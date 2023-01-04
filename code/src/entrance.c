@@ -22,10 +22,41 @@ typedef void (*SetNextEntrance_proc)(struct GlobalContext* globalCtx, s16 entran
 
 // Owl Flights : 0x492064 and 0x492080
 
+typedef struct {
+    s16 blueWarp;
+    s16 destination;
+} BlueWarpReplacement;
+
+typedef struct {
+    s16 entryway;
+    s16 exit;
+    s16 bossDoor;
+    s16 bossDoorReverse;
+    s16 blueWarp;
+    s16 scene;
+    s16 bossScene;
+} DungeonEntranceInfo;
+
+// Boss scenes (maps normalized boss scenes range to 0 on lookup) to the replaced dungeon scene it is connected to
+static s16 dungeonBossSceneOverrides[SHUFFLEABLE_BOSS_COUNT]      = { 0 };
 EntranceOverride rEntranceOverrides[ENTRANCE_OVERRIDES_MAX_COUNT] = { 0 };
 EntranceOverride destList[ENTRANCE_OVERRIDES_MAX_COUNT]           = { 0 };
 EntranceTrackingData gEntranceTrackingData                        = { 0 };
 static s16 entranceOverrideTable[ENTRANCE_TABLE_SIZE]             = { 0 };
+
+// clang-format off
+static DungeonEntranceInfo dungeons[] = {
+    //entryway,                  exit,   boss,   reverse,bluewarp,dungeon scene,           boss scene
+    { DEKU_TREE_ENTRANCE,        0x0209, 0x040F, 0x0252, 0x0457,  DUNGEON_DEKU_TREE,       DUNGEON_DEKU_TREE_BOSS_ROOM },
+    { DODONGOS_CAVERN_ENTRANCE,  0x0242, 0x040B, 0x00C5, 0x047A,  DUNGEON_DODONGOS_CAVERN, DUNGEON_DODONGOS_CAVERN_BOSS_ROOM },
+    { JABU_JABUS_BELLY_ENTRANCE, 0x0221, 0x0301, 0x0407, 0x010E,  DUNGEON_JABUJABUS_BELLY, DUNGEON_JABUJABUS_BELLY_BOSS_ROOM },
+    { FOREST_TEMPLE_ENTRANCE,    0x0215, 0x000C, 0x024E, 0x0608,  DUNGEON_FOREST_TEMPLE,   DUNGEON_FOREST_TEMPLE_BOSS_ROOM },
+    { FIRE_TEMPLE_ENTRANCE,      0x024A, 0x0305, 0x0175, 0x0564,  DUNGEON_FIRE_TEMPLE,     DUNGEON_FIRE_TEMPLE_BOSS_ROOM },
+    { WATER_TEMPLE_ENTRANCE,     0x021D, 0x0417, 0x0423, 0x060C,  DUNGEON_WATER_TEMPLE,    DUNGEON_WATER_TEMPLE_BOSS_ROOM },
+    { SPIRIT_TEMPLE_ENTRANCE,    0x01E1, 0x008D, 0x02F5, 0x0610,  DUNGEON_SPIRIT_TEMPLE,   DUNGEON_SPIRIT_TEMPLE_BOSS_ROOM},
+    { SHADOW_TEMPLE_ENTRANCE,    0x0205, 0x0413, 0x02B2, 0x0580,  DUNGEON_SHADOW_TEMPLE,   DUNGEON_SHADOW_TEMPLE_BOSS_ROOM },
+};
+// clang-format on
 
 // These variables store the new entrance indices for dungeons so that
 // savewarping and game overs respawn players at the proper entrance.
@@ -127,6 +158,9 @@ static void Entrance_SeparateAdultSpawnAndPrelude() {
 void Entrance_Init(void) {
     s32 index;
 
+    size_t blueWarpRemapIdx                               = 0;
+    BlueWarpReplacement bluewarps[SHUFFLEABLE_BOSS_COUNT] = { 0 };
+
     // Skip Child Stealth if given by settings
     if (gSettingsContext.skipChildStealth == SKIP) {
         gEntranceTable[0x07A].scene = 0x4A;
@@ -153,6 +187,11 @@ void Entrance_Init(void) {
     // index referring to itself means that the entrance is not currently shuffled.
     for (s16 i = 0; i < ENTRANCE_TABLE_SIZE; i++) {
         entranceOverrideTable[i] = i;
+    }
+
+    // Initialize all boss rooms connected to their vanilla dungeon
+    for (s16 i = 1; i < SHUFFLEABLE_BOSS_COUNT; i++) {
+        dungeonBossSceneOverrides[i] = i;
     }
 
     // Initialize the grotto exit and load lists
@@ -184,7 +223,33 @@ void Entrance_Init(void) {
         entranceOverrideTable[originalIndex] = overrideIndex;
 
         if (blueWarpIndex != 0) {
-            entranceOverrideTable[blueWarpIndex] = overrideIndex;
+            // When boss shuffle is enabled, we need to know what dungeon the boss room is connected to for
+            // death/save warping, and for the blue warp
+            if (gSettingsContext.shuffleBossEntrances != OFF) {
+                s16 bossScene            = -1;
+                s16 replacedDungeonScene = -1;
+                s16 replacedDungeonExit  = -1;
+                // Search for the boss scene and replaced blue warp exits
+                for (s16 j = 0; j <= SHUFFLEABLE_BOSS_COUNT; j++) {
+                    if (blueWarpIndex == dungeons[j].blueWarp) {
+                        bossScene = dungeons[j].bossScene;
+                    }
+                    if (overrideIndex == dungeons[j].bossDoorReverse) {
+                        replacedDungeonScene = dungeons[j].scene;
+                        replacedDungeonExit  = dungeons[j].exit;
+                    }
+                }
+
+                // assign the boss scene override
+                if (bossScene != -1 && replacedDungeonScene != -1 && replacedDungeonExit != -1) {
+                    dungeonBossSceneOverrides[bossScene - DUNGEON_DEKU_TREE_BOSS_ROOM] = replacedDungeonScene;
+                    bluewarps[blueWarpRemapIdx].blueWarp                               = blueWarpIndex;
+                    bluewarps[blueWarpRemapIdx].destination                            = replacedDungeonExit;
+                    blueWarpRemapIdx++;
+                }
+            } else {
+                entranceOverrideTable[blueWarpIndex] = overrideIndex;
+            }
         }
 
         // Override both land and water entrances for Hyrule Field -> ZR Front and vice versa
@@ -192,6 +257,14 @@ void Entrance_Init(void) {
             entranceOverrideTable[0x01D9] = overrideIndex;
         } else if (originalIndex == 0x0181) { // ZR Front -> Hyrule Field land entrance
             entranceOverrideTable[0x0311] = overrideIndex;
+        }
+    }
+
+    // If we have remapped blue warps from boss shuffle, handle setting those and grabbing the override for
+    // the replaced dungeons exit in the event that dungeon shuffle is also turned on
+    for (size_t i = 0; i < ARRAY_SIZE(bluewarps); i++) {
+        if (bluewarps[i].blueWarp != 0 && bluewarps[i].destination != 0) {
+            entranceOverrideTable[bluewarps[i].blueWarp] = Entrance_GetOverride(bluewarps[i].destination);
         }
     }
 
@@ -278,11 +351,22 @@ void Entrance_EnteredLocation(void) {
     SaveFile_SetSceneDiscovered(gGlobalContext->sceneNum);
 }
 
-// Properly respawn the player after a game over, accounding for dungeon entrance
+// Properly respawn the player after a game over, accounting for dungeon entrance
 // randomizer. It's easier to rewrite this entirely compared to performing an ASM
 // dance for just the boss rooms. Entrance Indexes can be found here:
 // https://wiki.cloudmodding.com/oot/Entrance_Table_(Data)
 void Entrance_SetGameOverEntrance(void) {
+
+    s16 scene = gGlobalContext->sceneNum;
+
+    // When in a boss room and boss shuffle is on, get the connected dungeon's original boss room entrance
+    // then run the normal game over overrides on it
+    if (gSettingsContext.shuffleBossEntrances != OFF && scene >= DUNGEON_DEKU_TREE_BOSS_ROOM &&
+        scene <= DUNGEON_SHADOW_TEMPLE_BOSS_ROOM) {
+        // Normalize boss scene range to 0 on lookup
+        scene                      = dungeonBossSceneOverrides[scene - DUNGEON_DEKU_TREE_BOSS_ROOM];
+        gSaveContext.entranceIndex = dungeons[scene].bossDoor;
+    }
 
     // Set the current entrance depending on which entrance the player last came through
     switch (gSaveContext.entranceIndex) {
@@ -324,21 +408,29 @@ void Entrance_SetSavewarpEntrance(void) {
 
     s16 scene = gSaveContext.sceneIndex;
 
+    // When in a boss room and boss shuffle is on, use the boss scene override to remap to its
+    // connected dungeon and use that for the final entrance
+    if (gSettingsContext.shuffleBossEntrances != OFF && scene >= DUNGEON_DEKU_TREE_BOSS_ROOM &&
+        scene <= DUNGEON_SHADOW_TEMPLE_BOSS_ROOM) {
+        // Normalize boss scene range to 0 on lookup
+        scene = dungeonBossSceneOverrides[scene - DUNGEON_DEKU_TREE_BOSS_ROOM];
+    }
+
     if (scene == DUNGEON_DEKU_TREE || scene == DUNGEON_DEKU_TREE_BOSS_ROOM) {
         gSaveContext.entranceIndex = newDekuTreeEntrance;
     } else if (scene == DUNGEON_DODONGOS_CAVERN || scene == DUNGEON_DODONGOS_CAVERN_BOSS_ROOM) {
         gSaveContext.entranceIndex = newDodongosCavernEntrance;
     } else if (scene == DUNGEON_JABUJABUS_BELLY || scene == DUNGEON_JABUJABUS_BELLY_BOSS_ROOM) {
         gSaveContext.entranceIndex = newJabuJabusBellyEntrance;
-    } else if (scene == DUNGEON_FOREST_TEMPLE || scene == 0x14) { // Forest Temple Boss Room
+    } else if (scene == DUNGEON_FOREST_TEMPLE || scene == DUNGEON_FOREST_TEMPLE_BOSS_ROOM) {
         gSaveContext.entranceIndex = newForestTempleEntrance;
-    } else if (scene == DUNGEON_FIRE_TEMPLE || scene == 0x15) { // Fire Temple Boss Room
+    } else if (scene == DUNGEON_FIRE_TEMPLE || scene == DUNGEON_FIRE_TEMPLE_BOSS_ROOM) {
         gSaveContext.entranceIndex = newFireTempleEntrance;
-    } else if (scene == DUNGEON_WATER_TEMPLE || scene == 0x16) { // Water Temple Boss Room
+    } else if (scene == DUNGEON_WATER_TEMPLE || scene == DUNGEON_WATER_TEMPLE_BOSS_ROOM) {
         gSaveContext.entranceIndex = newWaterTempleEntrance;
-    } else if (scene == DUNGEON_SPIRIT_TEMPLE || scene == 0x17) { // Spirit Temple Boss Room
+    } else if (scene == DUNGEON_SPIRIT_TEMPLE || scene == DUNGEON_SPIRIT_TEMPLE_BOSS_ROOM) {
         gSaveContext.entranceIndex = newSpiritTempleEntrance;
-    } else if (scene == DUNGEON_SHADOW_TEMPLE || scene == 0x18) { // Shadow Temple Boss Room
+    } else if (scene == DUNGEON_SHADOW_TEMPLE || scene == DUNGEON_SHADOW_TEMPLE_BOSS_ROOM) {
         gSaveContext.entranceIndex = newShadowTempleEntrance;
     } else if (scene == DUNGEON_BOTTOM_OF_THE_WELL) {
         gSaveContext.entranceIndex = newBottomOfTheWellEntrance;
@@ -460,24 +552,26 @@ const EntranceData entranceData[] = {
     { 0x027E, "LH Owl Flight",      "Hyrule Field Owl Drop",     ENTRANCE_GROUP_ONE_WAY, ENTRANCE_GROUP_ONE_WAY, ENTRANCE_TYPE_ONE_WAY},
 
     // Kokiri Forest
-    { 0x05E0, "KF",                 "Lost Woods Bridge", ENTRANCE_GROUP_KOKIRI_FOREST, ENTRANCE_GROUP_LOST_WOODS,    ENTRANCE_TYPE_OVERWORLD},
-    { 0x011E, "KF",                 "Lost Woods",        ENTRANCE_GROUP_KOKIRI_FOREST, ENTRANCE_GROUP_LOST_WOODS,    ENTRANCE_TYPE_OVERWORLD},
-    { 0x0272, "KF",                 "Link's House",      ENTRANCE_GROUP_KOKIRI_FOREST, ENTRANCE_GROUP_KOKIRI_FOREST, ENTRANCE_TYPE_INTERIOR, 1},
-    { 0x0433, "KF",                 "Mido's House",      ENTRANCE_GROUP_KOKIRI_FOREST, ENTRANCE_GROUP_KOKIRI_FOREST, ENTRANCE_TYPE_INTERIOR, 1},
-    { 0x0437, "KF",                 "Saria's House",     ENTRANCE_GROUP_KOKIRI_FOREST, ENTRANCE_GROUP_KOKIRI_FOREST, ENTRANCE_TYPE_INTERIOR, 1},
-    { 0x009C, "KF",                 "House of Twins",    ENTRANCE_GROUP_KOKIRI_FOREST, ENTRANCE_GROUP_KOKIRI_FOREST, ENTRANCE_TYPE_INTERIOR, 1},
-    { 0x00C9, "KF",                 "Know-It-All House", ENTRANCE_GROUP_KOKIRI_FOREST, ENTRANCE_GROUP_KOKIRI_FOREST, ENTRANCE_TYPE_INTERIOR, 1},
-    { 0x00C1, "KF",                 "KF Shop",           ENTRANCE_GROUP_KOKIRI_FOREST, ENTRANCE_GROUP_KOKIRI_FOREST, ENTRANCE_TYPE_INTERIOR, 1},
-    { 0x071B, "KF",                 "KF Storms Grotto",  ENTRANCE_GROUP_KOKIRI_FOREST, ENTRANCE_GROUP_KOKIRI_FOREST, ENTRANCE_TYPE_GROTTO,   1},
-    { 0x0000, "KF",                 "Deku Tree",         ENTRANCE_GROUP_KOKIRI_FOREST, ENTRANCE_GROUP_KOKIRI_FOREST, ENTRANCE_TYPE_DUNGEON,  1},
-    { 0x0211, "Link's House",       "KF",                ENTRANCE_GROUP_KOKIRI_FOREST, ENTRANCE_GROUP_KOKIRI_FOREST, ENTRANCE_TYPE_INTERIOR},
-    { 0x0443, "Mido's House",       "KF",                ENTRANCE_GROUP_KOKIRI_FOREST, ENTRANCE_GROUP_KOKIRI_FOREST, ENTRANCE_TYPE_INTERIOR},
-    { 0x0447, "Saria's House",      "KF",                ENTRANCE_GROUP_KOKIRI_FOREST, ENTRANCE_GROUP_KOKIRI_FOREST, ENTRANCE_TYPE_INTERIOR},
-    { 0x033C, "House of Twins",     "KF",                ENTRANCE_GROUP_KOKIRI_FOREST, ENTRANCE_GROUP_KOKIRI_FOREST, ENTRANCE_TYPE_INTERIOR},
-    { 0x026A, "Know-It-All House",  "KF",                ENTRANCE_GROUP_KOKIRI_FOREST, ENTRANCE_GROUP_KOKIRI_FOREST, ENTRANCE_TYPE_INTERIOR},
-    { 0x0266, "KF Shop",            "KF",                ENTRANCE_GROUP_KOKIRI_FOREST, ENTRANCE_GROUP_KOKIRI_FOREST, ENTRANCE_TYPE_INTERIOR},
-    { 0x081B, "KF Storms Grotto",   "KF",                ENTRANCE_GROUP_KOKIRI_FOREST, ENTRANCE_GROUP_KOKIRI_FOREST, ENTRANCE_TYPE_GROTTO,},
-    { 0x0209, "Deku Tree",          "KF",                ENTRANCE_GROUP_KOKIRI_FOREST, ENTRANCE_GROUP_KOKIRI_FOREST, ENTRANCE_TYPE_DUNGEON,},
+    { 0x05E0, "KF",                  "Lost Woods Bridge",   ENTRANCE_GROUP_KOKIRI_FOREST, ENTRANCE_GROUP_LOST_WOODS,    ENTRANCE_TYPE_OVERWORLD},
+    { 0x011E, "KF",                  "Lost Woods",          ENTRANCE_GROUP_KOKIRI_FOREST, ENTRANCE_GROUP_LOST_WOODS,    ENTRANCE_TYPE_OVERWORLD},
+    { 0x0272, "KF",                  "Link's House",        ENTRANCE_GROUP_KOKIRI_FOREST, ENTRANCE_GROUP_KOKIRI_FOREST, ENTRANCE_TYPE_INTERIOR, 1},
+    { 0x0433, "KF",                  "Mido's House",        ENTRANCE_GROUP_KOKIRI_FOREST, ENTRANCE_GROUP_KOKIRI_FOREST, ENTRANCE_TYPE_INTERIOR, 1},
+    { 0x0437, "KF",                  "Saria's House",       ENTRANCE_GROUP_KOKIRI_FOREST, ENTRANCE_GROUP_KOKIRI_FOREST, ENTRANCE_TYPE_INTERIOR, 1},
+    { 0x009C, "KF",                  "House of Twins",      ENTRANCE_GROUP_KOKIRI_FOREST, ENTRANCE_GROUP_KOKIRI_FOREST, ENTRANCE_TYPE_INTERIOR, 1},
+    { 0x00C9, "KF",                  "Know-It-All House",   ENTRANCE_GROUP_KOKIRI_FOREST, ENTRANCE_GROUP_KOKIRI_FOREST, ENTRANCE_TYPE_INTERIOR, 1},
+    { 0x00C1, "KF",                  "KF Shop",             ENTRANCE_GROUP_KOKIRI_FOREST, ENTRANCE_GROUP_KOKIRI_FOREST, ENTRANCE_TYPE_INTERIOR, 1},
+    { 0x071B, "KF",                  "KF Storms Grotto",    ENTRANCE_GROUP_KOKIRI_FOREST, ENTRANCE_GROUP_KOKIRI_FOREST, ENTRANCE_TYPE_GROTTO,   1},
+    { 0x0000, "KF",                  "Deku Tree",           ENTRANCE_GROUP_KOKIRI_FOREST, ENTRANCE_GROUP_KOKIRI_FOREST, ENTRANCE_TYPE_DUNGEON,  1},
+    { 0x0211, "Link's House",        "KF",                  ENTRANCE_GROUP_KOKIRI_FOREST, ENTRANCE_GROUP_KOKIRI_FOREST, ENTRANCE_TYPE_INTERIOR},
+    { 0x0443, "Mido's House",        "KF",                  ENTRANCE_GROUP_KOKIRI_FOREST, ENTRANCE_GROUP_KOKIRI_FOREST, ENTRANCE_TYPE_INTERIOR},
+    { 0x0447, "Saria's House",       "KF",                  ENTRANCE_GROUP_KOKIRI_FOREST, ENTRANCE_GROUP_KOKIRI_FOREST, ENTRANCE_TYPE_INTERIOR},
+    { 0x033C, "House of Twins",      "KF",                  ENTRANCE_GROUP_KOKIRI_FOREST, ENTRANCE_GROUP_KOKIRI_FOREST, ENTRANCE_TYPE_INTERIOR},
+    { 0x026A, "Know-It-All House",   "KF",                  ENTRANCE_GROUP_KOKIRI_FOREST, ENTRANCE_GROUP_KOKIRI_FOREST, ENTRANCE_TYPE_INTERIOR},
+    { 0x0266, "KF Shop",             "KF",                  ENTRANCE_GROUP_KOKIRI_FOREST, ENTRANCE_GROUP_KOKIRI_FOREST, ENTRANCE_TYPE_INTERIOR},
+    { 0x081B, "KF Storms Grotto",    "KF",                  ENTRANCE_GROUP_KOKIRI_FOREST, ENTRANCE_GROUP_KOKIRI_FOREST, ENTRANCE_TYPE_GROTTO,},
+    { 0x0209, "Deku Tree",           "KF",                  ENTRANCE_GROUP_KOKIRI_FOREST, ENTRANCE_GROUP_KOKIRI_FOREST, ENTRANCE_TYPE_DUNGEON,},
+    { 0x040F, "Deku Tree Boss Door", "Gohma",               ENTRANCE_GROUP_KOKIRI_FOREST, ENTRANCE_GROUP_KOKIRI_FOREST, ENTRANCE_TYPE_DUNGEON,  1},
+    { 0x0252, "Gohma",               "Deku Tree Boss Door", ENTRANCE_GROUP_KOKIRI_FOREST, ENTRANCE_GROUP_KOKIRI_FOREST, ENTRANCE_TYPE_DUNGEON,  1},
 
     // Lost Woods
     { 0x020D, "Lost Woods Bridge",        "KF",                       ENTRANCE_GROUP_LOST_WOODS, ENTRANCE_GROUP_KOKIRI_FOREST, ENTRANCE_TYPE_OVERWORLD},
@@ -494,15 +588,18 @@ const EntranceData entranceData[] = {
     { 0x0820, "Deku Theater",             "Lost Woods",               ENTRANCE_GROUP_LOST_WOODS, ENTRANCE_GROUP_LOST_WOODS,    ENTRANCE_TYPE_GROTTO},
 
     // Sacred Forest Meadow
-    { 0x01A9, "SFM",               "Lost Woods",        ENTRANCE_GROUP_SFM, ENTRANCE_GROUP_LOST_WOODS, ENTRANCE_TYPE_OVERWORLD},
-    { 0x0716, "SFM",               "SFM Wolfos Grotto", ENTRANCE_GROUP_SFM, ENTRANCE_GROUP_SFM,        ENTRANCE_TYPE_GROTTO,  1},
-    { 0x0718, "SFM",               "SFM Fairy Grotto",  ENTRANCE_GROUP_SFM, ENTRANCE_GROUP_SFM,        ENTRANCE_TYPE_GROTTO,  1},
-    { 0x0717, "SFM",               "SFM Storms Grotto", ENTRANCE_GROUP_SFM, ENTRANCE_GROUP_SFM,        ENTRANCE_TYPE_GROTTO,  1},
-    { 0x0169, "SFM",               "Forest Temple",     ENTRANCE_GROUP_SFM, ENTRANCE_GROUP_SFM,        ENTRANCE_TYPE_DUNGEON, 1},
-    { 0x0816, "SFM Wolfos Grotto", "SFM",               ENTRANCE_GROUP_SFM, ENTRANCE_GROUP_SFM,        ENTRANCE_TYPE_GROTTO},
-    { 0x0818, "SFM Fairy Grotto",  "SFM",               ENTRANCE_GROUP_SFM, ENTRANCE_GROUP_SFM,        ENTRANCE_TYPE_GROTTO},
-    { 0x0817, "SFM Storms Grotto", "SFM",               ENTRANCE_GROUP_SFM, ENTRANCE_GROUP_SFM,        ENTRANCE_TYPE_GROTTO},
-    { 0x0215, "Forest Temple",     "SFM",               ENTRANCE_GROUP_SFM, ENTRANCE_GROUP_SFM,        ENTRANCE_TYPE_DUNGEON},
+    { 0x01A9, "SFM",                     "Lost Woods",              ENTRANCE_GROUP_SFM, ENTRANCE_GROUP_LOST_WOODS, ENTRANCE_TYPE_OVERWORLD},
+    { 0x0716, "SFM",                     "SFM Wolfos Grotto",       ENTRANCE_GROUP_SFM, ENTRANCE_GROUP_SFM,        ENTRANCE_TYPE_GROTTO,  1},
+    { 0x0718, "SFM",                     "SFM Fairy Grotto",        ENTRANCE_GROUP_SFM, ENTRANCE_GROUP_SFM,        ENTRANCE_TYPE_GROTTO,  1},
+    { 0x0717, "SFM",                     "SFM Storms Grotto",       ENTRANCE_GROUP_SFM, ENTRANCE_GROUP_SFM,        ENTRANCE_TYPE_GROTTO,  1},
+    { 0x0169, "SFM",                     "Forest Temple",           ENTRANCE_GROUP_SFM, ENTRANCE_GROUP_SFM,        ENTRANCE_TYPE_DUNGEON, 1},
+    { 0x0816, "SFM Wolfos Grotto",       "SFM",                     ENTRANCE_GROUP_SFM, ENTRANCE_GROUP_SFM,        ENTRANCE_TYPE_GROTTO},
+    { 0x0818, "SFM Fairy Grotto",        "SFM",                     ENTRANCE_GROUP_SFM, ENTRANCE_GROUP_SFM,        ENTRANCE_TYPE_GROTTO},
+    { 0x0817, "SFM Storms Grotto",       "SFM",                     ENTRANCE_GROUP_SFM, ENTRANCE_GROUP_SFM,        ENTRANCE_TYPE_GROTTO},
+    { 0x0215, "Forest Temple",           "SFM",                     ENTRANCE_GROUP_SFM, ENTRANCE_GROUP_SFM,        ENTRANCE_TYPE_DUNGEON},
+    { 0x000C, "Forest Temple Boss Door", "Phantom Ganon",           ENTRANCE_GROUP_SFM, ENTRANCE_GROUP_SFM,        ENTRANCE_TYPE_DUNGEON, 1},
+    { 0x024E, "Phantom Ganon",           "Forest Temple Boss Door", ENTRANCE_GROUP_SFM, ENTRANCE_GROUP_SFM,        ENTRANCE_TYPE_DUNGEON, 1},
+
 
     // Kakariko Village
     { 0x017D, "Kakariko",              "Hyrule Field",          ENTRANCE_GROUP_KAKARIKO, ENTRANCE_GROUP_HYRULE_FIELD,         ENTRANCE_TYPE_OVERWORLD},
@@ -536,32 +633,36 @@ const EntranceData entranceData[] = {
     { 0x02A6, "Bottom of the Well",    "Kakariko",              ENTRANCE_GROUP_KAKARIKO, ENTRANCE_GROUP_KAKARIKO,             ENTRANCE_TYPE_DUNGEON},
 
     // The Graveyard
-    { 0x0195, "Graveyard",         "Kakariko",          ENTRANCE_GROUP_GRAVEYARD, ENTRANCE_GROUP_KAKARIKO,  ENTRANCE_TYPE_OVERWORLD},
-    { 0x030D, "Graveyard",         "Dampe's Shack",     ENTRANCE_GROUP_GRAVEYARD, ENTRANCE_GROUP_GRAVEYARD, ENTRANCE_TYPE_INTERIOR, 1},
-    { 0x004B, "Graveyard",         "Shield Grave",      ENTRANCE_GROUP_GRAVEYARD, ENTRANCE_GROUP_GRAVEYARD, ENTRANCE_TYPE_GROTTO,   1},
-    { 0x031C, "Graveyard",         "Heart Piece Grave", ENTRANCE_GROUP_GRAVEYARD, ENTRANCE_GROUP_GRAVEYARD, ENTRANCE_TYPE_GROTTO,   1},
-    { 0x002D, "Graveyard",         "Composer's Grave",  ENTRANCE_GROUP_GRAVEYARD, ENTRANCE_GROUP_GRAVEYARD, ENTRANCE_TYPE_GROTTO,   1},
-    { 0x044F, "Graveyard",         "Dampe's Grave",     ENTRANCE_GROUP_GRAVEYARD, ENTRANCE_GROUP_GRAVEYARD, ENTRANCE_TYPE_GROTTO,   1},
-    { 0x0037, "Graveyard",         "Shadow Temple",     ENTRANCE_GROUP_GRAVEYARD, ENTRANCE_GROUP_GRAVEYARD, ENTRANCE_TYPE_DUNGEON,  1},
-    { 0x0355, "Dampe's Shack",     "Graveyard",         ENTRANCE_GROUP_GRAVEYARD, ENTRANCE_GROUP_GRAVEYARD, ENTRANCE_TYPE_INTERIOR},
-    { 0x035D, "Shield Grave",      "Graveyard",         ENTRANCE_GROUP_GRAVEYARD, ENTRANCE_GROUP_GRAVEYARD, ENTRANCE_TYPE_GROTTO},
-    { 0x0361, "Heart Piece Grave", "Graveyard",         ENTRANCE_GROUP_GRAVEYARD, ENTRANCE_GROUP_GRAVEYARD, ENTRANCE_TYPE_GROTTO},
-    { 0x050B, "Composer's Grave",  "Graveyard",         ENTRANCE_GROUP_GRAVEYARD, ENTRANCE_GROUP_GRAVEYARD, ENTRANCE_TYPE_GROTTO},
-    { 0x0359, "Dampe's Grave",     "Graveyard",         ENTRANCE_GROUP_GRAVEYARD, ENTRANCE_GROUP_GRAVEYARD, ENTRANCE_TYPE_GROTTO},
-    { 0x0205, "Shadow Temple",     "Graveyard",         ENTRANCE_GROUP_GRAVEYARD, ENTRANCE_GROUP_GRAVEYARD, ENTRANCE_TYPE_DUNGEON},
+    { 0x0195, "Graveyard",               "Kakariko",                ENTRANCE_GROUP_GRAVEYARD, ENTRANCE_GROUP_KAKARIKO,  ENTRANCE_TYPE_OVERWORLD},
+    { 0x030D, "Graveyard",               "Dampe's Shack",           ENTRANCE_GROUP_GRAVEYARD, ENTRANCE_GROUP_GRAVEYARD, ENTRANCE_TYPE_INTERIOR, 1},
+    { 0x004B, "Graveyard",               "Shield Grave",            ENTRANCE_GROUP_GRAVEYARD, ENTRANCE_GROUP_GRAVEYARD, ENTRANCE_TYPE_GROTTO,   1},
+    { 0x031C, "Graveyard",               "Heart Piece Grave",       ENTRANCE_GROUP_GRAVEYARD, ENTRANCE_GROUP_GRAVEYARD, ENTRANCE_TYPE_GROTTO,   1},
+    { 0x002D, "Graveyard",               "Composer's Grave",        ENTRANCE_GROUP_GRAVEYARD, ENTRANCE_GROUP_GRAVEYARD, ENTRANCE_TYPE_GROTTO,   1},
+    { 0x044F, "Graveyard",               "Dampe's Grave",           ENTRANCE_GROUP_GRAVEYARD, ENTRANCE_GROUP_GRAVEYARD, ENTRANCE_TYPE_GROTTO,   1},
+    { 0x0037, "Graveyard",               "Shadow Temple",           ENTRANCE_GROUP_GRAVEYARD, ENTRANCE_GROUP_GRAVEYARD, ENTRANCE_TYPE_DUNGEON,  1},
+    { 0x0355, "Dampe's Shack",           "Graveyard",               ENTRANCE_GROUP_GRAVEYARD, ENTRANCE_GROUP_GRAVEYARD, ENTRANCE_TYPE_INTERIOR},
+    { 0x035D, "Shield Grave",            "Graveyard",               ENTRANCE_GROUP_GRAVEYARD, ENTRANCE_GROUP_GRAVEYARD, ENTRANCE_TYPE_GROTTO},
+    { 0x0361, "Heart Piece Grave",       "Graveyard",               ENTRANCE_GROUP_GRAVEYARD, ENTRANCE_GROUP_GRAVEYARD, ENTRANCE_TYPE_GROTTO},
+    { 0x050B, "Composer's Grave",        "Graveyard",               ENTRANCE_GROUP_GRAVEYARD, ENTRANCE_GROUP_GRAVEYARD, ENTRANCE_TYPE_GROTTO},
+    { 0x0359, "Dampe's Grave",           "Graveyard",               ENTRANCE_GROUP_GRAVEYARD, ENTRANCE_GROUP_GRAVEYARD, ENTRANCE_TYPE_GROTTO},
+    { 0x0205, "Shadow Temple",           "Graveyard",               ENTRANCE_GROUP_GRAVEYARD, ENTRANCE_GROUP_GRAVEYARD, ENTRANCE_TYPE_DUNGEON},
+    { 0x0413, "Shadow Temple Boss Door", "Bongo-Bongo",             ENTRANCE_GROUP_GRAVEYARD, ENTRANCE_GROUP_GRAVEYARD, ENTRANCE_TYPE_DUNGEON,  1},
+    { 0x02B2, "Bongo-Bongo",             "Shadow Temple Boss Door", ENTRANCE_GROUP_GRAVEYARD, ENTRANCE_GROUP_GRAVEYARD, ENTRANCE_TYPE_DUNGEON,  1},
 
     // Death Mountain Trail
-    { 0x0191, "DMT",                      "Kakariko",                 ENTRANCE_GROUP_DEATH_MOUNTAIN_TRAIL, ENTRANCE_GROUP_KAKARIKO,              ENTRANCE_TYPE_OVERWORLD},
-    { 0x014D, "DMT",                      "Goron City",               ENTRANCE_GROUP_DEATH_MOUNTAIN_TRAIL, ENTRANCE_GROUP_GORON_CITY,            ENTRANCE_TYPE_OVERWORLD},
-    { 0x0147, "DMT",                      "DMC",                      ENTRANCE_GROUP_DEATH_MOUNTAIN_TRAIL, ENTRANCE_GROUP_DEATH_MOUNTAIN_CRATER, ENTRANCE_TYPE_OVERWORLD},
-    { 0x0315, "DMT",                      "DMT Great Fairy Fountain", ENTRANCE_GROUP_DEATH_MOUNTAIN_TRAIL, ENTRANCE_GROUP_DEATH_MOUNTAIN_TRAIL,  ENTRANCE_TYPE_INTERIOR, 1},
-    { 0x0708, "DMT",                      "DMT Storms Grotto",        ENTRANCE_GROUP_DEATH_MOUNTAIN_TRAIL, ENTRANCE_GROUP_DEATH_MOUNTAIN_TRAIL,  ENTRANCE_TYPE_GROTTO,   1},
-    { 0x0709, "DMT",                      "DMT Cow Grotto",           ENTRANCE_GROUP_DEATH_MOUNTAIN_TRAIL, ENTRANCE_GROUP_DEATH_MOUNTAIN_TRAIL,  ENTRANCE_TYPE_GROTTO,   1},
-    { 0x0004, "DMT",                      "Dodongo's Cavern",         ENTRANCE_GROUP_DEATH_MOUNTAIN_TRAIL, ENTRANCE_GROUP_DEATH_MOUNTAIN_TRAIL,  ENTRANCE_TYPE_DUNGEON,  1},
-    { 0x045B, "DMT Great Fairy Fountain", "DMT",                      ENTRANCE_GROUP_DEATH_MOUNTAIN_TRAIL, ENTRANCE_GROUP_DEATH_MOUNTAIN_TRAIL,  ENTRANCE_TYPE_INTERIOR},
-    { 0x0808, "DMT Storms Grotto",        "DMT",                      ENTRANCE_GROUP_DEATH_MOUNTAIN_TRAIL, ENTRANCE_GROUP_DEATH_MOUNTAIN_TRAIL,  ENTRANCE_TYPE_GROTTO},
-    { 0x0809, "DMT Cow Grotto",           "DMT",                      ENTRANCE_GROUP_DEATH_MOUNTAIN_TRAIL, ENTRANCE_GROUP_DEATH_MOUNTAIN_TRAIL,  ENTRANCE_TYPE_GROTTO},
-    { 0x0242, "Dodongo's Cavern",         "DMT",                      ENTRANCE_GROUP_DEATH_MOUNTAIN_TRAIL, ENTRANCE_GROUP_DEATH_MOUNTAIN_TRAIL,  ENTRANCE_TYPE_DUNGEON},
+    { 0x0191, "DMT",                        "Kakariko",                   ENTRANCE_GROUP_DEATH_MOUNTAIN_TRAIL, ENTRANCE_GROUP_KAKARIKO,              ENTRANCE_TYPE_OVERWORLD},
+    { 0x014D, "DMT",                        "Goron City",                 ENTRANCE_GROUP_DEATH_MOUNTAIN_TRAIL, ENTRANCE_GROUP_GORON_CITY,            ENTRANCE_TYPE_OVERWORLD},
+    { 0x0147, "DMT",                        "DMC",                        ENTRANCE_GROUP_DEATH_MOUNTAIN_TRAIL, ENTRANCE_GROUP_DEATH_MOUNTAIN_CRATER, ENTRANCE_TYPE_OVERWORLD},
+    { 0x0315, "DMT",                        "DMT Great Fairy Fountain",   ENTRANCE_GROUP_DEATH_MOUNTAIN_TRAIL, ENTRANCE_GROUP_DEATH_MOUNTAIN_TRAIL,  ENTRANCE_TYPE_INTERIOR, 1},
+    { 0x0708, "DMT",                        "DMT Storms Grotto",          ENTRANCE_GROUP_DEATH_MOUNTAIN_TRAIL, ENTRANCE_GROUP_DEATH_MOUNTAIN_TRAIL,  ENTRANCE_TYPE_GROTTO,   1},
+    { 0x0709, "DMT",                        "DMT Cow Grotto",             ENTRANCE_GROUP_DEATH_MOUNTAIN_TRAIL, ENTRANCE_GROUP_DEATH_MOUNTAIN_TRAIL,  ENTRANCE_TYPE_GROTTO,   1},
+    { 0x0004, "DMT",                        "Dodongo's Cavern",           ENTRANCE_GROUP_DEATH_MOUNTAIN_TRAIL, ENTRANCE_GROUP_DEATH_MOUNTAIN_TRAIL,  ENTRANCE_TYPE_DUNGEON,  1},
+    { 0x045B, "DMT Great Fairy Fountain",   "DMT",                        ENTRANCE_GROUP_DEATH_MOUNTAIN_TRAIL, ENTRANCE_GROUP_DEATH_MOUNTAIN_TRAIL,  ENTRANCE_TYPE_INTERIOR},
+    { 0x0808, "DMT Storms Grotto",          "DMT",                        ENTRANCE_GROUP_DEATH_MOUNTAIN_TRAIL, ENTRANCE_GROUP_DEATH_MOUNTAIN_TRAIL,  ENTRANCE_TYPE_GROTTO},
+    { 0x0809, "DMT Cow Grotto",             "DMT",                        ENTRANCE_GROUP_DEATH_MOUNTAIN_TRAIL, ENTRANCE_GROUP_DEATH_MOUNTAIN_TRAIL,  ENTRANCE_TYPE_GROTTO},
+    { 0x0242, "Dodongo's Cavern",           "DMT",                        ENTRANCE_GROUP_DEATH_MOUNTAIN_TRAIL, ENTRANCE_GROUP_DEATH_MOUNTAIN_TRAIL,  ENTRANCE_TYPE_DUNGEON},
+    { 0x040B, "Dodongo's Cavern Boss Door", "King Dodongo",               ENTRANCE_GROUP_DEATH_MOUNTAIN_TRAIL, ENTRANCE_GROUP_DEATH_MOUNTAIN_TRAIL,  ENTRANCE_TYPE_DUNGEON,  1},
+    { 0x00C5, "King Dodongo",               "Dodongo's Cavern Boss Door", ENTRANCE_GROUP_DEATH_MOUNTAIN_TRAIL, ENTRANCE_GROUP_DEATH_MOUNTAIN_TRAIL,  ENTRANCE_TYPE_DUNGEON,  1},
 
     // Death Mountain Crater
     { 0x01C1, "DMC",                      "Goron City",               ENTRANCE_GROUP_DEATH_MOUNTAIN_CRATER, ENTRANCE_GROUP_GORON_CITY,            ENTRANCE_TYPE_OVERWORLD},
@@ -574,6 +675,8 @@ const EntranceData entranceData[] = {
     { 0x0806, "DMC Upper Grotto",         "DMC",                      ENTRANCE_GROUP_DEATH_MOUNTAIN_CRATER, ENTRANCE_GROUP_DEATH_MOUNTAIN_CRATER, ENTRANCE_TYPE_GROTTO},
     { 0x0805, "DMC Hammer Grotto",        "DMC",                      ENTRANCE_GROUP_DEATH_MOUNTAIN_CRATER, ENTRANCE_GROUP_DEATH_MOUNTAIN_CRATER, ENTRANCE_TYPE_GROTTO},
     { 0x024A, "Fire Temple",              "DMC",                      ENTRANCE_GROUP_DEATH_MOUNTAIN_CRATER, ENTRANCE_GROUP_DEATH_MOUNTAIN_CRATER, ENTRANCE_TYPE_DUNGEON},
+    { 0x0305, "Fire Temple Boss Door",    "Volvagia",                 ENTRANCE_GROUP_DEATH_MOUNTAIN_CRATER, ENTRANCE_GROUP_DEATH_MOUNTAIN_CRATER, ENTRANCE_TYPE_DUNGEON,  1},
+    { 0x0175, "Volvagia",                 "Fire Temple Boss Door",    ENTRANCE_GROUP_DEATH_MOUNTAIN_CRATER, ENTRANCE_GROUP_DEATH_MOUNTAIN_CRATER, ENTRANCE_TYPE_DUNGEON,  1},
 
     // Goron City
     { 0x01B9, "Goron City",        "DMT",               ENTRANCE_GROUP_GORON_CITY, ENTRANCE_GROUP_DEATH_MOUNTAIN_TRAIL,  ENTRANCE_TYPE_OVERWORLD},
@@ -605,13 +708,15 @@ const EntranceData entranceData[] = {
     { 0x081C, "ZD Storms Grotto", "Zora's Domain",    ENTRANCE_GROUP_ZORAS_DOMAIN, ENTRANCE_GROUP_ZORAS_DOMAIN,   ENTRANCE_TYPE_GROTTO},
 
     // Zora's Fountain
-    { 0x01A1, "ZF",                      "Zora's Domain",           ENTRANCE_GROUP_ZORAS_FOUNTAIN, ENTRANCE_GROUP_ZORAS_DOMAIN,   ENTRANCE_TYPE_OVERWORLD},
-    { 0x0371, "ZF",                      "ZF Great Fairy Fountain", ENTRANCE_GROUP_ZORAS_FOUNTAIN, ENTRANCE_GROUP_ZORAS_FOUNTAIN, ENTRANCE_TYPE_INTERIOR, 1},
-    { 0x0028, "ZF",                      "Jabu Jabu's Belly",       ENTRANCE_GROUP_ZORAS_FOUNTAIN, ENTRANCE_GROUP_ZORAS_FOUNTAIN, ENTRANCE_TYPE_DUNGEON,  1},
-    { 0x0088, "ZF",                      "Ice Cavern",              ENTRANCE_GROUP_ZORAS_FOUNTAIN, ENTRANCE_GROUP_ZORAS_FOUNTAIN, ENTRANCE_TYPE_DUNGEON,  1},
-    { 0x0394, "ZF Great Fairy Fountain", "ZF",                      ENTRANCE_GROUP_ZORAS_FOUNTAIN, ENTRANCE_GROUP_ZORAS_FOUNTAIN, ENTRANCE_TYPE_INTERIOR},
-    { 0x0221, "Jabu Jabu's Belly",       "ZF",                      ENTRANCE_GROUP_ZORAS_FOUNTAIN, ENTRANCE_GROUP_ZORAS_FOUNTAIN, ENTRANCE_TYPE_DUNGEON},
-    { 0x03D4, "Ice Cavern",              "ZF",                      ENTRANCE_GROUP_ZORAS_FOUNTAIN, ENTRANCE_GROUP_ZORAS_FOUNTAIN, ENTRANCE_TYPE_DUNGEON},
+    { 0x01A1, "ZF",                          "Zora's Domain",               ENTRANCE_GROUP_ZORAS_FOUNTAIN, ENTRANCE_GROUP_ZORAS_DOMAIN,   ENTRANCE_TYPE_OVERWORLD},
+    { 0x0371, "ZF",                          "ZF Great Fairy Fountain",     ENTRANCE_GROUP_ZORAS_FOUNTAIN, ENTRANCE_GROUP_ZORAS_FOUNTAIN, ENTRANCE_TYPE_INTERIOR, 1},
+    { 0x0028, "ZF",                          "Jabu Jabu's Belly",           ENTRANCE_GROUP_ZORAS_FOUNTAIN, ENTRANCE_GROUP_ZORAS_FOUNTAIN, ENTRANCE_TYPE_DUNGEON,  1},
+    { 0x0088, "ZF",                          "Ice Cavern",                  ENTRANCE_GROUP_ZORAS_FOUNTAIN, ENTRANCE_GROUP_ZORAS_FOUNTAIN, ENTRANCE_TYPE_DUNGEON,  1},
+    { 0x0394, "ZF Great Fairy Fountain",     "ZF",                          ENTRANCE_GROUP_ZORAS_FOUNTAIN, ENTRANCE_GROUP_ZORAS_FOUNTAIN, ENTRANCE_TYPE_INTERIOR},
+    { 0x0221, "Jabu Jabu's Belly",           "ZF",                          ENTRANCE_GROUP_ZORAS_FOUNTAIN, ENTRANCE_GROUP_ZORAS_FOUNTAIN, ENTRANCE_TYPE_DUNGEON},
+    { 0x0301, "Jabu Jabu's Belly Boss Door", "Barinade",                    ENTRANCE_GROUP_ZORAS_FOUNTAIN, ENTRANCE_GROUP_ZORAS_FOUNTAIN, ENTRANCE_TYPE_DUNGEON,  1},
+    { 0x0407, "Barinade",                    "Jabu Jabu's Belly Boss Door", ENTRANCE_GROUP_ZORAS_FOUNTAIN, ENTRANCE_GROUP_ZORAS_FOUNTAIN, ENTRANCE_TYPE_DUNGEON,  1},
+    { 0x03D4, "Ice Cavern",                  "ZF",                          ENTRANCE_GROUP_ZORAS_FOUNTAIN, ENTRANCE_GROUP_ZORAS_FOUNTAIN, ENTRANCE_TYPE_DUNGEON},
 
     // Hyrule Field
     { 0x04DE, "Hyrule Field",           "Lost Woods Bridge",      ENTRANCE_GROUP_HYRULE_FIELD, ENTRANCE_GROUP_LOST_WOODS,    ENTRANCE_TYPE_OVERWORLD},
@@ -650,16 +755,18 @@ const EntranceData entranceData[] = {
     { 0x0815, "LLR Grotto",    "Lon Lon Ranch", ENTRANCE_GROUP_LON_LON_RANCH, ENTRANCE_GROUP_LON_LON_RANCH, ENTRANCE_TYPE_GROTTO},
 
     // Lake Hylia
-    { 0x0189, "Lake Hylia",   "Hyrule Field",  ENTRANCE_GROUP_LAKE_HYLIA, ENTRANCE_GROUP_HYRULE_FIELD, ENTRANCE_TYPE_OVERWORLD},
-    { 0x0328, "Lake Hylia",   "Zora's Domain", ENTRANCE_GROUP_LAKE_HYLIA, ENTRANCE_GROUP_ZORAS_DOMAIN, ENTRANCE_TYPE_OVERWORLD},
-    { 0x0043, "Lake Hylia",   "LH Lab",        ENTRANCE_GROUP_LAKE_HYLIA, ENTRANCE_GROUP_LAKE_HYLIA,   ENTRANCE_TYPE_INTERIOR, 1},
-    { 0x045F, "Lake Hylia",   "Fishing Hole",  ENTRANCE_GROUP_LAKE_HYLIA, ENTRANCE_GROUP_LAKE_HYLIA,   ENTRANCE_TYPE_INTERIOR, 1},
-    { 0x0701, "Lake Hylia",   "LH Grotto",     ENTRANCE_GROUP_LAKE_HYLIA, ENTRANCE_GROUP_LAKE_HYLIA,   ENTRANCE_TYPE_GROTTO,   1},
-    { 0x0010, "Lake Hylia",   "Water Temple",  ENTRANCE_GROUP_LAKE_HYLIA, ENTRANCE_GROUP_LAKE_HYLIA,   ENTRANCE_TYPE_DUNGEON,  1},
-    { 0x03CC, "LH Lab",       "Lake Hylia",    ENTRANCE_GROUP_LAKE_HYLIA, ENTRANCE_GROUP_LAKE_HYLIA,   ENTRANCE_TYPE_INTERIOR},
-    { 0x0309, "Fishing Hole", "Lake Hylia",    ENTRANCE_GROUP_LAKE_HYLIA, ENTRANCE_GROUP_LAKE_HYLIA,   ENTRANCE_TYPE_INTERIOR},
-    { 0x0801, "LH Grotto",    "Lake Hylia",    ENTRANCE_GROUP_LAKE_HYLIA, ENTRANCE_GROUP_LAKE_HYLIA,   ENTRANCE_TYPE_GROTTO},
-    { 0x021D, "Water Temple", "Lake Hylia",    ENTRANCE_GROUP_LAKE_HYLIA, ENTRANCE_GROUP_LAKE_HYLIA,   ENTRANCE_TYPE_DUNGEON},
+    { 0x0189, "Lake Hylia",             "Hyrule Field",           ENTRANCE_GROUP_LAKE_HYLIA, ENTRANCE_GROUP_HYRULE_FIELD, ENTRANCE_TYPE_OVERWORLD},
+    { 0x0328, "Lake Hylia",             "Zora's Domain",          ENTRANCE_GROUP_LAKE_HYLIA, ENTRANCE_GROUP_ZORAS_DOMAIN, ENTRANCE_TYPE_OVERWORLD},
+    { 0x0043, "Lake Hylia",             "LH Lab",                 ENTRANCE_GROUP_LAKE_HYLIA, ENTRANCE_GROUP_LAKE_HYLIA,   ENTRANCE_TYPE_INTERIOR, 1},
+    { 0x045F, "Lake Hylia",             "Fishing Hole",           ENTRANCE_GROUP_LAKE_HYLIA, ENTRANCE_GROUP_LAKE_HYLIA,   ENTRANCE_TYPE_INTERIOR, 1},
+    { 0x0701, "Lake Hylia",             "LH Grotto",              ENTRANCE_GROUP_LAKE_HYLIA, ENTRANCE_GROUP_LAKE_HYLIA,   ENTRANCE_TYPE_GROTTO,   1},
+    { 0x0010, "Lake Hylia",             "Water Temple",           ENTRANCE_GROUP_LAKE_HYLIA, ENTRANCE_GROUP_LAKE_HYLIA,   ENTRANCE_TYPE_DUNGEON,  1},
+    { 0x03CC, "LH Lab",                 "Lake Hylia",             ENTRANCE_GROUP_LAKE_HYLIA, ENTRANCE_GROUP_LAKE_HYLIA,   ENTRANCE_TYPE_INTERIOR},
+    { 0x0309, "Fishing Hole",           "Lake Hylia",             ENTRANCE_GROUP_LAKE_HYLIA, ENTRANCE_GROUP_LAKE_HYLIA,   ENTRANCE_TYPE_INTERIOR},
+    { 0x0801, "LH Grotto",              "Lake Hylia",             ENTRANCE_GROUP_LAKE_HYLIA, ENTRANCE_GROUP_LAKE_HYLIA,   ENTRANCE_TYPE_GROTTO},
+    { 0x021D, "Water Temple",           "Lake Hylia",             ENTRANCE_GROUP_LAKE_HYLIA, ENTRANCE_GROUP_LAKE_HYLIA,   ENTRANCE_TYPE_DUNGEON},
+    { 0x0417, "Water Temple Boss Door", "Morpha",                 ENTRANCE_GROUP_LAKE_HYLIA, ENTRANCE_GROUP_LAKE_HYLIA,   ENTRANCE_TYPE_DUNGEON,  1},
+    { 0x0423, "Morpha",                 "Water Temple Boss Door", ENTRANCE_GROUP_LAKE_HYLIA, ENTRANCE_GROUP_LAKE_HYLIA,   ENTRANCE_TYPE_DUNGEON,  1},
 
     // Gerudo Area
     { 0x018D, "GV",                      "Hyrule Field",            ENTRANCE_GROUP_GERUDO_VALLEY, ENTRANCE_GROUP_HYRULE_FIELD,      ENTRANCE_TYPE_OVERWORLD},
@@ -688,6 +795,8 @@ const EntranceData entranceData[] = {
     { 0x057C, "Colossus Great Fairy Fountain", "Colossus",                      ENTRANCE_GROUP_HAUNTED_WASTELAND, ENTRANCE_GROUP_HAUNTED_WASTELAND, ENTRANCE_TYPE_INTERIOR},
     { 0x0800, "Colossus Grotto",               "Desert Colossus",               ENTRANCE_GROUP_HAUNTED_WASTELAND, ENTRANCE_GROUP_HAUNTED_WASTELAND, ENTRANCE_TYPE_GROTTO},
     { 0x01E1, "Spirit Temple",                 "Desert Colossus",               ENTRANCE_GROUP_HAUNTED_WASTELAND, ENTRANCE_GROUP_HAUNTED_WASTELAND, ENTRANCE_TYPE_DUNGEON},
+    { 0x008D, "Spirit Temple Boss Door",       "Twinrova",                      ENTRANCE_GROUP_HAUNTED_WASTELAND, ENTRANCE_GROUP_HAUNTED_WASTELAND, ENTRANCE_TYPE_DUNGEON,  1},
+    { 0x02F5, "Twinrova",                      "Spirit Temple Boss Door",       ENTRANCE_GROUP_HAUNTED_WASTELAND, ENTRANCE_GROUP_HAUNTED_WASTELAND, ENTRANCE_TYPE_DUNGEON,  1},
 
     // Market
     { 0x01FD, "Market Entrance",        "Hyrule Field",           ENTRANCE_GROUP_MARKET, ENTRANCE_GROUP_HYRULE_FIELD,  ENTRANCE_TYPE_OVERWORLD},
@@ -886,5 +995,29 @@ void Entrance_UpdateMQFlag(void) {
             case MIRRORWORLD_RANDOM:
                 gSaveContext.masterQuestFlag = gRandInt & 1;
         }
+    }
+}
+
+// Allows us to modify information pertaining to a scene just after scene init, but before the entrance is loaded
+void Entrance_OverrideSpawnScene(void) {
+    if (!IsInGame()) {
+        return;
+    }
+    // Repair the authentically bugged scene/spawn info for leaving Barinade's boss room -> JabuJabu's belly
+    // to load the correct room outside the boss room, and slightly adjust Link's position
+    // to prevent him from falling through the floor
+    if (gGlobalContext->sceneNum == DUNGEON_JABUJABUS_BELLY && gGlobalContext->curSpawn == 1) { // Barinade -> Jabu
+        gGlobalContext->linkActorEntry->pos.z                            = 0xF7F4;
+        gGlobalContext->setupEntranceList[gGlobalContext->curSpawn].room = 5;
+    }
+    // Repair the authentically bugged scene/spawn info for leaving Morhpa's boss room -> Water Temple
+    // to load the correct room for the hallway before Morpha's boss room
+    // and place Link's position/rotation in the hallway, instead of the temple entrance
+    if (gGlobalContext->sceneNum == DUNGEON_WATER_TEMPLE && gGlobalContext->curSpawn == 1) { // Morpha -> Water Temple
+        gGlobalContext->linkActorEntry->pos.x                            = 0xFF4C;
+        gGlobalContext->linkActorEntry->pos.y                            = 0x0406;
+        gGlobalContext->linkActorEntry->pos.z                            = 0xF828;
+        gGlobalContext->linkActorEntry->rot.y                            = 0;
+        gGlobalContext->setupEntranceList[gGlobalContext->curSpawn].room = 11;
     }
 }

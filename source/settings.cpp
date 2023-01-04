@@ -92,6 +92,7 @@ Option StartingAge               = Option::U8  ("Starting Age",           {"Adul
 u8 ResolvedStartingAge;
 Option ShuffleEntrances          = Option::Bool("Shuffle Entrances",       {"Off", "On"},                                                    {shuffleEntrancesDesc});
 Option ShuffleDungeonEntrances   = Option::U8  (2, "Dungeon Entrances",    {"Off", "On", "On + Ganon"},                                      {dungeonEntrancesDesc});
+Option ShuffleBossEntrances      = Option::U8  (2, "Boss Entrances",       {"Off", "Age Restricted", "Full"},                                {bossEntrancesDesc});
 Option ShuffleOverworldEntrances = Option::Bool(2, "Overworld Entrances",  {"Off", "On"},                                                    {overworldEntrancesDesc});
 Option ShuffleInteriorEntrances  = Option::U8  (2, "Interior Entrances",   {"Off", "Simple", "All"},                                         {interiorEntrancesOff, interiorEntrancesSimple, interiorEntrancesAll});
 Option ShuffleGrottoEntrances    = Option::Bool(2, "Grottos Entrances",    {"Off", "On"},                                                    {grottoEntrancesDesc});
@@ -128,6 +129,7 @@ std::vector<Option *> worldOptions = {
     &StartingAge,
     &ShuffleEntrances,
     &ShuffleDungeonEntrances,
+    &ShuffleBossEntrances,
     &ShuffleOverworldEntrances,
     &ShuffleInteriorEntrances,
     &ShuffleGrottoEntrances,
@@ -1331,6 +1333,7 @@ SettingsContext FillContext() {
     ctx.startingAge               = StartingAge.Value<u8>();
     ctx.resolvedStartingAge       = ResolvedStartingAge;
     ctx.shuffleDungeonEntrances   = ShuffleDungeonEntrances.Value<u8>();
+    ctx.shuffleBossEntrances      = ShuffleBossEntrances.Value<u8>();
     ctx.shuffleOverworldEntrances = (ShuffleOverworldEntrances) ? 1 : 0;
     ctx.shuffleInteriorEntrances  = ShuffleInteriorEntrances.Value<u8>();
     ctx.shuffleGrottoEntrances    = (ShuffleGrottoEntrances) ? 1 : 0;
@@ -1986,6 +1989,7 @@ void ForceChange(u32 kDown, Option* currentSetting) {
         // Show Shuffle options when Shuffle Entrances is On
         if (ShuffleEntrances) {
             ShuffleDungeonEntrances.Unhide();
+            ShuffleBossEntrances.Unhide();
             ShuffleOverworldEntrances.Unhide();
             ShuffleInteriorEntrances.Unhide();
             ShuffleGrottoEntrances.Unhide();
@@ -1997,6 +2001,8 @@ void ForceChange(u32 kDown, Option* currentSetting) {
         } else {
             ShuffleDungeonEntrances.SetSelectedIndex(SHUFFLEDUNGEONS_OFF);
             ShuffleDungeonEntrances.Hide();
+            ShuffleBossEntrances.SetSelectedIndex(SHUFFLEBOSSES_OFF);
+            ShuffleBossEntrances.Hide();
             ShuffleOverworldEntrances.SetSelectedIndex(OFF);
             ShuffleOverworldEntrances.Hide();
             ShuffleInteriorEntrances.SetSelectedIndex(SHUFFLEINTERIORS_OFF);
@@ -2534,6 +2540,7 @@ void RandomizeAllSettings(const bool selectOptions /*= false*/) {
     // Sanity Check Entrance Shuffling
     if (!ShuffleEntrances) {
         ShuffleDungeonEntrances.SetSelectedIndex(OFF);
+        ShuffleBossEntrances.SetSelectedIndex(OFF);
         ShuffleOverworldEntrances.SetSelectedIndex(OFF);
         ShuffleInteriorEntrances.SetSelectedIndex(OFF);
         ShuffleGrottoEntrances.SetSelectedIndex(OFF);

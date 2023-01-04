@@ -19,7 +19,8 @@
 #define GANONS_CASTLE_ENTRANCE 0x0467
 #define LINK_HOUSE_SAVEWARP_ENTRANCE 0x00BB
 
-#define ENTRANCE_OVERRIDES_MAX_COUNT 256
+#define ENTRANCE_OVERRIDES_MAX_COUNT 259 // 11 one-way entrances + 124 two-way entrances (x2)
+#define SHUFFLEABLE_BOSS_COUNT 8
 
 typedef struct {
     s16 index;

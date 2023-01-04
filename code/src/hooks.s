@@ -1688,6 +1688,14 @@ hook_InitSceneMirrorWorld:
     cpy r4,r0
     bx lr
 
+.global hook_InitSceneEntranceOverride
+hook_InitSceneEntranceOverride:
+    push {r0-r12,lr}
+    bl Entrance_OverrideSpawnScene
+    pop {r0-r12,lr}
+    mov r0, #0x14
+    bx lr
+
 .global hook_CollisionATvsAC
 hook_CollisionATvsAC:
     ldr r12,[sp,#0x18]

@@ -1718,66 +1718,66 @@ void HintTable_Init() {
 
     hintTable[QUEEN_GOHMA] = HintText::Boss({
                      // obscure text
-                     Text{"an #ancient tree# rewards", /*french*/"le #vieil arbre# octroie", /*spanish*/"un #ancestral árbol# premia con", /*italian*/"un #antico albero# premia con", /*german*/"am Ende eines #uralten Baumes#, |wäre|wären|"},
+                     Text{"the #Parasitic Armored Arachnid# holds", /*french*/"le #monstre insectoïde géant# possède", /*spanish*/"el #arácnido parasitario acorazado# porta", /*italian*/"il #parassita corazzato# possiede", /*german*/"nahe dem #gepanzerten Spinnenparasiten#, |wäre|wären|"},
                    }, {},
                      // clear text
-                     Text{"the #Deku Tree# rewards", /*french*/"l'#arbre Mojo# octroie", /*spanish*/"el #Gran Árbol Deku# premia con", /*italian*/"il #Grande Albero Deku# premia con", /*german*/"am Ende des #Deku-Baumes#, |wäre|wären|"}
+                     Text{"#Queen Gohma# holds", /*french*/"la #Reine Gohma# possède", /*spanish*/"la #Reina Goma# porta", /*italian*/"#Gohma# possiede", /*german*/"nahe der #Spinnenkönigin Gohma#, |wäre|wären|"}
     );
 
     hintTable[KING_DODONGO] = HintText::Boss({
                      // obscure text
-                     Text{"an #immense cavern# rewards", /*french*/"l'#immense caverne# octroie", /*spanish*/"una #descomunal cueva# premia con", /*italian*/"un'#immensa caverna# premia con", /*german*/"am Ende einer #riesigen Höhle#, |wäre|wären|"},
+                     Text{"the #Infernal Dinosaur# holds", /*french*/"le #dinosaure infernal# possède", /*spanish*/"el #dinosaurio infernal# porta", /*italian*/"il #dinosauro degli inferi# possiede", /*german*/"nahe dem #Infernosaurus#, |wäre|wären|"},
                    }, {},
                      // clear text
-                     Text{"#Dodongo's Cavern# rewards", /*french*/"la #caverne Dodongo# octroie", /*spanish*/"la #Cueva de los Dodongos# premia con", /*italian*/"la #caverna dei Dodongo# premia con", /*german*/"am Ende von #Dodongos Höhle#, |wäre|wären|"}
+                     Text{"#King Dodongo# holds", /*french*/"le #Roi Dodongo# possède", /*spanish*/"el #Rey Dodongo# porta", /*italian*/"il #Mega Dodongo# possiede", /*german*/"nahe #King Dodongo#, |wäre|wären|"}
     );
 
     hintTable[BARINADE] = HintText::Boss({
                      // obscure text
-                     Text{"the #belly of a deity# rewards", /*french*/"le #ventre du gardien# octroie", /*spanish*/"la #tripa de cierta deidad# premia con", /*italian*/"la #pancia di una divinità# premia con", /*german*/"am Ende vom #Bauch einer Gottheit#, |wäre|wären|"},
+                     Text{"the #Bio-Electric Anemone# holds", /*french*/"l'#anémone bioélectrique# possède", /*spanish*/"la #anémona bioeléctrica# porta", /*italian*/"l'#anemone bio-elettrico# possiede", /*german*/"nahe dem #elektroterrestrischen Biotentakel#, |wäre|wären|"},
                    }, {},
                      // clear text
-                     Text{"#Jabu-Jabu's Belly# rewards", /*french*/"le #ventre de Jabu-Jabu# octroie", /*spanish*/"la #tripa de Jabu-Jabu# premia con", /*italian*/"la #pancia di Jabu Jabu# premia con", /*german*/"am Ende von #Jabu-Jabus Bauch#, |wäre|wären|"}
+                     Text{"#Barinade# holds", /*french*/"#Barinade# possède", /*spanish*/"#Barinade# porta", /*italian*/"#Cnidade# possiede", /*german*/"nahe #Barinade#, |wäre|wären|"}
     );
 
     hintTable[PHANTOM_GANON] = HintText::Boss({
                      // obscure text
-                     Text{"a #deep forest# rewards", /*french*/"la #profonde forêt# octroie", /*spanish*/"el #profundo bosque# premia con", /*italian*/"una #fitta foresta# premia con", /*german*/"am Ende eines #dunklen Waldes#, |wäre|wären|"},
+                     Text{"the #Evil Spirit from Beyond# holds", /*french*/"l'#esprit maléfique de l'au-delà# possède", /*spanish*/"el #espíritu maligno de ultratumba# porta", /*italian*/"lo #spirito del male# possiede", /*german*/"nahe dem #reitenden Unheil#, |wäre|wären|"},
                    }, {},
                      // clear text
-                     Text{"the #Forest Temple# rewards", /*french*/"le #temple de la forêt# octroie", /*spanish*/"el #Templo del Bosque# premia con", /*italian*/"il #Santuario della Foresta# premia con", /*german*/"am Ende des #Waldtempels#, |wäre|wären|"}
+                     Text{"#Phantom Ganon# holds", /*french*/"#Ganon Spectral# possède", /*spanish*/"#Ganon Fantasma# porta", /*italian*/"#Spettro Ganon# possiede", /*german*/"nahe #Phantom-Ganon#, |wäre|wären|"}
     );
 
     hintTable[VOLVAGIA] = HintText::Boss({
                      // obscure text
-                     Text{"a #high mountain# rewards", /*french*/"la #grande montagne# octroie", /*spanish*/"una #alta montaña# premia con", /*italian*/"la #vetta di una montagna# premia con", /*german*/"am Ende eines #hohen Berges#, |wäre|wären|"},
+                     Text{"the #Subterranean Lava Dragon# holds", /*french*/"le #dragon des profondeurs# possède", /*spanish*/"el #dragón de lava subterráneo# porta", /*italian*/"il #drago di magma# possiede", /*german*/"nahe dem #subterranen Lavadrachoiden#, |wäre|wären|"},
                    }, {},
                      // clear text
-                     Text{"the #Fire Temple# rewards", /*french*/"le #temple du feu# octroie", /*spanish*/"el #Templo del Fuego# premia con", /*italian*/"il #Santuario del Fuoco# premia con", /*german*/"am Ende des #Feuertempels#, |wäre|wären|"}
+                     Text{"#Volvagia# holds", /*french*/"#Volvagia# possède", /*spanish*/"#Volvagia# porta", /*italian*/"#Varubaja# possiede", /*german*/"nahe #Volvagia#, |wäre|wären|"}
     );
 
     hintTable[MORPHA] = HintText::Boss({
                      // obscure text
-                     Text{"a #vast lake# rewards", /*french*/"le #vaste lac# octroie", /*spanish*/"un #lago inmenso# premia con", /*italian*/"l'#acqua di un lago# premia con", /*german*/"am Ende eines #tiefen Sees#, |wäre|wären|"},
+                     Text{"the #Giant Aquatic Amoeba# holds", /*french*/"l'#amibe aquatique géante# possède", /*spanish*/"la #ameba acuática gigante# porta", /*italian*/"l'#ameba gigante# possiede", /*german*/"nahe dem #aquamöben Wassertentakel#, |wäre|wären|"},
                    }, {},
                      // clear text
-                     Text{"the #Water Temple# rewards", /*french*/"le #temple de l'eau# octroie", /*spanish*/"el #Templo del Agua# premia con", /*italian*/"il #Santuario dell'Acqua# premia con", /*german*/"am Ende des #Wassertempels#, |wäre|wären|"}
+                     Text{"#Morpha# holds", /*french*/"#Morpha# possède", /*spanish*/"#Morpha# porta", /*italian*/"#Morpha# possiede", /*german*/"nahe #Morpha#, |wäre|wären|"}
     );
 
     hintTable[BONGO_BONGO] = HintText::Boss({
                      // obscure text
-                     Text{"the #house of the dead# rewards", /*french*/"la #maison des morts# octroie", /*spanish*/"la #casa de la muerte# premia con", /*italian*/"la #dea del deserto# premia con", /*german*/"am Ende der #Stätte des Todes#, |wäre|wären|"},
+                     Text{"the #Phantom Shadow Beast# holds", /*french*/"le #monstre de l'ombre# possède", /*spanish*/"la #alimaña oscura espectral# porta", /*italian*/"la #bestia delle tenebre# possiede", /*german*/"nahe der #bestialischen Schattenmonstrosität#, |wäre|wären|"},
                    }, {},
                      // clear text
-                     Text{"the #Shadow Temple# rewards", /*french*/"le #temple de l'ombre# octroie", /*spanish*/"el #Templo de las Sombras#", /*italian*/"il #Santuario dello Spirito# premia con", /*german*/"am Ende des #Schattentempels#, |wäre|wären|"}
+                     Text{"#Bongo Bongo# holds", /*french*/"#Bongo Bongo# possède", /*spanish*/"#Bongo Bongo# porta", /*italian*/"#Bongo Bongo# possiede", /*german*/"nahe #Bongo Bongo#, |wäre|wären|"}
     );
 
     hintTable[TWINROVA] = HintText::Boss({
                      // obscure text
-                     Text{"a #goddess of the sand# rewards", /*french*/"la #déesse des sables# octroie", /*spanish*/"la #diosa de la arena# premia con", /*italian*/"la #casa dei morti# premia con", /*german*/"am Ende der #Göttin des Sandes#, |wäre|wären|"},
+                     Text{"the #Sorceress Sisters# hold", /*french*/"#les sorcières jumelles# possède", /*spanish*/"las #hermanas hechiceras# portan", /*italian*/"le #sorelle megere# possiedono", /*german*/"nahe der #höllischen Hexenarmada#, |wäre|wären|"},
                    }, {},
                      // clear text
-                     Text{"the #Spirit Temple# rewards", /*french*/"le #temple de l'esprit# octroie", /*spanish*/"el #Templo del Espíritu# premia con", /*italian*/"il #Santuario dell'Ombra# premia con", /*german*/"am Ende des #Geistertempels#, |wäre|wären|"}
+                     Text{"#Twinrova# holds", /*french*/"#Twinrova# possède", /*spanish*/"#Birova# porta", /*italian*/"#Duerova# possiede", /*german*/"nahe #Twinrova#, |wäre|wären|"}
     );
     //
     // [LINKS_POCKET_BOSS] = HintText::Boss({

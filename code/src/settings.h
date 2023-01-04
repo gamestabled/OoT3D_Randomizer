@@ -87,6 +87,12 @@ typedef enum {
 } ShuffleDungeonEntrancesSetting;
 
 typedef enum {
+    SHUFFLEBOSSES_OFF,
+    SHUFFLEBOSSES_AGE_RESTRICTED,
+    SHUFFLEBOSSES_FULL,
+} ShuffleBossEntrancesSetting;
+
+typedef enum {
     SHUFFLEINTERIORS_OFF,
     SHUFFLEINTERIORS_SIMPLE,
     SHUFFLEINTERIORS_ALL,
@@ -432,6 +438,7 @@ typedef struct {
     u8 startingAge;
     u8 resolvedStartingAge;
     u8 shuffleDungeonEntrances;
+    u8 shuffleBossEntrances;
     u8 shuffleOverworldEntrances;
     u8 shuffleInteriorEntrances;
     u8 shuffleGrottoEntrances;

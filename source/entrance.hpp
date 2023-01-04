@@ -22,6 +22,9 @@ enum class EntranceType {
     Dungeon,
     GanonDungeon,
     DungeonReverse,
+    Boss,
+    ChildBoss,
+    AdultBoss,
     Interior,
     InteriorReverse,
     SpecialInterior,
@@ -183,6 +186,14 @@ class Entrance {
         return primary;
     }
 
+    bool IsDecoupled() const {
+        return decoupled;
+    }
+
+    void SetDecoupled() {
+        decoupled = true;
+    }
+
     s16 GetIndex() const {
         return index;
     }
@@ -272,6 +283,7 @@ class Entrance {
     bool shuffled         = false;
     bool primary          = false;
     bool addedToPool      = false;
+    bool decoupled        = false;
     std::string name      = "";
 };
 
