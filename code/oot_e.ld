@@ -1016,6 +1016,14 @@ SECTIONS
 		*(.patch_MidoCheckDekuTreeClearFour)
 	}
 
+	.patch_ShadowShip_Accel 0x3DFBD8 : {
+		*(.patch_ShadowShip_Accel)
+	}
+
+	.patch_ShadowShip_TopSpeed 0x3DFBDC : {
+		*(.patch_ShadowShip_TopSpeed)
+	}
+
 	.patch_BombPurchaseableCheck 0x3CE800 : {
 		*(.patch_BombPurchaseableCheck)
 	}
@@ -1046,6 +1054,10 @@ SECTIONS
 
 	.patch_SkipMasterSwordFanfare 0x3E5F60 : {
 		*(.patch_SkipMasterSwordFanfare)
+	}
+
+	.patch_ShadowShip_CSTimer 0x3E6C50 : {
+		*(.patch_ShadowShip_CSTimer)
 	}
 
 	.patch_FairyReward 0x3E7598 : {
