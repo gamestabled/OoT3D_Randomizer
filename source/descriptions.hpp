@@ -281,6 +281,8 @@ extern string_view startWithMaxRupeesDesc;
 
 extern string_view startingHealthDesc;
 
+extern string_view startingBunnyHoodDesc;
+
 extern string_view itemPoolPlentiful;
 extern string_view itemPoolBalanced;
 extern string_view itemPoolScarce;
