@@ -377,7 +377,7 @@ void UpdateResetToDefaultsMenu(u32 kDown) {
     ClearDescription();
     if (kDown & KEY_A) {
         Settings::SetDefaultSettings();
-        printf("\x1b[24;5HSettings have been reset to defaults.");
+        printf("\x1b[24;7HSettings have been reset to defaults.");
     }
 }
 
@@ -611,8 +611,8 @@ void PrintCustomPresetsMenu() {
 
 void PrintResetToDefaultsMenu() {
     consoleSelect(&bottomScreen);
-    printf("\x1b[10;4HPress A to reset to default settings.");
-    printf("\x1b[12;4HPress B to return to the preset menu.");
+    printf("\x1b[10;2HPress A to reset to default settings.");
+    printf("\x1b[12;2HPress B to return to the preset menu.");
 }
 
 void PrintGenerateMenu() {
