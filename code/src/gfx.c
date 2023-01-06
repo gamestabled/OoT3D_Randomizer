@@ -76,7 +76,7 @@ static s8 spoilerGroupDungeonIds[] = {
     DUNGEON_SPIRIT_TEMPLE,
     -1,
     -1,
-    DUNGEON_GANONS_TOWER,
+    DUNGEON_INSIDE_GANONS_CASTLE,
 };
 
 static char* spoilerCollectionGroupNames[] = {
@@ -468,7 +468,12 @@ static void Gfx_DrawDungeonItems(void) {
             Draw_DrawFormattedString(208, yPos, keysHave > 0 ? COLOR_WHITE : COLOR_DARK_GRAY, "%d", keysHave);
             Draw_DrawString(214, yPos, COLOR_WHITE, "/");
 
-            u8 keysFound       = Dungeon_FoundSmallKeys(dungeonId);
+            u8 keysFound = Dungeon_FoundSmallKeys(dungeonId);
+            if (gSettingsContext.keysanity == KEYSANITY_START_WITH &&
+                (dungeonId <= DUNGEON_BOTTOM_OF_THE_WELL || dungeonId == DUNGEON_GERUDO_TRAINING_GROUNDS ||
+                 dungeonId == DUNGEON_INSIDE_GANONS_CASTLE)) {
+                keysFound += Dungeon_KeyAmount(dungeonId);
+            }
             u32 keysFoundColor = COLOR_WHITE;
             if (keysFound >= Dungeon_KeyAmount(dungeonId) &&
                 (dungeonId == DUNGEON_THIEVES_HIDEOUT || dungeonId == DUNGEON_TREASURE_CHEST_SHOP ||
@@ -546,9 +551,9 @@ static void Gfx_DrawSpoilerData(void) {
             u32 color     = COLOR_WHITE;
             if (SpoilerData_GetIsItemLocationCollected(itemIndex)) {
                 color = COLOR_GREEN;
-            } else if (gSpoilerData.ItemLocations[itemIndex].CollectType == COLLECTTYPE_REPEATABLE) {
+            } else if (SpoilerData_ItemLoc(itemIndex)->CollectType == COLLECTTYPE_REPEATABLE) {
                 color = COLOR_BLUE;
-            } else if (gSpoilerData.ItemLocations[itemIndex].CollectType == COLLECTTYPE_NEVER) {
+            } else if (SpoilerData_ItemLoc(itemIndex)->CollectType == COLLECTTYPE_NEVER) {
                 color = COLOR_ORANGE;
             }
             Draw_DrawString_Small(10, locPosY, color, SpoilerData_GetItemLocationString(itemIndex));
@@ -603,8 +608,8 @@ static void Gfx_DrawItemTracker(void) {
         u32 locIndex = i + startIndex;
         if (SpoilerData_GetIsItemLocationCollected(locIndex)) {
             completeItems++;
-        } else if (gSpoilerData.ItemLocations[locIndex].CollectType == COLLECTTYPE_NEVER ||
-                   (gSpoilerData.ItemLocations[locIndex].CollectType == COLLECTTYPE_REPEATABLE &&
+        } else if (SpoilerData_ItemLoc(locIndex)->CollectType == COLLECTTYPE_NEVER ||
+                   (SpoilerData_ItemLoc(locIndex)->CollectType == COLLECTTYPE_REPEATABLE &&
                     SpoilerData_GetIsItemLocationRevealed(locIndex))) {
             uncollectableItems++;
         }
@@ -650,10 +655,10 @@ static void Gfx_DrawItemTracker(void) {
         if (isCollected) {
             color = COLOR_GREEN;
         } else if (canShowGroup) {
-            if (gSpoilerData.ItemLocations[locIndex].CollectType == COLLECTTYPE_REPEATABLE &&
+            if (SpoilerData_ItemLoc(locIndex)->CollectType == COLLECTTYPE_REPEATABLE &&
                 SpoilerData_GetIsItemLocationRevealed(locIndex)) {
                 color = COLOR_BLUE;
-            } else if (gSpoilerData.ItemLocations[locIndex].CollectType == COLLECTTYPE_NEVER) {
+            } else if (SpoilerData_ItemLoc(locIndex)->CollectType == COLLECTTYPE_NEVER) {
                 color = COLOR_ORANGE;
             }
         }

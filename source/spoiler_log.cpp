@@ -36,6 +36,7 @@ constexpr std::array<std::string_view, 32> hashIcons = {
 
 static RandomizerHash randomizerHash;
 static SpoilerData spoilerData;
+static std::array<SpoilerDataLocs, SPOILER_LOCDATS> spoilerDataLocs;
 
 void GenerateHash() {
     for (size_t i = 0; i < randomizerHash.size(); i++) {
@@ -45,7 +46,8 @@ void GenerateHash() {
     }
 
     // Clear out spoiler log data here, in case we aren't going to re-generate it
-    spoilerData = { 0 };
+    spoilerData     = { 0 };
+    spoilerDataLocs = { 0 };
 }
 
 const RandomizerHash& GetRandomizerHash() {
@@ -62,8 +64,12 @@ const std::string GetRandomizerHashAsString() {
     return hash;
 }
 
-const SpoilerData& GetSpoilerData() {
-    return spoilerData;
+const SpoilerData* GetSpoilerData() {
+    return &spoilerData;
+}
+
+const SpoilerDataLocs* GetSpoilerDataLocs(size_t index) {
+    return &spoilerDataLocs[index];
 }
 
 static auto GetGeneralPath() {
@@ -79,6 +85,7 @@ static auto GetPlacementLogPath() {
 }
 
 void WriteIngameSpoilerLog() {
+    u16 spoilerTotalItems       = 0;
     u16 spoilerItemIndex        = 0;
     u32 spoilerStringOffset     = 0;
     u16 spoilerSphereItemoffset = 0;
@@ -105,6 +112,12 @@ void WriteIngameSpoilerLog() {
     });
 
     for (const LocationKey key : allLocations) {
+        if (spoilerTotalItems >= SPOILER_ITEMS_MAX * SPOILER_LOCDATS) {
+            spoilerOutOfSpace = true;
+            break;
+        }
+        SpoilerDataLocs* splrDatLoc = &spoilerDataLocs[spoilerTotalItems / SPOILER_ITEMS_MAX];
+
         auto loc = Location(key);
 
         // Hide excluded locations from ingame tracker
@@ -145,7 +158,9 @@ void WriteIngameSpoilerLog() {
         }
 
         // Copy at most 51 chars from the name and location name to avoid issues with names that don't fit on screen
-        const char* nameFormatStr = "%.51s";
+        // Only copy enough characters that can fit on the screen
+        const char* locNameFormat  = "%.51s";
+        const char* itemNameFormat = "%.49s";
 
         auto locName = loc->GetName();
         if (stringOffsetMap.find(locName) == stringOffsetMap.end()) {
@@ -155,7 +170,7 @@ void WriteIngameSpoilerLog() {
             } else {
                 stringOffsetMap[locName] = spoilerStringOffset;
                 spoilerStringOffset +=
-                    sprintf(&spoilerData.StringData[spoilerStringOffset], nameFormatStr, locName.c_str()) + 1;
+                    sprintf(&splrDatLoc->StringData[spoilerStringOffset], locNameFormat, locName.c_str()) + 1;
             }
         }
 
@@ -173,44 +188,44 @@ void WriteIngameSpoilerLog() {
             } else {
                 stringOffsetMap[locItem] = spoilerStringOffset;
                 spoilerStringOffset +=
-                    sprintf(&spoilerData.StringData[spoilerStringOffset], nameFormatStr, locItem.c_str()) + 1;
+                    sprintf(&splrDatLoc->StringData[spoilerStringOffset], itemNameFormat, locItem.c_str()) + 1;
             }
         }
 
-        spoilerData.ItemLocations[spoilerItemIndex].LocationStrOffset   = stringOffsetMap[locName];
-        spoilerData.ItemLocations[spoilerItemIndex].ItemStrOffset       = stringOffsetMap[locItem];
-        spoilerData.ItemLocations[spoilerItemIndex].CollectionCheckType = loc->GetCollectionCheck().type;
-        spoilerData.ItemLocations[spoilerItemIndex].LocationScene       = loc->GetCollectionCheck().scene;
-        spoilerData.ItemLocations[spoilerItemIndex].LocationFlag        = loc->GetCollectionCheck().flag;
+        splrDatLoc->ItemLocations[spoilerItemIndex].LocationStrOffset   = stringOffsetMap[locName];
+        splrDatLoc->ItemLocations[spoilerItemIndex].ItemStrOffset       = stringOffsetMap[locItem];
+        splrDatLoc->ItemLocations[spoilerItemIndex].CollectionCheckType = loc->GetCollectionCheck().type;
+        splrDatLoc->ItemLocations[spoilerItemIndex].LocationScene       = loc->GetCollectionCheck().scene;
+        splrDatLoc->ItemLocations[spoilerItemIndex].LocationFlag        = loc->GetCollectionCheck().flag;
 
         // Collect Type and Reveal Type
         if (key == GANON) {
-            spoilerData.ItemLocations[spoilerItemIndex].CollectType = COLLECTTYPE_NEVER;
-            spoilerData.ItemLocations[spoilerItemIndex].RevealType  = REVEALTYPE_ALWAYS;
+            splrDatLoc->ItemLocations[spoilerItemIndex].CollectType = COLLECTTYPE_NEVER;
+            splrDatLoc->ItemLocations[spoilerItemIndex].RevealType  = REVEALTYPE_ALWAYS;
         } else if (key == TOT_LIGHT_ARROWS_CUTSCENE && (Settings::GanonsBossKey.Is(GANONSBOSSKEY_LACS_VANILLA) ||
                                                         Settings::GanonsBossKey.Is(GANONSBOSSKEY_LACS_MEDALLIONS) ||
                                                         Settings::GanonsBossKey.Is(GANONSBOSSKEY_LACS_STONES) ||
                                                         Settings::GanonsBossKey.Is(GANONSBOSSKEY_LACS_REWARDS) ||
                                                         Settings::GanonsBossKey.Is(GANONSBOSSKEY_LACS_DUNGEONS) ||
                                                         Settings::GanonsBossKey.Is(GANONSBOSSKEY_LACS_TOKENS))) {
-            spoilerData.ItemLocations[spoilerItemIndex].RevealType = REVEALTYPE_ALWAYS;
+            splrDatLoc->ItemLocations[spoilerItemIndex].RevealType = REVEALTYPE_ALWAYS;
         } else if (key == MARKET_BOMBCHU_BOWLING_BOMBCHUS) {
-            spoilerData.ItemLocations[spoilerItemIndex].CollectType = COLLECTTYPE_REPEATABLE;
-            spoilerData.ItemLocations[spoilerItemIndex].RevealType  = REVEALTYPE_ALWAYS;
+            splrDatLoc->ItemLocations[spoilerItemIndex].CollectType = COLLECTTYPE_REPEATABLE;
+            splrDatLoc->ItemLocations[spoilerItemIndex].RevealType  = REVEALTYPE_ALWAYS;
         } else if (key == ZR_MAGIC_BEAN_SALESMAN && !Settings::ShuffleMagicBeans) {
-            spoilerData.ItemLocations[spoilerItemIndex].RevealType = REVEALTYPE_ALWAYS;
+            splrDatLoc->ItemLocations[spoilerItemIndex].RevealType = REVEALTYPE_ALWAYS;
         }
         // Shops
         else if (loc->IsShop()) {
             if (Settings::Shopsanity.Is(SHOPSANITY_OFF)) {
-                spoilerData.ItemLocations[spoilerItemIndex].RevealType = REVEALTYPE_ALWAYS;
+                splrDatLoc->ItemLocations[spoilerItemIndex].RevealType = REVEALTYPE_ALWAYS;
             } else {
-                spoilerData.ItemLocations[spoilerItemIndex].RevealType = REVEALTYPE_SCENE;
+                splrDatLoc->ItemLocations[spoilerItemIndex].RevealType = REVEALTYPE_SCENE;
             }
             if (loc->GetPlacedItem().GetItemType() == ITEMTYPE_REFILL ||
                 loc->GetPlacedItem().GetItemType() == ITEMTYPE_SHOP ||
                 loc->GetPlacedItem().GetHintKey() == PROGRESSIVE_BOMBCHUS) {
-                spoilerData.ItemLocations[spoilerItemIndex].CollectType = COLLECTTYPE_REPEATABLE;
+                splrDatLoc->ItemLocations[spoilerItemIndex].CollectType = COLLECTTYPE_REPEATABLE;
             }
         }
         // Gold Skulltulas
@@ -218,17 +233,17 @@ void WriteIngameSpoilerLog() {
                  ((Settings::Tokensanity.Is(TOKENSANITY_OFF)) ||
                   (Settings::Tokensanity.Is(TOKENSANITY_DUNGEONS) && !loc->IsDungeon()) ||
                   (Settings::Tokensanity.Is(TOKENSANITY_OVERWORLD) && loc->IsDungeon()))) {
-            spoilerData.ItemLocations[spoilerItemIndex].RevealType = REVEALTYPE_ALWAYS;
+            splrDatLoc->ItemLocations[spoilerItemIndex].RevealType = REVEALTYPE_ALWAYS;
         }
         // Deku Scrubs
         else if (loc->IsCategory(Category::cDekuScrub) && !loc->IsCategory(Category::cDekuScrubUpgrades) &&
                  Settings::Scrubsanity.Is(SCRUBSANITY_OFF)) {
-            spoilerData.ItemLocations[spoilerItemIndex].CollectType = COLLECTTYPE_REPEATABLE;
-            spoilerData.ItemLocations[spoilerItemIndex].RevealType  = REVEALTYPE_ALWAYS;
+            splrDatLoc->ItemLocations[spoilerItemIndex].CollectType = COLLECTTYPE_REPEATABLE;
+            splrDatLoc->ItemLocations[spoilerItemIndex].RevealType  = REVEALTYPE_ALWAYS;
         }
 
         auto checkGroup                                   = loc->GetCollectionCheckGroup();
-        spoilerData.ItemLocations[spoilerItemIndex].Group = checkGroup;
+        splrDatLoc->ItemLocations[spoilerItemIndex].Group = checkGroup;
 
         // Group setup
         if (checkGroup != currentGroup) {
@@ -238,9 +253,16 @@ void WriteIngameSpoilerLog() {
         ++spoilerData.GroupItemCounts[currentGroup];
         ++spoilerGroupOffset;
 
-        itemLocationsMap[key] = spoilerItemIndex++;
+        itemLocationsMap[key] = spoilerTotalItems++;
+
+        spoilerItemIndex++;
+        if (spoilerItemIndex >= SPOILER_ITEMS_MAX) {
+            stringOffsetMap.clear();
+            spoilerItemIndex    = 0;
+            spoilerStringOffset = 0;
+        }
     }
-    spoilerData.ItemLocationsCount = spoilerItemIndex;
+    spoilerData.ItemLocationsCount = spoilerTotalItems;
 
     if (Settings::IngameSpoilers) {
         bool playthroughItemNotFound = false;
