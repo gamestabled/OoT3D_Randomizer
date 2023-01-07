@@ -12,6 +12,7 @@
 #define gGearMenuSpritesManager (*(MenuSpriteManager**)0x50447C)
 
 #define gItemsMenuSelectedSlot (*(s32*)0x506748)
+#define gGearMenuSelectedSlot (*(s32*)0x50448C)
 
 typedef void (*MenuSpritesManager_RegisterItemSprite_proc)(MenuSpriteManager* menuMan, s32 spriteId, s32 itemId);
 #define MenuSpritesManager_RegisterItemSprite ((MenuSpritesManager_RegisterItemSprite_proc)0x2F8D74)
@@ -102,6 +103,18 @@ void ItemsMenu_Draw(void) {
                                                   gSaveContext.items[selectedItemSlot]);
         }
     }
+}
+
+u16 GearMenu_GetMedallionHint(void) {
+    if (gGearMenuSelectedSlot >= GEARSLOT_KOKIRI_EMERALD && gGearMenuSelectedSlot <= GEARSLOT_ZORA_SAPPHIRE &&
+        gExtSaveData.extInf[EXTINF_TOTALTAR_FLAGS] & (1 << AGE_CHILD)) {
+        return 0x7300 + gGearMenuSelectedSlot - GEARSLOT_KOKIRI_EMERALD;
+    }
+    if (gGearMenuSelectedSlot >= GEARSLOT_FOREST_MEDALLION && gGearMenuSelectedSlot <= GEARSLOT_LIGHT_MEDALLION &&
+        gExtSaveData.extInf[EXTINF_TOTALTAR_FLAGS] & (1 << AGE_ADULT)) {
+        return 0x7303 + gGearMenuSelectedSlot - GEARSLOT_FOREST_MEDALLION;
+    }
+    return 0;
 }
 
 u16 SaveMenu_IgnoreOpen(void) {

@@ -169,6 +169,8 @@ void Actor_Init() {
 
     gActorOverlayTable[0x145].initInfo->init = BgSpot01Idosoko_rInit;
 
+    gActorOverlayTable[0x147].initInfo->update = EnWonderTalk_rUpdate;
+
     gActorOverlayTable[0x14D].initInfo->init   = EnOwl_DespawnInit; // Despawns unnecessary owls
     gActorOverlayTable[0x14D].initInfo->update = EnOwl_rUpdate;
 

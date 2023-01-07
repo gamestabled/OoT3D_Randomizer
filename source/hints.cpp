@@ -642,46 +642,73 @@ static Text BuildGanonBossKeyText() {
 
 static void CreateAltarText() {
 
+    Text emeraldText   = BuildDungeonRewardText(ITEM_KOKIRI_EMERALD, KOKIRI_EMERALD);
+    Text rubyText      = BuildDungeonRewardText(ITEM_GORON_RUBY, GORON_RUBY);
+    Text sapphireText  = BuildDungeonRewardText(ITEM_ZORA_SAPPHIRE, ZORA_SAPPHIRE);
+    Text lightMedText  = BuildDungeonRewardText(ITEM_MEDALLION_LIGHT, LIGHT_MEDALLION);
+    Text forestMedText = BuildDungeonRewardText(ITEM_MEDALLION_FOREST, FOREST_MEDALLION);
+    Text fireMedText   = BuildDungeonRewardText(ITEM_MEDALLION_FIRE, FIRE_MEDALLION);
+    Text waterMedText  = BuildDungeonRewardText(ITEM_MEDALLION_WATER, WATER_MEDALLION);
+    Text spiritMedText = BuildDungeonRewardText(ITEM_MEDALLION_SPIRIT, SPIRIT_MEDALLION);
+    Text shadowMedText = BuildDungeonRewardText(ITEM_MEDALLION_SHADOW, SHADOW_MEDALLION);
+
     // Child Altar Text
-    Text childText =
-        Hint(SPIRITUAL_STONE_TEXT_START).GetText() + "^" +
-        // Spiritual Stones
-        (StartingKokiriEmerald.Value<u8>() ? Text{ "##" }
-                                           : BuildDungeonRewardText(ITEM_KOKIRI_EMERALD, KOKIRI_EMERALD)) +
-        (StartingGoronRuby.Value<u8>() ? Text{ "##" } : BuildDungeonRewardText(ITEM_GORON_RUBY, GORON_RUBY)) +
-        (StartingZoraSapphire.Value<u8>() ? Text{ "##" } : BuildDungeonRewardText(ITEM_ZORA_SAPPHIRE, ZORA_SAPPHIRE)) +
-        // How to open Door of Time, the event trigger is necessary to read the altar multiple times
-        BuildDoorOfTimeText() + EVENT_TRIGGER();
-    CreateMessageFromTextObject(0x7040, 0, 2, 3, AddColorsAndFormat(childText, { QM_GREEN, QM_RED, QM_BLUE }));
+    const std::vector<u8>& stoneColors = { QM_GREEN, QM_RED, QM_BLUE };
+
+    Text childText = Hint(SPIRITUAL_STONE_TEXT_START).GetText() + "^" +
+                     // Spiritual Stones
+                     (StartingKokiriEmerald.Value<u8>() ? Text{ "##" } : emeraldText) +
+                     (StartingGoronRuby.Value<u8>() ? Text{ "##" } : rubyText) +
+                     (StartingZoraSapphire.Value<u8>() ? Text{ "##" } : sapphireText) +
+                     // How to open Door of Time, the event trigger is necessary to read the altar multiple times
+                     BuildDoorOfTimeText() + EVENT_TRIGGER();
+
+    CreateMessageFromTextObject(0x7040, 0, 2, 3, AddColorsAndFormat(childText, stoneColors));
+
+    // Inventory Stone Hints
+    const std::vector<Text>& stoneHints = { emeraldText, rubyText, sapphireText };
+    for (u32 i = 0; i < stoneHints.size(); i++) {
+        Text invText = AddColorsAndFormat(stoneHints[i], { stoneColors[i] });
+        invText.Replace(MESSAGE_END(), SHOP_MESSAGE_BOX());
+        invText.Replace(WAIT_FOR_INPUT(), "");
+        invText = invText + MESSAGE_END();
+        CreateMessageFromTextObject(0x7300 + i, 0, 2, 3, invText);
+    }
 
     // Adult Altar Text
-    Text adultText =
-        Hint(ADULT_ALTAR_TEXT_START).GetText() + "^" +
-        // Medallion Areas
-        (StartingLightMedallion.Value<u8>() ? Text{ "##" }
-                                            : BuildDungeonRewardText(ITEM_MEDALLION_LIGHT, LIGHT_MEDALLION)) +
-        (StartingForestMedallion.Value<u8>() ? Text{ "##" }
-                                             : BuildDungeonRewardText(ITEM_MEDALLION_FOREST, FOREST_MEDALLION)) +
-        (StartingFireMedallion.Value<u8>() ? Text{ "##" }
-                                           : BuildDungeonRewardText(ITEM_MEDALLION_FIRE, FIRE_MEDALLION)) +
-        (StartingWaterMedallion.Value<u8>() ? Text{ "##" }
-                                            : BuildDungeonRewardText(ITEM_MEDALLION_WATER, WATER_MEDALLION)) +
-        (StartingSpiritMedallion.Value<u8>() ? Text{ "##" }
-                                             : BuildDungeonRewardText(ITEM_MEDALLION_SPIRIT, SPIRIT_MEDALLION)) +
-        (StartingShadowMedallion.Value<u8>() ? Text{ "##" }
-                                             : BuildDungeonRewardText(ITEM_MEDALLION_SHADOW, SHADOW_MEDALLION)) +
+    Text adultText = Hint(ADULT_ALTAR_TEXT_START).GetText() + "^" +
+                     // Medallion Areas
+                     (StartingLightMedallion.Value<u8>() ? Text{ "##" } : lightMedText) +
+                     (StartingForestMedallion.Value<u8>() ? Text{ "##" } : forestMedText) +
+                     (StartingFireMedallion.Value<u8>() ? Text{ "##" } : fireMedText) +
+                     (StartingWaterMedallion.Value<u8>() ? Text{ "##" } : waterMedText) +
+                     (StartingSpiritMedallion.Value<u8>() ? Text{ "##" } : spiritMedText) +
+                     (StartingShadowMedallion.Value<u8>() ? Text{ "##" } : shadowMedText) +
 
-        // Bridge requirement
-        BuildBridgeReqsText() +
+                     // Bridge requirement
+                     BuildBridgeReqsText() +
 
-        // Ganons Boss Key requirement
-        BuildGanonBossKeyText() +
+                     // Ganons Boss Key requirement
+                     BuildGanonBossKeyText() +
 
-        // End
-        Hint(ADULT_ALTAR_TEXT_END).GetText() + EVENT_TRIGGER();
+                     // End
+                     Hint(ADULT_ALTAR_TEXT_END).GetText() + EVENT_TRIGGER();
+
     CreateMessageFromTextObject(0x7088, 0, 2, 3,
                                 AddColorsAndFormat(adultText, { QM_RED, QM_YELLOW, QM_GREEN, QM_RED, QM_BLUE, QM_YELLOW,
                                                                 QM_PINK, QM_RED, QM_RED, QM_RED, QM_RED }));
+
+    // Inventory Medallion Hints
+    const std::vector<Text>& medallionHints = { forestMedText, fireMedText,   waterMedText,
+                                                spiritMedText, shadowMedText, lightMedText };
+    const std::vector<u8>& medallionColors  = { QM_GREEN, QM_RED, QM_BLUE, QM_YELLOW, QM_PINK, QM_YELLOW };
+    for (u32 i = 0; i < medallionHints.size(); i++) {
+        Text invText = AddColorsAndFormat(medallionHints[i], { medallionColors[i] });
+        invText.Replace(MESSAGE_END(), SHOP_MESSAGE_BOX());
+        invText.Replace(WAIT_FOR_INPUT(), "");
+        invText = invText + MESSAGE_END();
+        CreateMessageFromTextObject(0x7303 + i, 0, 2, 3, invText);
+    }
 }
 
 void CreateMerchantsHints() {

@@ -1363,6 +1363,11 @@ ItemsMenuNumSprites_patch:
 ItemsMenuDraw_patch:
     bl hook_ItemsMenuDraw
 
+.section .patch_GearMenuEmptySlot
+.global GearMenuEmptySlot_patch
+GearMenuEmptySlot_patch:
+    b hook_GearMenuEmptySlot
+
 .section .patch_PreSwapBuffers
 .global PreSwapBuffers_patch
 PreSwapBuffers_patch:
