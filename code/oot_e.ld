@@ -1068,6 +1068,10 @@ SECTIONS
 		*(.patch_RainbowBridge)
 	}
 
+	.patch_RemoveWaterfallCS 0x3E7F64 : {
+		*(.patch_RemoveWaterfallCS)
+	}
+
 	.patch_DekuTheaterSkullMask 0x3EAF38 : {
 		*(.patch_DekuTheaterSkullMask)
 	}
