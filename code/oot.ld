@@ -184,6 +184,10 @@ SECTIONS
 		*(.patch_MedigoronItemOverrideTwo)
 	}
 
+	.patch_MaskSalesmanBorrowMask 0x16D148 : {
+	    *(patch_MaskSalesmanBorrowMask)
+	}
+
 	.patch_KingZoraIgnoreSapphire 0x1736B8 : {
 		*(.patch_KingZoraIgnoreSapphire)
 	}
@@ -584,6 +588,10 @@ SECTIONS
 		*(.patch_RedBoulderExplode)
 	}
 
+	.patch_MaskSalesmanGiveMaskOfTruth 0x271D48 : {
+	    *(.patch_MaskSalesmanGiveMaskOfTruth)
+	}
+
 	.patch_SongOfTimeJingle 0x274B1C : {
 		*(.patch_SongOfTimeJingle)
 	}
@@ -862,6 +870,14 @@ SECTIONS
 
 	.patch_IncomingGetItemID 0x3725AC : {
 		*(.patch_IncomingGetItemID)
+	}
+
+	.patch_MaskSalesmanCheckNoMaskOne 0x372B64 : {
+	    *(.patch_MaskSalesmanCheckNoMask)
+	}
+
+	.patch_MaskSalesmanCheckNoMaskTwo 0x372B70 : {
+	    *(.patch_MaskSalesmanCheckNoMaskTwo)
 	}
 
 	.patch_ConvertBombDropTwo 0x3747A4 : {
@@ -1168,6 +1184,10 @@ SECTIONS
 		*(.patch_OverrideFogDuringGameplayInit)
 	}
 
+	.patch_CheckForWeirdEggHatchGameplayInit 0x448A64 : {
+	    *(.patch_CheckForWeirdEggHatchGameplayInit)
+	}
+
 	.patch_CheckForPocketCuccoHatchGameplayInit 0x448A80 : {
 		*(.patch_CheckForPocketCuccoHatchGameplayInit)
 	}
@@ -1334,6 +1354,10 @@ SECTIONS
 
 	.patch_ItemsMenuNumSprites 0x46B758 : {
 		*(.patch_ItemsMenuNumSprites)
+	}
+
+	.patch_CheckForWeirdEggHatchKankyo 0x470D00 : {
+	    *(.patch_CheckForWeirdEggHatchKankyo)
 	}
 
 	.patch_CheckForPocketCuccoHatchKankyo 0x470D1C : {

@@ -34,4 +34,5 @@ void ItemEffect_GiveMedallion(SaveContext* saveCtx, s16 mask, s16 arg2);
 void ItemEffect_MoveNabooru(SaveContext* saveCtx, s16 arg1, s16 arg2);
 void ItemEffect_GrannySellsPotions(SaveContext* saveCtx, s16 arg1, s16 arg2);
 void ItemEffect_OwnAdultTrade(SaveContext* saveCtx, s16 arg1, s16 arg2);
+void ItemEffect_GiveWeirdEgg(SaveContext* saveCtx, s16 arg1, s16 arg2);
 #endif //_ITEM_EFFECT_H_

@@ -63,6 +63,41 @@ void ItemsMenu_Draw(void) {
                                                       gSaveContext.items[selectedItemSlot]);
             }
         }
+
+        // Obtained both weird egg and Zelda's letter and pressed l/r on child trade slot
+        if (selectedItemSlot == SLOT_TRADE_CHILD && SaveFile_ChildTradeSlots() == 2 && (rInputCtx.pressed.l || rInputCtx.pressed.r)) {
+            u8 item = gSaveContext.items[selectedItemSlot];
+
+            // Switch to ZL/mask slot
+            if (item == ITEM_WEIRD_EGG || item == ITEM_CHICKEN) {
+                // ZL has been replaced with a mask
+                if (gSaveContext.itemGetInf[2] & (0x1 << 0x3)) {
+                    // Sold mask but not paid for it
+                    if (SaveFile_MaskSlotValue() == ITEM_SOLD_OUT) {
+                        // Only change item to no mask if not equipped
+                        if (gItemsMenuSelectedSlot % 6 != 5) {
+                            item = ITEM_SOLD_OUT;
+                        }
+                    } else {
+                        item = ITEM_MASK_KEATON + SaveFile_CurrentMask();
+                    }
+                } else {
+                    item = ITEM_LETTER_ZELDA;
+                }
+            }
+            // Switch to egg/cucco slot
+            else {
+                if (SaveFile_WeirdEggHatched()) {
+                    item = ITEM_CHICKEN;
+                } else {
+                    item = ITEM_WEIRD_EGG;
+                }
+            }
+
+            gSaveContext.items[selectedItemSlot] = item;
+            MenuSpritesManager_RegisterItemSprite(gItemsMenuSpritesManager, gItemsMenuSelectedSlot, gSaveContext.items[selectedItemSlot]);
+            MenuSpritesManager_RegisterItemSprite(gItemsMenuGlowSpritesManager, 0, gSaveContext.items[selectedItemSlot]);
+        }
     }
 }
 

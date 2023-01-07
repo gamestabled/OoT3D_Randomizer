@@ -387,6 +387,7 @@ extern Option ShuffleKokiriSword;
 extern Option ShuffleMasterSword;
 extern Option ShuffleOcarinas;
 extern Option ShuffleWeirdEgg;
+extern Option ShuffleZeldasLetter;
 extern Option ShuffleGerudoToken;
 extern Option ShuffleMagicBeans;
 extern Option ShuffleMerchants;

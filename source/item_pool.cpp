@@ -503,7 +503,6 @@ void GenerateItemPool() {
     }
 
     // Fixed item locations
-    PlaceItemInLocation(HC_ZELDAS_LETTER, ZELDAS_LETTER);
     PlaceItemInLocation(GANON, TRIFORCE); // The Triforce is only used to make sure Ganon is accessible
     PlaceItemInLocation(MARKET_BOMBCHU_BOWLING_BOMBCHUS, BOMBCHU_DROP);
 
@@ -526,6 +525,13 @@ void GenerateItemPool() {
         IceTrapModels.push_back(GI_WEIRD_EGG);
     } else {
         PlaceItemInLocation(HC_MALON_EGG, WEIRD_EGG, false, true);
+    }
+
+    if (ShuffleZeldasLetter) {
+        AddItemToMainPool(ZELDAS_LETTER);
+        IceTrapModels.push_back(GI_LETTER_ZELDA);
+    } else {
+        PlaceItemInLocation(HC_ZELDAS_LETTER, ZELDAS_LETTER, false, true);
     }
 
     if (ShuffleOcarinas) {

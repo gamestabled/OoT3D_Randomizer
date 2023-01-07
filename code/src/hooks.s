@@ -1776,6 +1776,25 @@ hook_TargetPointerColor:
     b 0x47BB30
 .endif
 
+.global hook_MaskSalesmanBorrowMask
+hook_MaskSalesmanBorrowMask:
+    ldrsh r1,[r6,#0x1C]
+    push {r0-r12,lr}
+    cpy r0,r1
+    bl SaveFile_BorrowMask
+    pop {r0-r12,lr}
+    bx lr
+
+.global hook_MaskSalesmanGiveMaskOfTruth
+hook_MaskSalesmanGiveMaskOfTruth:
+    orr r1,r1,#0x400
+    push {r0-r12,lr}
+    mov r0,#0x22 @ Mask of Truth SI id
+    bl SaveFile_BorrowMask
+    pop {r0-r12,lr}
+    bx lr
+
+
 @ ----------------------------------
 @ ----------------------------------
 
