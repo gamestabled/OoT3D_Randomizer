@@ -111,5 +111,9 @@ typedef struct {
 #define BUTTON_L1 (1 << 9)
 #define BUTTON_X (1 << 10)
 #define BUTTON_Y (1 << 11)
+#define CPAD_RIGHT (1 << 28)
+#define CPAD_LEFT (1 << 29)
+#define CPAD_UP (1 << 30)
+#define CPAD_DOWN (1 << 31)
 
 #endif // HID_H

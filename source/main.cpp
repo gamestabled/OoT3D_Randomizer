@@ -27,12 +27,12 @@ int main() {
 
         // Time calculations for menu scrolling
         bool updatedByHeld = false;
-        if (kHeld & KEY_DDOWN || kHeld & KEY_DUP || kHeld & KEY_DLEFT || kHeld & KEY_DRIGHT) {
+        if (kHeld & KEY_DOWN || kHeld & KEY_UP || kHeld & KEY_LEFT || kHeld & KEY_RIGHT) {
             float totalHoldTime       = (svcGetSystemTick() - initialHoldTime) / TICKS_PER_SEC;
             float intervalElapsedTime = (svcGetSystemTick() - intervalTime) / TICKS_PER_SEC;
 
             if (intervalElapsedTime > 0.09 && totalHoldTime > 0.4) {
-                kDown |= kHeld & (KEY_DUP | KEY_DDOWN | KEY_DLEFT | KEY_DRIGHT); // add input to kDown for simplicity
+                kDown |= kHeld & (KEY_UP | KEY_DOWN | KEY_LEFT | KEY_RIGHT); // add input to kDown for simplicity
                 intervalTime  = svcGetSystemTick();
                 updatedByHeld = true;
             }
