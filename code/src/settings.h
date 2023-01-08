@@ -522,6 +522,7 @@ typedef struct {
     u8 fastBunnyHood;
 
     u8 damageMultiplier;
+    u8 permadeath;
     u8 startingTime;
     u8 gossipStoneHints;
     u8 totAltarHints;

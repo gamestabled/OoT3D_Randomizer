@@ -825,6 +825,11 @@ string_view damageMultiDesc           = "Changes the amount of damage taken.\n" 
                                         "\n"                                               //
                                         "If set to OHKO, Link will die in one hit.";       //
 /*------------------------------                                                           //
+|          PERMADEATH          |                                                           //
+------------------------------*/                                                           //
+string_view permadeathDesc            = "Dying deletes your save file and kicks you back\n"//
+                                        "out to the main menu.";                           //
+/*------------------------------                                                           //
 |        STARTING TIME         |                                                           //
 ------------------------------*/                                                           //
 string_view startingTimeDesc          = "Change up Link's sleep routine.";                 //

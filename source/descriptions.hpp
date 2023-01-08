@@ -266,6 +266,8 @@ extern string_view mapsShowDungeonModesDesc;
 
 extern string_view damageMultiDesc;
 
+extern string_view permadeathDesc;
+
 extern string_view startingTimeDesc;
 
 extern string_view locationsReachableDesc;
