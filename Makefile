@@ -172,7 +172,7 @@ ifneq ($(ROMFS),)
 	export _3DSXFLAGS += --romfs=$(CURDIR)/$(ROMFS)
 endif
 
-.PHONY: all clean
+.PHONY: all clean delete3DSX create_basecode
 
 #---------------------------------------------------------------------------------
 all: delete3DSX create_basecode $(BUILD) $(GFXBUILD) $(DEPSDIR) $(ROMFS_T3XFILES) $(T3XHFILES)
@@ -183,9 +183,9 @@ delete3DSX:
 
 create_basecode:
 ifeq ($(app_only), 0)
-	$(MAKE) --no-print-directory REGION=USA -C code
+	@$(MAKE) --no-print-directory REGION=USA -C code
 	@mv code/basecode_USA.ips $(ROMFS)
-	$(MAKE) --no-print-directory REGION=EUR -C code
+	@$(MAKE) --no-print-directory REGION=EUR -C code
 	@mv code/basecode_EUR.ips $(ROMFS)
 endif
 
