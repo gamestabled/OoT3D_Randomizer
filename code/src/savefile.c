@@ -633,7 +633,7 @@ typedef s32 (*Inventory_ReplaceItem_proc)(GlobalContext* globalCtx, u16 oldItem,
 
 u32 SaveFile_CheckForWeirdEggHatch(void) {
     // Force the egg into the child trade slot so that it can hatch
-    if (SaveFile_WeirdEggOwned()) {
+    if (SaveFile_WeirdEggOwned() & !SaveFile_WeirdEggHatched()) {
         gSaveContext.items[SLOT_TRADE_CHILD] = ITEM_WEIRD_EGG;
     }
 
