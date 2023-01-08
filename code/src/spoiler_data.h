@@ -3,8 +3,9 @@
 
 #include "../include/z3D/z3D.h"
 
+#define SPOILER_LOCDATS 2
 #define SPOILER_SPHERES_MAX 50
-#define SPOILER_ITEMS_MAX 512
+#define SPOILER_ITEMS_MAX 450
 #define SPOILER_STRING_DATA_SIZE 16384
 
 typedef enum {
@@ -96,32 +97,37 @@ typedef struct {
     u8 SphereCount;
     u16 ItemLocationsCount;
     SpoilerSphere Spheres[SPOILER_SPHERES_MAX];
-    SpoilerItemLocation ItemLocations[SPOILER_ITEMS_MAX];
     u16 SphereItemLocations[SPOILER_ITEMS_MAX];
-    char StringData[SPOILER_STRING_DATA_SIZE];
     u16 GroupItemCounts[SPOILER_COLLECTION_GROUP_COUNT];
     u16 GroupOffsets[SPOILER_COLLECTION_GROUP_COUNT];
 } SpoilerData;
 
+typedef struct {
+    SpoilerItemLocation ItemLocations[SPOILER_ITEMS_MAX];
+    char StringData[SPOILER_STRING_DATA_SIZE];
+} SpoilerDataLocs;
+
 extern SpoilerData gSpoilerData;
+
+SpoilerItemLocation* SpoilerData_ItemLoc(u16 itemIndex);
+char* SpoilerData_StringData(u16 itemIndex);
 
 char* SpoilerData_GetItemLocationString(u16 itemIndex);
 char* SpoilerData_GetItemNameString(u16 itemIndex);
-SpoilerItemLocation GetSpoilerItemLocation(u8 sphere, u16 itemIndex);
 u8 SpoilerData_GetIsItemLocationCollected(u16 itemIndex);
-u8 SpoilerData_ChestCheck(SpoilerItemLocation itemLoc);
-u8 SpoilerData_CollectableCheck(SpoilerItemLocation itemLoc);
+u8 SpoilerData_ChestCheck(SpoilerItemLocation* itemLoc);
+u8 SpoilerData_CollectableCheck(SpoilerItemLocation* itemLoc);
 u8 SpoilerData_ItemGetInfCheck(u8 slot);
 u8 SpoilerData_InfTableCheck(u8 offset, u8 bit);
 u8 SpoilerData_UpgradeCheck(u8 bit);
-u8 SpoilerData_CowCheck(SpoilerItemLocation itemLoc);
-u8 SpoilerData_FishingCheck(SpoilerItemLocation itemLoc);
-u8 SpoilerData_ScrubCheck(SpoilerItemLocation itemLoc);
+u8 SpoilerData_CowCheck(SpoilerItemLocation* itemLoc);
+u8 SpoilerData_FishingCheck(SpoilerItemLocation* itemLoc);
+u8 SpoilerData_ScrubCheck(SpoilerItemLocation* itemLoc);
 u8 SpoilerData_BiggoronCheck(u8 mask);
 u8 SpoilerData_GerudoTokenCheck();
 u8 SpoilerData_BigPoePointsCheck();
-u8 SpoilerData_ShopItemCheck(SpoilerItemLocation itemLoc);
-u8 SpoilerData_MagicBeansCheck(SpoilerItemLocation itemLoc);
+u8 SpoilerData_ShopItemCheck(SpoilerItemLocation* itemLoc);
+u8 SpoilerData_MagicBeansCheck(SpoilerItemLocation* itemLoc);
 u8 SpoilerData_GetIsItemLocationRevealed(u16 itemIndex);
 
 #endif // _SPOILER_DATA_H_

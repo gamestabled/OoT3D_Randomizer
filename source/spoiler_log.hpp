@@ -13,7 +13,8 @@ const RandomizerHash& GetRandomizerHash();
 void WriteIngameSpoilerLog();
 
 bool SpoilerLog_Write();
-const SpoilerData& GetSpoilerData();
+const SpoilerData* GetSpoilerData();
+const SpoilerDataLocs* GetSpoilerDataLocs(size_t index);
 
 void PlacementLog_Msg(std::string_view msg);
 void PlacementLog_Clear();
