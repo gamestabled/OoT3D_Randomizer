@@ -65,7 +65,8 @@ void ItemsMenu_Draw(void) {
         }
 
         // Obtained both weird egg and Zelda's letter and pressed l/r on child trade slot
-        if (selectedItemSlot == SLOT_TRADE_CHILD && SaveFile_ChildTradeSlots() == 2 && (rInputCtx.pressed.l || rInputCtx.pressed.r)) {
+        if (selectedItemSlot == SLOT_TRADE_CHILD && SaveFile_ChildTradeSlots() == 2 &&
+            (rInputCtx.pressed.l || rInputCtx.pressed.r)) {
             u8 item = gSaveContext.items[selectedItemSlot];
 
             // Switch to ZL/mask slot
@@ -95,8 +96,10 @@ void ItemsMenu_Draw(void) {
             }
 
             gSaveContext.items[selectedItemSlot] = item;
-            MenuSpritesManager_RegisterItemSprite(gItemsMenuSpritesManager, gItemsMenuSelectedSlot, gSaveContext.items[selectedItemSlot]);
-            MenuSpritesManager_RegisterItemSprite(gItemsMenuGlowSpritesManager, 0, gSaveContext.items[selectedItemSlot]);
+            MenuSpritesManager_RegisterItemSprite(gItemsMenuSpritesManager, gItemsMenuSelectedSlot,
+                                                  gSaveContext.items[selectedItemSlot]);
+            MenuSpritesManager_RegisterItemSprite(gItemsMenuGlowSpritesManager, 0,
+                                                  gSaveContext.items[selectedItemSlot]);
         }
     }
 }

@@ -583,7 +583,8 @@ u32 SaveFile_MaskSlotValue(void) {
     u8 mask = SaveFile_CurrentMask();
 
     // Sold but not paid for mask
-    if (mask < 4 && gSaveContext.itemGetInf[3] & (0x1 << (0x8 + mask)) && !(gSaveContext.eventChkInf[8] & (0x1 << (0xC + mask)))) {
+    if (mask < 4 && gSaveContext.itemGetInf[3] & (0x1 << (0x8 + mask)) &&
+        !(gSaveContext.eventChkInf[8] & (0x1 << (0xC + mask)))) {
         return ITEM_SOLD_OUT;
     }
 
