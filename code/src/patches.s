@@ -1132,6 +1132,16 @@ SkipDaruniaDanceThree_patch:
 ShortenRainbowBridgeCS_patch:
     bl hook_ShortenRainbowBridgeCS
 
+.section .patch_RemoveWaterfallCS
+.global RemoveWaterfallCS_patch
+RemoveWaterfallCS_patch:
+    nop
+    cpy r0,r10
+    add r1,r10,#0x800
+    add r1,r1,#0x2E8
+    ldr r2,[r6,#0x1A4]
+    bl 0x36B940
+
 .section .patch_OwlMagicCheck
 .global OwlMagicCheck_patch
 OwlMagicCheck_patch:
