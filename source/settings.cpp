@@ -1239,7 +1239,7 @@ Menu loadPremadePreset      = Menu::Action("Load Premade Preset",        LOAD_PR
 Menu loadCustomPreset       = Menu::Action("Load Custom Preset",         LOAD_CUSTOM_PRESET);
 Menu saveCustomPreset       = Menu::Action("Save Custom Preset",         SAVE_CUSTOM_PRESET);
 Menu deleteCustomPreset     = Menu::Action("Delete Custom Preset",       DELETE_CUSTOM_PRESET);
-Menu resetToDefaultSettings = Menu::Action("Reset to Default Settings",  RESET_TO_DEFAULTS);
+Menu resetToDefaultSettings = Menu::Action("Reset to Default Settings",  RESET_TO_DEFAULTS, menuResetToDefaultsDesc);
 
 std::vector<Menu *> settingsPresetItems = {
     &loadPremadePreset,
