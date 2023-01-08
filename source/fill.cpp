@@ -312,8 +312,9 @@ std::vector<LocationKey> GetAccessibleLocations(const std::vector<LocationKey>& 
                     !noRandomEntrances) {
                     entranceSphere.push_back(&exit);
                     exit.AddToPool();
-                    // Don't list a coupled entrance from both directions
-                    if (exit.GetReplacement()->GetReverse() != nullptr && !exit.IsDecoupled()) {
+                    // Don't list a two-way coupled entrance from both directions
+                    if (exit.GetReverse() != nullptr && exit.GetReplacement()->GetReverse() != nullptr &&
+                        !exit.IsDecoupled()) {
                         exit.GetReplacement()->GetReverse()->AddToPool();
                     }
                 }
