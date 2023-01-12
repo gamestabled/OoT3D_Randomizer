@@ -504,12 +504,11 @@ void Entrance_CheckEpona(void) {
             0x0157, // Hyrule Field -> Lon Lon Ranch
             0x01F9, // Lon Lon Ranch -> Hyrule Field
             0x01FD, // Market Entrance -> Hyrule Field
-            0x00EA, // ZR Front -> Hyrule Field
-            0x0181, // LW Bridge -> Hyrule Field
+            0x0181, // ZR Front -> Hyrule Field
+            0x0185, // LW Bridge -> Hyrule Field
             0x0129, // GV Fortress Side -> Gerudo Fortress
             0x022D, // Gerudo Fortress -> GV Fortress Side
             0x03D0, // GV Carpenter Tent -> GV Fortress Side
-            0x0496, // Gerudo Fortress -> Thieves Hideout
             0x042F, // LLR Stables -> Lon Lon Ranch
             0x05D4, // LLR Tower -> Lon Lon Ranch
             0x0378, // LLR Talons House -> Lon Lon Ranch
