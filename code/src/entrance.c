@@ -494,7 +494,7 @@ void Entrance_CheckEpona(void) {
     // unset the Epona flag to avoid Master glitch, and restore temp B.
     if (gSettingsContext.shuffleOverworldEntrances && (PLAYER->stateFlags1 & 0x00800000)) {
 
-        static const s16 validEponaEntrances[] = {
+        s16 validEponaEntrances[] = {
             0x0102, // Hyrule Field -> Lake Hylia
             0x0189, // Lake Hylia -> Hyrule Field
             0x0309, // LH Fishing Hole -> LH Fishing Island
