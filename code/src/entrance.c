@@ -516,6 +516,8 @@ void Entrance_CheckEpona(void) {
             0x028E, // LLR Western Fence Jump
             0x0292, // LLR Eastern Fence Jump
             0x0476, // LLR Front Gate Jump
+            // Allow Master glitch to be performed on the Thieves Hideout entrance
+            Entrance_GetOverride(0x0496), // Gerudo Fortress -> Thieves Hideout
             // The following indices currently aren't randomized, but we'll list
             // them in case they ever are. They're all Theives Hideout -> Gerudo Fortress
             0x231,
