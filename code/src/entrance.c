@@ -493,8 +493,12 @@ void Entrance_CheckEpona(void) {
     // If Link is riding Epona but he's about to go through an entrance where she can't spawn,
     // unset the Epona flag to avoid Master glitch, and restore temp B.
     if (gSettingsContext.shuffleOverworldEntrances && (PLAYER->stateFlags1 & 0x00800000)) {
+        // Allow Master glitch to be performed on the Thieves Hideout entrance
+        if (entrance == Entrance_GetOverride(0x0496)) {
+            return;
+        }
 
-        s16 validEponaEntrances[] = {
+        static const s16 validEponaEntrances[] = {
             0x0102, // Hyrule Field -> Lake Hylia
             0x0189, // Lake Hylia -> Hyrule Field
             0x0309, // LH Fishing Hole -> LH Fishing Island
@@ -516,8 +520,6 @@ void Entrance_CheckEpona(void) {
             0x028E, // LLR Western Fence Jump
             0x0292, // LLR Eastern Fence Jump
             0x0476, // LLR Front Gate Jump
-            // Allow Master glitch to be performed on the Thieves Hideout entrance
-            Entrance_GetOverride(0x0496), // Gerudo Fortress -> Thieves Hideout
             // The following indices currently aren't randomized, but we'll list
             // them in case they ever are. They're all Theives Hideout -> Gerudo Fortress
             0x231,
