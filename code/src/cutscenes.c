@@ -202,6 +202,9 @@ void Cutscene_OverrideDekuTree(void) {
             gSaveContext.nextCutsceneIndex = 0xFFF1;
             return;
         }
+
+        // Skipped if wrong warping
+        gSaveContext.dayTime = 0x8000;
     }
     gGlobalContext->nextEntranceIndex = Entrance_OverrideNextIndex(0x457);
     gGlobalContext->sceneLoadFlag     = 0x14;
@@ -219,6 +222,9 @@ void Custcene_OverrideDodongosCavern(void) {
             gSaveContext.nextCutsceneIndex = 0xFFF1;
             return;
         }
+
+        // Skipped if wrong warping
+        gSaveContext.dayTime = 0x8000;
     }
     gGlobalContext->nextEntranceIndex = Entrance_OverrideNextIndex(0x47A);
     gGlobalContext->sceneLoadFlag     = 0x14;
@@ -237,6 +243,9 @@ void Custcene_OverrideJabuJabusBelly(void) {
             gSaveContext.nextCutsceneIndex = 0xFFF0;
             return;
         }
+
+        // Skipped if wrong warping
+        gSaveContext.dayTime = 0x8000;
     }
     gGlobalContext->nextEntranceIndex = Entrance_OverrideNextIndex(0x221);
     gGlobalContext->sceneLoadFlag     = 0x14;
@@ -248,6 +257,7 @@ void Custcene_OverrideForestTemple(void) {
     if (EventCheck(0x48) == 0) {
         EventSet(0x48);
         ItemOverride_PushDungeonReward(DUNGEON_FOREST_TEMPLE);
+        gSaveContext.dayTime = 0x8000;
     }
     gGlobalContext->nextEntranceIndex = Entrance_OverrideNextIndex(0x608);
     gGlobalContext->sceneLoadFlag     = 0x14;
@@ -266,6 +276,9 @@ void Cutscene_OverrideFireTemple(void) {
             gSaveContext.nextCutsceneIndex = 0xFFF3;
             return;
         }
+
+        // Skipped if wrong warping
+        gSaveContext.dayTime = 0x8000;
     }
     gGlobalContext->nextEntranceIndex = Entrance_OverrideNextIndex(0x564);
     gGlobalContext->sceneLoadFlag     = 0x14;
@@ -278,6 +291,7 @@ void Custcene_OverrideWaterTemple(void) {
         EventSet(0x4A);
         ItemOverride_PushDungeonReward(DUNGEON_WATER_TEMPLE);
         gSaveContext.eventChkInf[6] |= 0x0200; // Raise Lake Hylia's Water
+        gSaveContext.dayTime = 0x4800;
     }
     gGlobalContext->nextEntranceIndex = Entrance_OverrideNextIndex(0x60C);
     gGlobalContext->sceneLoadFlag     = 0x14;
@@ -289,6 +303,7 @@ void Custcene_OverrideSpiritTemple(void) {
     if (EventCheck(0x47) == 0) {
         EventSet(0x47);
         ItemOverride_PushDungeonReward(DUNGEON_SPIRIT_TEMPLE);
+        gSaveContext.dayTime = 0x8000;
     }
     gGlobalContext->nextEntranceIndex = Entrance_OverrideNextIndex(0x610);
     gGlobalContext->sceneLoadFlag     = 0x14;
@@ -300,6 +315,7 @@ void Custcene_OverrideShadowTemple(void) {
     if (EventCheck(0x46) == 0) {
         EventSet(0x46);
         ItemOverride_PushDungeonReward(DUNGEON_SHADOW_TEMPLE);
+        gSaveContext.dayTime = 0x8000;
     }
     gGlobalContext->nextEntranceIndex = Entrance_OverrideNextIndex(0x580);
     gGlobalContext->sceneLoadFlag     = 0x14;
