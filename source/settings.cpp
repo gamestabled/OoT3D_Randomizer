@@ -316,11 +316,11 @@ std::vector<Option *> timesaverOptions = {
 // Misc Settings
 Option Racing              = Option::Bool("Racing",                 {"Off", "On"},                                                          {racingDesc});
 Option GossipStoneHints    = Option::U8  ("Gossip Stone Hints",     {"No Hints", "Need Nothing", "Mask of Truth", "Shard of Agony"},        {gossipStonesHintsDesc},                                                                                          OptionCategory::Setting,    HINTS_NEED_NOTHING);
-Option ClearerHints        = Option::U8  (2, "Hint Clarity",        {"Obscure", "Ambiguous", "Clear"},                                      {obscureHintsDesc, ambiguousHintsDesc, clearHintsDesc});
 Option HintDistribution    = Option::U8  (2, "Hint Distribution",   {"Useless", "Balanced", "Strong", "Very Strong"},                       {uselessHintsDesc, balancedHintsDesc, strongHintsDesc, veryStrongHintsDesc},                                      OptionCategory::Setting,    HINTDISTRIBUTION_BALANCED);
 Option MiscHints           = Option::U8  ("Miscellaneous Hints",    {"All Disabled",  "All Enabled", "Choose"},                             {miscHintsDesc});
 Option ToTAltarHints       = Option::Bool(2, "Temple of Time Altar",{"Off", "On"},                                                          {totAltarHintsDesc});
 Option GanonHints          = Option::Bool(2, "Ganondorf",           {"Off", "On"},                                                          {ganonHintsDesc});
+Option ClearerHints        = Option::U8  ("Hint Clarity",           {"Obscure", "Ambiguous", "Clear"},                                      {obscureHintsDesc, ambiguousHintsDesc, clearHintsDesc});
 Option CompassesShowReward = Option::U8  ("Compasses Show Rewards", {"No", "Yes"},                                                          {compassesShowRewardsDesc},                                                                                       OptionCategory::Setting,    ON);
 Option CompassesShowWotH   = Option::U8  ("Compasses Show WotH",    {"No", "Yes"},                                                          {compassesShowWotHDesc},                                                                                          OptionCategory::Setting,    ON);
 Option MapsShowDungeonMode = Option::U8  ("Maps Show Dungeon Modes",{"No", "Yes"},                                                          {mapsShowDungeonModesDesc},                                                                                       OptionCategory::Setting,    ON);
@@ -339,11 +339,11 @@ bool HasNightStart         = false;
 std::vector<Option *> miscOptions = {
     &Racing,
     &GossipStoneHints,
-    &ClearerHints,
     &HintDistribution,
     &MiscHints,
     &ToTAltarHints,
     &GanonHints,
+    &ClearerHints,
     &CompassesShowReward,
     &CompassesShowWotH,
     &MapsShowDungeonMode,
@@ -2169,10 +2169,8 @@ void ForceChange(u32 kDown, Option* currentSetting) {
 
     // Only show hint options if hints are enabled
     if (GossipStoneHints.Is(HINTS_NO_HINTS)) {
-        ClearerHints.Hide();
         HintDistribution.Hide();
     } else {
-        ClearerHints.Unhide();
         HintDistribution.Unhide();
     }
 
