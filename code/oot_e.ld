@@ -724,6 +724,18 @@ SECTIONS
 		*(.patch_Gfx_Update)
 	}
 
+	.patch_OoBBombchuOne 0x315120 : {
+        *(.patch_OoBBombchuOne)
+	}
+
+	.patch_OoBBombchuTwo 0x31513C : {
+        *(.patch_OoBBombchuTwo)
+	}
+
+	.patch_OoBBombchuThree 0x315150 : {
+        *(.patch_OoBBombchuThree)
+	}
+
 	.patch_CollisionATvsAC 0x3191B0 : {
 		*(.patch_CollisionATvsAC)
 	}

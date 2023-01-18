@@ -2031,6 +2031,21 @@ ShadowShip_Accel_patch:
 ShadowShip_TopSpeed_patch:
     .word 0x41A00000
 
+.section .patch_OoBBombchuOne
+.global OoBBombchuOne_patch
+OoBBombchuOne_patch:
+    bl hook_OoBBombchuOne
+
+.section .patch_OoBBombchuTwo
+.global OoBBombchuTwo_patch
+OoBBombchuTwo_patch:
+    bl hook_OoBBombchuTwo
+
+.section .patch_OoBBombchuThree
+.global OoBBombchuThree_patch
+OoBBombchuThree_patch:
+    bl hook_OoBBombchuThree
+
 @ ----------------------------------
 @ ----------------------------------
 
