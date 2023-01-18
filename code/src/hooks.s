@@ -1779,19 +1779,22 @@ hook_TargetPointerColor:
 .global hook_OoBBombchuOne
 hook_OoBBombchuOne:
     cmp r5,#0x0
-    ldrshne r0,[r5,#0xA]
+    bxeq lr
+    ldrsh r0,[r5,#0xA]
     bx lr
 
 .global hook_OoBBombchuTwo
 hook_OoBBombchuTwo:
     cmp r5,#0x0
-    ldrshne r0,[r5,#0xC]
+    bxeq lr
+    ldrsh r0,[r5,#0xC]
     bx lr
 
 .global hook_OoBBombchuThree
 hook_OoBBombchuThree:
     cmp r5,#0x0
-    ldrshne r0,[r5,#0xE]
+    bxeq lr
+    ldrsh r0,[r5,#0xE]
     bx lr
 
 @ ----------------------------------
