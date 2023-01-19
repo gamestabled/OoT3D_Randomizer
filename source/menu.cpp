@@ -81,7 +81,7 @@ void MoveCursor(u32 kDown, bool updatedByHeld) {
         // Cancel if holding and reached first/last selectable option
         if (updatedByHeld) {
             bool noSelectableOption = true;
-            if (kDown & KEY_DUP) {
+            if (kDown & KEY_UP) {
                 for (int i = currentMenu->menuIdx - 1; i >= 0; i--) {
                     if (!currentMenu->settingsList->at(i)->IsHidden() &&
                         !currentMenu->settingsList->at(i)->IsLocked()) {
@@ -90,7 +90,7 @@ void MoveCursor(u32 kDown, bool updatedByHeld) {
                     }
                 }
             }
-            if (kDown & KEY_DDOWN) {
+            if (kDown & KEY_DOWN) {
                 for (size_t i = currentMenu->menuIdx + 1; i < currentMenu->settingsList->size(); i++) {
                     if (!currentMenu->settingsList->at(i)->IsHidden() &&
                         !currentMenu->settingsList->at(i)->IsLocked()) {
@@ -105,10 +105,10 @@ void MoveCursor(u32 kDown, bool updatedByHeld) {
         }
         // Loop through settings until an unlocked one is reached
         do {
-            if ((kDown & KEY_DUP) != 0) {
+            if ((kDown & KEY_UP) != 0) {
                 currentMenu->menuIdx--;
             }
-            if ((kDown & KEY_DDOWN) != 0) {
+            if ((kDown & KEY_DOWN) != 0) {
                 currentMenu->menuIdx++;
             }
 
@@ -138,16 +138,16 @@ void MoveCursor(u32 kDown, bool updatedByHeld) {
 
         // Cancel if holding and reached first/last menu
         if (updatedByHeld) {
-            if ((kDown & KEY_DUP && currentMenu->menuIdx == 0) ||
-                (kDown & KEY_DDOWN && currentMenu->menuIdx == max - 1)) {
+            if ((kDown & KEY_UP && currentMenu->menuIdx == 0) ||
+                (kDown & KEY_DOWN && currentMenu->menuIdx == max - 1)) {
                 return;
             }
         }
 
-        if (kDown & KEY_DUP) {
+        if (kDown & KEY_UP) {
             currentMenu->menuIdx--;
         }
-        if (kDown & KEY_DDOWN) {
+        if (kDown & KEY_DOWN) {
             currentMenu->menuIdx++;
         }
 
@@ -309,10 +309,10 @@ void UpdateCustomCosmeticColors(u32 kDown) {
 }
 
 void UpdateOptionSubMenu(u32 kDown) {
-    if ((kDown & KEY_DRIGHT) != 0) {
+    if ((kDown & KEY_RIGHT) != 0) {
         currentSetting->NextOptionIndex();
     }
-    if ((kDown & KEY_DLEFT) != 0) {
+    if ((kDown & KEY_LEFT) != 0) {
         currentSetting->PrevOptionIndex();
     }
 
@@ -377,7 +377,7 @@ void UpdateResetToDefaultsMenu(u32 kDown) {
     ClearDescription();
     if (kDown & KEY_A) {
         Settings::SetDefaultSettings();
-        printf("\x1b[24;5HSettings have been reset to defaults.");
+        printf("\x1b[24;7HSettings have been reset to defaults.");
     }
 }
 
@@ -611,8 +611,8 @@ void PrintCustomPresetsMenu() {
 
 void PrintResetToDefaultsMenu() {
     consoleSelect(&bottomScreen);
-    printf("\x1b[10;4HPress A to reset to default settings.");
-    printf("\x1b[12;4HPress B to return to the preset menu.");
+    printf("\x1b[10;2HPress A to reset to default settings.");
+    printf("\x1b[12;2HPress B to return to the preset menu.");
 }
 
 void PrintGenerateMenu() {

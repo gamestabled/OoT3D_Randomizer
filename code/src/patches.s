@@ -1132,6 +1132,16 @@ SkipDaruniaDanceThree_patch:
 ShortenRainbowBridgeCS_patch:
     bl hook_ShortenRainbowBridgeCS
 
+.section .patch_RemoveWaterfallCS
+.global RemoveWaterfallCS_patch
+RemoveWaterfallCS_patch:
+    nop
+    cpy r0,r10
+    add r1,r10,#0x800
+    add r1,r1,#0x2E8
+    ldr r2,[r6,#0x1A4]
+    bl 0x36B940
+
 .section .patch_OwlMagicCheck
 .global OwlMagicCheck_patch
 OwlMagicCheck_patch:
@@ -1432,10 +1442,20 @@ KingZoraDontStartTimer_patch:
 KingZoraSetTradedPrescriptionFlag_patch:
     beq hook_KingZoraSetTradedPrescriptionFlag
 
+.section .patch_CheckForWeirdEggHatchGameplayInit
+.global CheckForWeirdEggHatchGameplayInit_patch
+CheckForWeirdEggHatchGameplayInit_patch:
+    bl SaveFile_CheckForWeirdEggHatch
+
 .section .patch_CheckForPocketCuccoHatchGameplayInit
 .global CheckForPocketCuccoHatchGameplayInit_patch
 CheckForPocketCuccoHatchGameplayInit_patch:
     bl SaveFile_CheckForPocketCuccoHatch
+
+.section .patch_CheckForWeirdEggHatchKankyo
+.global CheckForWeirdEggHatchKankyo_patch
+CheckForWeirdEggHatchKankyo_patch:
+    bl SaveFile_CheckForWeirdEggHatch
 
 .section .patch_CheckForPocketCuccoHatchKankyo
 .global CheckForPocketCuccoHatchKankyo_patch
@@ -2030,6 +2050,28 @@ ShadowShip_Accel_patch:
 .global ShadowShip_TopSpeed_patch
 ShadowShip_TopSpeed_patch:
     .word 0x41A00000
+
+.section .patch_MaskSalesmanCheckNoMaskOne
+.global MaskSalesmanCheckNoMaskOne_patch
+MaskSalesmanCheckNoMaskOne_patch:
+    push {r0,r1,r4-r12,lr}
+    bl SaveFile_MaskSlotValue
+
+.section .patch_MaskSalesmanCheckNoMaskTwo
+.global MaskSalesmanCheckNoMaskTwo_patch
+MaskSalesmanCheckNoMaskTwo_patch:
+    cpy r2,r0
+    pop {r0,r1,r4-r12,lr}
+
+.section .patch_MaskSalesmanBorrowMask
+.global MaskSalesmanBorrowMask_patch
+MaskSalesmanBorrowMask_patch:
+    bl hook_MaskSalesmanBorrowMask
+
+.section .patch_MaskSalesmanGiveMaskOfTruth
+.global MaskSalesmanGiveMaskOfTruth_patch
+MaskSalesmanGiveMaskOfTruth_patch:
+    bl hook_MaskSalesmanGiveMaskOfTruth
 
 .section .patch_OoBBombchuOne
 .global OoBBombchuOne_patch

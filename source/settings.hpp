@@ -279,8 +279,8 @@ class Menu {
                      SUB_MENU,         std::move(description_), printInSpoiler_ };
     }
 
-    static Menu Action(std::string name_, u8 mode_) {
-        return Menu{ std::move(name_), MenuType::Action, std::move(mode_) };
+    static Menu Action(std::string name_, u8 mode_, std::string_view description_ = "") {
+        return Menu{ std::move(name_), MenuType::Action, std::move(mode_), std::move(description_) };
     }
 
     Menu(std::string name_, MenuType type_, std::vector<Option*>* settingsList_, u8 mode_,
@@ -295,7 +295,8 @@ class Menu {
           description(std::move(description_)), printInSpoiler(printInSpoiler_) {
     }
 
-    Menu(std::string name_, MenuType type_, u8 mode_) : name(std::move(name_)), type(type_), mode(mode_) {
+    Menu(std::string name_, MenuType type_, u8 mode_, std::string_view description_ = "")
+        : name(std::move(name_)), type(type_), mode(mode_), description(std::move(description_)) {
     }
 
     void ResetMenuIndex() {
@@ -387,6 +388,7 @@ extern Option ShuffleKokiriSword;
 extern Option ShuffleMasterSword;
 extern Option ShuffleOcarinas;
 extern Option ShuffleWeirdEgg;
+extern Option ShuffleZeldasLetter;
 extern Option ShuffleGerudoToken;
 extern Option ShuffleMagicBeans;
 extern Option ShuffleMerchants;

@@ -76,7 +76,7 @@ static s8 spoilerGroupDungeonIds[] = {
     DUNGEON_SPIRIT_TEMPLE,
     -1,
     -1,
-    DUNGEON_GANONS_TOWER,
+    DUNGEON_INSIDE_GANONS_CASTLE,
 };
 
 static char* spoilerCollectionGroupNames[] = {
@@ -449,7 +449,8 @@ static void Gfx_DrawDungeonItems(void) {
         // Dungeon Type
         if (dungeonId <= DUNGEON_GERUDO_TRAINING_GROUNDS || dungeonId == DUNGEON_INSIDE_GANONS_CASTLE) {
             if (IsDungeonDiscovered(dungeonId)) {
-                bool isMasterQuest         = gSettingsContext.dungeonModes[dungeonId] == DUNGEONMODE_MQ;
+                u32 dungeonModeId          = (dungeonId == DUNGEON_INSIDE_GANONS_CASTLE ? 10 : dungeonId);
+                bool isMasterQuest         = (gSettingsContext.dungeonModes[dungeonModeId]) == DUNGEONMODE_MQ;
                 u32 modeIconColor          = isMasterQuest ? COLOR_ICON_MASTER_QUEST : COLOR_ICON_VANILLA;
                 Draw_IconType modeIconType = isMasterQuest ? ICON_MASTER_QUEST : ICON_VANILLA;
                 Draw_DrawIcon(10, yPos, modeIconColor, modeIconType);
@@ -468,7 +469,12 @@ static void Gfx_DrawDungeonItems(void) {
             Draw_DrawFormattedString(208, yPos, keysHave > 0 ? COLOR_WHITE : COLOR_DARK_GRAY, "%d", keysHave);
             Draw_DrawString(214, yPos, COLOR_WHITE, "/");
 
-            u8 keysFound       = Dungeon_FoundSmallKeys(dungeonId);
+            u8 keysFound = Dungeon_FoundSmallKeys(dungeonId);
+            if (gSettingsContext.keysanity == KEYSANITY_START_WITH &&
+                (dungeonId <= DUNGEON_BOTTOM_OF_THE_WELL || dungeonId == DUNGEON_GERUDO_TRAINING_GROUNDS ||
+                 dungeonId == DUNGEON_INSIDE_GANONS_CASTLE)) {
+                keysFound += Dungeon_KeyAmount(dungeonId);
+            }
             u32 keysFoundColor = COLOR_WHITE;
             if (keysFound >= Dungeon_KeyAmount(dungeonId) &&
                 (dungeonId == DUNGEON_THIEVES_HIDEOUT || dungeonId == DUNGEON_TREASURE_CHEST_SHOP ||
@@ -546,9 +552,9 @@ static void Gfx_DrawSpoilerData(void) {
             u32 color     = COLOR_WHITE;
             if (SpoilerData_GetIsItemLocationCollected(itemIndex)) {
                 color = COLOR_GREEN;
-            } else if (gSpoilerData.ItemLocations[itemIndex].CollectType == COLLECTTYPE_REPEATABLE) {
+            } else if (SpoilerData_ItemLoc(itemIndex)->CollectType == COLLECTTYPE_REPEATABLE) {
                 color = COLOR_BLUE;
-            } else if (gSpoilerData.ItemLocations[itemIndex].CollectType == COLLECTTYPE_NEVER) {
+            } else if (SpoilerData_ItemLoc(itemIndex)->CollectType == COLLECTTYPE_NEVER) {
                 color = COLOR_ORANGE;
             }
             Draw_DrawString_Small(10, locPosY, color, SpoilerData_GetItemLocationString(itemIndex));
@@ -603,8 +609,8 @@ static void Gfx_DrawItemTracker(void) {
         u32 locIndex = i + startIndex;
         if (SpoilerData_GetIsItemLocationCollected(locIndex)) {
             completeItems++;
-        } else if (gSpoilerData.ItemLocations[locIndex].CollectType == COLLECTTYPE_NEVER ||
-                   (gSpoilerData.ItemLocations[locIndex].CollectType == COLLECTTYPE_REPEATABLE &&
+        } else if (SpoilerData_ItemLoc(locIndex)->CollectType == COLLECTTYPE_NEVER ||
+                   (SpoilerData_ItemLoc(locIndex)->CollectType == COLLECTTYPE_REPEATABLE &&
                     SpoilerData_GetIsItemLocationRevealed(locIndex))) {
             uncollectableItems++;
         }
@@ -650,10 +656,10 @@ static void Gfx_DrawItemTracker(void) {
         if (isCollected) {
             color = COLOR_GREEN;
         } else if (canShowGroup) {
-            if (gSpoilerData.ItemLocations[locIndex].CollectType == COLLECTTYPE_REPEATABLE &&
+            if (SpoilerData_ItemLoc(locIndex)->CollectType == COLLECTTYPE_REPEATABLE &&
                 SpoilerData_GetIsItemLocationRevealed(locIndex)) {
                 color = COLOR_BLUE;
-            } else if (gSpoilerData.ItemLocations[locIndex].CollectType == COLLECTTYPE_NEVER) {
+            } else if (SpoilerData_ItemLoc(locIndex)->CollectType == COLLECTTYPE_NEVER) {
                 color = COLOR_ORANGE;
             }
         }
@@ -854,7 +860,7 @@ static void Gfx_ShowMenu(void) {
         } else if (curMenuIdx == PAGE_SPHERES && gSpoilerData.SphereCount > 0) {
             // Spoiler log
             u16 itemCount = gSpoilerData.Spheres[currentSphere].ItemCount;
-            if (pressed & BUTTON_LEFT) {
+            if (pressed & (BUTTON_LEFT | CPAD_LEFT)) {
                 if (currentSphere == 0) {
                     currentSphere = gSpoilerData.SphereCount - 1;
                 } else {
@@ -862,7 +868,7 @@ static void Gfx_ShowMenu(void) {
                 }
                 spoilerScroll = 0;
                 handledInput  = true;
-            } else if (pressed & BUTTON_RIGHT) {
+            } else if (pressed & (BUTTON_RIGHT | CPAD_RIGHT)) {
                 if (currentSphere < gSpoilerData.SphereCount - 1) {
                     currentSphere++;
                 } else {
@@ -870,10 +876,10 @@ static void Gfx_ShowMenu(void) {
                 }
                 spoilerScroll = 0;
                 handledInput  = true;
-            } else if (pressed & BUTTON_UP) {
+            } else if (pressed & (BUTTON_UP | CPAD_UP)) {
                 spoilerScroll = Gfx_Scroll(spoilerScroll, -1, itemCount);
                 handledInput  = true;
-            } else if (pressed & BUTTON_DOWN) {
+            } else if (pressed & (BUTTON_DOWN | CPAD_DOWN)) {
                 spoilerScroll = Gfx_Scroll(spoilerScroll, 1, itemCount);
                 handledInput  = true;
             }
@@ -884,16 +890,16 @@ static void Gfx_ShowMenu(void) {
                 handledInput  = true;
             } else if (!showingLegend) {
                 u16 itemCount = gSpoilerData.ItemLocationsCount;
-                if (pressed & BUTTON_LEFT) {
+                if (pressed & (BUTTON_LEFT | CPAD_LEFT)) {
                     allItemsScroll = Gfx_Scroll(allItemsScroll, -MAX_ENTRY_LINES * 10, itemCount);
                     handledInput   = true;
-                } else if (pressed & BUTTON_RIGHT) {
+                } else if (pressed & (BUTTON_RIGHT | CPAD_RIGHT)) {
                     allItemsScroll = Gfx_Scroll(allItemsScroll, MAX_ENTRY_LINES * 10, itemCount);
                     handledInput   = true;
-                } else if (pressed & BUTTON_UP) {
+                } else if (pressed & (BUTTON_UP | CPAD_UP)) {
                     allItemsScroll = Gfx_Scroll(allItemsScroll, -MAX_ENTRY_LINES, itemCount);
                     handledInput   = true;
-                } else if (pressed & BUTTON_DOWN) {
+                } else if (pressed & (BUTTON_DOWN | CPAD_DOWN)) {
                     allItemsScroll = Gfx_Scroll(allItemsScroll, MAX_ENTRY_LINES, itemCount);
                     handledInput   = true;
                 }
@@ -901,16 +907,16 @@ static void Gfx_ShowMenu(void) {
         } else if (curMenuIdx == PAGE_ITEMTRACKER_GROUPS && gSpoilerData.ItemLocationsCount > 0) {
             // Grouped Items list
             u16 itemCount = gSpoilerData.GroupItemCounts[currentItemGroup];
-            if (pressed & BUTTON_LEFT) {
+            if (pressed & (BUTTON_LEFT | CPAD_LEFT)) {
                 groupItemsScroll = Gfx_Scroll(groupItemsScroll, -MAX_ENTRY_LINES, itemCount);
                 handledInput     = true;
-            } else if (pressed & BUTTON_RIGHT) {
+            } else if (pressed & (BUTTON_RIGHT | CPAD_RIGHT)) {
                 groupItemsScroll = Gfx_Scroll(groupItemsScroll, MAX_ENTRY_LINES, itemCount);
                 handledInput     = true;
-            } else if (pressed & BUTTON_UP) {
+            } else if (pressed & (BUTTON_UP | CPAD_UP)) {
                 groupItemsScroll = Gfx_Scroll(groupItemsScroll, -1, itemCount);
                 handledInput     = true;
-            } else if (pressed & BUTTON_DOWN) {
+            } else if (pressed & (BUTTON_DOWN | CPAD_DOWN)) {
                 groupItemsScroll = Gfx_Scroll(groupItemsScroll, 1, itemCount);
                 handledInput     = true;
             } else if (pressed & BUTTON_A) {
@@ -927,16 +933,16 @@ static void Gfx_ShowMenu(void) {
                 handledInput  = true;
             } else if (!showingLegend) {
                 u16 entranceCount = gEntranceTrackingData.EntranceCount;
-                if (pressed & BUTTON_DOWN) {
+                if (pressed & (BUTTON_DOWN | CPAD_DOWN)) {
                     allEntranceScroll = Gfx_Scroll(allEntranceScroll, MAX_ENTRY_LINES, entranceCount);
                     handledInput      = true;
-                } else if (pressed & BUTTON_UP) {
+                } else if (pressed & (BUTTON_UP | CPAD_UP)) {
                     allEntranceScroll = Gfx_Scroll(allEntranceScroll, -MAX_ENTRY_LINES, entranceCount);
                     handledInput      = true;
-                } else if (pressed & BUTTON_RIGHT) {
+                } else if (pressed & (BUTTON_RIGHT | CPAD_RIGHT)) {
                     allEntranceScroll = Gfx_Scroll(allEntranceScroll, MAX_ENTRY_LINES * 10, entranceCount);
                     handledInput      = true;
-                } else if (pressed & BUTTON_LEFT) {
+                } else if (pressed & (BUTTON_LEFT | CPAD_LEFT)) {
                     allEntranceScroll = Gfx_Scroll(allEntranceScroll, -MAX_ENTRY_LINES * 10, entranceCount);
                     handledInput      = true;
                 } else if (pressed & BUTTON_X) {
@@ -947,16 +953,16 @@ static void Gfx_ShowMenu(void) {
         } else if (curMenuIdx == PAGE_ENTRANCETRACKER_GROUPS && gEntranceTrackingData.EntranceCount > 0) {
             // Grouped Entrances list
             u16 entranceCount = gEntranceTrackingData.GroupEntranceCounts[destListToggle][currentEntranceGroup];
-            if (pressed & BUTTON_DOWN) {
+            if (pressed & (BUTTON_DOWN | CPAD_DOWN)) {
                 groupEntranceScroll = Gfx_Scroll(groupEntranceScroll, 1, entranceCount);
                 handledInput        = true;
-            } else if (pressed & BUTTON_UP) {
+            } else if (pressed & (BUTTON_UP | CPAD_UP)) {
                 groupEntranceScroll = Gfx_Scroll(groupEntranceScroll, -1, entranceCount);
                 handledInput        = true;
-            } else if (pressed & BUTTON_RIGHT) {
+            } else if (pressed & (BUTTON_RIGHT | CPAD_RIGHT)) {
                 groupEntranceScroll = Gfx_Scroll(groupEntranceScroll, MAX_ENTRY_LINES, entranceCount);
                 handledInput        = true;
-            } else if (pressed & BUTTON_LEFT) {
+            } else if (pressed & (BUTTON_LEFT | CPAD_LEFT)) {
                 groupEntranceScroll = Gfx_Scroll(groupEntranceScroll, -MAX_ENTRY_LINES, entranceCount);
                 handledInput        = true;
             } else if (pressed & BUTTON_A) {

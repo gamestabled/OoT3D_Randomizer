@@ -8,6 +8,7 @@ extern string_view menuOpenSettingsDesc;
 extern string_view menuGlitchOptionsDesc;
 extern string_view menuPersonalizationDesc;
 extern string_view menuIngameDefaultsDesc;
+extern string_view menuResetToDefaultsDesc;
 
 extern string_view presetNintendedDesc;
 extern string_view presetAllsanityDesc;
@@ -149,6 +150,8 @@ extern string_view masterSwordDesc;
 extern string_view ocarinasDesc;
 
 extern string_view weirdEggDesc;
+
+extern string_view zeldasLetterDesc;
 
 extern string_view gerudoTokenDesc;
 

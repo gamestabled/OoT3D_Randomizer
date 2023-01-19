@@ -393,6 +393,15 @@ void HintTable_Init_Exclude_Overworld() {
                        Text{"a #carpet guru# sells", /*french*/"#un marchand du désert# vend", /*spanish*/"el #genio de una alfombra# vende", /*italian*/"il #mercante volante# vende", /*german*/"die Ware des #fliegenden Einsiedlers#, |wäre|wären|"},
     });
 
+    hintTable[GC_MEDIGORON] = HintText::Exclude({
+                       //obscure text
+                       Text{"#Medigoron# sells", /*french*/"#Medigoron# vend", /*spanish*/"#Medigoron# vende", /*italian*/"#Medigoron# vende", /*german*/"#Medigoron#, |wäre|wären|"},
+    });
+
+    hintTable[KAK_GRANNYS_SHOP] = HintText::Exclude({
+                       // obscure text
+                       Text{"the #potion shop lady# sells", /*french*/"la #gribiche du magasin de potion# vend", /*spanish*/"la #señora de la tienda de pociones# vende", /*italian*/"la #vecchietta del negozio di pozioni# vende", /*german*/"#Omas Allerlei#, |wäre|wären|"},
+    });
 
     hintTable[KAK_IMPAS_HOUSE_FREESTANDING_POH] = HintText::Exclude({
                        // obscure text

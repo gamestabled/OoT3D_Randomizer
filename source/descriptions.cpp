@@ -1,6 +1,6 @@
-// clang-format off
 #include "descriptions.hpp"
 
+// clang-format off
 /*------------------------------
 |      MENU DESCRIPTIONS       |                            *SCREEN WIDTH*
 ------------------------------*/       /*--------------------------------------------------*/
@@ -13,6 +13,7 @@ string_view menuPersonalizationDesc   = "These options do not affect seed genera
 string_view menuIngameDefaultsDesc    = "These options decide what the ingame options are\n"
                                         "set to when creating a save file. The new ingame\n"
                                         "options can be changed in the Custom Info Menu."; //
+string_view menuResetToDefaultsDesc   = "Does not affect personalization settings.";       //
 
 /*------------------------------
 |      PRESET DESCRIPTIONS     |                            *SCREEN WIDTH*
@@ -460,11 +461,15 @@ string_view weirdEggDesc              = "Enabling this shuffles the Weird Egg fr
                                         "into the item pool.\n"                            //
                                         "This will require finding the Weird Egg to talk to"
                                         "Zelda in Hyrule Castle, which in turn locks\n"    //
-                                        "rewards from Impa, Saria, Malon, and Talon, as\n" //
-                                        "well as the Happy Mask Sidequest. The Weird Egg is"
-                                        "also required for Zelda's Letter to unlock the\n" //
-                                        "Kakariko Gate as child which can lock some\n"     //
-                                        "progression";                                     //
+                                        "rewards from Impa, Saria, Malon, and Talon.";     //
+/*------------------------------                                                           //
+|    SHUFFLE ZELDAS LETTER     |                                                           //
+------------------------------*/                                                           //
+string_view zeldasLetterDesc          = "Enabling this shuffles Zelda's Letter into the\n" //
+                                        "item pool.\n"                                     //
+                                        "This will require finding the letter to open the\n"
+                                        "Happy Mask Shop and the gate in Kakariko if it is\n"
+                                        "set to closed.";                                  //
 /*------------------------------                                                           //
 |     SHUFFLE GERUDO TOKEN     |                                                           //
 ------------------------------*/                                                           //

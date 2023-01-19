@@ -16,20 +16,34 @@
 #include <string>
 #include <vector>
 
-const PatchSymbols UsaSymbols = { GSETTINGSCONTEXT_USA_ADDR,        GSPOILERDATA_USA_ADDR,
-                                  NUMCUSTOMMESSAGEENTRIES_USA_ADDR, PTRCUSTOMMESSAGEENTRIES_USA_ADDR,
-                                  RBGMOVERRIDES_USA_ADDR,           RCUSTOMMESSAGES_USA_ADDR,
-                                  RDUNGEONINFODATA_USA_ADDR,        RDUNGEONREWARDOVERRIDES_USA_ADDR,
-                                  RENTRANCEOVERRIDES_USA_ADDR,      RITEMOVERRIDES_USA_ADDR,
-                                  RSCRUBRANDOMITEMPRICES_USA_ADDR,  RSFXDATA_USA_ADDR,
+const PatchSymbols UsaSymbols = { GSETTINGSCONTEXT_USA_ADDR,
+                                  GSPOILERDATA_USA_ADDR,
+                                  GSPOILERDATALOCS_USA_ADDR,
+                                  NUMCUSTOMMESSAGEENTRIES_USA_ADDR,
+                                  PTRCUSTOMMESSAGEENTRIES_USA_ADDR,
+                                  RBGMOVERRIDES_USA_ADDR,
+                                  RCUSTOMMESSAGES_USA_ADDR,
+                                  RDUNGEONINFODATA_USA_ADDR,
+                                  RDUNGEONREWARDOVERRIDES_USA_ADDR,
+                                  RENTRANCEOVERRIDES_USA_ADDR,
+                                  RITEMOVERRIDES_USA_ADDR,
+                                  RSCRUBRANDOMITEMPRICES_USA_ADDR,
+                                  RSFXDATA_USA_ADDR,
                                   RSHOPSANITYPRICES_USA_ADDR };
 
-const PatchSymbols EurSymbols = { GSETTINGSCONTEXT_EUR_ADDR,        GSPOILERDATA_EUR_ADDR,
-                                  NUMCUSTOMMESSAGEENTRIES_EUR_ADDR, PTRCUSTOMMESSAGEENTRIES_EUR_ADDR,
-                                  RBGMOVERRIDES_EUR_ADDR,           RCUSTOMMESSAGES_EUR_ADDR,
-                                  RDUNGEONINFODATA_EUR_ADDR,        RDUNGEONREWARDOVERRIDES_EUR_ADDR,
-                                  RENTRANCEOVERRIDES_EUR_ADDR,      RITEMOVERRIDES_EUR_ADDR,
-                                  RSCRUBRANDOMITEMPRICES_EUR_ADDR,  RSFXDATA_EUR_ADDR,
+const PatchSymbols EurSymbols = { GSETTINGSCONTEXT_EUR_ADDR,
+                                  GSPOILERDATA_EUR_ADDR,
+                                  GSPOILERDATALOCS_EUR_ADDR,
+                                  NUMCUSTOMMESSAGEENTRIES_EUR_ADDR,
+                                  PTRCUSTOMMESSAGEENTRIES_EUR_ADDR,
+                                  RBGMOVERRIDES_EUR_ADDR,
+                                  RCUSTOMMESSAGES_EUR_ADDR,
+                                  RDUNGEONINFODATA_EUR_ADDR,
+                                  RDUNGEONREWARDOVERRIDES_EUR_ADDR,
+                                  RENTRANCEOVERRIDES_EUR_ADDR,
+                                  RITEMOVERRIDES_EUR_ADDR,
+                                  RSCRUBRANDOMITEMPRICES_EUR_ADDR,
+                                  RSFXDATA_EUR_ADDR,
                                   RSHOPSANITYPRICES_EUR_ADDR };
 
 // For specification on the IPS file format, visit: https://zerosoft.zophar.net/ips.php
@@ -247,10 +261,15 @@ bool WriteAllPatches() {
 
     patchOffset = V_TO_P(patchSymbols.GSPOILERDATA_ADDR);
     patchSize   = sizeof(SpoilerData);
-    // Get the spoiler data
-    SpoilerData spoilerData = GetSpoilerData();
-    if (!WritePatch(patchOffset, patchSize, (char*)(&spoilerData), code, bytesWritten, totalRW, buf)) {
+    if (!WritePatch(patchOffset, patchSize, (char*)(GetSpoilerData()), code, bytesWritten, totalRW, buf)) {
         return false;
+    }
+    patchSize = sizeof(SpoilerDataLocs);
+    for (size_t idx = 0; idx < SPOILER_LOCDATS; idx++) {
+        patchOffset = V_TO_P(patchSymbols.GSPOILERDATALOCS_ADDR) + (patchSize * idx);
+        if (!WritePatch(patchOffset, patchSize, (char*)(GetSpoilerDataLocs(idx)), code, bytesWritten, totalRW, buf)) {
+            return false;
+        }
     }
 
     /*-------------------------------

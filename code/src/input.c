@@ -5,11 +5,7 @@
 #include "3ds/svc.h"
 #include "utils.h"
 
-u32 GetCurrentPadState(void) {
-    u32 hid_shared_mem = *(u32*)(0x005AEC5C);
-    return *(volatile u32*)(hid_shared_mem + 0x1C);
-}
-#define HID_PAD (GetCurrentPadState())
+#define HID_PAD (real_hid.pad.pads[real_hid.pad.index].curr.val)
 
 InputContext rInputCtx;
 

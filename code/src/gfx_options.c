@@ -109,7 +109,7 @@ void PrevOption(const Option* option) {
 }
 
 void Gfx_OptionsUpdate(void) {
-    if (pressed & BUTTON_DOWN) {
+    if (pressed & (BUTTON_DOWN | CPAD_DOWN)) {
         do {
             selectedOption++;
             if (selectedOption > ARRAY_SIZE(options) - 1) {
@@ -117,7 +117,7 @@ void Gfx_OptionsUpdate(void) {
             }
         } while (strlen(options[selectedOption].name) == 0);
         handledInput = true;
-    } else if (pressed & BUTTON_UP) {
+    } else if (pressed & (BUTTON_UP | CPAD_UP)) {
         do {
             selectedOption--;
             if (selectedOption < 0) {
@@ -127,10 +127,10 @@ void Gfx_OptionsUpdate(void) {
         handledInput = true;
     }
 
-    if (pressed & BUTTON_RIGHT) {
+    if (pressed & (BUTTON_RIGHT | CPAD_RIGHT)) {
         NextOption(&options[selectedOption]);
         handledInput = true;
-    } else if (pressed & BUTTON_LEFT) {
+    } else if (pressed & (BUTTON_LEFT | CPAD_LEFT)) {
         PrevOption(&options[selectedOption]);
         handledInput = true;
     }

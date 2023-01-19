@@ -559,9 +559,92 @@ u32 SaveFile_TradeItemIsOwned(u8 itemId) {
     return (gSaveContext.sceneFlags[0x60].unk & (0x1 << tradeItemNum)) != 0;
 }
 
+u8 SaveFile_WeirdEggOwned(void) {
+    return (gSaveContext.sceneFlags[0x60].unk >> 0x10) & 0x1;
+}
+
+u8 SaveFile_ZeldasLetterOwned(void) {
+    return (gSaveContext.sceneFlags[0x60].unk >> 0x11) & 0x1;
+}
+
+u8 SaveFile_ChildTradeSlots(void) {
+    return SaveFile_WeirdEggOwned() + SaveFile_ZeldasLetterOwned();
+}
+
+u8 SaveFile_WeirdEggHatched(void) {
+    return (gSaveContext.sceneFlags[0x60].unk >> 0x12) & 0x1;
+}
+
+u8 SaveFile_CurrentMask(void) {
+    return (gSaveContext.sceneFlags[0x60].unk >> 0x13) & 0x7;
+}
+
+u32 SaveFile_MaskSlotValue(void) {
+    u8 mask = SaveFile_CurrentMask();
+
+    // Sold but not paid for mask
+    if (mask < 4 && gSaveContext.itemGetInf[3] & (0x1 << (0x8 + mask)) &&
+        !(gSaveContext.eventChkInf[8] & (0x1 << (0xC + mask)))) {
+        return ITEM_SOLD_OUT;
+    }
+
+    return ITEM_MASK_KEATON + mask;
+}
+
+void SaveFile_BorrowMask(s16 SI_ItemId) {
+    // SI ids are in a different order to normal item ids so need to convert
+    u8 itemId;
+    switch (SI_ItemId) {
+        case 0x1E:
+            itemId = ITEM_MASK_KEATON;
+            break;
+        case 0x1F:
+            itemId = ITEM_MASK_SPOOKY;
+            break;
+        case 0x20:
+            itemId = ITEM_MASK_SKULL;
+            break;
+        case 0x21:
+            itemId = ITEM_MASK_BUNNY;
+            break;
+        case 0x22:
+            itemId = ITEM_MASK_TRUTH;
+            break;
+        case 0x23:
+            itemId = ITEM_MASK_ZORA;
+            break;
+        case 0x24:
+            itemId = ITEM_MASK_GORON;
+            break;
+        case 0x25:
+            itemId = ITEM_MASK_GERUDO;
+            break;
+    }
+
+    // Ensure flag for obtaining Keaton mask is set in case complete mask quest is enabled
+    gSaveContext.itemGetInf[2] |= 0x1 << 0x3;
+
+    gSaveContext.sceneFlags[0x60].unk &= ~(0x7 << 0x13);
+    gSaveContext.sceneFlags[0x60].unk |= (itemId - ITEM_MASK_KEATON) << 0x13;
+}
+
 typedef s32 (*Inventory_ReplaceItem_proc)(GlobalContext* globalCtx, u16 oldItem, u16 newItem);
 #define Inventory_ReplaceItem_addr 0x316CEC
 #define Inventory_ReplaceItem ((Inventory_ReplaceItem_proc)Inventory_ReplaceItem_addr)
+
+u32 SaveFile_CheckForWeirdEggHatch(void) {
+    // Force the egg into the child trade slot so that it can hatch
+    if (SaveFile_WeirdEggOwned() & !SaveFile_WeirdEggHatched()) {
+        gSaveContext.items[SLOT_TRADE_CHILD] = ITEM_WEIRD_EGG;
+    }
+
+    if (Inventory_ReplaceItem(gGlobalContext, ITEM_WEIRD_EGG, ITEM_CHICKEN)) {
+        gSaveContext.sceneFlags[0x60].unk |= 0x1 << 0x12;
+        return 1;
+    } else {
+        return 0;
+    }
+}
 
 u32 SaveFile_CheckForPocketCuccoHatch(void) {
     // Force the egg into the adult trade slot so that it can hatch

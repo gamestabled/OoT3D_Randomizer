@@ -188,6 +188,7 @@ Option ShuffleKokiriSword     = Option::Bool("Shuffle Kokiri Sword",   {"Off", "
 Option ShuffleMasterSword     = Option::Bool("Shuffle Master Sword",   {"Off", "On"},                                                     {masterSwordDesc});
 Option ShuffleOcarinas        = Option::Bool("Shuffle Ocarinas",       {"Off", "On"},                                                     {ocarinasDesc});
 Option ShuffleWeirdEgg        = Option::Bool("Shuffle Weird Egg",      {"Off", "On"},                                                     {weirdEggDesc});
+Option ShuffleZeldasLetter    = Option::Bool("Shuffle Zelda's Letter", {"Off", "On"},                                                     {zeldasLetterDesc});
 Option ShuffleGerudoToken     = Option::Bool("Shuffle Gerudo Token",   {"Off", "On"},                                                     {gerudoTokenDesc});
 Option ShuffleMagicBeans      = Option::Bool("Shuffle Magic Beans",    {"Off", "On"},                                                     {magicBeansDesc});
 Option ShuffleMerchants       = Option::U8  ("Shuffle Merchants",      {"Off", "On (No Hints)", "On (With Hints)"},                       {merchantsDesc, merchantsHintsDesc});
@@ -207,6 +208,7 @@ std::vector<Option *> shuffleOptions = {
     &ShuffleMasterSword,
     &ShuffleOcarinas,
     &ShuffleWeirdEgg,
+    &ShuffleZeldasLetter,
     &ShuffleGerudoToken,
     &ShuffleMagicBeans,
     &ShuffleMerchants,
@@ -1239,7 +1241,7 @@ Menu loadPremadePreset      = Menu::Action("Load Premade Preset",        LOAD_PR
 Menu loadCustomPreset       = Menu::Action("Load Custom Preset",         LOAD_CUSTOM_PRESET);
 Menu saveCustomPreset       = Menu::Action("Save Custom Preset",         SAVE_CUSTOM_PRESET);
 Menu deleteCustomPreset     = Menu::Action("Delete Custom Preset",       DELETE_CUSTOM_PRESET);
-Menu resetToDefaultSettings = Menu::Action("Reset to Default Settings",  RESET_TO_DEFAULTS);
+Menu resetToDefaultSettings = Menu::Action("Reset to Default Settings",  RESET_TO_DEFAULTS, menuResetToDefaultsDesc);
 
 std::vector<Menu *> settingsPresetItems = {
     &loadPremadePreset,
@@ -1639,7 +1641,6 @@ void SetDefaultSettings() {
 
     // Don't let users exclude these locations
     // TODO: Make sure the defaults are set appropriately for these?
-    Location(HC_ZELDAS_LETTER)->GetExcludedOption()->Hide();
     Location(MARKET_BOMBCHU_BOWLING_BOMBCHUS)->GetExcludedOption()->Hide();
     Location(GANON)->GetExcludedOption()->Hide();
 
@@ -1777,6 +1778,13 @@ void ResolveExcludedLocationConflicts() {
         Unhide({ HC_MALON_EGG });
     } else {
         IncludeAndHide({ HC_MALON_EGG });
+    }
+
+    // Force include Zelda if Shuffle Zelda's Letter is Off
+    if (ShuffleZeldasLetter) {
+        Unhide({ HC_ZELDAS_LETTER });
+    } else {
+        IncludeAndHide({ HC_ZELDAS_LETTER });
     }
 
     // Force include Gerudo Token Location if it's not shuffled
@@ -2074,9 +2082,9 @@ void ForceChange(u32 kDown, Option* currentSetting) {
         // than the number of dungeons set to MQ plus the number of dungeons set to random
         u8 MQ = DungeonsOfType(1), R = DungeonsOfType(2);
         if (MQDungeonCount.Value<u8>() < MQ) {
-            MQDungeonCount.SetSelectedIndex((currentSetting == &MQDungeonCount && (kDown & KEY_DLEFT)) ? 13 : MQ);
+            MQDungeonCount.SetSelectedIndex((currentSetting == &MQDungeonCount && (kDown & KEY_LEFT)) ? 13 : MQ);
         } else if (MQDungeonCount.Value<u8>() != 13 && MQDungeonCount.Value<u8>() > MQ + R) {
-            MQDungeonCount.SetSelectedIndex((currentSetting == &MQDungeonCount && (kDown & KEY_DRIGHT)) ? 13 : MQ + R);
+            MQDungeonCount.SetSelectedIndex((currentSetting == &MQDungeonCount && (kDown & KEY_RIGHT)) ? 13 : MQ + R);
         }
     } else {
         for (Option* option : dungeonOptions) {
@@ -2198,7 +2206,7 @@ void ForceChange(u32 kDown, Option* currentSetting) {
     }
 
     if (currentSetting != nullptr) {
-        if ((kDown & KEY_DLEFT || kDown & KEY_DRIGHT) && currentSetting == &ToggleAllTricks) {
+        if ((kDown & KEY_LEFT || kDown & KEY_RIGHT) && currentSetting == &ToggleAllTricks) {
             for (u16 i = 1; i < Settings::trickOptions.size(); i++) {
                 trickOptions[i]->SetSelectedIndex(0);
             }
@@ -2300,7 +2308,7 @@ void ForceChange(u32 kDown, Option* currentSetting) {
         }
     }
 
-    if ((kDown & KEY_DLEFT || kDown & KEY_DRIGHT) && currentSetting == &ToggleAllGlitches) {
+    if ((kDown & KEY_LEFT || kDown & KEY_RIGHT) && currentSetting == &ToggleAllGlitches) {
         auto setDifficulty = ToggleAllGlitches.GetSelectedOptionIndex();
         for (auto option : glitchCategories) {
             if (option == &ToggleAllGlitches || (!RestoreISG && (option == &GlitchISG || option == &GlitchHover))) {
