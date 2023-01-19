@@ -312,6 +312,13 @@ s16 Entrance_OverrideNextIndex(s16 nextEntranceIndex) {
         gGlobalContext->actorCtx.flags.tempSwch    = 0;
         gGlobalContext->actorCtx.flags.tempCollect = 0;
     }
+
+    // Exiting through the crawl space from Hyrule Castle courtyard is the same exit as leaving Ganon's castle
+    // Don't override the entrance if we came from the Castle courtyard (day and night scenes)
+    if ((gGlobalContext->sceneNum == 69 || gGlobalContext->sceneNum == 70) && nextEntranceIndex == 0x023D) {
+        return nextEntranceIndex;
+    }
+
     SaveFile_SetEntranceDiscovered(nextEntranceIndex);
     return Grotto_CheckSpecialEntrance(Entrance_GetOverride(nextEntranceIndex));
 }
@@ -1003,6 +1010,16 @@ void Entrance_OverrideSpawnScene(void) {
     if (!IsInGame()) {
         return;
     }
+
+    if (gSettingsContext.shuffleDungeonEntrances == SHUFFLEDUNGEONS_GANON) {
+        // Move Hyrule's Castle Courtyard exit spawn to be before the crates so players don't skip Talon
+        if (gGlobalContext->sceneNum == 95 && gGlobalContext->curSpawn == 1) {
+            gGlobalContext->linkActorEntry->pos.x = 0x033A;
+            gGlobalContext->linkActorEntry->pos.y = 0x0623;
+            gGlobalContext->linkActorEntry->pos.z = 0xFF22;
+        }
+    }
+
     // Repair the authentically bugged scene/spawn info for leaving Barinade's boss room -> JabuJabu's belly
     // to load the correct room outside the boss room, and slightly adjust Link's position
     // to prevent him from falling through the floor
