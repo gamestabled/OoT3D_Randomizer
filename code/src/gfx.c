@@ -449,7 +449,8 @@ static void Gfx_DrawDungeonItems(void) {
         // Dungeon Type
         if (dungeonId <= DUNGEON_GERUDO_TRAINING_GROUNDS || dungeonId == DUNGEON_INSIDE_GANONS_CASTLE) {
             if (IsDungeonDiscovered(dungeonId)) {
-                bool isMasterQuest         = gSettingsContext.dungeonModes[dungeonId] == DUNGEONMODE_MQ;
+                u32 dungeonModeId          = (dungeonId == DUNGEON_INSIDE_GANONS_CASTLE ? 10 : dungeonId);
+                bool isMasterQuest         = (gSettingsContext.dungeonModes[dungeonModeId]) == DUNGEONMODE_MQ;
                 u32 modeIconColor          = isMasterQuest ? COLOR_ICON_MASTER_QUEST : COLOR_ICON_VANILLA;
                 Draw_IconType modeIconType = isMasterQuest ? ICON_MASTER_QUEST : ICON_VANILLA;
                 Draw_DrawIcon(10, yPos, modeIconColor, modeIconType);
