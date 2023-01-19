@@ -2074,9 +2074,9 @@ void ForceChange(u32 kDown, Option* currentSetting) {
         // than the number of dungeons set to MQ plus the number of dungeons set to random
         u8 MQ = DungeonsOfType(1), R = DungeonsOfType(2);
         if (MQDungeonCount.Value<u8>() < MQ) {
-            MQDungeonCount.SetSelectedIndex((currentSetting == &MQDungeonCount && (kDown & KEY_DLEFT)) ? 13 : MQ);
+            MQDungeonCount.SetSelectedIndex((currentSetting == &MQDungeonCount && (kDown & KEY_LEFT)) ? 13 : MQ);
         } else if (MQDungeonCount.Value<u8>() != 13 && MQDungeonCount.Value<u8>() > MQ + R) {
-            MQDungeonCount.SetSelectedIndex((currentSetting == &MQDungeonCount && (kDown & KEY_DRIGHT)) ? 13 : MQ + R);
+            MQDungeonCount.SetSelectedIndex((currentSetting == &MQDungeonCount && (kDown & KEY_RIGHT)) ? 13 : MQ + R);
         }
     } else {
         for (Option* option : dungeonOptions) {
@@ -2198,7 +2198,7 @@ void ForceChange(u32 kDown, Option* currentSetting) {
     }
 
     if (currentSetting != nullptr) {
-        if ((kDown & KEY_DLEFT || kDown & KEY_DRIGHT) && currentSetting == &ToggleAllTricks) {
+        if ((kDown & KEY_LEFT || kDown & KEY_RIGHT) && currentSetting == &ToggleAllTricks) {
             for (u16 i = 1; i < Settings::trickOptions.size(); i++) {
                 trickOptions[i]->SetSelectedIndex(0);
             }
@@ -2300,7 +2300,7 @@ void ForceChange(u32 kDown, Option* currentSetting) {
         }
     }
 
-    if ((kDown & KEY_DLEFT || kDown & KEY_DRIGHT) && currentSetting == &ToggleAllGlitches) {
+    if ((kDown & KEY_LEFT || kDown & KEY_RIGHT) && currentSetting == &ToggleAllGlitches) {
         auto setDifficulty = ToggleAllGlitches.GetSelectedOptionIndex();
         for (auto option : glitchCategories) {
             if (option == &ToggleAllGlitches || (!RestoreISG && (option == &GlitchISG || option == &GlitchHover))) {
