@@ -151,6 +151,8 @@ extern string_view ocarinasDesc;
 
 extern string_view weirdEggDesc;
 
+extern string_view zeldasLetterDesc;
+
 extern string_view gerudoTokenDesc;
 
 extern string_view magicBeansDesc;

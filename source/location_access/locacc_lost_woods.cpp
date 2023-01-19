@@ -422,7 +422,7 @@ void AreaTable_Init_LostWoods() {
         },
         {
             // Locations
-            LocationAccess(SONG_FROM_SARIA, { [] { return IsChild && ZeldasLetter; } }),
+            LocationAccess(SONG_FROM_SARIA, { [] { return IsChild && ChildCanAccess(HC_GARDEN); } }),
             LocationAccess(SHEIK_IN_FOREST, { [] { return IsAdult; } }),
             LocationAccess(SFM_GS, { [] { return IsAdult && HookshotOrBoomerang && AtNight && CanGetNightTimeGS; } }),
             LocationAccess(SFM_MAZE_GOSSIP_STONE_LOWER, { [] { return true; } }),

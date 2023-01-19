@@ -188,6 +188,7 @@ Option ShuffleKokiriSword     = Option::Bool("Shuffle Kokiri Sword",   {"Off", "
 Option ShuffleMasterSword     = Option::Bool("Shuffle Master Sword",   {"Off", "On"},                                                     {masterSwordDesc});
 Option ShuffleOcarinas        = Option::Bool("Shuffle Ocarinas",       {"Off", "On"},                                                     {ocarinasDesc});
 Option ShuffleWeirdEgg        = Option::Bool("Shuffle Weird Egg",      {"Off", "On"},                                                     {weirdEggDesc});
+Option ShuffleZeldasLetter    = Option::Bool("Shuffle Zelda's Letter", {"Off", "On"},                                                     {zeldasLetterDesc});
 Option ShuffleGerudoToken     = Option::Bool("Shuffle Gerudo Token",   {"Off", "On"},                                                     {gerudoTokenDesc});
 Option ShuffleMagicBeans      = Option::Bool("Shuffle Magic Beans",    {"Off", "On"},                                                     {magicBeansDesc});
 Option ShuffleMerchants       = Option::U8  ("Shuffle Merchants",      {"Off", "On (No Hints)", "On (With Hints)"},                       {merchantsDesc, merchantsHintsDesc});
@@ -207,6 +208,7 @@ std::vector<Option *> shuffleOptions = {
     &ShuffleMasterSword,
     &ShuffleOcarinas,
     &ShuffleWeirdEgg,
+    &ShuffleZeldasLetter,
     &ShuffleGerudoToken,
     &ShuffleMagicBeans,
     &ShuffleMerchants,
@@ -1639,7 +1641,6 @@ void SetDefaultSettings() {
 
     // Don't let users exclude these locations
     // TODO: Make sure the defaults are set appropriately for these?
-    Location(HC_ZELDAS_LETTER)->GetExcludedOption()->Hide();
     Location(MARKET_BOMBCHU_BOWLING_BOMBCHUS)->GetExcludedOption()->Hide();
     Location(GANON)->GetExcludedOption()->Hide();
 
@@ -1777,6 +1778,13 @@ void ResolveExcludedLocationConflicts() {
         Unhide({ HC_MALON_EGG });
     } else {
         IncludeAndHide({ HC_MALON_EGG });
+    }
+
+    // Force include Zelda if Shuffle Zelda's Letter is Off
+    if (ShuffleZeldasLetter) {
+        Unhide({ HC_ZELDAS_LETTER });
+    } else {
+        IncludeAndHide({ HC_ZELDAS_LETTER });
     }
 
     // Force include Gerudo Token Location if it's not shuffled

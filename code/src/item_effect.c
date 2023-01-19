@@ -270,6 +270,8 @@ void ItemEffect_FillWalletUpgrade(SaveContext* saveCtx, s16 arg1, s16 arg2) {
 }
 
 void ItemEffect_OpenMaskShop(SaveContext* saveCtx, s16 arg1, s16 arg2) {
+    gSaveContext.sceneFlags[0x60].unk |= 0x1 << 0x11;
+
     if (gSettingsContext.openKakariko == OPENKAKARIKO_OPEN) {
         gSaveContext.infTable[7] |= 0x40; // "Spoke to Gate Guard About Mask Shop"
         if (!gSettingsContext.completeMaskQuest) {
@@ -415,4 +417,8 @@ void ItemEffect_OwnAdultTrade(SaveContext* saveCtx, s16 arg1, s16 arg2) {
     if ((gSettingsContext.shuffleAdultTradeQuest == SHUFFLEADULTTRADEQUEST_OFF) && arg1 >= ITEM_ODD_POTION) {
         ItemEffect_GrannySellsPotions(saveCtx, arg1, arg2);
     }
+}
+
+void ItemEffect_GiveWeirdEgg(SaveContext* saveCtx, s16 arg1, s16 arg2) {
+    gSaveContext.sceneFlags[0x60].unk |= 0x1 << 0x10;
 }
