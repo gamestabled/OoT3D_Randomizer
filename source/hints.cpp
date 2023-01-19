@@ -204,7 +204,7 @@ static void CreateLocationHint(const std::vector<LocationKey>& possibleHintLocat
     Location(hintedLocation)->SetAsHinted();
 
     // make hint text
-    Text locationHintText = Location(hintedLocation)->GetHint().GetText();
+    Text locationHintText = GetHintRegion(Location(hintedLocation)->GetParentRegionKey())->GetHint().GetText();
     Text itemHintText     = Location(hintedLocation)->GetPlacedItem().GetHint().GetText();
     Text prefix           = Hint(PREFIX).GetText();
 
@@ -256,17 +256,12 @@ static void CreateWothHint(u8* remainingDungeonWothHints) {
     Location(hintedLocation)->SetAsHinted();
     LocationKey gossipStone = RandomElement(gossipStoneLocations);
 
-    // form hint text
-    Text locationText;
     if (Location(hintedLocation)->IsDungeon()) {
         *remainingDungeonWothHints -= 1;
-        AreaKey parentRegion = Location(hintedLocation)->GetParentRegionKey();
-        locationText         = AreaTable(parentRegion)->GetHint().GetText();
-
-    } else {
-        AreaKey parentRegion = Location(hintedLocation)->GetParentRegionKey();
-        locationText         = GetHintRegion(parentRegion)->GetHint().GetText();
     }
+
+    // form hint text
+    Text locationText  = GetHintRegion(Location(hintedLocation)->GetParentRegionKey())->GetHint().GetText();
     Text finalWothHint = Hint(PREFIX).GetText() + "#" + locationText + "#" + Hint(WAY_OF_THE_HERO).GetText();
     PlacementLog_Msg("\tMessage: ");
     PlacementLog_Msg(finalWothHint.NAenglish);
@@ -304,16 +299,12 @@ static void CreateBarrenHint(u8* remainingDungeonBarrenHints, std::vector<Locati
     Location(hintedLocation)->SetAsHinted();
     LocationKey gossipStone = RandomElement(gossipStoneLocations);
 
-    // form hint text
-    Text locationText;
     if (Location(hintedLocation)->IsDungeon()) {
         *remainingDungeonBarrenHints -= 1;
-        AreaKey parentRegion = Location(hintedLocation)->GetParentRegionKey();
-        locationText         = Hint(AreaTable(parentRegion)->hintKey).GetText();
-    } else {
-        AreaKey parentRegion = Location(hintedLocation)->GetParentRegionKey();
-        locationText         = Hint(GetHintRegion(parentRegion)->hintKey).GetText();
     }
+
+    // form hint text
+    Text locationText = GetHintRegion(Location(hintedLocation)->GetParentRegionKey())->GetHint().GetText();
     Text finalBarrenHint =
         Hint(PREFIX).GetText() + Hint(PLUNDERING).GetText() + "#" + locationText + "#" + Hint(FOOLISH).GetText();
     PlacementLog_Msg("\tMessage: ");
