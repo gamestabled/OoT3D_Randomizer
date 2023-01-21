@@ -332,11 +332,13 @@ bool WriteAllPatches() {
     |     rDungeonRewardOverrides    |
     ---------------------------------*/
     // Write rDungeonRewardOverrides to the patch
-    patchOffset = V_TO_P(patchSymbols.RDUNGEONREWARDOVERRIDES_ADDR);
-    patchSize   = sizeof(Settings::rDungeonRewardOverrides);
-    if (!WritePatch(patchOffset, patchSize, (char*)(&Settings::rDungeonRewardOverrides), code, bytesWritten, totalRW,
-                    buf)) {
-        return false;
+    if (Settings::ShuffleRewards.Is(REWARDSHUFFLE_END_OF_DUNGEON)) {
+        patchOffset = V_TO_P(patchSymbols.RDUNGEONREWARDOVERRIDES_ADDR);
+        patchSize   = sizeof(Settings::rDungeonRewardOverrides);
+        if (!WritePatch(patchOffset, patchSize, (char*)(&Settings::rDungeonRewardOverrides), code, bytesWritten,
+                        totalRW, buf)) {
+            return false;
+        }
     }
 
     /*--------------------------------

@@ -3,6 +3,7 @@
 #include "input.h"
 #include "savefile.h"
 #include "settings.h"
+#include "dungeon_rewards.h"
 
 #define gItemsMenuSpritesManager (*(MenuSpriteManager**)0x506734)
 #define gBowMenuSpritesManager (*(MenuSpriteManager**)0x506738)
@@ -105,15 +106,43 @@ void ItemsMenu_Draw(void) {
     }
 }
 
-u16 GearMenu_GetMedallionHint(void) {
-    if (gGearMenuSelectedSlot >= GEARSLOT_KOKIRI_EMERALD && gGearMenuSelectedSlot <= GEARSLOT_ZORA_SAPPHIRE &&
-        gExtSaveData.extInf[EXTINF_TOTALTAR_FLAGS] & (1 << AGE_CHILD)) {
-        return 0x7300 + gGearMenuSelectedSlot - GEARSLOT_KOKIRI_EMERALD;
+// Returns a text ID to display a textbox in the Gear Menu when an empty slot is selected, or 0 if there is no text.
+u16 GearMenu_GetRewardHint(void) {
+    s32 rewardId;
+    u8 checkedAltar, isHintUnlocked = FALSE;
+
+    if (gGearMenuSelectedSlot >= GEARSLOT_KOKIRI_EMERALD && gGearMenuSelectedSlot <= GEARSLOT_ZORA_SAPPHIRE) {
+        rewardId     = gGearMenuSelectedSlot - GEARSLOT_KOKIRI_EMERALD;
+        checkedAltar = gExtSaveData.extInf[EXTINF_TOTALTAR_FLAGS] & (1 << AGE_CHILD);
+    } else if (gGearMenuSelectedSlot >= GEARSLOT_FOREST_MEDALLION &&
+               gGearMenuSelectedSlot <= GEARSLOT_LIGHT_MEDALLION) {
+        rewardId     = gGearMenuSelectedSlot - GEARSLOT_FOREST_MEDALLION + 3;
+        checkedAltar = gExtSaveData.extInf[EXTINF_TOTALTAR_FLAGS] & (1 << AGE_ADULT);
+    } else {
+        return 0;
     }
-    if (gGearMenuSelectedSlot >= GEARSLOT_FOREST_MEDALLION && gGearMenuSelectedSlot <= GEARSLOT_LIGHT_MEDALLION &&
-        gExtSaveData.extInf[EXTINF_TOTALTAR_FLAGS] & (1 << AGE_ADULT)) {
-        return 0x7303 + gGearMenuSelectedSlot - GEARSLOT_FOREST_MEDALLION;
+
+    if (gSettingsContext.compassesShowReward) {
+        if (gSettingsContext.shuffleRewards == REWARDSHUFFLE_END_OF_DUNGEON) {
+            // If rewards are at the End of Dungeons, find which dungeon has the reward for the selected slot.
+            for (u32 dungeonId = 0; dungeonId <= DUNGEON_SHADOW_TEMPLE; dungeonId++) {
+                if (rDungeonRewardOverrides[dungeonId] == rewardId) {
+                    isHintUnlocked = gSaveContext.dungeonItems[dungeonId] & 2; // Check if compass is owned
+                    break;
+                }
+            }
+        } else {
+            // If rewards are anywhere, Light Medallion can't be hinted because there is no Light Temple Compass.
+            isHintUnlocked = ((rewardId != R_LIGHT_MEDALLION) && (gSaveContext.dungeonItems[rewardId] & 2));
+        }
+    } else {
+        isHintUnlocked = gSettingsContext.totAltarHints && checkedAltar;
     }
+
+    if (isHintUnlocked) {
+        return 0x7300 + rewardId;
+    }
+
     return 0;
 }
 

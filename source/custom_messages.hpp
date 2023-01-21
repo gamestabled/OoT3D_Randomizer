@@ -27,13 +27,14 @@ std::pair<const char*, u32> RawMessageEntryData();
 std::pair<const char*, u32> RawMessageData();
 
 void CreateAlwaysIncludedMessages();
+std::vector<Text> CreateBaseCompassTexts();
 Text AddColorsAndFormat(Text text, const std::vector<u8>& colors = {});
 void ClearMessages();
 
 std::string MESSAGE_END();
 std::string WAIT_FOR_INPUT();
 std::string HORIZONTAL_SPACE(u8 x);
-std::string GO_TO(u16 x);
+std::string GO_TO(u16 x); // "Go To Statement Considered Harmful"
 std::string INSTANT_TEXT_ON();
 std::string INSTANT_TEXT_OFF();
 std::string SHOP_MESSAGE_BOX();

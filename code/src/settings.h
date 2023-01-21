@@ -518,6 +518,8 @@ typedef struct {
     u8 damageMultiplier;
     u8 startingTime;
     u8 gossipStoneHints;
+    u8 totAltarHints;
+    u8 ganonHints;
     u8 compassesShowReward;
     u8 compassesShowWotH;
     u8 mapsShowDungeonMode;

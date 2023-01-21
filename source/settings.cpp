@@ -318,6 +318,9 @@ Option Racing              = Option::Bool("Racing",                 {"Off", "On"
 Option GossipStoneHints    = Option::U8  ("Gossip Stone Hints",     {"No Hints", "Need Nothing", "Mask of Truth", "Shard of Agony"},        {gossipStonesHintsDesc},                                                                                          OptionCategory::Setting,    HINTS_NEED_NOTHING);
 Option ClearerHints        = Option::U8  (2, "Hint Clarity",        {"Obscure", "Ambiguous", "Clear"},                                      {obscureHintsDesc, ambiguousHintsDesc, clearHintsDesc});
 Option HintDistribution    = Option::U8  (2, "Hint Distribution",   {"Useless", "Balanced", "Strong", "Very Strong"},                       {uselessHintsDesc, balancedHintsDesc, strongHintsDesc, veryStrongHintsDesc},                                      OptionCategory::Setting,    HINTDISTRIBUTION_BALANCED);
+Option MiscHints           = Option::U8  ("Miscellaneous Hints",    {"All Disabled",  "All Enabled", "Choose"},                             {miscHintsDesc});
+Option ToTAltarHints       = Option::Bool(2, "Temple of Time Altar",{"Off", "On"},                                                          {totAltarHintsDesc});
+Option GanonHints          = Option::Bool(2, "Ganondorf",           {"Off", "On"},                                                          {ganonHintsDesc});
 Option CompassesShowReward = Option::U8  ("Compasses Show Rewards", {"No", "Yes"},                                                          {compassesShowRewardsDesc},                                                                                       OptionCategory::Setting,    ON);
 Option CompassesShowWotH   = Option::U8  ("Compasses Show WotH",    {"No", "Yes"},                                                          {compassesShowWotHDesc},                                                                                          OptionCategory::Setting,    ON);
 Option MapsShowDungeonMode = Option::U8  ("Maps Show Dungeon Modes",{"No", "Yes"},                                                          {mapsShowDungeonModesDesc},                                                                                       OptionCategory::Setting,    ON);
@@ -338,6 +341,9 @@ std::vector<Option *> miscOptions = {
     &GossipStoneHints,
     &ClearerHints,
     &HintDistribution,
+    &MiscHints,
+    &ToTAltarHints,
+    &GanonHints,
     &CompassesShowReward,
     &CompassesShowWotH,
     &MapsShowDungeonMode,
@@ -1413,6 +1419,8 @@ SettingsContext FillContext() {
     ctx.fastBunnyHood      = FastBunnyHood ? 1 : 0;
 
     ctx.gossipStoneHints    = GossipStoneHints.Value<u8>();
+    ctx.totAltarHints       = ToTAltarHints ? 1 : 0;
+    ctx.ganonHints          = GanonHints ? 1 : 0;
     ctx.compassesShowReward = CompassesShowReward.Value<u8>();
     ctx.compassesShowWotH   = CompassesShowWotH.Value<u8>();
     ctx.mapsShowDungeonMode = MapsShowDungeonMode.Value<u8>();
@@ -2167,6 +2175,9 @@ void ForceChange(u32 kDown, Option* currentSetting) {
         ClearerHints.Unhide();
         HintDistribution.Unhide();
     }
+
+    // Manage toggle for misc hints options
+    ToggleSet(miscOptions, &MiscHints, &ToTAltarHints, &GanonHints);
 
     // Only show advanced trap options if random trap damage is set to "Advanced"
     if (RandomTrapDmg.Is(RANDOMTRAPS_ADVANCED)) {
