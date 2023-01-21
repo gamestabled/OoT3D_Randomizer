@@ -367,7 +367,7 @@ void HintTable_Init() {
     hintTable[GRAVEYARD_COMPOSERS_GRAVE_CHEST] = HintText::Sometimes({
                        // obscure text
                        Text{"#flames in the Composers' Grave# reveal", /*french*/"#les flammes dans le tombeau des compositeurs# cachent", /*spanish*/"#las llamas del Panteón Real# revelan", /*italian*/"nella #tomba della famiglia reale, le fiamme# rivelano", /*german*/"ein #flammendes Geheimnis des Königsgrabes#, |wäre|wären|"},
-                       Text{"the #Composer Brothers hid#",             /*french*/"#les Frères compositeurs on caché#",                     /*spanish*/"los #hermanos compositores esconden#",  /*italian*/"i #fratelli Mortaldi# chiusero in un forziere",          /*german*/"im Versteck der Gebrüder Brahmstein#, |wäre|wären|"},
+                       Text{"the #Composer Brothers hid#",             /*french*/"#les Frères compositeurs on caché#",                     /*spanish*/"los #hermanos compositores esconden#",  /*italian*/"i #fratelli Mortaldi# chiusero in un forziere",          /*german*/"im Versteck der #Gebrüder Brahmstein#, |wäre|wären|"},
     });
 
     hintTable[ZF_BOTTOM_FREESTANDING_POH] = HintText::Sometimes({
@@ -1782,7 +1782,7 @@ void HintTable_Init() {
     //
     // [LINKS_POCKET_BOSS] = HintText::Boss({
     //                    // obscure text
-    //                    Text{"#@'s pocket# rewards", /*french*/"#@ débute avec#", /*spanish*/"el #bolsillo de @# premia con", /*italian*/"le #tasche di @# premiano con", /*german*/"in #@s Tasche#, |wäre|wären|"},
+    //                    Text{"#@'s pocket# rewards", /*french*/"#@ débute avec#", /*spanish*/"el #bolsillo de @# premia con", /*italian*/"la #tasca di @# premia con", /*german*/"in #@s Tasche#, |wäre|wären|"},
     //                  },
     //                    // clear text
     //                           Text{"#@ already has#", /*french*/"#@ a déjà#", /*spanish*/"el #bolsillo de @ ya tiene#", /*italian*/"#@ già possiede#", /*german*/"bereits in #@s Besitz#, |wäre|wären|"}
@@ -2105,7 +2105,7 @@ void HintTable_Init() {
 
     hintTable[YOUR_POCKET] = HintText::Exclude({
                      // obscure text
-                     Text{"your pocket", /*french*/"tes poches", /*spanish*/"tu bolsillo", /*italian*/"le tue tasche", /*german*/"in deiner Tasche"},
+                     Text{"your pocket", /*french*/"tes poches", /*spanish*/"tu bolsillo", /*italian*/"la tua tasca", /*german*/"in deiner Tasche"},
     });
 
     /*--------------------------
