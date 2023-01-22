@@ -27,6 +27,7 @@ Actor* bomb                  = 0;
 EnElf* fairy                 = 0;
 
 void EnBox_rInit(Actor* thisx, GlobalContext* globalCtx) {
+    EnBox* this = (EnBox*)thisx;
     lastTrapChest = 0;
     //                                                                             treasure chest shop          final room
     u8 vanilla = (gSettingsContext.chestAppearance == CHESTAPPEARANCE_VANILLA) || (globalCtx->sceneNum == 16 && thisx->room != 6);
@@ -63,12 +64,17 @@ void EnBox_rInit(Actor* thisx, GlobalContext* globalCtx) {
             exObjectBankIdx = Object_Spawn(&rExtendedObjectCtx, OBJECT_CUSTOM_GENERAL_ASSETS);
         }
 
+        // Set mipmap count to 1 for both chest models
+        void** cmbMan = ZAR_GetCMBByIndex(this->zarInfo, 1);
+        *((u8*)(*cmbMan) + 0x59C) = 1;
+        *((u8*)(*cmbMan) + 0x530) = 1;
+
         if (type == CHEST_MAJOR) {
             cmabMan = ZAR_GetCMABByIndex(&rExtendedObjectCtx.status[exObjectBankIdx].zarInfo, TEXANIM_GOLD_CHEST);
-            TexAnim_Spawn(((EnBox*)thisx)->skelAnime.unk_28->unk_0C, cmabMan);
+            TexAnim_Spawn(this->skelAnime.unk_28->unk_0C, cmabMan);
         } else if (type == CHEST_SMALL_KEY) {
             cmabMan = ZAR_GetCMABByIndex(&rExtendedObjectCtx.status[exObjectBankIdx].zarInfo, TEXANIM_GRAY_CHEST);
-            TexAnim_Spawn(((EnBox*)thisx)->skelAnime.unk_28->unk_0C, cmabMan);
+            TexAnim_Spawn(this->skelAnime.unk_28->unk_0C, cmabMan);
         }
     }
 
