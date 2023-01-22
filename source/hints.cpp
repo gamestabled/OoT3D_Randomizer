@@ -691,7 +691,7 @@ static void CreateCompassAndGearMenuHints(const std::vector<Text>& rewardHints) 
     }
     std::vector<Text> baseCompassTexts = CreateBaseCompassTexts();
 
-    // Create compass messages
+    // Create Compass messages
     for (u32 dungeonId = DUNGEON_DEKU_TREE; dungeonId <= DUNGEON_ICE_CAVERN; dungeonId++) {
         // Add reward hint to compass message if necessary
         if (Settings::CompassesShowReward && dungeonId <= DUNGEON_SHADOW_TEMPLE) {
@@ -708,7 +708,7 @@ static void CreateCompassAndGearMenuHints(const std::vector<Text>& rewardHints) 
         CreateMessageFromTextObject(0x9DA + dungeonId, 0, 2, 3, baseCompassTexts[dungeonId]);
     }
 
-    // Create Gear Menu message
+    // Create Gear Menu messages
     for (u32 rewardId = R_KOKIRI_EMERALD; rewardId < DUNGEON_REWARDS_COUNT; rewardId++) {
         Text rewardText = formattedRewardHints[rewardId];
         rewardText.Replace(WAIT_FOR_INPUT(), "");
