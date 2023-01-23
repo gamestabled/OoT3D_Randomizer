@@ -6,6 +6,11 @@
 #include <3ds.h>
 
 namespace Music {
+
+// Index Variant
+// Shuffles and replaces sequence indexes with a patch
+// Does not support custom music, but does not require the original archive to be provided
+
 const u32 BGM_BASE  = 0x1000585;
 const int SEQ_COUNT = 85;
 
@@ -27,4 +32,21 @@ extern std::array<u32, SEQ_COUNT> seqOverridesMusic;
 
 void InitMusicRandomizer();
 void ShuffleSequences(int type);
+
+// Archive Variant
+// Shuffles and replaces files in the original sound archive
+// Requires the original archive to be provided, but avoids certain bugs and supports custom music
+
+typedef enum {
+    SARSHUFFLE_SUCCESS,
+    SARSHUFFLE_NO_DIRS,
+    SARSHUFFLE_SDMC_ARCHIVE_FAIL,
+    SARSHUFFLE_BCSAR_NOT_FOUND,
+} ArchiveShuffleResult;
+
+extern bool archiveFound;
+extern bool musicDirsCreated;
+void CreateMusicDirectories();
+int ShuffleMusic_Archive();
+
 } // namespace Music

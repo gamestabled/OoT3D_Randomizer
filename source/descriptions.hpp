@@ -354,10 +354,9 @@ extern string_view mirrorWorldRandomDesc;
 
 extern string_view musicRandoDesc;
 extern string_view shuffleBGMDesc;
-extern string_view fanfaresOffDesc;
-extern string_view onlyFanfaresDesc;
-extern string_view fanfaresOcarinaDesc;
-extern string_view shuffleOcaMusicDesc;
+extern string_view shuffleMelodiesDesc;
+extern string_view customMusicDesc;
+extern string_view customMusicOnlyDesc;
 
 extern string_view shuffleSFXOff;
 extern string_view shuffleSFXAll;

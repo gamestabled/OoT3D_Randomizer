@@ -5,6 +5,7 @@
 #include "item_list.hpp"
 #include "item_location.hpp"
 #include "location_access.hpp"
+#include "music.hpp"
 
 #define TICKS_PER_SEC 268123480.0
 
@@ -14,6 +15,7 @@ int main() {
     ItemTable_Init();
     LocationTable_Init();
     MenuInit();
+    Music::CreateMusicDirectories();
 
     u64 initialHoldTime = svcGetSystemTick();
     u64 intervalTime    = initialHoldTime;

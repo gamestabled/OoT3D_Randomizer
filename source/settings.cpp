@@ -1202,13 +1202,13 @@ std::vector<Option *> cosmeticOptions = {
     &MirrorWorld,
 };
 
-static std::vector<std::string> fanfareOptions = {"Off", "Only Fanfares", "Fanfares + \nOcarina Music"};
-static std::vector<std::string_view> fanfareDescriptions = {fanfaresOffDesc, onlyFanfaresDesc, fanfaresOcarinaDesc};
+static std::vector<std::string> musicOptions = {"Off", "On (Mixed)", "On (Grouped)", "On (Own)"};
 
-Option ShuffleMusic =    Option::Bool("Shuffle Music",            {"Off", "On"},                         {musicRandoDesc},                                                                                                                                     OptionCategory::Cosmetic);
-Option ShuffleBGM =      Option::U8  (2, "Shuffle BGM",           {"Off", "On (Grouped)", "On (Mixed)"}, {shuffleBGMDesc},                                                                                                                                     OptionCategory::Cosmetic,               2); // On (Mixed)
-Option ShuffleFanfares = Option::U8  (2, "Shuffle Fanfares",      {fanfareOptions},                      {fanfareDescriptions},                                                                                                                                OptionCategory::Cosmetic,               1); // Fanfares only
-Option ShuffleOcaMusic = Option::Bool(2, "Shuffle Ocarina Music", {"Off", "On"},                         {shuffleOcaMusicDesc},                                                                                                                                OptionCategory::Cosmetic,               ON);
+Option ShuffleMusic    = Option::Bool("Shuffle Music",                   {"Off", "On"},                             {musicRandoDesc},                                                                                                                          OptionCategory::Cosmetic);
+Option ShuffleBGM      = Option::U8  (2, "Shuffle BGM",                  {musicOptions},                            {shuffleBGMDesc},                                                                                                                          OptionCategory::Cosmetic,               SHUFFLEMUSIC_MIXED);
+Option ShuffleMelodies = Option::U8  (2, "Shuffle Melodies",             {musicOptions},                            {shuffleMelodiesDesc},                                                                                                                     OptionCategory::Cosmetic,               SHUFFLEMUSIC_GROUPED);
+Option CustomMusic     = Option::Bool(2, "Custom Music",                 {"Off", "On"},                             {customMusicDesc},                                                                                                                         OptionCategory::Cosmetic);
+Option CustomMusicOnly = Option::Bool(4, "Custom Music Only",            {"Off", "On"},                             {customMusicOnlyDesc},                                                                                                                     OptionCategory::Cosmetic);
 
 Option ShuffleSFX              = Option::U8  ("Shuffle SFX",             {"Off", "All", "Scene Specific", "Chaos"}, {shuffleSFXOff, shuffleSFXAll, shuffleSFXSceneSpecific, shuffleSFXChaos},                                                                  OptionCategory::Cosmetic);
 Option ShuffleSFXFootsteps     = Option::Bool(2, "Include Footsteps",    {"No", "Yes"},                             {""},                                                                                                                                      OptionCategory::Cosmetic,               ON);
@@ -1218,8 +1218,9 @@ Option ShuffleSFXCategorically = Option::Bool(2, "Categorical Shuffle",  {"Off",
 std::vector<Option*> audioOptions = {
     &ShuffleMusic,
     &ShuffleBGM,
-    &ShuffleFanfares,
-    &ShuffleOcaMusic,
+    &ShuffleMelodies,
+    &CustomMusic,
+    &CustomMusicOnly,
     &ShuffleSFX,
     &ShuffleSFXFootsteps,
     &ShuffleSFXLinkVoice,
@@ -2431,15 +2432,20 @@ void ForceChange(u32 kDown, Option* currentSetting) {
     // Audio
     if (ShuffleMusic) {
         ShuffleBGM.Unhide();
-        ShuffleFanfares.Unhide();
-        if (ShuffleFanfares.Is(2)) // Fanfares + ocarina
-            ShuffleOcaMusic.Hide();
-        else
-            ShuffleOcaMusic.Unhide();
+        ShuffleMelodies.Unhide();
+        CustomMusic.Unhide();
+        if (CustomMusic) {
+            CustomMusicOnly.Unhide();
+        } else {
+            CustomMusicOnly.Hide();
+            CustomMusicOnly.SetSelectedIndex(OFF);
+        }
     } else {
         ShuffleBGM.Hide();
-        ShuffleFanfares.Hide();
-        ShuffleOcaMusic.Hide();
+        ShuffleMelodies.Hide();
+        CustomMusic.Hide();
+        CustomMusicOnly.Hide();
+        CustomMusicOnly.SetSelectedIndex(OFF);
     }
 
     if (ShuffleSFX) {
@@ -2874,26 +2880,21 @@ void UpdateSettings() {
 
     InitMusicRandomizer();
     if (ShuffleMusic) {
-        if (ShuffleBGM.Is(1)) {
-            Music::ShuffleSequences(Music::SeqType::SEQ_BGM_WORLD);
-            Music::ShuffleSequences(Music::SeqType::SEQ_BGM_EVENT);
-            Music::ShuffleSequences(Music::SeqType::SEQ_BGM_BATTLE);
-        } else if (ShuffleBGM.Is(2)) {
+        if (ShuffleBGM.Is(SHUFFLEMUSIC_MIXED)) {
             Music::ShuffleSequences(Music::SeqType::SEQ_BGM_WORLD | Music::SeqType::SEQ_BGM_EVENT |
                                     Music::SeqType::SEQ_BGM_BATTLE);
             Music::ShuffleSequences(Music::SeqType::SEQ_BGM_ERROR);
+        } else if (ShuffleBGM.Is(SHUFFLEMUSIC_GROUPED)) {
+            Music::ShuffleSequences(Music::SeqType::SEQ_BGM_WORLD);
+            Music::ShuffleSequences(Music::SeqType::SEQ_BGM_EVENT);
+            Music::ShuffleSequences(Music::SeqType::SEQ_BGM_BATTLE);
         }
 
-        if (ShuffleFanfares.Is(2)) {
+        if (ShuffleMelodies.Is(SHUFFLEMUSIC_MIXED)) {
             Music::ShuffleSequences(Music::SeqType::SEQ_FANFARE | Music::SeqType::SEQ_OCARINA);
-        } else {
-            if (ShuffleFanfares.Is(1)) {
-                Music::ShuffleSequences(Music::SeqType::SEQ_FANFARE);
-            }
-
-            if (ShuffleOcaMusic) {
-                Music::ShuffleSequences(Music::SeqType::SEQ_OCARINA);
-            }
+        } else if (ShuffleMelodies.Is(SHUFFLEMUSIC_GROUPED)) {
+            Music::ShuffleSequences(Music::SeqType::SEQ_FANFARE);
+            Music::ShuffleSequences(Music::SeqType::SEQ_OCARINA);
         }
     }
 

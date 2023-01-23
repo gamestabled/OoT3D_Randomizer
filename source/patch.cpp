@@ -407,10 +407,14 @@ bool WriteAllPatches() {
     |         rBGMOverrides          |
     ---------------------------------*/
 
-    patchOffset = V_TO_P(patchSymbols.RBGMOVERRIDES_ADDR);
-    patchSize   = sizeof(Music::seqOverridesMusic);
-    if (!WritePatch(patchOffset, patchSize, (char*)Music::seqOverridesMusic.data(), code, bytesWritten, totalRW, buf)) {
-        return false;
+    // Only write patch if index variant of music shuffle is used
+    if (!Music::archiveFound) {
+        patchOffset = V_TO_P(patchSymbols.RBGMOVERRIDES_ADDR);
+        patchSize   = sizeof(Music::seqOverridesMusic);
+        if (!WritePatch(patchOffset, patchSize, (char*)Music::seqOverridesMusic.data(), code, bytesWritten, totalRW,
+                        buf)) {
+            return false;
+        }
     }
 
     /*---------------------------------

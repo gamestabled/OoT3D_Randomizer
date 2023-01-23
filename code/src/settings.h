@@ -368,6 +368,13 @@ typedef enum {
 } StartingBiggoronSwordSetting;
 
 typedef enum {
+    SHUFFLEMUSIC_OFF,
+    SHUFFLEMUSIC_MIXED,
+    SHUFFLEMUSIC_GROUPED,
+    SHUFFLEMUSIC_OWN,
+} ShuffleMusicSetting;
+
+typedef enum {
     SHUFFLESFX_OFF,
     SHUFFLESFX_ALL,
     SHUFFLESFX_SCENESPECIFIC,
