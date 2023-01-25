@@ -145,6 +145,18 @@ void CreateMessage(u32 textId, u32 unk_04, u32 textBoxType, u32 textBoxPosition,
                    std::string NAFrenchText, std::string NASpanishText, std::string EUREnglishText,
                    std::string EURFrenchText, std::string EURSpanishText, std::string EURItalianText,
                    std::string EURGermanText) {
+#ifdef ENABLE_DEBUG
+    static std::vector<u32> usedTextIds;
+    if (messageEntries.empty()) {
+        usedTextIds.clear();
+    }
+    if (std::find(usedTextIds.begin(), usedTextIds.end(), textId) != usedTextIds.end()) {
+        CitraPrint("Multiple custom messages use text id " + std::to_string(textId));
+        printf("\x1b[31m\x1b[9;10H!!Text ID error!!         \x1b[37m");
+    } else {
+        usedTextIds.push_back(textId);
+    }
+#endif
     MessageEntry newEntry = { textId, unk_04, textBoxType, textBoxPosition, { 0 } };
 
     if (Settings::Region == REGION_NA) {

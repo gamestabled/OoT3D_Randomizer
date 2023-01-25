@@ -117,7 +117,7 @@ bool WritePatch(u32 patchOffset, s32 patchSize, char* patchDataPtr, Handle& code
         patchSize -= PATCH_SIZE_MAX;
     }
 #ifdef ENABLE_DEBUG
-    CitraPrint(std::to_string(totalRW));
+    CitraPrint("patch.cpp: totalRW=" + std::to_string(totalRW));
 #endif
     return true;
 }
@@ -205,7 +205,7 @@ bool WriteAllPatches() {
 
         totalRW += bytesWritten - 3; // -3 to overwrite EOF
 #ifdef ENABLE_DEBUG
-        CitraPrint(std::to_string(totalRW));
+        CitraPrint("patch.cpp: totalRW=" + std::to_string(totalRW));
 #endif
     }
 
