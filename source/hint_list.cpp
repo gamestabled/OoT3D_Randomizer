@@ -1259,7 +1259,7 @@ void HintTable_Init() {
 
     hintTable[JUNK08] = HintText::Junk({// SFX: Ganondorf reflecting light ball
                      // obscure text
-                     Text{"'Member when Ganon was a blue pig?^{43A}I 'member.", /*french*/"Dans mon temps, Ganon était un cochon bleu...^{43A}Pff! Les jeunes de nos jours, et leur Ganondorf!", /*spanish*/"¿T'acuerdas cuando Ganon era un cerdo azul?^{43A}Qué tiempos, chico.", /*italian*/"Mi ricordo i bei vecchi tempi, quando Ganon era un cinghiale blu.^{43A}Ah, i giovani d'oggi e il loro Ganondorf!", /*german*/"Weisste' noch als Ganon nur 'nen blaues Schwein war?^{43A}Damals war alles besser, kein unnötiger Schnickschnack!"},
+                     Text{"'Member when Ganon was a blue pig?^{43A}I 'member.", /*french*/"Dans mon temps, Ganon était un cochon bleu...^{43A}Pff! Les jeunes de nos jours, et leur Ganondorf!", /*spanish*/"¿T'acuerdas cuando Ganon era un cerdo azul?^{43A}Qué tiempos, chico.", /*italian*/"Mi ricordo i bei vecchi tempi, quando Ganon era un cinghiale blu.^{43A}Ah, i giovani d'oggi e il loro Ganondorf!", /*german*/"Weißte' noch als Ganon nur 'n blaues Schwein war?^{43A}Damals war alles besser, kein unnötiger Schnickschnack!"},
     });
 
     hintTable[JUNK09] = HintText::Junk({
