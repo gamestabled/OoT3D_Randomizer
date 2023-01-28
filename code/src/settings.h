@@ -15,6 +15,12 @@ typedef enum {
 } SkipSetting;
 
 typedef enum {
+    TOGGLE_ALL_DISABLED,
+    TOGGLE_ALL_ENABLED,
+    TOGGLE_CHOOSE,
+} ToggleSetting;
+
+typedef enum {
     LOGIC_GLITCHLESS,
     LOGIC_GLITCHED,
     LOGIC_NONE,
