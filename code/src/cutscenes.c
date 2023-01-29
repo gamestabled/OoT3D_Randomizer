@@ -212,7 +212,7 @@ void Cutscene_OverrideDekuTree(void) {
     gSaveContext.nextCutsceneIndex    = 0x0;
 }
 
-void Custcene_OverrideDodongosCavern(void) {
+void Cutscene_OverrideDodongosCavern(void) {
     if (EventCheck(0x25) == 0) {
         EventSet(0x25);
         ItemOverride_PushDungeonReward(DUNGEON_DODONGOS_CAVERN);
@@ -232,7 +232,7 @@ void Custcene_OverrideDodongosCavern(void) {
     gSaveContext.nextCutsceneIndex    = 0x0;
 }
 
-void Custcene_OverrideJabuJabusBelly(void) {
+void Cutscene_OverrideJabuJabusBelly(void) {
     if (EventCheck(0x37) == 0) {
         EventSet(0x37);
         ItemOverride_PushDungeonReward(DUNGEON_JABUJABUS_BELLY);
@@ -253,7 +253,7 @@ void Custcene_OverrideJabuJabusBelly(void) {
     gSaveContext.nextCutsceneIndex    = 0x0;
 }
 
-void Custcene_OverrideForestTemple(void) {
+void Cutscene_OverrideForestTemple(void) {
     if (EventCheck(0x48) == 0) {
         EventSet(0x48);
         ItemOverride_PushDungeonReward(DUNGEON_FOREST_TEMPLE);
@@ -286,7 +286,7 @@ void Cutscene_OverrideFireTemple(void) {
     gSaveContext.nextCutsceneIndex    = 0x0;
 }
 
-void Custcene_OverrideWaterTemple(void) {
+void Cutscene_OverrideWaterTemple(void) {
     if (EventCheck(0x4A) == 0) {
         EventSet(0x4A);
         ItemOverride_PushDungeonReward(DUNGEON_WATER_TEMPLE);
@@ -299,7 +299,7 @@ void Custcene_OverrideWaterTemple(void) {
     gSaveContext.nextCutsceneIndex    = 0x0;
 }
 
-void Custcene_OverrideSpiritTemple(void) {
+void Cutscene_OverrideSpiritTemple(void) {
     if (EventCheck(0x47) == 0) {
         EventSet(0x47);
         ItemOverride_PushDungeonReward(DUNGEON_SPIRIT_TEMPLE);
@@ -311,7 +311,7 @@ void Custcene_OverrideSpiritTemple(void) {
     gSaveContext.nextCutsceneIndex    = 0x0;
 }
 
-void Custcene_OverrideShadowTemple(void) {
+void Cutscene_OverrideShadowTemple(void) {
     if (EventCheck(0x46) == 0) {
         EventSet(0x46);
         ItemOverride_PushDungeonReward(DUNGEON_SHADOW_TEMPLE);
@@ -332,25 +332,25 @@ void Cutscene_BlueWarpOverride(void) {
             Cutscene_OverrideDekuTree();
             break;
         case DUNGEON_DODONGOS_CAVERN:
-            Custcene_OverrideDodongosCavern();
+            Cutscene_OverrideDodongosCavern();
             break;
         case DUNGEON_JABUJABUS_BELLY:
-            Custcene_OverrideJabuJabusBelly();
+            Cutscene_OverrideJabuJabusBelly();
             break;
         case DUNGEON_FOREST_TEMPLE:
-            Custcene_OverrideForestTemple();
+            Cutscene_OverrideForestTemple();
             break;
         case DUNGEON_FIRE_TEMPLE:
             Cutscene_OverrideFireTemple();
             break;
         case DUNGEON_WATER_TEMPLE:
-            Custcene_OverrideWaterTemple();
+            Cutscene_OverrideWaterTemple();
             break;
         case DUNGEON_SPIRIT_TEMPLE:
-            Custcene_OverrideSpiritTemple();
+            Cutscene_OverrideSpiritTemple();
             break;
         case DUNGEON_SHADOW_TEMPLE:
-            Custcene_OverrideShadowTemple();
+            Cutscene_OverrideShadowTemple();
             break;
     }
 }
