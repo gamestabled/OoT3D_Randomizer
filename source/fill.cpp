@@ -969,7 +969,7 @@ void ClearProgress() {
     printf("\x1b[7;32H    ");                                // Done
     printf("\x1b[8;10H                    ");                // Placing Items...Done
     printf("\x1b[9;10H                              ");      // Calculating Playthrough...Done
-    printf("\x1b[10;10H                     ");              // Creating Hints...Done
+    printf("\x1b[10;10H                     ");              // Creating Gossip Stone Hints...Done
     printf("\x1b[11;10H                                  "); // Writing Spoiler Log...Done
 }
 
@@ -1111,9 +1111,10 @@ int Fill() {
             CreateItemOverrides();
             CreateEntranceOverrides();
             CreateAlwaysIncludedMessages();
+            CreateMiscHints();
             if (GossipStoneHints.IsNot(HINTS_NO_HINTS)) {
-                printf("\x1b[10;10HCreating Hints...");
-                CreateAllHints();
+                printf("\x1b[10;10HCreating Gossip Stone Hints...");
+                CreateGossipStoneHints();
                 printf("Done");
             }
             if (ShuffleMerchants.Is(SHUFFLEMERCHANTS_HINTS)) {

@@ -145,6 +145,18 @@ void CreateMessage(u32 textId, u32 unk_04, u32 textBoxType, u32 textBoxPosition,
                    std::string NAFrenchText, std::string NASpanishText, std::string EUREnglishText,
                    std::string EURFrenchText, std::string EURSpanishText, std::string EURItalianText,
                    std::string EURGermanText) {
+#ifdef ENABLE_DEBUG
+    static std::vector<u32> usedTextIds;
+    if (messageEntries.empty()) {
+        usedTextIds.clear();
+    }
+    if (std::find(usedTextIds.begin(), usedTextIds.end(), textId) != usedTextIds.end()) {
+        CitraPrint("Multiple custom messages use text id " + std::to_string(textId));
+        printf("\x1b[31m\x1b[9;10H!!Text ID error!!         \x1b[37m");
+    } else {
+        usedTextIds.push_back(textId);
+    }
+#endif
     MessageEntry newEntry = { textId, unk_04, textBoxType, textBoxPosition, { 0 } };
 
     if (Settings::Region == REGION_NA) {
@@ -353,26 +365,8 @@ void CreateAlwaysIncludedMessages() {
             GermanDungeonGenitiv[DUNGEON_INSIDE_GANONS_CASTLE] + COLOR(QM_WHITE) + "erhalten!" + INSTANT_TEXT_OFF() +
             MESSAGE_END());
     // Compasses
-    for (u32 dungeon = DUNGEON_DEKU_TREE; dungeon <= DUNGEON_ICE_CAVERN; dungeon++) {
-        CreateMessage(0x9DA + dungeon, 0, 2, 3,
-                      UNSKIPPABLE() + ITEM_OBTAINED(ITEM_COMPASS) + INSTANT_TEXT_ON() + "You got the " +
-                          COLOR(DungeonColors[dungeon]) + EnglishDungeonNames[dungeon] + NEWLINE() + "Compass" +
-                          COLOR(QM_WHITE) + "!" + INSTANT_TEXT_OFF() + MESSAGE_END(),
-                      UNSKIPPABLE() + ITEM_OBTAINED(ITEM_COMPASS) + INSTANT_TEXT_ON() + "Vous trouvez la " +
-                          COLOR(DungeonColors[dungeon]) + "boussole " + NEWLINE() + FrenchDungeonArticles[dungeon] +
-                          FrenchDungeonNames[dungeon] + COLOR(QM_WHITE) + "!" + INSTANT_TEXT_OFF() + MESSAGE_END(),
-                      UNSKIPPABLE() + ITEM_OBTAINED(ITEM_COMPASS) + INSTANT_TEXT_ON() + "¡Tienes la " +
-                          COLOR(DungeonColors[dungeon]) + "brújula " + SpanishDungeonArticles[dungeon] + NEWLINE() +
-                          SpanishDungeonNames[dungeon] + COLOR(QM_WHITE) + "!" + INSTANT_TEXT_OFF() + MESSAGE_END(),
-                      UNSKIPPABLE() + ITEM_OBTAINED(ITEM_COMPASS) + INSTANT_TEXT_ON() + "Hai ottenuto la " +
-                          COLOR(DungeonColors[dungeon]) + "bussola " + ItalianDungeonArticles[dungeon] + NEWLINE() +
-                          ItalianDungeonNames[dungeon] + COLOR(QM_WHITE) + "!" + INSTANT_TEXT_OFF() + MESSAGE_END(),
-                      UNSKIPPABLE() + ITEM_OBTAINED(ITEM_COMPASS) + INSTANT_TEXT_ON() + "Du hast den " +
-                          COLOR(DungeonColors[dungeon]) + "Kompass " + COLOR(QM_WHITE) +
-                          GermanDungeonArticles[dungeon] + NEWLINE() + COLOR(DungeonColors[dungeon]) +
-                          GermanDungeonNames[dungeon] + GermanDungeonGenitiv[dungeon] + COLOR(QM_WHITE) + "erhalten!" +
-                          INSTANT_TEXT_OFF() + MESSAGE_END());
-    }
+    //   Moved to Hints::CreateCompassAndGearMenuHints
+
     // Maps
     for (u32 dungeon = DUNGEON_DEKU_TREE; dungeon <= DUNGEON_ICE_CAVERN; dungeon++) {
         CreateMessage(0x9E4 + dungeon, 0, 2, 3,
@@ -1007,6 +1001,31 @@ void CreateAlwaysIncludedMessages() {
         rutoDialog.Replace("$", ""); // Plural marker
         CreateMessageFromTextObject(0x4050, 0, 2, 3, AddColorsAndFormat(rutoDialog, { itemColor }));
     }
+}
+
+std::vector<Text> CreateBaseCompassTexts() {
+    std::vector<Text> compassTexts = {};
+    for (u32 dungeon = DUNGEON_DEKU_TREE; dungeon <= DUNGEON_ICE_CAVERN; dungeon++) {
+        compassTexts.push_back(Text{
+            UNSKIPPABLE() + ITEM_OBTAINED(ITEM_COMPASS) + INSTANT_TEXT_ON() + "You got the " +
+                COLOR(DungeonColors[dungeon]) + EnglishDungeonNames[dungeon] + NEWLINE() + "Compass" + COLOR(QM_WHITE) +
+                "!" + INSTANT_TEXT_OFF(),
+            UNSKIPPABLE() + ITEM_OBTAINED(ITEM_COMPASS) + INSTANT_TEXT_ON() + "Vous trouvez la " +
+                COLOR(DungeonColors[dungeon]) + "boussole " + NEWLINE() + FrenchDungeonArticles[dungeon] +
+                FrenchDungeonNames[dungeon] + COLOR(QM_WHITE) + "!" + INSTANT_TEXT_OFF(),
+            UNSKIPPABLE() + ITEM_OBTAINED(ITEM_COMPASS) + INSTANT_TEXT_ON() + "¡Tienes la " +
+                COLOR(DungeonColors[dungeon]) + "brújula " + SpanishDungeonArticles[dungeon] + NEWLINE() +
+                SpanishDungeonNames[dungeon] + COLOR(QM_WHITE) + "!" + INSTANT_TEXT_OFF(),
+            UNSKIPPABLE() + ITEM_OBTAINED(ITEM_COMPASS) + INSTANT_TEXT_ON() + "Hai ottenuto la " +
+                COLOR(DungeonColors[dungeon]) + "bussola " + ItalianDungeonArticles[dungeon] + NEWLINE() +
+                ItalianDungeonNames[dungeon] + COLOR(QM_WHITE) + "!" + INSTANT_TEXT_OFF(),
+            UNSKIPPABLE() + ITEM_OBTAINED(ITEM_COMPASS) + INSTANT_TEXT_ON() + "Du hast den " +
+                COLOR(DungeonColors[dungeon]) + "Kompass " + COLOR(QM_WHITE) + GermanDungeonArticles[dungeon] +
+                NEWLINE() + COLOR(DungeonColors[dungeon]) + GermanDungeonNames[dungeon] +
+                GermanDungeonGenitiv[dungeon] + COLOR(QM_WHITE) + "erhalten!" + INSTANT_TEXT_OFF(),
+        });
+    }
+    return compassTexts;
 }
 
 Text AddColorsAndFormat(Text text, const std::vector<u8>& colors /*= {}*/) {

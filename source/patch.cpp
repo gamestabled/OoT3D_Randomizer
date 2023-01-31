@@ -117,7 +117,7 @@ bool WritePatch(u32 patchOffset, s32 patchSize, char* patchDataPtr, Handle& code
         patchSize -= PATCH_SIZE_MAX;
     }
 #ifdef ENABLE_DEBUG
-    CitraPrint(std::to_string(totalRW));
+    CitraPrint("patch.cpp: totalRW=" + std::to_string(totalRW));
 #endif
     return true;
 }
@@ -205,7 +205,7 @@ bool WriteAllPatches() {
 
         totalRW += bytesWritten - 3; // -3 to overwrite EOF
 #ifdef ENABLE_DEBUG
-        CitraPrint(std::to_string(totalRW));
+        CitraPrint("patch.cpp: totalRW=" + std::to_string(totalRW));
 #endif
     }
 
@@ -332,11 +332,13 @@ bool WriteAllPatches() {
     |     rDungeonRewardOverrides    |
     ---------------------------------*/
     // Write rDungeonRewardOverrides to the patch
-    patchOffset = V_TO_P(patchSymbols.RDUNGEONREWARDOVERRIDES_ADDR);
-    patchSize   = sizeof(Settings::rDungeonRewardOverrides);
-    if (!WritePatch(patchOffset, patchSize, (char*)(&Settings::rDungeonRewardOverrides), code, bytesWritten, totalRW,
-                    buf)) {
-        return false;
+    if (Settings::ShuffleRewards.Is(REWARDSHUFFLE_END_OF_DUNGEON)) {
+        patchOffset = V_TO_P(patchSymbols.RDUNGEONREWARDOVERRIDES_ADDR);
+        patchSize   = sizeof(Settings::rDungeonRewardOverrides);
+        if (!WritePatch(patchOffset, patchSize, (char*)(&Settings::rDungeonRewardOverrides), code, bytesWritten,
+                        totalRW, buf)) {
+            return false;
+        }
     }
 
     /*--------------------------------

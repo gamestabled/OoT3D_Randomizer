@@ -13,6 +13,8 @@
 #include "entrance.hpp"
 #include "settings.hpp"
 
+#include "../code/src/dungeon_rewards.h"
+
 using namespace CustomMessages;
 using namespace Logic;
 using namespace Settings;
@@ -529,12 +531,13 @@ static void CreateGanonText() {
 
 // Find the location which has the given itemKey and create the generic altar text for the reward
 static Text BuildDungeonRewardText(ItemID itemID, const ItemKey itemKey) {
-    LocationKey location = FilterFromPool(
-        allLocations, [itemKey](const LocationKey loc) { return Location(loc)->GetPlacedItemKey() == itemKey; })[0];
+    std::vector<LocationKey> itemKeyLocations = FilterFromPool(
+        allLocations, [itemKey](const LocationKey loc) { return Location(loc)->GetPlacedItemKey() == itemKey; });
+    LocationKey location = itemKeyLocations.empty() ? LINKS_POCKET : itemKeyLocations[0];
     Location(location)->SetAsHinted();
     // Calling ITEM_OBTAINED draws the passed in itemID to the left side of the textbox
-    return Text() + ITEM_OBTAINED(itemID) + "#" +
-           GetHintRegion(Location(location)->GetParentRegionKey())->GetHint().GetText() + "#...^";
+    return Text() + "^" + ITEM_OBTAINED(itemID) + "#" +
+           GetHintRegion(Location(location)->GetParentRegionKey())->GetHint().GetText() + "#...";
 }
 
 static Text BuildDoorOfTimeText() {
@@ -640,48 +643,101 @@ static Text BuildGanonBossKeyText() {
     return Text() + ITEM_OBTAINED(ITEM_KEY_BOSS) + ganonBossKeyText + "^";
 }
 
-static void CreateAltarText() {
+static void CreateAltarText(const std::vector<Text>& rewardHints) {
 
     // Child Altar Text
-    Text childText =
-        Hint(SPIRITUAL_STONE_TEXT_START).GetText() + "^" +
-        // Spiritual Stones
-        (StartingKokiriEmerald.Value<u8>() ? Text{ "##" }
-                                           : BuildDungeonRewardText(ITEM_KOKIRI_EMERALD, KOKIRI_EMERALD)) +
-        (StartingGoronRuby.Value<u8>() ? Text{ "##" } : BuildDungeonRewardText(ITEM_GORON_RUBY, GORON_RUBY)) +
-        (StartingZoraSapphire.Value<u8>() ? Text{ "##" } : BuildDungeonRewardText(ITEM_ZORA_SAPPHIRE, ZORA_SAPPHIRE)) +
-        // How to open Door of Time, the event trigger is necessary to read the altar multiple times
-        BuildDoorOfTimeText() + EVENT_TRIGGER();
+    Text childText = Hint(SPIRITUAL_STONE_TEXT_START).GetText() +
+                     // Spiritual Stones areas, skipped if already hinted by compasses.
+                     (CompassesShowReward.Is(OFF)
+                          ? (StartingKokiriEmerald.Value<u8>() ? Text{ "##" } : rewardHints[R_KOKIRI_EMERALD]) +
+                                (StartingGoronRuby.Value<u8>() ? Text{ "##" } : rewardHints[R_GORON_RUBY]) +
+                                (StartingZoraSapphire.Value<u8>() ? Text{ "##" } : rewardHints[R_ZORA_SAPPHIRE])
+                          : Text{ "######" }) +
+                     // How to open Door of Time, the event trigger is necessary to read the altar multiple times
+                     "^" + BuildDoorOfTimeText() + EVENT_TRIGGER();
+
     CreateMessageFromTextObject(0x7040, 0, 2, 3, AddColorsAndFormat(childText, { QM_GREEN, QM_RED, QM_BLUE }));
 
     // Adult Altar Text
-    Text adultText =
-        Hint(ADULT_ALTAR_TEXT_START).GetText() + "^" +
-        // Medallion Areas
-        (StartingLightMedallion.Value<u8>() ? Text{ "##" }
-                                            : BuildDungeonRewardText(ITEM_MEDALLION_LIGHT, LIGHT_MEDALLION)) +
-        (StartingForestMedallion.Value<u8>() ? Text{ "##" }
-                                             : BuildDungeonRewardText(ITEM_MEDALLION_FOREST, FOREST_MEDALLION)) +
-        (StartingFireMedallion.Value<u8>() ? Text{ "##" }
-                                           : BuildDungeonRewardText(ITEM_MEDALLION_FIRE, FIRE_MEDALLION)) +
-        (StartingWaterMedallion.Value<u8>() ? Text{ "##" }
-                                            : BuildDungeonRewardText(ITEM_MEDALLION_WATER, WATER_MEDALLION)) +
-        (StartingSpiritMedallion.Value<u8>() ? Text{ "##" }
-                                             : BuildDungeonRewardText(ITEM_MEDALLION_SPIRIT, SPIRIT_MEDALLION)) +
-        (StartingShadowMedallion.Value<u8>() ? Text{ "##" }
-                                             : BuildDungeonRewardText(ITEM_MEDALLION_SHADOW, SHADOW_MEDALLION)) +
+    Text adultText = Hint(ADULT_ALTAR_TEXT_START).GetText() +
+                     // Medallions areas, skipped if already hinted by compasses.
+                     (CompassesShowReward.Is(OFF)
+                          ? (StartingLightMedallion.Value<u8>() ? Text{ "##" } : rewardHints[R_LIGHT_MEDALLION]) +
+                                (StartingForestMedallion.Value<u8>() ? Text{ "##" } : rewardHints[R_FOREST_MEDALLION]) +
+                                (StartingFireMedallion.Value<u8>() ? Text{ "##" } : rewardHints[R_FIRE_MEDALLION]) +
+                                (StartingWaterMedallion.Value<u8>() ? Text{ "##" } : rewardHints[R_WATER_MEDALLION]) +
+                                (StartingSpiritMedallion.Value<u8>() ? Text{ "##" } : rewardHints[R_SPIRIT_MEDALLION]) +
+                                (StartingShadowMedallion.Value<u8>() ? Text{ "##" } : rewardHints[R_SHADOW_MEDALLION])
+                          : Text{ "############" }) +
+                     "^" +
+                     // Bridge requirement
+                     BuildBridgeReqsText() +
+                     // Ganons Boss Key requirement
+                     BuildGanonBossKeyText() +
+                     // End
+                     Hint(ADULT_ALTAR_TEXT_END).GetText() + EVENT_TRIGGER();
 
-        // Bridge requirement
-        BuildBridgeReqsText() +
-
-        // Ganons Boss Key requirement
-        BuildGanonBossKeyText() +
-
-        // End
-        Hint(ADULT_ALTAR_TEXT_END).GetText() + EVENT_TRIGGER();
     CreateMessageFromTextObject(0x7088, 0, 2, 3,
                                 AddColorsAndFormat(adultText, { QM_RED, QM_YELLOW, QM_GREEN, QM_RED, QM_BLUE, QM_YELLOW,
                                                                 QM_PINK, QM_RED, QM_RED, QM_RED, QM_RED }));
+}
+
+static void CreateCompassAndGearMenuHints(const std::vector<Text>& rewardHints) {
+    const std::vector<u8>& rewardColors    = { QM_GREEN, QM_RED,    QM_BLUE, QM_GREEN, QM_RED,
+                                               QM_BLUE,  QM_YELLOW, QM_PINK, QM_YELLOW };
+    std::vector<Text> formattedRewardHints = {};
+    for (u32 rewardId = R_KOKIRI_EMERALD; rewardId < DUNGEON_REWARDS_COUNT; rewardId++) {
+        formattedRewardHints.push_back(AddColorsAndFormat(rewardHints[rewardId], { rewardColors[rewardId] }));
+    }
+    std::vector<Text> baseCompassTexts = CreateBaseCompassTexts();
+
+    // Create Compass messages
+    for (u32 dungeonId = DUNGEON_DEKU_TREE; dungeonId <= DUNGEON_ICE_CAVERN; dungeonId++) {
+        // Add reward hint to compass message if necessary
+        if (Settings::CompassesShowReward && dungeonId <= DUNGEON_SHADOW_TEMPLE) {
+            // If rewards are at End of Dungeons, the text will reveal what reward is at the end of the dungeon.
+            // Otherwise, the text will reveal where the reward from that dungeon is located.
+            u32 rewardId = Settings::ShuffleRewards.Is(REWARDSHUFFLE_END_OF_DUNGEON)
+                               ? Settings::rDungeonRewardOverrides[dungeonId]
+                               : dungeonId;
+
+            baseCompassTexts[dungeonId] = baseCompassTexts[dungeonId] + formattedRewardHints[rewardId];
+        } else {
+            baseCompassTexts[dungeonId] = baseCompassTexts[dungeonId] + MESSAGE_END();
+        }
+        CreateMessageFromTextObject(0x9DA + dungeonId, 0, 2, 3, baseCompassTexts[dungeonId]);
+    }
+
+    // Create Gear Menu messages
+    for (u32 rewardId = R_KOKIRI_EMERALD; rewardId < DUNGEON_REWARDS_COUNT; rewardId++) {
+        Text rewardText = formattedRewardHints[rewardId];
+        rewardText.Replace(WAIT_FOR_INPUT(), "");
+        rewardText.Replace(MESSAGE_END(), SHOP_MESSAGE_BOX());
+        rewardText = rewardText + MESSAGE_END();
+        CreateMessageFromTextObject(0x7300 + rewardId, 0, 2, 3, rewardText);
+    }
+}
+
+void CreateMiscHints() {
+    const std::vector<Text>& rewardHints = {
+        BuildDungeonRewardText(ITEM_KOKIRI_EMERALD, KOKIRI_EMERALD),
+        BuildDungeonRewardText(ITEM_GORON_RUBY, GORON_RUBY),
+        BuildDungeonRewardText(ITEM_ZORA_SAPPHIRE, ZORA_SAPPHIRE),
+        BuildDungeonRewardText(ITEM_MEDALLION_FOREST, FOREST_MEDALLION),
+        BuildDungeonRewardText(ITEM_MEDALLION_FIRE, FIRE_MEDALLION),
+        BuildDungeonRewardText(ITEM_MEDALLION_WATER, WATER_MEDALLION),
+        BuildDungeonRewardText(ITEM_MEDALLION_SPIRIT, SPIRIT_MEDALLION),
+        BuildDungeonRewardText(ITEM_MEDALLION_SHADOW, SHADOW_MEDALLION),
+        BuildDungeonRewardText(ITEM_MEDALLION_LIGHT, LIGHT_MEDALLION),
+    };
+
+    if (GanonHints) {
+        CreateGanonText();
+    }
+    if (ToTAltarHints) {
+        CreateAltarText(rewardHints);
+    }
+    CreateCompassAndGearMenuHints(rewardHints);
 }
 
 void CreateMerchantsHints() {
@@ -713,10 +769,7 @@ void CreateMerchantsHints() {
                                 AddColorsAndFormat(carpetSalesmanTextTwo, { QM_RED, QM_YELLOW, QM_RED }));
 }
 
-void CreateAllHints() {
-
-    CreateGanonText();
-    CreateAltarText();
+void CreateGossipStoneHints() {
 
     PlacementLog_Msg("\nNOW CREATING HINTS\n");
     const HintSetting& hintSetting = hintSettingTable[Settings::HintDistribution.Value<u8>()];

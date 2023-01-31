@@ -1,7 +1,6 @@
 #include "gfx.h"
 #include "3ds/svc.h"
 #include "z3D/z3D.h"
-#include "dungeon_rewards.h"
 #include "rHeap.h"
 #include "custom_models.h"
 #include "objects.h"
@@ -154,7 +153,6 @@ static char* spoilerEntranceGroupNames[] = {
 typedef enum {
     PAGE_SEEDHASH,
     PAGE_DUNGEONITEMS,
-    PAGE_DUNGEONREWARDS,
     PAGE_SPHERES,
     PAGE_ITEMTRACKER_ALL,
     PAGE_ITEMTRACKER_GROUPS,
@@ -517,20 +515,6 @@ static void Gfx_DrawDungeonItems(void) {
     }
 }
 
-static void Gfx_DrawDungeonRewards(void) {
-    Draw_DrawString(10, 16, COLOR_TITLE, "Dungeon Rewards");
-    for (u32 dungeonId = 0; dungeonId <= DUNGEON_SHADOW_TEMPLE; ++dungeonId) {
-        u8 yPos = 30 + (dungeonId * 13);
-        Draw_DrawString(24, yPos, COLOR_WHITE, DungeonNames[dungeonId]);
-
-        // Only show reward if the player has collected the compass
-        // TODO: Optionally always show the reward
-        bool hasCompass = gSaveContext.dungeonItems[dungeonId] & 2;
-        Draw_DrawString(190, yPos, hasCompass ? COLOR_WHITE : COLOR_DARK_GRAY,
-                        hasCompass ? DungeonReward_GetName(dungeonId) : "???");
-    }
-}
-
 static void Gfx_DrawSpoilerData(void) {
     if (gSpoilerData.SphereCount > 0) {
         u16 itemCount = gSpoilerData.Spheres[currentSphere].ItemCount;
@@ -791,7 +775,7 @@ static void Gfx_DrawEntranceTracker(void) {
 
 static void (*menu_draw_funcs[])(void) = {
     // Make sure these line up with the GfxPage enum above
-    Gfx_DrawSeedHash,        Gfx_DrawDungeonItems, Gfx_DrawDungeonRewards, Gfx_DrawSpoilerData,
+    Gfx_DrawSeedHash,        Gfx_DrawDungeonItems, Gfx_DrawSpoilerData,
     Gfx_DrawItemTracker,     // All
     Gfx_DrawItemTracker,     // Groups
     Gfx_DrawEntranceTracker, // All
@@ -1135,9 +1119,6 @@ void Gfx_Init(void) {
     else if (gSettingsContext.menuOpeningButton == 5)
         closingButton = BUTTON_B | BUTTON_LEFT;
 
-    if (gSettingsContext.shuffleRewards != REWARDSHUFFLE_END_OF_DUNGEON || !gSettingsContext.compassesShowReward) {
-        menu_draw_funcs[PAGE_DUNGEONREWARDS] = NULL;
-    }
     if (!gSettingsContext.ingameSpoilers) {
         menu_draw_funcs[PAGE_SPHERES] = NULL;
     }

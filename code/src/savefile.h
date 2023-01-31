@@ -31,12 +31,13 @@ void SaveFile_EnforceHealthLimit(void);
 u8 SaveFile_SwordlessPatchesEnabled(void);
 
 // Increment the version number whenever the ExtSaveData structure is changed
-#define EXTSAVEDATA_VERSION 11
+#define EXTSAVEDATA_VERSION 12
 
 typedef enum {
     EXTINF_BIGGORONTRADES,
     EXTINF_HASTIMETRAVELED,
     EXTINF_MASTERSWORDFLAGS,
+    EXTINF_TOTALTAR_FLAGS,
     EXTINF_SIZE,
 } ExtInf;
 

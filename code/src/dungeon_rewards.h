@@ -1,21 +1,21 @@
 #ifndef _DUNGEON_REWARDS_H_
 #define _DUNGEON_REWARDS_H_
 
-#include "z3D/z3D.h"
-#include <stddef.h>
+#include "../include/z3D/z3D.h"
 
 typedef enum {
-    /* 0x00 */ KOKIRI_EMERALD,
-    /* 0x01 */ GORON_RUBY,
-    /* 0x02 */ ZORA_SAPPHIRE,
-    /* 0x03 */ FOREST_MEDALLION,
-    /* 0x04 */ FIRE_MEDALLION,
-    /* 0x05 */ WATER_MEDALLION,
-    /* 0x06 */ SPIRIT_MEDALLION,
-    /* 0x07 */ SHADOW_MEDALLION,
-    /* 0x08 */ LIGHT_MEDALLION,
+    /* 0x00 */ R_KOKIRI_EMERALD,
+    /* 0x01 */ R_GORON_RUBY,
+    /* 0x02 */ R_ZORA_SAPPHIRE,
+    /* 0x03 */ R_FOREST_MEDALLION,
+    /* 0x04 */ R_FIRE_MEDALLION,
+    /* 0x05 */ R_WATER_MEDALLION,
+    /* 0x06 */ R_SPIRIT_MEDALLION,
+    /* 0x07 */ R_SHADOW_MEDALLION,
+    /* 0x08 */ R_LIGHT_MEDALLION,
+    /* 0x09 */ DUNGEON_REWARDS_COUNT,
 } DungeonReward;
 
-const char* DungeonReward_GetName(u32 dungeonReward);
+extern u32 rDungeonRewardOverrides[DUNGEON_REWARDS_COUNT];
 
 #endif //_DUNGEON_REWARDS_H_

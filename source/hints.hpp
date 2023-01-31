@@ -242,5 +242,6 @@ extern std::array<DungeonInfo, 10> dungeonInfoData;
 extern std::array<ConditionalAlwaysHint, 9> conditionalAlwaysHints;
 
 extern HintKey GetHintRegionHintKey(const AreaKey area);
-extern void CreateAllHints();
+extern void CreateGossipStoneHints();
+extern void CreateMiscHints();
 extern void CreateMerchantsHints();
