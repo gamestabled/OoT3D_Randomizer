@@ -212,7 +212,7 @@ void Cutscene_OverrideDekuTree(void) {
     gSaveContext.nextCutsceneIndex    = 0x0;
 }
 
-void Custcene_OverrideDodongosCavern(void) {
+void Cutscene_OverrideDodongosCavern(void) {
     if (EventCheck(0x25) == 0) {
         EventSet(0x25);
         ItemOverride_PushDungeonReward(DUNGEON_DODONGOS_CAVERN);
@@ -232,7 +232,7 @@ void Custcene_OverrideDodongosCavern(void) {
     gSaveContext.nextCutsceneIndex    = 0x0;
 }
 
-void Custcene_OverrideJabuJabusBelly(void) {
+void Cutscene_OverrideJabuJabusBelly(void) {
     if (EventCheck(0x37) == 0) {
         EventSet(0x37);
         ItemOverride_PushDungeonReward(DUNGEON_JABUJABUS_BELLY);
@@ -253,13 +253,19 @@ void Custcene_OverrideJabuJabusBelly(void) {
     gSaveContext.nextCutsceneIndex    = 0x0;
 }
 
-void Custcene_OverrideForestTemple(void) {
+void Cutscene_OverrideForestTemple(void) {
     if (EventCheck(0x48) == 0) {
         EventSet(0x48);
         ItemOverride_PushDungeonReward(DUNGEON_FOREST_TEMPLE);
         gSaveContext.dayTime = 0x8000;
     }
-    gGlobalContext->nextEntranceIndex = Entrance_OverrideNextIndex(0x608);
+
+    s16 tempEntr = Entrance_OverrideNextIndex(0x608);
+    // If there is no override, use Minuet entrance as child.
+    if (gSaveContext.linkAge == AGE_CHILD && tempEntr == 0x608) {
+        tempEntr = 0x600;
+    }
+    gGlobalContext->nextEntranceIndex = tempEntr;
     gGlobalContext->sceneLoadFlag     = 0x14;
     gGlobalContext->fadeOutTransition = 0x3;
     gSaveContext.nextCutsceneIndex    = 0x0;
@@ -280,44 +286,68 @@ void Cutscene_OverrideFireTemple(void) {
         // Skipped if wrong warping
         gSaveContext.dayTime = 0x8000;
     }
-    gGlobalContext->nextEntranceIndex = Entrance_OverrideNextIndex(0x564);
+
+    s16 tempEntr = Entrance_OverrideNextIndex(0x564);
+    // If there is no override, use Bolero entrance as child.
+    if (gSaveContext.linkAge == AGE_CHILD && tempEntr == 0x564) {
+        tempEntr = 0x4F6;
+    }
+    gGlobalContext->nextEntranceIndex = tempEntr;
     gGlobalContext->sceneLoadFlag     = 0x14;
     gGlobalContext->fadeOutTransition = 0x3;
     gSaveContext.nextCutsceneIndex    = 0x0;
 }
 
-void Custcene_OverrideWaterTemple(void) {
+void Cutscene_OverrideWaterTemple(void) {
     if (EventCheck(0x4A) == 0) {
         EventSet(0x4A);
         ItemOverride_PushDungeonReward(DUNGEON_WATER_TEMPLE);
         gSaveContext.eventChkInf[6] |= 0x0200; // Raise Lake Hylia's Water
         gSaveContext.dayTime = 0x4800;
     }
-    gGlobalContext->nextEntranceIndex = Entrance_OverrideNextIndex(0x60C);
+
+    s16 tempEntr = Entrance_OverrideNextIndex(0x60C);
+    // If there is no override, use Serenade entrance as child.
+    if (gSaveContext.linkAge == AGE_CHILD && tempEntr == 0x60C) {
+        tempEntr = 0x604;
+    }
+    gGlobalContext->nextEntranceIndex = tempEntr;
     gGlobalContext->sceneLoadFlag     = 0x14;
     gGlobalContext->fadeOutTransition = 0x3;
     gSaveContext.nextCutsceneIndex    = 0x0;
 }
 
-void Custcene_OverrideSpiritTemple(void) {
+void Cutscene_OverrideSpiritTemple(void) {
     if (EventCheck(0x47) == 0) {
         EventSet(0x47);
         ItemOverride_PushDungeonReward(DUNGEON_SPIRIT_TEMPLE);
         gSaveContext.dayTime = 0x8000;
     }
-    gGlobalContext->nextEntranceIndex = Entrance_OverrideNextIndex(0x610);
+
+    s16 tempEntr = Entrance_OverrideNextIndex(0x610);
+    // If there is no override, use Requiem entrance as child.
+    if (gSaveContext.linkAge == AGE_CHILD && tempEntr == 0x610) {
+        tempEntr = 0x1F1;
+    }
+    gGlobalContext->nextEntranceIndex = tempEntr;
     gGlobalContext->sceneLoadFlag     = 0x14;
     gGlobalContext->fadeOutTransition = 0x3;
     gSaveContext.nextCutsceneIndex    = 0x0;
 }
 
-void Custcene_OverrideShadowTemple(void) {
+void Cutscene_OverrideShadowTemple(void) {
     if (EventCheck(0x46) == 0) {
         EventSet(0x46);
         ItemOverride_PushDungeonReward(DUNGEON_SHADOW_TEMPLE);
         gSaveContext.dayTime = 0x8000;
     }
-    gGlobalContext->nextEntranceIndex = Entrance_OverrideNextIndex(0x580);
+
+    s16 tempEntr = Entrance_OverrideNextIndex(0x580);
+    // If there is no override, use Nocturne entrance as child.
+    if (gSaveContext.linkAge == AGE_CHILD && tempEntr == 0x580) {
+        tempEntr = 0x568;
+    }
+    gGlobalContext->nextEntranceIndex = tempEntr;
     gGlobalContext->sceneLoadFlag     = 0x14;
     gGlobalContext->fadeOutTransition = 0x3;
     gSaveContext.nextCutsceneIndex    = 0x0;
@@ -332,25 +362,25 @@ void Cutscene_BlueWarpOverride(void) {
             Cutscene_OverrideDekuTree();
             break;
         case DUNGEON_DODONGOS_CAVERN:
-            Custcene_OverrideDodongosCavern();
+            Cutscene_OverrideDodongosCavern();
             break;
         case DUNGEON_JABUJABUS_BELLY:
-            Custcene_OverrideJabuJabusBelly();
+            Cutscene_OverrideJabuJabusBelly();
             break;
         case DUNGEON_FOREST_TEMPLE:
-            Custcene_OverrideForestTemple();
+            Cutscene_OverrideForestTemple();
             break;
         case DUNGEON_FIRE_TEMPLE:
             Cutscene_OverrideFireTemple();
             break;
         case DUNGEON_WATER_TEMPLE:
-            Custcene_OverrideWaterTemple();
+            Cutscene_OverrideWaterTemple();
             break;
         case DUNGEON_SPIRIT_TEMPLE:
-            Custcene_OverrideSpiritTemple();
+            Cutscene_OverrideSpiritTemple();
             break;
         case DUNGEON_SHADOW_TEMPLE:
-            Custcene_OverrideShadowTemple();
+            Cutscene_OverrideShadowTemple();
             break;
     }
 }
