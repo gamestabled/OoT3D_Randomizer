@@ -2073,6 +2073,21 @@ MaskSalesmanBorrowMask_patch:
 MaskSalesmanGiveMaskOfTruth_patch:
     bl hook_MaskSalesmanGiveMaskOfTruth
 
+.section .patch_OoBBombchuOne
+.global OoBBombchuOne_patch
+OoBBombchuOne_patch:
+    bl hook_OoBBombchuOne
+
+.section .patch_OoBBombchuTwo
+.global OoBBombchuTwo_patch
+OoBBombchuTwo_patch:
+    bl hook_OoBBombchuTwo
+
+.section .patch_OoBBombchuThree
+.global OoBBombchuThree_patch
+OoBBombchuThree_patch:
+    bl hook_OoBBombchuThree
+
 @ ----------------------------------
 @ ----------------------------------
 
