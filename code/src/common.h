@@ -3,6 +3,8 @@
 
 #include "../include/z3D/z3D.h"
 
+#include <stdarg.h>
+
 #define ARRAY_SIZE(x) (sizeof(x) / sizeof(x[0]))
 #define BIT_COUNT(x) (sizeof(x) * 8)
 
@@ -13,9 +15,10 @@
 s8 BitCompare(u32 value1, u32 value2, u8 bit);
 
 u32 Hash(u32);
-u8  Bias(u32);
+u8 Bias(u32);
 
 u8 IsInGame(void);
-void DebugPrintNumber(const char*, int);
+u8 IsInGameOrBossChallenge(void);
+void CitraPrint(const char*, ...);
 
 #endif //_COMMON_H_

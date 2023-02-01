@@ -15,46 +15,74 @@ on:
         required: false
 
 jobs:
+  get-changelog:
+    name: Retrieve Changelog
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Project
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Get Last Nightly
+        id: nightly-version
+        run: |
+          echo "last_nightly=$(git describe --tags $(git rev-list --tags --max-count=1))" >> $GITHUB_ENV
+      - name: Generate changelog
+        id: changelog
+        uses: metcalfc/changelog-generator@v4.0.1
+        with:
+          myToken: ${{ secrets.GITHUB_TOKEN }}
+          base-ref: ${{ env.last_nightly }}
+    outputs:
+      changelog: ${{ steps.changelog.outputs.changelog }}
+      last-nightly: ${{ env.last_nightly }}
+
   build-cia-3dsx:
+    needs: get-changelog
+    name: Build CIA and 3DSX Files
     runs-on: ubuntu-latest
     container:
-      image: phlex/oot3dr-build-tools
+      image: ghcr.io/z3dr/randotools:latest
 
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout Project
+        uses: actions/checkout@v3
 
       - name: Run Build Script
-      
         run: |
           chmod +x linux_build_rando.sh
           ./linux_build_rando.sh
-          
+
       - name: Get shorthand commit.
         id: vars
-        run: echo "::set-output name=sha_short::$(echo ${{ github.sha }} | cut -c1-6)"
+        run: echo "sha_short=$(echo ${{ github.sha }} | cut -c1-6)" >> $GITHUB_ENV
 
       - if: ${{ github.event.inputs.build_type == 'Nightly' }}
         name: Create Pre-release
-        uses: ncipollo/release-action@v1.8.3
+        uses: ncipollo/release-action@v1.12.0
         with:
           token: "${{ secrets.GITHUB_TOKEN }}"
           artifacts: "OoT3D_Randomizer.cia,OoT3D_Randomizer.3dsx,cia.png,3dsx.png"
           prerelease: true
           commit: "${{ github.sha }}"
-          tag: "Nightly-${{ steps.vars.outputs.sha_short }}"
-          name: "Nightly-${{ steps.vars.outputs.sha_short }}"
+          tag: "Nightly-${{ env.sha_short }}"
+          name: "Nightly-${{ env.sha_short }}"
           body: |
             Please note that these are DEVELOPMENT builds and may not be entirely stable.
             When reporting issues, please mention the six character commit listed in the randomizer menu.
             You can use the FBI homebrew application to install the randomizer using either of these QR codes.
             CIA QR Code:
-            ![CIA Download](https://github.com/${{ github.repository }}/releases/download/Nightly-${{ steps.vars.outputs.sha_short }}/cia.png)
+            ![CIA Download](https://github.com/${{ github.repository }}/releases/download/Nightly-${{ env.sha_short }}/cia.png)
             3DSX QR Code:
-            ![CIA Download](https://github.com/${{ github.repository }}/releases/download/Nightly-${{ steps.vars.outputs.sha_short }}/3dsx.png)
+            ![CIA Download](https://github.com/${{ github.repository }}/releases/download/Nightly-${{ env.sha_short }}/3dsx.png)
+
+            Changes Since [${{ needs.get-changelog.outputs.last-nightly }}](https://github.com/${{ github.repository }}/releases/tag/${{ needs.get-changelog.outputs.last-nightly }}) 🛠:  
+            ${{ needs.get-changelog.outputs.changelog }}
+
 
       - if: ${{ github.event.inputs.build_type == 'Release' }}
         name: Create Release
-        uses: ncipollo/release-action@v1.8.3
+        uses: ncipollo/release-action@v1.12.0
         with:
           token: "${{ secrets.GITHUB_TOKEN }}"
           artifacts: "OoT3D_Randomizer.cia,OoT3D_Randomizer.3dsx,cia.png,3dsx.png"
@@ -69,9 +97,9 @@ jobs:
             When reporting issues, please mention the six character commit listed in the randomizer menu.
             You can use the FBI homebrew application to install the randomizer using either of these QR codes.
             CIA QR Code:
-            ![CIA Download](https://github.com/${{ github.repository }}/releases/download/Nightly-${{ steps.vars.outputs.sha_short }}/cia.png)
+            ![CIA Download](https://github.com/${{ github.repository }}/releases/download/Nightly-${{ env.sha_short }}/cia.png)
             3DSX QR Code:
-            ![CIA Download](https://github.com/${{ github.repository }}/releases/download/Nightly-${{ steps.vars.outputs.sha_short }}/3dsx.png)
+            ![CIA Download](https://github.com/${{ github.repository }}/releases/download/Nightly-${{ env.sha_short }}/3dsx.png)
 
   deploy-gist:
     needs: build-cia-3dsx
@@ -404,7 +432,7 @@ jobs:
           done
 
       - name: Deploy to Gist
-        uses: exuanbo/actions-deploy-gist@v1
+        uses: exuanbo/actions-deploy-gist@v1.1.4
         with:
           token: ${{ secrets.TOKEN }}
           gist_id: fa5ea9b42b99377c63bede1cf8ddfdad

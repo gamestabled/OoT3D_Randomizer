@@ -3,7 +3,7 @@
 // Linux 6x10 font
 // https://github.com/torvalds/linux/tree/master/lib/fonts
 //---------------------------------------------------------------------------------
-#define FONT_WIDTH  6
+#define FONT_WIDTH 6
 #define FONT_HEIGHT 10
 //---------------------------------------------------------------------------------
 static const unsigned char ascii_font[] = {

@@ -36,9 +36,9 @@ APP_AUTHOR      :=  Gamestabled
 APP_DESCRIPTION :=  A different Ocarina of Time experience
 TARGET		    :=	$(notdir $(CURDIR))
 BUILD		    :=	build
-SOURCES		    :=	source
+SOURCES		    :=	$(sort $(dir $(wildcard source/*/ source/)))
 DATA		    :=	data
-INCLUDES	    :=	include
+INCLUDES	    :=	include $(SOURCES)
 GRAPHICS		:=	gfx
 GFXBUILD		:=	$(BUILD)
 ROMFS			:=	romfs
@@ -53,7 +53,7 @@ CFLAGS	:=	-g -Wall -O2 -mword-relocations \
 			-fomit-frame-pointer -ffunction-sections \
 			$(ARCH)
 
-CFLAGS	+=	$(INCLUDE) -DARM11 -D_3DS
+CFLAGS	+=	$(INCLUDE) -D__3DS__
 
 CXXFLAGS	:= $(CFLAGS) -fno-rtti -fno-exceptions -fno-var-tracking-assignments -std=gnu++17 -Wreorder
 
@@ -69,6 +69,9 @@ ifneq ($(debug), 0)
 	CFLAGS += -g -DENABLE_DEBUG
 	CXXFLAGS += -g -DENABLE_DEBUG
 endif
+
+# Enable this to skip building the basecode patches
+app_only ?= 0
 
 #---------------------------------------------------------------------------------
 # list of directories containing libraries, this must be the top level containing
@@ -169,15 +172,24 @@ ifneq ($(ROMFS),)
 	export _3DSXFLAGS += --romfs=$(CURDIR)/$(ROMFS)
 endif
 
-.PHONY: all clean
+.PHONY: all clean delete3DSX create_basecode
 
 #---------------------------------------------------------------------------------
-all: $(BUILD) $(GFXBUILD) $(DEPSDIR) $(ROMFS_T3XFILES) $(T3XHFILES)
+all: delete3DSX create_basecode $(BUILD) $(GFXBUILD) $(DEPSDIR) $(ROMFS_T3XFILES) $(T3XHFILES)
 	@$(MAKE) --no-print-directory -C $(BUILD) -f $(CURDIR)/Makefile
 
+delete3DSX:
+	@rm -fr $(TARGET).3dsx
+
+create_basecode:
+ifeq ($(app_only), 0)
+	@$(MAKE) --no-print-directory REGION=USA -C code
+	@mv code/basecode_USA.ips $(ROMFS)
+	@$(MAKE) --no-print-directory REGION=EUR -C code
+	@mv code/basecode_EUR.ips $(ROMFS)
+endif
+
 $(BUILD):
-	$(MAKE) -C code
-	@mv code/basecode.ips $(ROMFS)/basecode.ips
 	@mkdir -p $@
 
 ifneq ($(GFXBUILD),$(BUILD))
@@ -193,7 +205,8 @@ endif
 #---------------------------------------------------------------------------------
 clean:
 	@echo clean ...
-	@rm -fr $(BUILD) $(TARGET).3dsx $(OUTPUT).smdh $(TARGET).elf $(GFXBUILD) $(ROMFS)/basecode.ips
+	@rm -fr $(BUILD) $(TARGET).3dsx $(OUTPUT).smdh $(TARGET).elf $(GFXBUILD) \
+		$(ROMFS)/basecode.ips $(ROMFS)/basecode_USA.ips $(ROMFS)/basecode_EUR.ips
 	$(MAKE) clean -C code
 
 #---------------------------------------------------------------------------------

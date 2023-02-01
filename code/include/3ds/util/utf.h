@@ -15,7 +15,7 @@
  *  @returns number of input code units consumed
  *  @returns -1 for error
  */
-ssize_t decode_utf8 (uint32_t *out, const uint8_t *in);
+ssize_t decode_utf8(uint32_t* out, const uint8_t* in);
 
 /** Convert a UTF-16 sequence into a UTF-32 codepoint
  *
@@ -25,7 +25,7 @@ ssize_t decode_utf8 (uint32_t *out, const uint8_t *in);
  *  @returns number of input code units consumed
  *  @returns -1 for error
  */
-ssize_t decode_utf16(uint32_t *out, const uint16_t *in);
+ssize_t decode_utf16(uint32_t* out, const uint16_t* in);
 
 /** Convert a UTF-32 codepoint into a UTF-8 sequence
  *
@@ -37,7 +37,7 @@ ssize_t decode_utf16(uint32_t *out, const uint16_t *in);
  *
  *  @note \a out must be able to store 4 code units
  */
-ssize_t encode_utf8 (uint8_t *out, uint32_t in);
+ssize_t encode_utf8(uint8_t* out, uint32_t in);
 
 /** Convert a UTF-32 codepoint into a UTF-16 sequence
  *
@@ -49,7 +49,7 @@ ssize_t encode_utf8 (uint8_t *out, uint32_t in);
  *
  *  @note \a out must be able to store 2 code units
  */
-ssize_t encode_utf16(uint16_t *out, uint32_t in);
+ssize_t encode_utf16(uint16_t* out, uint32_t in);
 
 /** Convert a UTF-8 sequence into a UTF-16 sequence
  *
@@ -67,7 +67,7 @@ ssize_t encode_utf16(uint16_t *out, uint32_t in);
  *
  *  @note \a out is not null-terminated
  */
-ssize_t utf8_to_utf16(uint16_t *out, const uint8_t  *in, size_t len);
+ssize_t utf8_to_utf16(uint16_t* out, const uint8_t* in, size_t len);
 
 /** Convert a UTF-8 sequence into a UTF-32 sequence
  *
@@ -85,7 +85,7 @@ ssize_t utf8_to_utf16(uint16_t *out, const uint8_t  *in, size_t len);
  *
  *  @note \a out is not null-terminated
  */
-ssize_t utf8_to_utf32(uint32_t *out, const uint8_t  *in, size_t len);
+ssize_t utf8_to_utf32(uint32_t* out, const uint8_t* in, size_t len);
 
 /** Convert a UTF-16 sequence into a UTF-8 sequence
  *
@@ -103,7 +103,7 @@ ssize_t utf8_to_utf32(uint32_t *out, const uint8_t  *in, size_t len);
  *
  *  @note \a out is not null-terminated
  */
-ssize_t utf16_to_utf8(uint8_t  *out, const uint16_t *in, size_t len);
+ssize_t utf16_to_utf8(uint8_t* out, const uint16_t* in, size_t len);
 
 /** Convert a UTF-16 sequence into a UTF-32 sequence
  *
@@ -121,7 +121,7 @@ ssize_t utf16_to_utf8(uint8_t  *out, const uint16_t *in, size_t len);
  *
  *  @note \a out is not null-terminated
  */
-ssize_t utf16_to_utf32(uint32_t *out, const uint16_t *in, size_t len);
+ssize_t utf16_to_utf32(uint32_t* out, const uint16_t* in, size_t len);
 
 /** Convert a UTF-32 sequence into a UTF-8 sequence
  *
@@ -139,7 +139,7 @@ ssize_t utf16_to_utf32(uint32_t *out, const uint16_t *in, size_t len);
  *
  *  @note \a out is not null-terminated
  */
-ssize_t utf32_to_utf8(uint8_t  *out, const uint32_t *in, size_t len);
+ssize_t utf32_to_utf8(uint8_t* out, const uint32_t* in, size_t len);
 
 /** Convert a UTF-32 sequence into a UTF-16 sequence
  *
@@ -152,4 +152,4 @@ ssize_t utf32_to_utf8(uint8_t  *out, const uint32_t *in, size_t len);
  *
  *  @note \a out is not null-terminated
  */
-ssize_t utf32_to_utf16(uint16_t *out, const uint32_t *in, size_t len);
+ssize_t utf32_to_utf16(uint16_t* out, const uint32_t* in, size_t len);

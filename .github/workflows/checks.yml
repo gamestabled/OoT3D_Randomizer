@@ -1,0 +1,33 @@
+name: OoT3DR Checks
+
+on:
+  pull_request:
+
+jobs:
+  format:
+    name: Verify Formatting
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Project
+      uses: actions/checkout@v3
+
+    - name: Format Project
+      uses: DoozyX/clang-format-lint-action@v0.15
+      with:
+        source: "./code ./source"
+        extensions: 'c,h,cpp,hpp'
+        clangFormatVersion: 14
+
+  build:
+    name: Confirm Compilable
+    runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/z3dr/randotools:latest
+
+    steps:
+    - name: Checkout Project
+      uses: actions/checkout@v3
+
+    - name: Compile Project
+      run: make -j

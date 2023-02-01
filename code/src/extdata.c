@@ -5,11 +5,13 @@
 #include "3ds/srv.h"
 #include "3ds/svc.h"
 
+#include "settings.h"
+
 static u8 icn[14016];
 
 Result extDataInit() {
     Result res;
-    if(R_FAILED(res = srvInit())) {
+    if (R_FAILED(res = srvInit())) {
         return res;
     }
     return fsInit();
@@ -27,11 +29,12 @@ Result extDataCreate() {
     struct {
         u32 type;
         char filename[8];
-    } iconLowPath = {2, "icon"};
+    } iconLowPath    = { 2, "icon" };
     FS_Path iconPath = { PATH_BINARY, sizeof(iconLowPath), &iconLowPath };
 
-    // Open icon 
-    if (R_FAILED(res = FSUSER_OpenFileDirectly(&icnHandle, ARCHIVE_ROMFS, fsMakePath(PATH_EMPTY, ""), iconPath, FS_OPEN_READ, 0))) {
+    // Open icon
+    if (R_FAILED(res = FSUSER_OpenFileDirectly(&icnHandle, ARCHIVE_ROMFS, fsMakePath(PATH_EMPTY, ""), iconPath,
+                                               FS_OPEN_READ, 0))) {
         return res;
     }
     // Get file size (should be 14016)
@@ -50,19 +53,29 @@ Result extDataCreate() {
     }
 
     extInfo.mediaType = MEDIATYPE_SD;
-    extInfo.saveId = 0x33500;
+    if (gSettingsContext.region == REGION_NA) {
+        extInfo.saveId = 0x33500;
+    } else if (gSettingsContext.region == REGION_EUR) {
+        extInfo.saveId = 0x33600;
+    }
+
     // Create the extdata with the icon, one folder max (all the files are in /)
     // and per save file: 1 file, 1MiB max
     return FSUSER_CreateExtSaveData(extInfo, 1, 6, 6 * EXTDATA_MAXFILESIZE, icnSize, icn);
 }
 
-Result extDataMount(FS_Archive *out) {
+Result extDataMount(FS_Archive* out) {
     Result res;
     struct {
         u32 media;
         u32 saveIDLo;
         u32 saveIDHi;
     } extDataLowPath = { MEDIATYPE_SD, 0x33500, 0 };
+    if (gSettingsContext.region == REGION_NA) {
+        extDataLowPath.saveIDLo = 0x33500;
+    } else if (gSettingsContext.region == REGION_EUR) {
+        extDataLowPath.saveIDLo = 0x33600;
+    }
     FS_Path extDataPath = { PATH_BINARY, sizeof(extDataLowPath), &extDataLowPath };
 
     // Try mounting the extdata archive
@@ -77,7 +90,7 @@ Result extDataMount(FS_Archive *out) {
     return FSUSER_OpenArchive(out, ARCHIVE_EXTDATA, extDataPath);
 }
 
-Result extDataCreateFile(Handle *out, FS_Archive fsa, char *filename, u64 filesize) {
+Result extDataCreateFile(Handle* out, FS_Archive fsa, char* filename, u64 filesize) {
     Result res;
     if (R_FAILED(res = FSUSER_CreateFile(fsa, fsMakePath(PATH_ASCII, filename), 0, filesize))) {
         return res;
@@ -87,12 +100,12 @@ Result extDataCreateFile(Handle *out, FS_Archive fsa, char *filename, u64 filesi
     return extDataOpen(out, fsa, filename);
 }
 
-Result extDataOpenOrCreateFile(Handle *out, FS_Archive fsa, char *filename, u64 filesize) {
+Result extDataOpenOrCreateFile(Handle* out, FS_Archive fsa, char* filename, u64 filesize) {
     FSUSER_CreateFile(fsa, fsMakePath(PATH_ASCII, filename), 0, filesize);
     return extDataOpen(out, fsa, filename);
 }
 
-u32 extDataReadFile(Handle handle, void *buf_out, u64 offset, u32 count) {
+u32 extDataReadFile(Handle handle, void* buf_out, u64 offset, u32 count) {
     Result res;
     u32 bytes_read;
 
@@ -103,8 +116,7 @@ u32 extDataReadFile(Handle handle, void *buf_out, u64 offset, u32 count) {
     return bytes_read;
 }
 
-
-u32 extDataReadFileDirectly(FS_Archive fsa, char *filename, void *buf_out, u64 offset, u32 count) {
+u32 extDataReadFileDirectly(FS_Archive fsa, char* filename, void* buf_out, u64 offset, u32 count) {
     Result res;
     Handle handle;
     u32 bytes_read;
@@ -120,18 +132,18 @@ u32 extDataReadFileDirectly(FS_Archive fsa, char *filename, void *buf_out, u64 o
     return bytes_read;
 }
 
-u32 extDataWriteFile(Handle handle, void *buf, u64 offset, u32 count) {
+u32 extDataWriteFile(Handle handle, void* buf, u64 offset, u32 count) {
     Result res;
     u32 bytes_written;
 
     if (R_FAILED(res = FSFILE_Write(handle, &bytes_written, offset, buf, count, FS_WRITE_UPDATE_TIME))) {
         bytes_written = res;
     }
-    
+
     return bytes_written;
 }
 
-u32 extDataWriteFileDirectly(FS_Archive fsa, char *filename, void *buf, u64 offset, u32 count) {
+u32 extDataWriteFileDirectly(FS_Archive fsa, char* filename, void* buf, u64 offset, u32 count) {
     Result res;
     Handle handle;
     u32 bytes_written;
@@ -143,7 +155,7 @@ u32 extDataWriteFileDirectly(FS_Archive fsa, char *filename, void *buf, u64 offs
         }
         // Resize file automatically if it's too small
         FSFILE_GetSize(handle, &file_size);
-        if(file_size < count) {
+        if (file_size < count) {
             extDataClose(handle);
             if (R_FAILED(res = FSUSER_DeleteFile(fsa, fsMakePath(PATH_ASCII, filename)))) {
                 return -2;
@@ -157,18 +169,18 @@ u32 extDataWriteFileDirectly(FS_Archive fsa, char *filename, void *buf, u64 offs
             return -1;
         }
         FSFILE_GetSize(handle, &file_size);
-        if(file_size < offset + count) {
+        if (file_size < offset + count) {
             extDataClose(handle);
             return -2;
         }
     }
 
     if (R_FAILED(res = FSFILE_Write(handle, &bytes_written, offset, buf, count, FS_WRITE_UPDATE_TIME))) {
-        res = -3;
+        res           = -3;
         bytes_written = res;
     }
 
     extDataClose(handle);
-    
+
     return bytes_written;
 }

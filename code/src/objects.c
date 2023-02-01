@@ -19,7 +19,7 @@ s32 ExtendedObject_GetIndex(ObjectContext* objectCtx, s16 objectId) {
         s32 i;
         for (i = 0; i < OBJECT_EXCHANGE_BANK_MAX; ++i) {
             s32 id = rExtendedObjectCtx.status[i].id;
-            id = (id < 0 ? -id : id);
+            id     = (id < 0 ? -id : id);
             if (id == objectId)
                 return i + OBJECT_EXCHANGE_BANK_MAX;
         }
@@ -38,7 +38,7 @@ ObjectStatus* ExtendedObject_GetStatus(s16 objectId) {
     s32 i;
     for (i = 0; i < rExtendedObjectCtx.num; ++i) {
         s32 id = rExtendedObjectCtx.status[i].id;
-        id = (id < 0 ? -id : id);
+        id     = (id < 0 ? -id : id);
         if (id == objectId)
             return &rExtendedObjectCtx.status[i];
     }

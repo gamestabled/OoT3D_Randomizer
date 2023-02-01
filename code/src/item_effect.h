@@ -21,7 +21,9 @@ void ItemEffect_GiveFairyOcarina(SaveContext* saveCtx, s16 arg1, s16 arg2);
 void ItemEffect_GiveSong(SaveContext* saveCtx, s16 questBit, s16 arg2);
 void ItemEffect_GiveUpgrade(SaveContext* saveCtx, s16 arg1, s16 arg2);
 void ItemEffect_IceTrap(SaveContext* saveCtx, s16 arg1, s16 arg2);
+void ItemEffect_GiveMasterSword(SaveContext* saveCtx, s16 arg1, s16 arg2);
 void ItemEffect_BeanPack(SaveContext* saveCtx, s16 arg1, s16 arg2);
+void ItemEffect_RupeeAmmo(SaveContext* saveCtx);
 void ItemEffect_FillWalletUpgrade(SaveContext* saveCtx, s16 arg1, s16 arg2);
 void ItemEffect_OpenMaskShop(SaveContext* saveCtx, s16 arg1, s16 arg2);
 void PushSlotIntoInventoryMenu(u8 itemSlot);
@@ -32,4 +34,5 @@ void ItemEffect_GiveMedallion(SaveContext* saveCtx, s16 mask, s16 arg2);
 void ItemEffect_MoveNabooru(SaveContext* saveCtx, s16 arg1, s16 arg2);
 void ItemEffect_GrannySellsPotions(SaveContext* saveCtx, s16 arg1, s16 arg2);
 void ItemEffect_OwnAdultTrade(SaveContext* saveCtx, s16 arg1, s16 arg2);
+void ItemEffect_GiveWeirdEgg(SaveContext* saveCtx, s16 arg1, s16 arg2);
 #endif //_ITEM_EFFECT_H_

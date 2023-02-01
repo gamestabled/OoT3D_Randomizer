@@ -38,9 +38,9 @@ void Multiplayer_Ghosts_UpdateGhost(u16 networkID, GhostData* ghostData) {
         for (size_t i = 0; i < ARRAY_SIZE(ghosts); i++) {
             LinkGhost* ghost = &ghosts[i];
             if (!ghost->inUse) {
-                ghost->inUse = true;
+                ghost->inUse     = true;
                 ghost->networkID = networkID;
-                ghostX = ghost;
+                ghostX           = ghost;
                 break;
             }
         }
@@ -53,8 +53,8 @@ void Multiplayer_Ghosts_UpdateGhost(u16 networkID, GhostData* ghostData) {
     ghostX->lastTick = svcGetSystemTick();
     if (ghostData != NULL) {
         ghostX->ghostData.currentScene = ghostData->currentScene;
-        ghostX->ghostData.age = ghostData->age;
-        ghostX->ghostData.position = ghostData->position;
+        ghostX->ghostData.age          = ghostData->age;
+        ghostX->ghostData.position     = ghostData->position;
         // Temporary offset for effect
         ghostX->ghostData.position.y += (ghostData->age == 0 ? 50 : 35);
     }
@@ -70,11 +70,10 @@ GhostData* Multiplayer_Ghosts_GetGhostData(u16 networkID) {
     return NULL;
 }
 
-typedef void(*EffectSsDeadDb_Spawn_proc)(GlobalContext* globalCtx, Vec3f* position, Vec3f* velocity, Vec3f* acceleration,
-    s16 scale, s16 scale_step,
-    s16 prim_r, s16 prim_g, s16 prim_b, s16 prim_a,
-    s16 env_r, s16 env_g, s16 env_b,
-    s16 unused, s32 param_15, s16 play_sound);
+typedef void (*EffectSsDeadDb_Spawn_proc)(GlobalContext* globalCtx, Vec3f* position, Vec3f* velocity,
+                                          Vec3f* acceleration, s16 scale, s16 scale_step, s16 prim_r, s16 prim_g,
+                                          s16 prim_b, s16 prim_a, s16 env_r, s16 env_g, s16 env_b, s16 unused,
+                                          s32 frame_duration, s16 play_sound);
 #define EffectSsDeadDb_Spawn_addr 0x3642F4
 #define EffectSsDeadDb_Spawn ((EffectSsDeadDb_Spawn_proc)EffectSsDeadDb_Spawn_addr)
 
@@ -84,14 +83,16 @@ void Multiplayer_Ghosts_DrawAll(void) {
         if (ghost->inUse && ghost->ghostData.currentScene == gGlobalContext->sceneNum) {
             // Temporary effect
             static Vec3f vecEmpty;
-            static f32 colorR[] = { 1.0, 0.0, 0.0, 1.0, 0.0, 1.0, 1.0 };
-            static f32 colorG[] = { 0.0, 1.0, 0.0, 1.0, 1.0, 0.0, 0.5 };
-            static f32 colorB[] = { 0.0, 0.0, 1.0, 0.0, 1.0, 1.0, 0.0 };
+            static f32 colorR[] = { 1.0, 0.0, 0.0, 1.0, 1.0, 0.0, 1.0, 0.5 };
+            static f32 colorG[] = { 0.0, 1.0, 0.0, 1.0, 0.0, 1.0, 0.5, 0.0 };
+            static f32 colorB[] = { 0.0, 0.0, 1.0, 0.0, 1.0, 1.0, 0.0, 1.0 };
+
+            s16 envR = 100 * colorR[(ghost->networkID - 1) % ARRAY_SIZE(colorR)];
+            s16 envG = 100 * colorG[(ghost->networkID - 1) % ARRAY_SIZE(colorG)];
+            s16 envB = 100 * colorB[(ghost->networkID - 1) % ARRAY_SIZE(colorB)];
+
             EffectSsDeadDb_Spawn(gGlobalContext, &ghost->ghostData.position, &vecEmpty, &vecEmpty,
-                ghost->ghostData.age == 0 ? 100 : 70, 0,
-                0x64, 0x64, 0x64, 0x64,
-                0x64 * colorR[(ghost->networkID - 1) % ARRAY_SIZE(colorR)], 0x64 * colorG[(ghost->networkID - 1) % ARRAY_SIZE(colorG)], 0x64 * colorB[(ghost->networkID - 1) % ARRAY_SIZE(colorB)],
-                1, 0xB, 0);
+                                 ghost->ghostData.age == 0 ? 100 : 70, -1, 80, 80, 80, 0xFF, envR, envG, envB, 1, 8, 0);
         }
     }
 }

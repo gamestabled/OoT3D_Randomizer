@@ -10,12 +10,14 @@
 #include "common.h"
 #include "savefile.h"
 #include "multiplayer.h"
+#include "grotto.h"
+#include "item_effect.h"
 
 #include "z3D/z3D.h"
 #include "3ds/extdata.h"
 
 GlobalContext* gGlobalContext = NULL;
-static u8 rRandomizerInit = 0;
+static u8 rRandomizerInit     = 0;
 
 void set_GlobalContext(GlobalContext* globalCtx) {
     gGlobalContext = globalCtx;
@@ -43,12 +45,16 @@ void before_GlobalContext_Update(GlobalContext* globalCtx) {
     Settings_SkipSongReplays();
 
     Multiplayer_Run();
+
+    ItemEffect_RupeeAmmo(&gSaveContext);
 }
 
 void after_GlobalContext_Update() {
     // The alert is always displayed on the Title Screen, and for 10 seconds after opening a save file.
     if (missingRomfsAlert && romfsAlertFrames > 0) {
-        Draw_DrawFormattedStringTop(75, 180, COLOR_WHITE, "WARNING: THE ROMFS FOLDER IS MISSING!\nCOPY IT FROM AND TO THE SAME LOCATIONS\nUSED FOR CODE.IPS AND EXHEADER.BIN");
+        Draw_DrawFormattedStringTop(75, 180, COLOR_WHITE,
+                                    "WARNING: THE ROMFS FOLDER IS MISSING!\nCOPY IT FROM AND TO THE SAME "
+                                    "LOCATIONS\nUSED FOR CODE.IPS AND EXHEADER.BIN");
         if (IsInGame()) {
             romfsAlertFrames--;
         }

@@ -27,10 +27,12 @@ enum ItemType {
 };
 
 class Item {
-public:
+  public:
     Item() = default;
-    Item(Text name_, ItemType type_, int getItemId_, bool advancement_, bool* logicVar_, HintKey hintKey_, u16 price_ = 0);
-    Item(Text name_, ItemType type_, int getItemId_, bool advancement_, u8* logicVar_, HintKey hintKey_, u16 price_ = 0);
+    Item(ItemType type_, int getItemId_, bool advancement_, bool* logicVar_, HintKey hintKey_, u16 price_, Text name_);
+    Item(ItemType type_, int getItemId_, bool advancement_, u8* logicVar_, HintKey hintKey_, u16 price_, Text name_);
+    Item(ItemType type_, int getItemId_, bool advancement_, bool* logicVar_, HintKey hintKey_, Text name_);
+    Item(ItemType type_, int getItemId_, bool advancement_, u8* logicVar_, HintKey hintKey_, Text name_);
     ~Item();
 
     void ApplyEffect();
@@ -71,9 +73,9 @@ public:
     }
 
     bool IsBottleItem() const {
-        return getItemId == 0x0F || //Empty Bottle
-               getItemId == 0X14 || //Bottle with Milk
-              (getItemId >= 0x8C && getItemId <= 0x94); //Rest of bottled contents
+        return getItemId == 0x0F ||                      // Empty Bottle
+               getItemId == 0X14 ||                      // Bottle with Milk
+               (getItemId >= 0x8C && getItemId <= 0x94); // Rest of bottled contents
     }
 
     bool IsMajorItem() const {
@@ -82,7 +84,8 @@ public:
             return Bridge.Is(RAINBOWBRIDGE_TOKENS) || LACSCondition == LACSCONDITION_TOKENS;
         }
 
-        if (type == ITEMTYPE_DROP || type == ITEMTYPE_EVENT || type == ITEMTYPE_SHOP || type == ITEMTYPE_MAP || type == ITEMTYPE_COMPASS) {
+        if (type == ITEMTYPE_DROP || type == ITEMTYPE_EVENT || type == ITEMTYPE_SHOP || type == ITEMTYPE_MAP ||
+            type == ITEMTYPE_COMPASS) {
             return false;
         }
 
@@ -90,7 +93,7 @@ public:
             return false;
         }
 
-        if (name.GetEnglish().find("Bombchus") != std::string::npos && !BombchusInLogic) {
+        if (name.GetNAEnglish().find("Bombchus") != std::string::npos && !BombchusInLogic) {
             return false;
         }
 
@@ -102,11 +105,13 @@ public:
             return false;
         }
 
-        if ((type == ITEMTYPE_BOSSKEY && getItemId != 0x9A) && (BossKeysanity.Is(BOSSKEYSANITY_VANILLA) || BossKeysanity.Is(BOSSKEYSANITY_OWN_DUNGEON))) {
+        if ((type == ITEMTYPE_BOSSKEY && getItemId != 0x9A) &&
+            (BossKeysanity.Is(BOSSKEYSANITY_VANILLA) || BossKeysanity.Is(BOSSKEYSANITY_OWN_DUNGEON))) {
             return false;
         }
-            //Ganons Castle Boss Key
-        if (getItemId == 0x9A && (GanonsBossKey.Is(GANONSBOSSKEY_VANILLA) || GanonsBossKey.Is(GANONSBOSSKEY_OWN_DUNGEON))) {
+        // Ganons Castle Boss Key
+        if (getItemId == 0x9A &&
+            (GanonsBossKey.Is(GANONSBOSSKEY_VANILLA) || GanonsBossKey.Is(GANONSBOSSKEY_OWN_DUNGEON))) {
             return false;
         }
 
@@ -121,21 +126,21 @@ public:
         return Hint(hintKey);
     }
 
-    bool operator== (const Item& right) const {
+    bool operator==(const Item& right) const {
         return type == right.GetItemType() && getItemId == right.GetItemID();
     }
 
-    bool operator!= (const Item& right) const {
+    bool operator!=(const Item& right) const {
         return !operator==(right);
     }
 
-private:
-    Text name;
+  private:
     ItemType type;
-    int  getItemId;
+    int getItemId;
     bool advancement;
     std::variant<bool*, u8*> logicVar;
     HintKey hintKey;
-    u16  price;
+    u16 price;
+    Text name;
     bool playthrough = false;
 };

@@ -6,15 +6,17 @@
 
 #include "z3D/z3D.h"
 
-#define ITEM_ROW( \
-        baseItemId_, chestType_, actionId_,  textId_, objectId_, objectModelIdx_, cmabIndex_, \
-        objectModelIdx2_, cmabIndex2_, special_, graphicId_, upgrade_, effect_, effectArg1_, effectArg2_) \
-    { .baseItemId = baseItemId_, .chestType = chestType_, .actionId = actionId_, \
-      .textId = textId_, .objectId = objectId_, .objectModelIdx = objectModelIdx_, .cmabIndex = cmabIndex_, \
-      .objectModelIdx2 = objectModelIdx2_, .cmabIndex2 = cmabIndex2_, .special = special_, .graphicId = graphicId_, \
-      .upgrade = upgrade_, .effect = effect_, .effectArg1 = effectArg1_, .effectArg2 = effectArg2_ }
+#define ITEM_ROW(baseItemId_, chestType_, actionId_, textId_, objectId_, objectModelIdx_, cmabIndex_,                 \
+                 objectModelIdx2_, cmabIndex2_, special_, graphicId_, upgrade_, effect_, effectArg1_, effectArg2_)    \
+    {                                                                                                                 \
+        .baseItemId = baseItemId_, .chestType = chestType_, .actionId = actionId_, .textId = textId_,                 \
+        .objectId = objectId_, .objectModelIdx = objectModelIdx_, .cmabIndex = cmabIndex_,                            \
+        .objectModelIdx2 = objectModelIdx2_, .cmabIndex2 = cmabIndex2_, .special = special_, .graphicId = graphicId_, \
+        .upgrade = upgrade_, .effect = effect_, .effectArg1 = effectArg1_, .effectArg2 = effectArg2_                  \
+    }
 
-//TODO: All the object model indexes
+// TODO: All the object model indexes
+// clang-format off
 static ItemRow rItemTable[] = {
     [0x01] = ITEM_ROW(0x4D, 1, 0x8E, 0x0032, 0x00CE, 0x00, 0xFF, 0xFF, 0xFF, 0xFF, 0x20, ItemUpgrade_BombsToRupee, ItemEffect_None, -1, -1), // Bombs (5)
     [0x02] = ITEM_ROW(0x4D, 1, 0x8C, 0x0034, 0x00BB, 0x00, 0xFF, 0xFF, 0xFF, 0xFF, 0x12, ItemUpgrade_None, ItemEffect_None, -1, -1), // Deku Nuts (5)
@@ -86,7 +88,7 @@ static ItemRow rItemTable[] = {
     [0x44] = ITEM_ROW(0x53, 1, 0x79, 0x0052, 0x00CD, 0x01, 0xFF, 0xFF, 0xFF, 0xFF, 0x1F, ItemUpgrade_None, ItemEffect_None, -1, -1), // Large Magic Jar
     [0x45] = ITEM_ROW(0x53, 0, 0x56, 0x005E, 0x00D1, 0x00, 0xFF, 0xFF, 0xFF, 0xFF, 0x22, ItemUpgrade_None, ItemEffect_FillWalletUpgrade, 1, -1), // Adult's Wallet
     [0x46] = ITEM_ROW(0x53, 0, 0x57, 0x005F, 0x00D1, 0x01, 0xFF, 0xFF, 0xFF, 0xFF, 0x23, ItemUpgrade_None, ItemEffect_FillWalletUpgrade, 2, -1), // Giant's Wallet
-    [0x47] = ITEM_ROW(0x53, 0, 0x21, 0x009A, 0x00DA, 0x00, 0xFF, 0xFF, 0xFF, 0xFF, 0x29, ItemUpgrade_None, ItemEffect_None, -1, -1), // Weird Egg
+    [0x47] = ITEM_ROW(0x53, 0, 0x21, 0x009A, 0x00DA, 0x00, 0xFF, 0xFF, 0xFF, 0xFF, 0x29, ItemUpgrade_None, ItemEffect_GiveWeirdEgg, -1, -1), // Weird Egg
     [0x48] = ITEM_ROW(0x4D, 1, 0x83, 0x0055, 0x00B7, 0x00, 0xFF, 0xFF, 0xFF, 0xFF, 0x09, ItemUpgrade_None, ItemEffect_None, -1, -1), // Recovery Heart
     [0x49] = ITEM_ROW(0x4D, 1, 0x92, 0x00E6, 0x00D8, 0x00, 0xFF, 0xFF, 0xFF, 0xFF, 0x25, ItemUpgrade_ArrowsToRupee, ItemEffect_None, -1, -1), // Arrows (5)
     [0x4A] = ITEM_ROW(0x4D, 1, 0x93, 0x00E6, 0x00D8, 0x01, 0xFF, 0xFF, 0xFF, 0xFF, 0x26, ItemUpgrade_ArrowsToRupee, ItemEffect_None, -1, -1), // Arrows (10)
@@ -141,6 +143,8 @@ static ItemRow rItemTable[] = {
     [0x7B] = ITEM_ROW(0x53, 0, 0x41, 0x006C, 0x017B, 0x00, 0xFF, 0xFF, 0xFF, 0xFF, 0x73, ItemUpgrade_None, ItemEffect_GiveUpgrade, 3, 5), // Bullet Bag (50)
     [0x7C] = ITEM_ROW(0x53, 0, 0x41, 0x9002, 0x0000, 0x00, 0xFF, 0xFF, 0xFF, 0xFF, 0x00, ItemUpgrade_None, ItemEffect_IceTrap, -1, -1), // Ice Trap
 
+    [0x7E] = ITEM_ROW(0x53, 0, 0x3C, 0x9309, 0x0195, 0x00, 0xFF, 0xFF, 0xFF, 0xFF, 0x7D, ItemUpgrade_None, ItemEffect_GiveMasterSword, -1, -1), // Master Sword
+
     [0x80] = ITEM_ROW(  -1, 0,   -1,     -1, 0x00DD, 0x00, 0xFF, 0xFF, 0xFF, 0xFF, 0x2D, ItemUpgrade_Hookshot,  ItemEffect_None, -1, -1), // Progressive Hookshot
     [0x81] = ITEM_ROW(  -1, 0,   -1,     -1, 0x0147, 0x00, 0xFF, 0xFF, 0xFF, 0xFF, 0x58, ItemUpgrade_Strength,  ItemEffect_None, -1, -1), // Progressive Strength
     [0x82] = ITEM_ROW(  -1, 0,   -1,     -1, 0x00BF, 0x00, 0xFF, 0xFF, 0xFF, 0xFF, 0x18, ItemUpgrade_BombBag,   ItemEffect_None, -1, -1), // Progressive Bomb Bag
@@ -169,7 +173,7 @@ static ItemRow rItemTable[] = {
     [0x97] = ITEM_ROW(0x53, 2, 0x41, 0x09D6, 0x0080, 0x00, 0xFF, 0xFF, 0xFF, 0x02, 0x08, ItemUpgrade_None, ItemEffect_GiveDungeonItem, 0x01, DUNGEON_WATER_TEMPLE  ), // Water Temple Boss Key
     [0x98] = ITEM_ROW(0x53, 2, 0x41, 0x09D7, 0x0080, 0x00, 0xFF, 0xFF, 0xFF, 0x04, 0x08, ItemUpgrade_None, ItemEffect_GiveDungeonItem, 0x01, DUNGEON_SPIRIT_TEMPLE ), // Spirit Temple Boss Key
     [0x99] = ITEM_ROW(0x53, 2, 0x41, 0x09D8, 0x0080, 0x00, 0xFF, 0xFF, 0xFF, 0x03, 0x08, ItemUpgrade_None, ItemEffect_GiveDungeonItem, 0x01, DUNGEON_SHADOW_TEMPLE ), // Shadow Temple Boss Key
-    [0x9A] = ITEM_ROW(0x53, 2, 0x41, 0x09D9, 0x0080, 0x00, 0xFF, 0xFF, 0xFF, 0x05, 0x08, ItemUpgrade_None, ItemEffect_GiveDungeonItem, 0x01, DUNGEON_GANONS_CASTLE_SECOND_PART  ), // Ganon's Castle Boss Key
+    [0x9A] = ITEM_ROW(0x53, 2, 0x41, 0x09D9, 0x0080, 0x00, 0xFF, 0xFF, 0xFF, 0x05, 0x08, ItemUpgrade_None, ItemEffect_GiveDungeonItem, 0x01, DUNGEON_GANONS_TOWER  ), // Ganon's Castle Boss Key
 
     [0x9B] = ITEM_ROW(0x53, 1, 0x41, 0x09DA, 0x00B8, 0x00, 0xFF, 0xFF, 0xFF, 0xFF, 0x0B, ItemUpgrade_None, ItemEffect_GiveDungeonItem, 0x02, DUNGEON_DEKU_TREE         ), // Deku Tree Compass
     [0x9C] = ITEM_ROW(0x53, 1, 0x41, 0x09DB, 0x00B8, 0x00, 0xFF, 0xFF, 0xFF, 0xFF, 0x0B, ItemUpgrade_None, ItemEffect_GiveDungeonItem, 0x02, DUNGEON_DODONGOS_CAVERN   ), // Dodongo's Cavern Compass
@@ -200,8 +204,8 @@ static ItemRow rItemTable[] = {
     [0xB3] = ITEM_ROW(0x53, 3, 0x41, 0x09F2, 0x0079, 0x00, 0xFF, 0xFF, 0xFF, 0x03, 0x07, ItemUpgrade_None, ItemEffect_GiveSmallKey, DUNGEON_SHADOW_TEMPLE, -1), // Shadow Temple Small Key
     [0xB4] = ITEM_ROW(0x53, 3, 0x41, 0x09F3, 0x007A, 0x00, 0xFF, 0xFF, 0xFF, 0x04, 0x07, ItemUpgrade_None, ItemEffect_GiveSmallKey, DUNGEON_BOTTOM_OF_THE_WELL,       -1), // Bottom of the Well Small Key
     [0xB5] = ITEM_ROW(0x53, 3, 0x41, 0x09F4, 0x007E, 0x00, 0xFF, 0xFF, 0xFF, 0x07, 0x07, ItemUpgrade_None, ItemEffect_GiveSmallKey, DUNGEON_GERUDO_TRAINING_GROUNDS,  -1), // Gerudo Training Small Key
-    [0xB6] = ITEM_ROW(0x53, 3, 0x41, 0x09F5, 0x007D, 0x00, 0xFF, 0xFF, 0xFF, 0x06, 0x07, ItemUpgrade_None, ItemEffect_GiveSmallKey, DUNGEON_GERUDO_FORTRESS,          -1), // Gerudo Fortress Small Key
-    [0xB7] = ITEM_ROW(0x53, 3, 0x41, 0x09F6, 0x007F, 0x00, 0xFF, 0xFF, 0xFF, 0x08, 0x07, ItemUpgrade_None, ItemEffect_GiveSmallKey, DUNGEON_GANONS_CASTLE_FIRST_PART, -1), // Ganon's Castle Small Key
+    [0xB6] = ITEM_ROW(0x53, 3, 0x41, 0x09F5, 0x007D, 0x00, 0xFF, 0xFF, 0xFF, 0x06, 0x07, ItemUpgrade_None, ItemEffect_GiveSmallKey, DUNGEON_THIEVES_HIDEOUT,          -1), // Gerudo Fortress Small Key
+    [0xB7] = ITEM_ROW(0x53, 3, 0x41, 0x09F6, 0x007F, 0x00, 0xFF, 0xFF, 0xFF, 0x08, 0x07, ItemUpgrade_None, ItemEffect_GiveSmallKey, DUNGEON_INSIDE_GANONS_CASTLE, -1), // Ganon's Castle Small Key
 
     [0xB8] = ITEM_ROW(0x53, 0, 0x41, 0x00E9, 0x0004, 0x00, 0xFF, 0xFF, 0xFF, 0xFF, 0x04, ItemUpgrade_None, ItemEffect_GiveDefense,     -1, -1), // Double Defense
     [0xB9] = ITEM_ROW(0x53, 0, 0x41, 0x00E4, 0x00CD, 0x00, 0xFF, 0xFF, 0xFF, 0xFF, 0x1E, ItemUpgrade_None, ItemEffect_GiveMagic,       -1, -1), // Magic Meter
@@ -224,7 +228,7 @@ static ItemRow rItemTable[] = {
     [0xC7] = ITEM_ROW(0x53, 0, 0x41, 0x09F7, 0x00D1, 0x00, 0xFF, 0xFF, 0xFF, 0xFF, 0x23, ItemUpgrade_None, ItemEffect_GiveTycoonWallet, 3, -1), // Tycoon's Wallet
     [0xC8] = ITEM_ROW(0x53, 0, 0x14, 0x9099, 0x010B, 0x00, 0xFF, 0xFF, 0xFF, 0xFF, 0x45, ItemUpgrade_None, ItemEffect_None,            -1, -1), // Redundant Letter Bottle
     [0xC9] = ITEM_ROW(0x53, 0, 0x41, 0x0048, 0x00F3, 0x00, 0xFF, 0xFF, 0xFF, 0xFF, 0x3E, ItemUpgrade_None, ItemEffect_BeanPack,        -1, -1), // Magic Bean Pack
- // [0xCA] = ITEM_ROW(0x53, 0, 0x41, 0x9003, 0x0193, 0x00, 0xFF, 0xFF, 0xFF, 0xFF, 0x35, ItemUpgrade_None, give_triforce_piece,        -1, -1), // Triforce piece
+    // [0xCA] = ITEM_ROW(0x53, 0, 0x41, 0x9003, 0x0193, 0x00, 0xFF, 0xFF, 0xFF, 0xFF, 0x35, ItemUpgrade_None, give_triforce_piece,        -1, -1), // Triforce piece
 
     [0xCB] = ITEM_ROW(0x53, 0, 0x41, 0x0080, 0x019C, 0x00, 0xFF, 0xFF, 0xFF, 0xFF, 0x88, ItemUpgrade_None, ItemEffect_GiveStone, 0x0004, -1), // Kokiri Emerald
     [0xCC] = ITEM_ROW(0x53, 0, 0x41, 0x0081, 0x019D, 0x00, 0xFF, 0xFF, 0xFF, 0xFF, 0x89, ItemUpgrade_None, ItemEffect_GiveStone, 0x0008, -1), // Goron Ruby
@@ -246,12 +250,13 @@ static ItemRow rItemTable[] = {
     [0xD9] = ITEM_ROW(0x53, 3, 0x41, 0x9304, 0x0079, 0x00, 0xFF, 0xFF, 0xFF, 0x03, 0x07, ItemUpgrade_None, ItemEffect_GiveSmallKeyRing, DUNGEON_SHADOW_TEMPLE, -1), // Shadow Temple Small Key ring
     [0xDA] = ITEM_ROW(0x53, 3, 0x41, 0x9305, 0x007A, 0x00, 0xFF, 0xFF, 0xFF, 0x04, 0x07, ItemUpgrade_None, ItemEffect_GiveSmallKeyRing, DUNGEON_BOTTOM_OF_THE_WELL,       -1), // Bottom of the Well Small Key ring
     [0xDB] = ITEM_ROW(0x53, 3, 0x41, 0x9306, 0x007E, 0x00, 0xFF, 0xFF, 0xFF, 0x07, 0x07, ItemUpgrade_None, ItemEffect_GiveSmallKeyRing, DUNGEON_GERUDO_TRAINING_GROUNDS,  -1), // Gerudo Training Small Key ring
-    [0xDC] = ITEM_ROW(0x53, 3, 0x41, 0x9307, 0x007D, 0x00, 0xFF, 0xFF, 0xFF, 0x06, 0x07, ItemUpgrade_None, ItemEffect_GiveSmallKeyRing, DUNGEON_GERUDO_FORTRESS,          -1), // Gerudo Fortress Small Key ring
-    [0xDD] = ITEM_ROW(0x53, 3, 0x41, 0x9308, 0x007F, 0x00, 0xFF, 0xFF, 0xFF, 0x08, 0x07, ItemUpgrade_None, ItemEffect_GiveSmallKeyRing, DUNGEON_GANONS_CASTLE_FIRST_PART, -1), // Ganon's Castle Small Key ring
+    [0xDC] = ITEM_ROW(0x53, 3, 0x41, 0x9307, 0x007D, 0x00, 0xFF, 0xFF, 0xFF, 0x06, 0x07, ItemUpgrade_None, ItemEffect_GiveSmallKeyRing, DUNGEON_THIEVES_HIDEOUT,          -1), // Gerudo Fortress Small Key ring
+    [0xDD] = ITEM_ROW(0x53, 3, 0x41, 0x9308, 0x007F, 0x00, 0xFF, 0xFF, 0xFF, 0x08, 0x07, ItemUpgrade_None, ItemEffect_GiveSmallKeyRing, DUNGEON_INSIDE_GANONS_CASTLE, -1), // Ganon's Castle Small Key ring
 
     [0xDE] = ITEM_ROW(0x53, 3, 0x41, 0x00F3, 0x00AA, 0x00, 0xFF, 0xFF, 0xFF, 0xFF, 0x02, ItemUpgrade_None, ItemEffect_GiveSmallKey, DUNGEON_TREASURE_CHEST_SHOP, -1), // Small Key (Chest Game)
 
 };
+// clang-format on
 
 ItemRow* ItemTable_GetItemRow(u16 itemId) {
     if (itemId >= ARR_SIZE(rItemTable)) {
@@ -268,14 +273,14 @@ ItemRow* ItemTable_GetItemRowFromIndex(u8 rowIndex) {
     return &rItemTable[rowIndex];
 }
 
-void ItemTable_SetBombchusChestType(u8 type){
+void ItemTable_SetBombchusChestType(u8 type) {
     rItemTable[0x6B].chestType = type;
 }
 
 u16 ItemTable_ResolveUpgrades(u16 itemId) {
     for (;;) {
         ItemRow* itemRow = ItemTable_GetItemRow(itemId);
-        u16 newItemId = itemRow->upgrade(&gSaveContext, itemId);
+        u16 newItemId    = itemRow->upgrade(&gSaveContext, itemId);
         if (newItemId == itemId) {
             return itemId;
         }

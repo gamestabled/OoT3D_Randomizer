@@ -12,10 +12,11 @@ extern bool mp_completeSyncs[6];
 extern bool mSaveContextInit;
 
 void Multiplayer_Run(void);
-void Multiplayer_Update(void);
+void Multiplayer_Update(u8 fromGlobalContextUpdate);
 s8 Multiplayer_PlayerCount();
 void Multiplayer_Sync_Update(void);
 void Multiplayer_ReceivePackets();
+void Multiplayer_OnFileLoad(void);
 
 // Ghost Data
 void Multiplayer_Send_GhostPing(void);
@@ -50,7 +51,7 @@ void Multiplayer_Send_GSFlagBit(u8 index, u8 bit, u8 setOrUnset);
 void Multiplayer_Send_BigPoePoints(u32 pointDiff);
 void Multiplayer_Send_FishingFlag(u8 bit, u8 setOrUnset);
 void Multiplayer_Send_WorldMapBit(u8 bit, u8 setOrUnset);
-void Multiplayer_Send_BiggoronTradeBit(u8 bit);
+void Multiplayer_Send_ExtInfBit(u8 index, u8 bit, u8 setOrUnset);
 void Multiplayer_Send_FullEntranceSync(u16 targetID);
 void Multiplayer_Send_DiscoveredScene(u32 index, u32 bit);
 void Multiplayer_Send_DiscoveredEntrance(u32 index, u32 bit);

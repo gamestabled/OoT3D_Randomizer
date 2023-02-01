@@ -3,13 +3,18 @@
 #include "z3D/z3D.h"
 #include "savefile.h"
 #include "multiplayer.h"
+#include "dungeon.h"
+#include "common.h"
 
 void ItemEffect_None(SaveContext* saveCtx, s16 arg1, s16 arg2) {
 }
 
 void ItemEffect_FullHeal(SaveContext* saveCtx, s16 arg1, s16 arg2) {
-    //With the No Health Refills option on, store-bought health upgrades do not heal the player
-    if((gSettingsContext.heartDropRefill != HEARTDROPREFILL_NOREFILL) && (gSettingsContext.heartDropRefill != HEARTDROPREFILL_NODROPREFILL)){
+    // With the No Health Refills option on, or if max health is currently 0, store-bought health upgrades do not heal
+    // the player
+    if (gSettingsContext.heartDropRefill != HEARTDROPREFILL_NOREFILL &&
+        gSettingsContext.heartDropRefill != HEARTDROPREFILL_NODROPREFILL && gSaveContext.healthCapacity > 0) {
+
         saveCtx->healthAccumulator = 20 * 0x10;
     }
 }
@@ -70,7 +75,8 @@ void ItemEffect_GiveSmallKey(SaveContext* saveCtx, s16 dungeonId, s16 arg2) {
         keys = 0;
     }
     // Special case for Treasure Chest Shop: if the keys are in a pack, give all 6 at once
-    if (dungeonId == DUNGEON_TREASURE_CHEST_SHOP && gSettingsContext.shuffleChestMinigame == SHUFFLECHESTMINIGAME_PACK) {
+    if (dungeonId == DUNGEON_TREASURE_CHEST_SHOP &&
+        gSettingsContext.shuffleChestMinigame == SHUFFLECHESTMINIGAME_PACK) {
         keys += 5;
     }
     saveCtx->dungeonKeys[dungeonId] = keys + 1;
@@ -81,84 +87,19 @@ void ItemEffect_GiveSmallKeyRing(SaveContext* saveCtx, s16 dungeonId, s16 arg2) 
     if (keys < 0) {
         keys = 0;
     }
-    s8 amt = 0;
-    switch(dungeonId) {
-        case DUNGEON_FOREST_TEMPLE:
-            if (gSettingsContext.forestTempleDungeonMode == DUNGEONMODE_MQ) {
-                amt = 6;
-            }
-            else {
-                amt = 5;
-            }
-            break;
-        case DUNGEON_FIRE_TEMPLE:
-            if (gSettingsContext.fireTempleDungeonMode == DUNGEONMODE_MQ) {
-                amt = 5;
-            }
-            else {
-                amt = 8;
-            }
-            break;
-        case DUNGEON_WATER_TEMPLE:
-            if (gSettingsContext.waterTempleDungeonMode == DUNGEONMODE_MQ) {
-                amt = 2;
-            }
-            else {
-                amt = 6;
-            }
-            break;
-        case DUNGEON_SPIRIT_TEMPLE:
-            if (gSettingsContext.spiritTempleDungeonMode == DUNGEONMODE_MQ) {
-                amt = 7;
-            }
-            else {
-                amt = 5;
-            }
-            break;
-        case DUNGEON_SHADOW_TEMPLE:
-            if (gSettingsContext.shadowTempleDungeonMode == DUNGEONMODE_MQ) {
-                amt = 6;
-            }
-            else {
-                amt = 5;
-            }
-            break;
-        case DUNGEON_BOTTOM_OF_THE_WELL:
-            if (gSettingsContext.bottomOfTheWellDungeonMode == DUNGEONMODE_MQ) {
-                amt = 2;
-            }
-            else {
-                amt = 3;
-            }
-            break;
-        case DUNGEON_GERUDO_TRAINING_GROUNDS:
-            if (gSettingsContext.gerudoTrainingGroundsDungeonMode == DUNGEONMODE_MQ) {
-                amt = 3;
-            }
-            else {
-                amt = 9;
-            }
-            break;
-        case DUNGEON_GERUDO_FORTRESS:
-            amt = 4;
-            break;
-        case DUNGEON_GANONS_CASTLE_FIRST_PART:
-            if (gSettingsContext.ganonsCastleDungeonMode == DUNGEONMODE_MQ) {
-                amt = 3;
-            }
-            else {
-                amt = 2;
-            }
-            break;
-    }
+    s8 amt = Dungeon_KeyAmount(dungeonId);
+
     saveCtx->dungeonKeys[dungeonId] = keys + amt;
 }
 
 void ItemEffect_GiveDefense(SaveContext* saveCtx, s16 arg1, s16 arg2) {
     saveCtx->doubleDefense = 1;
     // saveCtx->defense_hearts = 20; //TODO? is this needed?
-    //With the No Health Refills option on, store-bought health upgrades do not heal the player
-    if((gSettingsContext.heartDropRefill != HEARTDROPREFILL_NOREFILL) && (gSettingsContext.heartDropRefill != HEARTDROPREFILL_NODROPREFILL)){
+    // With the No Health Refills option on, or if max health is currently 0, store-bought health upgrades do not heal
+    // the player
+    if (gSettingsContext.heartDropRefill != HEARTDROPREFILL_NOREFILL &&
+        gSettingsContext.heartDropRefill != HEARTDROPREFILL_NODROPREFILL && gSaveContext.healthCapacity > 0) {
+
         saveCtx->healthAccumulator = 20 * 0x10;
     }
 
@@ -168,10 +109,10 @@ void ItemEffect_GiveDefense(SaveContext* saveCtx, s16 arg1, s16 arg2) {
 }
 
 void ItemEffect_GiveMagic(SaveContext* saveCtx, s16 arg1, s16 arg2) {
-    saveCtx->magicLevel = 1;        // Set meter level
-    saveCtx->magicAcquired = 1;     // Required for meter to persist on save load
+    saveCtx->magicLevel     = 1;    // Set meter level
+    saveCtx->magicAcquired  = 1;    // Required for meter to persist on save load
     saveCtx->magicMeterSize = 0x30; // Set meter size
-    saveCtx->magic = 0x30;          // Fill meter
+    saveCtx->magic          = 0x30; // Fill meter
 
     if (gSettingsContext.mp_SharedProgress == ON) {
         Multiplayer_Send_GreatFairyBuff(1);
@@ -179,11 +120,11 @@ void ItemEffect_GiveMagic(SaveContext* saveCtx, s16 arg1, s16 arg2) {
 }
 
 void ItemEffect_GiveDoubleMagic(SaveContext* saveCtx, s16 arg1, s16 arg2) {
-    saveCtx->magicLevel = 2;        // Set meter level
-    saveCtx->magicAcquired = 1;     // Required for meter to persist on save load
-    saveCtx->doubleMagic = 1;       // Required for meter to persist on save load
+    saveCtx->magicLevel     = 2;    // Set meter level
+    saveCtx->magicAcquired  = 1;    // Required for meter to persist on save load
+    saveCtx->doubleMagic    = 1;    // Required for meter to persist on save load
     saveCtx->magicMeterSize = 0x60; // Set meter size
-    saveCtx->magic = 0x60;          // Fill meter
+    saveCtx->magic          = 0x60; // Fill meter
 
     if (gSettingsContext.mp_SharedProgress == ON) {
         Multiplayer_Send_GreatFairyBuff(2);
@@ -208,37 +149,116 @@ void ItemEffect_IceTrap(SaveContext* saveCtx, s16 arg1, s16 arg2) {
     IceTrap_Push((u16)arg1 << 16 | (u16)arg2);
 }
 
+void ItemEffect_GiveMasterSword(SaveContext* saveCtx, s16 arg1, s16 arg2) {
+    gExtSaveData.extInf[EXTINF_MASTERSWORDFLAGS] |= 1;
+}
+
+void ItemEffect_EquipMasterSword(void) {
+    // Prevent auto-equipping master sword on child unless can equip normally
+    if (gSettingsContext.shuffleMasterSword && gSaveContext.linkAge == 1 && !gSettingsContext.masterSwordAsChild)
+        return;
+    // Otherwise run original code...
+    gSaveContext.equips.equipment      = (gSaveContext.equips.equipment & 0xFFF0) | 0x2;
+    gSaveContext.equips.buttonItems[0] = 0x3C;
+    // ...and reset the scabbard model
+    Player_SetEquipmentData(gGlobalContext, PLAYER);
+}
+
 void ItemEffect_BeanPack(SaveContext* saveCtx, s16 arg1, s16 arg2) {
     saveCtx->items[SLOT_BEAN] = ITEM_BEAN;
     saveCtx->ammo[SLOT_BEAN] += 10; // 10 Magic Beans
 }
 
-//With the No Ammo Drops option on, when the player gets an ammo upgrade,
-//the ammo count increases by 10 instead of being set to the maximum
+// With the No Ammo Drops option on, when the player gets an ammo upgrade,
+// the ammo count increases by 10 instead of being set to the maximum
 typedef void (*Inventory_ChangeUpgrade_proc)(u32 upgrade, u32 value);
 #define Inventory_ChangeUpgrade_addr 0x33C730
 #define Inventory_ChangeUpgrade ((Inventory_ChangeUpgrade_proc)Inventory_ChangeUpgrade_addr)
 
 void ItemEffect_GiveUpgrade(SaveContext* saveCtx, s16 arg1, s16 arg2) {
     Inventory_ChangeUpgrade(arg2, arg1);
-    if(gSettingsContext.ammoDrops == AMMODROPS_NONE){
-        switch (arg2){
-            case 0: saveCtx->ammo[SLOT_BOW] += 10; break;
-            case 1: saveCtx->ammo[SLOT_BOMB] += 10; break;
-            case 5: saveCtx->ammo[SLOT_SLINGSHOT] += 10; break;
-            case 6: saveCtx->items[SLOT_STICK] = ITEM_STICK; saveCtx->ammo[SLOT_STICK] += 10; break;
-            case 7: saveCtx->items[SLOT_NUT] = ITEM_NUT; saveCtx->ammo[SLOT_NUT] += 10; break;
-		}
+    if (gSettingsContext.ammoDrops == AMMODROPS_NONE) {
+        switch (arg2) {
+            case 0:
+                saveCtx->ammo[SLOT_BOW] += 10;
+                break;
+            case 1:
+                saveCtx->ammo[SLOT_BOMB] += 10;
+                break;
+            case 5:
+                saveCtx->ammo[SLOT_SLINGSHOT] += 10;
+                break;
+            case 6:
+                saveCtx->items[SLOT_STICK] = ITEM_STICK;
+                saveCtx->ammo[SLOT_STICK] += 10;
+                break;
+            case 7:
+                saveCtx->items[SLOT_NUT] = ITEM_NUT;
+                saveCtx->ammo[SLOT_NUT] += 10;
+                break;
+        }
     } else {
-        switch (arg2){
-            case 0: saveCtx->ammo[SLOT_BOW] = (20 + 10 * arg1); break;
-            case 1: saveCtx->ammo[SLOT_BOMB] = (10 + 10 * arg1); break;
-            case 5: saveCtx->ammo[SLOT_SLINGSHOT] = (20 + 10 * arg1); break;
-            case 6: saveCtx->items[SLOT_STICK] = ITEM_STICK; saveCtx->ammo[SLOT_STICK] = (10 * arg1); break;
-            case 7: saveCtx->items[SLOT_NUT] = ITEM_NUT; saveCtx->ammo[SLOT_NUT] = (10 + 10 * arg1); break;
-		}
+        switch (arg2) {
+            case 0:
+                saveCtx->ammo[SLOT_BOW] = (20 + 10 * arg1);
+                break;
+            case 1:
+                saveCtx->ammo[SLOT_BOMB] = (10 + 10 * arg1);
+                break;
+            case 5:
+                saveCtx->ammo[SLOT_SLINGSHOT] = (20 + 10 * arg1);
+                break;
+            case 6:
+                saveCtx->items[SLOT_STICK] = ITEM_STICK;
+                saveCtx->ammo[SLOT_STICK]  = (10 * arg1);
+                break;
+            case 7:
+                saveCtx->items[SLOT_NUT] = ITEM_NUT;
+                saveCtx->ammo[SLOT_NUT]  = (10 + 10 * arg1);
+                break;
+        }
     }
 }
+
+// Use rupees as ammo when count gets to 0 and the player has the corresponding item
+void ItemEffect_RupeeAmmo(SaveContext* saveCtx) {
+    if (gSettingsContext.retroAmmo && IsInGameOrBossChallenge()) {
+        if (saveCtx->ammo[SLOT_BOW] == 0 && saveCtx->rupees >= 4 &&
+            (saveCtx->items[SLOT_BOW] == ITEM_BOW || saveCtx->items[SLOT_BOW] == ITEM_BOW_ARROW_FIRE ||
+             saveCtx->items[SLOT_BOW] == ITEM_BOW_ARROW_ICE || saveCtx->items[SLOT_BOW] == ITEM_BOW_ARROW_LIGHT)) {
+            saveCtx->rupeeAccumulator -= 4;
+            saveCtx->ammo[SLOT_BOW] += 1;
+        }
+        if (saveCtx->ammo[SLOT_BOMB] == 0 && saveCtx->rupees >= 8 && saveCtx->items[SLOT_BOMB] == ITEM_BOMB) {
+            saveCtx->rupeeAccumulator -= 8;
+            saveCtx->ammo[SLOT_BOMB] += 1;
+        }
+        if (saveCtx->ammo[SLOT_BOMBCHU] == 0 && saveCtx->rupees >= 12 && saveCtx->items[SLOT_BOMBCHU] == ITEM_BOMBCHU) {
+            saveCtx->rupeeAccumulator -= 12;
+            saveCtx->ammo[SLOT_BOMBCHU] += 1;
+        }
+        if (saveCtx->ammo[SLOT_SLINGSHOT] == 0 && saveCtx->rupees >= 2 &&
+            saveCtx->items[SLOT_SLINGSHOT] == ITEM_SLINGSHOT) {
+            saveCtx->rupeeAccumulator -= 2;
+            saveCtx->ammo[SLOT_SLINGSHOT] += 1;
+        }
+        if (saveCtx->ammo[SLOT_STICK] == 0 && saveCtx->rupees >= 15 && saveCtx->items[SLOT_STICK] == ITEM_STICK) {
+            saveCtx->rupeeAccumulator -= 15;
+            saveCtx->ammo[SLOT_STICK] += 1;
+        }
+        if (saveCtx->ammo[SLOT_NUT] == 0 && saveCtx->rupees >= 4 && saveCtx->items[SLOT_NUT] == ITEM_NUT) {
+            saveCtx->rupeeAccumulator -= 4;
+            saveCtx->ammo[SLOT_NUT] += 1;
+        }
+        // Use rupees as magic when it becomes low, when the player has magic, and when magic isn't being filled
+        if (saveCtx->magic < 0x18 && saveCtx->rupees >= 1 && (saveCtx->magicState == 0 || saveCtx->magicState == 7) &&
+            saveCtx->magicLevel > 0) {
+            saveCtx->rupeeAccumulator -= 1;
+            saveCtx->magic += 0x01;
+        }
+    }
+}
+
 void ItemEffect_FillWalletUpgrade(SaveContext* saveCtx, s16 arg1, s16 arg2) {
     if (gSettingsContext.startingMaxRupees) {
         if (arg1 == 1) {
@@ -250,6 +270,8 @@ void ItemEffect_FillWalletUpgrade(SaveContext* saveCtx, s16 arg1, s16 arg2) {
 }
 
 void ItemEffect_OpenMaskShop(SaveContext* saveCtx, s16 arg1, s16 arg2) {
+    gSaveContext.sceneFlags[0x60].unk |= 0x1 << 0x11;
+
     if (gSettingsContext.openKakariko == OPENKAKARIKO_OPEN) {
         gSaveContext.infTable[7] |= 0x40; // "Spoke to Gate Guard About Mask Shop"
         if (!gSettingsContext.completeMaskQuest) {
@@ -257,8 +279,8 @@ void ItemEffect_OpenMaskShop(SaveContext* saveCtx, s16 arg1, s16 arg2) {
         }
     }
     if (gSettingsContext.completeMaskQuest) {
-        gSaveContext.infTable[7] |= 0x80; // "Soldier Wears Keaton Mask"
-        gSaveContext.itemGetInf[3] |= 0x8F00; // "Sold Masks & Unlocked Masks" / "Obtained Mask of Truth"
+        gSaveContext.infTable[7] |= 0x80;      // "Soldier Wears Keaton Mask"
+        gSaveContext.itemGetInf[3] |= 0x8F00;  // "Sold Masks & Unlocked Masks" / "Obtained Mask of Truth"
         gSaveContext.eventChkInf[8] |= 0xF000; // "Paid Back Mask Fees"
     }
 }
@@ -266,7 +288,7 @@ void ItemEffect_OpenMaskShop(SaveContext* saveCtx, s16 arg1, s16 arg2) {
 static u8 MakeSpaceInItemMenu(u8* itemMenu) {
     u8 currentSlot = 5;
     u8 emptyButton = 0xFF;
-    u8 slotToFree = 0xFF;
+    u8 slotToFree  = 0xFF;
 
     // find an empty button
     for (currentSlot = 5; currentSlot < 24; currentSlot += 6) {
@@ -301,7 +323,7 @@ static u8 MakeSpaceInItemMenu(u8* itemMenu) {
         // equip the item and free up the slot it occupied
         if (slotToFree != 0xFF) {
             itemMenu[emptyButton] = itemMenu[slotToFree];
-            itemMenu[slotToFree] = 0xFF;
+            itemMenu[slotToFree]  = 0xFF;
             return slotToFree;
         }
     }
@@ -395,4 +417,8 @@ void ItemEffect_OwnAdultTrade(SaveContext* saveCtx, s16 arg1, s16 arg2) {
     if ((gSettingsContext.shuffleAdultTradeQuest == SHUFFLEADULTTRADEQUEST_OFF) && arg1 >= ITEM_ODD_POTION) {
         ItemEffect_GrannySellsPotions(saveCtx, arg1, arg2);
     }
+}
+
+void ItemEffect_GiveWeirdEgg(SaveContext* saveCtx, s16 arg1, s16 arg2) {
+    gSaveContext.sceneFlags[0x60].unk |= 0x1 << 0x10;
 }

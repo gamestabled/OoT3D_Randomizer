@@ -1,9 +1,10 @@
 #include "settings.h"
 #include "hid.h"
 #include "input.h"
+#include "savefile.h"
 
-SettingsContext gSettingsContext = {0};
-u8 Damage32 = 0;
+SettingsContext gSettingsContext = { 0 };
+u8 Damage32                      = 0;
 
 s32 Settings_ApplyDamageMultiplier(GlobalContext* globalCtx, s32 changeHealth) {
     // Fairy healing also gets sent to this function and should be ignored
@@ -16,7 +17,7 @@ s32 Settings_ApplyDamageMultiplier(GlobalContext* globalCtx, s32 changeHealth) {
     }
 
     s32 modifiedChangeHealth = changeHealth;
-    //disregard master quest damage
+    // disregard master quest damage
     if (gSaveContext.masterQuestFlag) {
         modifiedChangeHealth /= 2;
     }
@@ -56,7 +57,8 @@ s32 Settings_ApplyDamageMultiplier(GlobalContext* globalCtx, s32 changeHealth) {
         }
     }
 
-    // Double defense seems to round up after halving so values of -1 should instead alternate between -2 and 0 (-1 would also work, but -2 was easier)
+    // Double defense seems to round up after halving so values of -1 should instead alternate between -2 and 0 (-1
+    // would also work, but -2 was easier)
     if (gSaveContext.doubleDefense && modifiedChangeHealth == -1) {
         modifiedChangeHealth = -(Damage32 & 2);
         Damage32 ^= 2;
@@ -64,16 +66,20 @@ s32 Settings_ApplyDamageMultiplier(GlobalContext* globalCtx, s32 changeHealth) {
 
     return modifiedChangeHealth;
 }
-//With the No Health Refill option on, full health refills from health upgrades and Bombchu Bowling are turned off, and fairies restore 3 hearts
-//Otherwise, they grant a full heal, and the default effect applies (full heal from bottle, 8 hearts on contact)
+// With the No Health Refill option on, full health refills from health upgrades and Bombchu Bowling are turned off, and
+// fairies restore 3 hearts Otherwise, they grant a full heal, and the default effect applies (full heal from bottle, 8
+// hearts on contact)
 u32 Settings_SetFullHealthRestore(u8 setAmount) {
-    if((gSettingsContext.heartDropRefill == HEARTDROPREFILL_NOREFILL) || (gSettingsContext.heartDropRefill == HEARTDROPREFILL_NODROPREFILL)){
+    if ((gSettingsContext.heartDropRefill == HEARTDROPREFILL_NOREFILL) ||
+        (gSettingsContext.heartDropRefill == HEARTDROPREFILL_NODROPREFILL)) {
         return setAmount;
     } else {
         return 0x140;
     }
 }
 u32 NoHealFromHealthUpgrades(void) {
+    if (gSaveContext.healthCapacity == 0) // avoid Game Over when picking up a PoH with 0 hearts
+        return 0;
     return Settings_SetFullHealthRestore(0);
 }
 u32 NoHealFromBombchuBowlingPrize(void) {
@@ -87,7 +93,8 @@ u32 FairyUseHealAmount(void) {
 }
 
 void FairyPickupHealAmount(void) {
-    if(gSettingsContext.heartDropRefill == HEARTDROPREFILL_NOREFILL || gSettingsContext.heartDropRefill == HEARTDROPREFILL_NODROPREFILL){
+    if (gSettingsContext.heartDropRefill == HEARTDROPREFILL_NOREFILL ||
+        gSettingsContext.heartDropRefill == HEARTDROPREFILL_NODROPREFILL) {
         Health_ChangeBy(gGlobalContext, 0x30);
     } else {
         Health_ChangeBy(gGlobalContext, 0x80);
@@ -99,7 +106,7 @@ u32 Settings_GetQuickTextOption() {
 }
 
 u32 Settings_GetSongReplaysOption() {
-    return gSettingsContext.skipSongReplays;
+    return gExtSaveData.option_SkipSongReplays;
 }
 
 u32 Settings_IsTurboText() {
@@ -112,19 +119,20 @@ u32 Settings_GetChestMinigameOption() {
 
 void Settings_SkipSongReplays() {
     // msgModes 18 to 23 are used to manage the song replays. Skipping to mode 23 ends the replay.
-    // msgMode 18 starts the playback music. It can't be skipped for scarecrow's song (song "12") because it spawns Pierre.
-    if ((gSettingsContext.skipSongReplays == SONGREPLAYS_SKIP_NO_SFX && gGlobalContext->msgMode == 18 && gGlobalContext->unk_2A91[0xEB] != 12) ||
-        (gSettingsContext.skipSongReplays != SONGREPLAYS_DONT_SKIP   && gGlobalContext->msgMode == 19)
-       ) {
-        // In Water Temple, playing ZL cycles through the modes to avoid problems with the dimmed bottom screen at the ZL switches
-        if (gGlobalContext->sceneNum == 5 && gGlobalContext->unk_2A91[0xEB] == 8) {
+    // msgMode 18 starts the playback music. It can't be skipped for scarecrow's song (song "12") because it spawns
+    // Pierre.
+    if ((gExtSaveData.option_SkipSongReplays == SONGREPLAYS_SKIP_NO_SFX && gGlobalContext->msgMode == 18 &&
+         gGlobalContext->lastPlayedSong != 12) ||
+        (gExtSaveData.option_SkipSongReplays != SONGREPLAYS_DONT_SKIP && gGlobalContext->msgMode == 19)) {
+        // In Water Temple, playing ZL cycles through the modes to avoid problems with the dimmed bottom screen at the
+        // ZL switches
+        if (gGlobalContext->sceneNum == 5 && gGlobalContext->lastPlayedSong == 8) {
             gGlobalContext->msgMode = 20;
-        }
-        else {
+        } else {
             gGlobalContext->msgMode = 23;
         }
-    }
-    else if (gSettingsContext.skipSongReplays != SONGREPLAYS_DONT_SKIP && gGlobalContext->msgMode > 19 && gGlobalContext->msgMode < 23) {
+    } else if (gExtSaveData.option_SkipSongReplays != SONGREPLAYS_DONT_SKIP && gGlobalContext->msgMode > 19 &&
+               gGlobalContext->msgMode < 23) {
         gGlobalContext->msgMode++;
     }
 }
@@ -139,7 +147,8 @@ s32 Settings_BowAsChild() {
 }
 
 s32 Settings_IsMasterQuestDungeon(void) {
-    // Certain actors check the MQ flag in the base game, but they have to check the individual dungeon mode for the randomizer:
+    // Certain actors check the MQ flag in the base game, but they have to check the individual dungeon mode for the
+    // randomizer:
     // - Gold Skulltulas becoming intangible if they're inside blocks in MQ;
     // - The water jet covering the Boomerang chest (it didn't cover it on GameCube);
     s16 scene = gGlobalContext->sceneNum;
@@ -153,37 +162,15 @@ s32 Settings_IsMasterQuestDungeon(void) {
     return 0;
 }
 
+s32 Settings_IsIsgEnabled(void) {
+    return (s32)gSettingsContext.restoreISG;
+}
+
 const char hashIconNames[32][25] = {
-    "Deku Stick",
-    "Deku Nut",
-    "Bow",
-    "Slingshot",
-    "Fairy Ocarina",
-    "Bombchu",
-    "Longshot",
-    "Boomerang",
-    "Lens of Truth",
-    "Beans",
-    "Megaton Hammer",
-    "Bottled Fish",
-    "Bottled Milk",
-    "Mask of Truth",
-    "SOLD OUT",
-    "Cucco",
-    "Mushroom",
-    "Saw",
-    "Frog",
-    "Master Sword",
-    "Mirror Shield",
-    "Kokiri Tunic",
-    "Hover Boots",
-    "Silver Gauntlets",
-    "Gold Scale",
-    "Shard of Agony",
-    "Skull Token",
-    "Heart Container",
-    "Boss Key",
-    "Compass",
-    "Map",
-    "Big Magic",
+    "Deku Stick",   "Deku Nut",       "Bow",           "Slingshot",       "Fairy Ocarina",  "Bombchu",
+    "Longshot",     "Boomerang",      "Lens of Truth", "Beans",           "Megaton Hammer", "Bottled Fish",
+    "Bottled Milk", "Mask of Truth",  "SOLD OUT",      "Cucco",           "Mushroom",       "Saw",
+    "Frog",         "Master Sword",   "Mirror Shield", "Kokiri Tunic",    "Hover Boots",    "Silver Gauntlets",
+    "Gold Scale",   "Shard of Agony", "Skull Token",   "Heart Container", "Boss Key",       "Compass",
+    "Map",          "Big Magic",
 };

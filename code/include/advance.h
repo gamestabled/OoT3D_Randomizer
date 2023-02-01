@@ -16,7 +16,7 @@ typedef enum {
     LATCHED
 } frame_state_t;
 
-typedef struct{
+typedef struct {
     frame_state_t advance_state;
     uint8_t latched;
 } advance_ctx_t;
@@ -31,4 +31,4 @@ typedef struct {
 extern advance_ctx_t advance_ctx;
 extern advance_input_t inputs;
 
-#endif //ADVANCE_H
+#endif // ADVANCE_H

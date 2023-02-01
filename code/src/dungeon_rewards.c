@@ -1,30 +1,8 @@
 #include "z3D/z3D.h"
 #include "dungeon_rewards.h"
 
-u32 rDungeonRewardOverrides[LIGHT_MEDALLION + 1] = {
-    KOKIRI_EMERALD,
-    GORON_RUBY,
-    ZORA_SAPPHIRE,
-    FOREST_MEDALLION,
-    FIRE_MEDALLION,
-    WATER_MEDALLION,
-    SPIRIT_MEDALLION,
-    SHADOW_MEDALLION,
-    LIGHT_MEDALLION,
- };
-
-const char DungeonRewardNames[][25] = {
-    "Kokiri Emerald",
-    "Goron Ruby",
-    "Zora's Sapphire",
-    "Forest Medallion",
-    "Fire Medallion",
-    "Water Medallion",
-    "Spirit Medallion",
-    "Shadow Medallion",
-    "Light Medallion",
+// This will be overwritten by the app only if rewards are at End of Dungeons
+u32 rDungeonRewardOverrides[DUNGEON_REWARDS_COUNT] = {
+    R_KOKIRI_EMERALD,  R_GORON_RUBY,       R_ZORA_SAPPHIRE,    R_FOREST_MEDALLION, R_FIRE_MEDALLION,
+    R_WATER_MEDALLION, R_SPIRIT_MEDALLION, R_SHADOW_MEDALLION, R_LIGHT_MEDALLION,
 };
-
-const char* DungeonReward_GetName(u32 dungeonReward) {
-    return DungeonRewardNames[rDungeonRewardOverrides[dungeonReward]];
-}

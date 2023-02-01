@@ -29,30 +29,21 @@ include $(DEVKITARM)/3ds_rules
 #---------------------------------------------------------------------------------
 TARGET		:=	$(notdir $(CURDIR))
 BUILD		:=	build
-SOURCES		:=	src
+SOURCES		:=	$(sort $(dir $(wildcard src/*/ src/)))
 DATA		:=	data
-INCLUDES	:=	include
+INCLUDES	:=	include $(SOURCES)
 INCLUDES    +=  assets
 #ROMFS		:=	romfs
 
 #---------------------------------------------------------------------------------
 # options for code generation
 #---------------------------------------------------------------------------------
-OOT3D	 	:= OOT3D
-OOT3DJ 		:= OOT3DJ
-Z3D			:= OOT3D
+USA         := USA
+EUR         := EUR
+JP          := JP
+REGION      := USA
 
-ifeq ($(OOT3D), $(Z3D))
-  LINK_SCRIPT 	:= oot.ld
-  ASFLAGS += -D _USA_=1 -D _JP_=0
-else
-ifeq ($(OOT3DJ), $(Z3D))
-  LINK_SCRIPT 	:= oot_j.ld
-  ASFLAGS += -D _USA_=0 -D _JP_=1
-endif
-endif
-
-VERFLAGS := -D OOT3D=$(OOT3D) -D OOT3DJ=$(OOT3DJ) -D Z3D=$(Z3D)
+VERFLAGS := -D USA=$(USA) -D EUR=$(EUR) -D JP=$(JP) -D REGION=$(REGION)
 
 ARCH	:=	-march=armv6k -mtune=mpcore -mfloat-abi=softfp -mtp=soft -mfpu=vfpv2
 
@@ -63,6 +54,29 @@ CFLAGS	:=	-g -Wall -mword-relocations -D DEBUG \
 CFLAGS	+=	$(INCLUDE) -DARM11 -D_3DS $(VERFLAGS)
 
 CXXFLAGS	:= $(CFLAGS) -fno-rtti -fno-exceptions -std=gnu++11
+
+ifeq ($(USA), $(REGION))
+  LINK_SCRIPT 	:= oot.ld
+  ASFLAGS += -D _USA_=1 -D _EUR_=0 -D _JP_=0
+  CFLAGS += -g -DVersion_USA
+  BUILD  := build_usa
+  TARGET := code_usa
+else
+ifeq ($(EUR), $(REGION))
+  LINK_SCRIPT 	:= oot_e.ld
+  ASFLAGS += -D _USA_=0 -D _EUR_=1 -D _JP_=0
+  CFLAGS += -g -DVersion_EUR
+  BUILD  := build_eur
+  TARGET := code_eur
+ifeq ($(JP), $(REGION))
+  LINK_SCRIPT 	:= oot_j.ld
+  ASFLAGS += -D _USA_=0 -D _EUR_=0 -D _JP_=1
+  CFLAGS += -g -DVersion_JP
+  BUILD  := build_jp
+  TARGET := code_jp
+endif
+endif
+endif
 
 ASFLAGS	+=	-g $(ARCH) $(VERFLAGS)
 LDFLAGS	=	-g $(ARCH) -Wl,-Map,$(notdir $*.map) -T $(TOPDIR)/$(LINK_SCRIPT) $(VERFLAGS) -lgcc
@@ -151,17 +165,14 @@ all: $(BUILD)
 $(BUILD):
 	@[ -d $@ ] || mkdir -p $@
 	@$(MAKE) --no-print-directory -C $(BUILD) -f $(CURDIR)/Makefile
-	@if python3 patch.py $(OUTPUT).elf; then \
-		echo "created basecode.ips" ; \
-	else \
-		python patch.py $(OUTPUT).elf; \
-		echo "created basecode.ips" ; \
+	@if ! python3 patch.py $(OUTPUT).elf $(REGION) $(debug); then \
+		python patch.py $(OUTPUT).elf $(REGION) $(debug); \
 	fi
 
 #---------------------------------------------------------------------------------
 clean:
 	@echo clean ...
-	@rm -fr $(BUILD)  $(TARGET).elf
+	@rm -fr build build_eur build_usa *.elf ../source/patch_symbols*
 
 
 #---------------------------------------------------------------------------------
@@ -173,7 +184,7 @@ DEPENDS	:=	$(OFILES:.o=.d)
 # main targets
 #---------------------------------------------------------------------------------
 
-$(OUTPUT).elf	:	$(OFILES)
+$(OUTPUT).elf	:	$(OFILES) $(TOPDIR)/$(LINK_SCRIPT)
 
 #---------------------------------------------------------------------------------
 # you need a rule like this for each extension you use as binary data

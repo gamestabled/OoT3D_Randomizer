@@ -1,0 +1,11 @@
+All numbers in hexadecimal
+
+USA addresses       EUR offsets
+
+000000 - 419E17  :  ±0
+419E18 - 41A143  :  =/= (language-fetching function)
+41A144 - 43668B  :  +24
+43668C - 43668F  :  N/A (padding)
+436690 - 4A5ADF  :  +20
+4A5AE0 - 4A5AFF  :  N/A (padding)
+4A5B00 - 5C6607  :  ±0
