@@ -468,7 +468,7 @@ void AreaTable_Init_DeathMountain() {
              {
                  // Exits
                  Entrance(DMC_LOWER_NEARBY, { [] { return true; } }),
-                 Entrance(DMC_LADDER_AREA_NEARBY, { [] { return FireTimer >= 8; } }),
+                 Entrance(DMC_LADDER_AREA_NEARBY, { [] { return FireTimer >= 8 || Hearts >= 3; } }),
                  Entrance(DMC_CENTRAL_NEARBY,
                           { [] { return (CanUse(HOVER_BOOTS) || CanUse(HOOKSHOT)) && (FireTimer >= 8 || Hearts >= 3); },
                             /*Glitched*/
