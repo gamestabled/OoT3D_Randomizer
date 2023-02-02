@@ -40,7 +40,7 @@ typedef enum {
     TEXANIM_CHILD_LINK_BODY,
     TEXANIM_BOSS_KEY,
     TEXANIM_GOLD_CHEST,
-    TEXANIM_GRAY_CHEST,
+    TEXANIM_KEY_CHEST,
 } CustomGeneralAssetsTexAnims;
 
 typedef enum {

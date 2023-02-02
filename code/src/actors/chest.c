@@ -73,7 +73,7 @@ void EnBox_rInit(Actor* thisx, GlobalContext* globalCtx) {
             cmabMan = ZAR_GetCMABByIndex(&rExtendedObjectCtx.status[exObjectBankIdx].zarInfo, TEXANIM_GOLD_CHEST);
             TexAnim_Spawn(this->skelAnime.unk_28->unk_0C, cmabMan);
         } else if (type == CHEST_SMALL_KEY) {
-            cmabMan = ZAR_GetCMABByIndex(&rExtendedObjectCtx.status[exObjectBankIdx].zarInfo, TEXANIM_GRAY_CHEST);
+            cmabMan = ZAR_GetCMABByIndex(&rExtendedObjectCtx.status[exObjectBankIdx].zarInfo, TEXANIM_KEY_CHEST);
             TexAnim_Spawn(this->skelAnime.unk_28->unk_0C, cmabMan);
         }
     }
@@ -162,7 +162,7 @@ u8 Chest_OverrideAnimation() {
 u8 Chest_OverrideDecoration() {
 
     if (type == CHEST_BOSS_KEY ||
-        ((gSettingsContext.chestAppearance == CHESTAPPEARANCE_CLASSIC) && (type == CHEST_SMALL_KEY))) {
+        ((gSettingsContext.chestAppearance != CHESTAPPEARANCE_VANILLA) && (type == CHEST_SMALL_KEY))) {
         return 1;
     }
     return 0;
