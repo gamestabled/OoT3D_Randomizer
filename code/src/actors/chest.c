@@ -40,8 +40,8 @@ void EnBox_rInit(Actor* thisx, GlobalContext* globalCtx) {
         thisItemRow = ItemTable_GetItemRow(ItemTable_ResolveUpgrades(thisOverride.value.itemId));
     }
     u8 type = thisItemRow->chestType;
-    if (type == CHEST_BOMBCHUS && isBombchuMajor()) {
-        type = CHEST_MAJOR;
+    if (type == CHEST_BOMBCHUS) {
+        type = isBombchuMajor() ? CHEST_MAJOR : CHEST_JUNK;
     }
 
     EnBox_Init(thisx, globalCtx);
