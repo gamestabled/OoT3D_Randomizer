@@ -45,28 +45,29 @@ class SequenceData {
 };
 
 // Forward declaration
-class AudioCategoryLeaf;
+class MusicCategoryLeaf;
 
-class AudioCategory {
+class MusicCategoryNode {
   public:
-    AudioCategory(std::string Name_, std::vector<AudioCategory*> children_);
-    ~AudioCategory();
+    MusicCategoryNode(std::string Name_, std::vector<MusicCategoryNode*> children_);
+    ~MusicCategoryNode();
 
     /// Creates it's folder in it's parent's, and then calls each child to do the same.
     void CreateDirectories(FS_Archive sdmcArchive);
     /// Returns the full path of this node.
     std::string GetFullPath();
     /// Sets this node's parent node.
-    void SetParent(AudioCategory* parent_);
+    void SetParent(MusicCategoryNode* parent_);
     /// Returns true if this node has the given node as an ancestor.
-    bool HasAncestor(AudioCategory* ancestor);
+    bool HasAncestor(MusicCategoryNode* ancestor);
 
     /// Copies the given Sequence Data into it's vector.
     void AddNewSeqData(SequenceData seqData);
-    /// Adds all external Sequence Datas in this node's personal folder.
+    /// Adds all external Sequence Datas in this node's personal folder, and
+    /// then recursively calls it's children to do the same
     void AddExternalSeqDatas(FS_Archive sdmcArchive);
     /// Returns a vector of this node's and it's ancestor's Sequence Datas, and which node owns it.
-    std::vector<std::pair<AudioCategory*, SequenceData*>> GetSeqDatas();
+    std::vector<std::pair<MusicCategoryNode*, SequenceData*>> GetSeqDatas();
     /// Returns a random Sequence Data of this node or it's ancestors, and remove it from the owner.
     SequenceData GetAndRemoveRandomSeqData();
     /// Removes the Sequence Data in the vector matching the address, if found.
@@ -74,14 +75,14 @@ class AudioCategory {
     /// Clears the Sequence Data vector.
     void ClearSeqDatas();
 
-    /// Returns all leaves in this node.
-    std::vector<AudioCategoryLeaf*> GetAllLeaves();
+    /// Returns all leaves in this node's children.
+    std::vector<MusicCategoryLeaf*> GetAllLeaves();
 
     const std::string Name;
 
   protected:
-    AudioCategory* parent = nullptr;
-    std::vector<AudioCategory*> children;
+    MusicCategoryNode* parent = nullptr;
+    std::vector<MusicCategoryNode*> children;
     std::vector<SequenceData> seqDatas;
 
     std::string fullPath;
@@ -90,10 +91,10 @@ class AudioCategory {
     virtual void ForDynamicCast();
 };
 
-class AudioCategoryLeaf : public AudioCategory {
+class MusicCategoryLeaf : public MusicCategoryNode {
   public:
-    AudioCategoryLeaf(std::string Name_, u16 fileRep_);
-    ~AudioCategoryLeaf();
+    MusicCategoryLeaf(std::string Name_, u16 fileRep_);
+    ~MusicCategoryLeaf();
 
     /// ID of which file this node represents.
     const u16 FileRep;

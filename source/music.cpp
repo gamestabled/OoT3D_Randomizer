@@ -131,201 +131,205 @@ void ShuffleSequences(int type) {
 }
 
 // BGM: Overworld
-static AudioCategoryLeaf acBgm_HyruleField("Hyrule Field", 9);
-static AudioCategoryLeaf acBgm_KakarikoAdult("Kakariko Adult", 11);
-static AudioCategoryLeaf acBgm_Market("Market", 15);
-static AudioCategoryLeaf acBgm_KakarikoChild("Kakariko Child", 25);
-static AudioCategoryLeaf acBgm_LonLonRanch("Lon Lon Ranch", 33);
-static AudioCategoryLeaf acBgm_GoronCity("Goron City", 34);
-static AudioCategoryLeaf acBgm_KokiriForest("Kokiri Forest", 45);
-static AudioCategoryLeaf acBgm_LostWoods("Lost Woods", 47);
-static AudioCategoryLeaf acBgm_ZorasDomain("Zora's Domain", 65);
-static AudioCategoryLeaf acBgm_GerudoValley("Gerudo Valley", 79);
+static MusicCategoryLeaf mcBgm_HyruleField("Hyrule Field", 9);
+static MusicCategoryLeaf mcBgm_KakarikoAdult("Kakariko Adult", 11);
+static MusicCategoryLeaf mcBgm_Market("Market", 15);
+static MusicCategoryLeaf mcBgm_KakarikoChild("Kakariko Child", 25);
+static MusicCategoryLeaf mcBgm_LonLonRanch("Lon Lon Ranch", 33);
+static MusicCategoryLeaf mcBgm_GoronCity("Goron City", 34);
+static MusicCategoryLeaf mcBgm_KokiriForest("Kokiri Forest", 45);
+static MusicCategoryLeaf mcBgm_LostWoods("Lost Woods", 47);
+static MusicCategoryLeaf mcBgm_ZorasDomain("Zora's Domain", 65);
+static MusicCategoryLeaf mcBgm_GerudoValley("Gerudo Valley", 79);
 // BGM: Interiors
-static AudioCategoryLeaf acBgm_HouseTheme("House Theme", 17);
-static AudioCategoryLeaf acBgm_FairyFountain("Fairy Fountain", 26);
-static AudioCategoryLeaf acBgm_TempleTime("Temple of Time", 43);
-static AudioCategoryLeaf acBgm_Windmill("Windmill", 61);
-static AudioCategoryLeaf acBgm_ShopTheme("Shop Theme", 70);
-static AudioCategoryLeaf acBgm_GrannysPotionShop("Granny's Potion Shop", 80);
-static AudioCategoryLeaf acBgm_Underground("Underground", 83);
+static MusicCategoryLeaf mcBgm_HouseTheme("House Theme", 17);
+static MusicCategoryLeaf mcBgm_FairyFountain("Fairy Fountain", 26);
+static MusicCategoryLeaf mcBgm_TempleTime("Temple of Time", 43);
+static MusicCategoryLeaf mcBgm_Windmill("Windmill", 61);
+static MusicCategoryLeaf mcBgm_ShopTheme("Shop Theme", 70);
+static MusicCategoryLeaf mcBgm_Drugstore("Drugstore", 80);
+static MusicCategoryLeaf mcBgm_Underground("Underground", 83);
 // BGM: Dungeons
-static AudioCategoryLeaf acBgm_MiscDungeon("Misc Dungeon", 10);
-static AudioCategoryLeaf acBgm_InsideDekuTree("Deku Tree", 14);
-static AudioCategoryLeaf acBgm_JabuJabu("Jabu Jabu", 24);
-static AudioCategoryLeaf acBgm_FireTemple("Fire Temple", 28);
-static AudioCategoryLeaf acBgm_ForestTemple("Forest Temple", 30);
-static AudioCategoryLeaf acBgm_GanonsTower("Ganon's Tower", 32);
-static AudioCategoryLeaf acBgm_SpiritTemple("Spirit Temple", 48);
-static AudioCategoryLeaf acBgm_IceCavern("Ice Cavern", 73);
-static AudioCategoryLeaf acBgm_ShadowTemple("Shadow Temple", 76);
-static AudioCategoryLeaf acBgm_WaterTemple("Water Temple", 77);
+static MusicCategoryLeaf mcBgm_MiscDungeon("Misc Dungeon", 10);
+static MusicCategoryLeaf mcBgm_InsideDekuTree("Deku Tree", 14);
+static MusicCategoryLeaf mcBgm_JabuJabu("Jabu Jabu", 24);
+static MusicCategoryLeaf mcBgm_FireTemple("Fire Temple", 28);
+static MusicCategoryLeaf mcBgm_ForestTemple("Forest Temple", 30);
+static MusicCategoryLeaf mcBgm_GanonsTower("Ganon's Tower", 32);
+static MusicCategoryLeaf mcBgm_SpiritTemple("Spirit Temple", 48);
+static MusicCategoryLeaf mcBgm_IceCavern("Ice Cavern", 73);
+static MusicCategoryLeaf mcBgm_ShadowTemple("Shadow Temple", 76);
+static MusicCategoryLeaf mcBgm_WaterTemple("Water Temple", 77);
 // BGM: Area Themes
-static AudioCategory acBgm_Overworld("Overworld", {
-                                                      &acBgm_HyruleField,
-                                                      &acBgm_KakarikoAdult,
-                                                      &acBgm_Market,
-                                                      &acBgm_KakarikoChild,
-                                                      &acBgm_LonLonRanch,
-                                                      &acBgm_GoronCity,
-                                                      &acBgm_KokiriForest,
-                                                      &acBgm_LostWoods,
-                                                      &acBgm_ZorasDomain,
-                                                      &acBgm_GerudoValley,
-                                                  });
-static AudioCategory acBgm_Interiors("Interiors", {
-                                                      &acBgm_HouseTheme,
-                                                      &acBgm_FairyFountain,
-                                                      &acBgm_TempleTime,
-                                                      &acBgm_Windmill,
-                                                      &acBgm_ShopTheme,
-                                                      &acBgm_GrannysPotionShop,
-                                                      &acBgm_Underground,
-                                                  });
-static AudioCategory acBgm_Dungeons("Dungeons", {
-                                                    &acBgm_MiscDungeon,
-                                                    &acBgm_InsideDekuTree,
-                                                    &acBgm_JabuJabu,
-                                                    &acBgm_FireTemple,
-                                                    &acBgm_ForestTemple,
-                                                    &acBgm_GanonsTower,
-                                                    &acBgm_SpiritTemple,
-                                                    &acBgm_IceCavern,
-                                                    &acBgm_ShadowTemple,
-                                                    &acBgm_WaterTemple,
-                                                });
+static MusicCategoryNode mcBgm_Overworld("Overworld", {
+                                                          &mcBgm_HyruleField,
+                                                          &mcBgm_KakarikoAdult,
+                                                          &mcBgm_Market,
+                                                          &mcBgm_KakarikoChild,
+                                                          &mcBgm_LonLonRanch,
+                                                          &mcBgm_GoronCity,
+                                                          &mcBgm_KokiriForest,
+                                                          &mcBgm_LostWoods,
+                                                          &mcBgm_ZorasDomain,
+                                                          &mcBgm_GerudoValley,
+                                                      });
+static MusicCategoryNode mcBgm_Interiors("Interiors", {
+                                                          &mcBgm_HouseTheme,
+                                                          &mcBgm_FairyFountain,
+                                                          &mcBgm_TempleTime,
+                                                          &mcBgm_Windmill,
+                                                          &mcBgm_ShopTheme,
+                                                          &mcBgm_Drugstore,
+                                                          &mcBgm_Underground,
+                                                      });
+static MusicCategoryNode mcBgm_Dungeons("Dungeons", {
+                                                        &mcBgm_MiscDungeon,
+                                                        &mcBgm_InsideDekuTree,
+                                                        &mcBgm_JabuJabu,
+                                                        &mcBgm_FireTemple,
+                                                        &mcBgm_ForestTemple,
+                                                        &mcBgm_GanonsTower,
+                                                        &mcBgm_SpiritTemple,
+                                                        &mcBgm_IceCavern,
+                                                        &mcBgm_ShadowTemple,
+                                                        &mcBgm_WaterTemple,
+                                                    });
 // BGM: Event Music
-static AudioCategoryLeaf acBgm_TitleScreen("Title Screen", 16);
-static AudioCategoryLeaf acBgm_ZeldasTheme("Zelda's Theme", 27);
-static AudioCategoryLeaf acBgm_CastleCourtyard("Castle Courtyard", 31);
-static AudioCategoryLeaf acBgm_HorseRace("Horse Race", 49);
-static AudioCategoryLeaf acBgm_IngosTheme("Ingo's Theme", 51);
-static AudioCategoryLeaf acBgm_NaviIntro("Navi Intro", 59);
-static AudioCategoryLeaf acBgm_DekuTreeTheme("Deku Tree's Theme", 60);
-static AudioCategoryLeaf acBgm_MinigameTheme01("Minigame Theme 1", 63);
-static AudioCategoryLeaf acBgm_SheiksTheme("Sheik's Theme", 64);
-static AudioCategoryLeaf acBgm_AdultLink("Adult Link", 67); // Should probably be renamed
-static AudioCategoryLeaf acBgm_GanondorfsTheme("Ganondorf's Theme", 69);
-static AudioCategoryLeaf acBgm_GoddessTheme("Goddess Theme", 71);
-static AudioCategoryLeaf acBgm_FileSelect("File Select", 72);
-static AudioCategoryLeaf acBgm_OwlsTheme("Owl's Theme", 75);
-static AudioCategoryLeaf acBgm_KotakeKoume("Kotake & Koume", 81);
-static AudioCategoryLeaf acBgm_TowerEscape("Tower Escape", 82);
-static AudioCategoryLeaf acBgm_MinigameTheme02("Minigame Theme 2", 92);
+static MusicCategoryLeaf mcBgm_TitleScreen("Title Screen", 16);
+static MusicCategoryLeaf mcBgm_ZeldasTheme("Zelda's Theme", 27);
+static MusicCategoryLeaf mcBgm_CastleCourtyard("Castle Courtyard", 31);
+static MusicCategoryLeaf mcBgm_HorseRace("Horse Race", 49);
+static MusicCategoryLeaf mcBgm_IngosTheme("Ingo's Theme", 51);
+static MusicCategoryLeaf mcBgm_NaviIntro("Navi Intro", 59);
+static MusicCategoryLeaf mcBgm_DekuTreeStorytime("Deku Tree Storytime", 60);
+static MusicCategoryLeaf mcBgm_MinigameTheme01("Minigame Theme 1", 63);
+static MusicCategoryLeaf mcBgm_SheiksTheme("Sheik's Theme", 64);
+static MusicCategoryLeaf mcBgm_AdultLink("Adult Link", 67);
+static MusicCategoryLeaf mcBgm_GanondorfsTheme("Ganondorf's Theme", 69);
+static MusicCategoryLeaf mcBgm_GoddessTheme("Goddess Theme", 71);
+static MusicCategoryLeaf mcBgm_FileSelect("File Select", 72);
+static MusicCategoryLeaf mcBgm_OwlsTheme("Owl's Theme", 75);
+static MusicCategoryLeaf mcBgm_KotakeKoume("Kotake & Koume", 81);
+static MusicCategoryLeaf mcBgm_TowerEscape("Tower Escape", 82);
+static MusicCategoryLeaf mcBgm_MinigameTheme02("Minigame Theme 2", 92);
+// BGM: Boss Themes
+static MusicCategoryLeaf mcBgm_Boss00("Boss Theme 1", 13);
+static MusicCategoryLeaf mcBgm_Boss01("Boss Theme 2", 91);
 // BGM: Battle Themes
-static AudioCategoryLeaf acBgm_Enemy("Enemy Theme", 12);
-static AudioCategoryLeaf acBgm_Boss00("Boss Theme 1", 13);
-static AudioCategoryLeaf acBgm_MiniBoss("Mini Boss", 41);
-static AudioCategoryLeaf acBgm_GanondorfBattle("Ganondorf Battle", 84);
-static AudioCategoryLeaf acBgm_GanonBattle("Ganon Battle", 85);
-static AudioCategoryLeaf acBgm_Boss01("Boss Theme 2", 91);
-// BGM: Root
-static AudioCategory acBgm_AreaThemes("Area Themes", { &acBgm_Overworld, &acBgm_Interiors, &acBgm_Dungeons });
-static AudioCategory acBgm_EventMusic("Event Music", {
-                                                         &acBgm_TitleScreen,
-                                                         &acBgm_ZeldasTheme,
-                                                         &acBgm_CastleCourtyard,
-                                                         &acBgm_HorseRace,
-                                                         &acBgm_IngosTheme,
-                                                         &acBgm_NaviIntro,
-                                                         &acBgm_DekuTreeTheme,
-                                                         &acBgm_MinigameTheme01,
-                                                         &acBgm_SheiksTheme,
-                                                         &acBgm_AdultLink,
-                                                         &acBgm_GanondorfsTheme,
-                                                         &acBgm_GoddessTheme,
-                                                         &acBgm_FileSelect,
-                                                         &acBgm_OwlsTheme,
-                                                         &acBgm_KotakeKoume,
-                                                         &acBgm_TowerEscape,
-                                                         &acBgm_MinigameTheme02,
-                                                     });
-static AudioCategory acBgm_BattleThemes("Battle Themes", {
-                                                             &acBgm_Enemy,
-                                                             &acBgm_Boss00,
-                                                             &acBgm_MiniBoss,
-                                                             &acBgm_GanondorfBattle,
-                                                             &acBgm_GanonBattle,
-                                                             &acBgm_Boss01,
+static MusicCategoryLeaf mcBgm_Enemy("Enemy Theme", 12);
+static MusicCategoryLeaf mcBgm_MiniBoss("Mini Boss", 41);
+static MusicCategoryNode mcBgm_BossThemes("Boss Themes", {
+                                                             &mcBgm_Boss00,
+                                                             &mcBgm_Boss01,
                                                          });
+static MusicCategoryLeaf mcBgm_GanondorfBattle("Ganondorf Battle", 84);
+static MusicCategoryLeaf mcBgm_GanonBattle("Ganon Battle", 85);
+// BGM: Root
+static MusicCategoryNode mcBgm_AreaThemes("Area Themes", { &mcBgm_Overworld, &mcBgm_Interiors, &mcBgm_Dungeons });
+static MusicCategoryNode mcBgm_EventMusic("Event Music", {
+                                                             &mcBgm_TitleScreen,
+                                                             &mcBgm_ZeldasTheme,
+                                                             &mcBgm_CastleCourtyard,
+                                                             &mcBgm_HorseRace,
+                                                             &mcBgm_IngosTheme,
+                                                             &mcBgm_NaviIntro,
+                                                             &mcBgm_DekuTreeStorytime,
+                                                             &mcBgm_MinigameTheme01,
+                                                             &mcBgm_SheiksTheme,
+                                                             &mcBgm_AdultLink,
+                                                             &mcBgm_GanondorfsTheme,
+                                                             &mcBgm_GoddessTheme,
+                                                             &mcBgm_FileSelect,
+                                                             &mcBgm_OwlsTheme,
+                                                             &mcBgm_KotakeKoume,
+                                                             &mcBgm_TowerEscape,
+                                                             &mcBgm_MinigameTheme02,
+                                                         });
+static MusicCategoryNode mcBgm_BattleThemes("Battle Themes", {
+                                                                 &mcBgm_Enemy,
+                                                                 &mcBgm_MiniBoss,
+                                                                 &mcBgm_BossThemes,
+                                                                 &mcBgm_GanondorfBattle,
+                                                                 &mcBgm_GanonBattle,
+                                                             });
 // BGM
-static AudioCategory acBgm_Root("Background Music", { &acBgm_AreaThemes, &acBgm_EventMusic, &acBgm_BattleThemes });
+static MusicCategoryNode mcBgm_Root("Background Music", { &mcBgm_AreaThemes, &mcBgm_EventMusic, &mcBgm_BattleThemes });
 
 // Melodies: Item Jingles
-static AudioCategoryLeaf acMelodies_ItemGet("Item Get", 20);
-static AudioCategoryLeaf acMelodies_HeartContainerGet("Heart Container Get", 22);
-static AudioCategoryLeaf acMelodies_TreasureChestOpening("Treasure Chest Opening", 29);
-static AudioCategoryLeaf acMelodies_SpiritualStoneGet("Spiritual Stone Get", 35);
-static AudioCategoryLeaf acMelodies_SmallItemGet("Small Item Get", 42);
-static AudioCategoryLeaf acMelodies_SongLearned("Song Learned", 46);
-static AudioCategoryLeaf acMelodies_MedallionGet("Medallion Get", 52);
+static MusicCategoryLeaf mcMelodies_ItemGet("Item Get", 20);
+static MusicCategoryLeaf mcMelodies_HeartContainerGet("Heart Container Get", 22);
+static MusicCategoryLeaf mcMelodies_TreasureChestOpening("Treasure Chest Opening", 29);
+static MusicCategoryLeaf mcMelodies_SpiritualStoneGet("Spiritual Stone Get", 35);
+static MusicCategoryLeaf mcMelodies_SmallItemGet("Small Item Get", 42);
+static MusicCategoryLeaf mcMelodies_SongLearned("Song Learned", 46);
+static MusicCategoryLeaf mcMelodies_MedallionGet("Medallion Get", 52);
 // Melodies: Misc Fanfares
-static AudioCategoryLeaf acMelodies_GameOver("Game Over", 18);
-static AudioCategoryLeaf acMelodies_BossClear("Boss Clear", 19);
-static AudioCategoryLeaf acMelodies_GanonAppears("Ganon Appears", 21);
-static AudioCategoryLeaf acMelodies_EventClear("Event Clear", 44);
-static AudioCategoryLeaf acMelodies_HorseGoal("Horse Goal", 50);
-static AudioCategoryLeaf acMelodies_Appearance("Appearance", 66);
-static AudioCategoryLeaf acMelodies_MasterSword("Master Sword", 68);
-static AudioCategoryLeaf acMelodies_DoorTimeOpened("Door of Time Opened", 74);
-static AudioCategoryLeaf acMelodies_RainbowBridge("Rainbow Bridge", 78);
+static MusicCategoryLeaf mcMelodies_GameOver("Game Over", 18);
+static MusicCategoryLeaf mcMelodies_BossClear("Boss Clear", 19);
+static MusicCategoryLeaf mcMelodies_GanonAppears("Ganon Appears", 21);
+static MusicCategoryLeaf mcMelodies_EventClear("Event Clear", 44);
+static MusicCategoryLeaf mcMelodies_HorseGoal("Horse Goal", 50);
+static MusicCategoryLeaf mcMelodies_Appearance("Appearance", 66);
+static MusicCategoryLeaf mcMelodies_MasterSword("Master Sword", 68);
+static MusicCategoryLeaf mcMelodies_DoorTimeOpened("Door of Time Opened", 74);
+static MusicCategoryLeaf mcMelodies_RainbowBridge("Rainbow Bridge", 78);
 // Melodies: Fanfares
-static AudioCategory acMelodies_ItemJingles("Item Jingles", {
-                                                                &acMelodies_ItemGet,
-                                                                &acMelodies_HeartContainerGet,
-                                                                &acMelodies_TreasureChestOpening,
-                                                                &acMelodies_SpiritualStoneGet,
-                                                                &acMelodies_SmallItemGet,
-                                                                &acMelodies_SongLearned,
-                                                                &acMelodies_MedallionGet,
-                                                            });
-static AudioCategory acMelodies_MiscFanfares("Misc Fanfares", {
-                                                                  &acMelodies_GameOver,
-                                                                  &acMelodies_BossClear,
-                                                                  &acMelodies_GanonAppears,
-                                                                  &acMelodies_EventClear,
-                                                                  &acMelodies_HorseGoal,
-                                                                  &acMelodies_Appearance,
-                                                                  &acMelodies_MasterSword,
-                                                                  &acMelodies_DoorTimeOpened,
-                                                                  &acMelodies_RainbowBridge,
-                                                              });
+static MusicCategoryNode mcMelodies_ItemJingles("Item Jingles", {
+                                                                    &mcMelodies_ItemGet,
+                                                                    &mcMelodies_HeartContainerGet,
+                                                                    &mcMelodies_TreasureChestOpening,
+                                                                    &mcMelodies_SpiritualStoneGet,
+                                                                    &mcMelodies_SmallItemGet,
+                                                                    &mcMelodies_SongLearned,
+                                                                    &mcMelodies_MedallionGet,
+                                                                });
+static MusicCategoryNode mcMelodies_MiscFanfares("Misc Fanfares", {
+                                                                      &mcMelodies_GameOver,
+                                                                      &mcMelodies_BossClear,
+                                                                      &mcMelodies_GanonAppears,
+                                                                      &mcMelodies_EventClear,
+                                                                      &mcMelodies_HorseGoal,
+                                                                      &mcMelodies_Appearance,
+                                                                      &mcMelodies_MasterSword,
+                                                                      &mcMelodies_DoorTimeOpened,
+                                                                      &mcMelodies_RainbowBridge,
+                                                                  });
 // Melodies: Child Songs
-static AudioCategoryLeaf acMelodies_SariasSong("Saria's Song", 53);
-static AudioCategoryLeaf acMelodies_EponasSong("Epona's Song", 54);
-static AudioCategoryLeaf acMelodies_ZeldasLullaby("Zelda's Lullaby", 55);
-// static AudioCategoryLeaf acMelodies_SunsSong("Sun's Song", 56); // Still unshuffled because of bugs
-static AudioCategoryLeaf acMelodies_SongTime("Song of Time", 57);
-static AudioCategoryLeaf acMelodies_SongStorms("Song of Storms", 58);
+static MusicCategoryLeaf mcMelodies_SariasSong("Saria's Song", 53);
+static MusicCategoryLeaf mcMelodies_EponasSong("Epona's Song", 54);
+static MusicCategoryLeaf mcMelodies_ZeldasLullaby("Zelda's Lullaby", 55);
+// static MusicCategoryLeaf mcMelodies_SunsSong("Sun's Song", 56); // Still unshuffled because of bugs
+static MusicCategoryLeaf mcMelodies_SongTime("Song of Time", 57);
+static MusicCategoryLeaf mcMelodies_SongStorms("Song of Storms", 58);
 // Melodies: Warp Songs
-static AudioCategoryLeaf acMelodies_PreludeLight("Prelude of Light", 23);
-static AudioCategoryLeaf acMelodies_BoleroFire("Bolero of Fire", 36);
-static AudioCategoryLeaf acMelodies_MinuetForest("Minuet of Forest", 37);
-static AudioCategoryLeaf acMelodies_SerenadeWater("Serenade of Water", 38);
-static AudioCategoryLeaf acMelodies_RequiemSpirit("Requiem of Spirit", 39);
-static AudioCategoryLeaf acMelodies_NoctureShadow("Nocture of Shadow", 40);
+static MusicCategoryLeaf mcMelodies_PreludeLight("Prelude of Light", 23);
+static MusicCategoryLeaf mcMelodies_BoleroFire("Bolero of Fire", 36);
+static MusicCategoryLeaf mcMelodies_MinuetForest("Minuet of Forest", 37);
+static MusicCategoryLeaf mcMelodies_SerenadeWater("Serenade of Water", 38);
+static MusicCategoryLeaf mcMelodies_RequiemSpirit("Requiem of Spirit", 39);
+static MusicCategoryLeaf mcMelodies_NoctureShadow("Nocture of Shadow", 40);
 // Melodies: Ocarina Songs
-static AudioCategory acMelodies_ChildSongs("Child Songs", {
-                                                              &acMelodies_SariasSong,
-                                                              &acMelodies_EponasSong,
-                                                              &acMelodies_ZeldasLullaby,
-                                                              //&acMelodies_SunsSong,
-                                                              &acMelodies_SongTime,
-                                                              &acMelodies_SongStorms,
-                                                          });
-static AudioCategory acMelodies_WarpSongs("Warp Songs", {
-                                                            &acMelodies_PreludeLight,
-                                                            &acMelodies_BoleroFire,
-                                                            &acMelodies_MinuetForest,
-                                                            &acMelodies_SerenadeWater,
-                                                            &acMelodies_RequiemSpirit,
-                                                            &acMelodies_NoctureShadow,
-                                                        });
+static MusicCategoryNode mcMelodies_ChildSongs("Child Songs", {
+                                                                  &mcMelodies_SariasSong,
+                                                                  &mcMelodies_EponasSong,
+                                                                  &mcMelodies_ZeldasLullaby,
+                                                                  //&mcMelodies_SunsSong,
+                                                                  &mcMelodies_SongTime,
+                                                                  &mcMelodies_SongStorms,
+                                                              });
+static MusicCategoryNode mcMelodies_WarpSongs("Warp Songs", {
+                                                                &mcMelodies_PreludeLight,
+                                                                &mcMelodies_BoleroFire,
+                                                                &mcMelodies_MinuetForest,
+                                                                &mcMelodies_SerenadeWater,
+                                                                &mcMelodies_RequiemSpirit,
+                                                                &mcMelodies_NoctureShadow,
+                                                            });
 // Melodies: Root
-static AudioCategory acMelodies_Fanfares("Fanfares", { &acMelodies_ItemJingles, &acMelodies_MiscFanfares });
-static AudioCategory acMelodies_OcarinaSongs("Ocarina Songs", { &acMelodies_ChildSongs, &acMelodies_WarpSongs });
+static MusicCategoryNode mcMelodies_Fanfares("Fanfares", { &mcMelodies_ItemJingles, &mcMelodies_MiscFanfares });
+static MusicCategoryNode mcMelodies_OcarinaSongs("Ocarina Songs", { &mcMelodies_ChildSongs, &mcMelodies_WarpSongs });
 // Melodies
-static AudioCategory acMelodies_Root("Melodies", { &acMelodies_Fanfares, &acMelodies_OcarinaSongs });
+static MusicCategoryNode mcMelodies_Root("Melodies", { &mcMelodies_Fanfares, &mcMelodies_OcarinaSongs });
 
 bool archiveFound     = false;
 bool musicDirsCreated = false;
@@ -341,8 +345,8 @@ void CreateMusicDirectories() {
     // Create all dirs
     FSUSER_CreateDirectory(sdmcArchive, fsMakePath(PATH_ASCII, "/OoT3DR"), FS_ATTRIBUTE_DIRECTORY);
     FSUSER_CreateDirectory(sdmcArchive, fsMakePath(PATH_ASCII, CustomMusicRootPath.c_str()), FS_ATTRIBUTE_DIRECTORY);
-    acBgm_Root.CreateDirectories(sdmcArchive);
-    acMelodies_Root.CreateDirectories(sdmcArchive);
+    mcBgm_Root.CreateDirectories(sdmcArchive);
+    mcMelodies_Root.CreateDirectories(sdmcArchive);
 
     musicDirsCreated = true;
     FSUSER_CloseArchive(sdmcArchive);
@@ -384,13 +388,13 @@ int ShuffleMusic_Archive() {
     archiveFound = true;
 
     // Clear any previous sequence data
-    acBgm_Root.ClearSeqDatas();
-    acMelodies_Root.ClearSeqDatas();
+    mcBgm_Root.ClearSeqDatas();
+    mcMelodies_Root.ClearSeqDatas();
 
     // Find all leaves of the tree
-    static std::vector<AudioCategoryLeaf*> allAudioCatLeaves;
+    static std::vector<MusicCategoryLeaf*> allAudioCatLeaves;
     if (allAudioCatLeaves.empty()) {
-        for (auto* root : { &acBgm_Root, &acMelodies_Root }) {
+        for (auto* root : { &mcBgm_Root, &mcMelodies_Root }) {
             auto newLeaves = root->GetAllLeaves();
             allAudioCatLeaves.insert(allAudioCatLeaves.begin(), newLeaves.begin(), newLeaves.end());
         }
@@ -398,41 +402,41 @@ int ShuffleMusic_Archive() {
 
     // Add original sequences
     if (!Settings::CustomMusicOnly) {
-        const auto audioCatAddSeq = [&sar](AudioCategory& audioCat, u16 fileIdx) {
+        const auto musicNodeAddSeq = [&sar](MusicCategoryNode& audioCat, u16 fileIdx) {
             audioCat.AddNewSeqData(SequenceData(sar.GetRawFilePtr(fileIdx), sar.GetOriginalBank(fileIdx),
                                                 sar.GetOriginalChFlags(fileIdx)));
         };
-        const auto fillNodeWithOriginals = [&](AudioCategory& node) {
+        const auto fillNodeWithOriginals = [&](MusicCategoryNode& node) {
             for (auto leaf : allAudioCatLeaves) {
                 if (leaf->HasAncestor(&node)) {
-                    audioCatAddSeq(node, leaf->FileRep);
+                    musicNodeAddSeq(node, leaf->FileRep);
                 }
             }
         };
         // BGM
         if (Settings::ShuffleBGM.Is(SHUFFLEMUSIC_MIXED)) {
-            fillNodeWithOriginals(acBgm_Root);
+            fillNodeWithOriginals(mcBgm_Root);
         } else if (Settings::ShuffleBGM.Is(SHUFFLEMUSIC_GROUPED)) {
-            fillNodeWithOriginals(acBgm_AreaThemes);
-            fillNodeWithOriginals(acBgm_EventMusic);
-            fillNodeWithOriginals(acBgm_BattleThemes);
+            fillNodeWithOriginals(mcBgm_AreaThemes);
+            fillNodeWithOriginals(mcBgm_EventMusic);
+            fillNodeWithOriginals(mcBgm_BattleThemes);
         } else if (Settings::ShuffleBGM.Is(SHUFFLEMUSIC_OWN)) {
             for (auto leaf : allAudioCatLeaves) {
-                if (leaf->HasAncestor(&acBgm_Root)) {
-                    audioCatAddSeq(*leaf, leaf->FileRep);
+                if (leaf->HasAncestor(&mcBgm_Root)) {
+                    musicNodeAddSeq(*leaf, leaf->FileRep);
                 }
             }
         }
         // Melodies
         if (Settings::ShuffleMelodies.Is(SHUFFLEMUSIC_MIXED)) {
-            fillNodeWithOriginals(acMelodies_Root);
+            fillNodeWithOriginals(mcMelodies_Root);
         } else if (Settings::ShuffleMelodies.Is(SHUFFLEMUSIC_GROUPED)) {
-            fillNodeWithOriginals(acMelodies_Fanfares);
-            fillNodeWithOriginals(acMelodies_OcarinaSongs);
+            fillNodeWithOriginals(mcMelodies_Fanfares);
+            fillNodeWithOriginals(mcMelodies_OcarinaSongs);
         } else if (Settings::ShuffleBGM.Is(SHUFFLEMUSIC_OWN)) {
             for (auto leaf : allAudioCatLeaves) {
-                if (leaf->HasAncestor(&acMelodies_Root)) {
-                    audioCatAddSeq(*leaf, leaf->FileRep);
+                if (leaf->HasAncestor(&mcMelodies_Root)) {
+                    musicNodeAddSeq(*leaf, leaf->FileRep);
                 }
             }
         }
@@ -440,8 +444,8 @@ int ShuffleMusic_Archive() {
 
     // Add external sequences
     if (Settings::CustomMusic) {
-        acBgm_Root.AddExternalSeqDatas(sdmcArchive);
-        acMelodies_Root.AddExternalSeqDatas(sdmcArchive);
+        mcBgm_Root.AddExternalSeqDatas(sdmcArchive);
+        mcMelodies_Root.AddExternalSeqDatas(sdmcArchive);
     }
 
     // Shuffle

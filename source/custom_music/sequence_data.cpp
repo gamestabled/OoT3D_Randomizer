@@ -48,25 +48,25 @@ u32 SequenceData::GetBank() {
     return bankNum;
 }
 
-// Audio Category
+// MusicCategoryNode
 
-AudioCategory::AudioCategory(std::string Name_, std::vector<AudioCategory*> children_)
+MusicCategoryNode::MusicCategoryNode(std::string Name_, std::vector<MusicCategoryNode*> children_)
     : Name(Name_), children(children_) {
     for (auto& child : children) {
         child->SetParent(this);
     }
 }
 
-AudioCategory::~AudioCategory() = default;
+MusicCategoryNode::~MusicCategoryNode() = default;
 
-void AudioCategory::CreateDirectories(FS_Archive sdmcArchive) {
+void MusicCategoryNode::CreateDirectories(FS_Archive sdmcArchive) {
     FSUSER_CreateDirectory(sdmcArchive, fsMakePath(PATH_ASCII, GetFullPath().c_str()), FS_ATTRIBUTE_DIRECTORY);
     for (auto& child : children) {
         child->CreateDirectories(sdmcArchive);
     }
 }
 
-std::string AudioCategory::GetFullPath() {
+std::string MusicCategoryNode::GetFullPath() {
     if (fullPath.empty()) {
         std::string finalPath = Name + '/';
         if (parent != nullptr) {
@@ -79,12 +79,12 @@ std::string AudioCategory::GetFullPath() {
     return fullPath;
 }
 
-void AudioCategory::SetParent(AudioCategory* parent_) {
+void MusicCategoryNode::SetParent(MusicCategoryNode* parent_) {
     parent = parent_;
 }
 
-bool AudioCategory::HasAncestor(AudioCategory* parent_) {
-    AudioCategory* curParent = parent;
+bool MusicCategoryNode::HasAncestor(MusicCategoryNode* parent_) {
+    MusicCategoryNode* curParent = parent;
 
     while (curParent != nullptr) {
         if (curParent == parent_) {
@@ -97,11 +97,11 @@ bool AudioCategory::HasAncestor(AudioCategory* parent_) {
     return false;
 }
 
-void AudioCategory::AddNewSeqData(SequenceData seqData) {
+void MusicCategoryNode::AddNewSeqData(SequenceData seqData) {
     seqDatas.push_back(seqData);
 }
 
-void AudioCategory::AddExternalSeqDatas(FS_Archive sdmcArchive) {
+void MusicCategoryNode::AddExternalSeqDatas(FS_Archive sdmcArchive) {
     for (const auto& bcseq : fs::directory_iterator(GetFullPath())) {
         if (bcseq.is_regular_file() && bcseq.path().extension().string() == bcseqExtension) {
             u8 bank     = 7;  // Set bank to Orchestra by default
@@ -137,8 +137,8 @@ void AudioCategory::AddExternalSeqDatas(FS_Archive sdmcArchive) {
     }
 }
 
-std::vector<std::pair<AudioCategory*, SequenceData*>> AudioCategory::GetSeqDatas() {
-    std::vector<std::pair<AudioCategory*, SequenceData*>> allSoundFiles;
+std::vector<std::pair<MusicCategoryNode*, SequenceData*>> MusicCategoryNode::GetSeqDatas() {
+    std::vector<std::pair<MusicCategoryNode*, SequenceData*>> allSoundFiles;
     for (auto& soundFile : seqDatas) {
         allSoundFiles.push_back(std::make_pair(this, &soundFile));
     }
@@ -149,7 +149,7 @@ std::vector<std::pair<AudioCategory*, SequenceData*>> AudioCategory::GetSeqDatas
     return allSoundFiles;
 }
 
-SequenceData AudioCategory::GetAndRemoveRandomSeqData() {
+SequenceData MusicCategoryNode::GetAndRemoveRandomSeqData() {
     auto allSoundFiles = GetSeqDatas();
 
     // All out, do nothing
@@ -168,7 +168,7 @@ SequenceData AudioCategory::GetAndRemoveRandomSeqData() {
     return seqData;
 }
 
-void AudioCategory::RemoveSeqData(SequenceData* seqDataPtr) {
+void MusicCategoryNode::RemoveSeqData(SequenceData* seqDataPtr) {
     for (size_t i = 0; i < seqDatas.size(); i++) {
         if (&seqDatas.at(i) == seqDataPtr) {
             seqDatas.erase(seqDatas.begin() + i);
@@ -177,19 +177,19 @@ void AudioCategory::RemoveSeqData(SequenceData* seqDataPtr) {
     }
 }
 
-void AudioCategory::ClearSeqDatas() {
+void MusicCategoryNode::ClearSeqDatas() {
     seqDatas.clear();
     for (auto child : children) {
         child->ClearSeqDatas();
     }
 }
 
-std::vector<AudioCategoryLeaf*> AudioCategory::GetAllLeaves() {
-    std::vector<AudioCategoryLeaf*> leaves;
+std::vector<MusicCategoryLeaf*> MusicCategoryNode::GetAllLeaves() {
+    std::vector<MusicCategoryLeaf*> leaves;
     for (auto child : children) {
         // Assume child is leaf if it has no children
         if (child->children.empty()) {
-            leaves.push_back(dynamic_cast<AudioCategoryLeaf*>(child));
+            leaves.push_back(dynamic_cast<MusicCategoryLeaf*>(child));
         } else {
             auto newLeaves = child->GetAllLeaves();
             leaves.insert(leaves.begin(), newLeaves.begin(), newLeaves.end());
@@ -198,12 +198,13 @@ std::vector<AudioCategoryLeaf*> AudioCategory::GetAllLeaves() {
     return leaves;
 }
 
-void AudioCategory::ForDynamicCast() {
+void MusicCategoryNode::ForDynamicCast() {
 }
 
-// AudioCategoryLeaf
+// MusicCategoryLeaf
 
-AudioCategoryLeaf::AudioCategoryLeaf(std::string Name_, u16 fileRep_) : AudioCategory(Name_, {}), FileRep(fileRep_) {
+MusicCategoryLeaf::MusicCategoryLeaf(std::string Name_, u16 fileRep_)
+    : MusicCategoryNode(Name_, {}), FileRep(fileRep_) {
 }
 
-AudioCategoryLeaf::~AudioCategoryLeaf() = default;
+MusicCategoryLeaf::~MusicCategoryLeaf() = default;
