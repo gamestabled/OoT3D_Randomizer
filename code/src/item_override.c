@@ -30,7 +30,7 @@ u32 rActiveItemActionId  = 0;
 u32 rActiveItemTextId    = 0;
 u32 rActiveItemObjectId  = 0;
 u32 rActiveItemGraphicId = 0;
-u32 rActiveItemFastChest = 0;
+u32 rActiveItemChestType = 0;
 
 static u8 rSatisfiedPendingFrames      = 0;
 static u8 rSatisfiedPendingFramesWater = 0;
@@ -199,7 +199,7 @@ static void ItemOverride_Activate(ItemOverride override) {
     rActiveItemTextId    = itemRow->textId;
     rActiveItemObjectId  = itemRow->objectId;
     rActiveItemGraphicId = looksLikeItemId ? ItemTable_GetItemRow(looksLikeItemId)->graphicId : itemRow->graphicId;
-    rActiveItemFastChest = itemRow->chestType & 0x01;
+    rActiveItemChestType = itemRow->chestType;
 }
 
 static void ItemOverride_Clear(void) {
@@ -209,7 +209,7 @@ static void ItemOverride_Clear(void) {
     rActiveItemTextId    = 0;
     rActiveItemObjectId  = 0;
     rActiveItemGraphicId = 0;
-    rActiveItemFastChest = 0;
+    rActiveItemChestType = 0;
 }
 
 static void ItemOverride_PushPendingOverride(ItemOverride override) {

@@ -21,25 +21,20 @@
 // by one chest at a time.
 static u8 type = 0;
 
-static u8 checkedForBombchus = 0;
 Actor* lastTrapChest         = 0;
 Actor* bomb                  = 0;
 EnElf* fairy                 = 0;
+
+// Bombchus are a major item if they're in logic and haven't been obtained yet
+u32 isBombchuMajor(void) {
+    return gSettingsContext.bombchusInLogic && gSaveContext.items[8] == 0xFF;
+}
 
 void EnBox_rInit(Actor* thisx, GlobalContext* globalCtx) {
     EnBox* this = (EnBox*)thisx;
     lastTrapChest = 0;
     //                                                                             treasure chest shop          final room
     u8 vanilla = (gSettingsContext.chestAppearance == CHESTAPPEARANCE_VANILLA) || (globalCtx->sceneNum == 16 && thisx->room != 6);
-
-    if (!checkedForBombchus && gSettingsContext.bombchusInLogic && gSaveContext.items[8] == 0xFF) {
-        ItemTable_SetBombchusChestType(0);
-        checkedForBombchus = 1;
-    }
-    if (checkedForBombchus && gSaveContext.items[8] != 0xFF) {
-        ItemTable_SetBombchusChestType(1);
-        checkedForBombchus = 0;
-    }
 
     ItemOverride thisOverride = ItemOverride_Lookup(thisx, globalCtx->sceneNum, 0);
     ItemRow* thisItemRow;
@@ -49,6 +44,9 @@ void EnBox_rInit(Actor* thisx, GlobalContext* globalCtx) {
         thisItemRow = ItemTable_GetItemRow(ItemTable_ResolveUpgrades(thisOverride.value.itemId));
     }
     type = thisItemRow->chestType;
+    if (type == CHEST_BOMBCHUS && isBombchuMajor()) {
+        type = CHEST_MAJOR;
+    }
 
     EnBox_Init(thisx, globalCtx);
 
@@ -151,12 +149,19 @@ u8 Chest_OverrideAnimation() {
 
     if ((gSettingsContext.chestAnimations == CHESTANIMATIONS_ALWAYSFAST) ||
         (rActiveItemActionId == 0)) // The animation is always fast for unused chests that aren't randomized
-        return 0;
+        return FALSE;
 
-    if (!rActiveItemFastChest) {
-        PlaySound(0x1000599); // Play chest opening fanfare
+    switch (rActiveItemChestType) {
+        case CHEST_BOMBCHUS:
+            if (!isBombchuMajor())
+                break;
+        case CHEST_MAJOR:
+        case CHEST_BOSS_KEY:
+            PlaySound(0x1000599); // Play chest opening fanfare
+            return TRUE;
     }
-    return !rActiveItemFastChest;
+
+    return FALSE;
 }
 
 u8 Chest_OverrideDecoration() {
