@@ -16,9 +16,9 @@
 #define EnBox_Update_addr 0x1D5B70
 #define EnBox_Update ((ActorFunc)EnBox_Update_addr)
 
-Actor* lastTrapChest = 0;
-Actor* bomb          = 0;
-EnElf* fairy         = 0;
+static Actor* sLastTrapChest = 0;
+static Actor* sBomb          = 0;
+static EnElf* sFairy         = 0;
 
 // Bombchus are a major item if they're in logic and haven't been obtained yet
 u32 isBombchuMajor(void) {
@@ -27,7 +27,7 @@ u32 isBombchuMajor(void) {
 
 void EnBox_rInit(Actor* thisx, GlobalContext* globalCtx) {
     EnBox* this = (EnBox*)thisx;
-    lastTrapChest = 0;
+    sLastTrapChest = 0;
     //                                                                             treasure chest shop          final room
     u8 vanilla = (gSettingsContext.chestAppearance == CHESTAPPEARANCE_VANILLA) || (globalCtx->sceneNum == 16 && thisx->room != 6);
 
@@ -122,15 +122,15 @@ void EnBox_rInit(Actor* thisx, GlobalContext* globalCtx) {
 
 void EnBox_rUpdate(Actor* thisx, GlobalContext* globalCtx) {
 
-    if (bomb != 0 && thisx == lastTrapChest) {
-        *(((u8*)(bomb)) + 0x26C) = 2; // bomb timer
-        bomb                     = 0;
+    if (sBomb != 0 && thisx == sLastTrapChest) {
+        *(((u8*)(sBomb)) + 0x26C) = 2; // bomb timer
+        sBomb                     = 0;
     }
 
-    if (fairy != 0 && thisx == lastTrapChest) {
-        fairy->innerColor.r = 0; // evil dark fairy
-        fairy->innerColor.g = 0;
-        fairy->innerColor.b = 0;
+    if (sFairy != 0 && thisx == sLastTrapChest) {
+        sFairy->innerColor.r = 0; // evil dark fairy
+        sFairy->innerColor.g = 0;
+        sFairy->innerColor.b = 0;
 
         if (gSaveContext.health <= 16 || gSettingsContext.damageMultiplier == DAMAGEMULTIPLIER_OHKO) {
             gSaveContext.health = 0;
@@ -150,7 +150,7 @@ void EnBox_rUpdate(Actor* thisx, GlobalContext* globalCtx) {
             healthDecrement /= 2;
         }
         PlaySound(0x100035C); // Poe laugh SFX
-        fairy = 0;
+        sFairy = 0;
     }
 
     EnBox_Update(thisx, globalCtx);
@@ -193,8 +193,8 @@ u8 Chest_OverrideIceSmoke(Actor* thisx) {
     if (possibleChestTrapsAmount == 0)
         IceTrap_InitTypes();
 
-    if (thisx != lastTrapChest && thisx->xzDistToPlayer < 50.0f) {
-        lastTrapChest = thisx;
+    if (thisx != sLastTrapChest && thisx->xzDistToPlayer < 50.0f) {
+        sLastTrapChest = thisx;
         u32 pRandInt = dizzyCurseSeed = Hash(thisx->params);
 
         u8 trapType = possibleChestTraps[pRandInt % possibleChestTrapsAmount];
@@ -232,11 +232,11 @@ u8 Chest_OverrideIceSmoke(Actor* thisx) {
                 break;
             case ICETRAP_BOMB_SIMPLE:
             case ICETRAP_BOMB_KNOCKDOWN:
-                bomb = Actor_Spawn(&gGlobalContext->actorCtx, gGlobalContext, 0x10, thisx->world.pos.x,
+                sBomb = Actor_Spawn(&gGlobalContext->actorCtx, gGlobalContext, 0x10, thisx->world.pos.x,
                                    thisx->world.pos.y, thisx->world.pos.z, 0, 0, 0, 0);
                 break;
             case ICETRAP_ANTIFAIRY:
-                fairy = (EnElf*)Actor_Spawn(&gGlobalContext->actorCtx, gGlobalContext, 0x18, thisx->world.pos.x,
+                sFairy = (EnElf*)Actor_Spawn(&gGlobalContext->actorCtx, gGlobalContext, 0x18, thisx->world.pos.x,
                                             thisx->world.pos.y, thisx->world.pos.z, 0, 0, 0, 0x5);
                 PLAYER->actor.home.pos.y = -5000; // Make Link airborne for a frame to cancel the get item event
                 break;
