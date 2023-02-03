@@ -228,10 +228,6 @@ SECTIONS
 		*(.patch_BombchuShopInfinitePurchases)
 	}
 
-	.patch_DecoratedChest 0x189E88 : {
-		*(.patch_DecoratedChest)
-	}
-
 	.patch_BusinessScrubTable 0x18A634 : {
 		*(.patch_BusinessScrubTable)
 	}

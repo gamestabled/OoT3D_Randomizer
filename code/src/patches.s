@@ -1071,11 +1071,6 @@ ReadGossipStoneHints_patch:
 GossipStoneAddSariaHint_patch:
     bl hook_GossipStoneAddSariaHint
 
-.section .patch_DecoratedChest
-.global DecoratedChest_patch
-DecoratedChest_patch:
-    bl hook_DecoratedChest
-
 .section .patch_GoronShopPurchaseableCheck
 .global GoronShopPurchaseableCheck_patch
 GoronShopPurchaseableCheck_patch:

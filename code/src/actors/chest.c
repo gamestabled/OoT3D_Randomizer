@@ -16,14 +16,9 @@
 #define EnBox_Update_addr 0x1D5B70
 #define EnBox_Update ((ActorFunc)EnBox_Update_addr)
 
-// This variable is updated in rInit and used in Chest_OverrideDecoration,
-// which runs inside a patch for the Init function. So it's only ever used
-// by one chest at a time.
-static u8 type = 0;
-
-Actor* lastTrapChest         = 0;
-Actor* bomb                  = 0;
-EnElf* fairy                 = 0;
+Actor* lastTrapChest = 0;
+Actor* bomb          = 0;
+EnElf* fairy         = 0;
 
 // Bombchus are a major item if they're in logic and haven't been obtained yet
 u32 isBombchuMajor(void) {
@@ -43,18 +38,34 @@ void EnBox_rInit(Actor* thisx, GlobalContext* globalCtx) {
     } else {
         thisItemRow = ItemTable_GetItemRow(ItemTable_ResolveUpgrades(thisOverride.value.itemId));
     }
-    type = thisItemRow->chestType;
+    u8 type = thisItemRow->chestType;
     if (type == CHEST_BOMBCHUS && isBombchuMajor()) {
         type = CHEST_MAJOR;
     }
 
     EnBox_Init(thisx, globalCtx);
 
+    // Change Chest Model
+    if (type == CHEST_BOSS_KEY ||
+        ((gSettingsContext.chestAppearance != CHESTAPPEARANCE_VANILLA) && (type == CHEST_SMALL_KEY))) {
+        // 0: Fancy Chest   1: Wooden Chest   2: Fancy Lid   3: Wooden Lid
+        Model_EnableMeshByIndex(this->skelAnime.unk_28, 0);
+        Model_EnableMeshByIndex(this->skelAnime.unk_28, 2);
+        Model_DisableMeshByIndex(this->skelAnime.unk_28, 1);
+        Model_DisableMeshByIndex(this->skelAnime.unk_28, 3);
+    } else {
+        Model_EnableMeshByIndex(this->skelAnime.unk_28, 1);
+        Model_EnableMeshByIndex(this->skelAnime.unk_28, 3);
+        Model_DisableMeshByIndex(this->skelAnime.unk_28, 0);
+        Model_DisableMeshByIndex(this->skelAnime.unk_28, 2);
+    }
+
+    // Stop here for vanilla settings
     if (vanilla) {
-        type = 0;
         return;
     }
 
+    // Change Chest Texture
     if (gSettingsContext.chestAppearance == CHESTAPPEARANCE_TEXTURE || gSettingsContext.chestAppearance == CHESTAPPEARANCE_SIZE_AND_TEXTURE) {
         s16 exObjectBankIdx = Object_GetIndex(&rExtendedObjectCtx, OBJECT_CUSTOM_GENERAL_ASSETS);
         void* cmabMan;
@@ -76,6 +87,7 @@ void EnBox_rInit(Actor* thisx, GlobalContext* globalCtx) {
         }
     }
 
+    // Change Chest Size
     if (gSettingsContext.chestAppearance == CHESTAPPEARANCE_CLASSIC || gSettingsContext.chestAppearance == CHESTAPPEARANCE_SIZE_AND_TEXTURE) {
         if (type == CHEST_MAJOR || type == CHEST_BOSS_KEY) {
             // Make chest BIG
@@ -106,7 +118,6 @@ void EnBox_rInit(Actor* thisx, GlobalContext* globalCtx) {
             }
         }
     }
-    type = 0;
 }
 
 void EnBox_rUpdate(Actor* thisx, GlobalContext* globalCtx) {
@@ -162,15 +173,6 @@ u8 Chest_OverrideAnimation() {
     }
 
     return FALSE;
-}
-
-u8 Chest_OverrideDecoration() {
-
-    if (type == CHEST_BOSS_KEY ||
-        ((gSettingsContext.chestAppearance != CHESTAPPEARANCE_VANILLA) && (type == CHEST_SMALL_KEY))) {
-        return 1;
-    }
-    return 0;
 }
 
 u8 vanillaIceTrap() {
