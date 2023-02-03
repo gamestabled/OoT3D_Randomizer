@@ -26,10 +26,11 @@ u32 isBombchuMajor(void) {
 }
 
 void EnBox_rInit(Actor* thisx, GlobalContext* globalCtx) {
-    EnBox* this = (EnBox*)thisx;
+    EnBox* this    = (EnBox*)thisx;
     sLastTrapChest = 0;
-    //                                                                             treasure chest shop          final room
-    u8 vanilla = (gSettingsContext.chestAppearance == CHESTAPPEARANCE_VANILLA) || (globalCtx->sceneNum == 16 && thisx->room != 6);
+
+    u8 vanilla = (gSettingsContext.chestAppearance == CHESTAPPEARANCE_VANILLA) ||
+                 (globalCtx->sceneNum == 16 && thisx->room != 6); // treasure chest shop, final room
 
     ItemOverride thisOverride = ItemOverride_Lookup(thisx, globalCtx->sceneNum, 0);
     ItemRow* thisItemRow;
@@ -66,15 +67,16 @@ void EnBox_rInit(Actor* thisx, GlobalContext* globalCtx) {
     }
 
     // Change Chest Texture
-    if (gSettingsContext.chestAppearance == CHESTAPPEARANCE_TEXTURE || gSettingsContext.chestAppearance == CHESTAPPEARANCE_SIZE_AND_TEXTURE) {
+    if (gSettingsContext.chestAppearance == CHESTAPPEARANCE_TEXTURE ||
+        gSettingsContext.chestAppearance == CHESTAPPEARANCE_SIZE_AND_TEXTURE) {
         s16 exObjectBankIdx = Object_GetIndex(&rExtendedObjectCtx, OBJECT_CUSTOM_GENERAL_ASSETS);
         void* cmabMan;
         if (exObjectBankIdx < 0) {
             exObjectBankIdx = Object_Spawn(&rExtendedObjectCtx, OBJECT_CUSTOM_GENERAL_ASSETS);
         }
 
-        // Set mipmap count to 1 for both chest models
         void** cmbMan = ZAR_GetCMBByIndex(this->zarInfo, 1);
+        // Set mipmap count to 1 for both chest models
         *((u8*)(*cmbMan) + 0x59C) = 1;
         *((u8*)(*cmbMan) + 0x530) = 1;
 
@@ -88,7 +90,8 @@ void EnBox_rInit(Actor* thisx, GlobalContext* globalCtx) {
     }
 
     // Change Chest Size
-    if (gSettingsContext.chestAppearance == CHESTAPPEARANCE_CLASSIC || gSettingsContext.chestAppearance == CHESTAPPEARANCE_SIZE_AND_TEXTURE) {
+    if (gSettingsContext.chestAppearance == CHESTAPPEARANCE_CLASSIC ||
+        gSettingsContext.chestAppearance == CHESTAPPEARANCE_SIZE_AND_TEXTURE) {
         if (type == CHEST_MAJOR || type == CHEST_BOSS_KEY) {
             // Make chest BIG
             thisx->scale.x = 0.01f;
@@ -233,11 +236,11 @@ u8 Chest_OverrideIceSmoke(Actor* thisx) {
             case ICETRAP_BOMB_SIMPLE:
             case ICETRAP_BOMB_KNOCKDOWN:
                 sBomb = Actor_Spawn(&gGlobalContext->actorCtx, gGlobalContext, 0x10, thisx->world.pos.x,
-                                   thisx->world.pos.y, thisx->world.pos.z, 0, 0, 0, 0);
+                                    thisx->world.pos.y, thisx->world.pos.z, 0, 0, 0, 0);
                 break;
             case ICETRAP_ANTIFAIRY:
                 sFairy = (EnElf*)Actor_Spawn(&gGlobalContext->actorCtx, gGlobalContext, 0x18, thisx->world.pos.x,
-                                            thisx->world.pos.y, thisx->world.pos.z, 0, 0, 0, 0x5);
+                                             thisx->world.pos.y, thisx->world.pos.z, 0, 0, 0, 0x5);
                 PLAYER->actor.home.pos.y = -5000; // Make Link airborne for a frame to cancel the get item event
                 break;
             case ICETRAP_RUPPY:
