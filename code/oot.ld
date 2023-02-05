@@ -884,6 +884,10 @@ SECTIONS
 		*(.patch_IncomingGetItemID)
 	}
 
+	.patch_Model_EnableMeshGroupByIndex 0x372670 : {
+		*(.patch_Model_EnableMeshGroupByIndex)
+	}
+
 	.patch_MaskSalesmanCheckNoMaskOne 0x372B64 : {
 	    *(.patch_MaskSalesmanCheckNoMask)
 	}

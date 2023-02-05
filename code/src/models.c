@@ -4,6 +4,8 @@
 #include "item_table.h"
 #include "objects.h"
 #include "custom_models.h"
+#include "settings.h"
+#include "common.h"
 #include <stddef.h>
 
 typedef void (*SkeletonAnimationModel_MatrixCopy_proc)(SkeletonAnimationModel* glModel, nn_math_MTX34* mtx);
@@ -326,4 +328,17 @@ s32 Model_DrawByActor(Actor* actor) {
         }
     }
     return actorDrawn;
+}
+
+u32 Model_OverrideMesh(void* unk, u32 meshGroupIndex) {
+    // When adult Link holds a deku stick, draw unused deku stick instead of shield.
+    if (IsInGameOrBossChallenge() && gSaveContext.linkAge == AGE_ADULT && gSettingsContext.stickAsAdult &&
+        PLAYER->heldItemActionParam == 6 && // holding a deku stick
+        meshGroupIndex == 23 &&             // meshGroupIndex for deku stick in child object and shield in adult object
+        unk == PLAYER->skelAnime.unk_28->unk_draw_struct_14 // check that this is for the player model
+    ) {
+        return 44; // meshGroupIndex for unused deku stick in adult object
+    }
+
+    return meshGroupIndex;
 }

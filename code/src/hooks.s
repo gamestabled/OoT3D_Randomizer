@@ -1343,6 +1343,14 @@ hook_ChildHoverBoots:
     beq 0x2D5F04
     b 0x2D5DFC
 
+.global hook_Model_EnableMeshGroupByIndex
+hook_Model_EnableMeshGroupByIndex:
+    push {r0,r2-r12,lr}
+    bl Model_OverrideMesh
+    cpy r1,r0
+    pop {r0,r2-r12,lr}
+    b 0x4C8B8C
+
 .global hook_ArrowsOrSeeds
 hook_ArrowsOrSeeds:
     push {r0-r12, lr}

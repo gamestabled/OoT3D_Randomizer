@@ -1718,6 +1718,11 @@ SavewarpSetRespawnFlag_patch:
 ChildHoverBoots_patch:
     b hook_ChildHoverBoots
 
+.section .patch_Model_EnableMeshGroupByIndex
+.global Model_EnableMeshGroupByIndex_patch
+Model_EnableMeshGroupByIndex_patch:
+    b hook_Model_EnableMeshGroupByIndex
+
 .section .patch_NockArrow
 .global NockArrow_patch
 NockArrow_patch:
