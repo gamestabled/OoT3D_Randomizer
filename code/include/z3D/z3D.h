@@ -678,10 +678,10 @@ typedef s32 (*Audio_PlayActorSfx2_proc)(Actor* actor, s32 sfxID);
 #define Audio_PlayActorSfx2_addr 0x375BCC
 #define Audio_PlayActorSfx2 ((Audio_PlayActorSfx2_proc)Audio_PlayActorSfx2_addr)
 
-typedef void (*Model_EnableMeshByIndex_proc)(SkeletonAnimationModel* skel, u32 index);
-#define Model_EnableMeshByIndex ((Model_EnableMeshByIndex_proc)0x37266C)
+typedef void (*Model_EnableMeshGroupByIndex_proc)(SkeletonAnimationModel* skel, u32 index);
+#define Model_EnableMeshGroupByIndex ((Model_EnableMeshGroupByIndex_proc)0x37266C)
 
-typedef void (*Model_DisableMeshByIndex_proc)(SkeletonAnimationModel* skel, u32 index);
-#define Model_DisableMeshByIndex ((Model_DisableMeshByIndex_proc)0x36932C)
+typedef void (*Model_DisableMeshGroupByIndex_proc)(SkeletonAnimationModel* skel, u32 index);
+#define Model_DisableMeshGroupByIndex ((Model_DisableMeshGroupByIndex_proc)0x36932C)
 
 #endif //_Z3D_H_

@@ -50,15 +50,15 @@ void EnBox_rInit(Actor* thisx, GlobalContext* globalCtx) {
     if (type == CHEST_BOSS_KEY ||
         ((gSettingsContext.chestAppearance != CHESTAPPEARANCE_VANILLA) && (type == CHEST_SMALL_KEY))) {
         // 0: Fancy Chest   1: Wooden Chest   2: Fancy Lid   3: Wooden Lid
-        Model_EnableMeshByIndex(this->skelAnime.unk_28, 0);
-        Model_EnableMeshByIndex(this->skelAnime.unk_28, 2);
-        Model_DisableMeshByIndex(this->skelAnime.unk_28, 1);
-        Model_DisableMeshByIndex(this->skelAnime.unk_28, 3);
+        Model_EnableMeshGroupByIndex(this->skelAnime.unk_28, 0);
+        Model_EnableMeshGroupByIndex(this->skelAnime.unk_28, 2);
+        Model_DisableMeshGroupByIndex(this->skelAnime.unk_28, 1);
+        Model_DisableMeshGroupByIndex(this->skelAnime.unk_28, 3);
     } else {
-        Model_EnableMeshByIndex(this->skelAnime.unk_28, 1);
-        Model_EnableMeshByIndex(this->skelAnime.unk_28, 3);
-        Model_DisableMeshByIndex(this->skelAnime.unk_28, 0);
-        Model_DisableMeshByIndex(this->skelAnime.unk_28, 2);
+        Model_EnableMeshGroupByIndex(this->skelAnime.unk_28, 1);
+        Model_EnableMeshGroupByIndex(this->skelAnime.unk_28, 3);
+        Model_DisableMeshGroupByIndex(this->skelAnime.unk_28, 0);
+        Model_DisableMeshGroupByIndex(this->skelAnime.unk_28, 2);
     }
 
     // Stop here for vanilla settings
