@@ -9,8 +9,8 @@ static const std::string CustomMusicRootPath = "/OoT3DR/Custom Music/";
 class SequenceData {
   public:
     SequenceData();
-    SequenceData(std::vector<u8>* rawBytesPtr_, u32 bankNum_, u16 chFlags_);
-    SequenceData(std::string filePath_, u32 bankNum_, u16 chFlags_);
+    SequenceData(std::vector<u8>* rawBytesPtr_, u32 bankNum_, u16 chFlags_, u8 volume_);
+    SequenceData(std::string filePath_, u32 bankNum_, u16 chFlags_, u8 volume_);
     ~SequenceData();
 
     /// Returns the raw bytes of the sequence.
@@ -19,10 +19,12 @@ class SequenceData {
     /// - PATH Type: Returns the raw bytes of the external sequence.
     ///   Reads the file only the first time this is called.
     std::vector<u8> GetData(FS_Archive archive_);
-    /// Returns the bits of the set flags.
-    u16 GetChFlags();
     /// Returns the bank index.
     u32 GetBank();
+    /// Returns the bits of the set flags.
+    u16 GetChFlags();
+    /// Returns the volume.
+    u8 GetVolume();
 
   private:
     enum DataType {
@@ -42,6 +44,7 @@ class SequenceData {
 
     u32 bankNum;
     u16 chFlags;
+    u8 volume;
 };
 
 // Forward declaration

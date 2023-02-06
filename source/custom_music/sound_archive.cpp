@@ -79,13 +79,21 @@ SoundArchive::SoundArchive(FS_Archive archive_, const std::string& filePath_) {
         fileReader.OpenReferenceTable(br, "SoundRefTable");
 
         // Read the info of the music sequences
-        for (size_t i = 1413; i <= 1497; i++) {
-            fileReader.ReferenceTableJumpToReference(br, i, "SoundRefTable");
+        for (size_t seqIdx = 1413; seqIdx <= 1497; seqIdx++) {
+            fileReader.ReferenceTableJumpToReference(br, seqIdx, "SoundRefTable");
             fileReader.StartStructure(br);
+
+            static const auto DUMMY_SEQ_SARIA = 1483;
 
             br.position += 4; // File ID
             br.position += 4; // ID
-            br.position += 1; // Volume
+            // Skip the dummy sequence
+            if (seqIdx != DUMMY_SEQ_SARIA) {
+                volumeGlobalOffsets.push_back(br.position);
+                originalVolumes.push_back(br.ReadByte());
+            } else {
+                br.position += 1; // Volume
+            }
             br.position += 1; // Remote Filter
             br.position += 2; // Padding
 
@@ -96,7 +104,7 @@ SoundArchive::SoundArchive(FS_Archive archive_, const std::string& filePath_) {
                 fileReader.OpenReference(br, "BnkTableRef");
 
                 // Skip the dummy sequence
-                if (i != 1483) {
+                if (seqIdx != DUMMY_SEQ_SARIA) {
                     chFlagsGlobalOffsets.push_back(br.position);
                     originalChFlags.push_back(br.ReadU16());
                 }
@@ -105,7 +113,7 @@ SoundArchive::SoundArchive(FS_Archive archive_, const std::string& filePath_) {
                 br.position += 4;
 
                 // Skip the dummy sequence
-                if (i != 1483) {
+                if (seqIdx != DUMMY_SEQ_SARIA) {
                     seqBnkGlobalOffsets.push_back(br.position);
                     originalBanks.push_back(br.ReadU32() & 0xFF'FF'FF);
                 }
@@ -131,9 +139,11 @@ SoundArchive::SoundArchive(FS_Archive archive_, const std::string& filePath_) {
 
     newFiles = rawFiles;
 
+    originalVolumes.insert(originalVolumes.begin(), 9, -1);
     originalChFlags.insert(originalChFlags.begin(), 9, -1);
     originalBanks.insert(originalBanks.begin(), 9, -1);
 
+    newVolumes = originalVolumes;
     newChFlags = originalChFlags;
     newBanks   = originalBanks;
 }
@@ -146,6 +156,10 @@ bool SoundArchive::SuccessfullyInitialized() {
 
 std::vector<u8>* SoundArchive::GetRawFilePtr(u16 index) {
     return &rawFiles.at(index);
+}
+
+u16 SoundArchive::GetOriginalVolume(u16 index) {
+    return originalVolumes.at(index);
 }
 
 u16 SoundArchive::GetOriginalChFlags(u16 index) {
@@ -162,8 +176,9 @@ void SoundArchive::ReplaceSeq(FS_Archive archive_, u16 fileIndex, SequenceData& 
         return;
     }
     newFiles.at(fileIndex)   = seqData.GetData(archive_);
-    newChFlags.at(fileIndex) = seqData.GetChFlags();
     newBanks.at(fileIndex)   = seqData.GetBank();
+    newChFlags.at(fileIndex) = seqData.GetChFlags();
+    newVolumes.at(fileIndex) = seqData.GetVolume();
 }
 
 void SoundArchive::Write(FS_Archive archive_, const std::string& filePath_) {
@@ -213,11 +228,16 @@ void SoundArchive::Write(FS_Archive archive_, const std::string& filePath_) {
         fileBlockSize += bw.position - lastPos;
         lastPos = bw.position;
 
-        // Set channel flags and bank for sequences
+        // Set new info for sequences
         if (i >= 9 && i <= 92) {
-            tmpPos      = bw.position;
+            tmpPos = bw.position;
+            // Volume
+            bw.position = volumeGlobalOffsets.at(i - 9);
+            bw.Write((u8)newVolumes.at(i));
+            // Channel Flags
             bw.position = chFlagsGlobalOffsets.at(i - 9);
             bw.Write((u16)newChFlags.at(i));
+            // Bank
             bw.position = seqBnkGlobalOffsets.at(i - 9);
             bw.Write((u32)((3 << 24) | (newBanks.at(i) & 0xFF'FF'FF)));
             bw.position = tmpPos;

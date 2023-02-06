@@ -11,15 +11,15 @@ static const std::string cmetaExtension = ".cmeta";
 
 // Sequence Data
 
-SequenceData::SequenceData() : dataType(DataType_Raw), rawBytesPtr(nullptr), bankNum(0), chFlags(0) {
+SequenceData::SequenceData() : dataType(DataType_Raw), rawBytesPtr(nullptr), bankNum(0), chFlags(0), volume(0) {
 }
 
-SequenceData::SequenceData(std::vector<u8>* rawBytesPtr_, u32 bankNum_, u16 chFlags_)
-    : dataType(DataType_Raw), rawBytesPtr(rawBytesPtr_), bankNum(bankNum_), chFlags(chFlags_) {
+SequenceData::SequenceData(std::vector<u8>* rawBytesPtr_, u32 bankNum_, u16 chFlags_, u8 volume_)
+    : dataType(DataType_Raw), rawBytesPtr(rawBytesPtr_), bankNum(bankNum_), chFlags(chFlags_), volume(volume_) {
 }
 
-SequenceData::SequenceData(std::string filePath_, u32 bankNum_, u16 chFlags_)
-    : dataType(DataType_Path), filePath(filePath_), bankNum(bankNum_), chFlags(chFlags_) {
+SequenceData::SequenceData(std::string filePath_, u32 bankNum_, u16 chFlags_, u8 volume_)
+    : dataType(DataType_Path), filePath(filePath_), bankNum(bankNum_), chFlags(chFlags_), volume(volume_) {
 }
 
 SequenceData::~SequenceData() = default;
@@ -40,12 +40,16 @@ std::vector<u8> SequenceData::GetData(FS_Archive archive_) {
     }
 }
 
+u32 SequenceData::GetBank() {
+    return bankNum;
+}
+
 u16 SequenceData::GetChFlags() {
     return chFlags;
 }
 
-u32 SequenceData::GetBank() {
-    return bankNum;
+u8 SequenceData::GetVolume() {
+    return volume;
 }
 
 // MusicCategoryNode
@@ -104,8 +108,9 @@ void MusicCategoryNode::AddNewSeqData(SequenceData seqData) {
 void MusicCategoryNode::AddExternalSeqDatas(FS_Archive sdmcArchive) {
     for (const auto& bcseq : fs::directory_iterator(GetFullPath())) {
         if (bcseq.is_regular_file() && bcseq.path().extension().string() == bcseqExtension) {
-            u8 bank     = 7;  // Set bank to Orchestra by default
-            u16 chFlags = -1; // Enable all channel flags by default
+            u8 bank     = 7;   // Set bank to Orchestra by default
+            u16 chFlags = -1;  // Enable all channel flags by default
+            u8 volume   = 127; // 100% by default
 
             // Check for cmeta file
             auto fileName = bcseq.path().stem().string();
@@ -122,6 +127,11 @@ void MusicCategoryNode::AddExternalSeqDatas(FS_Archive sdmcArchive) {
                         // Channel Flags
                         if (br.GetFileSize() >= 6) {
                             chFlags = br.ReadU16();
+
+                            // Volume
+                            if (br.GetFileSize() >= 7) {
+                                volume = br.ReadByte();
+                            }
                         }
                     }
                     br.Close();
@@ -129,7 +139,7 @@ void MusicCategoryNode::AddExternalSeqDatas(FS_Archive sdmcArchive) {
                 }
             }
 
-            seqDatas.push_back(SequenceData(bcseq.path().string(), bank, chFlags));
+            seqDatas.push_back(SequenceData(bcseq.path().string(), bank, chFlags, volume));
         }
     }
     for (auto child : children) {

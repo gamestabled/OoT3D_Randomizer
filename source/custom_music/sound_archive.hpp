@@ -21,6 +21,8 @@ class SoundArchive {
 
     /// Returns a pointer to the original file.
     std::vector<u8>* GetRawFilePtr(u16 index);
+    /// Returns the volume of the original sequence at the given file index.
+    u16 GetOriginalVolume(u16 index);
     /// Returns the channel flags of the original sequence at the given file index.
     u16 GetOriginalChFlags(u16 index);
     /// Returns the bank index of the original sequence at the given file index.
@@ -50,14 +52,17 @@ class SoundArchive {
     // std::vector<u8> fileBlock;
 
     std::vector<SizedReferenceInfo> fileRefs;
+    std::vector<u8> originalVolumes;
     std::vector<u16> originalChFlags;
     std::vector<u32> originalBanks;
     std::vector<std::vector<u8>> rawFiles;
 
     std::vector<u32> fileRefGlobalOffsets;
+    std::vector<u32> volumeGlobalOffsets;
     std::vector<u32> chFlagsGlobalOffsets;
     std::vector<u32> seqBnkGlobalOffsets;
 
+    std::vector<u8> newVolumes;
     std::vector<u16> newChFlags;
     std::vector<u32> newBanks;
     std::vector<std::vector<u8>> newFiles;

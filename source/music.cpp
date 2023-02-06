@@ -404,7 +404,7 @@ int ShuffleMusic_Archive() {
     if (!Settings::CustomMusicOnly) {
         const auto musicNodeAddSeq = [&sar](MusicCategoryNode& audioCat, u16 fileIdx) {
             audioCat.AddNewSeqData(SequenceData(sar.GetRawFilePtr(fileIdx), sar.GetOriginalBank(fileIdx),
-                                                sar.GetOriginalChFlags(fileIdx)));
+                                                sar.GetOriginalChFlags(fileIdx), sar.GetOriginalVolume(fileIdx)));
         };
         const auto fillNodeWithOriginals = [&](MusicCategoryNode& node) {
             for (auto leaf : allAudioCatLeaves) {
