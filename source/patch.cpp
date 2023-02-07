@@ -713,9 +713,9 @@ bool WriteAllPatches() {
         fread(buffer.data(), 1, buffer.size(), file.get());
 
         // obtain offsets for tunic textures
-        size_t zarDataSectionOffsetInZAR = *(size_t*)(buffer.data() + 0x14);
-        size_t adultTunicOffsetInZAR = *(size_t*)(buffer.data() + zarDataSectionOffsetInZAR + TEXANIM_LINK_BODY*4);
-        size_t childTunicOffsetInZAR = *(size_t*)(buffer.data() + zarDataSectionOffsetInZAR + TEXANIM_CHILD_LINK_BODY*4);
+        size_t dataSectionOffsetInZAR = *(size_t*)(buffer.data() + 0x14);
+        size_t adultTunicOffsetInZAR  = *(size_t*)(buffer.data() + dataSectionOffsetInZAR + TEXANIM_LINK_BODY * 4);
+        size_t childTunicOffsetInZAR = *(size_t*)(buffer.data() + dataSectionOffsetInZAR + TEXANIM_CHILD_LINK_BODY * 4);
 
         // edit assets as needed
         WriteFloatToBuffer(buffer, kokiriTunicColor.r, adultTunicOffsetInZAR + 0x70);
