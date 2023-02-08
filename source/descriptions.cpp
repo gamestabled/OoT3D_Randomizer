@@ -854,8 +854,7 @@ string_view chestAnimDesc             = "Choose if you want the slow animation t
 /*------------------------------                                                           //
 |     CHEST SIZE AND COLOR     |                                                           //
 ------------------------------*/                                                           //
-string_view chestVanillaDesc          = "This option will change the appearance of all\n"  //
-                                        "regular chests depending on their contents.";     //
+string_view chestVanillaDesc          = "Chests will appear as they do in the base game."; //
 string_view chestTextureDesc          = "Chest texture will reflect its contents\n"        //
                                         "regardless of size.\n"                            //
                                         "Major Items    =    Gilded Chests\n"              //
