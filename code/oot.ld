@@ -1120,6 +1120,10 @@ SECTIONS
 		*(.patch_LabScientistIgnoreEyedropsInInventory)
 	}
 
+	.patch_FastChestsTwo 0x3F1048 : {
+		*(.patch_FastChestsTwo)
+	}
+
 	.patch_HandleDoorDestroyCustomModels 0x3F1B88 : {
 		*(.patch_HandleDoorDestroyCustomModels)
 	}

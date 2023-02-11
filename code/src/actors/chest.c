@@ -157,6 +157,11 @@ void EnBox_rUpdate(Actor* thisx, GlobalContext* globalCtx) {
     }
 
     EnBox_Update(thisx, globalCtx);
+
+    // Use correct size for the light effect if it appears
+    if (thisx->child != 0) {
+        thisx->child->scale = thisx->scale;
+    }
 }
 
 u8 Chest_OverrideAnimation() {
@@ -171,7 +176,6 @@ u8 Chest_OverrideAnimation() {
                 break;
         case CHEST_MAJOR:
         case CHEST_BOSS_KEY:
-            PlaySound(0x1000599); // Play chest opening fanfare
             return TRUE;
     }
 

@@ -276,6 +276,18 @@ GetCustomMessageTextTwo_patch:
 FastChests_patch:
     bl hook_FastChests
 
+.section .patch_FastChestsTwo
+    bl hook_FastChests
+    bne 0x3F10B0
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+
 .section .patch_DampeChest
 .global DampeChest_patch
 DampeChest_patch:
