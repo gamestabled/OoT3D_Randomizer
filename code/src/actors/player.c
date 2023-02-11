@@ -166,8 +166,12 @@ f32 Player_GetSpeedMultiplier(void) {
     return speedMultiplier;
 }
 
-s32 Player_ShouldDrawHoverBootsEffect() {
-    return gSaveContext.linkAge == 0 || !gSettingsContext.hoverbootsAsChild;
+s32 Player_IsAdult() {
+    return gSaveContext.linkAge == AGE_ADULT;
+}
+
+s32 Player_ShouldApplyAdultItemsCMABs() {
+    return gSaveContext.linkAge == AGE_ADULT || gSettingsContext.hoverbootsAsChild || gSettingsContext.hookshotAsChild;
 }
 
 s32 Player_ShouldUseSlingshot() {
@@ -177,10 +181,6 @@ s32 Player_ShouldUseSlingshot() {
     } else {
         return gSaveContext.linkAge == 1 && !gSettingsContext.bowAsChild;
     }
-}
-
-s32 Player_ShouldDrawHookshotParts() {
-    return gSaveContext.linkAge == 0 || !gSettingsContext.hookshotAsChild;
 }
 
 s32 Player_CanPickUpThisActor(Actor* interactedActor) {
