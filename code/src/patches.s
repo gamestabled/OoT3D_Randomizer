@@ -939,7 +939,7 @@ BombPurchaseableCheck_patch:
 .section .patch_BombchuShopInfinitePurchases
 .global BombchuShopInfinitePurchases_patch
 BombchuShopInfinitePurchases_patch:
-    nop
+    b hook_BombchuShopInfinitePurchases
 
 .section .patch_GanonBattleDeathWarp
 .global GanonBattleDeathWarp_patch

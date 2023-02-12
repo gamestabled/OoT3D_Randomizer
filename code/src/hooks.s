@@ -1826,6 +1826,16 @@ hook_OoBBombchuThree:
     ldrsh r0,[r5,#0xE]
     bx lr
 
+.global hook_BombchuShopInfinitePurchases
+hook_BombchuShopInfinitePurchases:
+    ldrsh r3,[r1,#0x1C]
+    push {r0-r12,lr}
+    bl Settings_IsLogicVanilla
+    cmp r0,#0x1
+    pop {r0-r12,lr}
+    movne r3,#0x0 @ Skip setting itemGetInf flag
+    b 0x188D40
+
 @ ----------------------------------
 @ ----------------------------------
 

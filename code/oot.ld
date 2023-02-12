@@ -224,7 +224,7 @@ SECTIONS
 		*(.patch_FastOwlCutscenes)
 	}
 
-	.patch_BombchuShopInfinitePurchases 0x188D4C : {
+	.patch_BombchuShopInfinitePurchases 0x188D3C : {
 		*(.patch_BombchuShopInfinitePurchases)
 	}
 
