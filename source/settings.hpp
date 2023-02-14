@@ -446,6 +446,7 @@ extern Option CompassesShowReward;
 extern Option CompassesShowWotH;
 extern Option MapsShowDungeonMode;
 extern Option DamageMultiplier;
+extern Option Permadeath;
 extern Option StartingTime;
 extern Option ChestAnimations;
 extern Option ChestSize;

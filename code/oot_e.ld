@@ -548,6 +548,10 @@ SECTIONS
 		*(.patch_MultiplyPlayerSpeed)
 	}
 
+	.patch_PermadeathDeleteSave 0x252424 : {
+		*(.patch_PermadeathDeleteSave)
+	}
+
 	.patch_SkipDaruniaDanceThree 0x257F00 : {
 		*(.patch_SkipDaruniaDanceThree)
 	}
@@ -1180,6 +1184,10 @@ SECTIONS
 		*(.patch_CurseTrapDizzyButtons)
 	}
 
+	.patch_PermadeathSkipMenu 0x41C9A4 : {
+		*(.patch_PermadeathSkipMenu)
+	}
+
 	.patch_SaveMenuIgnoreOpen 0x42EC24 : {
 		*(.patch_SaveMenuIgnoreOpen)
 	}
@@ -1318,6 +1326,10 @@ SECTIONS
 
 	.patch_DeathHandleBButton 0x458CC8 : {
 		*(.patch_DeathHandleBButton)
+	}
+
+	.patch_PermadeathForceQuit 0x458E40 : {
+		*(.patch_PermadeathForceQuit)
 	}
 
 	.patch_SetGameOverEntrance 0x458E5C : {

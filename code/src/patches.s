@@ -1580,6 +1580,21 @@ DontSetMotionSetting_patch:
 SaveMenuIgnoreOpen_patch:
     bl hook_SaveMenuIgnoreOpen
 
+.section .patch_PermadeathDeleteSave
+.global PermadeathDeleteSave_patch
+PermadeathDeleteSave_patch:
+    bl hook_PermadeathDeleteSave
+
+.section .patch_PermadeathSkipMenu
+.global PermadeathSkipMenu_patch
+PermadeathSkipMenu_patch:
+    bl hook_PermadeathSkipMenu
+
+.section .patch_PermadeathForceQuit
+.global PermadeathForceQuit_patch
+PermadeathForceQuit_patch:
+    bl hook_PermadeathForceQuit
+
 .section .patch_OverrideFogDuringGameplayInit
 .global OverrideFogDuringGameplayInit_patch
 OverrideFogDuringGameplayInit_patch:

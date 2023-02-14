@@ -168,7 +168,7 @@ void SaveFile_Init(u32 fileBaseIndex) {
     }
 
     SaveFile_SetStartingInventory();
-    SaveFile_InitExtSaveData(fileBaseIndex + gSaveContext.fileNum);
+    SaveFile_InitExtSaveData(fileBaseIndex + gSaveContext.fileNum, 1);
 
     // Ingame Defaults
     gSaveContext.zTargetingSetting    = gSettingsContext.zTargeting;
@@ -705,7 +705,7 @@ s8 SaveFile_GetIgnoreMaskReactionOption(u32 reactionSet) {
     return gExtSaveData.option_IgnoreMaskReaction;
 }
 
-void SaveFile_InitExtSaveData(u32 saveNumber) {
+void SaveFile_InitExtSaveData(u32 saveNumber, u8 fromSaveCreation) {
     gExtSaveData.version = EXTSAVEDATA_VERSION; // Do not change this line
     memset(&gExtSaveData.extInf, 0, sizeof(gExtSaveData.extInf));
     gExtSaveData.extInf[EXTINF_MASTERSWORDFLAGS] =
@@ -714,6 +714,7 @@ void SaveFile_InitExtSaveData(u32 saveNumber) {
     gExtSaveData.playtimeSeconds = 0;
     memset(&gExtSaveData.scenesDiscovered, 0, sizeof(gExtSaveData.scenesDiscovered));
     memset(&gExtSaveData.entrancesDiscovered, 0, sizeof(gExtSaveData.entrancesDiscovered));
+    gExtSaveData.permadeath = fromSaveCreation ? gSettingsContext.permadeath : 0;
     // Ingame Options
     gExtSaveData.option_EnableBGM          = gSettingsContext.playMusic;
     gExtSaveData.option_EnableSFX          = gSettingsContext.playSFX;
@@ -732,7 +733,7 @@ void SaveFile_LoadExtSaveData(u32 saveNumber) {
     Handle fileHandle;
 
     if (R_FAILED(res = extDataMount(&fsa))) {
-        SaveFile_InitExtSaveData(saveNumber);
+        SaveFile_InitExtSaveData(saveNumber, 0);
         return;
     }
 
@@ -741,7 +742,7 @@ void SaveFile_LoadExtSaveData(u32 saveNumber) {
     // Load default values if the file does not exist
     if (R_FAILED(res = extDataOpen(&fileHandle, fsa, path))) {
         extDataUnmount(fsa);
-        SaveFile_InitExtSaveData(saveNumber);
+        SaveFile_InitExtSaveData(saveNumber, 0);
         return;
     }
 
@@ -752,7 +753,7 @@ void SaveFile_LoadExtSaveData(u32 saveNumber) {
         extDataClose(fileHandle);
         extDataDeleteFile(fsa, path);
         extDataUnmount(fsa);
-        SaveFile_InitExtSaveData(saveNumber);
+        SaveFile_InitExtSaveData(saveNumber, 0);
         return;
     }
 

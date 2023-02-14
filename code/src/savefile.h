@@ -24,14 +24,14 @@ u32 SaveFile_MaskSlotValue(void);
 void SaveFile_SetOwnedTradeItemEquipped(void);
 void SaveFile_ResetItemSlotsIfMatchesID(u8 itemSlot);
 u8 SaveFile_InventoryMenuHasSlot(u8 adult, u8 itemSlot);
-void SaveFile_InitExtSaveData(u32 fileBaseIndex);
+void SaveFile_InitExtSaveData(u32 fileBaseIndex, u8 fromSaveCreation);
 void SaveFile_LoadExtSaveData(u32 saveNumber);
 void SaveFile_SaveExtSaveData(u32 saveNumber);
 void SaveFile_EnforceHealthLimit(void);
 u8 SaveFile_SwordlessPatchesEnabled(void);
 
 // Increment the version number whenever the ExtSaveData structure is changed
-#define EXTSAVEDATA_VERSION 12
+#define EXTSAVEDATA_VERSION 13
 
 typedef enum {
     EXTINF_BIGGORONTRADES,
@@ -43,7 +43,7 @@ typedef enum {
 
 typedef struct {
     u32 version;            // Needs to always be the first field of the structure
-    u8 extInf[EXTINF_SIZE]; // Used for various bit flags
+    u8 extInf[EXTINF_SIZE]; // Used for various bit flags that should also be synced in multiplayer
     struct {
         Vec3i pos;
         s32 yaw;
@@ -57,6 +57,7 @@ typedef struct {
     u32 playtimeSeconds;
     u32 scenesDiscovered[SAVEFILE_SCENES_DISCOVERED_IDX_COUNT];
     u32 entrancesDiscovered[SAVEFILE_ENTRANCES_DISCOVERED_IDX_COUNT];
+    u8 permadeath;
     // Ingame Options, all need to be s8
     s8 option_EnableBGM;
     s8 option_EnableSFX;
