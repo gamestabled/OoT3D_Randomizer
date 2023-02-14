@@ -16,6 +16,8 @@
 #include <string>
 #include <vector>
 
+#include "../code/src/custom_models.h"
+
 const PatchSymbols UsaSymbols = { GSETTINGSCONTEXT_USA_ADDR,
                                   GSPOILERDATA_USA_ADDR,
                                   GSPOILERDATALOCS_USA_ADDR,
@@ -714,10 +716,12 @@ bool WriteAllPatches() {
         std::vector<char> buffer(lSize);
         fread(buffer.data(), 1, buffer.size(), file.get());
 
-        // edit assets as needed
-        const size_t adultTunicOffsetInZAR = 0x1021C;
-        const size_t childTunicOffsetInZAR = 0x1E7FC;
+        // obtain offsets for tunic textures
+        size_t dataSectionOffsetInZAR = *(size_t*)(buffer.data() + 0x14);
+        size_t adultTunicOffsetInZAR  = *(size_t*)(buffer.data() + dataSectionOffsetInZAR + TEXANIM_LINK_BODY * 4);
+        size_t childTunicOffsetInZAR = *(size_t*)(buffer.data() + dataSectionOffsetInZAR + TEXANIM_CHILD_LINK_BODY * 4);
 
+        // edit assets as needed
         WriteFloatToBuffer(buffer, kokiriTunicColor.r, adultTunicOffsetInZAR + 0x70);
         WriteFloatToBuffer(buffer, kokiriTunicColor.g, adultTunicOffsetInZAR + 0x98);
         WriteFloatToBuffer(buffer, kokiriTunicColor.b, adultTunicOffsetInZAR + 0xC0);

@@ -364,7 +364,7 @@ PremadePreset presetRacing = { "Racing",
                                    { &Settings::MapsShowDungeonMode, ON },
                                    { &Settings::StartingTime, STARTINGTIME_NIGHT },
                                    { &Settings::ChestAnimations, CHESTANIMATIONS_ALWAYSFAST },
-                                   { &Settings::ChestSize, CHESTSIZE_MATCHCONTENT },
+                                   { &Settings::ChestAppearance, CHESTAPPEARANCE_TEXTURE },
                                    { &Settings::GenerateSpoilerLog, OFF },
                                    { &Settings::RandomTrapDmg, RANDOMTRAPS_OFF },
                                    // Item Pool Settings

@@ -608,14 +608,12 @@ typedef u32 (*Inventory_HasEmptyBottle_proc)(void);
 
 typedef void (*PlaySound_proc)(u32);
 #define PlaySound_addr 0x35C528
-#define PlaySound     \
-    ((PlaySound_proc) \
-         PlaySound_addr) // this function plays sound effects and music tracks, overlaid on top of the current BGM
+// This function plays sound effects and music tracks, overlaid on top of the current BGM
+#define PlaySound ((PlaySound_proc)PlaySound_addr)
 
 typedef Actor* (*Actor_Spawn_proc)(ActorContext* actorCtx, GlobalContext* globalCtx, s16 actorId, float posX,
                                    float posY, float posZ, s16 rotX, s16 rotY, s16 rotZ, s16 params)
     __attribute__((pcs("aapcs-vfp")));
-;
 #define Actor_Spawn_addr 0x3738D0
 #define Actor_Spawn ((Actor_Spawn_proc)Actor_Spawn_addr)
 
@@ -679,5 +677,11 @@ typedef s32 (*BossChallenge_IsActive_proc)(void);
 typedef s32 (*Audio_PlayActorSfx2_proc)(Actor* actor, s32 sfxID);
 #define Audio_PlayActorSfx2_addr 0x375BCC
 #define Audio_PlayActorSfx2 ((Audio_PlayActorSfx2_proc)Audio_PlayActorSfx2_addr)
+
+typedef void (*Model_EnableMeshGroupByIndex_proc)(SkeletonAnimationModel* skel, u32 index);
+#define Model_EnableMeshGroupByIndex ((Model_EnableMeshGroupByIndex_proc)0x37266C)
+
+typedef void (*Model_DisableMeshGroupByIndex_proc)(SkeletonAnimationModel* skel, u32 index);
+#define Model_DisableMeshGroupByIndex ((Model_DisableMeshGroupByIndex_proc)0x36932C)
 
 #endif //_Z3D_H_

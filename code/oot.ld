@@ -228,10 +228,6 @@ SECTIONS
 		*(.patch_BombchuShopInfinitePurchases)
 	}
 
-	.patch_DecoratedChest 0x189E88 : {
-		*(.patch_DecoratedChest)
-	}
-
 	.patch_BusinessScrubTable 0x18A634 : {
 		*(.patch_BusinessScrubTable)
 	}
@@ -1126,6 +1122,10 @@ SECTIONS
 
 	.patch_LabScientistIgnoreEyedropsInInventory 0x3F0B44 : {
 		*(.patch_LabScientistIgnoreEyedropsInInventory)
+	}
+
+	.patch_FastChestsTwo 0x3F1048 : {
+		*(.patch_FastChestsTwo)
 	}
 
 	.patch_HandleDoorDestroyCustomModels 0x3F1B88 : {

@@ -275,7 +275,10 @@ extern string_view nightGSDesc;
 
 extern string_view chestAnimDesc;
 
-extern string_view chestSizeDesc;
+extern string_view chestVanillaDesc;
+extern string_view chestTextureDesc;
+extern string_view chestSizeTextureDesc;
+extern string_view chestClassicDesc;
 
 extern string_view ingameSpoilersShowDesc;
 extern string_view ingameSpoilersHideDesc;

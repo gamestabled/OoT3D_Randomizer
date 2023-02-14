@@ -597,14 +597,6 @@ hook_FastChests:
     pop {r0-r12, lr}
     bx lr
 
-.global hook_DecoratedChest
-hook_DecoratedChest:
-    push {r0-r12, lr}
-    bl Chest_OverrideDecoration
-    cmp r0,#0x1
-    pop {r0-r12, lr}
-    bx lr
-
 .global hook_FastOwlCutscenes
 hook_FastOwlCutscenes:
     push {r0-r12, lr}

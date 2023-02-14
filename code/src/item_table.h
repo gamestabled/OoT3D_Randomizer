@@ -32,7 +32,6 @@ typedef struct {
 u16 ItemTable_ResolveUpgrades(u16 itemId);
 ItemRow* ItemTable_GetItemRow(u16 itemId);
 ItemRow* ItemTable_GetItemRowFromIndex(u8 rowIndex);
-void ItemTable_SetBombchusChestType(u8 type);
 void ItemTable_CallEffect(ItemRow* itemRow);
 
 #endif //_ITEM_TABLE_H_
