@@ -138,7 +138,12 @@ s16 ShopsanityItem_GetPrice(ShopsanityItem* item) {
 s32 Shopsanity_CheckAlreadySold(ShopsanityItem* item) {
     u32 itemBit = 1 << item->shopItemPosition;
 
-    if ((Entrance_SceneAndSpawnAre(0x2C, 0x00) &&
+    // For Bombchu Shop with vanilla logic, check the base game flags.
+    u32 vanillaSoldOut = (gSettingsContext.logic == LOGIC_VANILLA) && Entrance_SceneAndSpawnAre(0x32, 0x00) &&
+                         (gSaveContext.itemGetInf[0] & (1 << (3 + item->super.actor.params - SI_BOMBCHU_10_1)));
+
+    if (vanillaSoldOut ||
+        (Entrance_SceneAndSpawnAre(0x2C, 0x00) &&
          gSaveContext.sceneFlags[SCENE_BAZAAR + SHOP_KAKARIKO_BAZAAR].unk & itemBit) ||
         (!Entrance_SceneAndSpawnAre(0x2C, 0x00) && gSaveContext.sceneFlags[gGlobalContext->sceneNum].unk & itemBit)) {
         item->super.actor.params = SI_SOLD_OUT;

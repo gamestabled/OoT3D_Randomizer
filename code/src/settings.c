@@ -166,6 +166,10 @@ s32 Settings_IsIsgEnabled(void) {
     return (s32)gSettingsContext.restoreISG;
 }
 
+s32 Settings_IsLogicVanilla(void) {
+    return (s32)gSettingsContext.logic == LOGIC_VANILLA;
+}
+
 const char hashIconNames[32][25] = {
     "Deku Stick",   "Deku Nut",       "Bow",           "Slingshot",       "Fairy Ocarina",  "Bombchu",
     "Longshot",     "Boomerang",      "Lens of Truth", "Beans",           "Megaton Hammer", "Bottled Fish",
