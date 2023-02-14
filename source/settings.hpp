@@ -762,8 +762,9 @@ extern Option MirrorWorld;
 
 extern Option ShuffleMusic;
 extern Option ShuffleBGM;
-extern Option ShuffleFanfares;
-extern Option ShuffleOcaMusic;
+extern Option ShuffleMelodies;
+extern Option CustomMusic;
+extern Option CustomMusicOnly;
 extern Option ShuffleSFX;
 extern Option ShuffleSFXFootsteps;
 extern Option ShuffleSFXLinkVoice;

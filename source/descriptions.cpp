@@ -1153,16 +1153,23 @@ string_view mirrorWorldRandomDesc     = "Whether the world is mirrored may chang
 |        SHUFFLE MUSIC         |                                                           //
 ------------------------------*/                                                           //
 string_view musicRandoDesc            = "Randomize the music in the game.";                //
-string_view shuffleBGMDesc            = "Randomize area background music, either\n"        //
-                                        "grouped into categories or all mixed together.\n" //
-                                        "The group categories are World, Event, and Battle.";
-string_view fanfaresOffDesc           = "Fanfares are not shuffled.";                      //
-string_view onlyFanfaresDesc          = "Fanfares and ocarina songs are shuffled in\n"     //
-                                        "separate pools.";                                 //
-string_view fanfaresOcarinaDesc       = "Fanfares and ocarina songs are shuffled together\n"
-                                        "in the same pool.";                               //
-string_view shuffleOcaMusicDesc       = "The music that plays back after you play an\n"    //
-                                        "ocarina song is randomized.";                     //
+string_view shuffleBGMDesc            = "Shuffle background music.\n"                      //
+                                        "Mixed allows any BGM to appear anywhere.\n"       //
+                                        "The group categories are Area Themes, Event Music,"
+                                        "and Battle Themes.\n"                             //
+                                        "\"Own\" is for Custom Music, limiting the original\n"
+                                        "music to only appear at it's original place.\n";  //
+string_view shuffleMelodiesDesc       = "Shuffle played-once music.\n"                     //
+                                        "Mixed allows any melody to appear anywhere.\n"    //
+                                        "The group categories are Fanfares,\n"             //
+                                        "and Ocarina Songs.\n"                             //
+                                        "\"Own\" is for Custom Music, limiting the original\n"
+                                        "music to only appear at it's original place.\n";  //
+string_view customMusicDesc           = "Add custom music to the pool. The sound archive\n"//
+                                        "has to be placed in the Custom Music folder.";    //
+string_view customMusicOnlyDesc       = "Excludes the game's original music from the pool.\n"
+                                        "If there's not enough custom music, the original\n"
+                                        "song with be used.";                              //
 /*------------------------------                                                           //
 |         SHUFFLE SFX          |                                                           //
 ------------------------------*/                                                           //

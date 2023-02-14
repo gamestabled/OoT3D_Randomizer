@@ -16,6 +16,7 @@
 #include "spoiler_log.hpp"
 #include "location_access.hpp"
 #include "debug.hpp"
+#include "music.hpp"
 
 namespace {
 bool seedChanged;
@@ -720,21 +721,37 @@ void GenerateRandomizer() {
             return;
         }
     }
-    printf("\x1b[12;10HWriting Patch...");
+
+    if (Settings::ShuffleMusic) {
+        printf("\x1b[12;10HShuffling Music...");
+        auto musicRes = Music::ShuffleMusic_Archive();
+        if (musicRes == Music::SARSHUFFLE_SUCCESS) {
+            printf("Done");
+        } else {
+            if (musicRes == Music::SARSHUFFLE_BCSAR_NOT_FOUND && !Settings::CustomMusic) {
+                // Inform that the original music shuffle system is used
+                printf("Legacy");
+            } else {
+                printf("Error %d", musicRes);
+            }
+        }
+    }
+
+    printf("\x1b[13;10HWriting Patch...");
     if (WriteAllPatches()) {
         printf("Done");
         if (Settings::PlayOption == PATCH_CONSOLE) {
-            printf("\x1b[14;10HQuit out using the home menu. Then\n");
-            printf("\x1b[15;10Henable game patching and launch OoT3D!\n");
+            printf("\x1b[15;10HQuit out using the home menu. Then\n");
+            printf("\x1b[16;10Henable game patching and launch OoT3D!\n");
         } else if (Settings::PlayOption == PATCH_CITRA) {
-            printf("\x1b[14;10HCopy code.ips, exheader.bin and romfs to\n");
-            printf("\x1b[15;10Hthe OoT3D mods folder, then launch OoT3D!\n");
+            printf("\x1b[15;10HCopy code.ips, exheader.bin and romfs to\n");
+            printf("\x1b[16;10Hthe OoT3D mods folder, then launch OoT3D!\n");
         }
 
         const auto& randomizerHash = GetRandomizerHash();
-        printf("\x1b[17;10HHash:");
+        printf("\x1b[18;10HHash:");
         for (size_t i = 0; i < randomizerHash.size(); i++) {
-            printf("\x1b[%zu;11H- %s", i + 18, randomizerHash[i].c_str());
+            printf("\x1b[%zu;11H- %s", i + 19, randomizerHash[i].c_str());
         }
     } else {
         printf("Failed\nPress Select to exit.\n");
