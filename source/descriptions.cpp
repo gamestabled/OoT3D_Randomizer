@@ -1168,18 +1168,18 @@ string_view shuffleBGMDesc            = "Shuffle background music.\n"           
                                         "The group categories are Area Themes, Event Music,"
                                         "and Battle Themes.\n"                             //
                                         "\"Own\" is for Custom Music, limiting the original\n"
-                                        "music to only appear at it's original place.\n";  //
+                                        "music to only appear at its original place.\n";   //
 string_view shuffleMelodiesDesc       = "Shuffle played-once music.\n"                     //
                                         "Mixed allows any melody to appear anywhere.\n"    //
                                         "The group categories are Fanfares,\n"             //
                                         "and Ocarina Songs.\n"                             //
                                         "\"Own\" is for Custom Music, limiting the original\n"
-                                        "music to only appear at it's original place.\n";  //
+                                        "music to only appear at its original place.\n";   //
 string_view customMusicDesc           = "Add custom music to the pool. The sound archive\n"//
                                         "has to be placed in the Custom Music folder.";    //
 string_view customMusicOnlyDesc       = "Excludes the game's original music from the pool.\n"
                                         "If there's not enough custom music, the original\n"
-                                        "song with be used.";                              //
+                                        "song will be used.";                              //
 /*------------------------------                                                           //
 |         SHUFFLE SFX          |                                                           //
 ------------------------------*/                                                           //

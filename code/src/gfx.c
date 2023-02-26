@@ -404,7 +404,7 @@ static void Gfx_DrawDungeonItems(void) {
         Draw_DrawIcon(10, 16 + (spacingY * offsetY), COLOR_WHITE, ICON_SMALL_KEY);
         Draw_DrawString(24, 16 + (spacingY * offsetY++), COLOR_WHITE, "Small Keys: Have / Found");
         Draw_DrawIcon(10, 16 + (spacingY * offsetY), COLOR_ICON_BOSS_KEY, ICON_BOSS_KEY);
-        Draw_DrawString(24, 16 + (spacingY * offsetY), COLOR_WHITE, "Boss Key");
+        Draw_DrawString(24, 16 + (spacingY * offsetY++), COLOR_WHITE, "Boss Key");
         Draw_DrawIcon(10, 16 + (spacingY * offsetY), COLOR_ICON_MAP, ICON_MAP);
         Draw_DrawString(24, 16 + (spacingY * offsetY++), COLOR_WHITE, "Map");
         Draw_DrawIcon(10, 16 + (spacingY * offsetY), COLOR_ICON_COMPASS, ICON_COMPASS);
