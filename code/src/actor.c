@@ -281,3 +281,38 @@ void TitleCard_rUpdate(GlobalContext* globalCtx, TitleCardContext* titleCtx) {
 
     TitleCard_Update(globalCtx, titleCtx);
 }
+
+void HyperActors(Actor* thisx, GlobalContext* globalCtx) {
+    thisx->update(thisx, globalCtx);
+
+    if (globalCtx->csCtx.state != 0 || thisx->update == NULL) {
+        return;
+    }
+
+    if (gSettingsContext.hyperBosses == ON) {
+        if ((thisx->id == 0x28) ||                                           // Gohma
+            (thisx->id == 0x12) ||                                           // King Dodongo
+            (thisx->id == 0xBA && thisx->params == -1) ||                    // Barinade
+            (thisx->id == 0x52 || thisx->id == 0x67 || thisx->id == 0x6D) || // Phantom Ganon + Horse + Lightning
+            (thisx->id == 0x96 || thisx->id == 0xA2) ||                      // Volvagia (Flying + Grounded)
+            (thisx->id == 0xC4) ||                                           // Morpha
+            (thisx->id == 0xE9 && thisx->params == -1) ||                    // Bongo Bongo
+            (thisx->id == 0xDC) ||                                           // Twinrova
+            (thisx->id == 0xE8) ||                                           // Ganondorf
+            (thisx->id == 0x17A)) {                                          // Ganon
+
+            // Special case to update in order for Barinade and Bongo Bongo
+            if (thisx->id == 0xBA || thisx->id == 0xE9) {
+                for (Actor* actor = gGlobalContext->actorCtx.actorList[ACTORTYPE_BOSS].first; actor != NULL;
+                     actor        = actor->next) {
+                    if (actor == thisx || actor->update == NULL) {
+                        continue;
+                    }
+                    actor->update(actor, globalCtx);
+                }
+            }
+
+            thisx->update(thisx, globalCtx);
+        }
+    }
+}

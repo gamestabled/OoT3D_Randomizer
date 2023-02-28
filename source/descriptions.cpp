@@ -1220,6 +1220,12 @@ string_view extraArrowEffectsDesc     = "Ice Arrows will act like blue fire, mel
                                         "Light Arrows will activate Sun Switches like in\n"//
                                         "Majora's Mask.";                                  //
                                                                                            //
+/*------------------------------                                                           //
+|         HYPER BOSSES         |                                                           //
+------------------------------*/                                                           //
+string_view hyperBossesDesc           = "Powers up all the bosses, including Ganon,\n"     //
+                                        "allowing them to act twice as fast!";             //
+                                                                                           //
                                                                                            //--------------//
 /*------------------------------                                                                           //
 |  DETAILED LOGIC EXPLANATIONS |                                                                           //

@@ -923,6 +923,9 @@ SwapFaroresWind_patch:
 BombchuShopAlwaysOpen_patch:
     nop
 
+.section .patch_PhantomGanonLightningID
+    .short 0x6D
+
 .section .patch_BombchuCheapestPriceOne
     .word 0x0063FFFF
 
@@ -1228,6 +1231,11 @@ SariasSongHintsOne_patch:
 .global SariasSongHintsTwo_patch
 SariasSongHintsTwo_patch:
     bl Hints_GetNextSariasSongHint
+
+.section .patch_HyperActors
+.global HyperActors_patch
+HyperActors_patch:
+    bl hook_HyperActors
 
 .section .patch_TitleCardUpdate
 .global TitleCardUpdate_patch
