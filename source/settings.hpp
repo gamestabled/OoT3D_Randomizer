@@ -459,6 +459,7 @@ extern Option FireTrap;
 extern Option AntiFairyTrap;
 extern Option CurseTraps;
 extern Option ExtraArrowEffects;
+extern Option HyperBosses;
 extern bool HasNightStart;
 
 extern Option FaroresWindAnywhere;

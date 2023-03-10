@@ -1380,6 +1380,10 @@ SECTIONS
 		*(.patch_ChildDontEquipSwordSlotByDefault)
 	}
 
+	.patch_HyperActors 0x4617B0 : {
+		*(.patch_HyperActors)
+	}
+
 	.patch_TitleCardUpdate 0x4618D8 : {
 		*(.patch_TitleCardUpdate)
 	}
@@ -1528,6 +1532,10 @@ SECTIONS
 
 	.patch_DampeSetCollectibleFlag 0x4D9D50 : {
 		*(.patch_DampeSetCollectibleFlag)
+	}
+
+	.patch_PhantomGanonLightningID 0x523698 : {
+		*(.patch_PhantomGanonLightningID)
 	}
 
 	.patch_BombchuCheapestPriceOne 0x525348 : {

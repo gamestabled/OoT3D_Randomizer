@@ -333,6 +333,13 @@ hook_ApplyDamageMultiplier:
     pop {r0-r3, r5-r12, lr}
     bx lr
 
+.global hook_HyperActors
+hook_HyperActors:
+    push {r0-r12, lr}
+    bl HyperActors
+    pop {r0-r12, lr}
+    bx lr
+
 .global hook_SceneInitAfterCopyScenes
 hook_SceneInitAfterCopyScenes:
     push {r0-r12, lr}

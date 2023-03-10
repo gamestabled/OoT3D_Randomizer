@@ -550,6 +550,7 @@ typedef struct {
     u8 antiFairyTrap;
     u8 curseTraps;
     u8 extraArrowEffects;
+    u8 hyperBosses;
 
     u8 faroresWindAnywhere;
     u8 stickAsAdult;
