@@ -46,7 +46,8 @@ typedef struct SkeletonAnimationModel {
     /* 0x04 */ char unk_04[0x08];
     /* 0x0C */ SkeletonAnimationModel_unk_0C* unk_0C;
     /* 0x10 */ SkeletonAnimationModel_unk_10* unk_10;
-    /* 0x14 */ char unk_14[0x68];
+    /* 0x14 */ void* unk_draw_struct_14;
+    /* 0x18 */ char unk_18[0x64];
     /* 0x7C */ nn_math_MTX34 mtx;
     /* 0xAC */ s8 unk_AC;
     /* 0xAD */ char unk_AD[0x03];

@@ -980,9 +980,9 @@ string_view ageItemsInLogicDesc       = "Using items as the wrong age may be req
 /*------------------------------                                                           //
 |    ENABLE ADULT DEKU STICK   |                                                           //
 ------------------------------*/                                                           //
-string_view adultStickDesc            = "Adult Link can wield a deku stick. In game Adult\n"
-                                        "Link will look like he's holding a Hylian Shield,\n"
-                                        "but rest assured it is a deku stick.";            //
+string_view adultStickDesc            = "Adult Link can wield a Deku Stick.\n"             //
+                                        "It will look like the N64 Deku Stick, but with a\n"
+                                        "simpler texture.";                                //
                                                                                            //
 /*------------------------------                                                           //
 |    ENABLE ADULT BOOMERANG    |                                                           //
@@ -993,6 +993,7 @@ string_view adultBoomerangDesc        = "Adult Link can throw the boomerang.";  
 |     ENABLE CHILD HAMMER      |                                                           //
 ------------------------------*/                                                           //
 string_view childHammerDesc           = "Child Link can swing the Megaton Hammer.";        //
+                                                                                           //
 /*------------------------------                                                           //
 |    ENABLE ADULT SLINGSHOT    |                                                           //
 ------------------------------*/                                                           //
@@ -1009,9 +1010,7 @@ string_view childBowDesc              = "Child Link can use the Bow. It will loo
 |    ENABLE CHILD HOOKSHOT     |                                                           //
 ------------------------------*/                                                           //
 string_view childHookshotDesc         = "Child Link can use the Hookshot/Longshot.\n"      //
-                                        "It will be difficult to aim, the red dot and\n"   //
-                                        "laser won't appear and the hook will look like\n" //
-                                        "a small bomb.";                                   //
+                                        "The hook will look like a small bomb.";           //
 /*------------------------------                                                           //
 |   ENABLE CHILD IRON BOOTS    |                                                           //
 ------------------------------*/                                                           //
@@ -1020,8 +1019,7 @@ string_view childIronBootsDesc        = "Child Link can equip the Iron Boots."; 
 /*------------------------------                                                           //
 |   ENABLE CHILD HOVER BOOTS   |                                                           //
 ------------------------------*/                                                           //
-string_view childHoverBootsDesc       = "Child Link can equip the Hover Boots. The yellow\n"
-                                        "circle beneath Link's feet won't appear.";        //
+string_view childHoverBootsDesc       = "Child Link can equip the Hover Boots.";           //
                                                                                            //
 /*------------------------------                                                           //
 |     ENABLE ADULT MASKS       |                                                           //
