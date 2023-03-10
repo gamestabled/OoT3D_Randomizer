@@ -3,6 +3,7 @@
 #include "reference_structures.hpp"
 #include "file_reader.hpp"
 #include "common_structures.hpp"
+#include <cstring>
 
 SoundArchive::SoundArchive(FS_Archive archive_, const std::string& filePath_) {
     BinaryDataReader br(archive_, filePath_);
@@ -37,19 +38,40 @@ SoundArchive::SoundArchive(FS_Archive archive_, const std::string& filePath_) {
     br.position = sarHeader.blockOffsets[FILE_BLOCK].offset;
     // The file block will be created from a vector of raw bytes.
 
+    // Stuff for multiple banks per sequence
+    u32 extraBankBytes = 0;
+    std::vector<u32> mainInfoReferenceOffsets;
+    u32 soundRefTableOffset = 0;
+
+    static const auto SEQ_FIRST_SONG = 1413;
+    static const auto SEQ_LAST_SONG  = 1497;
+
+    static const auto DUMMY_SEQ_SARIA = 1483;
+
     // Get file reference offsets and sequence info offsets
     {
         br.position = 0;
         FileReader fileReader(br);
         fileReader.OpenBlock(br, 1);
 
+        const auto addMainRefOffset = [&] {
+            mainInfoReferenceOffsets.push_back(br.position + 4 - sarHeader.blockOffsets[INFO_BLOCK].offset);
+        };
+
         fileReader.OpenReference(br, "SoundRefTableRef");
+        addMainRefOffset();
         fileReader.OpenReference(br, "SoundGroupRefTableRef");
+        addMainRefOffset();
         fileReader.OpenReference(br, "BankRefTableRef");
+        addMainRefOffset();
         fileReader.OpenReference(br, "WaveArchiveRefTableRef");
+        addMainRefOffset();
         fileReader.OpenReference(br, "GroupRefTableRef");
+        addMainRefOffset();
         fileReader.OpenReference(br, "PlayerRefTableRef");
+        addMainRefOffset();
         fileReader.OpenReference(br, "FileRefTableRef");
+        addMainRefOffset();
         fileReader.OpenReference(br, "ProjectInfo");
 
         // File Reference Offsets
@@ -76,14 +98,13 @@ SoundArchive::SoundArchive(FS_Archive archive_, const std::string& filePath_) {
         // Sequence Info Offsets
         fileReader.JumpToReference(br, "SoundRefTableRef");
         fileReader.StartStructure(br);
+        soundRefTableOffset = br.position - sarHeader.blockOffsets[INFO_BLOCK].offset;
         fileReader.OpenReferenceTable(br, "SoundRefTable");
 
         // Read the info of the music sequences
-        for (size_t seqIdx = 1413; seqIdx <= 1497; seqIdx++) {
+        for (size_t seqIdx = SEQ_FIRST_SONG; seqIdx <= SEQ_LAST_SONG; seqIdx++) {
             fileReader.ReferenceTableJumpToReference(br, seqIdx, "SoundRefTable");
             fileReader.StartStructure(br);
-
-            static const auto DUMMY_SEQ_SARIA = 1483;
 
             br.position += 4; // File ID
             br.position += 4; // ID
@@ -110,12 +131,14 @@ SoundArchive::SoundArchive(FS_Archive archive_, const std::string& filePath_) {
                 }
 
                 fileReader.JumpToReference(br, "BnkTableRef");
-                br.position += 4;
 
                 // Skip the dummy sequence
                 if (seqIdx != DUMMY_SEQ_SARIA) {
                     seqBnkGlobalOffsets.push_back(br.position);
+                    br.position += 4;
                     originalBanks.push_back(br.ReadU32() & 0xFF'FF'FF);
+
+                    extraBankBytes += 12;
                 }
 
                 fileReader.EndStructure();
@@ -145,7 +168,67 @@ SoundArchive::SoundArchive(FS_Archive archive_, const std::string& filePath_) {
 
     newVolumes = originalVolumes;
     newChFlags = originalChFlags;
-    newBanks   = originalBanks;
+
+    newBanks.clear();
+    for (size_t i = 0; i < originalBanks.size(); i++) {
+        u32 origBnk = originalBanks.at(i);
+        newBanks.push_back({ origBnk, origBnk, origBnk, origBnk });
+    }
+
+    // Below is a hacky solution to allow sequences to use multiple banks
+
+    const auto increaseOffset = [&](u32 offsetPos, u32 addedOffset) {
+        u32 origOffset = 0;
+        memcpy(&origOffset, &infoBlock.at(offsetPos), 4);
+
+        u32 newOffset = origOffset + addedOffset;
+        memcpy(&infoBlock.at(offsetPos), &newOffset, 4);
+    };
+
+    for (size_t i = 0; i < mainInfoReferenceOffsets.size(); i++) {
+        increaseOffset(mainInfoReferenceOffsets.at(i), extraBankBytes);
+    }
+
+    // Update SoundRefTable
+    {
+        u32 offsetToAdd = 0;
+        for (size_t i = SEQ_FIRST_SONG; i <= 1523; i++) {
+            u32 srftOffs = soundRefTableOffset;
+            srftOffs += 4;     // Count
+            srftOffs += i * 8; // Previous references
+            srftOffs += 4;     // Current reference type + padding
+
+            increaseOffset(srftOffs, offsetToAdd);
+
+            if (i != DUMMY_SEQ_SARIA && i <= SEQ_LAST_SONG) {
+                offsetToAdd += 12;
+            }
+        }
+    }
+
+    sarHeader.blockOffsets[INFO_BLOCK].size += extraBankBytes;
+    sarHeader.blockOffsets[FILE_BLOCK].offset += extraBankBytes;
+
+    for (s32 i = seqBnkGlobalOffsets.size() - 1; i >= 0; i--) {
+        u32 seqBnkLocalOffset = seqBnkGlobalOffsets[i] - sarHeader.blockOffsets[INFO_BLOCK].offset;
+        infoBlock.insert(infoBlock.begin() + (seqBnkLocalOffset + 8), 12, 0);
+    }
+
+    const auto addIncrementalOffset = [](std::vector<u32>& globalOffsets) {
+        u32 offsetToAdd = 0;
+        for (auto& offset : globalOffsets) {
+            offset += offsetToAdd;
+            offsetToAdd += 12;
+        }
+    };
+
+    addIncrementalOffset(volumeGlobalOffsets);
+    addIncrementalOffset(chFlagsGlobalOffsets);
+    addIncrementalOffset(seqBnkGlobalOffsets);
+
+    for (auto& abc : fileRefGlobalOffsets) {
+        abc += extraBankBytes;
+    }
 }
 
 SoundArchive::~SoundArchive() = default;
@@ -175,8 +258,10 @@ void SoundArchive::ReplaceSeq(FS_Archive archive_, u16 fileIndex, SequenceData& 
         // Empty received, no change
         return;
     }
-    newFiles.at(fileIndex)   = seqData.GetData(archive_);
-    newBanks.at(fileIndex)   = seqData.GetBank();
+    newFiles.at(fileIndex) = seqData.GetData(archive_);
+    for (size_t bnkIdx = 0; bnkIdx < 4; bnkIdx++) {
+        newBanks.at(fileIndex) = seqData.GetBanks();
+    }
     newChFlags.at(fileIndex) = seqData.GetChFlags();
     newVolumes.at(fileIndex) = seqData.GetVolume();
 }
@@ -239,7 +324,10 @@ void SoundArchive::Write(FS_Archive archive_, const std::string& filePath_) {
             bw.Write((u16)newChFlags.at(i));
             // Bank
             bw.position = seqBnkGlobalOffsets.at(i - 9);
-            bw.Write((u32)((3 << 24) | (newBanks.at(i) & 0xFF'FF'FF)));
+            bw.Write((u32)4);
+            for (size_t bnkIdx = 0; bnkIdx < 4; bnkIdx++) {
+                bw.Write((u32)((3 << 24) | (newBanks.at(i)[bnkIdx] & 0xFF'FF'FF)));
+            }
             bw.position = tmpPos;
         }
     }
@@ -248,10 +336,14 @@ void SoundArchive::Write(FS_Archive archive_, const std::string& filePath_) {
     bw.Write(fileBlockSize);
 
     // Write new header values
-    bw.position = 0xC;
-    bw.Write(sarHeader.blockOffsets[FILE_BLOCK].offset + fileBlockSize);
+    bw.position = 0x28;
+    bw.Write(sarHeader.blockOffsets[INFO_BLOCK].size);
+    bw.position = 0x30;
+    bw.Write(sarHeader.blockOffsets[FILE_BLOCK].offset);
     bw.position = 0x34;
     bw.Write(fileBlockSize);
+    bw.position = 0xC;
+    bw.Write(sarHeader.blockOffsets[FILE_BLOCK].offset + fileBlockSize);
 
     bw.Close();
 }

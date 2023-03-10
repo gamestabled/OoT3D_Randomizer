@@ -3,6 +3,7 @@
 #include <3ds.h>
 #include <string>
 #include <vector>
+#include <array>
 
 #include "reference_structures.hpp"
 #include "sequence_data.hpp"
@@ -64,6 +65,6 @@ class SoundArchive {
 
     std::vector<u8> newVolumes;
     std::vector<u16> newChFlags;
-    std::vector<u32> newBanks;
+    std::vector<std::array<u32, 4>> newBanks;
     std::vector<std::vector<u8>> newFiles;
 };
