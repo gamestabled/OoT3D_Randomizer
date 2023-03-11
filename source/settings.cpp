@@ -335,7 +335,7 @@ Option RandomTrapDmg       = Option::U8  ("Random Trap Damage",     {"Off", "Bas
 Option FireTrap            = Option::Bool(2, "Fire Trap",           {"Off", "On"},                                                          {fireTrapDesc},                                                                                                   OptionCategory::Setting,    ON);
 Option AntiFairyTrap       = Option::Bool(2, "Anti-Fairy Trap",     {"Off", "On"},                                                          {antiFairyTrapDesc},                                                                                              OptionCategory::Setting,    ON);
 Option CurseTraps          = Option::Bool(2, "Curse Traps",         {"Off", "On"},                                                          {curseTrapsDesc},                                                                                                 OptionCategory::Setting);
-Option ScreenTraps         = Option::Bool(2, "Screen Traps",        {"Off", "On"},                                                          {screenTrapsDesc},                                                                                                OptionCategory::Setting);
+Option ScreenTraps         = Option::Bool(4, "Screen Traps",        {"Off", "On"},                                                          {screenTrapsDesc},                                                                                                OptionCategory::Setting);
 Option ExtraArrowEffects   = Option::Bool("Extra Arrow Effects",    {"Off", "On"},                                                          {extraArrowEffectsDesc});
 Option HyperBosses         = Option::Bool("Hyper Bosses",           {"Off", "On"},                                                          {hyperBossesDesc});
 bool HasNightStart         = false;
@@ -2192,12 +2192,17 @@ void ForceChange(u32 kDown, Option* currentSetting) {
         FireTrap.Unhide();
         AntiFairyTrap.Unhide();
         CurseTraps.Unhide();
-        ScreenTraps.Unhide();
     } else {
         FireTrap.Hide();
         AntiFairyTrap.Hide();
         CurseTraps.Hide();
+    }
+
+    if (CurseTraps) {
+        ScreenTraps.Unhide();
+    } else {
         ScreenTraps.Hide();
+        ScreenTraps.SetSelectedIndex(0);
     }
 
     // Manage toggle for item usability options
