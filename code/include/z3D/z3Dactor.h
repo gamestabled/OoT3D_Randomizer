@@ -209,7 +209,9 @@ typedef struct Actor {
     /* 0x115 */ u8 targetPriority;      // Lower values have higher priority. Resets to 0 when player stops targeting
     /* 0x116 */ u16 textId;             // Text ID to pass to link/display when interacting with the actor
     /* 0x118 */ u16 freezeTimer;        // Actor does not update when set. Timer decrements automatically
-    /* 0x120 */ char unk_118[0x7];
+    /* 0x11A */ s16 colorFilterTimer;
+    /* 0x11C */ u32 colorFilterParams;
+    /* 0x120 */ char unk_120;
     /* 0x121 */ u8 isDrawn;     // Set to true if the actor is currently being drawn. Always stays false for lens actors
     /* 0x122 */ u8 unk_122;     // Set within a routine that deals with collision
     /* 0x123 */ u8 naviEnemyId; // Sets what 0600 dialog to display when talking to navi. Default 0xFF

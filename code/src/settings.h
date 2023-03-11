@@ -325,6 +325,12 @@ typedef enum {
 } RandomTrapDamageSetting;
 
 typedef enum {
+    HYPERACTORS_OFF,
+    HYPERACTORS_ON,
+    HYPERACTORS_CHOOSE,
+} HyperActorsSetting;
+
+typedef enum {
     ITEMPOOL_MINIMAL,
     ITEMPOOL_SCARCE,
     ITEMPOOL_BALANCED,
@@ -551,6 +557,8 @@ typedef struct {
     u8 curseTraps;
     u8 extraArrowEffects;
     u8 hyperBosses;
+    u8 hyperMiddleBosses;
+    u8 hyperEnemies;
 
     u8 faroresWindAnywhere;
     u8 stickAsAdult;

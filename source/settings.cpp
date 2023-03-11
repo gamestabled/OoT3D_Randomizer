@@ -336,7 +336,10 @@ Option FireTrap            = Option::Bool(2, "Fire Trap",           {"Off", "On"
 Option AntiFairyTrap       = Option::Bool(2, "Anti-Fairy Trap",     {"Off", "On"},                                                          {antiFairyTrapDesc},                                                                                              OptionCategory::Setting,    ON);
 Option CurseTraps          = Option::Bool(2, "Curse Traps",         {"Off", "On"},                                                          {curseTrapsDesc},                                                                                                 OptionCategory::Setting);
 Option ExtraArrowEffects   = Option::Bool("Extra Arrow Effects",    {"Off", "On"},                                                          {extraArrowEffectsDesc});
-Option HyperBosses         = Option::Bool("Hyper Bosses",           {"Off", "On"},                                                          {hyperBossesDesc});
+Option HyperActors         = Option::U8  ("Hyper Actors",           {"All Off", "All On", "Choose"},                                        {hyperActorsDesc});
+Option HyperBosses         = Option::Bool(2, "Hyper Bosses",        {"Off", "On"},                                                          {hyperBossesDesc});
+Option HyperMiddleBosses   = Option::Bool(2, "Hyper Middle Bosses", {"Off", "On"},                                                          {hyperMiddleBossesDesc});
+Option HyperEnemies        = Option::Bool(2, "Hyper Enemies",       {"Off", "On"},                                                          {hyperEnemiesDesc});
 bool HasNightStart         = false;
 std::vector<Option *> miscOptions = {
     &Racing,
@@ -361,7 +364,10 @@ std::vector<Option *> miscOptions = {
     &AntiFairyTrap,
     &CurseTraps,
     &ExtraArrowEffects,
+    &HyperActors,
     &HyperBosses,
+    &HyperMiddleBosses,
+    &HyperEnemies,
 };
 
 // Item Usability Settings
@@ -1444,6 +1450,8 @@ SettingsContext FillContext() {
     ctx.curseTraps          = (CurseTraps) ? 1 : 0;
     ctx.extraArrowEffects   = (ExtraArrowEffects) ? 1 : 0;
     ctx.hyperBosses         = (HyperBosses) ? 1 : 0;
+    ctx.hyperMiddleBosses   = (HyperMiddleBosses) ? 1 : 0;
+    ctx.hyperEnemies        = (HyperEnemies) ? 1 : 0;
 
     ctx.faroresWindAnywhere  = (FaroresWindAnywhere) ? 1 : 0;
     ctx.stickAsAdult         = (StickAsAdult) ? 1 : 0;
@@ -2193,6 +2201,27 @@ void ForceChange(u32 kDown, Option* currentSetting) {
         FireTrap.Hide();
         AntiFairyTrap.Hide();
         CurseTraps.Hide();
+    }
+
+    static const std::vector<Option*> hyperActorOptions = {
+        &HyperBosses,
+        &HyperMiddleBosses,
+        &HyperEnemies,
+    };
+    if (HyperActors.Is(HYPERACTORS_OFF)) {
+        for (auto op : hyperActorOptions) {
+            op->SetSelectedIndex(OFF);
+            op->Hide();
+        }
+    } else if (HyperActors.Is(HYPERACTORS_ON)) {
+        for (auto op : hyperActorOptions) {
+            op->SetSelectedIndex(ON);
+            op->Hide();
+        }
+    } else {
+        for (auto op : hyperActorOptions) {
+            op->Unhide();
+        }
     }
 
     // Manage toggle for item usability options

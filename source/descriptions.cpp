@@ -1219,10 +1219,19 @@ string_view extraArrowEffectsDesc     = "Ice Arrows will act like blue fire, mel
                                         "Majora's Mask.";                                  //
                                                                                            //
 /*------------------------------                                                           //
-|         HYPER BOSSES         |                                                           //
+|         HYPER ACTORS         |                                                           //
 ------------------------------*/                                                           //
-string_view hyperBossesDesc           = "Powers up all the bosses, including Ganon,\n"     //
-                                        "allowing them to act twice as fast!";             //
+string_view hyperActorsDesc           = "Powers up the selected actors, allowing them to\n"//
+                                        "move and act twice as fast!";                     //
+                                                                                           //
+string_view hyperBossesDesc           = "Affects all of the main bosses, including both\n" //
+                                        "Ganon phases.";                                   //
+                                                                                           //
+string_view hyperMiddleBossesDesc     = "Affects all middle bosses, like Dark Link and\n"  //
+                                        "Dead Hand. This also includes Iron Knuckles and\n"//
+                                        "Stalfos.";                                        //
+                                                                                           //
+string_view hyperEnemiesDesc          = "Affects all regular enemies.";                    //
                                                                                            //
                                                                                            //--------------//
 /*------------------------------                                                                           //

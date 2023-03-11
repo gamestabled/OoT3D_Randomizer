@@ -380,7 +380,10 @@ extern string_view fireTrapDesc;
 extern string_view antiFairyTrapDesc;
 extern string_view curseTrapsDesc;
 extern string_view extraArrowEffectsDesc;
+extern string_view hyperActorsDesc;
 extern string_view hyperBossesDesc;
+extern string_view hyperMiddleBossesDesc;
+extern string_view hyperEnemiesDesc;
 
 extern string_view ToggleAllTricksDesc;
 
