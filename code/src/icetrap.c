@@ -218,9 +218,9 @@ u16 lerps(u16 a, u16 b, f32 t) {
     u16 tmp;
     if (a < b) {
         tmp = a;
-        a = b;
-        b = tmp;
-        t = 1 - t;
+        a   = b;
+        b   = tmp;
+        t   = 1 - t;
     }
 
     if (a - b < 0x8000) {
