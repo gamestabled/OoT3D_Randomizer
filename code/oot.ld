@@ -684,10 +684,6 @@ SECTIONS
 		*(.patch_GetCustomMessageTextOne)
 	}
 
-	.patch_ChildHoverBoots 0x2D5DF8 : {
-		*(.patch_ChildHoverBoots)
-	}
-
 	.patch_CamRoll 0x2D88E4 : {
 	    *(.patch_CamRoll)
 	}
