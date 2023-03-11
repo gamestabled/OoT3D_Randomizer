@@ -30,17 +30,22 @@
 u16 healthDecrement = 0;
 u8 storedMask       = 0;
 
-void* Player_EditAndRetrieveCMB(ZARInfo* zarInfo, u32 objModelIdx) {
-    void* cmbMan = ZAR_GetCMBByIndex(zarInfo, objModelIdx);
+void** Player_EditAndRetrieveCMB(ZARInfo* zarInfo, u32 objModelIdx) {
+    void** cmbMan = ZAR_GetCMBByIndex(zarInfo, objModelIdx);
+    void* cmb     = *cmbMan;
 
     if (gSettingsContext.customTunicColors == ON) {
-        if (gSaveContext.linkAge == 0) {
-            void* cmb = (void*)(((char*)zarInfo->buf) + 0xDAE8);
+        if (gSaveContext.linkAge == AGE_ADULT) {
             CustomModel_EditLinkToCustomTunic(cmb);
         } else {
-            void* cmb = (void*)(((char*)zarInfo->buf) + 0xDACC);
             CustomModel_EditChildLinkToCustomTunic(cmb);
         }
+    }
+
+    if (gSettingsContext.stickAsAdult) {
+        // The unused deku stick will use the same materialIndex as the bow, to make it appear brown.
+        // This also avoids issues with its combiners being repurposed by the custom tunic patches.
+        ((char*)cmb)[0x4C52] = 5;
     }
 
     return cmbMan;
@@ -161,8 +166,12 @@ f32 Player_GetSpeedMultiplier(void) {
     return speedMultiplier;
 }
 
-s32 Player_ShouldDrawHoverBootsEffect() {
-    return gSaveContext.linkAge == 0 || !gSettingsContext.hoverbootsAsChild;
+s32 Player_IsAdult() {
+    return gSaveContext.linkAge == AGE_ADULT;
+}
+
+s32 Player_ShouldApplyAdultItemsCMABs() {
+    return gSaveContext.linkAge == AGE_ADULT || gSettingsContext.hoverbootsAsChild || gSettingsContext.hookshotAsChild;
 }
 
 s32 Player_ShouldUseSlingshot() {
@@ -172,10 +181,6 @@ s32 Player_ShouldUseSlingshot() {
     } else {
         return gSaveContext.linkAge == 1 && !gSettingsContext.bowAsChild;
     }
-}
-
-s32 Player_ShouldDrawHookshotParts() {
-    return gSaveContext.linkAge == 0 || !gSettingsContext.hookshotAsChild;
 }
 
 s32 Player_CanPickUpThisActor(Actor* interactedActor) {

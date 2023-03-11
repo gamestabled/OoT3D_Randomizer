@@ -923,6 +923,9 @@ SwapFaroresWind_patch:
 BombchuShopAlwaysOpen_patch:
     nop
 
+.section .patch_PhantomGanonLightningID
+    .short 0x6D
+
 .section .patch_BombchuCheapestPriceOne
     .word 0x0063FFFF
 
@@ -1228,6 +1231,11 @@ SariasSongHintsOne_patch:
 .global SariasSongHintsTwo_patch
 SariasSongHintsTwo_patch:
     bl Hints_GetNextSariasSongHint
+
+.section .patch_HyperActors
+.global HyperActors_patch
+HyperActors_patch:
+    bl hook_HyperActors
 
 .section .patch_TitleCardUpdate
 .global TitleCardUpdate_patch
@@ -1713,10 +1721,15 @@ LHOwlEntranceOverride_patch:
 SavewarpSetRespawnFlag_patch:
     bl hook_SavewarpSetRespawnFlag
 
-.section .patch_ChildHoverBoots
-.global ChildHoverBoots_patch
-ChildHoverBoots_patch:
-    b hook_ChildHoverBoots
+.section .patch_AdultItemsCMABsAsChild
+.global AdultItemsCMABsAsChild_patch
+AdultItemsCMABsAsChild_patch:
+    bl hook_AdultItemsCMABsAsChild
+
+.section .patch_Model_EnableMeshGroupByIndex
+.global Model_EnableMeshGroupByIndex_patch
+Model_EnableMeshGroupByIndex_patch:
+    b hook_Model_EnableMeshGroupByIndex
 
 .section .patch_NockArrow
 .global NockArrow_patch
@@ -1727,11 +1740,6 @@ NockArrow_patch:
 .global DecreaseArrowCount_patch
 DecreaseArrowCount_patch:
     bl hook_ArrowsOrSeeds
-
-.section .patch_HookshotDrawRedLaser
-.global HookshotDrawRedLaser_patch
-HookshotDrawRedLaser_patch:
-    bl hook_HookshotDrawRedLaser
 
 .section .patch_HookshotDrawChain
 .global HookshotDrawChain_patch

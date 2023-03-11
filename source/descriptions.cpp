@@ -980,9 +980,9 @@ string_view ageItemsInLogicDesc       = "Using items as the wrong age may be req
 /*------------------------------                                                           //
 |    ENABLE ADULT DEKU STICK   |                                                           //
 ------------------------------*/                                                           //
-string_view adultStickDesc            = "Adult Link can wield a deku stick. In game Adult\n"
-                                        "Link will look like he's holding a Hylian Shield,\n"
-                                        "but rest assured it is a deku stick.";            //
+string_view adultStickDesc            = "Adult Link can wield a Deku Stick.\n"             //
+                                        "It will look like the N64 Deku Stick, but with a\n"
+                                        "simpler texture.";                                //
                                                                                            //
 /*------------------------------                                                           //
 |    ENABLE ADULT BOOMERANG    |                                                           //
@@ -993,6 +993,7 @@ string_view adultBoomerangDesc        = "Adult Link can throw the boomerang.";  
 |     ENABLE CHILD HAMMER      |                                                           //
 ------------------------------*/                                                           //
 string_view childHammerDesc           = "Child Link can swing the Megaton Hammer.";        //
+                                                                                           //
 /*------------------------------                                                           //
 |    ENABLE ADULT SLINGSHOT    |                                                           //
 ------------------------------*/                                                           //
@@ -1009,9 +1010,7 @@ string_view childBowDesc              = "Child Link can use the Bow. It will loo
 |    ENABLE CHILD HOOKSHOT     |                                                           //
 ------------------------------*/                                                           //
 string_view childHookshotDesc         = "Child Link can use the Hookshot/Longshot.\n"      //
-                                        "It will be difficult to aim, the red dot and\n"   //
-                                        "laser won't appear and the hook will look like\n" //
-                                        "a small bomb.";                                   //
+                                        "The hook will look like a small bomb.";           //
 /*------------------------------                                                           //
 |   ENABLE CHILD IRON BOOTS    |                                                           //
 ------------------------------*/                                                           //
@@ -1020,8 +1019,7 @@ string_view childIronBootsDesc        = "Child Link can equip the Iron Boots."; 
 /*------------------------------                                                           //
 |   ENABLE CHILD HOVER BOOTS   |                                                           //
 ------------------------------*/                                                           //
-string_view childHoverBootsDesc       = "Child Link can equip the Hover Boots. The yellow\n"
-                                        "circle beneath Link's feet won't appear.";        //
+string_view childHoverBootsDesc       = "Child Link can equip the Hover Boots.";           //
                                                                                            //
 /*------------------------------                                                           //
 |     ENABLE ADULT MASKS       |                                                           //
@@ -1168,18 +1166,18 @@ string_view shuffleBGMDesc            = "Shuffle background music.\n"           
                                         "The group categories are Area Themes, Event Music,"
                                         "and Battle Themes.\n"                             //
                                         "\"Own\" is for Custom Music, limiting the original\n"
-                                        "music to only appear at it's original place.\n";  //
+                                        "music to only appear at its original place.\n";   //
 string_view shuffleMelodiesDesc       = "Shuffle played-once music.\n"                     //
                                         "Mixed allows any melody to appear anywhere.\n"    //
                                         "The group categories are Fanfares,\n"             //
                                         "and Ocarina Songs.\n"                             //
                                         "\"Own\" is for Custom Music, limiting the original\n"
-                                        "music to only appear at it's original place.\n";  //
+                                        "music to only appear at its original place.\n";   //
 string_view customMusicDesc           = "Add custom music to the pool. The sound archive\n"//
                                         "has to be placed in the Custom Music folder.";    //
 string_view customMusicOnlyDesc       = "Excludes the game's original music from the pool.\n"
                                         "If there's not enough custom music, the original\n"
-                                        "song with be used.";                              //
+                                        "song will be used.";                              //
 /*------------------------------                                                           //
 |         SHUFFLE SFX          |                                                           //
 ------------------------------*/                                                           //
@@ -1220,6 +1218,12 @@ string_view extraArrowEffectsDesc     = "Ice Arrows will act like blue fire, mel
                                         "ice and breaking mud walls in Dodongo's Cavern.\n\n"
                                         "Light Arrows will activate Sun Switches like in\n"//
                                         "Majora's Mask.";                                  //
+                                                                                           //
+/*------------------------------                                                           //
+|         HYPER BOSSES         |                                                           //
+------------------------------*/                                                           //
+string_view hyperBossesDesc           = "Powers up all the bosses, including Ganon,\n"     //
+                                        "allowing them to act twice as fast!";             //
                                                                                            //
                                                                                            //--------------//
 /*------------------------------                                                                           //

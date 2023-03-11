@@ -276,6 +276,10 @@ SECTIONS
 		*(.patch_PlayerEditAndRetrieveCMB)
 	}
 
+	.patch_AdultItemsCMABsAsChild 0x191BB0 : {
+		*(.patch_AdultItemsCMABsAsChild)
+	}
+
 	.patch_SetChildCustomTunic 0x191DB0 : {
 		*(.patch_SetChildCustomTunic)
 	}
@@ -684,10 +688,6 @@ SECTIONS
 		*(.patch_GetCustomMessageTextOne)
 	}
 
-	.patch_ChildHoverBoots 0x2D5DF8 : {
-		*(.patch_ChildHoverBoots)
-	}
-
 	.patch_CamRoll 0x2D88E4 : {
 	    *(.patch_CamRoll)
 	}
@@ -886,6 +886,10 @@ SECTIONS
 
 	.patch_IncomingGetItemID 0x3725AC : {
 		*(.patch_IncomingGetItemID)
+	}
+
+	.patch_Model_EnableMeshGroupByIndex 0x372670 : {
+		*(.patch_Model_EnableMeshGroupByIndex)
 	}
 
 	.patch_MaskSalesmanCheckNoMaskOne 0x372B64 : {
@@ -1384,6 +1388,10 @@ SECTIONS
 		*(.patch_ChildDontEquipSwordSlotByDefault)
 	}
 
+	.patch_HyperActors 0x461790 : {
+		*(.patch_HyperActors)
+	}
+
 	.patch_TitleCardUpdate 0x4618B8 : {
 		*(.patch_TitleCardUpdate)
 	}
@@ -1512,10 +1520,6 @@ SECTIONS
 		*(.patch_HookshotRotation)
 	}
 
-	.patch_HookshotDrawRedLaser 0x4C2620 : {
-		*(.patch_HookshotDrawRedLaser)
-	}
-
 	.patch_EditDrawGetItemAfterModelSpawn 0x4C61A4 : {
 		*(.patch_EditDrawGetItemAfterModelSpawn)
 	}
@@ -1532,6 +1536,10 @@ SECTIONS
 
 	.patch_DampeSetCollectibleFlag 0x4D9D50 : {
 		*(.patch_DampeSetCollectibleFlag)
+	}
+
+	.patch_PhantomGanonLightningID 0x523698 : {
+		*(.patch_PhantomGanonLightningID)
 	}
 
 	.patch_BombchuCheapestPriceOne 0x525348 : {

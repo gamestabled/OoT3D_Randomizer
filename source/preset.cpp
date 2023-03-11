@@ -497,6 +497,7 @@ PremadePreset presetFullChaos = { "Full Chaos",
                                       { &Settings::FireTrap, ON },
                                       { &Settings::AntiFairyTrap, ON },
                                       { &Settings::CurseTraps, ON },
+                                      { &Settings::HyperBosses, ON },
                                       // Item Pool Settings
                                       { &Settings::IceTrapValue, ICETRAPS_ONSLAUGHT },
                                       { &Settings::RemoveDoubleDefense, OFF },

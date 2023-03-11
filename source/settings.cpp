@@ -337,6 +337,7 @@ Option AntiFairyTrap       = Option::Bool(2, "Anti-Fairy Trap",     {"Off", "On"
 Option CurseTraps          = Option::Bool(2, "Curse Traps",         {"Off", "On"},                                                          {curseTrapsDesc},                                                                                                 OptionCategory::Setting);
 Option ScreenTraps         = Option::Bool(2, "Screen Traps",        {"Off", "On"},                                                          {screenTrapsDesc},                                                                                                OptionCategory::Setting);
 Option ExtraArrowEffects   = Option::Bool("Extra Arrow Effects",    {"Off", "On"},                                                          {extraArrowEffectsDesc});
+Option HyperBosses         = Option::Bool("Hyper Bosses",           {"Off", "On"},                                                          {hyperBossesDesc});
 bool HasNightStart         = false;
 std::vector<Option *> miscOptions = {
     &Racing,
@@ -362,6 +363,7 @@ std::vector<Option *> miscOptions = {
     &CurseTraps,
     &ScreenTraps,
     &ExtraArrowEffects,
+    &HyperBosses,
 };
 
 // Item Usability Settings
@@ -1444,6 +1446,7 @@ SettingsContext FillContext() {
     ctx.curseTraps          = (CurseTraps) ? 1 : 0;
     ctx.screenTraps         = (ScreenTraps) ? 1 : 0;
     ctx.extraArrowEffects   = (ExtraArrowEffects) ? 1 : 0;
+    ctx.hyperBosses         = (HyperBosses) ? 1 : 0;
 
     ctx.faroresWindAnywhere  = (FaroresWindAnywhere) ? 1 : 0;
     ctx.stickAsAdult         = (StickAsAdult) ? 1 : 0;
