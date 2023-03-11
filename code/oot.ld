@@ -816,10 +816,6 @@ SECTIONS
 		*(.patch_FWGetSet)
 	}
 
-	.patch_OverrideGraphicID_351B94 0x351B94 : {
-		*(.patch_OverrideGraphicID_351B94)
-	}
-
 	.patch_ApplyDamageMultiplier 0x352DC0 : {
 		*(.patch_ApplyDamageMultiplier)
 	}
