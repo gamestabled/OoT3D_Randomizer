@@ -996,6 +996,12 @@ void InitEntranceTrackingData(void) {
 void Entrance_UpdateMQFlag(void) {
     if (IsInGame()) {
         switch (gSettingsContext.mirrorWorld) {
+            case MIRRORWORLD_OFF:
+                gSaveContext.masterQuestFlag = 0;
+                return;
+            case MIRRORWORLD_ON:
+                gSaveContext.masterQuestFlag = 1;
+                return;
             case MIRRORWORLD_SCENESPECIFIC:
                 gSaveContext.masterQuestFlag = Hash(gGlobalContext->sceneNum) & 1;
                 return;
