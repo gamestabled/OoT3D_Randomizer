@@ -15,6 +15,7 @@
 
 #include "z3D/z3D.h"
 #include "3ds/extdata.h"
+#include "3ds/services/irrst.h"
 
 GlobalContext* gGlobalContext = NULL;
 static u8 rRandomizerInit     = 0;
@@ -29,6 +30,7 @@ void Randomizer_Init() {
     Entrance_Init();
     ItemOverride_Init();
     extDataInit();
+    irrstInit();
 }
 
 void before_GlobalContext_Update(GlobalContext* globalCtx) {
