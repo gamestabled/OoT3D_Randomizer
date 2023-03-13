@@ -2,8 +2,6 @@
 #include "common.h"
 #include "input.h"
 
-#define ControlStick_X *(float*)0x5655C0
-#define ControlStick_Y *(float*)0x5655C4
 s16 pitch = 0, yaw = 0;
 
 u8 Camera_FreeCamEnabled(Camera* camera) {
@@ -14,17 +12,16 @@ u8 Camera_FreeCamEnabled(Camera* camera) {
         pitch = camera->inputDir.y;
     }
 
-    if (rInputCtx.cur.r) {
+    if (rInputCtx.cStick.dx > 48 || rInputCtx.cStick.dx < -48 || rInputCtx.cStick.dy > 48 || rInputCtx.cStick.dy < -48) {
         freeCamEnabled = 1;
     }
 
-    if (rInputCtx.cur.l) {
+    // Titlescreen or no player or targeting or first person or cutscene or crawlspace or special camera state
+    if (!IsInGame() || !camera->player || camera->player->stateFlags1 & 0x20138010 || camera->player->stateFlags2 & 0x00040000 || camera->status != 7) {
         freeCamEnabled = 0;
     }
 
-    if (!IsInGame()) {
-        freeCamEnabled = 0;
-    }
+    // TODO: Prevent free cam in houses/market/probably others
 
     return freeCamEnabled;
 }
@@ -48,14 +45,15 @@ s16 Clamp(f32 val) {
 }
 
 void Camera_FreeCamUpdate(Vec3s* out, Camera* camera) {
+    // TODO: Handle HUD, distance to player, collision, roll traps, dizzy trap
     if (camera->player != (Player*)0x0) {
         camera->globalCtx->view.at = camera->globalCtx->view.eye = camera->at = camera->eye = camera->player->actor.world.pos;
         camera->globalCtx->view.at.y = camera->globalCtx->view.eye.y = camera->at.y = camera->eye.y +=
             ((camera->player->stateFlags1 & (1 << 23)) ? 32 : 0) + ((gSaveContext.linkAge) ? 44 : 68);
 
-        if (rInputCtx.cur.r) {
-            pitch -= ControlStick_X * 0x0010;
-            yaw    = Clamp(yaw + ControlStick_Y * 0x0010);
+        if (rInputCtx.cStick.dx > 48 || rInputCtx.cStick.dx < -48 || rInputCtx.cStick.dy > 48 || rInputCtx.cStick.dy < -48) {
+            pitch -= rInputCtx.cStick.dx * 0x0008;
+            yaw    = Clamp(yaw + rInputCtx.cStick.dy * 0x0008);
         }
 
         camera->globalCtx->view.eye.x = camera->eye.x -= 150 * fastSin(pitch)          * fastSin(yaw + 0x4000);
