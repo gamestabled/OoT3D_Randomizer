@@ -3,6 +3,8 @@
 #include "input.h"
 #include "icetrap.h"
 
+#define GyroDrawHUDIcon *(u8*)0x4FC648
+
 f32 sins(u16 angle) {
     if (angle <= 0x4000) {
         f32 theta = angle * 0.0000958737992429, theta2 = theta * theta, result = theta;
@@ -89,7 +91,10 @@ Vec3f lerpv(Vec3f a, Vec3f b, f32 t) {
 }
 
 void Camera_FreeCamUpdate(Vec3s* out, Camera* camera) {
-    // TODO: Handle HUD, collision
+    // TODO: Collision
+    Camera_CheckWater(camera);
+    Camera_UpdateInterface(0);
+    GyroDrawHUDIcon = 0;
     if (camera->player != (Player*)0x0) {
         Vec3f at, eye;
         at   = eye    = camera->player->actor.world.pos;
@@ -97,8 +102,8 @@ void Camera_FreeCamUpdate(Vec3s* out, Camera* camera) {
 
         s8 speed = (IceTrap_ActiveCurse == ICETRAP_CURSE_DIZZY) ? -8 : 8;
         if (rInputCtx.cStick.dx > 48 || rInputCtx.cStick.dx < -48 || rInputCtx.cStick.dy > 48 || rInputCtx.cStick.dy < -48) {
-            yaw  -= rInputCtx.cStick.dx * speed;
-            pitch = Clamp(pitch + rInputCtx.cStick.dy * speed);
+            yaw  -= rInputCtx.cStick.dx * speed * ((gSaveContext.masterQuestFlag) ? -1 : 1);
+            pitch = Clamp(pitch + rInputCtx.cStick.dy * speed * ((gSaveContext.cameraControlSetting) ? -1 : 1));
         }
 
         dist = lerpf(dist, (gSaveContext.linkAge) ? 150 : 200, 0.1);
@@ -111,7 +116,7 @@ void Camera_FreeCamUpdate(Vec3s* out, Camera* camera) {
         camera->globalCtx->view.eye = camera->eye = lerpv(camera->globalCtx->view.eye, eye, 0.3);
 
         f32 cR = coss(IceTrap_CamRoll(0)), sR = sins(IceTrap_CamRoll(0)), r = distXZ(camera->at, camera->eye);
-        camera->globalCtx->view.up.x = sR * (camera->at.z  - camera->eye.z) / r;
+        camera->globalCtx->view.up.x = sR * (camera->at.z - camera->eye.z) / r;
         camera->globalCtx->view.up.y = cR;
         camera->globalCtx->view.up.z = sR * (camera->eye.x - camera->at.x) / r;
 

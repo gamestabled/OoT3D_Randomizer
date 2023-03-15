@@ -486,7 +486,8 @@ typedef struct GlobalContext {
         /* 0x0198 */ f32 fovY;
         /* 0x019C */ f32 zNear;
         /* 0x01A0 */ f32 zFar;
-        /* 0x01A4 */ char unk_01A4[0x0014];
+        /* 0x01A4 */ f32 scale;
+        /* 0x01A8 */ char unk_01A8[0x0010];
         /* 0x01B8 */ Vec3f eye;
         /* 0x01C4 */ Vec3f at;
         /* 0x01D0 */ Vec3f up;
@@ -759,5 +760,11 @@ typedef void (*Model_EnableMeshGroupByIndex_proc)(SkeletonAnimationModel* skel, 
 
 typedef void (*Model_DisableMeshGroupByIndex_proc)(SkeletonAnimationModel* skel, u32 index);
 #define Model_DisableMeshGroupByIndex ((Model_DisableMeshGroupByIndex_proc)0x36932C)
+
+typedef s32 (*Camera_CheckWater_proc)(Camera* camera);
+#define Camera_CheckWater ((Camera_CheckWater_proc)0x2D06A0)
+
+typedef void (*Camera_UpdateInterface_proc)(u32 flags);
+#define Camera_UpdateInterface ((Camera_UpdateInterface_proc)0x330D84)
 
 #endif //_Z3D_H_
