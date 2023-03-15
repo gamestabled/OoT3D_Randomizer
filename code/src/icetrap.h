@@ -15,6 +15,7 @@ void IceTrap_Update(void);
 void IceTrap_InitTypes(void);
 u8 IceTrap_ActivateCurseTrap(u8 curseType);
 void IceTrap_DispelCurses(void);
+u16 IceTrap_CamRoll(u16 roll);
 
 typedef enum {
     ICETRAP_FIRE,

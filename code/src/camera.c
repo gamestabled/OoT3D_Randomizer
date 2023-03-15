@@ -1,15 +1,66 @@
 #include "z3D/z3D.h"
 #include "common.h"
 #include "input.h"
+#include "icetrap.h"
+
+f32 sins(u16 angle) {
+    if (angle <= 0x4000) {
+        f32 theta = angle * 0.0000958737992429, theta2 = theta * theta, result = theta;
+        theta *= theta2 * 0.166666666667;
+        result -= theta;
+        theta *= theta2 * 0.05;
+        result += theta;
+        theta *= theta2 * 0.0238095238095;
+        result -= theta;
+        return result;
+    } else if (angle <= 0x8000) {
+        return sins(0x8000 - angle);
+    }
+    return -sins(angle - 0x8000);
+}
+
+f32 coss(u16 angle) {
+    return sins(angle + 0x4000);
+}
+
+f32 sqrtf(f32 x) {
+    f32 n = (1 + x) / 2;
+
+    while (n * n < x * 0.999f || n * n > x * 1.001f) {
+        n = (n + x / n) / 2;
+    }
+
+    return n;
+}
+
+f32 distXYZ(Vec3f a, Vec3f b) {
+    f32 x = a.x - b.x, y = a.y - b.y, z = a.z - b.z;
+    return sqrtf(x * x + y * y + z * z);
+}
+
+f32 distXZ(Vec3f a, Vec3f b) {
+    f32 x = a.x - b.x, z = a.z - b.z;
+    return sqrtf(x * x + z * z);
+}
+
+s16 Clamp(f32 val) {
+    if (val >= 0x3000)
+        return 0x3000;
+    if (val <= -0x3000)
+        return -0x3000;
+    return (s16)val;
+}
 
 s16 pitch = 0, yaw = 0;
+f32 dist = 0;
 
 u8 Camera_FreeCamEnabled(Camera* camera) {
     static u8 freeCamEnabled = 0;
 
     if (!freeCamEnabled) {
-        yaw   = camera->inputDir.x;
-        pitch = camera->inputDir.y;
+        pitch = camera->inputDir.x;
+        yaw   = camera->inputDir.y;
+        dist  = distXYZ(camera->at, camera->eye);
     }
 
     if (rInputCtx.cStick.dx > 48 || rInputCtx.cStick.dx < -48 || rInputCtx.cStick.dy > 48 || rInputCtx.cStick.dy < -48) {
@@ -26,46 +77,46 @@ u8 Camera_FreeCamEnabled(Camera* camera) {
     return freeCamEnabled;
 }
 
-f32 fastSin(u16 angle) {
-    if (angle < 0x2000)
-        return angle * 0.0000863167f;
-    if (angle <= 0x4000)
-        return angle * 0.0000357536f + 0.414214f;
-    if (angle < 0x8000)
-        return fastSin(0x8000 - angle);
-    return -fastSin(angle - 0x8000);
+f32 lerpf(f32 a, f32 b, f32 t) {
+    return a + (b - a) * t;
 }
 
-s16 Clamp(f32 val) {
-    if (val >= 0x3000)
-        return 0x3000;
-    if (val <= -0x3000)
-        return -0x3000;
-    return (s16)val;
+Vec3f lerpv(Vec3f a, Vec3f b, f32 t) {
+    a.x += (b.x - a.x) * t;
+    a.y += (b.y - a.y) * t;
+    a.z += (b.z - a.z) * t;
+    return a;
 }
 
 void Camera_FreeCamUpdate(Vec3s* out, Camera* camera) {
-    // TODO: Handle HUD, distance to player, collision, roll traps, dizzy trap
+    // TODO: Handle HUD, collision
     if (camera->player != (Player*)0x0) {
-        camera->globalCtx->view.at = camera->globalCtx->view.eye = camera->at = camera->eye = camera->player->actor.world.pos;
-        camera->globalCtx->view.at.y = camera->globalCtx->view.eye.y = camera->at.y = camera->eye.y +=
-            ((camera->player->stateFlags1 & (1 << 23)) ? 32 : 0) + ((gSaveContext.linkAge) ? 44 : 68);
+        Vec3f at, eye;
+        at   = eye    = camera->player->actor.world.pos;
+        at.y = eye.y += (gSaveContext.linkAge) ? 38 : 56;
 
+        s8 speed = (IceTrap_ActiveCurse == ICETRAP_CURSE_DIZZY) ? -8 : 8;
         if (rInputCtx.cStick.dx > 48 || rInputCtx.cStick.dx < -48 || rInputCtx.cStick.dy > 48 || rInputCtx.cStick.dy < -48) {
-            pitch -= rInputCtx.cStick.dx * 0x0008;
-            yaw    = Clamp(yaw + rInputCtx.cStick.dy * 0x0008);
+            yaw  -= rInputCtx.cStick.dx * speed;
+            pitch = Clamp(pitch + rInputCtx.cStick.dy * speed);
         }
 
-        camera->globalCtx->view.eye.x = camera->eye.x -= 150 * fastSin(pitch)          * fastSin(yaw + 0x4000);
-        camera->globalCtx->view.eye.y = camera->eye.y -= 150                           * fastSin(yaw);
-        camera->globalCtx->view.eye.z = camera->eye.z -= 150 * fastSin(pitch + 0x4000) * fastSin(yaw + 0x4000);
+        dist = lerpf(dist, (gSaveContext.linkAge) ? 150 : 200, 0.1);
 
-        camera->globalCtx->view.up.x = 0;
-        camera->globalCtx->view.up.y = 1;
-        camera->globalCtx->view.up.z = 0;
+        eye.x -= dist * coss(pitch) * sins(yaw);
+        eye.y -= dist * sins(pitch);
+        eye.z -= dist * coss(pitch) * coss(yaw);
 
-        out->x = camera->inputDir.x = yaw;
-        out->y = camera->inputDir.y = pitch;
+        camera->globalCtx->view.at  = camera->at  = lerpv(camera->globalCtx->view.at,  at,  0.3);
+        camera->globalCtx->view.eye = camera->eye = lerpv(camera->globalCtx->view.eye, eye, 0.3);
+
+        f32 cR = coss(IceTrap_CamRoll(0)), sR = sins(IceTrap_CamRoll(0)), r = distXZ(camera->at, camera->eye);
+        camera->globalCtx->view.up.x = sR * (camera->at.z  - camera->eye.z) / r;
+        camera->globalCtx->view.up.y = cR;
+        camera->globalCtx->view.up.z = sR * (camera->eye.x - camera->at.x) / r;
+
+        out->x = camera->inputDir.x = pitch;
+        out->y = camera->inputDir.y = yaw;
         out->z = camera->inputDir.z = 0;
     }
     return;
