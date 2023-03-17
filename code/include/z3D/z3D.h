@@ -419,6 +419,19 @@ typedef struct {
 } CollisionCheckContext; // size = 0x29C
 // _Static_assert(sizeof(CollisionCheckContext) == 0x29C, "CollisionCheckContext size");
 
+typedef CollisionPoly CollisionPoly;
+typedef struct {
+    /* 0x00 */ Vec3f pos;
+    /* 0x0C */ Vec3f norm;
+    /* 0x18 */ CollisionPoly* poly;
+    struct {
+        /* 0x1C */ f32 radius;
+        /* 0x20 */ s16 pitch;
+        /* 0x22 */ s16 yaw;
+    } geoNorm;
+    /* 0x24 */ s32 bgId;
+} CamColChk; // size = 0x28
+
 #define OBJECT_EXCHANGE_BANK_MAX 19
 #define OBJECT_ID_MAX 417
 
@@ -766,5 +779,8 @@ typedef s32 (*Camera_CheckWater_proc)(Camera* camera);
 
 typedef void (*Camera_UpdateInterface_proc)(u32 flags);
 #define Camera_UpdateInterface ((Camera_UpdateInterface_proc)0x330D84)
+
+typedef f32 (*Camera_BGCheckInfo_proc)(Camera* camera, Vec3f* from, CamColChk* to);
+#define Camera_BGCheckInfo ((Camera_BGCheckInfo_proc)0x3553FC)
 
 #endif //_Z3D_H_

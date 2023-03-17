@@ -59,22 +59,22 @@ f32 dist = 0;
 u8 Camera_FreeCamEnabled(Camera* camera) {
     static u8 freeCamEnabled = 0;
 
+    dist  = distXYZ(camera->at, camera->eye);
     if (!freeCamEnabled) {
-        pitch = camera->inputDir.x;
-        yaw   = camera->inputDir.y;
-        dist  = distXYZ(camera->at, camera->eye);
+        pitch = camera->camDir.x;
+        yaw   = camera->camDir.y;
     }
 
-    if (rInputCtx.cStick.dx > 48 || rInputCtx.cStick.dx < -48 || rInputCtx.cStick.dy > 48 || rInputCtx.cStick.dy < -48) {
+    if (rInputCtx.cStick.dx * rInputCtx.cStick.dx + rInputCtx.cStick.dy * rInputCtx.cStick.dy > 400) {
         freeCamEnabled = 1;
     }
 
-    // Titlescreen or no player or targeting or first person or cutscene or crawlspace or special camera state
-    if (!IsInGame() || !camera->player || camera->player->stateFlags1 & 0x20138010 || camera->player->stateFlags2 & 0x00040000 || camera->status != 7) {
+    // Titlescreen or no player or targeting or first person or cutscene or horse or crawlspace or special camera state/setting
+    // TODO: SpT alcoves should disable free cam, probably same in GaC
+    if (!IsInGame() || !camera->player || camera->player->stateFlags1 & 0x20938010 || camera->player->stateFlags2 & 0x00040000 || camera->status != 7 ||
+        camera->setting == 0x15 || camera->setting == 0x19 || camera->setting == 0x1A || camera->setting == 0x40 || camera->setting == 0x46) {
         freeCamEnabled = 0;
     }
-
-    // TODO: Prevent free cam in houses/market/probably others
 
     return freeCamEnabled;
 }
@@ -91,38 +91,39 @@ Vec3f lerpv(Vec3f a, Vec3f b, f32 t) {
 }
 
 void Camera_FreeCamUpdate(Vec3s* out, Camera* camera) {
-    // TODO: Collision
     Camera_CheckWater(camera);
     Camera_UpdateInterface(0);
     GyroDrawHUDIcon = 0;
     if (camera->player != (Player*)0x0) {
-        Vec3f at, eye;
-        at   = eye    = camera->player->actor.world.pos;
-        at.y = eye.y += (gSaveContext.linkAge) ? 38 : 56;
+        Vec3f at;
+        CamColChk eye;
+
+        at   = eye.pos    = camera->player->actor.world.pos;
+        at.y = eye.pos.y += ((gSaveContext.linkAge) ? 38 : 56) * ((camera->player->stateFlags1 & 0x00002000) ? 0.5 : 1);
 
         s8 speed = (IceTrap_ActiveCurse == ICETRAP_CURSE_DIZZY) ? -8 : 8;
-        if (rInputCtx.cStick.dx > 48 || rInputCtx.cStick.dx < -48 || rInputCtx.cStick.dy > 48 || rInputCtx.cStick.dy < -48) {
+        if (rInputCtx.cStick.dx * rInputCtx.cStick.dx + rInputCtx.cStick.dy * rInputCtx.cStick.dy > 400) {
             yaw  -= rInputCtx.cStick.dx * speed * ((gSaveContext.masterQuestFlag) ? -1 : 1);
             pitch = Clamp(pitch + rInputCtx.cStick.dy * speed * ((gSaveContext.cameraControlSetting) ? -1 : 1));
         }
 
-        dist = lerpf(dist, (gSaveContext.linkAge) ? 150 : 200, 0.1);
+        dist = lerpf(dist, ((gSaveContext.linkAge) ? 150 : 200) - 50 * sins(pitch), 0.5);
+        eye.pos.x -= dist * coss(pitch) * sins(yaw);
+        eye.pos.y -= dist * sins(pitch);
+        eye.pos.z -= dist * coss(pitch) * coss(yaw);
+        Camera_BGCheckInfo(camera, &at, &eye);
 
-        eye.x -= dist * coss(pitch) * sins(yaw);
-        eye.y -= dist * sins(pitch);
-        eye.z -= dist * coss(pitch) * coss(yaw);
-
-        camera->globalCtx->view.at  = camera->at  = lerpv(camera->globalCtx->view.at,  at,  0.3);
-        camera->globalCtx->view.eye = camera->eye = lerpv(camera->globalCtx->view.eye, eye, 0.3);
+        camera->globalCtx->view.at  = camera->at  = lerpv(camera->globalCtx->view.at,  at,      0.3);
+        camera->globalCtx->view.eye = camera->eye = lerpv(camera->globalCtx->view.eye, eye.pos, 0.3);
 
         f32 cR = coss(IceTrap_CamRoll(0)), sR = sins(IceTrap_CamRoll(0)), r = distXZ(camera->at, camera->eye);
         camera->globalCtx->view.up.x = sR * (camera->at.z - camera->eye.z) / r;
         camera->globalCtx->view.up.y = cR;
         camera->globalCtx->view.up.z = sR * (camera->eye.x - camera->at.x) / r;
 
-        out->x = camera->inputDir.x = pitch;
-        out->y = camera->inputDir.y = yaw;
-        out->z = camera->inputDir.z = 0;
+        out->x = camera->inputDir.x = camera->camDir = pitch;
+        out->y = camera->inputDir.y = camera->camDir = yaw;
+        out->z = camera->inputDir.z = camera->camDir = 0;
     }
     return;
 }
