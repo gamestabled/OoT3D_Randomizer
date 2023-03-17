@@ -279,7 +279,7 @@ typedef struct {
     /* 0x15C */ f32 waterYPos;
     /* 0x160 */ s32 waterPrevCamIdx;
     /* 0x164 */ s32 waterPrevCamSetting;
-    /* 0x168 */ s32 waterSkyboxIndex;
+    /* 0x168 */ s32 waterQuakeIdx;
     /* 0x16C */ char unk_16C[0xC];
     /* 0x178 */ s16 uid;
     /* 0x17A */ char unk_17A[0x2];
@@ -310,7 +310,27 @@ typedef struct {
 } Camera; // size = 0x1BC
 
 typedef struct {
-    /* 0x00 */ void* colHeader; // TODO: CollisionHeader* struct
+    /* 0x0 */ u16 setting;
+    /* 0x2 */ s16 count;
+    /* 0x4 */ Vec3s* camFuncData;
+} CamData; // size = 0x8
+
+typedef struct {
+    /* 0x00 */ char unk_00[0x04];
+    /* 0x04 */ Vec3s minBounds;
+    /* 0x0A */ Vec3s maxBounds;
+    /* 0x10 */ u16 numVertices;
+    /* 0x12 */ u16 numPolygons;
+    /* 0x14 */ u16 numWaterboxes;
+    /* 0x18 */ Vec3s* vtxList;
+    /* 0x1C */ CollisionPoly* polyList;
+    /* 0x20 */ void* surfaceTypeList;
+    /* 0x24 */ CamData* camDataList;
+    /* 0x28 */ void* waterboxes;
+} CollisionHeader; // size = 0x2C
+
+typedef struct {
+    /* 0x00 */ CollisionHeader* colHeader; // TODO: CollisionHeader* struct
     /* 0x04 */ char unk_04[0x4C];
 } StaticCollisionContext; // size = 0x50
 
@@ -419,7 +439,6 @@ typedef struct {
 } CollisionCheckContext; // size = 0x29C
 // _Static_assert(sizeof(CollisionCheckContext) == 0x29C, "CollisionCheckContext size");
 
-typedef CollisionPoly CollisionPoly;
 typedef struct {
     /* 0x00 */ Vec3f pos;
     /* 0x0C */ Vec3f norm;
@@ -782,5 +801,13 @@ typedef void (*Camera_UpdateInterface_proc)(u32 flags);
 
 typedef f32 (*Camera_BGCheckInfo_proc)(Camera* camera, Vec3f* from, CamColChk* to);
 #define Camera_BGCheckInfo ((Camera_BGCheckInfo_proc)0x3553FC)
+
+typedef s16 (*Camera_GetCamDataId_proc)(CollisionContext* colCtx, CollisionPoly* poly, s32 floorBgId);
+#ifdef Version_EUR
+    #define Camera_GetCamDataId_addr 0x47BFD8
+#else
+    #define Camera_GetCamDataId_addr 0x47BFF8
+#endif
+#define Camera_GetCamDataId ((Camera_GetCamDataId_proc)Camera_GetCamDataId_addr)
 
 #endif //_Z3D_H_
