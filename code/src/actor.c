@@ -247,7 +247,7 @@ void Actor_Init() {
     strncpy(gObjectTable[OBJECT_CUSTOM_SMALL_KEY_GTG].filename, gObjectTable[OBJECT_GI_KEY].filename, 0x40);
     strncpy(gObjectTable[OBJECT_CUSTOM_SMALL_KEY_GANON].filename, gObjectTable[OBJECT_GI_KEY].filename, 0x40);
 
-    // Define object 128 to be by default the same as object
+    // Define object 128 to be by default the same as object 185
     strncpy(gObjectTable[OBJECT_CUSTOM_BOSS_KEYS].filename, gObjectTable[OBJECT_GI_BOSSKEY].filename, 0x40);
 
     // Define draw item 3 (corresponding to gid 4) to be double defense custom model
