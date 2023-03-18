@@ -2,6 +2,7 @@
 #include "common.h"
 #include "input.h"
 #include "icetrap.h"
+#include "savefile.h"
 
 #define GyroDrawHUDIcon *(u8*)0x4FC648
 s16 pitch = 0, yaw = 0;
@@ -71,7 +72,7 @@ u8 Camera_FreeCamEnabled(Camera* camera) {
     static u8 freeCamEnabled = 0;
 
     // Keep track of these to smoothly switch to free cam
-    dist  = distXYZ(camera->at, camera->eye);
+    dist = distXYZ(camera->at, camera->eye);
     if (!freeCamEnabled) {
         pitch = camera->camDir.x;
         yaw   = camera->camDir.y;
@@ -108,9 +109,9 @@ void Camera_FreeCamUpdate(Vec3s* out, Camera* camera) {
         // Invert controls for dizzy trap
         s8 speed = (IceTrap_ActiveCurse == ICETRAP_CURSE_DIZZY) ? -8 : 8;
         if (rInputCtx.cStick.dx * rInputCtx.cStick.dx + rInputCtx.cStick.dy * rInputCtx.cStick.dy > 900) {
-            // Invert X input in mirror world, invert Y input if base game camera control is set to inverted Y
-            yaw  -= rInputCtx.cStick.dx * speed * ((gSaveContext.masterQuestFlag) ? -1 : 1);
-            pitch = Clamp(pitch + rInputCtx.cStick.dy * speed * ((gSaveContext.cameraControlSetting) ? -1 : 1));
+            // Invert X input in mirror world and both axes depending on settings
+            yaw  -= rInputCtx.cStick.dx * speed * ((gSaveContext.masterQuestFlag ^ (gExtSaveData.option_FreeCamControl >> 1)) ? -1 : 1);
+            pitch = Clamp(pitch + rInputCtx.cStick.dy * speed * ((gExtSaveData.option_FreeCamControl & 1) ? -1 : 1));
         }
 
         // Set intended camera position

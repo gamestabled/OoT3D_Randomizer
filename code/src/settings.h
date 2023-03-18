@@ -592,6 +592,7 @@ typedef struct {
     u8 playSFX;
     u8 silenceNavi;
     u8 ignoreMaskReaction;
+    u8 freeCamControl;
 
     u8 customTunicColors;
     u8 customNaviColors;

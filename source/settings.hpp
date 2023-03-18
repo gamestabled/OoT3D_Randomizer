@@ -709,6 +709,7 @@ extern Option TogglePlayMusic;
 extern Option TogglePlaySFX;
 extern Option SilenceNavi;
 extern Option IgnoreMaskReaction;
+extern Option FreeCamControl;
 
 // Cosmetic Settings
 extern Option CustomTunicColors;

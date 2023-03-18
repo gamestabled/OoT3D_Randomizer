@@ -330,7 +330,7 @@ typedef struct {
 } CollisionHeader; // size = 0x2C
 
 typedef struct {
-    /* 0x00 */ CollisionHeader* colHeader; // TODO: CollisionHeader* struct
+    /* 0x00 */ CollisionHeader* colHeader;
     /* 0x04 */ char unk_04[0x4C];
 } StaticCollisionContext; // size = 0x50
 
@@ -802,11 +802,11 @@ typedef void (*Camera_UpdateInterface_proc)(u32 flags);
 typedef f32 (*Camera_BGCheckInfo_proc)(Camera* camera, Vec3f* from, CamColChk* to);
 #define Camera_BGCheckInfo ((Camera_BGCheckInfo_proc)0x3553FC)
 
-typedef s16 (*Camera_GetCamDataId_proc)(CollisionContext* colCtx, CollisionPoly* poly, s32 floorBgId);
+typedef s16 (*Camera_GetCamDataId_proc)(CollisionContext* colCtx, CollisionPoly* poly, s32 bgId);
 #ifdef Version_EUR
-    #define Camera_GetCamDataId_addr 0x47BFD8
-#else
     #define Camera_GetCamDataId_addr 0x47BFF8
+#else
+    #define Camera_GetCamDataId_addr 0x47BFD8
 #endif
 #define Camera_GetCamDataId ((Camera_GetCamDataId_proc)Camera_GetCamDataId_addr)
 
