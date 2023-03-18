@@ -249,13 +249,13 @@ typedef struct {
 typedef struct GraphicsContext GraphicsContext; // TODO
 typedef struct GlobalContext GlobalContext;
 typedef struct {
-    /* 0x000 */ char unk_000[0x80];
+    /* 0x000 */ char unk_000[0x080];
     /* 0x080 */ Vec3f at;
     /* 0x08C */ Vec3f eye;
     /* 0x098 */ Vec3f up;
     /* 0x0A4 */ Vec3f eyeNext;
     /* 0x0B0 */ Vec3f skyboxOffset;
-    /* 0x0BC */ char unk_0BC[0x18];
+    /* 0x0BC */ char unk_0BC[0x018];
     /* 0x0D4 */ GlobalContext* globalCtx;
     /* 0x0D8 */ Player* player;
     /* 0x0DC */ PosRot playerPosRot;
@@ -280,9 +280,9 @@ typedef struct {
     /* 0x160 */ s32 waterPrevCamIdx;
     /* 0x164 */ s32 waterPrevCamSetting;
     /* 0x168 */ s32 waterQuakeIdx;
-    /* 0x16C */ char unk_16C[0xC];
+    /* 0x16C */ char unk_16C[0x00C];
     /* 0x178 */ s16 uid;
-    /* 0x17A */ char unk_17A[0x2];
+    /* 0x17A */ char unk_17A[0x002];
     /* 0x17C */ Vec3s inputDir;
     /* 0x182 */ Vec3s camDir;
     /* 0x188 */ s16 status;
@@ -306,7 +306,7 @@ typedef struct {
     /* 0x1AC */ s16 thisIdx;
     /* 0x1AE */ s16 prevCamDataIdx;
     /* 0x1B0 */ s16 csId;
-    /* 0x1B2 */ char unk_1B2[0xA];
+    /* 0x1B2 */ char unk_1B2[0x00A];
 } Camera; // size = 0x1BC
 
 typedef struct {
