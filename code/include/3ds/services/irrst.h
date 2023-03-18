@@ -8,13 +8,12 @@
 
 #include "3ds/types.h"
 
-//See also: http://3dbrew.org/wiki/IR_Services http://3dbrew.org/wiki/IRRST_Shared_Memory
+// See also: http://3dbrew.org/wiki/IR_Services http://3dbrew.org/wiki/IRRST_Shared_Memory
 
 /// Circle Pad position.
-typedef struct
-{
-	s16 dx; ///< Pad X
-	s16 dy; ///< Pad Y
+typedef struct {
+    s16 dx; ///< Pad X
+    s16 dy; ///< Pad Y
 } circlePosition;
 
 /// IRRST's shared memory handle.

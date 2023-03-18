@@ -74,7 +74,8 @@ void InitOptions(void) {
     strcpy(options[opNum].alternatives[altNum++], "Invert Y-Axis");
     strcpy(options[opNum].alternatives[altNum++], "Invert X-Axis");
     strcpy(options[opNum].alternatives[altNum++], "Invert Both");
-    strcpy(options[opNum].description, "Change the input directions of the free camera.\n\nThis feature is not available on old 3DS systems.");
+    strcpy(options[opNum].description,
+           "Change the input directions of the free camera.\n\nThis feature is not available on old 3DS systems.");
     options[opNum++].optionPointer = &gExtSaveData.option_FreeCamControl;
 }
 

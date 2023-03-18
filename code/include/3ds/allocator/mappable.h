@@ -8,8 +8,8 @@
 
 #include <3ds/types.h>
 
-#define OS_MAP_AREA_BEGIN  0x10000000 ///< Start of the mappable area in the virtual address space
-#define OS_MAP_AREA_END    0x14000000 ///< End of the mappable area in the virtual address space
+#define OS_MAP_AREA_BEGIN 0x10000000 ///< Start of the mappable area in the virtual address space
+#define OS_MAP_AREA_END 0x14000000   ///< End of the mappable area in the virtual address space
 
 /**
  * @brief Initializes the mappable allocator.

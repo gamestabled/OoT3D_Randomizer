@@ -83,11 +83,12 @@ u8 Camera_FreeCamEnabled(Camera* camera) {
         freeCamEnabled = 1;
     }
 
-    // Titlescreen or no player or targeting or first person or cutscene or horse or crawlspace or special camera state/setting
-    // (MK balcony, chu bowling, static, rotating, hedge maze, GF cells, shops, back alley)
-    if (!IsInGame() || !camera->player || camera->player->stateFlags1 & 0x20938210 || camera->player->stateFlags2 & 0x00040000 || camera->status != 7 ||
-        camera->setting == 0x14 || camera->setting == 0x15 || camera->setting == 0x19 || camera->setting == 0x1A ||
-        camera->setting == 0x1B || camera->setting == 0x23 || camera->setting == 0x40 || camera->setting == 0x46) {
+    // Titlescreen or no player or targeting or first person or cutscene or horse or crawlspace or special camera
+    // state/setting (MK balcony, chu bowling, static, rotating, hedge maze, GF cells, shops, back alley)
+    if (!IsInGame() || !camera->player || camera->player->stateFlags1 & 0x20938210 ||
+        camera->player->stateFlags2 & 0x00040000 || camera->status != 7 || camera->setting == 0x14 ||
+        camera->setting == 0x15 || camera->setting == 0x19 || camera->setting == 0x1A || camera->setting == 0x1B ||
+        camera->setting == 0x23 || camera->setting == 0x40 || camera->setting == 0x46) {
         freeCamEnabled = 0;
     }
 
@@ -103,14 +104,15 @@ void Camera_FreeCamUpdate(Vec3s* out, Camera* camera) {
         CamColChk eye;
 
         // Aim camera at Link's head. Aim lower when hanging from a ledge as position and model become disjointed
-        at   = eye.pos    = camera->player->actor.world.pos;
+        at = eye.pos = camera->player->actor.world.pos;
         at.y = eye.pos.y += ((gSaveContext.linkAge) ? 38 : 56) * ((camera->player->stateFlags1 & 0x00002000) ? 0.5 : 1);
 
         // Invert controls for dizzy trap
         s8 speed = (IceTrap_ActiveCurse == ICETRAP_CURSE_DIZZY) ? -8 : 8;
         if (rInputCtx.cStick.dx * rInputCtx.cStick.dx + rInputCtx.cStick.dy * rInputCtx.cStick.dy > 900) {
             // Invert X input in mirror world and both axes depending on settings
-            yaw  -= rInputCtx.cStick.dx * speed * ((gSaveContext.masterQuestFlag ^ (gExtSaveData.option_FreeCamControl >> 1)) ? -1 : 1);
+            yaw -= rInputCtx.cStick.dx * speed *
+                   ((gSaveContext.masterQuestFlag ^ (gExtSaveData.option_FreeCamControl >> 1)) ? -1 : 1);
             pitch = Clamp(pitch + rInputCtx.cStick.dy * speed * ((gExtSaveData.option_FreeCamControl & 1) ? -1 : 1));
         }
 
@@ -123,7 +125,7 @@ void Camera_FreeCamUpdate(Vec3s* out, Camera* camera) {
         Camera_BGCheckInfo(camera, &at, &eye);
 
         // Move actual camera positions towards intended positions
-        camera->globalCtx->view.at  = camera->at                    = lerpv(camera->globalCtx->view.at,  at,      0.3);
+        camera->globalCtx->view.at = camera->at = lerpv(camera->globalCtx->view.at, at, 0.3);
         camera->globalCtx->view.eye = camera->eye = camera->eyeNext = lerpv(camera->globalCtx->view.eye, eye.pos, 0.3);
 
         // Set the up vector for roll traps
@@ -137,8 +139,12 @@ void Camera_FreeCamUpdate(Vec3s* out, Camera* camera) {
         out->y = camera->inputDir.y = camera->camDir.y = yaw;
         out->z = camera->inputDir.z = camera->camDir.z = 0;
 
-        // Pretty much entirely for the alcoves in SpT, causes unmapped reads if jumping into them so wait until player is on ground
-        s16 newSetting = camera->globalCtx->colCtx.stat.colHeader->camDataList[Camera_GetCamDataId(&camera->globalCtx->colCtx, camera->player->actor.floorPoly, 0x32)].setting;
+        // Pretty much entirely for the alcoves in SpT, causes unmapped reads if jumping into them so wait until player
+        // is on ground
+        s16 newSetting =
+            camera->globalCtx->colCtx.stat.colHeader
+                ->camDataList[Camera_GetCamDataId(&camera->globalCtx->colCtx, camera->player->actor.floorPoly, 0x32)]
+                .setting;
         if (newSetting && !(camera->player->stateFlags1 & 0x00040000)) {
             camera->setting = newSetting;
         }
