@@ -80,7 +80,8 @@ void InitOptions(void) {
                "Change the input directions of the free camera.\n\nThis feature is not available on old 3DS systems.");
     } else {
         strcpy(options[opNum].alternatives[altNum++], "Disabled");
-        strcpy(options[opNum].description, "Free camera is disabled, enable it in\n\"Misc Settings\".\nThis feature is not available on old 3DS systems.");
+        strcpy(options[opNum].description, "Free camera is disabled, enable it in\n\"Misc Settings\".\nThis feature is "
+                                           "not available on old 3DS systems.");
     }
     options[opNum++].optionPointer = &gExtSaveData.option_FreeCamControl;
 }

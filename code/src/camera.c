@@ -70,7 +70,7 @@ Vec3f lerpv(Vec3f a, Vec3f b, f32 t) {
 }
 
 // Original function got inlined so recreated with help from decomp
-#define CAM_DEG_TO_BINANG(degrees) (s16)(s32)((degrees) * 182.04167 + 0.5)
+#define CAM_DEG_TO_BINANG(degrees) (s16)(s32)((degrees)*182.04167 + 0.5)
 void Camera_UpdateDistortion(Camera* camera) {
     static u16 screenPlanePhase = 0;
     f32 screenPlanePhaseStep;
@@ -84,36 +84,36 @@ void Camera_UpdateDistortion(Camera* camera) {
         if (camera->distortionFlags & 4) {
             // DISTORTION_UNDERWATER_MEDIUM
             screenPlanePhaseStep = 170;
-            xScale = -0.01;
-            yScale = 0.01;
-            speed = 0.6;
-            scaleFactor = camera->waterDistortionTimer / 60.0;
-            speedFactor = 1;
+            xScale               = -0.01;
+            yScale               = 0.01;
+            speed                = 0.6;
+            scaleFactor          = camera->waterDistortionTimer / 60.0;
+            speedFactor          = 1;
         } else if (camera->distortionFlags & 8) {
             // DISTORTION_UNDERWATER_STRONG
             screenPlanePhaseStep = -90;
-            xScale = -0.22;
-            yScale = 0.12;
-            speed = 0.1;
-            scaleFactor = camera->waterDistortionTimer / 80.0;
-            speedFactor = 1;
+            xScale               = -0.22;
+            yScale               = 0.12;
+            speed                = 0.1;
+            scaleFactor          = camera->waterDistortionTimer / 80.0;
+            speedFactor          = 1;
         } else if (camera->distortionFlags & 2) {
             // DISTORTION_UNDERWATER_WEAK
             screenPlanePhaseStep = -18.5;
-            xScale = 0.09;
-            yScale = 0.09;
-            speed = 0.08;
-            scaleFactor = camera->waterYPos - camera->eye.y;
-            scaleFactor = ((scaleFactor > 150) ? 1 : scaleFactor / 150) * 0.45 + camera->speedRatio * 0.45;
-            speedFactor = scaleFactor;
+            xScale               = 0.09;
+            yScale               = 0.09;
+            speed                = 0.08;
+            scaleFactor          = camera->waterYPos - camera->eye.y;
+            scaleFactor          = ((scaleFactor > 150) ? 1 : scaleFactor / 150) * 0.45 + camera->speedRatio * 0.45;
+            speedFactor          = scaleFactor;
         } else if (camera->distortionFlags & 1) {
             // DISTORTION_HOT_ROOM
             screenPlanePhaseStep = 150;
-            xScale = -0.01;
-            yScale = 0.01;
-            speed = 0.6;
-            scaleFactor = 1;
-            speedFactor = 1;
+            xScale               = -0.01;
+            yScale               = 0.01;
+            speed                = 0.6;
+            scaleFactor          = 1;
+            speedFactor          = 1;
         } else {
             // DISTORTION_UNDERWATER_FISHING
             return;
@@ -124,13 +124,13 @@ void Camera_UpdateDistortion(Camera* camera) {
 
         camera->globalCtx->view.distortionScale.x = xScale * scaleFactor * sins(screenPlanePhase) + 1;
         camera->globalCtx->view.distortionScale.y = yScale * scaleFactor * coss(screenPlanePhase) + 1;
-        camera->globalCtx->view.distortionSpeed = speed * speedFactor;
+        camera->globalCtx->view.distortionSpeed   = speed * speedFactor;
 
         camera->stateFlags |= 0x0040;
     } else if (camera->stateFlags & 0x0040) {
         camera->globalCtx->view.distortionScale.x = 1;
         camera->globalCtx->view.distortionScale.y = 1;
-        camera->globalCtx->view.distortionSpeed = 1;
+        camera->globalCtx->view.distortionSpeed   = 1;
         camera->stateFlags &= ~0x0040;
     }
 }
