@@ -338,6 +338,7 @@ Option CurseTraps          = Option::Bool(2, "Curse Traps",         {"Off", "On"
 Option ScreenTraps         = Option::Bool(4, "Screen Traps",        {"Off", "On"},                                                          {screenTrapsDesc},                                                                                                OptionCategory::Setting);
 Option ExtraArrowEffects   = Option::Bool("Extra Arrow Effects",    {"Off", "On"},                                                          {extraArrowEffectsDesc});
 Option HyperBosses         = Option::Bool("Hyper Bosses",           {"Off", "On"},                                                          {hyperBossesDesc});
+Option FreeCamera          = Option::Bool("Free Camera",            {"Off", "On"},                                                          {freeCamDesc},                                                                                                    OptionCategory::Setting,    ON);
 bool HasNightStart         = false;
 std::vector<Option *> miscOptions = {
     &Racing,
@@ -364,6 +365,7 @@ std::vector<Option *> miscOptions = {
     &ScreenTraps,
     &ExtraArrowEffects,
     &HyperBosses,
+    &FreeCamera,
 };
 
 // Item Usability Settings
@@ -1449,6 +1451,7 @@ SettingsContext FillContext() {
     ctx.screenTraps         = (ScreenTraps) ? 1 : 0;
     ctx.extraArrowEffects   = (ExtraArrowEffects) ? 1 : 0;
     ctx.hyperBosses         = (HyperBosses) ? 1 : 0;
+    ctx.freeCamera          = (FreeCamera) ? 1 : 0;
 
     ctx.faroresWindAnywhere  = (FaroresWindAnywhere) ? 1 : 0;
     ctx.stickAsAdult         = (StickAsAdult) ? 1 : 0;
@@ -2206,6 +2209,13 @@ void ForceChange(u32 kDown, Option* currentSetting) {
     } else {
         ScreenTraps.Hide();
         ScreenTraps.SetSelectedIndex(0);
+    }
+
+    if (FreeCamera) {
+        FreeCamControl.Unhide();
+    } else {
+        FreeCamControl.Hide();
+        FreeCamControl.SetSelectedIndex(0);
     }
 
     // Manage toggle for item usability options

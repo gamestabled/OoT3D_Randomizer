@@ -382,6 +382,7 @@ extern string_view curseTrapsDesc;
 extern string_view screenTrapsDesc;
 extern string_view extraArrowEffectsDesc;
 extern string_view hyperBossesDesc;
+extern string_view freeCamDesc;
 
 extern string_view ToggleAllTricksDesc;
 

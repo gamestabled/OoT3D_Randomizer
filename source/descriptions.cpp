@@ -1225,6 +1225,13 @@ string_view extraArrowEffectsDesc     = "Ice Arrows will act like blue fire, mel
 string_view hyperBossesDesc           = "Powers up all the bosses, including Ganon,\n"     //
                                         "allowing them to act twice as fast!";             //
                                                                                            //
+/*------------------------------                                                           //
+|          FREE CAMERA         |                                                           //
+------------------------------*/                                                           //
+string_view freeCamDesc               = "Use the C-stick to control the camera on new 3DS\n"
+                                        "systems and Citra.\n\n"                           //
+                                        "Go to Personalization Settings > Ingame Defaults\n"
+                                        "for camera control options.";                     //
                                                                                            //--------------//
 /*------------------------------                                                                           //
 |  DETAILED LOGIC EXPLANATIONS |                                                                           //

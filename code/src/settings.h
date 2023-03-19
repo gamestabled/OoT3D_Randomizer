@@ -552,6 +552,7 @@ typedef struct {
     u8 screenTraps;
     u8 extraArrowEffects;
     u8 hyperBosses;
+    u8 freeCamera;
 
     u8 faroresWindAnywhere;
     u8 stickAsAdult;

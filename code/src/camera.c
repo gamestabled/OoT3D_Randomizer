@@ -3,6 +3,7 @@
 #include "input.h"
 #include "icetrap.h"
 #include "savefile.h"
+#include "settings.h"
 
 #define GyroDrawHUDIcon *(u8*)0x4FC648
 s16 pitch = 0, yaw = 0;
@@ -136,6 +137,10 @@ void Camera_UpdateDistortion(Camera* camera) {
 
 u8 Camera_FreeCamEnabled(Camera* camera) {
     static u8 freeCamEnabled = 0;
+
+    if (!gSettingsContext.freeCamera) {
+        return 0;
+    }
 
     // Keep track of these to smoothly switch to free cam
     dist = distXYZ(camera->at, camera->eye);

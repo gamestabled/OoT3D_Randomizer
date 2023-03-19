@@ -461,6 +461,7 @@ extern Option CurseTraps;
 extern Option ScreenTraps;
 extern Option ExtraArrowEffects;
 extern Option HyperBosses;
+extern Option FreeCamera;
 extern bool HasNightStart;
 
 extern Option FaroresWindAnywhere;
