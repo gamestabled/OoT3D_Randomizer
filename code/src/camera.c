@@ -68,6 +68,72 @@ Vec3f lerpv(Vec3f a, Vec3f b, f32 t) {
     return a;
 }
 
+// Original function got inlined so recreated with help from decomp
+#define CAM_DEG_TO_BINANG(degrees) (s16)(s32)((degrees) * 182.04167 + 0.5)
+void Camera_UpdateDistortion(Camera* camera) {
+    static u16 screenPlanePhase = 0;
+    f32 screenPlanePhaseStep;
+    f32 xScale;
+    f32 yScale;
+    f32 speed;
+    f32 speedFactor;
+    f32 scaleFactor;
+
+    if (camera->distortionFlags) {
+        if (camera->distortionFlags & 4) {
+            // DISTORTION_UNDERWATER_MEDIUM
+            screenPlanePhaseStep = 170;
+            xScale = -0.01;
+            yScale = 0.01;
+            speed = 0.6;
+            scaleFactor = camera->waterDistortionTimer / 60.0;
+            speedFactor = 1;
+        } else if (camera->distortionFlags & 8) {
+            // DISTORTION_UNDERWATER_STRONG
+            screenPlanePhaseStep = -90;
+            xScale = -0.22;
+            yScale = 0.12;
+            speed = 0.1;
+            scaleFactor = camera->waterDistortionTimer / 80.0;
+            speedFactor = 1;
+        } else if (camera->distortionFlags & 2) {
+            // DISTORTION_UNDERWATER_WEAK
+            screenPlanePhaseStep = -18.5;
+            xScale = 0.09;
+            yScale = 0.09;
+            speed = 0.08;
+            scaleFactor = camera->waterYPos - camera->eye.y;
+            scaleFactor = ((scaleFactor > 150) ? 1 : scaleFactor / 150) * 0.45 + camera->speedRatio * 0.45;
+            speedFactor = scaleFactor;
+        } else if (camera->distortionFlags & 1) {
+            // DISTORTION_HOT_ROOM
+            screenPlanePhaseStep = 150;
+            xScale = -0.01;
+            yScale = 0.01;
+            speed = 0.6;
+            scaleFactor = 1;
+            speedFactor = 1;
+        } else {
+            // DISTORTION_UNDERWATER_FISHING
+            return;
+        }
+
+        screenPlanePhase += CAM_DEG_TO_BINANG(screenPlanePhaseStep * 2 / 3.0);
+        speedFactor *= 2 / 3.0;
+
+        camera->globalCtx->view.distortionScale.x = xScale * scaleFactor * sins(screenPlanePhase) + 1;
+        camera->globalCtx->view.distortionScale.y = yScale * scaleFactor * coss(screenPlanePhase) + 1;
+        camera->globalCtx->view.distortionSpeed = speed * speedFactor;
+
+        camera->stateFlags |= 0x0040;
+    } else if (camera->stateFlags & 0x0040) {
+        camera->globalCtx->view.distortionScale.x = 1;
+        camera->globalCtx->view.distortionScale.y = 1;
+        camera->globalCtx->view.distortionSpeed = 1;
+        camera->stateFlags &= ~0x0040;
+    }
+}
+
 u8 Camera_FreeCamEnabled(Camera* camera) {
     static u8 freeCamEnabled = 0;
 
@@ -96,9 +162,10 @@ u8 Camera_FreeCamEnabled(Camera* camera) {
 }
 
 void Camera_FreeCamUpdate(Vec3s* out, Camera* camera) {
-    Camera_CheckWater(camera); // Changes skybox colour and audio when camera is underwater
-    Camera_UpdateInterface(0); // Remove the black bars at the top/bottom of the screen
-    GyroDrawHUDIcon = 0;       // Remove the icon in the top right indicating motion controls
+    Camera_CheckWater(camera);       // Changes skybox colour and audio when camera is underwater
+    Camera_UpdateDistortion(camera); // Handle heat/water screen distortions
+    Camera_UpdateInterface(0);       // Remove the black bars at the top/bottom of the screen
+    GyroDrawHUDIcon = 0;             // Remove the icon in the top right indicating motion controls
     if (camera->player != (Player*)0x0) {
         Vec3f at;
         CamColChk eye;

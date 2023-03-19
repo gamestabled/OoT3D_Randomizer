@@ -523,7 +523,12 @@ typedef struct GlobalContext {
         /* 0x01B8 */ Vec3f eye;
         /* 0x01C4 */ Vec3f at;
         /* 0x01D0 */ Vec3f up;
-        /* 0x01DC */ char unk_01DC[0x0188];
+        /* 0x01DC */ char unk_01DC[0x0150];
+        /* 0x032C */ Vec3f distortionOrientation;
+        /* 0x0338 */ Vec3f distortionScale;
+        /* 0x0344 */ char unk_0344[0x0018];
+        /* 0x035C */ f32 distortionSpeed;
+        /* 0x0360 */ char unk_0360[0x0004];
     } view;
     /* 0x0364 */ Camera mainCamera;
     /* 0x0520 */ Camera subCameras[3];
