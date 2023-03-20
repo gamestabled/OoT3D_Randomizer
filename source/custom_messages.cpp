@@ -1041,7 +1041,7 @@ Text AddColorsAndFormat(Text text, const std::vector<u8>& colors /*= {}*/) {
             atSymbol = textStr->find('@');
         }
         // insert newlines either manually or when encountering a '&'
-        constexpr size_t lineLength = 44;
+        constexpr size_t lineLength = 42;
         size_t lastNewline          = 0;
         while (lastNewline + lineLength < textStr->length()) {
             size_t carrot     = textStr->find('^', lastNewline);
