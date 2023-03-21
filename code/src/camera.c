@@ -226,11 +226,10 @@ void Camera_FreeCamUpdate(Vec3s* out, Camera* camera) {
         out->y = camera->inputDir.y = camera->camDir.y = yaw;
         out->z = camera->inputDir.z = camera->camDir.z = 0;
 
-        // Pretty much entirely for the alcoves in SpT, causes unmapped reads if jumping into them so wait until player
-        // is on ground
+        // Pretty much entirely to let the alcoves in SpT reclaim control of the camera
         camera->camDataIdx = Camera_GetCamDataId(&camera->globalCtx->colCtx, camera->player->actor.floorPoly, 0x32);
         s16 newSetting     = camera->globalCtx->colCtx.stat.colHeader->camDataList[camera->camDataIdx].setting;
-        if (newSetting && newSetting != camera->setting && !(camera->player->stateFlags1 & 0x00040000)) {
+        if (newSetting && newSetting != camera->setting) {
             camera->prevSetting = camera->setting;
             camera->setting     = newSetting;
         }
