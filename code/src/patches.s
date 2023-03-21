@@ -923,8 +923,20 @@ SwapFaroresWind_patch:
 BombchuShopAlwaysOpen_patch:
     nop
 
+.section .patch_KingDodongoID
+    .short 0x27
+
+.section .patch_KingDodongoFireBreathID
+    .short 0x30
+
 .section .patch_PhantomGanonLightningID
     .short 0x6D
+
+.section .patch_GohmaLarvaID
+    .short 0x2B
+
+.section .patch_VolvagiaRockID
+    .short 0xAD
 
 .section .patch_BombchuCheapestPriceOne
     .word 0x0063FFFF
@@ -2040,6 +2052,21 @@ InitSceneEntranceOverride_patch:
 .global CollisionATvsAC_patch
 CollisionATvsAC_patch:
     bl hook_CollisionATvsAC
+
+.section .patch_CollisionCheck_SetAC_Once
+.global CollisionCheck_SetAC_Once_patch
+CollisionCheck_SetAC_Once_patch:
+    bl hook_CollisionCheck_SetAll_Once
+
+.section .patch_CollisionCheck_SetAT_Once
+.global CollisionCheck_SetAT_Once_patch
+CollisionCheck_SetAT_Once_patch:
+    bl hook_CollisionCheck_SetAll_Once
+
+.section .patch_CollisionCheck_SetOC_Once
+.global CollisionCheck_SetOC_Once_patch
+CollisionCheck_SetOC_Once_patch:
+    bl hook_CollisionCheck_SetAll_Once
 
 .section .patch_GanonDrawMasterSword
 .global GanonDrawMasterSword_patch

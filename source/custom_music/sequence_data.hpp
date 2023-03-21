@@ -3,14 +3,15 @@
 #include <3ds.h>
 #include <vector>
 #include <string>
+#include <array>
 
 static const std::string CustomMusicRootPath = "/OoT3DR/Custom Music/";
 
 class SequenceData {
   public:
     SequenceData();
-    SequenceData(std::vector<u8>* rawBytesPtr_, u32 bankNum_, u16 chFlags_, u8 volume_);
-    SequenceData(std::string filePath_, u32 bankNum_, u16 chFlags_, u8 volume_);
+    SequenceData(std::vector<u8>* rawBytesPtr_, std::array<u32, 4> banks_, u16 chFlags_, u8 volume_);
+    SequenceData(std::string filePath_, std::array<u32, 4> banks_, u16 chFlags_, u8 volume_);
     ~SequenceData();
 
     /// Returns the raw bytes of the sequence.
@@ -20,7 +21,7 @@ class SequenceData {
     ///   Reads the file only the first time this is called.
     std::vector<u8> GetData(FS_Archive archive_);
     /// Returns the bank index.
-    u32 GetBank();
+    std::array<u32, 4> GetBanks();
     /// Returns the bits of the set flags.
     u16 GetChFlags();
     /// Returns the volume.
@@ -42,7 +43,7 @@ class SequenceData {
     /// PATH Type: The raw bytes of the external sequence
     std::vector<u8> rawBytes;
 
-    u32 bankNum;
+    std::array<u32, 4> banks;
     u16 chFlags;
     u8 volume;
 };

@@ -912,6 +912,18 @@ SECTIONS
 		*(.patch_SetSFX)
 	}
 
+	.patch_CollisionCheck_SetAC_Once 0x376174 : {
+		*(.patch_CollisionCheck_SetAC_Once)
+	}
+
+	.patch_CollisionCheck_SetAT_Once 0x3761FC : {
+		*(.patch_CollisionCheck_SetAT_Once)
+	}
+
+	.patch_CollisionCheck_SetOC_Once 0x3762B0 : {
+		*(.patch_CollisionCheck_SetOC_Once)
+	}
+
 	.patch_GKSetDurability 0x376BDC : {
 		*(.patch_GKSetDurability)
 	}
@@ -1542,8 +1554,24 @@ SECTIONS
 		*(.patch_DampeSetCollectibleFlag)
 	}
 
+	.patch_KingDodongoID 0x514594 : {
+		*(.patch_KingDodongoID)
+	}
+
+	.patch_KingDodongoFireBreathID 0x520D38 : {
+		*(.patch_KingDodongoFireBreathID)
+	}
+
 	.patch_PhantomGanonLightningID 0x523698 : {
 		*(.patch_PhantomGanonLightningID)
+	}
+
+	.patch_GohmaLarvaID 0x525F24 : {
+		*(.patch_GohmaLarvaID)
+	}
+
+	.patch_VolvagiaRockID 0x52FDB4 : {
+		*(.patch_VolvagiaRockID)
 	}
 
 	.patch_BombchuCheapestPriceOne 0x525348 : {

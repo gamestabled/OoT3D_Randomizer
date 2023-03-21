@@ -402,18 +402,18 @@ void AreaTable_Init_HyruleField() {
              },
              {
                  // Locations
-                 LocationAccess(SONG_FROM_MALON,
-                                { [] { return IsChild && ZeldasLetter && Ocarina && AtDay; },
-                                  /*Glitched*/
-                                  [] {
-                                      return (CanDoGlitch(GlitchType::OutdoorBombOI, GlitchDifficulty::INTERMEDIATE) ||
-                                              ((Bugs || Fish) && CanShield &&
-                                               (CanSurviveDamage || (Fairy && NumBottles >= 2)) &&
-                                               CanDoGlitch(GlitchType::QPA, GlitchDifficulty::ADVANCED)) ||
-                                              ((Bugs || Fish) && CanShield && HasBombchus &&
-                                               CanDoGlitch(GlitchType::ActionSwap, GlitchDifficulty::ADVANCED))) &&
-                                             IsChild && ZeldasLetter && AtDay;
-                                  } }),
+                 LocationAccess(
+                     SONG_FROM_MALON,
+                     { [] { return IsChild && WeirdEgg && ChildCanAccess(HYRULE_CASTLE_GROUNDS) && Ocarina && AtDay; },
+                       /*Glitched*/
+                       [] {
+                           return (CanDoGlitch(GlitchType::OutdoorBombOI, GlitchDifficulty::INTERMEDIATE) ||
+                                   ((Bugs || Fish) && CanShield && (CanSurviveDamage || (Fairy && NumBottles >= 2)) &&
+                                    CanDoGlitch(GlitchType::QPA, GlitchDifficulty::ADVANCED)) ||
+                                   ((Bugs || Fish) && CanShield && HasBombchus &&
+                                    CanDoGlitch(GlitchType::ActionSwap, GlitchDifficulty::ADVANCED))) &&
+                                  IsChild && WeirdEgg && ChildCanAccess(HYRULE_CASTLE_GROUNDS) && AtDay;
+                       } }),
                  LocationAccess(LLR_GS_TREE, { [] { return IsChild; } }),
                  LocationAccess(LLR_GS_RAIN_SHED, { [] { return IsChild && AtNight && CanGetNightTimeGS; } }),
                  LocationAccess(LLR_GS_HOUSE_WINDOW,
@@ -435,16 +435,17 @@ void AreaTable_Init_HyruleField() {
                  Entrance(LLR_GROTTO, { [] { return IsChild; } }),
              });
 
-    areaTable[LLR_TALONS_HOUSE] =
-        Area("LLR Talons House", "LLR Talons House", NONE, NO_DAY_NIGHT_CYCLE, {},
-             {
-                 // Locations
-                 LocationAccess(LLR_TALONS_CHICKENS, { [] { return IsChild && AtDay && ZeldasLetter; } }),
-             },
-             {
-                 // Exits
-                 Entrance(LON_LON_RANCH, { [] { return true; } }),
-             });
+    areaTable[LLR_TALONS_HOUSE] = Area(
+        "LLR Talons House", "LLR Talons House", NONE, NO_DAY_NIGHT_CYCLE, {},
+        {
+            // Locations
+            LocationAccess(LLR_TALONS_CHICKENS,
+                           { [] { return IsChild && AtDay && WeirdEgg && ChildCanAccess(HYRULE_CASTLE_GROUNDS); } }),
+        },
+        {
+            // Exits
+            Entrance(LON_LON_RANCH, { [] { return true; } }),
+        });
 
     areaTable[LLR_STABLES] =
         Area("LLR Stables", "LLR Stables", NONE, NO_DAY_NIGHT_CYCLE, {},
