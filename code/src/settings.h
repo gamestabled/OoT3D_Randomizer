@@ -549,6 +549,7 @@ typedef struct {
     u8 fireTrap;
     u8 antiFairyTrap;
     u8 curseTraps;
+    u8 screenTraps;
     u8 extraArrowEffects;
     u8 hyperBosses;
 

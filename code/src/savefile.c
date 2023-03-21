@@ -97,13 +97,6 @@ void SaveFile_Init(u32 fileBaseIndex) {
         gSaveContext.infTable[29]          = 0x00; // Unset swordless flag
     }
 
-    // set master quest flag for mirror world
-    if (gSettingsContext.mirrorWorld == ON) {
-        gSaveContext.masterQuestFlag = 1;
-    } else {
-        gSaveContext.masterQuestFlag = 0;
-    }
-
     if (gSettingsContext.startingTime == STARTINGTIME_NIGHT) {
         gSaveContext.dayTime = 0x1400; // Set night time
     }

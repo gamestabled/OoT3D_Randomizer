@@ -223,7 +223,7 @@ u8 Chest_OverrideIceSmoke(Actor* thisx) {
         }
         PLAYER->getItemId = 0;
         PLAYER->stateFlags1 &= ~0x20000C00;
-        PLAYER->actor.colChkInfo.damage = (gSettingsContext.mirrorWorld) ? 16 : 8;
+        PLAYER->actor.colChkInfo.damage = (gSaveContext.masterQuestFlag) ? 16 : 8;
         if (trapType == ICETRAP_KNOCKDOWN || trapType == ICETRAP_BOMB_KNOCKDOWN) { // For knockback
             PLAYER->stateFlags1 |= 0x4000;                                         // Ledge Cancel
         }

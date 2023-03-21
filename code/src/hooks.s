@@ -1865,6 +1865,20 @@ hook_BombchuShopInfinitePurchases:
     movne r3,#0x0 @ Skip setting itemGetInf flag
     b 0x188D40
 
+.global hook_CamRoll
+hook_CamRoll:
+    push {r0,lr}
+    mov r0,#0x0
+    strh r0,[r5,#0xA2]
+    pop {r0}
+    blx r1
+    push {r0}
+    ldrh r0,[r5,#0xA2]
+    bl IceTrap_CamRoll
+    strh r0,[r5,0xA2]
+    pop {r0,lr}
+    bx lr
+
 @ ----------------------------------
 @ ----------------------------------
 

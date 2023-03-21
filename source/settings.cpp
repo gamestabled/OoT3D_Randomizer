@@ -335,6 +335,7 @@ Option RandomTrapDmg       = Option::U8  ("Random Trap Damage",     {"Off", "Bas
 Option FireTrap            = Option::Bool(2, "Fire Trap",           {"Off", "On"},                                                          {fireTrapDesc},                                                                                                   OptionCategory::Setting,    ON);
 Option AntiFairyTrap       = Option::Bool(2, "Anti-Fairy Trap",     {"Off", "On"},                                                          {antiFairyTrapDesc},                                                                                              OptionCategory::Setting,    ON);
 Option CurseTraps          = Option::Bool(2, "Curse Traps",         {"Off", "On"},                                                          {curseTrapsDesc},                                                                                                 OptionCategory::Setting);
+Option ScreenTraps         = Option::Bool(4, "Screen Traps",        {"Off", "On"},                                                          {screenTrapsDesc},                                                                                                OptionCategory::Setting);
 Option ExtraArrowEffects   = Option::Bool("Extra Arrow Effects",    {"Off", "On"},                                                          {extraArrowEffectsDesc});
 Option HyperBosses         = Option::Bool("Hyper Bosses",           {"Off", "On"},                                                          {hyperBossesDesc});
 bool HasNightStart         = false;
@@ -360,6 +361,7 @@ std::vector<Option *> miscOptions = {
     &FireTrap,
     &AntiFairyTrap,
     &CurseTraps,
+    &ScreenTraps,
     &ExtraArrowEffects,
     &HyperBosses,
 };
@@ -1442,6 +1444,7 @@ SettingsContext FillContext() {
     ctx.fireTrap            = (FireTrap) ? 1 : 0;
     ctx.antiFairyTrap       = (AntiFairyTrap) ? 1 : 0;
     ctx.curseTraps          = (CurseTraps) ? 1 : 0;
+    ctx.screenTraps         = (ScreenTraps) ? 1 : 0;
     ctx.extraArrowEffects   = (ExtraArrowEffects) ? 1 : 0;
     ctx.hyperBosses         = (HyperBosses) ? 1 : 0;
 
@@ -2193,6 +2196,14 @@ void ForceChange(u32 kDown, Option* currentSetting) {
         FireTrap.Hide();
         AntiFairyTrap.Hide();
         CurseTraps.Hide();
+        CurseTraps.SetSelectedIndex(0);
+    }
+
+    if (CurseTraps) {
+        ScreenTraps.Unhide();
+    } else {
+        ScreenTraps.Hide();
+        ScreenTraps.SetSelectedIndex(0);
     }
 
     // Manage toggle for item usability options

@@ -688,6 +688,10 @@ SECTIONS
 		*(.patch_GetCustomMessageTextOne)
 	}
 
+	.patch_CamRoll 0x2D88E4 : {
+	    *(.patch_CamRoll)
+	}
+
 	.patch_InstantTextFirstLine 0x2E049C : {
 		*(.patch_InstantTextFirstLine)
 	}

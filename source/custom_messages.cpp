@@ -678,6 +678,40 @@ void CreateAlwaysIncludedMessages() {
                   UNSKIPPABLE() + INSTANT_TEXT_ON() + CENTER_TEXT() + "Du wurdest " + COLOR(QM_RED) + "verflucht" +
                       COLOR(QM_WHITE) + "!" + NEWLINE() + CENTER_TEXT() + "Die Umgebung ist " + COLOR(QM_RED) +
                       "unsichtbar" + COLOR(QM_WHITE) + "!" + INSTANT_TEXT_OFF() + CLOSE_AFTER(120) + MESSAGE_END());
+    CreateMessage(0x8FF4, 0, 2, 3,
+                  UNSKIPPABLE() + INSTANT_TEXT_ON() + CENTER_TEXT() + "You've been " + COLOR(QM_RED) + "cursed" +
+                      COLOR(QM_WHITE) + "!" + NEWLINE() + CENTER_TEXT() + "The world is " + COLOR(QM_RED) + "crooked" +
+                      COLOR(QM_WHITE) + "!" + INSTANT_TEXT_OFF() + CLOSE_AFTER(120) + MESSAGE_END(),
+                  UNSKIPPABLE() + INSTANT_TEXT_ON() + CENTER_TEXT() + "Un " + COLOR(QM_RED) + "sort" + COLOR(QM_WHITE) +
+                      " vous a été jeté!" + NEWLINE() + CENTER_TEXT() + "Le monde est " + COLOR(QM_RED) + "penché" +
+                      COLOR(QM_WHITE) + "!" + INSTANT_TEXT_OFF() + CLOSE_AFTER(120) + MESSAGE_END(),
+                  UNSKIPPABLE() + INSTANT_TEXT_ON() + CENTER_TEXT() + "¡Has sido " + COLOR(QM_RED) + "hechizado" +
+                      COLOR(QM_WHITE) + "!" + NEWLINE() + CENTER_TEXT() + "¡El mundo está " + COLOR(QM_RED) +
+                      "torcido" + COLOR(QM_WHITE) + "!" + INSTANT_TEXT_OFF() + CLOSE_AFTER(120) + MESSAGE_END(),
+                  UNSKIPPABLE() + INSTANT_TEXT_ON() + CENTER_TEXT() + "Sei caduto vittima di una " + COLOR(QM_RED) +
+                      "maledizione" + COLOR(QM_WHITE) + "!" + NEWLINE() + CENTER_TEXT() + "Il mondo si è " +
+                      COLOR(QM_RED) + "inclinato" + COLOR(QM_WHITE) + "!" + INSTANT_TEXT_OFF() + CLOSE_AFTER(120) +
+                      MESSAGE_END(),
+                  UNSKIPPABLE() + INSTANT_TEXT_ON() + CENTER_TEXT() + "Du wurdest " + COLOR(QM_RED) + "verflucht" +
+                      COLOR(QM_WHITE) + "!" + NEWLINE() + CENTER_TEXT() + "Die Welt wurde " + COLOR(QM_RED) +
+                      "gedreht" + COLOR(QM_WHITE) + "!" + INSTANT_TEXT_OFF() + CLOSE_AFTER(120) + MESSAGE_END());
+    CreateMessage(
+        0x8FF5, 0, 2, 3,
+        UNSKIPPABLE() + INSTANT_TEXT_ON() + CENTER_TEXT() + "You've been " + COLOR(QM_RED) + "cursed" +
+            COLOR(QM_WHITE) + "!" + NEWLINE() + CENTER_TEXT() + "The camera is " + COLOR(QM_RED) + "unstable" +
+            COLOR(QM_WHITE) + "!" + INSTANT_TEXT_OFF() + CLOSE_AFTER(120) + MESSAGE_END(),
+        UNSKIPPABLE() + INSTANT_TEXT_ON() + CENTER_TEXT() + "Un " + COLOR(QM_RED) + "sort" + COLOR(QM_WHITE) +
+            " vous a été jeté!" + NEWLINE() + CENTER_TEXT() + "La caméra est " + COLOR(QM_RED) + "instable" +
+            COLOR(QM_WHITE) + "!" + INSTANT_TEXT_OFF() + CLOSE_AFTER(120) + MESSAGE_END(),
+        UNSKIPPABLE() + INSTANT_TEXT_ON() + CENTER_TEXT() + "¡Has sido " + COLOR(QM_RED) + "hechizado" +
+            COLOR(QM_WHITE) + "!" + NEWLINE() + CENTER_TEXT() + "¡La cámara está " + COLOR(QM_RED) + "inestable" +
+            COLOR(QM_WHITE) + "!" + INSTANT_TEXT_OFF() + CLOSE_AFTER(120) + MESSAGE_END(),
+        UNSKIPPABLE() + INSTANT_TEXT_ON() + CENTER_TEXT() + "Sei caduto vittima di una " + COLOR(QM_RED) +
+            "maledizione" + COLOR(QM_WHITE) + "!" + NEWLINE() + CENTER_TEXT() + "La visuale è " + COLOR(QM_RED) +
+            "impazzita" + COLOR(QM_WHITE) + "!" + INSTANT_TEXT_OFF() + CLOSE_AFTER(120) + MESSAGE_END(),
+        UNSKIPPABLE() + INSTANT_TEXT_ON() + CENTER_TEXT() + "Du wurdest " + COLOR(QM_RED) + "verflucht" +
+            COLOR(QM_WHITE) + "!" + NEWLINE() + CENTER_TEXT() + "Die Kameraperspektive " + COLOR(QM_RED) +
+            "ändert sich stetig" + COLOR(QM_WHITE) + "!" + INSTANT_TEXT_OFF() + CLOSE_AFTER(120) + MESSAGE_END());
 
     // Business Scrubs
     // The less significant byte represents the price of the item

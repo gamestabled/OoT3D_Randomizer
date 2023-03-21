@@ -1209,6 +1209,7 @@ string_view antiFairyTrapDesc         = "This dangerous fairy will inflict up to
                                         "have less than that.";                            //
                                                                                            //
 string_view curseTrapsDesc            = "Some traps will apply status effects for 1 minute.";
+string_view screenTrapsDesc           = "Extra curses are added that rotate the screen.";  //
                                                                                            //
 /*------------------------------                                                           //
 |      EXTRA ARROW EFFECTS     |                                                           //
