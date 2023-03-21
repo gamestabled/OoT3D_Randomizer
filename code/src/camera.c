@@ -135,6 +135,15 @@ void Camera_UpdateDistortion(Camera* camera) {
     }
 }
 
+s32 Camera_UpdateHotRoom(Camera* camera) {
+    camera->distortionFlags &= 0xFFFE;
+    // Parts of RoomContext, bool value seems new to 3D
+    if (camera->globalCtx->unk_4C31[1] == 3 || camera->globalCtx->unk_4C31[6]) {
+        camera->distortionFlags |= 1;
+    }
+    return 1;
+}
+
 u8 Camera_FreeCamEnabled(Camera* camera) {
     static u8 freeCamEnabled = 0;
 
@@ -168,6 +177,7 @@ u8 Camera_FreeCamEnabled(Camera* camera) {
 
 void Camera_FreeCamUpdate(Vec3s* out, Camera* camera) {
     Camera_CheckWater(camera);       // Changes skybox colour and audio when camera is underwater
+    Camera_UpdateHotRoom(camera);    // Check if in a hot room (mainly for DC load planes)
     Camera_UpdateDistortion(camera); // Handle heat/water screen distortions
     Camera_UpdateInterface(0);       // Remove the black bars at the top/bottom of the screen
     GyroDrawHUDIcon = 0;             // Remove the icon in the top right indicating motion controls
