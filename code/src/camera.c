@@ -154,12 +154,12 @@ u8 Camera_FreeCamEnabled(Camera* camera) {
         freeCamEnabled = 1;
     }
 
-    // Titlescreen or cutscsene or no player or targeting or first person or cutscene or horse or crawlspace or special camera
-    // state/setting (MK balcony, chu bowling, static, rotating, hedge maze, GF cells, shops, back alley)
-    if (!IsInGame() || camera != &camera->globalCtx->mainCamera || !camera->player || camera->player->stateFlags1 & 0x20938230 ||
-        camera->player->stateFlags2 & 0x00040000 || camera->status != 7 || camera->setting == 0x14 ||
-        camera->setting == 0x15 || camera->setting == 0x19 || camera->setting == 0x1A || camera->setting == 0x1B ||
-        camera->setting == 0x23 || camera->setting == 0x40 || camera->setting == 0x46) {
+    // Titlescreen or cutscsene or no player or targeting or first person or cutscene or horse or crawlspace or special
+    // camera state/setting (MK balcony, chu bowling, static, rotating, hedge maze, GF cells, shops, back alley)
+    if (!IsInGame() || camera != &camera->globalCtx->mainCamera || !camera->player ||
+        camera->player->stateFlags1 & 0x20938230 || camera->player->stateFlags2 & 0x00040000 || camera->status != 7 ||
+        camera->setting == 0x14 || camera->setting == 0x15 || camera->setting == 0x19 || camera->setting == 0x1A ||
+        camera->setting == 0x1B || camera->setting == 0x23 || camera->setting == 0x40 || camera->setting == 0x46) {
         freeCamEnabled = 0;
     }
 
@@ -176,7 +176,7 @@ void Camera_FreeCamUpdate(Vec3s* out, Camera* camera) {
         CamColChk eye;
 
         // Idk why but this prevents unmapped reads in very specific situations
-        camera->animState = 1;
+        camera->animState     = 1;
         camera->behaviorFlags = 0;
 
         // Aim camera at Link's head. Aim lower when hanging from a ledge as position and model become disjointed
@@ -219,10 +219,10 @@ void Camera_FreeCamUpdate(Vec3s* out, Camera* camera) {
         // Pretty much entirely for the alcoves in SpT, causes unmapped reads if jumping into them so wait until player
         // is on ground
         camera->camDataIdx = Camera_GetCamDataId(&camera->globalCtx->colCtx, camera->player->actor.floorPoly, 0x32);
-        s16 newSetting = camera->globalCtx->colCtx.stat.colHeader->camDataList[camera->camDataIdx].setting;
+        s16 newSetting     = camera->globalCtx->colCtx.stat.colHeader->camDataList[camera->camDataIdx].setting;
         if (newSetting && newSetting != camera->setting && !(camera->player->stateFlags1 & 0x00040000)) {
             camera->prevSetting = camera->setting;
-            camera->setting = newSetting;
+            camera->setting     = newSetting;
         }
     }
     return;
