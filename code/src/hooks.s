@@ -336,7 +336,7 @@ hook_ApplyDamageMultiplier:
 .global hook_HyperActors
 hook_HyperActors:
     push {r0-r12, lr}
-    bl HyperActors
+    bl HyperActors_Main
     pop {r0-r12, lr}
     bx lr
 
@@ -1744,6 +1744,16 @@ hook_CollisionATvsAC:
     cpy r1,r12 @ AC collider
     bl RedIce_CheckIceArrow
     pop {r0-r12,lr}
+    bx lr
+
+.global hook_CollisionCheck_SetAll_Once
+hook_CollisionCheck_SetAll_Once:
+    cpy r5,r2
+    push {r0-r12,lr}
+    bl HyperActors_GetExtraUpdate
+    cmp r0,#0x1
+    pop {r0-r12,lr}
+    addeq lr,#0x8
     bx lr
 
 .global hook_GanonDrawMasterSword

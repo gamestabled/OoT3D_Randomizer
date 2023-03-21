@@ -684,4 +684,7 @@ typedef void (*Model_EnableMeshGroupByIndex_proc)(SkeletonAnimationModel* skel, 
 typedef void (*Model_DisableMeshGroupByIndex_proc)(SkeletonAnimationModel* skel, u32 index);
 #define Model_DisableMeshGroupByIndex ((Model_DisableMeshGroupByIndex_proc)0x36932C)
 
+typedef s32 (*Player_InBlockingCsMode_proc)(GlobalContext* globalCtx, Player* player);
+#define Player_InBlockingCsMode ((Player_InBlockingCsMode_proc)0x35DB20)
+
 #endif //_Z3D_H_
