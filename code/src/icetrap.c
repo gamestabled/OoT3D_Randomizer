@@ -56,10 +56,12 @@ void IceTrap_InitTypes(void) {
         possibleChestTraps[possibleChestTrapsAmount++] = ICETRAP_CURSE_SHIELD;
         possibleChestTraps[possibleChestTrapsAmount++] = ICETRAP_CURSE_DIZZY;
         possibleChestTraps[possibleChestTrapsAmount++] = ICETRAP_CURSE_BLIND;
+        possibleChestTraps[possibleChestTrapsAmount++] = ICETRAP_CURSE_SLOW;
         possibleItemTraps[possibleItemTrapsAmount++]   = ICETRAP_CURSE_SWORD;
         possibleItemTraps[possibleItemTrapsAmount++]   = ICETRAP_CURSE_SHIELD;
         possibleItemTraps[possibleItemTrapsAmount++]   = ICETRAP_CURSE_DIZZY;
         possibleItemTraps[possibleItemTrapsAmount++]   = ICETRAP_CURSE_BLIND;
+        possibleItemTraps[possibleItemTrapsAmount++]   = ICETRAP_CURSE_SLOW;
     }
     if (gSettingsContext.screenTraps) {
         possibleChestTraps[possibleChestTrapsAmount++] = ICETRAP_CURSE_CROOKED;
@@ -181,6 +183,8 @@ u8 IceTrap_ActivateCurseTrap(u8 curseType) {
                 gStaticContext.dekuNutFlash          = -1;
                 gStaticContext.renderGeometryDisable = 1;
                 break;
+            case ICETRAP_CURSE_SLOW:
+                break;
             case ICETRAP_CURSE_CROOKED:
                 targetOffset = dizzyCurseSeed % 0xC001 + 0x2000;
                 break;
@@ -196,7 +200,7 @@ u8 IceTrap_ActivateCurseTrap(u8 curseType) {
     gSaveContext.timer2State = 4; // "active"
     gSaveContext.timer2Value = 60;
     TimerFrameCounter        = 30;
-    DisplayTextbox(gGlobalContext, 0x8FF0 + curseType - ICETRAP_CURSE_SHIELD, 0);
+    DisplayTextbox(gGlobalContext, CURSETRAP_TEXT_BASE_INDEX + curseType - ICETRAP_CURSE_SHIELD, 0);
     PlaySound(0x100035C); // Poe laugh SFX
     IceTrap_ActiveCurse = (s8)curseType;
     return 1;

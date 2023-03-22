@@ -5,6 +5,7 @@
 #include "shops.hpp"
 #include "../code/src/message.h"
 #include "settings.hpp"
+#include "../code/src/icetrap.h"
 
 #include <array>
 #include <set>
@@ -611,7 +612,8 @@ void CreateAlwaysIncludedMessages() {
                   UNSKIPPABLE() + INSTANT_TEXT_ON() + CENTER_TEXT() + COLOR(QM_RED) + "NARR!" + COLOR(QM_WHITE) +
                       INSTANT_TEXT_OFF() + MESSAGE_END());
     // Curse Traps
-    CreateMessage(0x8FF0, 0, 2, 3,
+    u32 curseIdxOffset = 0;
+    CreateMessage(CURSETRAP_TEXT_BASE_INDEX + curseIdxOffset++, 0, 2, 3,
                   UNSKIPPABLE() + INSTANT_TEXT_ON() + CENTER_TEXT() + "You've been " + COLOR(QM_RED) + "cursed" +
                       COLOR(QM_WHITE) + "!" + NEWLINE() + CENTER_TEXT() + "You can't use your shield!" +
                       INSTANT_TEXT_OFF() + CLOSE_AFTER(120) + MESSAGE_END(),
@@ -629,7 +631,7 @@ void CreateAlwaysIncludedMessages() {
                       "Du kannst deinen Schild nicht mehr benutzen!" + INSTANT_TEXT_OFF() + CLOSE_AFTER(120) +
                       MESSAGE_END());
     CreateMessage(
-        0x8FF1, 0, 2, 3,
+        CURSETRAP_TEXT_BASE_INDEX + curseIdxOffset++, 0, 2, 3,
         UNSKIPPABLE() + INSTANT_TEXT_ON() + CENTER_TEXT() + "You've been " + COLOR(QM_RED) + "cursed" +
             COLOR(QM_WHITE) + "!" + NEWLINE() + CENTER_TEXT() + "Your sword " + COLOR(QM_RED) + "can't hit" +
             COLOR(QM_WHITE) + " anything!" + INSTANT_TEXT_OFF() + CLOSE_AFTER(120) + MESSAGE_END(),
@@ -645,7 +647,7 @@ void CreateAlwaysIncludedMessages() {
         UNSKIPPABLE() + INSTANT_TEXT_ON() + CENTER_TEXT() + "Du wurdest " + COLOR(QM_RED) + "verflucht" +
             COLOR(QM_WHITE) + "!" + NEWLINE() + CENTER_TEXT() + "Dein Schwert " + COLOR(QM_RED) + "verfehlt" +
             COLOR(QM_WHITE) + " absolut alles!" + INSTANT_TEXT_OFF() + CLOSE_AFTER(120) + MESSAGE_END());
-    CreateMessage(0x8FF2, 0, 2, 3,
+    CreateMessage(CURSETRAP_TEXT_BASE_INDEX + curseIdxOffset++, 0, 2, 3,
                   UNSKIPPABLE() + INSTANT_TEXT_ON() + CENTER_TEXT() + "You've been " + COLOR(QM_RED) + "cursed" +
                       COLOR(QM_WHITE) + "!" + NEWLINE() + CENTER_TEXT() + "You are " + COLOR(QM_RED) + "confused" +
                       COLOR(QM_WHITE) + "!" + INSTANT_TEXT_OFF() + CLOSE_AFTER(120) + MESSAGE_END(),
@@ -661,7 +663,7 @@ void CreateAlwaysIncludedMessages() {
                   UNSKIPPABLE() + INSTANT_TEXT_ON() + CENTER_TEXT() + "Du wurdest " + COLOR(QM_RED) + "verflucht" +
                       COLOR(QM_WHITE) + "!" + NEWLINE() + CENTER_TEXT() + "Du bist " + COLOR(QM_RED) + "verwirrt" +
                       COLOR(QM_WHITE) + "!" + INSTANT_TEXT_OFF() + CLOSE_AFTER(120) + MESSAGE_END());
-    CreateMessage(0x8FF3, 0, 2, 3,
+    CreateMessage(CURSETRAP_TEXT_BASE_INDEX + curseIdxOffset++, 0, 2, 3,
                   UNSKIPPABLE() + INSTANT_TEXT_ON() + CENTER_TEXT() + "You've been " + COLOR(QM_RED) + "cursed" +
                       COLOR(QM_WHITE) + "!" + NEWLINE() + CENTER_TEXT() + "Terrain is " + COLOR(QM_RED) + "invisible" +
                       COLOR(QM_WHITE) + "!" + INSTANT_TEXT_OFF() + CLOSE_AFTER(120) + MESSAGE_END(),
@@ -678,7 +680,24 @@ void CreateAlwaysIncludedMessages() {
                   UNSKIPPABLE() + INSTANT_TEXT_ON() + CENTER_TEXT() + "Du wurdest " + COLOR(QM_RED) + "verflucht" +
                       COLOR(QM_WHITE) + "!" + NEWLINE() + CENTER_TEXT() + "Die Umgebung ist " + COLOR(QM_RED) +
                       "unsichtbar" + COLOR(QM_WHITE) + "!" + INSTANT_TEXT_OFF() + CLOSE_AFTER(120) + MESSAGE_END());
-    CreateMessage(0x8FF4, 0, 2, 3,
+    CreateMessage(CURSETRAP_TEXT_BASE_INDEX + curseIdxOffset++, 0, 2, 3,
+                  UNSKIPPABLE() + INSTANT_TEXT_ON() + CENTER_TEXT() + "You've been " + COLOR(QM_RED) + "cursed" +
+                      COLOR(QM_WHITE) + "!" + NEWLINE() + CENTER_TEXT() + "You are feeling " + COLOR(QM_RED) +
+                      "sluggish" + COLOR(QM_WHITE) + "..." + INSTANT_TEXT_OFF() + CLOSE_AFTER(120) + MESSAGE_END(),
+                  UNSKIPPABLE() + INSTANT_TEXT_ON() + CENTER_TEXT() + "Un " + COLOR(QM_RED) + "sort" + COLOR(QM_WHITE) +
+                      " vous a été jeté!" + NEWLINE() + CENTER_TEXT() + "Vous vous sentez " + COLOR(QM_RED) +
+                      "léthargique" + COLOR(QM_WHITE) + "..." + INSTANT_TEXT_OFF() + CLOSE_AFTER(120) + MESSAGE_END(),
+                  UNSKIPPABLE() + INSTANT_TEXT_ON() + CENTER_TEXT() + "¡Has sido " + COLOR(QM_RED) + "hechizado" +
+                      COLOR(QM_WHITE) + "!" + NEWLINE() + CENTER_TEXT() + "Te sientes " + COLOR(QM_RED) + "lento" +
+                      COLOR(QM_WHITE) + "..." + INSTANT_TEXT_OFF() + CLOSE_AFTER(120) + MESSAGE_END(),
+                  UNSKIPPABLE() + INSTANT_TEXT_ON() + CENTER_TEXT() + "Sei caduto vittima di una " + COLOR(QM_RED) +
+                      "maledizione" + COLOR(QM_WHITE) + "!" + NEWLINE() + CENTER_TEXT() + "Ti senti un po' " +
+                      COLOR(QM_RED) + "fiacco" + COLOR(QM_WHITE) + "..." + INSTANT_TEXT_OFF() + CLOSE_AFTER(120) +
+                      MESSAGE_END(),
+                  UNSKIPPABLE() + INSTANT_TEXT_ON() + CENTER_TEXT() + "Du wurdest " + COLOR(QM_RED) + "verflucht" +
+                      COLOR(QM_WHITE) + "!" + NEWLINE() + CENTER_TEXT() + "Du fühlst dich " + COLOR(QM_RED) + "träge" +
+                      COLOR(QM_WHITE) + "..." + INSTANT_TEXT_OFF() + CLOSE_AFTER(120) + MESSAGE_END());
+    CreateMessage(CURSETRAP_TEXT_BASE_INDEX + curseIdxOffset++, 0, 2, 3,
                   UNSKIPPABLE() + INSTANT_TEXT_ON() + CENTER_TEXT() + "You've been " + COLOR(QM_RED) + "cursed" +
                       COLOR(QM_WHITE) + "!" + NEWLINE() + CENTER_TEXT() + "The world is " + COLOR(QM_RED) + "crooked" +
                       COLOR(QM_WHITE) + "!" + INSTANT_TEXT_OFF() + CLOSE_AFTER(120) + MESSAGE_END(),
@@ -696,7 +715,7 @@ void CreateAlwaysIncludedMessages() {
                       COLOR(QM_WHITE) + "!" + NEWLINE() + CENTER_TEXT() + "Die Welt wurde " + COLOR(QM_RED) +
                       "gedreht" + COLOR(QM_WHITE) + "!" + INSTANT_TEXT_OFF() + CLOSE_AFTER(120) + MESSAGE_END());
     CreateMessage(
-        0x8FF5, 0, 2, 3,
+        CURSETRAP_TEXT_BASE_INDEX + curseIdxOffset++, 0, 2, 3,
         UNSKIPPABLE() + INSTANT_TEXT_ON() + CENTER_TEXT() + "You've been " + COLOR(QM_RED) + "cursed" +
             COLOR(QM_WHITE) + "!" + NEWLINE() + CENTER_TEXT() + "The camera is " + COLOR(QM_RED) + "unstable" +
             COLOR(QM_WHITE) + "!" + INSTANT_TEXT_OFF() + CLOSE_AFTER(120) + MESSAGE_END(),
