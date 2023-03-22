@@ -69,21 +69,17 @@ void InitOptions(void) {
     options[opNum++].optionPointer = &gExtSaveData.option_SkipSongReplays;
 
     // Free Camera Control
-    altNum = 0;
-    strcpy(options[opNum].name, "Free Camera Control");
     if (gSettingsContext.freeCamera) {
+        altNum = 0;
+        strcpy(options[opNum].name, "Free Camera Control");
         strcpy(options[opNum].alternatives[altNum++], "Normal");
         strcpy(options[opNum].alternatives[altNum++], "Invert Y-Axis");
         strcpy(options[opNum].alternatives[altNum++], "Invert X-Axis");
         strcpy(options[opNum].alternatives[altNum++], "Invert Both");
         strcpy(options[opNum].description,
                "Change the input directions of the free camera.\n\nThis feature is not available on old 3DS systems.");
-    } else {
-        strcpy(options[opNum].alternatives[altNum++], "Disabled");
-        strcpy(options[opNum].description, "Free camera is disabled, enable it in\n\"Misc Settings\".\nThis feature is "
-                                           "not available on old 3DS systems.");
+        options[opNum++].optionPointer = &gExtSaveData.option_FreeCamControl;
     }
-    options[opNum++].optionPointer = &gExtSaveData.option_FreeCamControl;
 }
 
 void Gfx_DrawOptions(void) {

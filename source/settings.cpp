@@ -2552,7 +2552,6 @@ std::vector<std::pair<Option*, u8>> racingOverrides = {
     { &SkipSongReplays, SONGREPLAYS_SKIP_NO_SFX },
     { &ColoredKeys, ON },
     { &ColoredBossKeys, ON },
-    { &FreeCamera, OFF },
 };
 
 // Options that should be overridden and then restored after generating when vanilla logic is enabled
