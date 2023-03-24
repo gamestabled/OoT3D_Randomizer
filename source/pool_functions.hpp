@@ -32,7 +32,6 @@ template <typename T, typename Container> bool ElementInContainer(T& element, co
     return std::find(container.begin(), container.end(), element) != container.end();
 }
 
-template <typename First, typename... T>
-bool IsAnyOf(First&& first, T&&... t) {
+template <typename First, typename... T> bool IsAnyOf(First&& first, T&&... t) {
     return ((first == t) || ...);
 }
