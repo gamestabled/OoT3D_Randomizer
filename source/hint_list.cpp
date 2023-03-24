@@ -1967,7 +1967,7 @@ void HintTable_Init() {
                      Text{"And the #evil one#'s key will be&provided by Zelda once #%d |Dungeon#&is|Dungeons#&are| conquered.",
                 /*french*/"Aussi, Zelda crééra la clé du&#Malin# une fois #%d |donjon conquéri|donjons conquéris|#.",
                /*spanish*/"Y Zelda entregará la llave&del #señor del mal# tras completar&#%d |mazmorra|mazmorras|#.",
-               /*italian*/"E la chiave del #re del male# sarà&ricevuta da Zelda dopo aver completato&#%d dungeon#.",
+               /*italian*/"E la chiave del #re del male# sarà&ricevuta da Zelda dopo aver&completato #%d dungeon#.",
                 /*german*/"Und der #Schlüssel des Bösen# wird&von Zelda verliehen, sobald #%d&|Labyrinth# abgeschlossen wurde|Labyrinthe# abgeschlossen wurden|."},
     });
 
