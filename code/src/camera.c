@@ -163,7 +163,7 @@ u8 Camera_FreeCamEnabled(Camera* camera) {
         freeCamEnabled = 1;
     }
 
-    // Titlescreen or cutscsene or no player or targeting or first person or cutscene or horse or crawlspace or special
+    // Titlescreen or cutscene or no player or targeting or first person or cutscene or horse or crawlspace or special
     // camera state/setting (MK balcony, chu bowling, static, rotating, hedge maze, GF cells, shops, back alley)
     if (!IsInGame() || camera != &camera->globalCtx->mainCamera || !camera->player ||
         camera->player->stateFlags1 & 0x20938230 || camera->player->stateFlags2 & 0x00040000 || camera->status != 7 ||
@@ -181,13 +181,16 @@ void Camera_FreeCamUpdate(Vec3s* out, Camera* camera) {
     Camera_UpdateDistortion(camera); // Handle heat/water screen distortions
     Camera_UpdateInterface(0);       // Remove the black bars at the top/bottom of the screen
     GyroDrawHUDIcon = 0;             // Remove the icon in the top right indicating motion controls
-    if (camera->player != (Player*)0x0) {
+    if (camera->player) {
         Vec3f at;
         CamColChk eye;
 
-        // Idk why but this prevents unmapped reads in very specific situations
-        camera->animState     = 1;
-        camera->behaviorFlags = 0;
+        // Fixes some weird camera behaviour when leaving free cam out of bounds
+        // Causes some issues with pulling objects and collecting some items so don't run while in bounds
+        if (!camera->player->actor.floorPoly) {
+            camera->animState     = 1;
+            camera->behaviorFlags = 0;
+        }
 
         // Aim camera at Link's head. Aim lower when hanging from a ledge as position and model become disjointed
         camera->playerPosRot = camera->player->actor.world;
