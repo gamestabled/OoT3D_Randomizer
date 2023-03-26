@@ -70,7 +70,7 @@ Vec3f lerpv(Vec3f a, Vec3f b, f32 t) {
 }
 
 // Original function got inlined so recreated with help from decomp
-#define CAM_DEG_TO_BINANG(degrees) (s16)(s32)((degrees) * 182.04167 + 0.5)
+#define CAM_DEG_TO_BINANG(degrees) (s16)(s32)((degrees)*182.04167 + 0.5)
 void Camera_UpdateDistortion(Camera* camera) {
     static u16 screenPlanePhase = 0;
     f32 screenPlanePhaseStep;
