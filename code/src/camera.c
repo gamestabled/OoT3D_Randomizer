@@ -245,7 +245,7 @@ void Camera_FreeCamUpdate(Vec3s* out, Camera* camera) {
         s16 newCamDataIdx = Camera_GetCamDataId(&camera->globalCtx->colCtx, camera->player->actor.floorPoly, 0x32);
         s16 newSetting    = camera->globalCtx->colCtx.stat.colHeader->camDataList[newCamDataIdx].setting;
         if (newSetting) {
-            camera->camDataIdx  = newCamDataIdx;
+            camera->camDataIdx = newCamDataIdx;
             if (newSetting != camera->setting) {
                 camera->prevSetting = camera->setting;
                 camera->setting     = newSetting;
