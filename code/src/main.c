@@ -62,7 +62,5 @@ void after_GlobalContext_Update() {
         }
     }
 
-    Draw_DrawFormattedStringTop(10, 10, COLOR_WHITE, "%f %f %f\n%f %f %f", gGlobalContext->view.at.x, gGlobalContext->view.at.y, gGlobalContext->view.at.z, gGlobalContext->view.eye.x, gGlobalContext->view.eye.y, gGlobalContext->view.eye.z);
-
     Multiplayer_Sync_Update();
 }
