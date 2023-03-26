@@ -316,6 +316,15 @@ typedef struct {
 } CamData; // size = 0x8
 
 typedef struct {
+    /* 0x00 */ Vec3f atOffset;
+    /* 0x0C */ Vec3f eyeOffset;
+    /* 0x18 */ s16 upPitchOffset;
+    /* 0x1A */ s16 upYawOffset;
+    /* 0x1C */ s16 fovOffset;
+    /* 0x20 */ f32 maxOffset;
+} ShakeInfo; // size = 0x24
+
+typedef struct {
     /* 0x00 */ char unk_00[0x04];
     /* 0x04 */ Vec3s minBounds;
     /* 0x0A */ Vec3s maxBounds;
@@ -809,6 +818,14 @@ typedef void (*Camera_UpdateInterface_proc)(u32 flags);
 
 typedef f32 (*Camera_BGCheckInfo_proc)(Camera* camera, Vec3f* from, CamColChk* to);
 #define Camera_BGCheckInfo ((Camera_BGCheckInfo_proc)0x3553FC)
+
+typedef s32 (*Quake_Update_proc)(Camera* camera, ShakeInfo* camShake);
+#ifdef Version_EUR
+    #define Quake_Update_addr 0x4787E8
+#else
+    #define Quake_Update_addr 0x4787C8
+#endif
+#define Quake_Update ((Quake_Update_proc)Quake_Update_addr)
 
 typedef s16 (*Camera_GetCamDataId_proc)(CollisionContext* colCtx, CollisionPoly* poly, s32 bgId);
 #ifdef Version_EUR

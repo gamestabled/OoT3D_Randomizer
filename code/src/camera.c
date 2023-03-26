@@ -70,7 +70,7 @@ Vec3f lerpv(Vec3f a, Vec3f b, f32 t) {
 }
 
 // Original function got inlined so recreated with help from decomp
-#define CAM_DEG_TO_BINANG(degrees) (s16)(s32)((degrees)*182.04167 + 0.5)
+#define CAM_DEG_TO_BINANG(degrees) (s16)(s32)((degrees) * 182.04167 + 0.5)
 void Camera_UpdateDistortion(Camera* camera) {
     static u16 screenPlanePhase = 0;
     f32 screenPlanePhaseStep;
@@ -215,8 +215,20 @@ void Camera_FreeCamUpdate(Vec3s* out, Camera* camera) {
         Camera_BGCheckInfo(camera, &at, &eye);
 
         // Move actual camera positions towards intended positions
-        camera->globalCtx->view.at = camera->at = lerpv(camera->globalCtx->view.at, at, 0.3);
-        camera->globalCtx->view.eye = camera->eye = camera->eyeNext = lerpv(camera->globalCtx->view.eye, eye.pos, 0.3);
+        camera->globalCtx->view.at = camera->at = lerpv(camera->at, at, 0.3);
+        camera->globalCtx->view.eye = camera->eye = camera->eyeNext = lerpv(camera->eye, eye.pos, 0.3);
+
+        // Apply quake offsets
+        ShakeInfo camShake;
+        s32 numQuakes = Quake_Update(camera, &camShake);
+        if (numQuakes) {
+            camera->globalCtx->view.at.x += camShake.atOffset.x;
+            camera->globalCtx->view.at.y += camShake.atOffset.y;
+            camera->globalCtx->view.at.z += camShake.atOffset.z;
+            camera->globalCtx->view.eye.x += camShake.eyeOffset.x;
+            camera->globalCtx->view.eye.y += camShake.eyeOffset.y;
+            camera->globalCtx->view.eye.z += camShake.eyeOffset.z;
+        }
 
         // Set the up vector for roll traps
         f32 cR = coss(IceTrap_CamRoll(0)), sR = sins(IceTrap_CamRoll(0)), r = distXZ(camera->at, camera->eye);
