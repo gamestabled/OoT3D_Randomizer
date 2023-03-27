@@ -186,7 +186,7 @@ void Camera_FreeCamUpdate(Vec3s* out, Camera* camera) {
         CamColChk eye;
 
         // Fixes some weird camera behaviour when leaving free cam out of bounds
-        // Causes some issues with pulling objects and collecting some items so don't run while in bounds
+        // Causes some issues with pulling objects so don't run while in bounds
         if (!camera->player->actor.floorPoly) {
             camera->animState     = 1;
             camera->behaviorFlags = 0;
@@ -220,8 +220,7 @@ void Camera_FreeCamUpdate(Vec3s* out, Camera* camera) {
 
         // Apply quake offsets
         ShakeInfo camShake;
-        s32 numQuakes = Quake_Update(camera, &camShake);
-        if (numQuakes) {
+        if (Quake_Update(camera, &camShake)) {
             camera->globalCtx->view.at.x += camShake.atOffset.x;
             camera->globalCtx->view.at.y += camShake.atOffset.y;
             camera->globalCtx->view.at.z += camShake.atOffset.z;
@@ -244,7 +243,7 @@ void Camera_FreeCamUpdate(Vec3s* out, Camera* camera) {
         // Pretty much entirely to let the alcoves in SpT reclaim control of the camera
         s16 newCamDataIdx = Camera_GetCamDataId(&camera->globalCtx->colCtx, camera->player->actor.floorPoly, 0x32);
         s16 newSetting    = camera->globalCtx->colCtx.stat.colHeader->camDataList[newCamDataIdx].setting;
-        if (newSetting) {
+        if (newCamDataIdx != -1 && newSetting && (newSetting != 0x35 || gSaveContext.linkAge)) {
             camera->camDataIdx = newCamDataIdx;
             if (newSetting != camera->setting) {
                 camera->prevSetting = camera->setting;
