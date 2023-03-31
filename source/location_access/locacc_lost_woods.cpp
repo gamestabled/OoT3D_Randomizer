@@ -19,19 +19,6 @@ void AreaTable_Init_LostWoods() {
         {
             // Locations
             LocationAccess(KF_KOKIRI_SWORD_CHEST, { [] { return IsChild; } }),
-            LocationAccess(KF_GS_KNOW_IT_ALL_HOUSE, { [] {
-                               return IsChild && CanChildAttack && AtNight &&
-                                      (HasNightStart || CanLeaveForest || CanPlay(SunsSong)) && CanGetNightTimeGS;
-                           } }),
-            LocationAccess(KF_GS_BEAN_PATCH, { [] { return CanPlantBugs && CanChildAttack; } }),
-            LocationAccess(KF_GS_HOUSE_OF_TWINS,
-                           { [] { return IsAdult && AtNight && HookshotOrBoomerang && CanGetNightTimeGS; },
-                             /*Glitched*/
-                             [] {
-                                 return IsAdult && AtNight && CanGetNightTimeGS &&
-                                        (CanDoGlitch(GlitchType::HammerSlide, GlitchDifficulty::INTERMEDIATE) ||
-                                         CanDoGlitch(GlitchType::HoverBoost, GlitchDifficulty::INTERMEDIATE));
-                             } }),
             LocationAccess(KF_GOSSIP_STONE, { [] { return true; } }),
         },
         {
@@ -245,7 +232,6 @@ void AreaTable_Init_LostWoods() {
                              } }),
             LocationAccess(LW_TARGET_IN_WOODS, { [] { return IsChild && CanUse(SLINGSHOT); } }),
             LocationAccess(LW_DEKU_SCRUB_NEAR_BRIDGE, { [] { return IsChild && CanStunDeku; } }),
-            LocationAccess(LW_GS_BEAN_PATCH_NEAR_BRIDGE, { [] { return CanPlantBugs && CanChildAttack; } }),
             LocationAccess(LW_GOSSIP_STONE, { [] { return true; } }),
         },
         {
@@ -309,63 +295,45 @@ void AreaTable_Init_LostWoods() {
                                                  } }),
         });
 
-    areaTable[LW_BEYOND_MIDO] = Area(
-        "LW Beyond Mido", "Lost Woods", THE_LOST_WOODS, NO_DAY_NIGHT_CYCLE,
-        {
-            // Events
-            EventAccess(&ButterflyFairy, { [] { return ButterflyFairy || CanUse(STICKS); } }),
-        },
-        {
-            // Locations
-            LocationAccess(LW_DEKU_SCRUB_NEAR_DEKU_THEATER_RIGHT, { [] { return IsChild && CanStunDeku; } }),
-            LocationAccess(LW_DEKU_SCRUB_NEAR_DEKU_THEATER_LEFT, { [] { return IsChild && CanStunDeku; } }),
-            LocationAccess(LW_GS_ABOVE_THEATER, { [] {
-                                                     return IsAdult && CanAdultAttack && AtNight &&
-                                                            (CanPlantBean(LW_BEYOND_MIDO) ||
-                                                             (LogicLostWoodsGSBean && CanUse(HOOKSHOT) &&
-                                                              (CanUse(LONGSHOT) || CanUse(BOW) || CanUse(SLINGSHOT) ||
-                                                               HasBombchus || CanUse(DINS_FIRE)))) &&
-                                                            CanGetNightTimeGS;
-                                                 },
-                                                  /*Glitched*/
-                                                  [] {
-                                                      return IsAdult && AtNight && CanGetNightTimeGS &&
-                                                             CanDoGlitch(GlitchType::BombHover,
-                                                                         GlitchDifficulty::INTERMEDIATE);
-                                                  } }),
-            LocationAccess(LW_GS_BEAN_PATCH_NEAR_THEATER, { [] {
-                               return CanPlantBugs &&
-                                      (CanChildAttack || (Scrubsanity.Is(SCRUBSANITY_OFF) && DekuShield));
-                           } }),
-        },
-        {
-            // Exits
-            Entrance(LW_FOREST_EXIT, { [] { return true; } }),
-            Entrance(THE_LOST_WOODS,
-                     { [] { return IsChild || CanPlay(SariasSong); },
-                       /*Glitched*/
-                       [] {
-                           return CanDoGlitch(GlitchType::BombHover, GlitchDifficulty::INTERMEDIATE) ||
-                                  CanDoGlitch(GlitchType::Megaflip, GlitchDifficulty::NOVICE) ||
-                                  ((CanDoGlitch(GlitchType::OutdoorBombOI, GlitchDifficulty::INTERMEDIATE) ||
-                                    ((Bugs || Fish) && CanShield && Bombs &&
-                                     (CanSurviveDamage || (NumBottles >= 2 && Fairy)) &&
-                                     CanDoGlitch(GlitchType::QPA, GlitchDifficulty::ADVANCED)) ||
-                                    ((Bugs || Fish) && HasBombchus && CanShield &&
-                                     CanDoGlitch(GlitchType::ActionSwap, GlitchDifficulty::ADVANCED))) &&
-                                   SariasSong);
-                       } }),
-            Entrance(SFM_ENTRYWAY, { [] { return true; } }),
-            Entrance(DEKU_THEATER, { [] { return true; } }),
-            Entrance(LW_SCRUBS_GROTTO, { [] { return Here(LW_BEYOND_MIDO, [] { return CanBlastOrSmash; }); },
-                                         /*Glitched*/
-                                         [] {
-                                             return Here(LW_BEYOND_MIDO, [] {
-                                                 return IsChild && CanUse(STICKS) &&
-                                                        CanDoGlitch(GlitchType::QPA, GlitchDifficulty::ADVANCED);
-                                             });
-                                         } }),
-        });
+    areaTable[LW_BEYOND_MIDO] =
+        Area("LW Beyond Mido", "Lost Woods", THE_LOST_WOODS, NO_DAY_NIGHT_CYCLE,
+             {
+                 // Events
+                 EventAccess(&ButterflyFairy, { [] { return ButterflyFairy || CanUse(STICKS); } }),
+             },
+             {
+                 // Locations
+                 LocationAccess(LW_DEKU_SCRUB_NEAR_DEKU_THEATER_RIGHT, { [] { return IsChild && CanStunDeku; } }),
+                 LocationAccess(LW_DEKU_SCRUB_NEAR_DEKU_THEATER_LEFT, { [] { return IsChild && CanStunDeku; } }),
+             },
+             {
+                 // Exits
+                 Entrance(LW_FOREST_EXIT, { [] { return true; } }),
+                 Entrance(THE_LOST_WOODS,
+                          { [] { return IsChild || CanPlay(SariasSong); },
+                            /*Glitched*/
+                            [] {
+                                return CanDoGlitch(GlitchType::BombHover, GlitchDifficulty::INTERMEDIATE) ||
+                                       CanDoGlitch(GlitchType::Megaflip, GlitchDifficulty::NOVICE) ||
+                                       ((CanDoGlitch(GlitchType::OutdoorBombOI, GlitchDifficulty::INTERMEDIATE) ||
+                                         ((Bugs || Fish) && CanShield && Bombs &&
+                                          (CanSurviveDamage || (NumBottles >= 2 && Fairy)) &&
+                                          CanDoGlitch(GlitchType::QPA, GlitchDifficulty::ADVANCED)) ||
+                                         ((Bugs || Fish) && HasBombchus && CanShield &&
+                                          CanDoGlitch(GlitchType::ActionSwap, GlitchDifficulty::ADVANCED))) &&
+                                        SariasSong);
+                            } }),
+                 Entrance(SFM_ENTRYWAY, { [] { return true; } }),
+                 Entrance(DEKU_THEATER, { [] { return true; } }),
+                 Entrance(LW_SCRUBS_GROTTO, { [] { return Here(LW_BEYOND_MIDO, [] { return CanBlastOrSmash; }); },
+                                              /*Glitched*/
+                                              [] {
+                                                  return Here(LW_BEYOND_MIDO, [] {
+                                                      return IsChild && CanUse(STICKS) &&
+                                                             CanDoGlitch(GlitchType::QPA, GlitchDifficulty::ADVANCED);
+                                                  });
+                                              } }),
+             });
 
     areaTable[LW_NEAR_SHORTCUTS_GROTTO] =
         Area("LW Near Shortcuts Grotto", "LW Near Shortcuts Grotto", NONE, NO_DAY_NIGHT_CYCLE, grottoEvents,
@@ -424,7 +392,6 @@ void AreaTable_Init_LostWoods() {
             // Locations
             LocationAccess(SONG_FROM_SARIA, { [] { return IsChild && ChildCanAccess(HC_GARDEN); } }),
             LocationAccess(SHEIK_IN_FOREST, { [] { return IsAdult; } }),
-            LocationAccess(SFM_GS, { [] { return IsAdult && HookshotOrBoomerang && AtNight && CanGetNightTimeGS; } }),
             LocationAccess(SFM_MAZE_GOSSIP_STONE_LOWER, { [] { return true; } }),
             LocationAccess(SFM_MAZE_GOSSIP_STONE_UPPER, { [] { return true; } }),
             LocationAccess(SFM_SARIA_GOSSIP_STONE, { [] { return true; } }),

@@ -117,7 +117,6 @@ void AreaTable_Init_CastleTown() {
         {
             // Locations
             LocationAccess(HC_MALON_EGG, { [] { return true; } }),
-            LocationAccess(HC_GS_TREE, { [] { return CanChildAttack; } }),
             LocationAccess(HC_MALON_GOSSIP_STONE, { [] { return true; } }),
             LocationAccess(HC_ROCK_WALL_GOSSIP_STONE, { [] { return true; } }),
         },
@@ -178,27 +177,23 @@ void AreaTable_Init_CastleTown() {
                  Entrance(CASTLE_GROUNDS, { [] { return true; } }),
              });
 
-    areaTable[HC_STORMS_GROTTO] = Area(
-        "HC Storms Grotto", "HC Storms Grotto", NONE, NO_DAY_NIGHT_CYCLE,
-        {
-            // Events
-            EventAccess(&NutPot, { [] { return NutPot || CanBlastOrSmash; } }),
-            EventAccess(&GossipStoneFairy,
-                        { [] { return GossipStoneFairy || (CanBlastOrSmash && CanSummonGossipFairy); } }),
-            EventAccess(&WanderingBugs, { [] { return WanderingBugs || CanBlastOrSmash; } }),
-        },
-        {
-            // Locations
-            LocationAccess(
-                HC_GS_STORMS_GROTTO,
-                { [] { return CanBlastOrSmash && HookshotOrBoomerang; },
-                  /*Glitched*/ [] { return CanDoGlitch(GlitchType::BombHover, GlitchDifficulty::INTERMEDIATE); } }),
-            LocationAccess(HC_STORMS_GROTTO_GOSSIP_STONE, { [] { return CanBlastOrSmash; } }),
-        },
-        {
-            // Exits
-            Entrance(CASTLE_GROUNDS, { [] { return true; } }),
-        });
+    areaTable[HC_STORMS_GROTTO] =
+        Area("HC Storms Grotto", "HC Storms Grotto", NONE, NO_DAY_NIGHT_CYCLE,
+             {
+                 // Events
+                 EventAccess(&NutPot, { [] { return NutPot || CanBlastOrSmash; } }),
+                 EventAccess(&GossipStoneFairy,
+                             { [] { return GossipStoneFairy || (CanBlastOrSmash && CanSummonGossipFairy); } }),
+                 EventAccess(&WanderingBugs, { [] { return WanderingBugs || CanBlastOrSmash; } }),
+             },
+             {
+                 // Locations
+                 LocationAccess(HC_STORMS_GROTTO_GOSSIP_STONE, { [] { return CanBlastOrSmash; } }),
+             },
+             {
+                 // Exits
+                 Entrance(CASTLE_GROUNDS, { [] { return true; } }),
+             });
 
     areaTable[GANONS_CASTLE_GROUNDS] = Area(
         "Ganon's Castle Grounds", "Castle Grounds", OUTSIDE_GANONS_CASTLE, NO_DAY_NIGHT_CYCLE,
@@ -280,7 +275,6 @@ void AreaTable_Init_CastleTown() {
              {
                  // Locations
                  LocationAccess(MARKET_10_BIG_POES, { [] { return IsAdult && BigPoeKill; } }),
-                 LocationAccess(MARKET_GS_GUARD_HOUSE, { [] { return IsChild; } }),
              },
              {
                  // Exits

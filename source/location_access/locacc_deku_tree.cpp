@@ -108,7 +108,6 @@ void AreaTable_Init_DekuTree() {
                 // Locations
                 LocationAccess(DEKU_TREE_COMPASS_CHEST, { [] { return true; } }),
                 LocationAccess(DEKU_TREE_COMPASS_ROOM_SIDE_CHEST, { [] { return true; } }),
-                LocationAccess(DEKU_TREE_GS_COMPASS_ROOM, { [] { return CanAdultAttack || CanChildAttack; } }),
             },
             {
                 // Exits
@@ -135,15 +134,6 @@ void AreaTable_Init_DekuTree() {
             {
                 // Locations
                 LocationAccess(DEKU_TREE_BASEMENT_CHEST, { [] { return true; } }),
-                LocationAccess(DEKU_TREE_GS_BASEMENT_GATE, { [] { return CanAdultAttack || CanChildAttack; } }),
-                LocationAccess(
-                    DEKU_TREE_GS_BASEMENT_VINES,
-                    { [] { return CanUseProjectile || CanUse(DINS_FIRE) || (LogicDekuBasementGS && CanJumpslash); },
-                      /*Glitched*/
-                      [] {
-                          return CanDoGlitch(GlitchType::ISG, GlitchDifficulty::NOVICE) ||
-                                 CanDoGlitch(GlitchType::SuperStab, GlitchDifficulty::NOVICE);
-                      } }),
             },
             {
                 // Exits
@@ -248,18 +238,7 @@ void AreaTable_Init_DekuTree() {
             });
 
         areaTable[DEKU_TREE_BASEMENT_BACK_ROOM] =
-            Area("Deku Tree Basement Back Room", "Deku Tree", DEKU_TREE, NO_DAY_NIGHT_CYCLE, {},
-                 {
-                     // Locations
-                     LocationAccess(DEKU_TREE_GS_BASEMENT_BACK_ROOM,
-                                    { [] { return HookshotOrBoomerang; },
-                                      /*Glitched*/
-                                      [] {
-                                          return Bombs &&
-                                                 CanDoGlitch(GlitchType::BombHover, GlitchDifficulty::INTERMEDIATE) &&
-                                                 CanDoGlitch(GlitchType::ISG, GlitchDifficulty::INTERMEDIATE);
-                                      } }),
-                 },
+            Area("Deku Tree Basement Back Room", "Deku Tree", DEKU_TREE, NO_DAY_NIGHT_CYCLE, {}, {},
                  {
                      // Exits
                      Entrance(DEKU_TREE_BASEMENT_BACK_LOBBY, { [] { return true; } }),
@@ -325,7 +304,6 @@ void AreaTable_Init_DekuTree() {
                                { [] { return HasFireSourceWithTorch || (IsAdult && CanUse(BOW)); } }),
                 LocationAccess(DEKU_TREE_MQ_BASEMENT_CHEST,
                                { [] { return HasFireSourceWithTorch || (IsAdult && CanUse(BOW)); } }),
-                LocationAccess(DEKU_TREE_MQ_GS_LOBBY, { [] { return CanAdultAttack || CanChildAttack; } }),
             },
             {
                 // Exits

@@ -13,6 +13,7 @@
 #include "descriptions.hpp"
 #include "trial.hpp"
 #include "keys.hpp"
+#include "gold_skulltulas.hpp"
 
 using namespace Cosmetics;
 using namespace Dungeon;
@@ -343,6 +344,8 @@ Option HyperBosses         = Option::Bool(2, "Hyper Bosses",        {"Off", "On"
 Option HyperMiddleBosses   = Option::Bool(2, "Hyper Middle Bosses", {"Off", "On"},                                                          {hyperMiddleBossesDesc});
 Option HyperEnemies        = Option::Bool(2, "Hyper Enemies",       {"Off", "On"},                                                          {hyperEnemiesDesc});
 Option FreeCamera          = Option::Bool("Free Camera",            {"Off", "On"},                                                          {freeCamDesc},                                                                                                    OptionCategory::Setting,    ON);
+Option RandomGsLocations   = Option::Bool("Random GS Locations",    {"Off", "On"},                                                          {randomGsLocationsDesc});
+Option GsLocGuaranteeNew   = Option::Bool(2, "Guarantee New",       {"Off", "On"},                                                          {gsLocGuaranteeNewDesc});
 bool HasNightStart         = false;
 std::vector<Option *> miscOptions = {
     &Racing,
@@ -374,6 +377,8 @@ std::vector<Option *> miscOptions = {
     &HyperMiddleBosses,
     &HyperEnemies,
     &FreeCamera,
+    &RandomGsLocations,
+    &GsLocGuaranteeNew,
 };
 
 // Item Usability Settings
@@ -2268,6 +2273,12 @@ void ForceChange(u32 kDown, Option* currentSetting) {
     } else {
         FreeCamControl.Hide();
         FreeCamControl.SetSelectedIndex(0);
+    }
+
+    if (RandomGsLocations) {
+        GsLocGuaranteeNew.Unhide();
+    } else {
+        GsLocGuaranteeNew.Hide();
     }
 
     // Manage toggle for item usability options

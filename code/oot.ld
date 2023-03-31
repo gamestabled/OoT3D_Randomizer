@@ -120,6 +120,10 @@ SECTIONS
 		*(.patch_FairyPickupHealAmount)
 	}
 
+	.patch_RandomGsLoc_SkipSoilJingle 0x15DBD8 : {
+		*(.patch_RandomGsLoc_SkipSoilJingle)
+	}
+
 	.patch_GrannyBottleCheck 0x161044 : {
 		*(.patch_GrannyBottleCheck)
 	}
@@ -174,6 +178,10 @@ SECTIONS
 
 	.patch_CheckFadoCanSpawnInLostWoods 0x1657EC : {
 		*(.patch_CheckFadoCanSpawnInLostWoods)
+	}
+
+	.patch_RandomGsLoc_BlockSpawn_Tree 0x16C43C : {
+		*(.patch_RandomGsLoc_BlockSpawn_Tree)
 	}
 
 	.patch_MedigoronSetRewardFlag 0x16C918 : {
@@ -804,6 +812,10 @@ SECTIONS
 		*(.patch_FWandWarpSongTimerDepletion)
 	}
 
+	.patch_RandomGsLoc_CustomTangibilityCheck 0x3415B0 : {
+		*(.patch_RandomGsLoc_CustomTangibilityCheck)
+	}
+
 	.patch_MasterQuestGoldSkulltulaCheck 0x3415C8 : {
 		*(.patch_MasterQuestGoldSkulltulaCheck)
 	}
@@ -1000,6 +1012,14 @@ SECTIONS
 		*(.patch_GerudoArcheryOne)
 	}
 
+	.patch_RandomGsLoc_CustomTokenSpawnOffset 0x3B94C4 : {
+		*(.patch_RandomGsLoc_CustomTokenSpawnOffset)
+	}
+
+	.patch_RandomGsLoc_BlockSpawn_Crate 0x3BCA68 : {
+		*(.patch_RandomGsLoc_BlockSpawn_Crate)
+	}
+
 	.patch_MovableBlockCooldownTimer 0x3BD46C : {
 		*(.patch_MovableBlockCooldownTimer)
 	}
@@ -1014,6 +1034,10 @@ SECTIONS
 
 	.patch_MilkCrateSpeed 0x3BD88C : {
 		*(.patch_MilkCrateSpeed)
+	}
+
+	.patch_RandomGsLoc_BlockSpawn_Soil 0x3BF690 : {
+		*(.patch_RandomGsLoc_BlockSpawn_Soil)
 	}
 
 	.patch_ForestTempleBasementPuzzleDelay 0x3BFA8C : {
@@ -1324,6 +1348,14 @@ SECTIONS
 		*(.patch_OpenSaveDontSpoilTradeItems)
 	}
 
+	.patch_OnActorSetup_SceneChange 0x452250 : {
+		*(.patch_OnActorSetup_SceneChange)
+	}
+
+	.patch_AfterActorSetup_SceneChange 0x4522B8 : {
+		*(.patch_AfterActorSetup_SceneChange)
+	}
+
 	.patch_before_GlobalContext_Update 0x452390 : {
 		*(.patch_before_GlobalContext_Update)
 	}
@@ -1394,6 +1426,14 @@ SECTIONS
 
 	.patch_ChildDontEquipSwordSlotByDefault 0x45F49C : {
 		*(.patch_ChildDontEquipSwordSlotByDefault)
+	}
+
+	.patch_OnActorSetup_RoomChange 0x4613C4 : {
+		*(.patch_OnActorSetup_RoomChange)
+	}
+
+	.patch_AfterActorSetup_RoomChange 0x461434 : {
+		*(.patch_AfterActorSetup_RoomChange)
 	}
 
 	.patch_HyperActors 0x461790 : {

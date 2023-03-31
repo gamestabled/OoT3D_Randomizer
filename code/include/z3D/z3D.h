@@ -6,6 +6,7 @@
 // #include "z3Dequipment.h"
 #include "z3Dcutscene.h"
 #include "z3Ditem.h"
+#include "z3Dmath.h"
 
 // #include "hid.h"
 
@@ -571,7 +572,7 @@ typedef struct GlobalContext {
     /* 0x3234 */ char unk_3234[0x0824];
     /* 0x3A58 */ ObjectContext objectCtx;
     /* 0x43DC */ char unk_43DC[0x0854];
-    /* 0x4C30 */ u8 roomNum;
+    /* 0x4C30 */ s8 roomNum;
     /* 0x4C31 */ char unk_4C31[0x0FCF];
     /* 0x5C00 */ u8 linkAgeOnLoad;
     /* 0x5C01 */ u8 unk_5C01;
@@ -860,7 +861,7 @@ typedef s32 (*Animation_GetLastFrame_proc)(SkelAnime* anime, s32 animation_index
 #define Animation_GetLastFrame ((Animation_GetLastFrame_proc)Animation_GetLastFrame_addr)
 
 typedef void (*Animation_Change_proc)(SkelAnime* anime, s32 animation_index, f32 play_speed, f32 start_frame,
-                                      f32 end_frame, f32 morph_frames, s32 mode);
+                                      f32 end_frame, f32 morph_frames, s32 mode) __attribute__((pcs("aapcs-vfp")));
 #define Animation_Change_addr 0x375C08
 #define Animation_Change ((Animation_Change_proc)Animation_Change_addr)
 

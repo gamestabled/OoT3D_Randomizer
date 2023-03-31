@@ -9,6 +9,7 @@
 #include "spoiler_log.hpp"
 #include "trial.hpp"
 #include "entrance.hpp"
+#include "gold_skulltulas.hpp"
 
 #include <unistd.h>
 #include <fstream>
@@ -128,6 +129,10 @@ bool Area::UpdateEvents(SearchMode mode) {
         }
     }
     return eventsUpdated;
+}
+
+void Area::AddLocation(LocationAccess location) {
+    locations.push_back(location);
 }
 
 void Area::AddExit(AreaKey parentKey, AreaKey newExitKey, ConditionFn condition) {
@@ -425,6 +430,9 @@ void AreaTable_Init() {
     AreaTable_Init_IceCavern();
     AreaTable_Init_GerudoTrainingGrounds();
     AreaTable_Init_GanonsCastle();
+
+    // Add Gold Skulltulas
+    Gs_AssignLocations();
 
     // Set parent regions
     for (AreaKey i = ROOT; i <= GANONS_CASTLE; i++) {

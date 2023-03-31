@@ -7,11 +7,7 @@ using namespace Settings;
 
 void AreaTable_Init_ZorasDomain() {
     areaTable[ZR_FRONT] = Area(
-        "ZR Front", "Zora River", ZORAS_RIVER, DAY_NIGHT_CYCLE, {},
-        {
-            // Locations
-            LocationAccess(ZR_GS_TREE, { [] { return IsChild && CanChildAttack; } }),
-        },
+        "ZR Front", "Zora River", ZORAS_RIVER, DAY_NIGHT_CYCLE, {}, {},
         {
             // Exits
             Entrance(ZORAS_RIVER,
@@ -119,11 +115,6 @@ void AreaTable_Init_ZorasDomain() {
                            { [] { return IsChild || CanUse(HOVER_BOOTS) || (IsAdult && LogicZoraRiverLower); } }),
             LocationAccess(ZR_NEAR_DOMAIN_FREESTANDING_POH,
                            { [] { return IsChild || CanUse(HOVER_BOOTS) || (IsAdult && LogicZoraRiverUpper); } }),
-            LocationAccess(ZR_GS_LADDER, { [] { return IsChild && AtNight && CanChildAttack && CanGetNightTimeGS; } }),
-            LocationAccess(ZR_GS_NEAR_RAISED_GROTTOS,
-                           { [] { return IsAdult && HookshotOrBoomerang && AtNight && CanGetNightTimeGS; } }),
-            LocationAccess(ZR_GS_ABOVE_BRIDGE,
-                           { [] { return IsAdult && CanUse(HOOKSHOT) && AtNight && CanGetNightTimeGS; } }),
             LocationAccess(ZR_NEAR_GROTTOS_GOSSIP_STONE, { [] { return true; } }),
             LocationAccess(ZR_NEAR_DOMAIN_GOSSIP_STONE, { [] { return true; } }),
         },
@@ -241,12 +232,6 @@ void AreaTable_Init_ZorasDomain() {
             LocationAccess(ZD_CHEST, { [] { return IsChild && CanUse(STICKS); } }),
             LocationAccess(ZD_KING_ZORA_THAWED, { [] { return KingZoraThawed; } }),
             LocationAccess(ZD_TRADE_PRESCRIPTION, { [] { return KingZoraThawed && Prescription; } }),
-            LocationAccess(ZD_GS_FROZEN_WATERFALL, { [] {
-                               return IsAdult && AtNight &&
-                                      (HookshotOrBoomerang || CanUse(SLINGSHOT) || Bow ||
-                                       (MagicMeter && (MasterSword || BiggoronSword))) &&
-                                      CanGetNightTimeGS;
-                           } }),
             LocationAccess(ZD_GOSSIP_STONE, { [] { return true; } }),
         },
         {
@@ -353,24 +338,6 @@ void AreaTable_Init_ZorasDomain() {
             // Locations
             LocationAccess(ZF_ICEBERG_FREESTANDING_POH, { [] { return IsAdult; } }),
             LocationAccess(ZF_BOTTOM_FREESTANDING_POH, { [] { return IsAdult && IronBoots && WaterTimer >= 24; } }),
-            LocationAccess(ZF_GS_TREE, { [] { return IsChild; } }),
-            LocationAccess(ZF_GS_ABOVE_THE_LOG,
-                           { [] { return IsChild && HookshotOrBoomerang && AtNight && CanGetNightTimeGS; },
-                             /*Glitched*/
-                             [] {
-                                 return IsChild && AtNight && CanGetNightTimeGS && HasBombchus &&
-                                        CanDoGlitch(GlitchType::BombHover, GlitchDifficulty::NOVICE);
-                             } }),
-            LocationAccess(ZF_GS_HIDDEN_CAVE,
-                           { [] {
-                                return CanUse(SILVER_GAUNTLETS) && CanBlastOrSmash && HookshotOrBoomerang && IsAdult &&
-                                       AtNight && CanGetNightTimeGS;
-                            },
-                             /*Glitched*/
-                             [] {
-                                 return CanDoGlitch(GlitchType::LedgeCancel, GlitchDifficulty::INTERMEDIATE) &&
-                                        IsAdult && HookshotOrBoomerang && AtNight && CanGetNightTimeGS;
-                             } }),
             LocationAccess(ZF_FAIRY_GOSSIP_STONE, { [] { return true; } }),
             LocationAccess(ZF_JABU_GOSSIP_STONE, { [] { return true; } }),
         },
