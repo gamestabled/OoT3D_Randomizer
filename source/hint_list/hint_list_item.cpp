@@ -1945,12 +1945,15 @@ void HintTable_Init_Item() {
                        Text{"Epona", /*french*/"Epona", /*spanish*/"a Epona", /*italian*/"Epona", /*german*/"Epona"}
     );
 
-    // [HINT_ERROR] = HintText::Item({
-    //                      // obscure text
-    //                      Text{"something mysterious", /*french*/"un sacré mystère",  /*spanish*/"algo misterioso",       /*italian*/"qualcosa di misterioso", /*german*/"etwas Unvorhergesehenes"},
-    //                      Text{"an unknown treasure",  /*french*/"un trésor inconnu", /*spanish*/"un desconocido tesoro", /*italian*/"un tesoro incognito",    /*german*/"ein unbekannter Schatz"},
-    //                    },
-    //                      // clear text
+    hintTable[HINT_MYSTERIOUS] = HintText::Item({
+                         // only obscure text, used for merchants without hints
+                         Text{"something mysterious", /*french*/"un sacré mystère",  /*spanish*/"algo misterioso",       /*italian*/"qualcosa di misterioso", /*german*/"etwas Unvorhergesehenes"},
+                         Text{"an unknown treasure",  /*french*/"un trésor inconnu", /*spanish*/"un desconocido tesoro", /*italian*/"un tesoro incognito",    /*german*/"ein unbekannter Schatz"},
+                       }
+    );
+
+    // hintTable[HINT_ERROR] = HintText::Item({
     //                      Text{"An Error (Please Report This)", /*french*/"une erreur (signaler S.V.P.)", /*spanish*/"un error (repórtelo si es posible)", /*italian*/"un errore (segnalalo per favore)", /*german*/"ein Fehler (Bitte melden)"}
+    //                    }
     // );
 }
