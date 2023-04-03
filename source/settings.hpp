@@ -638,6 +638,7 @@ extern Option LogicShadowFireArrowEntry;
 extern Option LogicShadowUmbrella;
 extern Option LogicShadowFreestandingKey;
 extern Option LogicShadowStatue;
+extern Option LogicShadowBongo;
 extern Option LogicChildDeadhand;
 extern Option LogicGtgWithoutHookshot;
 extern Option LogicGtgFakeWall;

@@ -328,7 +328,7 @@ void AreaTable_Init_ShadowTemple() {
                             ((CanUse(LENS_OF_TRUTH) || ((Dungeon::ShadowTemple.IsVanilla() && LogicLensShadowBack) ||
                                                         (Dungeon::ShadowTemple.IsMQ() && LogicLensShadowMQBack))) &&
                              (CanUse(KOKIRI_SWORD) || CanUse(MASTER_SWORD) || CanUse(BIGGORON_SWORD)) &&
-                             (CanUse(HOOKSHOT) || CanUse(BOW) || CanUse(SLINGSHOT)));
+                             (CanUse(HOOKSHOT) || CanUse(BOW) || CanUse(SLINGSHOT) || LogicShadowBongo));
                  } }),
              },
              {
