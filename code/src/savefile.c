@@ -473,6 +473,8 @@ void SaveFile_SetStartingInventory(void) {
 
     if (gSettingsContext.startingChildTrade) {
         gSaveContext.items[SLOT_TRADE_CHILD] = ITEM_MASK_BUNNY;
+        SaveFile_BorrowMask(0x21);
+        gSaveContext.sceneFlags[0x60].unk |= 0x1 << 0x11;
     }
 
     if (gSettingsContext.startingOcarina > 0) {
