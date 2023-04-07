@@ -790,8 +790,14 @@ static void FillExcludedLocations() {
 
 // Function to handle the Own Dungeon setting
 static void RandomizeOwnDungeon(const Dungeon::DungeonInfo* dungeon) {
-    std::vector<LocationKey> dungeonLocations = dungeon->GetDungeonLocations();
     std::vector<ItemKey> dungeonItems;
+
+    // Search and filter for locations that match the hint region of the dungeon
+    // This accounts for boss room shuffle so that own dungeon items can be placed
+    // in the shuffled boss room
+    std::vector<LocationKey> dungeonLocations = FilterFromPool(allLocations, [dungeon](const auto loc) {
+        return GetHintRegionHintKey(Location(loc)->GetParentRegionKey()) == dungeon->GetHintKey();
+    });
 
     // filter out locations that may be required to have songs placed at them
     dungeonLocations = FilterFromPool(dungeonLocations, [](const LocationKey loc) {

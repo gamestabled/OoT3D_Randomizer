@@ -8,16 +8,21 @@
 
 namespace Dungeon {
 
-DungeonInfo::DungeonInfo(std::string name_, ItemKey map_, ItemKey compass_, ItemKey smallKey_, ItemKey keyRing_,
-                         ItemKey bossKey_, u8 vanillaKeyCount_, u8 mqKeyCount_,
+DungeonInfo::DungeonInfo(std::string name_, HintKey hintKey_, ItemKey map_, ItemKey compass_, ItemKey smallKey_,
+                         ItemKey keyRing_, ItemKey bossKey_, u8 vanillaKeyCount_, u8 mqKeyCount_,
                          std::vector<LocationKey> vanillaLocations_, std::vector<LocationKey> mqLocations_,
-                         std::vector<LocationKey> sharedLocations_)
-    : name(std::move(name_)), map(map_), compass(compass_), smallKey(smallKey_), keyRing(keyRing_), bossKey(bossKey_),
-      vanillaKeyCount(vanillaKeyCount_), mqKeyCount(mqKeyCount_), vanillaLocations(std::move(vanillaLocations_)),
-      mqLocations(std::move(mqLocations_)), sharedLocations(std::move(sharedLocations_)) {
+                         std::vector<LocationKey> sharedLocations_, std::vector<LocationKey> bossRoomLocations_)
+    : name(std::move(name_)), hintKey(hintKey_), map(map_), compass(compass_), smallKey(smallKey_), keyRing(keyRing_),
+      bossKey(bossKey_), vanillaKeyCount(vanillaKeyCount_), mqKeyCount(mqKeyCount_),
+      vanillaLocations(std::move(vanillaLocations_)), mqLocations(std::move(mqLocations_)),
+      sharedLocations(std::move(sharedLocations_)), bossRoomLocations(std::move(bossRoomLocations_)) {
 }
 
 DungeonInfo::~DungeonInfo() = default;
+
+HintKey DungeonInfo::GetHintKey() const {
+    return hintKey;
+}
 
 ItemKey DungeonInfo::GetSmallKey() const {
     return smallKey;
@@ -91,6 +96,7 @@ void DungeonInfo::PlaceVanillaSmallKeys() {
 std::vector<LocationKey> DungeonInfo::GetDungeonLocations() const {
     auto locations = masterQuest ? mqLocations : vanillaLocations;
     AddElementsToPool(locations, sharedLocations);
+    AddElementsToPool(locations, bossRoomLocations);
     return locations;
 }
 
@@ -99,10 +105,11 @@ std::vector<LocationKey> DungeonInfo::GetEveryLocation() const {
     auto locations = vanillaLocations;
     AddElementsToPool(locations, mqLocations);
     AddElementsToPool(locations, sharedLocations);
+    AddElementsToPool(locations, bossRoomLocations);
     return locations;
 }
 
-DungeonInfo DekuTree = DungeonInfo("Deku Tree", DEKU_TREE_MAP, DEKU_TREE_COMPASS, NONE, NONE, NONE, 0, 0,
+DungeonInfo DekuTree = DungeonInfo("Deku Tree", DEKU_TREE, DEKU_TREE_MAP, DEKU_TREE_COMPASS, NONE, NONE, NONE, 0, 0,
                                    {
                                        // Vanilla Locations
                                        DEKU_TREE_MAP_CHEST,
@@ -131,96 +138,99 @@ DungeonInfo DekuTree = DungeonInfo("Deku Tree", DEKU_TREE_MAP, DEKU_TREE_COMPASS
                                        DEKU_TREE_MQ_GS_BASEMENT_GRAVES_ROOM,
                                        DEKU_TREE_MQ_GS_BASEMENT_BACK_ROOM,
                                    },
+                                   {},
                                    {
-                                       // Shared Locations
+                                       // Boss Room Locations
                                        DEKU_TREE_QUEEN_GOHMA_HEART,
                                        QUEEN_GOHMA,
                                    });
 
-DungeonInfo DodongosCavern =
-    DungeonInfo("Dodongo's Cavern", DODONGOS_CAVERN_MAP, DODONGOS_CAVERN_COMPASS, NONE, NONE, NONE, 0, 0,
-                {
-                    // Vanilla Locations
-                    DODONGOS_CAVERN_MAP_CHEST,
-                    DODONGOS_CAVERN_COMPASS_CHEST,
-                    DODONGOS_CAVERN_BOMB_FLOWER_PLATFORM_CHEST,
-                    DODONGOS_CAVERN_BOMB_BAG_CHEST,
-                    DODONGOS_CAVERN_END_OF_BRIDGE_CHEST,
-                    DODONGOS_CAVERN_DEKU_SCRUB_LOBBY,
-                    DODONGOS_CAVERN_DEKU_SCRUB_SIDE_ROOM_NEAR_DODONGOS,
-                    DODONGOS_CAVERN_DEKU_SCRUB_NEAR_BOMB_BAG_LEFT,
-                    DODONGOS_CAVERN_DEKU_SCRUB_NEAR_BOMB_BAG_RIGHT,
-                    DODONGOS_CAVERN_GS_VINES_ABOVE_STAIRS,
-                    DODONGOS_CAVERN_GS_SCARECROW,
-                    DODONGOS_CAVERN_GS_ALCOVE_ABOVE_STAIRS,
-                    DODONGOS_CAVERN_GS_BACK_ROOM,
-                    DODONGOS_CAVERN_GS_SIDE_ROOM_NEAR_LOWER_LIZALFOS,
-                },
-                {
-                    // MQ Locations
-                    DODONGOS_CAVERN_MQ_MAP_CHEST,
-                    DODONGOS_CAVERN_MQ_BOMB_BAG_CHEST,
-                    DODONGOS_CAVERN_MQ_COMPASS_CHEST,
-                    DODONGOS_CAVERN_MQ_LARVAE_ROOM_CHEST,
-                    DODONGOS_CAVERN_MQ_TORCH_PUZZLE_ROOM_CHEST,
-                    DODONGOS_CAVERN_MQ_UNDER_GRAVE_CHEST,
-                    DODONGOS_CAVERN_MQ_DEKU_SCRUB_LOBBY_REAR,
-                    DODONGOS_CAVERN_MQ_DEKU_SCRUB_LOBBY_FRONT,
-                    DODONGOS_CAVERN_MQ_DEKU_SCRUB_STAIRCASE,
-                    DODONGOS_CAVERN_MQ_DEKU_SCRUB_SIDE_ROOM_NEAR_LOWER_LIZALFOS,
-                    DODONGOS_CAVERN_MQ_GS_SCRUB_ROOM,
-                    DODONGOS_CAVERN_MQ_GS_SONG_OF_TIME_BLOCK_ROOM,
-                    DODONGOS_CAVERN_MQ_GS_LIZALFOS_ROOM,
-                    DODONGOS_CAVERN_MQ_GS_LARVAE_ROOM,
-                    DODONGOS_CAVERN_MQ_GS_BACK_AREA,
-                },
-                {
-                    // Shared Locations
-                    DODONGOS_CAVERN_BOSS_ROOM_CHEST,
-                    DODONGOS_CAVERN_KING_DODONGO_HEART,
-                    KING_DODONGO,
-                });
+DungeonInfo DodongosCavern = DungeonInfo("Dodongo's Cavern", DODONGOS_CAVERN, DODONGOS_CAVERN_MAP,
+                                         DODONGOS_CAVERN_COMPASS, NONE, NONE, NONE, 0, 0,
+                                         {
+                                             // Vanilla Locations
+                                             DODONGOS_CAVERN_MAP_CHEST,
+                                             DODONGOS_CAVERN_COMPASS_CHEST,
+                                             DODONGOS_CAVERN_BOMB_FLOWER_PLATFORM_CHEST,
+                                             DODONGOS_CAVERN_BOMB_BAG_CHEST,
+                                             DODONGOS_CAVERN_END_OF_BRIDGE_CHEST,
+                                             DODONGOS_CAVERN_DEKU_SCRUB_LOBBY,
+                                             DODONGOS_CAVERN_DEKU_SCRUB_SIDE_ROOM_NEAR_DODONGOS,
+                                             DODONGOS_CAVERN_DEKU_SCRUB_NEAR_BOMB_BAG_LEFT,
+                                             DODONGOS_CAVERN_DEKU_SCRUB_NEAR_BOMB_BAG_RIGHT,
+                                             DODONGOS_CAVERN_GS_VINES_ABOVE_STAIRS,
+                                             DODONGOS_CAVERN_GS_SCARECROW,
+                                             DODONGOS_CAVERN_GS_ALCOVE_ABOVE_STAIRS,
+                                             DODONGOS_CAVERN_GS_BACK_ROOM,
+                                             DODONGOS_CAVERN_GS_SIDE_ROOM_NEAR_LOWER_LIZALFOS,
+                                         },
+                                         {
+                                             // MQ Locations
+                                             DODONGOS_CAVERN_MQ_MAP_CHEST,
+                                             DODONGOS_CAVERN_MQ_BOMB_BAG_CHEST,
+                                             DODONGOS_CAVERN_MQ_COMPASS_CHEST,
+                                             DODONGOS_CAVERN_MQ_LARVAE_ROOM_CHEST,
+                                             DODONGOS_CAVERN_MQ_TORCH_PUZZLE_ROOM_CHEST,
+                                             DODONGOS_CAVERN_MQ_UNDER_GRAVE_CHEST,
+                                             DODONGOS_CAVERN_MQ_DEKU_SCRUB_LOBBY_REAR,
+                                             DODONGOS_CAVERN_MQ_DEKU_SCRUB_LOBBY_FRONT,
+                                             DODONGOS_CAVERN_MQ_DEKU_SCRUB_STAIRCASE,
+                                             DODONGOS_CAVERN_MQ_DEKU_SCRUB_SIDE_ROOM_NEAR_LOWER_LIZALFOS,
+                                             DODONGOS_CAVERN_MQ_GS_SCRUB_ROOM,
+                                             DODONGOS_CAVERN_MQ_GS_SONG_OF_TIME_BLOCK_ROOM,
+                                             DODONGOS_CAVERN_MQ_GS_LIZALFOS_ROOM,
+                                             DODONGOS_CAVERN_MQ_GS_LARVAE_ROOM,
+                                             DODONGOS_CAVERN_MQ_GS_BACK_AREA,
+                                         },
+                                         {},
+                                         {
+                                             // Boss Room Locations
+                                             DODONGOS_CAVERN_BOSS_ROOM_CHEST,
+                                             DODONGOS_CAVERN_KING_DODONGO_HEART,
+                                             KING_DODONGO,
+                                         });
 
-DungeonInfo JabuJabusBelly =
-    DungeonInfo("Jabu Jabu's Belly", JABU_JABUS_BELLY_MAP, JABU_JABUS_BELLY_COMPASS, NONE, NONE, NONE, 0, 0,
-                {
-                    // Vanilla Locations
-                    JABU_JABUS_BELLY_MAP_CHEST,
-                    JABU_JABUS_BELLY_COMPASS_CHEST,
-                    JABU_JABUS_BELLY_BOOMERANG_CHEST,
-                    JABU_JABUS_BELLY_DEKU_SCRUB,
-                    JABU_JABUS_BELLY_GS_LOBBY_BASEMENT_LOWER,
-                    JABU_JABUS_BELLY_GS_LOBBY_BASEMENT_UPPER,
-                    JABU_JABUS_BELLY_GS_NEAR_BOSS,
-                    JABU_JABUS_BELLY_GS_WATER_SWITCH_ROOM,
-                },
-                {
-                    // MQ Locations
-                    JABU_JABUS_BELLY_MQ_FIRST_ROOM_SIDE_CHEST,
-                    JABU_JABUS_BELLY_MQ_MAP_CHEST,
-                    JABU_JABUS_BELLY_MQ_SECOND_ROOM_LOWER_CHEST,
-                    JABU_JABUS_BELLY_MQ_COMPASS_CHEST,
-                    JABU_JABUS_BELLY_MQ_SECOND_ROOM_UPPER_CHEST,
-                    JABU_JABUS_BELLY_MQ_BASEMENT_NEAR_SWITCHES_CHEST,
-                    JABU_JABUS_BELLY_MQ_BASEMENT_NEAR_VINES_CHEST,
-                    JABU_JABUS_BELLY_MQ_NEAR_BOSS_CHEST,
-                    JABU_JABUS_BELLY_MQ_FALLING_LIKE_LIKE_ROOM_CHEST,
-                    JABU_JABUS_BELLY_MQ_BOOMERANG_ROOM_SMALL_CHEST,
-                    JABU_JABUS_BELLY_MQ_BOOMERANG_CHEST,
-                    JABU_JABUS_BELLY_MQ_COW,
-                    JABU_JABUS_BELLY_MQ_GS_TAILPASARAN_ROOM,
-                    JABU_JABUS_BELLY_MQ_GS_INVISIBLE_ENEMIES_ROOM,
-                    JABU_JABUS_BELLY_MQ_GS_BOOMERANG_CHEST_ROOM,
-                    JABU_JABUS_BELLY_MQ_GS_NEAR_BOSS,
-                },
-                {
-                    // Shared Locations
-                    JABU_JABUS_BELLY_BARINADE_HEART,
-                    BARINADE,
-                });
+DungeonInfo JabuJabusBelly = DungeonInfo("Jabu Jabu's Belly", JABU_JABUS_BELLY, JABU_JABUS_BELLY_MAP,
+                                         JABU_JABUS_BELLY_COMPASS, NONE, NONE, NONE, 0, 0,
+                                         {
+                                             // Vanilla Locations
+                                             JABU_JABUS_BELLY_MAP_CHEST,
+                                             JABU_JABUS_BELLY_COMPASS_CHEST,
+                                             JABU_JABUS_BELLY_BOOMERANG_CHEST,
+                                             JABU_JABUS_BELLY_DEKU_SCRUB,
+                                             JABU_JABUS_BELLY_GS_LOBBY_BASEMENT_LOWER,
+                                             JABU_JABUS_BELLY_GS_LOBBY_BASEMENT_UPPER,
+                                             JABU_JABUS_BELLY_GS_NEAR_BOSS,
+                                             JABU_JABUS_BELLY_GS_WATER_SWITCH_ROOM,
+                                         },
+                                         {
+                                             // MQ Locations
+                                             JABU_JABUS_BELLY_MQ_FIRST_ROOM_SIDE_CHEST,
+                                             JABU_JABUS_BELLY_MQ_MAP_CHEST,
+                                             JABU_JABUS_BELLY_MQ_SECOND_ROOM_LOWER_CHEST,
+                                             JABU_JABUS_BELLY_MQ_COMPASS_CHEST,
+                                             JABU_JABUS_BELLY_MQ_SECOND_ROOM_UPPER_CHEST,
+                                             JABU_JABUS_BELLY_MQ_BASEMENT_NEAR_SWITCHES_CHEST,
+                                             JABU_JABUS_BELLY_MQ_BASEMENT_NEAR_VINES_CHEST,
+                                             JABU_JABUS_BELLY_MQ_NEAR_BOSS_CHEST,
+                                             JABU_JABUS_BELLY_MQ_FALLING_LIKE_LIKE_ROOM_CHEST,
+                                             JABU_JABUS_BELLY_MQ_BOOMERANG_ROOM_SMALL_CHEST,
+                                             JABU_JABUS_BELLY_MQ_BOOMERANG_CHEST,
+                                             JABU_JABUS_BELLY_MQ_COW,
+                                             JABU_JABUS_BELLY_MQ_GS_TAILPASARAN_ROOM,
+                                             JABU_JABUS_BELLY_MQ_GS_INVISIBLE_ENEMIES_ROOM,
+                                             JABU_JABUS_BELLY_MQ_GS_BOOMERANG_CHEST_ROOM,
+                                             JABU_JABUS_BELLY_MQ_GS_NEAR_BOSS,
+                                         },
+                                         {},
+                                         {
+                                             // Boss Room Locations
+                                             JABU_JABUS_BELLY_BARINADE_HEART,
+                                             BARINADE,
+                                         });
 
 DungeonInfo ForestTemple =
-    DungeonInfo("Forest Temple", FOREST_TEMPLE_MAP, FOREST_TEMPLE_COMPASS, FOREST_TEMPLE_SMALL_KEY,
+    DungeonInfo("Forest Temple", FOREST_TEMPLE, FOREST_TEMPLE_MAP, FOREST_TEMPLE_COMPASS, FOREST_TEMPLE_SMALL_KEY,
                 FOREST_TEMPLE_KEY_RING, FOREST_TEMPLE_BOSS_KEY, FOREST_KEY_COUNT, FOREST_MQ_KEY_COUNT,
                 {
                     // Vanilla Locations
@@ -263,104 +273,108 @@ DungeonInfo ForestTemple =
                     FOREST_TEMPLE_MQ_GS_LEVEL_ISLAND_COURTYARD,
                     FOREST_TEMPLE_MQ_GS_WELL,
                 },
+                {},
                 {
-                    // Shared Locations
+                    // Boss Room Locations
                     FOREST_TEMPLE_PHANTOM_GANON_HEART,
                     PHANTOM_GANON,
                 });
 
-DungeonInfo FireTemple = DungeonInfo("Fire Temple", FIRE_TEMPLE_MAP, FIRE_TEMPLE_COMPASS, FIRE_TEMPLE_SMALL_KEY,
-                                     FIRE_TEMPLE_KEY_RING, FIRE_TEMPLE_BOSS_KEY, FIRE_KEY_COUNT, FIRE_MQ_KEY_COUNT,
-                                     {
-                                         // Vanilla Locations
-                                         FIRE_TEMPLE_NEAR_BOSS_CHEST,
-                                         FIRE_TEMPLE_FLARE_DANCER_CHEST,
-                                         FIRE_TEMPLE_BOSS_KEY_CHEST,
-                                         FIRE_TEMPLE_BIG_LAVA_ROOM_BLOCKED_DOOR_CHEST,
-                                         FIRE_TEMPLE_BIG_LAVA_ROOM_LOWER_OPEN_DOOR_CHEST,
-                                         FIRE_TEMPLE_BOULDER_MAZE_LOWER_CHEST,
-                                         FIRE_TEMPLE_BOULDER_MAZE_UPPER_CHEST,
-                                         FIRE_TEMPLE_BOULDER_MAZE_SIDE_ROOM_CHEST,
-                                         FIRE_TEMPLE_BOULDER_MAZE_SHORTCUT_CHEST,
-                                         FIRE_TEMPLE_SCARECROW_CHEST,
-                                         FIRE_TEMPLE_MAP_CHEST,
-                                         FIRE_TEMPLE_COMPASS_CHEST,
-                                         FIRE_TEMPLE_HIGHEST_GORON_CHEST,
-                                         FIRE_TEMPLE_MEGATON_HAMMER_CHEST,
-                                         FIRE_TEMPLE_GS_SONG_OF_TIME_ROOM,
-                                         FIRE_TEMPLE_GS_BOSS_KEY_LOOP,
-                                         FIRE_TEMPLE_GS_BOULDER_MAZE,
-                                         FIRE_TEMPLE_GS_SCARECROW_TOP,
-                                         FIRE_TEMPLE_GS_SCARECROW_CLIMB,
-                                     },
-                                     {
-                                         // MQ Locations
-                                         FIRE_TEMPLE_MQ_NEAR_BOSS_CHEST,
-                                         FIRE_TEMPLE_MQ_MEGATON_HAMMER_CHEST,
-                                         FIRE_TEMPLE_MQ_COMPASS_CHEST,
-                                         FIRE_TEMPLE_MQ_LIZALFOS_MAZE_LOWER_CHEST,
-                                         FIRE_TEMPLE_MQ_LIZALFOS_MAZE_UPPER_CHEST,
-                                         FIRE_TEMPLE_MQ_CHEST_ON_FIRE,
-                                         FIRE_TEMPLE_MQ_MAP_ROOM_SIDE_CHEST,
-                                         FIRE_TEMPLE_MQ_MAP_CHEST,
-                                         FIRE_TEMPLE_MQ_BOSS_KEY_CHEST,
-                                         FIRE_TEMPLE_MQ_BIG_LAVA_ROOM_BLOCKED_DOOR_CHEST,
-                                         FIRE_TEMPLE_MQ_LIZALFOS_MAZE_SIDE_ROOM_CHEST,
-                                         FIRE_TEMPLE_MQ_FREESTANDING_KEY,
-                                         FIRE_TEMPLE_MQ_GS_ABOVE_FIRE_WALL_MAZE,
-                                         FIRE_TEMPLE_MQ_GS_FIRE_WALL_MAZE_CENTER,
-                                         FIRE_TEMPLE_MQ_GS_BIG_LAVA_ROOM_OPEN_DOOR,
-                                         FIRE_TEMPLE_MQ_GS_FIRE_WALL_MAZE_SIDE_ROOM,
-                                         FIRE_TEMPLE_MQ_GS_SKULL_ON_FIRE,
-                                     },
-                                     {
-                                         // Shared Locations
-                                         FIRE_TEMPLE_VOLVAGIA_HEART,
-                                         VOLVAGIA,
-                                     });
+DungeonInfo FireTemple =
+    DungeonInfo("Fire Temple", FIRE_TEMPLE, FIRE_TEMPLE_MAP, FIRE_TEMPLE_COMPASS, FIRE_TEMPLE_SMALL_KEY,
+                FIRE_TEMPLE_KEY_RING, FIRE_TEMPLE_BOSS_KEY, FIRE_KEY_COUNT, FIRE_MQ_KEY_COUNT,
+                {
+                    // Vanilla Locations
+                    FIRE_TEMPLE_NEAR_BOSS_CHEST,
+                    FIRE_TEMPLE_FLARE_DANCER_CHEST,
+                    FIRE_TEMPLE_BOSS_KEY_CHEST,
+                    FIRE_TEMPLE_BIG_LAVA_ROOM_BLOCKED_DOOR_CHEST,
+                    FIRE_TEMPLE_BIG_LAVA_ROOM_LOWER_OPEN_DOOR_CHEST,
+                    FIRE_TEMPLE_BOULDER_MAZE_LOWER_CHEST,
+                    FIRE_TEMPLE_BOULDER_MAZE_UPPER_CHEST,
+                    FIRE_TEMPLE_BOULDER_MAZE_SIDE_ROOM_CHEST,
+                    FIRE_TEMPLE_BOULDER_MAZE_SHORTCUT_CHEST,
+                    FIRE_TEMPLE_SCARECROW_CHEST,
+                    FIRE_TEMPLE_MAP_CHEST,
+                    FIRE_TEMPLE_COMPASS_CHEST,
+                    FIRE_TEMPLE_HIGHEST_GORON_CHEST,
+                    FIRE_TEMPLE_MEGATON_HAMMER_CHEST,
+                    FIRE_TEMPLE_GS_SONG_OF_TIME_ROOM,
+                    FIRE_TEMPLE_GS_BOSS_KEY_LOOP,
+                    FIRE_TEMPLE_GS_BOULDER_MAZE,
+                    FIRE_TEMPLE_GS_SCARECROW_TOP,
+                    FIRE_TEMPLE_GS_SCARECROW_CLIMB,
+                },
+                {
+                    // MQ Locations
+                    FIRE_TEMPLE_MQ_NEAR_BOSS_CHEST,
+                    FIRE_TEMPLE_MQ_MEGATON_HAMMER_CHEST,
+                    FIRE_TEMPLE_MQ_COMPASS_CHEST,
+                    FIRE_TEMPLE_MQ_LIZALFOS_MAZE_LOWER_CHEST,
+                    FIRE_TEMPLE_MQ_LIZALFOS_MAZE_UPPER_CHEST,
+                    FIRE_TEMPLE_MQ_CHEST_ON_FIRE,
+                    FIRE_TEMPLE_MQ_MAP_ROOM_SIDE_CHEST,
+                    FIRE_TEMPLE_MQ_MAP_CHEST,
+                    FIRE_TEMPLE_MQ_BOSS_KEY_CHEST,
+                    FIRE_TEMPLE_MQ_BIG_LAVA_ROOM_BLOCKED_DOOR_CHEST,
+                    FIRE_TEMPLE_MQ_LIZALFOS_MAZE_SIDE_ROOM_CHEST,
+                    FIRE_TEMPLE_MQ_FREESTANDING_KEY,
+                    FIRE_TEMPLE_MQ_GS_ABOVE_FIRE_WALL_MAZE,
+                    FIRE_TEMPLE_MQ_GS_FIRE_WALL_MAZE_CENTER,
+                    FIRE_TEMPLE_MQ_GS_BIG_LAVA_ROOM_OPEN_DOOR,
+                    FIRE_TEMPLE_MQ_GS_FIRE_WALL_MAZE_SIDE_ROOM,
+                    FIRE_TEMPLE_MQ_GS_SKULL_ON_FIRE,
+                },
+                {},
+                {
+                    FIRE_TEMPLE_VOLVAGIA_HEART,
+                    VOLVAGIA,
+                });
 
-DungeonInfo WaterTemple = DungeonInfo("Water Temple", WATER_TEMPLE_MAP, WATER_TEMPLE_COMPASS, WATER_TEMPLE_SMALL_KEY,
-                                      WATER_TEMPLE_KEY_RING, WATER_TEMPLE_BOSS_KEY, WATER_KEY_COUNT, WATER_MQ_KEY_COUNT,
-                                      {
-                                          // Vanilla Locations
-                                          WATER_TEMPLE_MAP_CHEST,
-                                          WATER_TEMPLE_COMPASS_CHEST,
-                                          WATER_TEMPLE_TORCHES_CHEST,
-                                          WATER_TEMPLE_DRAGON_CHEST,
-                                          WATER_TEMPLE_CENTRAL_BOW_TARGET_CHEST,
-                                          WATER_TEMPLE_CENTRAL_PILLAR_CHEST,
-                                          WATER_TEMPLE_CRACKED_WALL_CHEST,
-                                          WATER_TEMPLE_BOSS_KEY_CHEST,
-                                          WATER_TEMPLE_LONGSHOT_CHEST,
-                                          WATER_TEMPLE_RIVER_CHEST,
-                                          WATER_TEMPLE_GS_BEHIND_GATE,
-                                          WATER_TEMPLE_GS_FALLING_PLATFORM_ROOM,
-                                          WATER_TEMPLE_GS_CENTRAL_PILLAR,
-                                          WATER_TEMPLE_GS_NEAR_BOSS_KEY_CHEST,
-                                          WATER_TEMPLE_GS_RIVER,
-                                      },
-                                      {
-                                          // MQ Locations
-                                          WATER_TEMPLE_MQ_CENTRAL_PILLAR_CHEST,
-                                          WATER_TEMPLE_MQ_BOSS_KEY_CHEST,
-                                          WATER_TEMPLE_MQ_LONGSHOT_CHEST,
-                                          WATER_TEMPLE_MQ_COMPASS_CHEST,
-                                          WATER_TEMPLE_MQ_MAP_CHEST,
-                                          WATER_TEMPLE_MQ_FREESTANDING_KEY,
-                                          WATER_TEMPLE_MQ_GS_BEFORE_UPPER_WATER_SWITCH,
-                                          WATER_TEMPLE_MQ_GS_FREESTANDING_KEY_AREA,
-                                          WATER_TEMPLE_MQ_GS_LIZALFOS_HALLWAY,
-                                          WATER_TEMPLE_MQ_GS_RIVER,
-                                          WATER_TEMPLE_MQ_GS_TRIPLE_WALL_TORCH,
-                                      },
-                                      {
-                                          // Shared Locations
-                                          WATER_TEMPLE_MORPHA_HEART,
-                                          MORPHA,
-                                      });
+DungeonInfo WaterTemple =
+    DungeonInfo("Water Temple", WATER_TEMPLE, WATER_TEMPLE_MAP, WATER_TEMPLE_COMPASS, WATER_TEMPLE_SMALL_KEY,
+                WATER_TEMPLE_KEY_RING, WATER_TEMPLE_BOSS_KEY, WATER_KEY_COUNT, WATER_MQ_KEY_COUNT,
+                {
+                    // Vanilla Locations
+                    WATER_TEMPLE_MAP_CHEST,
+                    WATER_TEMPLE_COMPASS_CHEST,
+                    WATER_TEMPLE_TORCHES_CHEST,
+                    WATER_TEMPLE_DRAGON_CHEST,
+                    WATER_TEMPLE_CENTRAL_BOW_TARGET_CHEST,
+                    WATER_TEMPLE_CENTRAL_PILLAR_CHEST,
+                    WATER_TEMPLE_CRACKED_WALL_CHEST,
+                    WATER_TEMPLE_BOSS_KEY_CHEST,
+                    WATER_TEMPLE_LONGSHOT_CHEST,
+                    WATER_TEMPLE_RIVER_CHEST,
+                    WATER_TEMPLE_GS_BEHIND_GATE,
+                    WATER_TEMPLE_GS_FALLING_PLATFORM_ROOM,
+                    WATER_TEMPLE_GS_CENTRAL_PILLAR,
+                    WATER_TEMPLE_GS_NEAR_BOSS_KEY_CHEST,
+                    WATER_TEMPLE_GS_RIVER,
+                },
+                {
+                    // MQ Locations
+                    WATER_TEMPLE_MQ_CENTRAL_PILLAR_CHEST,
+                    WATER_TEMPLE_MQ_BOSS_KEY_CHEST,
+                    WATER_TEMPLE_MQ_LONGSHOT_CHEST,
+                    WATER_TEMPLE_MQ_COMPASS_CHEST,
+                    WATER_TEMPLE_MQ_MAP_CHEST,
+                    WATER_TEMPLE_MQ_FREESTANDING_KEY,
+                    WATER_TEMPLE_MQ_GS_BEFORE_UPPER_WATER_SWITCH,
+                    WATER_TEMPLE_MQ_GS_FREESTANDING_KEY_AREA,
+                    WATER_TEMPLE_MQ_GS_LIZALFOS_HALLWAY,
+                    WATER_TEMPLE_MQ_GS_RIVER,
+                    WATER_TEMPLE_MQ_GS_TRIPLE_WALL_TORCH,
+                },
+                {},
+                {
+                    // Boss Room Locations
+                    WATER_TEMPLE_MORPHA_HEART,
+                    MORPHA,
+                });
 
 DungeonInfo SpiritTemple =
-    DungeonInfo("Spirit Temple", SPIRIT_TEMPLE_MAP, SPIRIT_TEMPLE_COMPASS, SPIRIT_TEMPLE_SMALL_KEY,
+    DungeonInfo("Spirit Temple", SPIRIT_TEMPLE, SPIRIT_TEMPLE_MAP, SPIRIT_TEMPLE_COMPASS, SPIRIT_TEMPLE_SMALL_KEY,
                 SPIRIT_TEMPLE_KEY_RING, SPIRIT_TEMPLE_BOSS_KEY, SPIRIT_KEY_COUNT, SPIRIT_MQ_KEY_COUNT,
                 {
                     // Vanilla Locations
@@ -419,12 +433,15 @@ DungeonInfo SpiritTemple =
                     // Shared Locations
                     SPIRIT_TEMPLE_SILVER_GAUNTLETS_CHEST,
                     SPIRIT_TEMPLE_MIRROR_SHIELD_CHEST,
+                },
+                {
+                    // Boss Room Locations
                     SPIRIT_TEMPLE_TWINROVA_HEART,
                     TWINROVA,
                 });
 
 DungeonInfo ShadowTemple =
-    DungeonInfo("Shadow Temple", SHADOW_TEMPLE_MAP, SHADOW_TEMPLE_COMPASS, SHADOW_TEMPLE_SMALL_KEY,
+    DungeonInfo("Shadow Temple", SHADOW_TEMPLE, SHADOW_TEMPLE_MAP, SHADOW_TEMPLE_COMPASS, SHADOW_TEMPLE_SMALL_KEY,
                 SHADOW_TEMPLE_KEY_RING, SHADOW_TEMPLE_BOSS_KEY, SHADOW_KEY_COUNT, SHADOW_MQ_KEY_COUNT,
                 {
                     // Vanilla Locations
@@ -479,15 +496,16 @@ DungeonInfo ShadowTemple =
                     SHADOW_TEMPLE_MQ_GS_AFTER_SHIP,
                     SHADOW_TEMPLE_MQ_GS_NEAR_BOSS,
                 },
+                {},
                 {
-                    // Shared Locations
+                    // Boss Room Locations
                     SHADOW_TEMPLE_BONGO_BONGO_HEART,
                     BONGO_BONGO,
                 });
 
 DungeonInfo BottomOfTheWell =
-    DungeonInfo("Bottom of the Well", BOTTOM_OF_THE_WELL_MAP, BOTTOM_OF_THE_WELL_COMPASS, BOTTOM_OF_THE_WELL_SMALL_KEY,
-                BOTTOM_OF_THE_WELL_KEY_RING, NONE, BOTW_KEY_COUNT, BOTW_MQ_KEY_COUNT,
+    DungeonInfo("Bottom of the Well", BOTTOM_OF_THE_WELL, BOTTOM_OF_THE_WELL_MAP, BOTTOM_OF_THE_WELL_COMPASS,
+                BOTTOM_OF_THE_WELL_SMALL_KEY, BOTTOM_OF_THE_WELL_KEY_RING, NONE, BOTW_KEY_COUNT, BOTW_MQ_KEY_COUNT,
                 {
                     // Vanilla Locations
                     BOTTOM_OF_THE_WELL_FRONT_LEFT_FAKE_WALL_CHEST,
@@ -519,36 +537,38 @@ DungeonInfo BottomOfTheWell =
                     BOTTOM_OF_THE_WELL_MQ_GS_COFFIN_ROOM,
                     BOTTOM_OF_THE_WELL_MQ_GS_WEST_INNER_ROOM,
                 },
+                {}, {});
+
+DungeonInfo IceCavern =
+    DungeonInfo("Ice Cavern", ICE_CAVERN, ICE_CAVERN_MAP, ICE_CAVERN_COMPASS, NONE, NONE, NONE, 0, 0,
+                {
+                    // Vanilla Locations
+                    ICE_CAVERN_MAP_CHEST,
+                    ICE_CAVERN_COMPASS_CHEST,
+                    ICE_CAVERN_IRON_BOOTS_CHEST,
+                    ICE_CAVERN_FREESTANDING_POH,
+                    ICE_CAVERN_GS_PUSH_BLOCK_ROOM,
+                    ICE_CAVERN_GS_SPINNING_SCYTHE_ROOM,
+                    ICE_CAVERN_GS_HEART_PIECE_ROOM,
+                },
+                {
+                    // MQ Locations
+                    ICE_CAVERN_MQ_IRON_BOOTS_CHEST,
+                    ICE_CAVERN_MQ_COMPASS_CHEST,
+                    ICE_CAVERN_MQ_MAP_CHEST,
+                    ICE_CAVERN_MQ_FREESTANDING_POH,
+                    ICE_CAVERN_MQ_GS_SCARECROW,
+                    ICE_CAVERN_MQ_GS_ICE_BLOCK,
+                    ICE_CAVERN_MQ_GS_RED_ICE,
+                },
+                {
+                    // Shared Locations
+                    SHEIK_IN_ICE_CAVERN,
+                },
                 {});
 
-DungeonInfo IceCavern = DungeonInfo("Ice Cavern", ICE_CAVERN_MAP, ICE_CAVERN_COMPASS, NONE, NONE, NONE, 0, 0,
-                                    {
-                                        // Vanilla Locations
-                                        ICE_CAVERN_MAP_CHEST,
-                                        ICE_CAVERN_COMPASS_CHEST,
-                                        ICE_CAVERN_IRON_BOOTS_CHEST,
-                                        ICE_CAVERN_FREESTANDING_POH,
-                                        ICE_CAVERN_GS_PUSH_BLOCK_ROOM,
-                                        ICE_CAVERN_GS_SPINNING_SCYTHE_ROOM,
-                                        ICE_CAVERN_GS_HEART_PIECE_ROOM,
-                                    },
-                                    {
-                                        // MQ Locations
-                                        ICE_CAVERN_MQ_IRON_BOOTS_CHEST,
-                                        ICE_CAVERN_MQ_COMPASS_CHEST,
-                                        ICE_CAVERN_MQ_MAP_CHEST,
-                                        ICE_CAVERN_MQ_FREESTANDING_POH,
-                                        ICE_CAVERN_MQ_GS_SCARECROW,
-                                        ICE_CAVERN_MQ_GS_ICE_BLOCK,
-                                        ICE_CAVERN_MQ_GS_RED_ICE,
-                                    },
-                                    {
-                                        // Shared Locations
-                                        SHEIK_IN_ICE_CAVERN,
-                                    });
-
 DungeonInfo GerudoTrainingGrounds =
-    DungeonInfo("Gerudo Training Grounds", NONE, NONE, GERUDO_TRAINING_GROUNDS_SMALL_KEY,
+    DungeonInfo("Gerudo Training Grounds", GERUDO_TRAINING_GROUNDS, NONE, NONE, GERUDO_TRAINING_GROUNDS_SMALL_KEY,
                 GERUDO_TRAINING_GROUNDS_KEY_RING, NONE, GTG_KEY_COUNT, GTG_MQ_KEY_COUNT,
                 {
                     // Vanilla Locations
@@ -595,63 +615,67 @@ DungeonInfo GerudoTrainingGrounds =
                     GERUDO_TRAINING_GROUNDS_MQ_UNDERWATER_SILVER_RUPEE_CHEST,
                     GERUDO_TRAINING_GROUNDS_MQ_HEAVY_BLOCK_CHEST,
                 },
-                {});
+                {}, {});
 
-DungeonInfo GanonsCastle = DungeonInfo("Ganon's Castle", NONE, NONE, GANONS_CASTLE_SMALL_KEY, GANONS_CASTLE_KEY_RING,
-                                       GANONS_CASTLE_BOSS_KEY, GANON_KEY_COUNT, GANON_MQ_KEY_COUNT,
-                                       {
-                                           // Vanilla Locations
-                                           GANONS_CASTLE_FOREST_TRIAL_CHEST,
-                                           GANONS_CASTLE_WATER_TRIAL_LEFT_CHEST,
-                                           GANONS_CASTLE_WATER_TRIAL_RIGHT_CHEST,
-                                           GANONS_CASTLE_SHADOW_TRIAL_FRONT_CHEST,
-                                           GANONS_CASTLE_SHADOW_TRIAL_GOLDEN_GAUNTLETS_CHEST,
-                                           GANONS_CASTLE_SPIRIT_TRIAL_CRYSTAL_SWITCH_CHEST,
-                                           GANONS_CASTLE_SPIRIT_TRIAL_INVISIBLE_CHEST,
-                                           GANONS_CASTLE_LIGHT_TRIAL_FIRST_LEFT_CHEST,
-                                           GANONS_CASTLE_LIGHT_TRIAL_SECOND_LEFT_CHEST,
-                                           GANONS_CASTLE_LIGHT_TRIAL_THIRD_LEFT_CHEST,
-                                           GANONS_CASTLE_LIGHT_TRIAL_FIRST_RIGHT_CHEST,
-                                           GANONS_CASTLE_LIGHT_TRIAL_SECOND_RIGHT_CHEST,
-                                           GANONS_CASTLE_LIGHT_TRIAL_THIRD_RIGHT_CHEST,
-                                           GANONS_CASTLE_LIGHT_TRIAL_INVISIBLE_ENEMIES_CHEST,
-                                           GANONS_CASTLE_LIGHT_TRIAL_LULLABY_CHEST,
-                                           GANONS_CASTLE_DEKU_SCRUB_LEFT,
-                                           GANONS_CASTLE_DEKU_SCRUB_CENTER_LEFT,
-                                           GANONS_CASTLE_DEKU_SCRUB_CENTER_RIGHT,
-                                           GANONS_CASTLE_DEKU_SCRUB_RIGHT,
-                                       },
-                                       {
-                                           // MQ Locations
-                                           GANONS_CASTLE_MQ_WATER_TRIAL_CHEST,
-                                           GANONS_CASTLE_MQ_FOREST_TRIAL_EYE_SWITCH_CHEST,
-                                           GANONS_CASTLE_MQ_FOREST_TRIAL_FROZEN_EYE_SWITCH_CHEST,
-                                           GANONS_CASTLE_MQ_LIGHT_TRIAL_LULLABY_CHEST,
-                                           GANONS_CASTLE_MQ_SHADOW_TRIAL_BOMB_FLOWER_CHEST,
-                                           GANONS_CASTLE_MQ_SHADOW_TRIAL_EYE_SWITCH_CHEST,
-                                           GANONS_CASTLE_MQ_SPIRIT_TRIAL_GOLDEN_GAUNTLETS_CHEST,
-                                           GANONS_CASTLE_MQ_SPIRIT_TRIAL_SUN_BACK_RIGHT_CHEST,
-                                           GANONS_CASTLE_MQ_SPIRIT_TRIAL_SUN_BACK_LEFT_CHEST,
-                                           GANONS_CASTLE_MQ_SPIRIT_TRIAL_SUN_FRONT_LEFT_CHEST,
-                                           GANONS_CASTLE_MQ_SPIRIT_TRIAL_FIRST_CHEST,
-                                           GANONS_CASTLE_MQ_SPIRIT_TRIAL_INVISIBLE_CHEST,
-                                           GANONS_CASTLE_MQ_FOREST_TRIAL_FREESTANDING_KEY,
-                                           GANONS_CASTLE_MQ_DEKU_SCRUB_RIGHT,
-                                           GANONS_CASTLE_MQ_DEKU_SCRUB_CENTER_LEFT,
-                                           GANONS_CASTLE_MQ_DEKU_SCRUB_CENTER,
-                                           GANONS_CASTLE_MQ_DEKU_SCRUB_CENTER_RIGHT,
-                                           GANONS_CASTLE_MQ_DEKU_SCRUB_LEFT,
-                                       },
-                                       {
-                                           // Shared Locations
-                                           GANONS_TOWER_BOSS_KEY_CHEST,
-                                           GANON,
-                                       });
+DungeonInfo GanonsCastle =
+    DungeonInfo("Ganon's Castle", GANONS_CASTLE, NONE, NONE, GANONS_CASTLE_SMALL_KEY, GANONS_CASTLE_KEY_RING,
+                GANONS_CASTLE_BOSS_KEY, GANON_KEY_COUNT, GANON_MQ_KEY_COUNT,
+                {
+                    // Vanilla Locations
+                    GANONS_CASTLE_FOREST_TRIAL_CHEST,
+                    GANONS_CASTLE_WATER_TRIAL_LEFT_CHEST,
+                    GANONS_CASTLE_WATER_TRIAL_RIGHT_CHEST,
+                    GANONS_CASTLE_SHADOW_TRIAL_FRONT_CHEST,
+                    GANONS_CASTLE_SHADOW_TRIAL_GOLDEN_GAUNTLETS_CHEST,
+                    GANONS_CASTLE_SPIRIT_TRIAL_CRYSTAL_SWITCH_CHEST,
+                    GANONS_CASTLE_SPIRIT_TRIAL_INVISIBLE_CHEST,
+                    GANONS_CASTLE_LIGHT_TRIAL_FIRST_LEFT_CHEST,
+                    GANONS_CASTLE_LIGHT_TRIAL_SECOND_LEFT_CHEST,
+                    GANONS_CASTLE_LIGHT_TRIAL_THIRD_LEFT_CHEST,
+                    GANONS_CASTLE_LIGHT_TRIAL_FIRST_RIGHT_CHEST,
+                    GANONS_CASTLE_LIGHT_TRIAL_SECOND_RIGHT_CHEST,
+                    GANONS_CASTLE_LIGHT_TRIAL_THIRD_RIGHT_CHEST,
+                    GANONS_CASTLE_LIGHT_TRIAL_INVISIBLE_ENEMIES_CHEST,
+                    GANONS_CASTLE_LIGHT_TRIAL_LULLABY_CHEST,
+                    GANONS_CASTLE_DEKU_SCRUB_LEFT,
+                    GANONS_CASTLE_DEKU_SCRUB_CENTER_LEFT,
+                    GANONS_CASTLE_DEKU_SCRUB_CENTER_RIGHT,
+                    GANONS_CASTLE_DEKU_SCRUB_RIGHT,
+                },
+                {
+                    // MQ Locations
+                    GANONS_CASTLE_MQ_WATER_TRIAL_CHEST,
+                    GANONS_CASTLE_MQ_FOREST_TRIAL_EYE_SWITCH_CHEST,
+                    GANONS_CASTLE_MQ_FOREST_TRIAL_FROZEN_EYE_SWITCH_CHEST,
+                    GANONS_CASTLE_MQ_LIGHT_TRIAL_LULLABY_CHEST,
+                    GANONS_CASTLE_MQ_SHADOW_TRIAL_BOMB_FLOWER_CHEST,
+                    GANONS_CASTLE_MQ_SHADOW_TRIAL_EYE_SWITCH_CHEST,
+                    GANONS_CASTLE_MQ_SPIRIT_TRIAL_GOLDEN_GAUNTLETS_CHEST,
+                    GANONS_CASTLE_MQ_SPIRIT_TRIAL_SUN_BACK_RIGHT_CHEST,
+                    GANONS_CASTLE_MQ_SPIRIT_TRIAL_SUN_BACK_LEFT_CHEST,
+                    GANONS_CASTLE_MQ_SPIRIT_TRIAL_SUN_FRONT_LEFT_CHEST,
+                    GANONS_CASTLE_MQ_SPIRIT_TRIAL_FIRST_CHEST,
+                    GANONS_CASTLE_MQ_SPIRIT_TRIAL_INVISIBLE_CHEST,
+                    GANONS_CASTLE_MQ_FOREST_TRIAL_FREESTANDING_KEY,
+                    GANONS_CASTLE_MQ_DEKU_SCRUB_RIGHT,
+                    GANONS_CASTLE_MQ_DEKU_SCRUB_CENTER_LEFT,
+                    GANONS_CASTLE_MQ_DEKU_SCRUB_CENTER,
+                    GANONS_CASTLE_MQ_DEKU_SCRUB_CENTER_RIGHT,
+                    GANONS_CASTLE_MQ_DEKU_SCRUB_LEFT,
+                },
+                {
+                    // Shared Locations
+                    GANONS_TOWER_BOSS_KEY_CHEST,
+                    GANON,
+                },
+                {});
 
 const DungeonArray dungeonList = {
     &DekuTree,        &DodongosCavern, &JabuJabusBelly,        &ForestTemple,
     &FireTemple,      &WaterTemple,    &SpiritTemple,          &ShadowTemple,
     &BottomOfTheWell, &IceCavern,      &GerudoTrainingGrounds, &GanonsCastle,
 };
+
+using BossLocations = std::unordered_map<AreaKey, std::vector<LocationKey>>;
 
 } // namespace Dungeon

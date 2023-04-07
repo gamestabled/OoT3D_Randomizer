@@ -10,9 +10,10 @@
 namespace Dungeon {
 class DungeonInfo {
   public:
-    DungeonInfo(std::string name_, ItemKey map_, ItemKey compass_, ItemKey smallKey_, ItemKey keyRing_,
+    DungeonInfo(std::string name_, HintKey hintKey, ItemKey map_, ItemKey compass_, ItemKey smallKey_, ItemKey keyRing_,
                 ItemKey bossKey_, u8 vanillaKeyCount_, u8 mqKeyCount_, std::vector<LocationKey> vanillaLocations_,
-                std::vector<LocationKey> mqLocations_, std::vector<LocationKey> sharedLocations_);
+                std::vector<LocationKey> mqLocations_, std::vector<LocationKey> sharedLocations_,
+                std::vector<LocationKey> bossRoomLocations_);
     ~DungeonInfo();
 
     const std::string& GetName() const {
@@ -51,6 +52,7 @@ class DungeonInfo {
         return (masterQuest) ? mqKeyCount : vanillaKeyCount;
     }
 
+    HintKey GetHintKey() const;
     ItemKey GetSmallKey() const;
     ItemKey GetKeyRing() const;
     ItemKey GetMap() const;
@@ -70,6 +72,7 @@ class DungeonInfo {
 
   private:
     std::string name;
+    HintKey hintKey;
     ItemKey map;
     ItemKey compass;
     ItemKey smallKey;
@@ -82,6 +85,7 @@ class DungeonInfo {
     std::vector<LocationKey> vanillaLocations;
     std::vector<LocationKey> mqLocations;
     std::vector<LocationKey> sharedLocations;
+    std::vector<LocationKey> bossRoomLocations;
 };
 
 extern DungeonInfo DekuTree;
