@@ -457,55 +457,40 @@ bool HasProjectile(HasProjectileAge age) {
            (age == HasProjectileAge::Either && (Slingshot || Boomerang || Hookshot || Bow));
 }
 
-u8 GetDifficultyValueFromString(Option& glitchOption) {
-    for (size_t i = 0; i < GlitchDifficulties.size(); i++) {
-        if (glitchOption.GetSelectedOptionText() == GlitchDifficulties[i]) {
-            return i;
-        }
-    }
-    return 0;
-}
-
 bool CanDoGlitch(GlitchType glitch, GlitchDifficulty difficulty) {
-    u8 setDifficulty;
     switch (glitch) {
         // Restricted Items
         case GlitchType::RestrictedItems:
-            setDifficulty = GetDifficultyValueFromString(GlitchRestrictedItems);
-            if (setDifficulty < static_cast<u8>(difficulty)) {
+            if (!GlitchEnabled(GlitchRestrictedItems, difficulty)) {
                 return false;
             }
             return true;
 
         // Super Stab
         case GlitchType::SuperStab:
-            setDifficulty = GetDifficultyValueFromString(GlitchSuperStab);
-            if (setDifficulty < static_cast<u8>(difficulty)) {
+            if (!GlitchEnabled(GlitchSuperStab, difficulty)) {
                 return false;
             }
             return CanShield && CanUse(STICKS);
 
         // Infinite Sword Glitch
         case GlitchType::ISG:
-            setDifficulty = GetDifficultyValueFromString(GlitchISG);
-            if (setDifficulty < static_cast<u8>(difficulty)) {
+            if (!GlitchEnabled(GlitchISG, difficulty)) {
                 return false;
             }
             return CanShield && (CanJumpslash || CanUse(MEGATON_HAMMER));
 
         // Bomb Hover
         case GlitchType::BombHover:
-            setDifficulty = GetDifficultyValueFromString(GlitchHover);
-            if (setDifficulty < static_cast<u8>(difficulty)) {
+            if (!GlitchEnabled(GlitchHover, difficulty)) {
                 return false;
             }
             return CanDoGlitch(GlitchType::ISG, GlitchDifficulty::NOVICE) &&
-                   (HasBombchus || (Bombs && setDifficulty >= static_cast<u8>(GlitchDifficulty::ADVANCED)));
+                   (HasBombchus || (Bombs && GlitchEnabled(GlitchHover, GlitchDifficulty::ADVANCED)));
 
         // Bomb Ocarina Items
         case GlitchType::BombOI:
-            setDifficulty = GetDifficultyValueFromString(GlitchBombOI);
-            if (setDifficulty < static_cast<u8>(difficulty)) {
+            if (!GlitchEnabled(GlitchBombOI, difficulty)) {
                 return false;
             }
             return Bombs && CanSurviveDamage;
@@ -557,98 +542,89 @@ bool CanDoGlitch(GlitchType glitch, GlitchDifficulty difficulty) {
 
         // Hover Boost
         case GlitchType::HoverBoost:
-            setDifficulty = GetDifficultyValueFromString(GlitchHoverBoost);
-            if (setDifficulty < static_cast<u8>(difficulty)) {
+            if (!GlitchEnabled(GlitchHoverBoost, difficulty)) {
                 return false;
             }
             return Bombs && CanUse(HOVER_BOOTS) && CanSurviveDamage;
 
         // Super Slide
         case GlitchType::SuperSlide:
-            setDifficulty = GetDifficultyValueFromString(GlitchSuperSlide);
-            if (setDifficulty < static_cast<u8>(difficulty)) {
+            if (!GlitchEnabled(GlitchSuperSlide, difficulty)) {
                 return false;
             }
             return true;
 
         // Megaflip
         case GlitchType::Megaflip:
-            setDifficulty = GetDifficultyValueFromString(GlitchMegaflip);
-            if (setDifficulty < static_cast<u8>(difficulty)) {
+            if (!GlitchEnabled(GlitchMegaflip, difficulty)) {
                 return false;
             }
-            //                             Bombchu megaflips should be considered 2 difficulty levels higher
-            return CanShield && (Bombs || (HasBombchus && setDifficulty >= static_cast<u8>(difficulty) + 2));
+            //                Bombchu megaflips should be considered 2 difficulty levels higher
+            return CanShield &&
+                   (Bombs || (HasBombchus && GlitchValue(GlitchMegaflip) >= static_cast<u8>(difficulty) + 2));
 
         // A-Slide
         case GlitchType::ASlide:
-            setDifficulty = GetDifficultyValueFromString(GlitchASlide);
-            if (setDifficulty < static_cast<u8>(difficulty)) {
+            if (!GlitchEnabled(GlitchASlide, difficulty)) {
                 return false;
             }
-            //                                        Same deal as bombchu megaflips
-            return IsChild && CanShield && (Bombs || (HasBombchus && setDifficulty >= static_cast<u8>(difficulty) + 2));
+            //                Same deal as bombchu megaflips
+            return IsChild && CanShield &&
+                   (Bombs || (HasBombchus && GlitchValue(GlitchASlide) >= static_cast<u8>(difficulty) + 2));
 
         // Hammer Slide
         case GlitchType::HammerSlide:
-            setDifficulty = GetDifficultyValueFromString(GlitchHammerSlide);
-            if (setDifficulty < static_cast<u8>(difficulty)) {
+            if (!GlitchEnabled(GlitchHammerSlide, difficulty)) {
                 return false;
             }
             return CanUse(MEGATON_HAMMER) && CanUse(HOVER_BOOTS) && CanShield;
 
         // Ledge Cancel
         case GlitchType::LedgeCancel:
-            setDifficulty = GetDifficultyValueFromString(GlitchLedgeCancel);
-            if (setDifficulty < static_cast<u8>(difficulty)) {
+            if (!GlitchEnabled(GlitchLedgeCancel, difficulty)) {
                 return false;
             }
             //                Similar to bombchu megaflips / A-slides but doesn't scale beyond advanced
             return CanShield &&
-                   (Bombs || (HasBombchus && setDifficulty >= static_cast<u8>(GlitchDifficulty::ADVANCED)));
+                   (Bombs || (HasBombchus && GlitchEnabled(GlitchLedgeCancel, GlitchDifficulty::ADVANCED)));
 
         // Action Swap
         case GlitchType::ActionSwap:
-            setDifficulty = GetDifficultyValueFromString(GlitchActionSwap);
-            if (setDifficulty < static_cast<u8>(difficulty)) {
+            if (!GlitchEnabled(GlitchActionSwap, difficulty)) {
                 return false;
             }
             return true;
 
         // Quick Put Away
         case GlitchType::QPA:
-            setDifficulty = GetDifficultyValueFromString(GlitchQPA);
-            if (setDifficulty < static_cast<u8>(difficulty)) {
+            if (!GlitchEnabled(GlitchQPA, difficulty)) {
                 return false;
             }
             return (CanTakeDamage && Bombs &&
                     // Boot Put Away Delay Method
                     ((CanUse(HOVER_BOOTS) || CanUse(IRON_BOOTS)) ||
                      // Frame Perfect Method
-                     setDifficulty >= static_cast<u8>(GlitchDifficulty::INTERMEDIATE))) ||
+                     GlitchEnabled(GlitchQPA, GlitchDifficulty::INTERMEDIATE))) ||
                    // Grab Method
-                   setDifficulty >= static_cast<u8>(GlitchDifficulty::ADVANCED);
+                   GlitchEnabled(GlitchQPA, GlitchDifficulty::ADVANCED);
 
         // Hookshot Clip
         case GlitchType::HookshotClip:
-            setDifficulty = GetDifficultyValueFromString(GlitchHookshotClip);
-            if (setDifficulty < static_cast<u8>(difficulty)) {
+            if (!GlitchEnabled(GlitchHookshotClip, difficulty)) {
                 return false;
             }
             return CanUse(HOOKSHOT);
 
         // Hookshot Jump: Bonk
         case GlitchType::HookshotJump_Bonk:
-            setDifficulty = GetDifficultyValueFromString(GlitchHookshotJump_Bonk);
-            if (setDifficulty < static_cast<u8>(difficulty)) {
+            if (!GlitchEnabled(GlitchHookshotJump_Bonk, difficulty)) {
                 return false;
             }
             return IsAdult && Hookshot; // Child hookshot jumps are tiny so these stay as adult only until I check
 
         // Hookshot Jump: Boots
         case GlitchType::HookshotJump_Boots:
-            setDifficulty = GetDifficultyValueFromString(GlitchHookshotJump_Boots);
-            if (setDifficulty < static_cast<u8>(difficulty)) {
+            if (!GlitchEnabled(GlitchHookshotJump_Boots, difficulty)) {
                 return false;
             }
             return IsAdult && Hookshot &&
@@ -656,40 +632,35 @@ bool CanDoGlitch(GlitchType glitch, GlitchDifficulty difficulty) {
 
         // Cutscene Dives
         case GlitchType::CutsceneDive:
-            setDifficulty = GetDifficultyValueFromString(GlitchCutsceneDive);
-            if (setDifficulty < static_cast<u8>(difficulty)) {
+            if (!GlitchEnabled(GlitchCutsceneDive, difficulty)) {
                 return false;
             }
             return true;
 
         // Navi Dives without TSC
         case GlitchType::NaviDive_Stick:
-            setDifficulty = GetDifficultyValueFromString(GlitchNaviDive_Stick);
-            if (setDifficulty < static_cast<u8>(difficulty)) {
+            if (!GlitchEnabled(GlitchNaviDive_Stick, difficulty)) {
                 return false;
             }
             return IsChild && Sticks;
 
         // Triple Slash Clip
         case GlitchType::TripleSlashClip:
-            setDifficulty = GetDifficultyValueFromString(GlitchTripleSlashClip);
-            if (setDifficulty < static_cast<u8>(difficulty)) {
+            if (!GlitchEnabled(GlitchTripleSlashClip, difficulty)) {
                 return false;
             }
             return CanUse(KOKIRI_SWORD) || CanUse(MASTER_SWORD);
 
         // Ledge Clip
         case GlitchType::LedgeClip:
-            setDifficulty = GetDifficultyValueFromString(GlitchLedgeClip);
-            if (setDifficulty < static_cast<u8>(difficulty)) {
+            if (!GlitchEnabled(GlitchLedgeClip, difficulty)) {
                 return false;
             }
             return IsAdult;
 
         // Seam Walks
         case GlitchType::SeamWalk:
-            setDifficulty = GetDifficultyValueFromString(GlitchSeamWalk);
-            if (setDifficulty < static_cast<u8>(difficulty)) {
+            if (!GlitchEnabled(GlitchSeamWalk, difficulty)) {
                 return false;
             }
             return true;
@@ -858,20 +829,17 @@ bool SmallKeys(Key dungeon, u8 requiredAmount) {
 bool SmallKeys(Key dungeon, u8 requiredAmountGlitchless, u8 requiredAmountGlitched) {
     switch (dungeon) {
         case FOREST_TEMPLE:
-            if (IsGlitched &&
-                (GetDifficultyValueFromString(GlitchHookshotJump_Boots) >=
-                     static_cast<u8>(GlitchDifficulty::INTERMEDIATE) ||
-                 GetDifficultyValueFromString(GlitchHoverBoost) >= static_cast<u8>(GlitchDifficulty::NOVICE) ||
-                 (GetDifficultyValueFromString(GlitchHover) >= static_cast<u8>(GlitchDifficulty::NOVICE) &&
-                  GetDifficultyValueFromString(GlitchISG) >= static_cast<u8>(GlitchDifficulty::INTERMEDIATE)))) {
+            if (IsGlitched && (GlitchEnabled(GlitchHookshotJump_Boots, GlitchDifficulty::INTERMEDIATE) ||
+                               GlitchEnabled(GlitchHoverBoost, GlitchDifficulty::NOVICE) ||
+                               (GlitchEnabled(GlitchHover, GlitchDifficulty::NOVICE) &&
+                                GlitchEnabled(GlitchISG, GlitchDifficulty::INTERMEDIATE)))) {
                 return ForestTempleKeys >= requiredAmountGlitched;
             }
             return ForestTempleKeys >= requiredAmountGlitchless;
 
         case FIRE_TEMPLE:
-            if (IsGlitched &&
-                (GetDifficultyValueFromString(GlitchLedgeClip) >= static_cast<u8>(GlitchDifficulty::INTERMEDIATE) ||
-                 GetDifficultyValueFromString(GlitchHover) >= static_cast<u8>(GlitchDifficulty::INTERMEDIATE))) {
+            if (IsGlitched && (GlitchEnabled(GlitchLedgeClip, GlitchDifficulty::INTERMEDIATE) ||
+                               GlitchEnabled(GlitchHover, GlitchDifficulty::INTERMEDIATE))) {
                 return FireTempleKeys >= requiredAmountGlitched;
             }
             return FireTempleKeys >= requiredAmountGlitchless;
@@ -889,8 +857,7 @@ bool SmallKeys(Key dungeon, u8 requiredAmountGlitchless, u8 requiredAmountGlitch
             return SpiritTempleKeys >= requiredAmountGlitchless;
 
         case SHADOW_TEMPLE:
-            if (IsGlitched &&
-                (GetDifficultyValueFromString(GlitchHookshotClip) >= static_cast<u8>(GlitchDifficulty::NOVICE))) {
+            if (IsGlitched && (GlitchEnabled(GlitchHookshotClip, GlitchDifficulty::NOVICE))) {
                 return ShadowTempleKeys >= requiredAmountGlitched;
             }
             return ShadowTempleKeys >= requiredAmountGlitchless;
