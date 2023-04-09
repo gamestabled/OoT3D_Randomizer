@@ -1,7 +1,9 @@
 #ifndef _ICETRAP_H_
 #define _ICETRAP_H_
 
-#include "z3D/z3D.h"
+#include "../include/z3D/z3D.h"
+
+#define CURSETRAP_TEXT_BASE_INDEX 0x8FF0
 
 extern s8 IceTrap_ActiveCurse;
 extern u32 possibleChestTraps[20];
@@ -15,6 +17,7 @@ void IceTrap_Update(void);
 void IceTrap_InitTypes(void);
 u8 IceTrap_ActivateCurseTrap(u8 curseType);
 void IceTrap_DispelCurses(void);
+u16 IceTrap_CamRoll(u16 roll);
 
 typedef enum {
     ICETRAP_FIRE,
@@ -31,6 +34,7 @@ typedef enum {
     ICETRAP_CURSE_SWORD,
     ICETRAP_CURSE_DIZZY,
     ICETRAP_CURSE_BLIND,
+    ICETRAP_CURSE_SLOW,
     ICETRAP_CURSE_CROOKED,
     ICETRAP_CURSE_UNSTABLE,
 } IceTrapTypes;

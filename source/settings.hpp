@@ -464,6 +464,7 @@ extern Option HyperActors;
 extern Option HyperBosses;
 extern Option HyperMiddleBosses;
 extern Option HyperEnemies;
+extern Option FreeCamera;
 extern bool HasNightStart;
 
 extern Option FaroresWindAnywhere;
@@ -638,6 +639,7 @@ extern Option LogicShadowFireArrowEntry;
 extern Option LogicShadowUmbrella;
 extern Option LogicShadowFreestandingKey;
 extern Option LogicShadowStatue;
+extern Option LogicShadowBongo;
 extern Option LogicChildDeadhand;
 extern Option LogicGtgWithoutHookshot;
 extern Option LogicGtgFakeWall;
@@ -712,6 +714,7 @@ extern Option TogglePlayMusic;
 extern Option TogglePlaySFX;
 extern Option SilenceNavi;
 extern Option IgnoreMaskReaction;
+extern Option FreeCamControl;
 
 // Cosmetic Settings
 extern Option CustomTunicColors;

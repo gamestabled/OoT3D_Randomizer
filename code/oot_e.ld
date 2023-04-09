@@ -688,6 +688,10 @@ SECTIONS
 		*(.patch_GetCustomMessageTextOne)
 	}
 
+	.patch_CamUpdate 0x2D84C8 : {
+	    * (.patch_CamUpdate)
+	}
+
 	.patch_CamRoll 0x2D88E4 : {
 	    *(.patch_CamRoll)
 	}
@@ -818,10 +822,6 @@ SECTIONS
 
 	.patch_FWGetSet 0x3519CC : {
 		*(.patch_FWGetSet)
-	}
-
-	.patch_OverrideGraphicID_351B94 0x351B94 : {
-		*(.patch_OverrideGraphicID_351B94)
 	}
 
 	.patch_ApplyDamageMultiplier 0x352DC0 : {

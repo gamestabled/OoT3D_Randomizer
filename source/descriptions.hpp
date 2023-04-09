@@ -385,6 +385,7 @@ extern string_view hyperActorsDesc;
 extern string_view hyperBossesDesc;
 extern string_view hyperMiddleBossesDesc;
 extern string_view hyperEnemiesDesc;
+extern string_view freeCamDesc;
 
 extern string_view ToggleAllTricksDesc;
 
@@ -463,6 +464,7 @@ extern string_view LogicShadowFireArrowEntryDesc;
 extern string_view LogicShadowUmbrellaDesc;
 extern string_view LogicShadowFreestandingKeyDesc;
 extern string_view LogicShadowStatueDesc;
+extern string_view LogicShadowBongoDesc;
 extern string_view LogicChildDeadhandDesc;
 extern string_view LogicGtgWithoutHookshotDesc;
 extern string_view LogicGtgFakeWallDesc;

@@ -163,6 +163,10 @@ f32 Player_GetSpeedMultiplier(void) {
         speedMultiplier *= 1.5;
     }
 
+    if (IceTrap_ActiveCurse == ICETRAP_CURSE_SLOW) {
+        speedMultiplier *= 0.75;
+    }
+
     return speedMultiplier;
 }
 

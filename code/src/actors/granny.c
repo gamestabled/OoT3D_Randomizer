@@ -4,7 +4,7 @@
 #define GRANNY_FLAG (gSaveContext.eventChkInf[3] & 0x04)
 
 s32 EnDs_GetTextID(void) {
-    if ((gSettingsContext.shuffleMerchants == SHUFFLEMERCHANTS_HINTS) && !GRANNY_FLAG) {
+    if ((gSettingsContext.shuffleMerchants != SHUFFLEMERCHANTS_OFF) && !GRANNY_FLAG) {
         return 0x9121; // custom text
     }
     return 0x500C; // vanilla text

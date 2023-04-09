@@ -1,5 +1,6 @@
 #include "z3D/z3D.h"
 #include "hid.h"
+#include "3ds/services/irrst.h"
 
 typedef struct {
     btn_t cur;
@@ -10,6 +11,7 @@ typedef struct {
     int16_t touchY;
     uint32_t touchPressed;
     uint32_t touchHeld;
+    circlePosition cStick;
 } InputContext;
 
 void Input_Update(void);

@@ -473,6 +473,8 @@ void SaveFile_SetStartingInventory(void) {
 
     if (gSettingsContext.startingChildTrade) {
         gSaveContext.items[SLOT_TRADE_CHILD] = ITEM_MASK_BUNNY;
+        SaveFile_BorrowMask(0x21);
+        gSaveContext.sceneFlags[0x60].unk |= 0x1 << 0x11;
     }
 
     if (gSettingsContext.startingOcarina > 0) {
@@ -714,6 +716,7 @@ void SaveFile_InitExtSaveData(u32 saveNumber, u8 fromSaveCreation) {
     gExtSaveData.option_SilenceNavi        = gSettingsContext.silenceNavi;
     gExtSaveData.option_IgnoreMaskReaction = gSettingsContext.ignoreMaskReaction;
     gExtSaveData.option_SkipSongReplays    = gSettingsContext.skipSongReplays;
+    gExtSaveData.option_FreeCamControl     = gSettingsContext.freeCamControl;
 }
 
 void SaveFile_LoadExtSaveData(u32 saveNumber) {

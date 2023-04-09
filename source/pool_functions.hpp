@@ -31,3 +31,7 @@ template <typename T, typename FromPool> void AddElementsToPool(std::vector<T>& 
 template <typename T, typename Container> bool ElementInContainer(T& element, const Container& container) {
     return std::find(container.begin(), container.end(), element) != container.end();
 }
+
+template <typename First, typename... T> bool IsAnyOf(First&& first, T&&... t) {
+    return ((first == t) || ...);
+}

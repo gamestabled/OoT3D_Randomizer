@@ -560,6 +560,7 @@ typedef struct {
     u8 hyperBosses;
     u8 hyperMiddleBosses;
     u8 hyperEnemies;
+    u8 freeCamera;
 
     u8 faroresWindAnywhere;
     u8 stickAsAdult;
@@ -600,6 +601,7 @@ typedef struct {
     u8 playSFX;
     u8 silenceNavi;
     u8 ignoreMaskReaction;
+    u8 freeCamControl;
 
     u8 customTunicColors;
     u8 customNaviColors;

@@ -5,10 +5,12 @@
 #include "shops.hpp"
 #include "../code/src/message.h"
 #include "settings.hpp"
+#include "../code/src/icetrap.h"
 
 #include <array>
 #include <set>
 #include <sstream>
+#include <map>
 
 #include <unistd.h>
 
@@ -611,7 +613,8 @@ void CreateAlwaysIncludedMessages() {
                   UNSKIPPABLE() + INSTANT_TEXT_ON() + CENTER_TEXT() + COLOR(QM_RED) + "NARR!" + COLOR(QM_WHITE) +
                       INSTANT_TEXT_OFF() + MESSAGE_END());
     // Curse Traps
-    CreateMessage(0x8FF0, 0, 2, 3,
+    u32 curseIdxOffset = 0;
+    CreateMessage(CURSETRAP_TEXT_BASE_INDEX + curseIdxOffset++, 0, 2, 3,
                   UNSKIPPABLE() + INSTANT_TEXT_ON() + CENTER_TEXT() + "You've been " + COLOR(QM_RED) + "cursed" +
                       COLOR(QM_WHITE) + "!" + NEWLINE() + CENTER_TEXT() + "You can't use your shield!" +
                       INSTANT_TEXT_OFF() + CLOSE_AFTER(120) + MESSAGE_END(),
@@ -629,7 +632,7 @@ void CreateAlwaysIncludedMessages() {
                       "Du kannst deinen Schild nicht mehr benutzen!" + INSTANT_TEXT_OFF() + CLOSE_AFTER(120) +
                       MESSAGE_END());
     CreateMessage(
-        0x8FF1, 0, 2, 3,
+        CURSETRAP_TEXT_BASE_INDEX + curseIdxOffset++, 0, 2, 3,
         UNSKIPPABLE() + INSTANT_TEXT_ON() + CENTER_TEXT() + "You've been " + COLOR(QM_RED) + "cursed" +
             COLOR(QM_WHITE) + "!" + NEWLINE() + CENTER_TEXT() + "Your sword " + COLOR(QM_RED) + "can't hit" +
             COLOR(QM_WHITE) + " anything!" + INSTANT_TEXT_OFF() + CLOSE_AFTER(120) + MESSAGE_END(),
@@ -645,7 +648,7 @@ void CreateAlwaysIncludedMessages() {
         UNSKIPPABLE() + INSTANT_TEXT_ON() + CENTER_TEXT() + "Du wurdest " + COLOR(QM_RED) + "verflucht" +
             COLOR(QM_WHITE) + "!" + NEWLINE() + CENTER_TEXT() + "Dein Schwert " + COLOR(QM_RED) + "verfehlt" +
             COLOR(QM_WHITE) + " absolut alles!" + INSTANT_TEXT_OFF() + CLOSE_AFTER(120) + MESSAGE_END());
-    CreateMessage(0x8FF2, 0, 2, 3,
+    CreateMessage(CURSETRAP_TEXT_BASE_INDEX + curseIdxOffset++, 0, 2, 3,
                   UNSKIPPABLE() + INSTANT_TEXT_ON() + CENTER_TEXT() + "You've been " + COLOR(QM_RED) + "cursed" +
                       COLOR(QM_WHITE) + "!" + NEWLINE() + CENTER_TEXT() + "You are " + COLOR(QM_RED) + "confused" +
                       COLOR(QM_WHITE) + "!" + INSTANT_TEXT_OFF() + CLOSE_AFTER(120) + MESSAGE_END(),
@@ -661,7 +664,7 @@ void CreateAlwaysIncludedMessages() {
                   UNSKIPPABLE() + INSTANT_TEXT_ON() + CENTER_TEXT() + "Du wurdest " + COLOR(QM_RED) + "verflucht" +
                       COLOR(QM_WHITE) + "!" + NEWLINE() + CENTER_TEXT() + "Du bist " + COLOR(QM_RED) + "verwirrt" +
                       COLOR(QM_WHITE) + "!" + INSTANT_TEXT_OFF() + CLOSE_AFTER(120) + MESSAGE_END());
-    CreateMessage(0x8FF3, 0, 2, 3,
+    CreateMessage(CURSETRAP_TEXT_BASE_INDEX + curseIdxOffset++, 0, 2, 3,
                   UNSKIPPABLE() + INSTANT_TEXT_ON() + CENTER_TEXT() + "You've been " + COLOR(QM_RED) + "cursed" +
                       COLOR(QM_WHITE) + "!" + NEWLINE() + CENTER_TEXT() + "Terrain is " + COLOR(QM_RED) + "invisible" +
                       COLOR(QM_WHITE) + "!" + INSTANT_TEXT_OFF() + CLOSE_AFTER(120) + MESSAGE_END(),
@@ -678,7 +681,24 @@ void CreateAlwaysIncludedMessages() {
                   UNSKIPPABLE() + INSTANT_TEXT_ON() + CENTER_TEXT() + "Du wurdest " + COLOR(QM_RED) + "verflucht" +
                       COLOR(QM_WHITE) + "!" + NEWLINE() + CENTER_TEXT() + "Die Umgebung ist " + COLOR(QM_RED) +
                       "unsichtbar" + COLOR(QM_WHITE) + "!" + INSTANT_TEXT_OFF() + CLOSE_AFTER(120) + MESSAGE_END());
-    CreateMessage(0x8FF4, 0, 2, 3,
+    CreateMessage(CURSETRAP_TEXT_BASE_INDEX + curseIdxOffset++, 0, 2, 3,
+                  UNSKIPPABLE() + INSTANT_TEXT_ON() + CENTER_TEXT() + "You've been " + COLOR(QM_RED) + "cursed" +
+                      COLOR(QM_WHITE) + "!" + NEWLINE() + CENTER_TEXT() + "You are feeling " + COLOR(QM_RED) +
+                      "sluggish" + COLOR(QM_WHITE) + "..." + INSTANT_TEXT_OFF() + CLOSE_AFTER(120) + MESSAGE_END(),
+                  UNSKIPPABLE() + INSTANT_TEXT_ON() + CENTER_TEXT() + "Un " + COLOR(QM_RED) + "sort" + COLOR(QM_WHITE) +
+                      " vous a été jeté!" + NEWLINE() + CENTER_TEXT() + "Vous vous sentez " + COLOR(QM_RED) +
+                      "léthargique" + COLOR(QM_WHITE) + "..." + INSTANT_TEXT_OFF() + CLOSE_AFTER(120) + MESSAGE_END(),
+                  UNSKIPPABLE() + INSTANT_TEXT_ON() + CENTER_TEXT() + "¡Has sido " + COLOR(QM_RED) + "hechizado" +
+                      COLOR(QM_WHITE) + "!" + NEWLINE() + CENTER_TEXT() + "Te sientes " + COLOR(QM_RED) + "lento" +
+                      COLOR(QM_WHITE) + "..." + INSTANT_TEXT_OFF() + CLOSE_AFTER(120) + MESSAGE_END(),
+                  UNSKIPPABLE() + INSTANT_TEXT_ON() + CENTER_TEXT() + "Sei caduto vittima di una " + COLOR(QM_RED) +
+                      "maledizione" + COLOR(QM_WHITE) + "!" + NEWLINE() + CENTER_TEXT() + "Ti senti un po' " +
+                      COLOR(QM_RED) + "fiacco" + COLOR(QM_WHITE) + "..." + INSTANT_TEXT_OFF() + CLOSE_AFTER(120) +
+                      MESSAGE_END(),
+                  UNSKIPPABLE() + INSTANT_TEXT_ON() + CENTER_TEXT() + "Du wurdest " + COLOR(QM_RED) + "verflucht" +
+                      COLOR(QM_WHITE) + "!" + NEWLINE() + CENTER_TEXT() + "Du fühlst dich " + COLOR(QM_RED) + "träge" +
+                      COLOR(QM_WHITE) + "..." + INSTANT_TEXT_OFF() + CLOSE_AFTER(120) + MESSAGE_END());
+    CreateMessage(CURSETRAP_TEXT_BASE_INDEX + curseIdxOffset++, 0, 2, 3,
                   UNSKIPPABLE() + INSTANT_TEXT_ON() + CENTER_TEXT() + "You've been " + COLOR(QM_RED) + "cursed" +
                       COLOR(QM_WHITE) + "!" + NEWLINE() + CENTER_TEXT() + "The world is " + COLOR(QM_RED) + "crooked" +
                       COLOR(QM_WHITE) + "!" + INSTANT_TEXT_OFF() + CLOSE_AFTER(120) + MESSAGE_END(),
@@ -696,7 +716,7 @@ void CreateAlwaysIncludedMessages() {
                       COLOR(QM_WHITE) + "!" + NEWLINE() + CENTER_TEXT() + "Die Welt wurde " + COLOR(QM_RED) +
                       "gedreht" + COLOR(QM_WHITE) + "!" + INSTANT_TEXT_OFF() + CLOSE_AFTER(120) + MESSAGE_END());
     CreateMessage(
-        0x8FF5, 0, 2, 3,
+        CURSETRAP_TEXT_BASE_INDEX + curseIdxOffset++, 0, 2, 3,
         UNSKIPPABLE() + INSTANT_TEXT_ON() + CENTER_TEXT() + "You've been " + COLOR(QM_RED) + "cursed" +
             COLOR(QM_WHITE) + "!" + NEWLINE() + CENTER_TEXT() + "The camera is " + COLOR(QM_RED) + "unstable" +
             COLOR(QM_WHITE) + "!" + INSTANT_TEXT_OFF() + CLOSE_AFTER(120) + MESSAGE_END(),
@@ -1062,6 +1082,96 @@ std::vector<Text> CreateBaseCompassTexts() {
     return compassTexts;
 }
 
+// Width of all used characters in pixels when displayed in-game. Each number
+// is actually the pixel width of each character plus one since the game puts
+// one pixel of space between each character in a textbox.
+// Used to nicely format messages
+static std::map<std::string, int> pixelWidthTable = {
+    { " ", 4 },  { "!", 3 },  { "\"", 5 },     { "#", 9 },  { "$", 9 },  { "%", 11 }, { "&", 9 },  { "\'", 4 },
+    { "(", 5 },  { ")", 5 },  { "*", 6 },      { "+", 8 },  { ",", 4 },  { "-", 6 },  { ".", 3 },  { "/", 6 },
+    { "0", 8 },  { "1", 4 },  { "2", 8 },      { "3", 8 },  { "4", 8 },  { "5", 8 },  { "6", 8 },  { "7", 8 },
+    { "8", 8 },  { "9", 8 },  { ":", 3 },      { ";", 3 },  { "<", 8 },  { "=", 9 },  { ">", 8 },  { "?", 7 },
+    { "@", 11 }, { "A", 11 }, { "B", 9 },      { "C", 10 }, { "D", 9 },  { "E", 8 },  { "F", 8 },  { "G", 10 },
+    { "H", 9 },  { "I", 3 },  { "J", 8 },      { "K", 9 },  { "L", 7 },  { "M", 11 }, { "N", 9 },  { "O", 11 },
+    { "P", 9 },  { "Q", 11 }, { "R", 9 },      { "S", 9 },  { "T", 9 },  { "U", 9 },  { "V", 10 }, { "W", 12 },
+    { "X", 9 },  { "Y", 10 }, { "Z", 9 },      { "[", 5 },  { "\\", 6 }, { "]", 5 },  { "^", 7 },  { "_", 8 },
+    { "`", 4 },  { "a", 8 },  { "b", 8 },      { "c", 8 },  { "d", 8 },  { "e", 8 },  { "f", 5 },  { "g", 8 },
+    { "h", 7 },  { "i", 3 },  { "j", 4 },      { "k", 7 },  { "l", 3 },  { "m", 10 }, { "n", 7 },  { "o", 9 },
+    { "p", 8 },  { "q", 8 },  { "r", 5 },      { "s", 7 },  { "t", 5 },  { "u", 7 },  { "v", 8 },  { "w", 9 },
+    { "x", 8 },  { "y", 8 },  { "z", 8 },      { "{", 5 },  { "¦", 3 },  { "}", 5 },  { "¡", 5 },  { "¢", 7 },
+    { "£", 8 },  { "¤", 7 },  { "¥", 8 },      { "|", 3 },  { "§", 12 }, { "¨", 12 }, { "©", 10 }, { "ª", 5 },
+    { "«", 8 },  { "¬", 7 },  { "\u00AD", 6 }, { "®", 10 }, { "¯", 5 },  { "°", 12 }, { "±", 12 }, { "²", 5 },
+    { "³", 5 },  { "µ", 6 },  { "¶", 8 },      { "·", 4 },  { "¹", 4 },  { "º", 5 },  { "»", 9 },  { "¼", 9 },
+    { "½", 9 },  { "¾", 10 }, { "¿", 7 },      { "À", 11 }, { "Á", 11 }, { "Â", 11 }, { "Ã", 11 }, { "Ä", 11 },
+    { "Å", 11 }, { "Æ", 12 }, { "Ç", 10 },     { "È", 8 },  { "É", 8 },  { "Ê", 8 },  { "Ë", 8 },  { "Ì", 5 },
+    { "Í", 5 },  { "Î", 5 },  { "Ï", 5 },      { "Ð", 10 }, { "Ñ", 9 },  { "Ò", 11 }, { "Ó", 11 }, { "Ô", 11 },
+    { "Õ", 11 }, { "Ö", 11 }, { "×", 9 },      { "Ø", 11 }, { "Ù", 9 },  { "Ú", 9 },  { "Û", 9 },  { "Ü", 9 },
+    { "Ý", 10 }, { "Þ", 8 },  { "ß", 8 },      { "à", 8 },  { "á", 8 },  { "â", 8 },  { "ã", 8 },  { "ä", 8 },
+    { "å", 8 },  { "æ", 11 }, { "ç", 8 },      { "è", 8 },  { "é", 8 },  { "ê", 8 },  { "ë", 8 },  { "ì", 5 },
+    { "í", 5 },  { "î", 5 },  { "ï", 5 },      { "ð", 9 },  { "ñ", 7 },  { "ò", 9 },  { "ó", 9 },  { "ô", 9 },
+    { "õ", 9 },  { "ö", 9 },  { "÷", 11 },     { "ø", 9 },  { "ù", 7 },  { "ú", 7 },  { "û", 7 },  { "ü", 7 },
+    { "ý", 8 },  { "þ", 8 },  { "ÿ", 8 },      { "Œ", 11 }, { "œ", 11 }, { "„", 5 },  { "”", 5 },  { "€", 10 },
+    { "Ÿ", 10 },
+};
+
+// Takes a string and the position of the last calculated newline.
+// Calculates the maximum number of characters that could satisfy
+// next line in the string from the last calculated newline.
+static size_t NextLineLength(std::string* textStr, size_t lastNewline) {
+    constexpr size_t maxLinePixelWidth = 287;
+
+    size_t totalPixelWidth = 0;
+    size_t currentPos      = lastNewline;
+
+    // Looping through the string from the lastNewline until the total
+    // width of counted characters exceeds the maximum pixels in a line
+    size_t nextPosJump = 0;
+    while (totalPixelWidth < maxLinePixelWidth && currentPos < textStr->length()) {
+        // Skip over control codes
+        if (textStr->at(currentPos) == '\x7F') {
+            if (IsAnyOf(textStr->at(currentPos + 1), '\x02', '\x06', '\x08', '\x0A', '\x0F', '\x10', '\x1D')) {
+                nextPosJump = 3;
+            } else if (textStr->at(currentPos + 1) == '\x03') {
+                nextPosJump = 4;
+            } else if (textStr->at(currentPos + 1) == '\x1A') {
+                nextPosJump = 6;
+            } else if (textStr->at(currentPos + 1) == '\x0E') {
+                nextPosJump = 7;
+            } else if (textStr->at(currentPos + 1) == '\x0B') {
+                nextPosJump = 2;
+                // Assume worst case for player name 12 * 8 (widest character * longest name length)
+                totalPixelWidth += 96;
+            } else {
+                nextPosJump = 2;
+            }
+        } else {
+            // Some characters are only one byte while others are two bytes
+            // So check both possibilities when checking for a character
+            if (pixelWidthTable.count(textStr->substr(currentPos, 1))) {
+                totalPixelWidth += pixelWidthTable[textStr->substr(currentPos, 1)];
+                nextPosJump = 1;
+            } else if (pixelWidthTable.count(textStr->substr(currentPos, 2))) {
+                totalPixelWidth += pixelWidthTable[textStr->substr(currentPos, 2)];
+                nextPosJump = 2;
+            } else {
+                CitraPrint("Table does not contain " + textStr->substr(currentPos, 1) + "/" +
+                           textStr->substr(currentPos, 2));
+                CitraPrint("Full string: " + *textStr);
+                nextPosJump = 1;
+            }
+        }
+
+        currentPos += nextPosJump;
+    }
+
+    // return the total number of characters we looped through
+    if (totalPixelWidth > maxLinePixelWidth && textStr->at(currentPos - nextPosJump) != ' ') {
+        return currentPos - lastNewline - nextPosJump;
+    } else {
+        return currentPos - lastNewline;
+    }
+}
+
 Text AddColorsAndFormat(Text text, const std::vector<u8>& colors /*= {}*/) {
 
     // for each language
@@ -1074,9 +1184,33 @@ Text AddColorsAndFormat(Text text, const std::vector<u8>& colors /*= {}*/) {
             textStr->replace(atSymbol, 1, PLAYER_NAME());
             atSymbol = textStr->find('@');
         }
+
+        // add colors
+        for (auto color : colors) {
+            size_t firstHashtag = textStr->find('#');
+            if (firstHashtag != std::string::npos) {
+                textStr->replace(firstHashtag, 1, COLOR(color));
+                size_t secondHashtag = textStr->find('#');
+                if (secondHashtag == std::string::npos) {
+                    CitraPrint("ERROR: Couldn't find second '#' in " + (*textStr));
+                } else {
+                    textStr->replace(secondHashtag, 1, COLOR(QM_WHITE));
+                }
+            }
+        }
+
+        // add SFX
+        size_t brace = textStr->find('{');
+        while (brace != std::string::npos) {
+            std::string sfxString = textStr->substr(brace + 1, brace + 3);
+            u16 sfxNumber         = stoi(sfxString, nullptr, 16);
+            textStr->replace(brace, 5, PLAY_SFX(sfxNumber));
+            brace = textStr->find('{');
+        }
+
         // insert newlines either manually or when encountering a '&'
-        constexpr size_t lineLength = 42;
-        size_t lastNewline          = 0;
+        size_t lastNewline = 0;
+        size_t lineLength  = NextLineLength(textStr, lastNewline);
         while (lastNewline + lineLength < textStr->length()) {
             size_t carrot     = textStr->find('^', lastNewline);
             size_t ampersand  = textStr->find('&', lastNewline);
@@ -1097,6 +1231,7 @@ Text AddColorsAndFormat(Text text, const std::vector<u8>& colors /*= {}*/) {
                 textStr->replace(lastSpace, 1, NEWLINE());
                 lastNewline = lastSpace + NEWLINE().length();
             }
+            lineLength = NextLineLength(textStr, lastNewline);
         }
         // clean up any remaining '&' characters
         size_t ampersand = textStr->find('&');
@@ -1135,29 +1270,6 @@ Text AddColorsAndFormat(Text text, const std::vector<u8>& colors /*= {}*/) {
             if (newLinesCount <= 1) {
                 textStr->replace(choice, TWO_WAY_CHOICE().length(), NEWLINE() + TWO_WAY_CHOICE());
             }
-        }
-
-        // add colors
-        for (auto color : colors) {
-            size_t firstHashtag = textStr->find('#');
-            if (firstHashtag != std::string::npos) {
-                textStr->replace(firstHashtag, 1, COLOR(color));
-                size_t secondHashtag = textStr->find('#');
-                if (secondHashtag == std::string::npos) {
-                    CitraPrint("ERROR: Couldn't find second '#' in " + (*textStr));
-                } else {
-                    textStr->replace(secondHashtag, 1, COLOR(QM_WHITE));
-                }
-            }
-        }
-
-        // add SFX
-        size_t brace = textStr->find('{');
-        while (brace != std::string::npos) {
-            std::string sfxString = textStr->substr(brace + 1, brace + 3);
-            u16 sfxNumber         = stoi(sfxString, nullptr, 16);
-            textStr->replace(brace, 5, PLAY_SFX(sfxNumber));
-            brace = textStr->find('{');
         }
     }
     return Text{ "" } + UNSKIPPABLE() + INSTANT_TEXT_ON() + text + INSTANT_TEXT_OFF() + MESSAGE_END();

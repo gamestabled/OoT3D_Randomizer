@@ -247,7 +247,7 @@ void Cutscene_OverrideJabuJabusBelly(void) {
         // Skipped if wrong warping
         gSaveContext.dayTime = 0x8000;
     }
-    gGlobalContext->nextEntranceIndex = Entrance_OverrideNextIndex(0x221);
+    gGlobalContext->nextEntranceIndex = Entrance_OverrideNextIndex(0x10E);
     gGlobalContext->sceneLoadFlag     = 0x14;
     gGlobalContext->fadeOutTransition = 0xA;
     gSaveContext.nextCutsceneIndex    = 0x0;

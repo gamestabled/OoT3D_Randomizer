@@ -41,11 +41,6 @@ OverrideTextID_patch:
 OverrideItemID_patch:
     b hook_OverrideItemID
 
-.section .patch_OverrideGraphicID_351B94
-.global OverrideGraphicID_patch_351B94
-OverrideGraphicID_patch_351B94:
-    bl hook_OverrideGraphicID_351B94
-
 .section .patch_OverrideGraphicID_35495C
 .global OverrideGraphicID_patch_35495C
 OverrideGraphicID_patch_35495C:
@@ -2154,6 +2149,11 @@ OoBBombchuThree_patch:
 .global CamRoll_patch
 CamRoll_patch:
     bl hook_CamRoll
+
+.section .patch_CamUpdate
+.global CamUpdate_patch
+CamUpdate_patch:
+    bl hook_CamUpdate
 
 @ ----------------------------------
 @ ----------------------------------

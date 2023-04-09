@@ -18,7 +18,7 @@ void EnGm_SetRewardFlag(void) {
 }
 
 s32 EnGm_UseCustomText(void) {
-    return (gSettingsContext.shuffleMerchants == SHUFFLEMERCHANTS_HINTS && (gSaveContext.eventChkInf[3] & 0x20) == 0);
+    return (gSettingsContext.shuffleMerchants != SHUFFLEMERCHANTS_OFF && (gSaveContext.eventChkInf[3] & 0x20) == 0);
 }
 
 s32 EnGm_ItemOverride(void) {
