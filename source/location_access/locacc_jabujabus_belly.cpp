@@ -350,7 +350,6 @@ void AreaTable_Init_JabuJabusBelly() {
                  {
                      // Events
                      EventAccess(&FairyPot, { [] { return true; } }),
-                     EventAccess(&JabuJabusBellyClear, { [] { return true; } }),
                  },
                  {
                      // Locations
