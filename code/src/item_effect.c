@@ -271,6 +271,7 @@ void ItemEffect_FillWalletUpgrade(SaveContext* saveCtx, s16 arg1, s16 arg2) {
 
 void ItemEffect_OpenMaskShop(SaveContext* saveCtx, s16 arg1, s16 arg2) {
     gSaveContext.sceneFlags[0x60].unk |= 0x1 << 0x11;
+    gSaveContext.itemGetInf[2] &= 0xFFF7; // Replace starting bunny hood with letter
 
     if (gSettingsContext.openKakariko == OPENKAKARIKO_OPEN) {
         gSaveContext.infTable[7] |= 0x40; // "Spoke to Gate Guard About Mask Shop"

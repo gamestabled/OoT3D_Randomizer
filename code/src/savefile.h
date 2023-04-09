@@ -21,6 +21,7 @@ u8 SaveFile_ChildTradeSlots(void);
 u8 SaveFile_WeirdEggHatched(void);
 u8 SaveFile_CurrentMask(void);
 u32 SaveFile_MaskSlotValue(void);
+void SaveFile_BorrowMask(s16 SI_ItemId);
 void SaveFile_SetOwnedTradeItemEquipped(void);
 void SaveFile_ResetItemSlotsIfMatchesID(u8 itemSlot);
 u8 SaveFile_InventoryMenuHasSlot(u8 adult, u8 itemSlot);
