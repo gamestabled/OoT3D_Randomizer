@@ -2155,6 +2155,11 @@ OoBBombchuThree_patch:
 CamRoll_patch:
     bl hook_CamRoll
 
+.section .patch_CamUpdate
+.global CamUpdate_patch
+CamUpdate_patch:
+    bl hook_CamUpdate
+
 @ ----------------------------------
 @ ----------------------------------
 

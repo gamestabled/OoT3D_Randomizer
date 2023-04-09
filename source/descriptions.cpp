@@ -1234,6 +1234,13 @@ string_view hyperMiddleBossesDesc     = "Affects all middle bosses, like Dark Li
                                                                                            //
 string_view hyperEnemiesDesc          = "Affects all regular enemies.";                    //
                                                                                            //
+/*------------------------------                                                           //
+|          FREE CAMERA         |                                                           //
+------------------------------*/                                                           //
+string_view freeCamDesc               = "Use the C-stick to control the camera on new 3DS\n"
+                                        "systems and Citra.\n\n"                           //
+                                        "Go to Personalization Settings > Ingame Defaults\n"
+                                        "for camera control options.";                     //
                                                                                            //--------------//
 /*------------------------------                                                                           //
 |  DETAILED LOGIC EXPLANATIONS |                                                                           //

@@ -464,6 +464,7 @@ extern Option HyperActors;
 extern Option HyperBosses;
 extern Option HyperMiddleBosses;
 extern Option HyperEnemies;
+extern Option FreeCamera;
 extern bool HasNightStart;
 
 extern Option FaroresWindAnywhere;
@@ -712,6 +713,7 @@ extern Option TogglePlayMusic;
 extern Option TogglePlaySFX;
 extern Option SilenceNavi;
 extern Option IgnoreMaskReaction;
+extern Option FreeCamControl;
 
 // Cosmetic Settings
 extern Option CustomTunicColors;

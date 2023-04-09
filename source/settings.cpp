@@ -341,6 +341,7 @@ Option HyperActors         = Option::U8  ("Hyper Actors",           {"All Off", 
 Option HyperBosses         = Option::Bool(2, "Hyper Bosses",        {"Off", "On"},                                                          {hyperBossesDesc});
 Option HyperMiddleBosses   = Option::Bool(2, "Hyper Middle Bosses", {"Off", "On"},                                                          {hyperMiddleBossesDesc});
 Option HyperEnemies        = Option::Bool(2, "Hyper Enemies",       {"Off", "On"},                                                          {hyperEnemiesDesc});
+Option FreeCamera          = Option::Bool("Free Camera",            {"Off", "On"},                                                          {freeCamDesc},                                                                                                    OptionCategory::Setting,    ON);
 bool HasNightStart         = false;
 std::vector<Option *> miscOptions = {
     &Racing,
@@ -370,6 +371,7 @@ std::vector<Option *> miscOptions = {
     &HyperBosses,
     &HyperMiddleBosses,
     &HyperEnemies,
+    &FreeCamera,
 };
 
 // Item Usability Settings
@@ -978,14 +980,15 @@ std::vector<Option*> preferenceOptions = {
     &ArrowSwitchButton,
 };
 
-Option ZTargeting         = Option::U8("L-Targeting",          {"Switch", "Hold"},                                 {""},                     OptionCategory::Cosmetic, 1);
-Option CameraControl      = Option::U8("Camera Control",       {"Normal", "Invert Y-axis"},                        {""},                     OptionCategory::Cosmetic);
-Option MotionControl      = Option::U8("Motion Control",       {"On", "Off"},                                      {""},                     OptionCategory::Cosmetic);
-Option TogglePlayMusic    = Option::U8("Play Music",           {"Off", "On"},                                      {""},                     OptionCategory::Cosmetic, 1);
-Option TogglePlaySFX      = Option::U8("Play Sound Effects",   {"Off", "On"},                                      {""},                     OptionCategory::Cosmetic, 1);
-Option SilenceNavi        = Option::U8("Silence Navi",         {"Off", "On"},                                      {silenceNaviDesc},        OptionCategory::Cosmetic);
-Option IgnoreMaskReaction = Option::U8("Ignore Mask Reaction", {"Off", "On"},                                      {ignoreMaskReactionDesc}, OptionCategory::Cosmetic);
-Option SkipSongReplays    = Option::U8("Skip Song Replays",    {"Don't Skip", "Skip (No SFX)", "Skip (Keep SFX)"}, {skipSongReplaysDesc},    OptionCategory::Cosmetic);
+Option ZTargeting         = Option::U8("L-Targeting",          {"Switch", "Hold"},                                          {""},                     OptionCategory::Cosmetic, 1);
+Option CameraControl      = Option::U8("Camera Control",       {"Normal", "Invert Y-axis"},                                 {""},                     OptionCategory::Cosmetic);
+Option MotionControl      = Option::U8("Motion Control",       {"On", "Off"},                                               {""},                     OptionCategory::Cosmetic);
+Option TogglePlayMusic    = Option::U8("Play Music",           {"Off", "On"},                                               {""},                     OptionCategory::Cosmetic, 1);
+Option TogglePlaySFX      = Option::U8("Play Sound Effects",   {"Off", "On"},                                               {""},                     OptionCategory::Cosmetic, 1);
+Option SilenceNavi        = Option::U8("Silence Navi",         {"Off", "On"},                                               {silenceNaviDesc},        OptionCategory::Cosmetic);
+Option IgnoreMaskReaction = Option::U8("Ignore Mask Reaction", {"Off", "On"},                                               {ignoreMaskReactionDesc}, OptionCategory::Cosmetic);
+Option SkipSongReplays    = Option::U8("Skip Song Replays",    {"Don't Skip", "Skip (No SFX)", "Skip (Keep SFX)"},          {skipSongReplaysDesc},    OptionCategory::Cosmetic);
+Option FreeCamControl     = Option::U8("Free Camera Control",  {"Normal", "Invert Y-Axis", "Invert X-Axis", "Invert Both"}, {""},                     OptionCategory::Cosmetic);
 std::vector<Option*> ingameDefaultOptions = {
     &ZTargeting,
     &CameraControl,
@@ -995,6 +998,7 @@ std::vector<Option*> ingameDefaultOptions = {
     &SilenceNavi,
     &IgnoreMaskReaction,
     &SkipSongReplays,
+    &FreeCamControl,
 };
 
 // Function to make options vectors for Navi and Tunic colors without the "Same as ..." option
@@ -1455,6 +1459,7 @@ SettingsContext FillContext() {
     ctx.hyperBosses         = (HyperBosses) ? 1 : 0;
     ctx.hyperMiddleBosses   = (HyperMiddleBosses) ? 1 : 0;
     ctx.hyperEnemies        = (HyperEnemies) ? 1 : 0;
+    ctx.freeCamera          = (FreeCamera) ? 1 : 0;
 
     ctx.faroresWindAnywhere  = (FaroresWindAnywhere) ? 1 : 0;
     ctx.stickAsAdult         = (StickAsAdult) ? 1 : 0;
@@ -1495,6 +1500,7 @@ SettingsContext FillContext() {
     ctx.playSFX            = TogglePlaySFX.Value<u8>();
     ctx.silenceNavi        = SilenceNavi.Value<u8>();
     ctx.ignoreMaskReaction = IgnoreMaskReaction.Value<u8>();
+    ctx.freeCamControl     = FreeCamControl.Value<u8>();
 
     ctx.customTunicColors           = (CustomTunicColors) ? 1 : 0;
     ctx.customNaviColors            = (CustomNaviColors) ? 1 : 0;
@@ -2233,6 +2239,13 @@ void ForceChange(u32 kDown, Option* currentSetting) {
         for (auto op : hyperActorOptions) {
             op->Unhide();
         }
+    }
+
+    if (FreeCamera) {
+        FreeCamControl.Unhide();
+    } else {
+        FreeCamControl.Hide();
+        FreeCamControl.SetSelectedIndex(0);
     }
 
     // Manage toggle for item usability options

@@ -4,6 +4,7 @@
 #include "hid.h"
 #include "3ds/svc.h"
 #include "utils.h"
+#include "3ds/types.h"
 
 #define HID_PAD (real_hid.pad.pads[real_hid.pad.index].curr.val)
 
@@ -18,6 +19,9 @@ void Input_Update(void) {
     rInputCtx.touchY       = real_hid.touch.touches[real_hid.touch.index].touch.y;
     rInputCtx.touchPressed = real_hid.touch.touches[real_hid.touch.index].updated && !rInputCtx.touchHeld;
     rInputCtx.touchHeld    = real_hid.touch.touches[real_hid.touch.index].updated;
+
+    irrstScanInput();
+    irrstCstickRead(&(rInputCtx.cStick));
 }
 
 u32 buttonCheck(u32 key) {
