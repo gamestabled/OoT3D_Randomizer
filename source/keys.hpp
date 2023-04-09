@@ -207,6 +207,7 @@ typedef enum {
     TRIFORCE_PIECE,
     EPONA,
     HINT,
+    HINT_MYSTERIOUS,
 
     // SHOP ITEMS
     BUY_DEKU_NUT_5,

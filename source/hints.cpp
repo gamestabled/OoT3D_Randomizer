@@ -738,13 +738,22 @@ void CreateMiscHints() {
         CreateAltarText(rewardHints);
     }
     CreateCompassAndGearMenuHints(rewardHints);
+
+    if (ShuffleMerchants.IsNot(SHUFFLEMERCHANTS_OFF)) {
+        CreateMerchantsHints();
+    }
 }
 
 void CreateMerchantsHints() {
+    Text medigoronItemText, grannyItemText, carpetSalesmanItemText;
 
-    Text medigoronItemText           = Location(GC_MEDIGORON)->GetPlacedItem().GetHint().GetText();
-    Text grannyItemText              = Location(KAK_GRANNYS_SHOP)->GetPlacedItem().GetHint().GetText();
-    Text carpetSalesmanItemText      = Location(WASTELAND_BOMBCHU_SALESMAN)->GetPlacedItem().GetHint().GetText();
+    if (ShuffleMerchants.Is(SHUFFLEMERCHANTS_HINTS)) {
+        medigoronItemText      = Location(GC_MEDIGORON)->GetPlacedItem().GetHint().GetTextCopy();
+        grannyItemText         = Location(KAK_GRANNYS_SHOP)->GetPlacedItem().GetHint().GetTextCopy();
+        carpetSalesmanItemText = Location(WASTELAND_BOMBCHU_SALESMAN)->GetPlacedItem().GetHint().GetTextCopy();
+    } else {
+        medigoronItemText = grannyItemText = carpetSalesmanItemText = hintTable[HINT_MYSTERIOUS].GetTextCopy();
+    }
     Text carpetSalesmanItemClearText = Location(WASTELAND_BOMBCHU_SALESMAN)->GetPlacedItem().GetHint().GetClear();
 
     for (Text* itemText :
