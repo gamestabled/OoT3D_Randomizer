@@ -140,6 +140,7 @@ void PlayerActor_rDestroy(Actor* thisx, GlobalContext* globalCtx) {
     if (gSettingsContext.fastBunnyHood) {
         storedMask = PLAYER->currentMask;
     }
+    Fairy_ResetRainbowCMABs();
     PlayerActor_Destroy(thisx, globalCtx);
 }
 

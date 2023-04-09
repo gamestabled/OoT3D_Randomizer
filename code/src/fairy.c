@@ -117,3 +117,8 @@ s32 Fairy_SetTargetReticleColor(TargetContext* targetCtx) {
 
     return 1;
 }
+
+void Fairy_ResetRainbowCMABs(void) {
+    staticRainbowPointerCMAB = 0;
+    staticRainbowReticleCMAB = 0;
+}
