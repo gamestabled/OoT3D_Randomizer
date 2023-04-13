@@ -679,7 +679,7 @@ u8 SaveFile_InventoryMenuHasSlot(u8 adult, u8 itemSlot) {
 }
 
 void SaveFile_SetOwnedTradeItemEquipped(void) {
-    if (gSaveContext.sceneFlags[0x60].unk & 0x7FF == 0) {
+    if ((gSaveContext.sceneFlags[0x60].unk & 0x7FF) == 0) {
         gSaveContext.items[SLOT_TRADE_ADULT] = 0xFF;
         SaveFile_ResetItemSlotsIfMatchesID(SLOT_TRADE_ADULT);
     } else {
