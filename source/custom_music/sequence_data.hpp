@@ -56,10 +56,10 @@ class MusicCategoryNode {
     MusicCategoryNode(std::string Name_, std::vector<MusicCategoryNode*> children_);
     ~MusicCategoryNode();
 
-    /// Creates it's folder in it's parent's, and then calls each child to do the same.
-    void CreateDirectories(FS_Archive sdmcArchive);
     /// Returns the full path of this node.
     std::string GetFullPath();
+    /// Returns a vector of this node's and it's children's directories.
+    std::vector<std::string> GetDirectories();
     /// Sets this node's parent node.
     void SetParent(MusicCategoryNode* parent_);
     /// Returns true if this node has the given node as an ancestor.

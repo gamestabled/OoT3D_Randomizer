@@ -64,13 +64,6 @@ MusicCategoryNode::MusicCategoryNode(std::string Name_, std::vector<MusicCategor
 
 MusicCategoryNode::~MusicCategoryNode() = default;
 
-void MusicCategoryNode::CreateDirectories(FS_Archive sdmcArchive) {
-    FSUSER_CreateDirectory(sdmcArchive, fsMakePath(PATH_ASCII, GetFullPath().c_str()), FS_ATTRIBUTE_DIRECTORY);
-    for (auto& child : children) {
-        child->CreateDirectories(sdmcArchive);
-    }
-}
-
 std::string MusicCategoryNode::GetFullPath() {
     if (fullPath.empty()) {
         std::string finalPath = Name + '/';
@@ -82,6 +75,16 @@ std::string MusicCategoryNode::GetFullPath() {
         fullPath = finalPath;
     }
     return fullPath;
+}
+
+std::vector<std::string> MusicCategoryNode::GetDirectories() {
+    std::vector<std::string> dirs;
+    dirs.push_back(GetFullPath());
+    for (auto child : children) {
+        auto childDirs = child->GetDirectories();
+        dirs.insert(dirs.end(), childDirs.begin(), childDirs.end());
+    }
+    return dirs;
 }
 
 void MusicCategoryNode::SetParent(MusicCategoryNode* parent_) {

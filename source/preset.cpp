@@ -23,8 +23,8 @@ static const std::string CACHED_COSMETICS_FILENAME = "CACHED_COSMETICS";
 
 static std::string_view GetBasePath(OptionCategory category) {
     static constexpr std::array<std::string_view, 2> paths{
-        "/3ds/presets/oot3dr/settings/",
-        "/3ds/presets/oot3dr/cosmetics/",
+        "/OoT3DR/Presets/Settings/",
+        "/OoT3DR/Presets/Cosmetics/",
     };
 
     switch (category) {
@@ -38,30 +38,48 @@ static std::string_view GetBasePath(OptionCategory category) {
 }
 
 // Creates preset directories if they don't exist
-bool CreatePresetDirectories() {
-    Result res;
-    FS_Archive sdmcArchive;
+void CreatePresetDirectories(FS_Archive sdmcArchive) {
+    std::vector<std::string> dirs = {
+        "/OoT3DR/",
+        "/OoT3DR/Presets/",
+        "/OoT3DR/Presets/Settings/",
+        "/OoT3DR/Presets/Cosmetics/",
+    };
 
-    // Open SD archive
-    if (!R_SUCCEEDED(res = FSUSER_OpenArchive(&sdmcArchive, ARCHIVE_SDMC, fsMakePath(PATH_EMPTY, "")))) {
-        return false;
+    const auto printInfo = [&](int progress) {
+        consoleClear();
+        printf("\x1b[10;10HCreating Preset Directories");
+        printf("\x1b[11;10HProgress: %d/%d", progress, dirs.size());
+    };
+
+    printInfo(0);
+    for (size_t i = 0; i < dirs.size(); i++) {
+        FSUSER_CreateDirectory(sdmcArchive, fsMakePath(PATH_ASCII, dirs[i].c_str()), FS_ATTRIBUTE_DIRECTORY);
+        printInfo(i + 1);
     }
 
-    // Create the 3ds directory if it doesn't exist
-    FSUSER_CreateDirectory(sdmcArchive, fsMakePath(PATH_ASCII, "/3ds"), FS_ATTRIBUTE_DIRECTORY);
-    // Create the presets directory if it doesn't exist
-    FSUSER_CreateDirectory(sdmcArchive, fsMakePath(PATH_ASCII, "/3ds/presets"), FS_ATTRIBUTE_DIRECTORY);
-    // Create the oot3d directory if it doesn't exist
-    FSUSER_CreateDirectory(sdmcArchive, fsMakePath(PATH_ASCII, "/3ds/presets/oot3dr"), FS_ATTRIBUTE_DIRECTORY);
-    // Create the cosmetics directory if it doesn't exist
-    FSUSER_CreateDirectory(sdmcArchive, fsMakePath(PATH_ASCII, "/3ds/presets/oot3dr/cosmetics"),
-                           FS_ATTRIBUTE_DIRECTORY);
-    // Create the settings directory if it doesn't exist
-    FSUSER_CreateDirectory(sdmcArchive, fsMakePath(PATH_ASCII, "/3ds/presets/oot3dr/settings"), FS_ATTRIBUTE_DIRECTORY);
+    // Migrate presets to new directories
 
-    // Close SD archive
-    FSUSER_CloseArchive(sdmcArchive);
-    return true;
+    std::vector<std::pair<std::string, std::string>> dirPairs = {
+        { "/3ds/presets/oot3dr/settings/", "/OoT3DR/Presets/Settings/" },
+        { "/3ds/presets/oot3dr/cosmetics/", "/OoT3DR/Presets/Cosmetics/" },
+    };
+
+    for (auto dirPair : dirPairs) {
+        if (R_FAILED(FSUSER_OpenDirectory(nullptr, sdmcArchive, fsMakePath(PATH_ASCII, dirPair.first.c_str())))) {
+            continue;
+        }
+        for (const auto& entry : fs::directory_iterator(dirPair.first)) {
+            if (entry.is_regular_file() && entry.path().extension().string() == ".xml") {
+                auto filename = entry.path().filename().string();
+                consoleClear();
+                printf("\x1b[10;10HMigrating Presets");
+                printf("\x1b[11;10HMoving %s", filename.c_str());
+                FSUSER_RenameFile(sdmcArchive, fsMakePath(PATH_ASCII, std::string(dirPair.first + filename).c_str()),
+                                  sdmcArchive, fsMakePath(PATH_ASCII, std::string(dirPair.second + filename).c_str()));
+            }
+        }
+    }
 }
 
 // Gets the preset filenames

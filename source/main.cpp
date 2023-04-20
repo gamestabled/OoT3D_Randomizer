@@ -15,7 +15,6 @@ int main() {
     ItemTable_Init();
     LocationTable_Init();
     MenuInit();
-    Music::CreateMusicDirectories();
 
     u64 initialHoldTime = svcGetSystemTick();
     u64 intervalTime    = initialHoldTime;
