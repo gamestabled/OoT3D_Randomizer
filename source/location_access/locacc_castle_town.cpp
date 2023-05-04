@@ -265,6 +265,7 @@ void AreaTable_Init_CastleTown() {
                  // Exits
                  Entrance(GANONS_CASTLE_GROUNDS,
                           { [] { return BuiltRainbowBridge; },
+                          /* Glitched */
                             [] {
                                 return (HasBombchus && CanDoGlitch(GlitchType::BombHover, GlitchDifficulty::NOVICE)) ||
                                        CanDoGlitch(GlitchType::HoverBoost, GlitchDifficulty::ADVANCED) ||
