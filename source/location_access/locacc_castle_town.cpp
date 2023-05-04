@@ -263,6 +263,8 @@ void AreaTable_Init_CastleTown() {
                                         CanDoGlitch(GlitchType::SuperSlide, GlitchDifficulty::EXPERT)) ||
                                        (HoverBoots && CanDoGlitch(GlitchType::Megaflip, GlitchDifficulty::ADVANCED));
                             } }),
+                Entrance(HYRULE_CASTLE_GROUNDS, { [] { return IsChild; }}),
+                Entrance(GANONS_CASTLE_ENTRYWAY, { [] { return IsAdult; }}),
              })
 
     areaTable[MARKET_GUARD_HOUSE] =
