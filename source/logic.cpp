@@ -299,6 +299,7 @@ u8 DungeonCount            = 0;
 bool HasAllStones          = false;
 bool HasAllMedallions      = false;
 bool CanBuildRainbowBridge = false;
+bool BuiltRainbowBridge    = false;
 bool CanTriggerLACS        = false;
 
 // Other
@@ -1227,6 +1228,7 @@ void LogicReset() {
     HasAllStones          = false;
     HasAllMedallions      = false;
     CanBuildRainbowBridge = false;
+    BuiltRainbowBridge    = false;
     CanTriggerLACS        = false;
 
     // Other
