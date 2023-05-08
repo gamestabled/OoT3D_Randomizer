@@ -934,6 +934,7 @@ Option GlitchModernHalfie      = Option::Bool("Modern Halfie",               {"O
 Option GlitchJabuSwitch        = Option::Bool("Jabu Switch\n  w/ CS item",   {"Off", "On"}, {GlitchJabuSwitchDesc});
 Option GlitchForestBKSkip      = Option::Bool("Forest Temple\n  BK Skip",    {"Off", "On"}, {GlitchForestBKSkipDesc});
 Option GlitchFireGrunzClip     = Option::Bool("Fire Temple\n  Grunz Clip",   {"Off", "On"}, {GlitchFireGrunzClipDesc});
+// These are all expected to be booleans by the GlitchEnabled function
 std::vector<Option*> miscGlitches = {
     &GlitchWWTEscape,
     &GlitchGVTentAsChild,
@@ -3000,4 +3001,47 @@ const std::vector<Menu*> GetAllOptionMenus() {
     return allMenus;
 }
 
+bool IsGlitchOption(Option& option) {
+    for (auto op : glitchCategories) {
+        if (op == &ToggleAllGlitches) {
+            continue;
+        }
+        if (&option == op) {
+            return true;
+        }
+    }
+    return false;
+}
+
+u8 GlitchValue(Option& glitchOption) {
+    if (Logic.IsNot(LOGIC_GLITCHED) || !IsGlitchOption(glitchOption)) {
+        return 0;
+    }
+    for (size_t difficulty = 0; difficulty < GlitchDifficulties.size(); difficulty++) {
+        if (glitchOption.GetSelectedOptionText() == GlitchDifficulties[difficulty]) {
+            return difficulty;
+        }
+    }
+    return 0;
+}
+
+bool GlitchEnabled(Option& glitchOption, GlitchDifficulty glitchDifficulty) {
+    if (Logic.IsNot(LOGIC_GLITCHED) || !IsGlitchOption(glitchOption)) {
+        return false;
+    }
+    return GlitchValue(glitchOption) >= static_cast<u8>(glitchDifficulty);
+}
+
+bool GlitchEnabled(Option& glitchOption) {
+    auto isMiscGlitch = [&] {
+        for (auto op : miscGlitches) {
+            if (&glitchOption == op) {
+                return true;
+            }
+        }
+        return false;
+    };
+
+    return Logic.Is(LOGIC_GLITCHED) && isMiscGlitch() && glitchOption;
+}
 } // namespace Settings

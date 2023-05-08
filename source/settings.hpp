@@ -18,6 +18,7 @@
 #include "menu.hpp"
 #include "pool_functions.hpp"
 #include "utils.hpp"
+#include "glitches.hpp"
 
 class Option {
   public:
@@ -334,6 +335,15 @@ void ResolveExcludedLocationConflicts();
 void RandomizeAllSettings(const bool selectOptions = false);
 void ForceChange(u32 kDown, Option* currentSetting);
 const std::vector<Menu*> GetAllOptionMenus();
+/// Gives the numerical value of the selected glitch option.
+/// Always returns 0 if logic is not set to Glitched.
+u8 GlitchValue(Option& glitchOption);
+/// Checks if the glitch's set difficulty is the same or higher than the given difficulty.
+/// Always returns false if logic is not set to Glitched.
+bool GlitchEnabled(Option& glitchOption, GlitchDifficulty glitchDifficulty);
+/// Checks if the misc glitch is enabled.
+/// Always returns false if logic is not set to Glitched.
+bool GlitchEnabled(Option& glitchOption);
 
 extern std::string seed;
 extern std::string version;
