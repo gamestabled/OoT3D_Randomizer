@@ -58,9 +58,28 @@ void MenuInit() {
 
     consoleSelect(&topScreen);
 
-    if (!CreatePresetDirectories()) {
-        printf("\x1b[20;5Failed to create preset directories.");
-        printf("\x1b[21;5Loading presets might crash.");
+    // Create directories
+    FS_Archive sdmcArchive;
+    if (R_SUCCEEDED(FSUSER_OpenArchive(&sdmcArchive, ARCHIVE_SDMC, fsMakePath(PATH_EMPTY, "")))) {
+        CreateLogDirectories(sdmcArchive);
+        CreatePresetDirectories(sdmcArchive);
+        Music::CreateMusicDirectories(sdmcArchive);
+
+        FSUSER_CloseArchive(sdmcArchive);
+    } else {
+        consoleClear();
+        printf("\x1b[10;10HFailed to create directories.");
+        printf("\x1b[11;10H- Spoiler logs won't be written.");
+        printf("\x1b[12;10H- Loading presets might crash.");
+        printf("\x1b[13;10H- Custom music will fail.");
+        printf("\x1b[15;10HPress B to continue.");
+
+        while (aptMainLoop()) {
+            hidScanInput();
+            if (hidKeysHeld() & KEY_B) {
+                break;
+            }
+        }
     }
 
     // If cached presets exist, load them

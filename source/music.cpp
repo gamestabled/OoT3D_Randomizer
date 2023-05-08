@@ -334,22 +334,33 @@ static MusicCategoryNode mcMelodies_Root("Melodies", { &mcMelodies_Fanfares, &mc
 bool archiveFound     = false;
 bool musicDirsCreated = false;
 
-void CreateMusicDirectories() {
-    FS_Archive sdmcArchive;
+void CreateMusicDirectories(FS_Archive sdmcArchive) {
+    std::vector<std::string> dirs;
 
-    // Open SD archive
-    if (!R_SUCCEEDED(FSUSER_OpenArchive(&sdmcArchive, ARCHIVE_SDMC, fsMakePath(PATH_EMPTY, "")))) {
-        return;
+    dirs.push_back("/OoT3DR/");
+    dirs.push_back(CustomMusicRootPath);
+
+    auto bgmDirs = mcBgm_Root.GetDirectories();
+    dirs.insert(dirs.end(), bgmDirs.begin(), bgmDirs.end());
+
+    auto melodyDirs = mcMelodies_Root.GetDirectories();
+    dirs.insert(dirs.end(), melodyDirs.begin(), melodyDirs.end());
+
+    const auto printInfo = [&](int progress) {
+        consoleClear();
+        printf("\x1b[10;10HCreating Music Directories");
+        printf("\x1b[11;10HProgress: %d/%d", progress, dirs.size());
+        printf("\x1b[13;10HIf this is slow, don't worry.");
+        printf("\x1b[14;10HThis only has to be done once.");
+    };
+
+    printInfo(0);
+    for (size_t i = 0; i < dirs.size(); i++) {
+        FSUSER_CreateDirectory(sdmcArchive, fsMakePath(PATH_ASCII, dirs[i].c_str()), FS_ATTRIBUTE_DIRECTORY);
+        printInfo(i + 1);
     }
 
-    // Create all dirs
-    FSUSER_CreateDirectory(sdmcArchive, fsMakePath(PATH_ASCII, "/OoT3DR"), FS_ATTRIBUTE_DIRECTORY);
-    FSUSER_CreateDirectory(sdmcArchive, fsMakePath(PATH_ASCII, CustomMusicRootPath.c_str()), FS_ATTRIBUTE_DIRECTORY);
-    mcBgm_Root.CreateDirectories(sdmcArchive);
-    mcMelodies_Root.CreateDirectories(sdmcArchive);
-
     musicDirsCreated = true;
-    FSUSER_CloseArchive(sdmcArchive);
 }
 
 int ShuffleMusic_Archive() {
@@ -434,7 +445,7 @@ int ShuffleMusic_Archive() {
         } else if (Settings::ShuffleMelodies.Is(SHUFFLEMUSIC_GROUPED)) {
             fillNodeWithOriginals(mcMelodies_Fanfares);
             fillNodeWithOriginals(mcMelodies_OcarinaSongs);
-        } else if (Settings::ShuffleBGM.Is(SHUFFLEMUSIC_OWN)) {
+        } else if (Settings::ShuffleMelodies.Is(SHUFFLEMUSIC_OWN)) {
             for (auto leaf : allAudioCatLeaves) {
                 if (leaf->HasAncestor(&mcMelodies_Root)) {
                     musicNodeAddSeq(*leaf, leaf->FileRep);
