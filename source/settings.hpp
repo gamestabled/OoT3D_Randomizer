@@ -449,6 +449,7 @@ extern Option Racing;
 extern Option GossipStoneHints;
 extern Option ClearerHints;
 extern Option HintDistribution;
+extern Option BonusGossipHints;
 extern Option MiscHints;
 extern Option ToTAltarHints;
 extern Option GanonHints;

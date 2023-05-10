@@ -316,7 +316,8 @@ std::vector<Option *> timesaverOptions = {
 // Misc Settings
 Option Racing              = Option::Bool("Racing",                 {"Off", "On"},                                                          {racingDesc});
 Option GossipStoneHints    = Option::U8  ("Gossip Stone Hints",     {"No Hints", "Need Nothing", "Mask of Truth", "Shard of Agony"},        {gossipStonesHintsDesc},                                                                                          OptionCategory::Setting,    HINTS_NEED_NOTHING);
-Option HintDistribution    = Option::U8  (2, "Hint Distribution",   {"Useless", "Balanced", "Strong", "Very Strong"},                       {uselessHintsDesc, balancedHintsDesc, strongHintsDesc, veryStrongHintsDesc},                                      OptionCategory::Setting,    HINTDISTRIBUTION_BALANCED);
+Option HintDistribution    = Option::U8  (2, "Hint Distribution",   {"Useless", "Balanced", "Strong", "Very Strong", "Playthrough"},        {uselessHintsDesc, balancedHintsDesc, strongHintsDesc, veryStrongHintsDesc, playthroughHintsDesc},                OptionCategory::Setting,    HINTDISTRIBUTION_BALANCED);
+Option BonusGossipHints    = Option::Bool(4, "Bonus Hints",         {"Off", "On"},                                                          {bonusGossipHintsDesc});
 Option MiscHints           = Option::U8  ("Miscellaneous Hints",    {"All Disabled",  "All Enabled", "Choose"},                             {miscHintsDesc},                                                                                                  OptionCategory::Setting,    TOGGLE_ALL_ENABLED);
 Option ToTAltarHints       = Option::Bool(2, "Temple of Time Altar",{"Off", "On"},                                                          {totAltarHintsDesc});
 Option GanonHints          = Option::Bool(2, "Ganondorf",           {"Off", "On"},                                                          {ganonHintsDesc});
@@ -347,6 +348,7 @@ std::vector<Option *> miscOptions = {
     &Racing,
     &GossipStoneHints,
     &HintDistribution,
+    &BonusGossipHints,
     &MiscHints,
     &ToTAltarHints,
     &GanonHints,
@@ -2194,11 +2196,26 @@ void ForceChange(u32 kDown, Option* currentSetting) {
         }
     }
 
+    // Since No Logic doesn't create a playthrough, select the next best hint distribution
+    if (Logic.Is(LOGIC_NONE) && HintDistribution.Is(HINTDISTRIBUTION_PLAYTHROUGH)) {
+        if (currentSetting == &HintDistribution && kDown & KEY_RIGHT) {
+            HintDistribution.SetSelectedIndex(HINTDISTRIBUTION_USELESS);
+        } else {
+            HintDistribution.SetSelectedIndex(HINTDISTRIBUTION_VERYSTRONG);
+        }
+    }
+
     // Only show hint options if hints are enabled
     if (GossipStoneHints.Is(HINTS_NO_HINTS)) {
         HintDistribution.Hide();
+        BonusGossipHints.Hide();
     } else {
         HintDistribution.Unhide();
+        if (HintDistribution.Is(HINTDISTRIBUTION_PLAYTHROUGH)) {
+            BonusGossipHints.Unhide();
+        } else {
+            BonusGossipHints.Hide();
+        }
     }
 
     // Manage toggle for misc hints options

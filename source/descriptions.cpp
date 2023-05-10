@@ -778,6 +778,16 @@ string_view uselessHintsDesc          = "Only junk hints.";                     
 string_view balancedHintsDesc         = "Recommended hint spread.";                        //
 string_view strongHintsDesc           = "More useful hints.";                              //
 string_view veryStrongHintsDesc       = "Many powerful hints.";                            //
+string_view playthroughHintsDesc      = "The playthrough locations will be hinted at what\n"
+                                        "they contain and in what general area they are.\n"//
+                                        "\n"                                               //
+                                        "Not compatible with No Logic.";                   //
+                                                                                           //
+/*------------------------------                                                           //
+|      BONUS GOSSIP HINTS      |                                                           //
+------------------------------*/                                                           //
+string_view bonusGossipHintsDesc      = "Adds Sun's Song and warp songs to gossip stone\n" //
+                                        "hints after all playthrough hints have been set.";//
                                                                                            //
 /*------------------------------                                                           //
 |     MISCELLANEOUS HINTS      |                                                           //
