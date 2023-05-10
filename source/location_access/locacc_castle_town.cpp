@@ -201,9 +201,9 @@ void AreaTable_Init_CastleTown() {
         });
 
     areaTable[GANONS_CASTLE_GROUNDS] = Area(
-        "Ganon's Castle Grounds", "Castle Grounds", OUTSIDE_GANONS_CASTLE, NO_DAY_NIGHT_CYCLE, 
+        "Ganon's Castle Grounds", "Castle Grounds", OUTSIDE_GANONS_CASTLE, NO_DAY_NIGHT_CYCLE,
         {
-            EventAccess(&BuiltRainbowBridge, {[]{return CanBuildRainbowBridge;}}),
+            EventAccess(&BuiltRainbowBridge, { [] { return CanBuildRainbowBridge; } }),
         },
         {
             // Locations                                   //the terrain was lowered such that you can't get this GS
@@ -249,15 +249,14 @@ void AreaTable_Init_CastleTown() {
                  // Exits
                  Entrance(CASTLE_GROUNDS, { [] { return true; } }),
              });
-    
-    areaTable[CASTLE_GROUNDS_FROM_GANONS_CASTLE] = 
-        Area("Castle Grounds From Ganon's Castle", "Castle Grounds From Ganon's Castle", NONE, NO_DAY_NIGHT_CYCLE, {},
-             {},
-             {
-                 // Exits
-                 Entrance(HYRULE_CASTLE_GROUNDS, { [] { return IsChild; }}),
-                 Entrance(GANONS_CASTLE_LEDGE, { [] { return IsAdult; }}),
-             });
+
+    areaTable[CASTLE_GROUNDS_FROM_GANONS_CASTLE] = Area(
+        "Castle Grounds From Ganon's Castle", "Castle Grounds From Ganon's Castle", NONE, NO_DAY_NIGHT_CYCLE, {}, {},
+        {
+            // Exits
+            Entrance(HYRULE_CASTLE_GROUNDS, { [] { return IsChild; } }),
+            Entrance(GANONS_CASTLE_LEDGE, { [] { return IsAdult; } }),
+        });
 
     areaTable[GANONS_CASTLE_LEDGE] =
         Area("Ganon's Castle Ledge", "OGC Ganon's Castle Ledge", NONE, NO_DAY_NIGHT_CYCLE, {}, {},
@@ -265,7 +264,7 @@ void AreaTable_Init_CastleTown() {
                  // Exits
                  Entrance(GANONS_CASTLE_GROUNDS,
                           { [] { return BuiltRainbowBridge; },
-                          /* Glitched */
+                            /* Glitched */
                             [] {
                                 return (HasBombchus && CanDoGlitch(GlitchType::BombHover, GlitchDifficulty::NOVICE)) ||
                                        CanDoGlitch(GlitchType::HoverBoost, GlitchDifficulty::ADVANCED) ||
@@ -273,7 +272,7 @@ void AreaTable_Init_CastleTown() {
                                         CanDoGlitch(GlitchType::SuperSlide, GlitchDifficulty::EXPERT)) ||
                                        (HoverBoots && CanDoGlitch(GlitchType::Megaflip, GlitchDifficulty::ADVANCED));
                             } }),
-                Entrance(GANONS_CASTLE_ENTRYWAY, { [] { return true; }}),
+                 Entrance(GANONS_CASTLE_ENTRYWAY, { [] { return true; } }),
              });
 
     areaTable[MARKET_GUARD_HOUSE] =
