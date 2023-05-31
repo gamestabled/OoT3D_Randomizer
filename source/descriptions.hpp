@@ -345,7 +345,7 @@ extern string_view mp_SharedHealthDesc;
 extern string_view mp_SharedRupeesDesc;
 extern string_view mp_SharedAmmoDesc;
 
-extern string_view silenceNaviDesc;
+extern string_view naviNotificationsDesc;
 extern string_view ignoreMaskReactionDesc;
 
 extern string_view naviColorsDesc;

@@ -32,7 +32,7 @@ void SaveFile_EnforceHealthLimit(void);
 u8 SaveFile_SwordlessPatchesEnabled(void);
 
 // Increment the version number whenever the ExtSaveData structure is changed
-#define EXTSAVEDATA_VERSION 14
+#define EXTSAVEDATA_VERSION 15
 
 typedef enum {
     EXTINF_BIGGORONTRADES,
@@ -62,7 +62,7 @@ typedef struct {
     // Ingame Options, all need to be s8
     s8 option_EnableBGM;
     s8 option_EnableSFX;
-    s8 option_SilenceNavi;
+    s8 option_NaviNotifications;
     s8 option_IgnoreMaskReaction;
     s8 option_SkipSongReplays;
     s8 option_FreeCamControl;

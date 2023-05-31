@@ -572,8 +572,8 @@ SECTIONS
 		*(.patch_GanonDrawMasterSword)
 	}
 
-	.patch_SilenceNavi 0x26807C : {
-		*(.patch_SilenceNavi)
+	.patch_NaviNotifications 0x267E04 : {
+		*(.patch_NaviNotifications)
 	}
 
 	.patch_CheckGerudoToken_269884 0x269884 : {

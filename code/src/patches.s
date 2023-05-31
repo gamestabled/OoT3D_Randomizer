@@ -1662,10 +1662,10 @@ MultiplyPlayerSpeed_patch:
 RunAnimationSpeed_patch:
     bl hook_RunAnimationSpeed
 
-.section .patch_SilenceNavi
-.global SilenceNavi_patch
-SilenceNavi_patch:
-    bl hook_SilenceNavi
+.section .patch_NaviNotifications
+.global NaviNotifications_patch
+NaviNotifications_patch:
+    bl hook_NaviNotifications
 
 .section .patch_ChestMinigame_RewardChestVisibility
 .global ChestMinigame_RewardChestVisibility_patch

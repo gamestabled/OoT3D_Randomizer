@@ -713,7 +713,7 @@ void SaveFile_InitExtSaveData(u32 saveNumber, u8 fromSaveCreation) {
     // Ingame Options
     gExtSaveData.option_EnableBGM          = gSettingsContext.playMusic;
     gExtSaveData.option_EnableSFX          = gSettingsContext.playSFX;
-    gExtSaveData.option_SilenceNavi        = gSettingsContext.silenceNavi;
+    gExtSaveData.option_NaviNotifications  = gSettingsContext.naviNotifications;
     gExtSaveData.option_IgnoreMaskReaction = gSettingsContext.ignoreMaskReaction;
     gExtSaveData.option_SkipSongReplays    = gSettingsContext.skipSongReplays;
     gExtSaveData.option_FreeCamControl     = gSettingsContext.freeCamControl;

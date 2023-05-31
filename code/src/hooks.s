@@ -1241,14 +1241,18 @@ hook_RunAnimationSpeed:
     vmul.f32 s17,s1
     bx lr
 
-.global hook_SilenceNavi
-hook_SilenceNavi:
+.global hook_NaviNotifications
+hook_NaviNotifications:
     push {r0-r12, lr}
-    bl IsNaviSilenced
+    bl Navi_GetNotificationOption
     cmp r0,#0x1
     pop {r0-r12, lr}
-    beq 0x26808C
-    cmp r0,r2
+    # Silenced
+    blt 0x267E3C
+    # Constant
+    bgt 0x267E14
+    # Normal
+    ldr r0,[r0,#0x4C]
     bx lr
 
 .global hook_ChestMinigame_KeyChestVisibility
