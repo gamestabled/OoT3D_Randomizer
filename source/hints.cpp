@@ -510,11 +510,10 @@ static void CreateGanonText() {
     }
     text = text + "!";
 
+    // Get the location of the master sword
+    auto masterSwordLocation = FilterFromPool(
+        allLocations, [](const LocationKey loc) { return Location(loc)->GetPlacedItemKey() == MASTER_SWORD; });
     if (ShuffleMasterSword) {
-        // Get the location of the master sword
-        auto masterSwordLocation = FilterFromPool(
-            allLocations, [](const LocationKey loc) { return Location(loc)->GetPlacedItemKey() == MASTER_SWORD; });
-
         // Add second text box
         text = text + "^";
         if (masterSwordLocation.empty()) {
@@ -527,6 +526,44 @@ static void CreateGanonText() {
     }
 
     CreateMessageFromTextObject(0x70CC, 0, 2, 3, AddColorsAndFormat(text));
+
+    // Sheik
+    {
+        Text sheikText;
+
+        sheikText = Hint(SHEIK_LINE01).GetText();
+        CreateMessageFromTextObject(0x9150, 0, 0, 0, AddColorsAndFormat(sheikText, { QM_RED }));
+
+        sheikText = Hint(SHEIK_LINE02).GetText();
+        CreateMessageFromTextObject(0x9151, 0, 0, 0, AddColorsAndFormat(sheikText));
+
+        if (lightArrowLocation.empty()) {
+            sheikText = Hint(SHEIK_LIGHT_ARROW_LOCATION_HINT).GetText() + "#" + Hint(YOUR_POCKET).GetText() + "#";
+        } else {
+            sheikText = Hint(SHEIK_LIGHT_ARROW_LOCATION_HINT).GetText() + "#" +
+                        GetHintRegion(Location(lightArrowLocation[0])->GetParentRegionKey())->GetHint().GetText() + "#";
+        }
+        sheikText.EURgerman += " versteckt hat";
+        sheikText += ".";
+        if (ShuffleMasterSword) {
+            // Add second text box
+            sheikText += "^";
+            if (masterSwordLocation.empty()) {
+                sheikText += Hint(SHEIK_MASTER_SWORD_LOCATION_HINT).GetText() + "#" + Hint(YOUR_POCKET).GetText() + "#";
+            } else {
+                sheikText +=
+                    Hint(SHEIK_MASTER_SWORD_LOCATION_HINT).GetText() + "#" +
+                    GetHintRegion(Location(masterSwordLocation[0])->GetParentRegionKey())->GetHint().GetText() + "#";
+            }
+            sheikText.EURgerman += " versteckt";
+            sheikText += ".";
+        }
+        CreateMessageFromTextObject(0x9152, 0, 0, 0,
+                                    AddColorsAndFormat(sheikText, { QM_RED, QM_GREEN, QM_RED, QM_GREEN }));
+
+        sheikText = Hint(SHEIK_LINE03).GetText();
+        CreateMessageFromTextObject(0x9153, 0, 0, 0, AddColorsAndFormat(sheikText));
+    }
 }
 
 // Find the location which has the given itemKey and create the generic altar text for the reward

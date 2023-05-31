@@ -2155,6 +2155,11 @@ CamRoll_patch:
 CamUpdate_patch:
     bl hook_CamUpdate
 
+.section .patch_Sheik_GetTextID
+.global Sheik_GetTextID_patch
+Sheik_GetTextID_patch:
+    b hook_Sheik_GetTextID
+
 @ ----------------------------------
 @ ----------------------------------
 

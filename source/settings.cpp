@@ -1441,6 +1441,8 @@ SettingsContext FillContext() {
     ctx.gossipStoneHints    = GossipStoneHints.Value<u8>();
     ctx.totAltarHints       = ToTAltarHints ? 1 : 0;
     ctx.ganonHints          = GanonHints ? 1 : 0;
+    ctx.sheikHints          = (GanonHints && GanonsTrialsCount.Value<u8>() > 0 &&
+                      (!StartingLightArrows || (ShuffleMasterSword && !StartingMasterSword)));
     ctx.compassesShowReward = CompassesShowReward.Value<u8>();
     ctx.compassesShowWotH   = CompassesShowWotH.Value<u8>();
     ctx.mapsShowDungeonMode = MapsShowDungeonMode.Value<u8>();

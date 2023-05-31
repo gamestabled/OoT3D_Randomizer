@@ -542,6 +542,7 @@ typedef struct {
     u8 gossipStoneHints;
     u8 totAltarHints;
     u8 ganonHints;
+    u8 sheikHints;
     u8 compassesShowReward;
     u8 compassesShowWotH;
     u8 mapsShowDungeonMode;

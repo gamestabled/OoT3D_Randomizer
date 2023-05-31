@@ -640,6 +640,10 @@ SECTIONS
 		*(.patch_LostWoodsShootingGameTwo)
 	}
 
+	.patch_Sheik_GetTextID 0x2A4B44 : {
+		*(.patch_Sheik_GetTextID)
+	}
+
 	.patch_SerenadeCheckChestFlag 0x2B2544 : {
 		*(.patch_SerenadeCheckChestFlag)
 	}
