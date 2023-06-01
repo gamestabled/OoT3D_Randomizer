@@ -1826,6 +1826,23 @@ hook_TargetPointerColor:
     b 0x47BB30
 .endif
 
+.global hook_ShadowShip_Speed
+hook_ShadowShip_Speed:
+    add r0,r4,#0x6C
+    push {r0-r12,lr}
+    vpush {s0-s1}
+    bl ShadowShip_HasActiveStalfos
+    vpop {s0-s1}
+    cmp r0,#0x1
+    mov r0,#0x5
+    vmov s2,r0
+    vcvt.f32.s32 s2,s2
+    pop {r0-r12,lr}
+    vmul.f32 s1,s2
+    bxeq lr
+    vmul.f32 s0,s2
+    bx lr
+
 .global hook_MaskSalesmanBorrowMask
 hook_MaskSalesmanBorrowMask:
     ldrsh r1,[r6,#0x1C]

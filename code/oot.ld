@@ -1064,12 +1064,8 @@ SECTIONS
 		*(.patch_MidoCheckDekuTreeClearFour)
 	}
 
-	.patch_ShadowShip_Accel 0x3DFBD8 : {
-		*(.patch_ShadowShip_Accel)
-	}
-
-	.patch_ShadowShip_TopSpeed 0x3DFBDC : {
-		*(.patch_ShadowShip_TopSpeed)
+	.patch_ShadowShip_Speed 0x3DFB30 : {
+		*(.patch_ShadowShip_Speed)
 	}
 
 	.patch_BombPurchaseableCheck 0x3CE800 : {
