@@ -529,6 +529,18 @@ static void CreateGanonText() {
     CreateMessageFromTextObject(0x70CC, 0, 2, 3, AddColorsAndFormat(text));
 }
 
+static void CreateDampeHint() {
+    auto hookshotLocation = FilterFromPool(
+        allLocations, [](const LocationKey loc) { return Location(loc)->GetPlacedItemKey() == PROGRESSIVE_HOOKSHOT; });
+
+    auto dampeHint = Hint(PROGRESSIVE_HOOKSHOT_LOCATION_HINT).GetText() + "#" + GetHintRegion(Location(hookshotLocation[0])->GetParentRegionKey())->GetHint().GetText();
+    dampeHint = dampeHint + ".";
+
+    CreateMessageFromTextObject(0x5003, 0, 2, 3, AddColorsAndFormat(dampeHint, { QM_PINK }));
+    
+
+}
+
 // Find the location which has the given itemKey and create the generic altar text for the reward
 static Text BuildDungeonRewardText(ItemID itemID, const ItemKey itemKey) {
     std::vector<LocationKey> itemKeyLocations = FilterFromPool(
@@ -733,6 +745,9 @@ void CreateMiscHints() {
 
     if (GanonHints) {
         CreateGanonText();
+    }
+    if (DampeHint) {
+        CreateDampeHint();
     }
     if (ToTAltarHints) {
         CreateAltarText(rewardHints);

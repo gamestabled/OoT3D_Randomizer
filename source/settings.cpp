@@ -320,6 +320,7 @@ Option HintDistribution    = Option::U8  (2, "Hint Distribution",   {"Useless", 
 Option MiscHints           = Option::U8  ("Miscellaneous Hints",    {"All Disabled",  "All Enabled", "Choose"},                             {miscHintsDesc},                                                                                                  OptionCategory::Setting,    TOGGLE_ALL_ENABLED);
 Option ToTAltarHints       = Option::Bool(2, "Temple of Time Altar",{"Off", "On"},                                                          {totAltarHintsDesc});
 Option GanonHints          = Option::Bool(2, "Ganondorf",           {"Off", "On"},                                                          {ganonHintsDesc});
+Option DampeHint           = Option::Bool(2, "Dampe's Diary",       {"Off", "On"},                                                          {dampeHintDesc});
 Option ClearerHints        = Option::U8  ("Hint Clarity",           {"Obscure", "Ambiguous", "Clear"},                                      {obscureHintsDesc, ambiguousHintsDesc, clearHintsDesc});
 Option CompassesShowReward = Option::U8  ("Compasses Show Rewards", {"No", "Yes"},                                                          {compassesShowRewardsDesc});
 Option CompassesShowWotH   = Option::U8  ("Compasses Show WotH",    {"No", "Yes"},                                                          {compassesShowWotHDesc},                                                                                          OptionCategory::Setting,    ON);
@@ -350,6 +351,7 @@ std::vector<Option *> miscOptions = {
     &MiscHints,
     &ToTAltarHints,
     &GanonHints,
+    &DampeHint,
     &ClearerHints,
     &CompassesShowReward,
     &CompassesShowWotH,
@@ -1441,6 +1443,7 @@ SettingsContext FillContext() {
     ctx.gossipStoneHints    = GossipStoneHints.Value<u8>();
     ctx.totAltarHints       = ToTAltarHints ? 1 : 0;
     ctx.ganonHints          = GanonHints ? 1 : 0;
+    ctx.dampeHint           = DampeHint ? 1 : 0;
     ctx.compassesShowReward = CompassesShowReward.Value<u8>();
     ctx.compassesShowWotH   = CompassesShowWotH.Value<u8>();
     ctx.mapsShowDungeonMode = MapsShowDungeonMode.Value<u8>();
@@ -2202,7 +2205,7 @@ void ForceChange(u32 kDown, Option* currentSetting) {
     }
 
     // Manage toggle for misc hints options
-    ToggleSet(miscOptions, &MiscHints, &ToTAltarHints, &GanonHints);
+    ToggleSet(miscOptions, &MiscHints, &ToTAltarHints, &DampeHint);
 
     // Only show advanced trap options if random trap damage is set to "Advanced"
     if (RandomTrapDmg.Is(RANDOMTRAPS_ADVANCED)) {

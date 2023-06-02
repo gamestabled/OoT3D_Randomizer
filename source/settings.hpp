@@ -452,6 +452,7 @@ extern Option HintDistribution;
 extern Option MiscHints;
 extern Option ToTAltarHints;
 extern Option GanonHints;
+extern Option DampeHint;
 extern Option CompassesShowReward;
 extern Option CompassesShowWotH;
 extern Option MapsShowDungeonMode;

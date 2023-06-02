@@ -795,6 +795,8 @@ string_view totAltarHintsDesc         = "The Temple of Time altar will reveal th
 string_view ganonHintsDesc            = "Talking to Ganondorf in his boss room will tell\n"//
                                         "you the location of the Light Arrows and, if it\n"//
                                         "was shuffled, the Master Sword.";                 //
+string_view dampeHintDesc            =  "Reading Dampe's diary will reveal the location\n" //
+                                        "of a single progressive hookshot.";               //
 /*------------------------------                                                           //
 |  MAP AND COMPASS GIVES INFO  |                                                           //
 ------------------------------*/                                                           //

@@ -2121,6 +2121,19 @@ void HintTable_Init() {
                 /*german*/"Und selbst wenn doch, die legendäre Klinge wirst du niemals finden "},
     });
 
+    /*----------------------------------
+    |PROGRESSIVE HOOKSHOT LOCATION TEXT|
+    -----------------------------------*/
+
+    hintTable[PROGRESSIVE_HOOKSHOT_LOCATION_HINT] = HintText::ProgressiveHookshot({
+                     // obscure text
+                     Text{"Whoever reads this, if you seek my prized stretching keepsake, please enter ",
+                /*french*/"Localisation required ",
+               /*spanish*/"Localisation required ",
+               /*italian*/"Localisation required ",
+                /*german*/"Localisation required "},
+    });
+
     /*--------------------------
     |      GANON LINE TEXT     |
     ---------------------------*/

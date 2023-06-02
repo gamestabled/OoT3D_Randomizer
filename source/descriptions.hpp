@@ -259,6 +259,7 @@ extern string_view veryStrongHintsDesc;
 extern string_view miscHintsDesc;
 extern string_view totAltarHintsDesc;
 extern string_view ganonHintsDesc;
+extern string_view dampeHintDesc;
 
 extern string_view compassesShowRewardsDesc;
 extern string_view compassesShowWotHDesc;
