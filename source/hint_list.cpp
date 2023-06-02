@@ -2128,10 +2128,10 @@ void HintTable_Init() {
     hintTable[PROGRESSIVE_HOOKSHOT_LOCATION_HINT] = HintText::ProgressiveHookshot({
                      // obscure text
                      Text{"Whoever reads this, if you seek my prized stretching keepsake, please enter ",
-                /*french*/"Localisation required ",
-               /*spanish*/"Localisation required ",
-               /*italian*/"Localisation required ",
-                /*german*/"Localisation required "},
+                /*french*/"Quiconque lit ceci, si vous cherchez mon précieux souvenir d'étirement, veuillez entrer ",
+               /*spanish*/"Quienquiera que lea esto, si busca mi preciado recuerdo de estiramiento, ingrese ",
+               /*italian*/"Chiunque stia leggendo questo, se stai cercando il mio oggetto prezioso, per favore entra ",
+                /*german*/"Wer auch immer dies liest, wenn Sie mein wertvolles Stretching-Andenken suchen, treten Sie bitte ein "},
     });
 
     /*--------------------------
