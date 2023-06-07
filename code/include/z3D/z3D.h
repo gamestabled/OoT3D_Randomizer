@@ -344,6 +344,19 @@ typedef struct {
 } StaticCollisionContext; // size = 0x50
 
 typedef struct {
+    /* 0x00 */ Actor* actor;
+    /* 0x04 */ CollisionHeader* colHeader;
+    /* 0x08 */ char unk_04[0x0C];
+    /* 0x14 */ Vec3f scale1;
+    /* 0x20 */ Vec3s rot1;
+    /* 0x28 */ Vec3f pos1;
+    /* 0x34 */ Vec3f scale2;
+    /* 0x40 */ Vec3s rot2;
+    /* 0x48 */ Vec3f pos2;
+    /* 0x54 */ char unk_54[0x18];
+} ActorMesh; // size = 0x6C
+
+typedef struct {
     /* 0x0000 */ char unk_00[0x04];
     /* 0x0004 */ ActorMesh actorMeshArr[50];
     /* 0x151C */ u16 flags[50];
@@ -812,6 +825,9 @@ typedef s32 (*Player_InBlockingCsMode_proc)(GlobalContext* globalCtx, Player* pl
 
 typedef s32 (*Camera_CheckWater_proc)(Camera* camera);
 #define Camera_CheckWater ((Camera_CheckWater_proc)0x2D06A0)
+
+typedef f32 (*BgCheck_EntityRaycastFloor5_proc)(GlobalContext* globalCtx, CollisionContext* colCtx, CollisionPoly** floorPoly, s16* bgId, Player* player, Vec3f* playerPos);
+#define BgCheck_EntityRaycastFloor5 ((BgCheck_EntityRaycastFloor5_proc)0x316C18)
 
 typedef void (*Camera_UpdateInterface_proc)(u32 flags);
 #define Camera_UpdateInterface ((Camera_UpdateInterface_proc)0x330D84)

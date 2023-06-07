@@ -240,9 +240,21 @@ void Camera_FreeCamUpdate(Vec3s* out, Camera* camera) {
         out->y = camera->inputDir.y = camera->camDir.y = yaw;
         out->z = camera->inputDir.z = camera->camDir.z = 0;
 
-        // Pretty much entirely to let the alcoves in SpT reclaim control of the camera
-        s16 newCamDataIdx = Camera_GetCamDataId(&camera->globalCtx->colCtx, camera->player->actor.floorPoly, 0x32);
-        s16 newSetting    = camera->globalCtx->colCtx.stat.colHeader->camDataList[newCamDataIdx].setting;
+        // Update camera setting
+        CollisionPoly* floorPoly;
+        s16 newSetting;
+        Vec3f headPos;
+        headPos.x = camera->player->actor.world.pos.x;
+        headPos.y = camera->player->actor.world.pos.y + (gSaveContext.linkAge ? 44 : 68);
+        headPos.z = camera->player->actor.world.pos.z;
+
+        camera->playerGroundY = BgCheck_EntityRaycastFloor5(camera->globalCtx, &camera->globalCtx->colCtx, &floorPoly, &camera->bgCheckId, camera->player, &headPos);
+        s16 newCamDataIdx = Camera_GetCamDataId(&camera->globalCtx->colCtx, floorPoly, camera->bgCheckId);
+        if (camera->bgCheckId == 0x32)
+            newSetting = camera->globalCtx->colCtx.stat.colHeader->camDataList[newCamDataIdx].setting;
+        else
+            newSetting = camera->globalCtx->colCtx.dyna.actorMeshArr[camera->bgCheckId].colHeader->camDataList[newCamDataIdx].setting;
+
         if (newCamDataIdx != -1 && newSetting && (newSetting != 0x35 || gSaveContext.linkAge)) {
             camera->camDataIdx = newCamDataIdx;
             if (newSetting != camera->setting) {
