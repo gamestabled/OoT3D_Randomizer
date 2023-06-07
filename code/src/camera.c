@@ -248,12 +248,15 @@ void Camera_FreeCamUpdate(Vec3s* out, Camera* camera) {
         headPos.y = camera->player->actor.world.pos.y + (gSaveContext.linkAge ? 44 : 68);
         headPos.z = camera->player->actor.world.pos.z;
 
-        camera->playerGroundY = BgCheck_EntityRaycastFloor5(camera->globalCtx, &camera->globalCtx->colCtx, &floorPoly, &camera->bgCheckId, camera->player, &headPos);
-        s16 newCamDataIdx = Camera_GetCamDataId(&camera->globalCtx->colCtx, floorPoly, camera->bgCheckId);
+        camera->playerGroundY = BgCheck_EntityRaycastFloor5(camera->globalCtx, &camera->globalCtx->colCtx, &floorPoly,
+                                                            &camera->bgCheckId, camera->player, &headPos);
+        s16 newCamDataIdx     = Camera_GetCamDataId(&camera->globalCtx->colCtx, floorPoly, camera->bgCheckId);
         if (camera->bgCheckId == 0x32)
             newSetting = camera->globalCtx->colCtx.stat.colHeader->camDataList[newCamDataIdx].setting;
         else
-            newSetting = camera->globalCtx->colCtx.dyna.actorMeshArr[camera->bgCheckId].colHeader->camDataList[newCamDataIdx].setting;
+            newSetting = camera->globalCtx->colCtx.dyna.actorMeshArr[camera->bgCheckId]
+                             .colHeader->camDataList[newCamDataIdx]
+                             .setting;
 
         if (newCamDataIdx != -1 && newSetting && (newSetting != 0x35 || gSaveContext.linkAge)) {
             camera->camDataIdx = newCamDataIdx;
