@@ -53,6 +53,7 @@
 #include "spin_attack.h"
 #include "deku_scrubs.h"
 #include "bean_plant.h"
+#include "sheik.h"
 
 #define OBJECT_GI_KEY 170
 #define OBJECT_GI_BOSSKEY 185
@@ -115,6 +116,7 @@ void Actor_Init() {
 
     gActorOverlayTable[0x8C].initInfo->update = DemoKankyo_rUpdate;
 
+    gActorOverlayTable[0x95].initInfo->init   = EnSw_rInit;
     gActorOverlayTable[0x95].initInfo->update = EnSw_rUpdate;
 
     gActorOverlayTable[0x9C].initInfo->update = BgSpot02Objects_rUpdate;
@@ -272,6 +274,11 @@ void Actor_Init() {
     gDrawItemTable[7].objectModelIdx = 0;
 }
 
+void ActorSetup_Extra() {
+    Sheik_Spawn();
+    GsQueue_Update();
+}
+
 void TitleCard_rUpdate(GlobalContext* globalCtx, TitleCardContext* titleCtx) {
     if (ItemOverride_IsAPendingOverride()) {
         titleCtx->delayTimer    = 0;
@@ -281,6 +288,19 @@ void TitleCard_rUpdate(GlobalContext* globalCtx, TitleCardContext* titleCtx) {
     }
 
     TitleCard_Update(globalCtx, titleCtx);
+}
+
+u8 ActorSetup_ShouldSkipEntry(ActorEntry* actorEntry) {
+    // Alternate Gold Skulltula Locations
+    if (actorEntry->id == 0x95 && (actorEntry->params & 0xE000) && Gs_HasAltLoc(actorEntry, GS_PPT_ACTORENTRY, TRUE)) {
+        return TRUE;
+    }
+
+    return FALSE;
+}
+
+void ActorSetup_After(void) {
+    Gs_QueueAlternateLocated();
 }
 
 static s32 hyperActors_ExtraUpdate = 0;

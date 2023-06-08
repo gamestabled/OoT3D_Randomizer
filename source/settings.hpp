@@ -476,6 +476,8 @@ extern Option HyperBosses;
 extern Option HyperMiddleBosses;
 extern Option HyperEnemies;
 extern Option FreeCamera;
+extern Option RandomGsLocations;
+extern Option GsLocGuaranteeNew;
 extern bool HasNightStart;
 
 extern Option FaroresWindAnywhere;

@@ -23,27 +23,17 @@ void AreaTable_Init_ForestTemple() {
     |     VANILLA DUNGEON      |
     ---------------------------*/
     if (Dungeon::ForestTemple.IsVanilla()) {
-        areaTable[FOREST_TEMPLE_FIRST_ROOM] = Area(
-            "Forest Temple First Room", "Forest Temple", FOREST_TEMPLE, NO_DAY_NIGHT_CYCLE, {},
-            {
-                // Locations
-                LocationAccess(FOREST_TEMPLE_FIRST_ROOM_CHEST, { [] { return true; } }),
-                LocationAccess(FOREST_TEMPLE_GS_FIRST_ROOM,
-                               { [] {
-                                    return (IsAdult && Bombs) || CanUse(BOW) || CanUse(HOOKSHOT) || CanUse(BOOMERANG) ||
-                                           CanUse(SLINGSHOT) || HasBombchus || CanUse(DINS_FIRE);
-                                },
-                                 /*Glitched*/
-                                 [] {
-                                     return (Bombs && CanDoGlitch(GlitchType::ISG, GlitchDifficulty::INTERMEDIATE)) ||
-                                            CanDoGlitch(GlitchType::SuperStab, GlitchDifficulty::NOVICE);
-                                 } }),
-            },
-            {
-                // Exits
-                Entrance(FOREST_TEMPLE_ENTRYWAY, { [] { return true; } }),
-                Entrance(FOREST_TEMPLE_SOUTH_CORRIDOR, { [] { return true; } }),
-            });
+        areaTable[FOREST_TEMPLE_FIRST_ROOM] =
+            Area("Forest Temple First Room", "Forest Temple", FOREST_TEMPLE, NO_DAY_NIGHT_CYCLE, {},
+                 {
+                     // Locations
+                     LocationAccess(FOREST_TEMPLE_FIRST_ROOM_CHEST, { [] { return true; } }),
+                 },
+                 {
+                     // Exits
+                     Entrance(FOREST_TEMPLE_ENTRYWAY, { [] { return true; } }),
+                     Entrance(FOREST_TEMPLE_SOUTH_CORRIDOR, { [] { return true; } }),
+                 });
 
         areaTable[FOREST_TEMPLE_SOUTH_CORRIDOR] =
             Area("Forest Temple South Corridor", "Forest Temple", FOREST_TEMPLE, NO_DAY_NIGHT_CYCLE, {}, {},
@@ -62,14 +52,7 @@ void AreaTable_Init_ForestTemple() {
                            (ForestTempleJoelle && ForestTempleBeth && ForestTempleAmy && CanUse(BOW));
                 } }),
             },
-            {
-                // Locations
-                LocationAccess(
-                    FOREST_TEMPLE_GS_LOBBY,
-                    { [] { return HookshotOrBoomerang; },
-                      /*Glitched*/
-                      [] { return HasBombchus && CanDoGlitch(GlitchType::BombHover, GlitchDifficulty::NOVICE); } }),
-            },
+            {},
             {
                 // Exits
                 Entrance(FOREST_TEMPLE_SOUTH_CORRIDOR, { [] { return true; } }),
@@ -140,13 +123,7 @@ void AreaTable_Init_ForestTemple() {
                                             CanUse(MEGATON_HAMMER) || HasExplosives || CanUse(DINS_FIRE));
                 } }),
             },
-            {
-                // Locations
-                LocationAccess(FOREST_TEMPLE_GS_LEVEL_ISLAND_COURTYARD, { [] {
-                                   return CanUse(LONGSHOT) ||
-                                          Here(FOREST_TEMPLE_NW_OUTDOORS_UPPER, [] { return HookshotOrBoomerang; });
-                               } }),
-            },
+            {},
             {
                 // Exits
                 Entrance(FOREST_TEMPLE_LOBBY,
@@ -222,13 +199,6 @@ void AreaTable_Init_ForestTemple() {
                 // Locations
                 LocationAccess(FOREST_TEMPLE_RAISED_ISLAND_COURTYARD_CHEST,
                                { [] { return CanUse(HOOKSHOT) || HasAccessTo(FOREST_TEMPLE_FALLING_ROOM); } }),
-                LocationAccess(FOREST_TEMPLE_GS_RAISED_ISLAND_COURTYARD, { [] {
-                                   return CanUse(HOOKSHOT) || (LogicForestOutdoorEastGS && CanUse(BOOMERANG)) ||
-                                          Here(FOREST_TEMPLE_FALLING_ROOM, [] {
-                                              return CanUse(BOW) || CanUse(SLINGSHOT) || CanUse(DINS_FIRE) ||
-                                                     HasExplosives;
-                                          });
-                               } }),
             },
             {
                 // Exits
@@ -535,14 +505,6 @@ void AreaTable_Init_ForestTemple() {
                  {
                      // Locations
                      LocationAccess(FOREST_TEMPLE_BASEMENT_CHEST, { [] { return true; } }),
-                     LocationAccess(FOREST_TEMPLE_GS_BASEMENT,
-                                    { [] { return HookshotOrBoomerang; },
-                                      /*Glitched*/
-                                      [] {
-                                          return Bombs &&
-                                                 CanDoGlitch(GlitchType::BombHover, GlitchDifficulty::INTERMEDIATE) &&
-                                                 CanDoGlitch(GlitchType::ISG, GlitchDifficulty::INTERMEDIATE);
-                                      } }),
                  },
                  {
                      // Exits

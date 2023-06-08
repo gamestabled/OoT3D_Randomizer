@@ -335,4 +335,7 @@ typedef u32 (*Actor_HasParent_proc)(Actor* actor, struct GlobalContext* globalCt
 #define Actor_HasParent_addr 0x371E40
 #define Actor_HasParent ((Actor_HasParent_proc)Actor_HasParent_addr)
 
+typedef f32 (*Actor_WorldDistXYZToActor_proc)(Actor* a, Actor* b) __attribute__((pcs("aapcs-vfp")));
+#define Actor_WorldDistXYZToActor ((Actor_WorldDistXYZToActor_proc)0x3306C4)
+
 #endif

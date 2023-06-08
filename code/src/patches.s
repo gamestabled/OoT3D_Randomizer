@@ -2150,6 +2150,56 @@ CamUpdate_patch:
 Sheik_GetTextID_patch:
     b hook_Sheik_GetTextID
 
+.section .patch_OnActorSetup_SceneChange
+.global OnActorSetup_SceneChange_patch
+OnActorSetup_SceneChange_patch:
+    bl hook_OnActorSetup_SceneChange
+
+.section .patch_AfterActorSetup_SceneChange
+.global AfterActorSetup_SceneChange_patch
+AfterActorSetup_SceneChange_patch:
+    b hook_AfterActorSetup_SceneChange
+
+.section .patch_OnActorSetup_RoomChange
+.global OnActorSetup_RoomChange_patch
+OnActorSetup_RoomChange_patch:
+    bl hook_OnActorSetup_RoomChange
+
+.section .patch_AfterActorSetup_RoomChange
+.global AfterActorSetup_RoomChange_patch
+AfterActorSetup_RoomChange_patch:
+    b hook_AfterActorSetup_RoomChange
+
+.section .patch_RandomGsLoc_CustomTangibilityCheck
+.global RandomGsLoc_CustomTangibilityCheck_patch
+RandomGsLoc_CustomTangibilityCheck_patch:
+    b hook_RandomGsLoc_CustomTangibilityCheck
+
+.section .patch_RandomGsLoc_CustomTokenSpawnOffset
+.global RandomGsLoc_CustomTokenSpawnOffset_patch
+RandomGsLoc_CustomTokenSpawnOffset_patch:
+    bl hook_RandomGsLoc_CustomTokenSpawnOffset
+
+.section .patch_RandomGsLoc_BlockSpawn_Crate
+.global RandomGsLoc_BlockSpawn_Crate_patch
+RandomGsLoc_BlockSpawn_Crate_patch:
+    bl hook_RandomGsLoc_BlockSpawn_Crate
+
+.section .patch_RandomGsLoc_BlockSpawn_Tree
+.global RandomGsLoc_BlockSpawn_Tree_patch
+RandomGsLoc_BlockSpawn_Tree_patch:
+    bl hook_RandomGsLoc_BlockSpawn_Tree
+
+.section .patch_RandomGsLoc_BlockSpawn_Soil
+.global RandomGsLoc_BlockSpawn_Soil_patch
+RandomGsLoc_BlockSpawn_Soil_patch:
+    bl hook_RandomGsLoc_BlockSpawn_Soil
+
+.section .patch_RandomGsLoc_SkipSoilJingle
+.global RandomGsLoc_SkipSoilJingle_patch
+RandomGsLoc_SkipSoilJingle_patch:
+    bl hook_RandomGsLoc_SkipSoilJingle
+
 @ ----------------------------------
 @ ----------------------------------
 

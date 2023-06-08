@@ -30,7 +30,7 @@ static u8 PlayerCanFightGanon(void) {
 }
 
 void Sheik_Spawn(void) {
-    if (!IsInGame() || !gSettingsContext.sheikHints) {
+    if (!IsInGame() || !gSettingsContext.sheikHints || gSaveContext.linkAge != AGE_ADULT) {
         return;
     }
 
@@ -66,7 +66,8 @@ void Sheik_Spawn(void) {
             return;
         }
         if (Sheik_IsAt_TempleOfTime()) {
-            Animation_Change(&sheik->anime, 0x12, 1.0, 0.0, Animation_GetLastFrame(&sheik->anime, 0x12), 0.0, 0);
+            // Sometimes causes unmapped reads?!
+            // Animation_Change(&sheik->anime, 0x12, 1.0, 0.0, Animation_GetLastFrame(&sheik->anime, 0x12), 0.0, 0);
         }
         sheik->action    = 0x4F;
         sheik->draw_mode = 1;

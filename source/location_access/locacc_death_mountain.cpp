@@ -27,26 +27,6 @@ void AreaTable_Init_DeathMountain() {
                                       (IsAdult && CanPlantBean(DEATH_MOUNTAIN_TRAIL) &&
                                        (HasExplosives || GoronBracelet));
                            } }),
-            LocationAccess(DMT_GS_BEAN_PATCH, { [] {
-                               return CanPlantBugs &&
-                                      (HasExplosives || GoronBracelet ||
-                                       (LogicDMTSoilGS && (CanTakeDamage || CanUse(HOVER_BOOTS)) && CanUse(BOOMERANG)));
-                           } }),
-            LocationAccess(DMT_GS_NEAR_KAK, { [] { return CanBlastOrSmash; },
-                                              /*Glitched*/
-                                              [] {
-                                                  return (CanUse(STICKS) &&
-                                                          CanDoGlitch(GlitchType::QPA, GlitchDifficulty::ADVANCED));
-                                              } }),
-            LocationAccess(DMT_GS_ABOVE_DODONGOS_CAVERN,
-                           { [] { return IsAdult && AtNight && CanUse(MEGATON_HAMMER) && CanGetNightTimeGS; },
-                             /*Glitched*/
-                             [] {
-                                 return IsAdult && AtNight && CanGetNightTimeGS && CanUse(STICKS) &&
-                                        ((CanTakeDamageTwice &&
-                                          CanDoGlitch(GlitchType::QPA, GlitchDifficulty::NOVICE)) ||
-                                         CanDoGlitch(GlitchType::QPA, GlitchDifficulty::ADVANCED));
-                             } }),
         },
         {
             // Exits
@@ -92,8 +72,6 @@ void AreaTable_Init_DeathMountain() {
             LocationAccess(DMT_TRADE_BROKEN_SWORD, { [] { return IsAdult && BrokenSword; } }),
             LocationAccess(DMT_TRADE_EYEDROPS, { [] { return IsAdult && Eyedrops; } }),
             LocationAccess(DMT_TRADE_CLAIM_CHECK, { [] { return IsAdult && ClaimCheck; } }),
-            LocationAccess(DMT_GS_FALLING_ROCKS_PATH,
-                           { [] { return IsAdult && AtNight && CanUse(MEGATON_HAMMER) && CanGetNightTimeGS; } }),
             LocationAccess(DMT_GOSSIP_STONE, { [] { return true; } }),
         },
         {
@@ -242,8 +220,6 @@ void AreaTable_Init_DeathMountain() {
                                return IsChild && (HasExplosives || (GoronBracelet && LogicChildRollingWithStrength));
                            } }),
             LocationAccess(GC_ROLLING_GORON_AS_ADULT, { [] { return StopGCRollingGoronAsAdult; } }),
-            LocationAccess(GC_GS_BOULDER_MAZE, { [] { return IsChild && CanBlastOrSmash; } }),
-            LocationAccess(GC_GS_CENTER_PLATFORM, { [] { return CanAdultAttack; } }),
             LocationAccess(GC_MEDIGORON,
                            { [] { return IsAdult && AdultsWallet && (CanBlastOrSmash || GoronBracelet); } }),
             LocationAccess(GC_MAZE_GOSSIP_STONE, { [] { return CanBlastOrSmash || CanUse(SILVER_GAUNTLETS); } }),
@@ -394,8 +370,6 @@ void AreaTable_Init_DeathMountain() {
         {
             // Locations
             LocationAccess(DMC_WALL_FREESTANDING_POH, { [] { return FireTimer >= 16 || Hearts >= 3; } }),
-            LocationAccess(DMC_GS_CRATE,
-                           { [] { return (FireTimer >= 8 || Hearts >= 3) && IsChild && CanChildAttack; } }),
             LocationAccess(DMC_GOSSIP_STONE, { [] { return HasExplosives && (FireTimer >= 16 || Hearts >= 3); } }),
         },
         {
@@ -512,11 +486,7 @@ void AreaTable_Init_DeathMountain() {
                 return BeanPlantFairy || (CanPlantBean(DMC_CENTRAL_LOCAL) && CanPlay(SongOfStorms));
             } }),
         },
-        {
-            // Locations
-            LocationAccess(DMC_GS_BEAN_PATCH,
-                           { [] { return (FireTimer >= 8 || Hearts >= 3) && CanPlantBugs && CanChildAttack; } }),
-        },
+        {},
         {
             // Exits
             Entrance(DMC_CENTRAL_NEARBY, { [] { return true; } }),

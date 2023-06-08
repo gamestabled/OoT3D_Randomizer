@@ -12,7 +12,6 @@
 #include "multiplayer.h"
 #include "grotto.h"
 #include "item_effect.h"
-#include "sheik.h"
 
 #include "z3D/z3D.h"
 #include "3ds/extdata.h"
@@ -41,7 +40,7 @@ void before_GlobalContext_Update(GlobalContext* globalCtx) {
         rRandomizerInit = 1;
     }
     ItemOverride_Update();
-    Sheik_Spawn(); // TODO: Place in ActorSetup_Extra
+    ActorSetup_Extra();
     Model_UpdateAll(globalCtx);
     Input_Update();
     SaveFile_EnforceHealthLimit();

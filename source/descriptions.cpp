@@ -1257,6 +1257,24 @@ string_view freeCamDesc               = "Use the C-stick to control the camera o
                                         "systems and Citra.\n\n"                           //
                                         "Go to Personalization Settings > Ingame Defaults\n"
                                         "for camera control options.";                     //
+                                                                                           //
+/*------------------------------                                                           //
+|      RANDOM GS LOCATIONS     |                                                           //
+------------------------------*/                                                           //
+string_view randomGsLocationsDesc     = "Moves Gold Skulltulas to different locations\n"   //
+                                        "around the same area as the original.\n"          //
+                                        "The age they appear in is always the same as the\n"
+                                        "original. If it hides during the night mostly\n"  //
+                                        "depends on if the sun can reach it.\n"            //
+                                        "They will never be in generic areas, such as\n"   //
+                                        "Business Scrub grottos, Fairy Fountains, etc.\n"  //
+                                        "Some new locations are only available with certain"
+                                        "settings enabled, like tricks and glitches.\n"    //
+                                        "The logic is updated for any that are moved.";    //
+                                                                                           //
+string_view gsLocGuaranteeNewDesc     = "Excludes the original location from the Gold\n"   //
+                                        "Skulltula's available locations pool.";           //
+                                                                                           //
                                                                                            //--------------//
 /*------------------------------                                                                           //
 |  DETAILED LOGIC EXPLANATIONS |                                                                           //
