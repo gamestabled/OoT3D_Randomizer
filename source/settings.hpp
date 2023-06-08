@@ -723,7 +723,7 @@ extern Option CameraControl;
 extern Option MotionControl;
 extern Option TogglePlayMusic;
 extern Option TogglePlaySFX;
-extern Option SilenceNavi;
+extern Option NaviNotifications;
 extern Option IgnoreMaskReaction;
 extern Option FreeCamControl;
 

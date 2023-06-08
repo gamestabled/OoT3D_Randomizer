@@ -258,6 +258,12 @@ typedef enum {
 } SkipSongReplaysSetting;
 
 typedef enum {
+    NAVINOTIFS_SILENCED,
+    NAVINOTIFS_NORMAL,
+    NAVINOTIFS_CONSTANT,
+} NaviNotificationsSetting;
+
+typedef enum {
     INCLUDE,
     EXCLUDE,
 } ExcludeLocationSetting;
@@ -601,7 +607,7 @@ typedef struct {
     u8 motionControl;
     u8 playMusic;
     u8 playSFX;
-    u8 silenceNavi;
+    u8 naviNotifications;
     u8 ignoreMaskReaction;
     u8 freeCamControl;
 

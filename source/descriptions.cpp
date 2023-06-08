@@ -1126,7 +1126,10 @@ string_view mp_SharedAmmoDesc         = "Syncs ammo when shared progress is on,\
 /*------------------------------                                                           //
 |       INGAME DEFAULTS        |                                                           //
 ------------------------------*/                                                           //
-string_view silenceNaviDesc           = "Prevents Navi from alerting you about advice.";   //
+string_view naviNotificationsDesc     = "Adjust how much Navi should bother you.\n"        //
+                                        "Silenced prevents it completely, while Constant\n"//
+                                        "can be used to allow repeated attempts at related\n"
+                                        "glitches without having to reload the save.";     //
 string_view ignoreMaskReactionDesc    = "Causes NPCs to respond normally when wearing\n"   //
                                         "masks. Does not apply to trade quest dialouges."; //
                                                                                            //

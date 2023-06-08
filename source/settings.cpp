@@ -990,7 +990,7 @@ Option CameraControl      = Option::U8("Camera Control",       {"Normal", "Inver
 Option MotionControl      = Option::U8("Motion Control",       {"On", "Off"},                                               {""},                     OptionCategory::Cosmetic);
 Option TogglePlayMusic    = Option::U8("Play Music",           {"Off", "On"},                                               {""},                     OptionCategory::Cosmetic, 1);
 Option TogglePlaySFX      = Option::U8("Play Sound Effects",   {"Off", "On"},                                               {""},                     OptionCategory::Cosmetic, 1);
-Option SilenceNavi        = Option::U8("Silence Navi",         {"Off", "On"},                                               {silenceNaviDesc},        OptionCategory::Cosmetic);
+Option NaviNotifications  = Option::U8("Navi Notifications",   {"Silenced", "Normal", "Constant"},                          {naviNotificationsDesc},  OptionCategory::Cosmetic, NAVINOTIFS_NORMAL);
 Option IgnoreMaskReaction = Option::U8("Ignore Mask Reaction", {"Off", "On"},                                               {ignoreMaskReactionDesc}, OptionCategory::Cosmetic);
 Option SkipSongReplays    = Option::U8("Skip Song Replays",    {"Don't Skip", "Skip (No SFX)", "Skip (Keep SFX)"},          {skipSongReplaysDesc},    OptionCategory::Cosmetic);
 Option FreeCamControl     = Option::U8("Free Camera Control",  {"Normal", "Invert Y-Axis", "Invert X-Axis", "Invert Both"}, {""},                     OptionCategory::Cosmetic);
@@ -1000,7 +1000,7 @@ std::vector<Option*> ingameDefaultOptions = {
     &MotionControl,
     &TogglePlayMusic,
     &TogglePlaySFX,
-    &SilenceNavi,
+    &NaviNotifications,
     &IgnoreMaskReaction,
     &SkipSongReplays,
     &FreeCamControl,
@@ -1505,7 +1505,7 @@ SettingsContext FillContext() {
     ctx.motionControl      = MotionControl.Value<u8>();
     ctx.playMusic          = TogglePlayMusic.Value<u8>();
     ctx.playSFX            = TogglePlaySFX.Value<u8>();
-    ctx.silenceNavi        = SilenceNavi.Value<u8>();
+    ctx.naviNotifications  = NaviNotifications.Value<u8>();
     ctx.ignoreMaskReaction = IgnoreMaskReaction.Value<u8>();
     ctx.freeCamControl     = FreeCamControl.Value<u8>();
 
