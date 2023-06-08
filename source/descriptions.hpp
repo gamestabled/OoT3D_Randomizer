@@ -255,6 +255,9 @@ extern string_view uselessHintsDesc;
 extern string_view balancedHintsDesc;
 extern string_view strongHintsDesc;
 extern string_view veryStrongHintsDesc;
+extern string_view playthroughHintsDesc;
+
+extern string_view bonusGossipHintsDesc;
 
 extern string_view miscHintsDesc;
 extern string_view totAltarHintsDesc;
