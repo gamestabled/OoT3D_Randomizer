@@ -804,7 +804,10 @@ string_view totAltarHintsDesc         = "The Temple of Time altar will reveal th
                                         "and Rainbow Bridge as adult.";                    //
 string_view ganonHintsDesc            = "Talking to Ganondorf in his boss room will tell\n"//
                                         "you the location of the Light Arrows and, if it\n"//
-                                        "was shuffled, the Master Sword.";                 //
+                                        "was shuffled, the Master Sword.\n"                //
+                                        "\n"                                               //
+                                        "When trials are on, Sheik will appear to relay\n" //
+                                        "these hints in Ganon's Castle.";                  //
 /*------------------------------                                                           //
 |  MAP AND COMPASS GIVES INFO  |                                                           //
 ------------------------------*/                                                           //

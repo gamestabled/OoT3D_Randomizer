@@ -91,6 +91,30 @@ class Text {
                      EURfrench + right, EURspanish + right, EURitalian + right, EURgerman + right };
     }
 
+    Text& operator+=(const Text& right) {
+        NAenglish += right.GetNAEnglish();
+        NAfrench += right.GetNAFrench();
+        NAspanish += right.GetNASpanish();
+        EURenglish += right.GetEUREnglish();
+        EURfrench += right.GetEURFrench();
+        EURspanish += right.GetEURSpanish();
+        EURitalian += right.GetEURItalian();
+        EURgerman += right.GetEURGerman();
+        return *this;
+    }
+
+    Text& operator+=(const std::string& right) {
+        NAenglish += right;
+        NAfrench += right;
+        NAspanish += right;
+        EURenglish += right;
+        EURfrench += right;
+        EURspanish += right;
+        EURitalian += right;
+        EURgerman += right;
+        return *this;
+    }
+
     bool operator==(const Text& right) const {
         return NAenglish == right.NAenglish;
     }

@@ -1901,6 +1901,15 @@ hook_CamUpdate:
     bl Camera_FreeCamUpdate
     ldmia sp!,{r4-r11,pc}
 
+.global hook_Sheik_GetTextID
+hook_Sheik_GetTextID:
+    push {r0, r2-r12, lr}
+    cpy r0,r4
+    bl Sheik_GetTextID
+    cpy r1,r0
+    pop {r0, r2-r12, lr}
+    b 0x2A4B4C
+
 @ ----------------------------------
 @ ----------------------------------
 
