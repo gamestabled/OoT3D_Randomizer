@@ -238,6 +238,13 @@ typedef enum {
 } GanonsBossKeySetting;
 
 typedef enum {
+    KEYRINGS_OFF,
+    KEYRINGS_ON,
+    KEYRINGS_CHOOSE,
+    KEYRINGS_RANDOM,
+} KeyRingsSetting;
+
+typedef enum {
     KINGZORASPEED_FAST,
     KINGZORASPEED_VANILLA,
     KINGZORASPEED_RANDOM,

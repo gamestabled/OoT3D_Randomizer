@@ -236,7 +236,7 @@ Option LACSStoneCount      = Option::U8  (2, "Stone Count",            {NumOpts(
 Option LACSRewardCount     = Option::U8  (2, "Reward Count",           {NumOpts(0, 9)},                                                        {lacsRewardCountDesc},                                                                                            OptionCategory::Setting,    1,                          true);
 Option LACSDungeonCount    = Option::U8  (2, "Dungeon Count",          {NumOpts(0, 8)},                                                        {lacsDungeonCountDesc},                                                                                           OptionCategory::Setting,    1,                          true);
 Option LACSTokenCount      = Option::U8  (2, "Token Count",            {NumOpts(0, 100)},                                                      {lacsTokenCountDesc},                                                                                             OptionCategory::Setting,    1,                          true);
-Option KeyRings            = Option::U8  ("Key Rings",                 {"Off", "On", "Random"},                                                {keyRingDesc});
+Option KeyRings            = Option::U8  ("Key Rings",                 {"All Off", "All On", "Choose", "Random"},                              {keyRingDesc});
 Option RingFortress        = Option::Bool(2, "Gerudo Fortress",        {"Off", "On"},                                                          {keyRingDesc},                                                                                                    OptionCategory::Setting);
 Option RingForest          = Option::Bool(2, "Forest Temple",          {"Off", "On"},                                                          {keyRingDesc},                                                                                                    OptionCategory::Setting);
 Option RingFire            = Option::Bool(2, "Fire Temple",            {"Off", "On"},                                                          {keyRingDesc},                                                                                                    OptionCategory::Setting);
@@ -295,8 +295,6 @@ Option NumRequiredCuccos   = Option::U8  ("Cuccos to return",       {NumOpts(0, 
 Option KingZoraSpeed       = Option::U8  ("King Zora Speed",        {"Fast", "Vanilla", "Random", "Custom"},                                {kingZoraSpeedFast, kingZoraSpeedVanilla, kingZoraSpeedRandom, kingZoraSpeedCustom});
 Option ExactZoraSpeed      = Option::U8  (2, "Exact Shuffle Count", {NumOpts(1, 128)},                                                      {""});
 Option CompleteMaskQuest   = Option::Bool("Complete Mask Quest",    {"Off", "On"},                                                          {completeMaskDesc});
-Option KeepFWWarpPoint     = Option::Bool("Keep FW Warp Point",     {"Off", "On"},                                                          {keepFWWarpPointDesc});
-Option FastBunnyHood       = Option::Bool("Fast Bunny Hood",        {"Off", "On"},                                                          {fastBunnyHoodDesc});
 std::vector<Option *> timesaverOptions = {
     &SkipChildStealth,
     &SkipTowerEscape,
@@ -310,8 +308,6 @@ std::vector<Option *> timesaverOptions = {
     &KingZoraSpeed,
     &ExactZoraSpeed,
     &CompleteMaskQuest,
-    &KeepFWWarpPoint,
-    &FastBunnyHood,
 };
 
 // Misc Settings
@@ -326,26 +322,11 @@ Option ClearerHints        = Option::U8  ("Hint Clarity",           {"Obscure", 
 Option CompassesShowReward = Option::U8  ("Compasses Show Rewards", {"No", "Yes"},                                                          {compassesShowRewardsDesc});
 Option CompassesShowWotH   = Option::U8  ("Compasses Show WotH",    {"No", "Yes"},                                                          {compassesShowWotHDesc},                                                                                          OptionCategory::Setting,    ON);
 Option MapsShowDungeonMode = Option::U8  ("Maps Show Dungeon Modes",{"No", "Yes"},                                                          {mapsShowDungeonModesDesc},                                                                                       OptionCategory::Setting,    ON);
-Option DamageMultiplier    = Option::U8  ("Damage Multiplier",      {"x1/2", "x1", "x2", "x4", "x8", "x16", "OHKO"},                        {damageMultiDesc},                                                                                                OptionCategory::Setting,    DAMAGEMULTIPLIER_DEFAULT);
-Option Permadeath          = Option::Bool("Permadeath",             {"Off", "On"},                                                          {permadeathDesc});
 Option StartingTime        = Option::U8  ("Starting Time",          {"Day", "Night"},                                                       {startingTimeDesc});
 Option ChestAnimations     = Option::Bool("Chest Animations",       {"Always Fast", "Match Contents"},                                      {chestAnimDesc});
 Option ChestAppearance     = Option::U8  ("Chest Appearance Mod",   {"Vanilla", "Texture", "Size & Texture", "Classic CSMC"},               {chestVanillaDesc, chestTextureDesc, chestSizeTextureDesc, chestClassicDesc});
 Option GenerateSpoilerLog  = Option::Bool("Generate Spoiler Log",   {"No", "Yes"},                                                          {""},                                                                                                             OptionCategory::Setting,    ON);
 Option IngameSpoilers      = Option::Bool("Ingame Spoilers",        {"Hide", "Show"},                                                       {ingameSpoilersHideDesc, ingameSpoilersShowDesc });
-Option RandomTrapDmg       = Option::U8  ("Random Trap Damage",     {"Off", "Basic", "Advanced"},                                           {randomTrapDmgDesc, basicTrapDmgDesc, advancedTrapDmgDesc},                                                       OptionCategory::Setting,    RANDOMTRAPS_BASIC);
-Option FireTrap            = Option::Bool(2, "Fire Trap",           {"Off", "On"},                                                          {fireTrapDesc},                                                                                                   OptionCategory::Setting,    ON);
-Option AntiFairyTrap       = Option::Bool(2, "Anti-Fairy Trap",     {"Off", "On"},                                                          {antiFairyTrapDesc},                                                                                              OptionCategory::Setting,    ON);
-Option CurseTraps          = Option::Bool(2, "Curse Traps",         {"Off", "On"},                                                          {curseTrapsDesc},                                                                                                 OptionCategory::Setting);
-Option ScreenTraps         = Option::Bool(4, "Screen Traps",        {"Off", "On"},                                                          {screenTrapsDesc},                                                                                                OptionCategory::Setting);
-Option ExtraArrowEffects   = Option::Bool("Extra Arrow Effects",    {"Off", "On"},                                                          {extraArrowEffectsDesc});
-Option HyperActors         = Option::U8  ("Hyper Actors",           {"All Off", "All On", "Choose"},                                        {hyperActorsDesc});
-Option HyperBosses         = Option::Bool(2, "Hyper Bosses",        {"Off", "On"},                                                          {hyperBossesDesc});
-Option HyperMiddleBosses   = Option::Bool(2, "Hyper Middle Bosses", {"Off", "On"},                                                          {hyperMiddleBossesDesc});
-Option HyperEnemies        = Option::Bool(2, "Hyper Enemies",       {"Off", "On"},                                                          {hyperEnemiesDesc});
-Option FreeCamera          = Option::Bool("Free Camera",            {"Off", "On"},                                                          {freeCamDesc},                                                                                                    OptionCategory::Setting,    ON);
-Option RandomGsLocations   = Option::Bool("Random GS Locations",    {"Off", "On"},                                                          {randomGsLocationsDesc});
-Option GsLocGuaranteeNew   = Option::Bool(2, "Guarantee New",       {"Off", "On"},                                                          {gsLocGuaranteeNewDesc});
 bool HasNightStart         = false;
 std::vector<Option *> miscOptions = {
     &Racing,
@@ -359,26 +340,11 @@ std::vector<Option *> miscOptions = {
     &CompassesShowReward,
     &CompassesShowWotH,
     &MapsShowDungeonMode,
-    &DamageMultiplier,
-    &Permadeath,
     &StartingTime,
     &ChestAnimations,
     &ChestAppearance,
     &GenerateSpoilerLog,
     &IngameSpoilers,
-    &RandomTrapDmg,
-    &FireTrap,
-    &AntiFairyTrap,
-    &CurseTraps,
-    &ScreenTraps,
-    &ExtraArrowEffects,
-    &HyperActors,
-    &HyperBosses,
-    &HyperMiddleBosses,
-    &HyperEnemies,
-    &FreeCamera,
-    &RandomGsLocations,
-    &GsLocGuaranteeNew,
 };
 
 // Item Usability Settings
@@ -439,6 +405,43 @@ std::vector<Option *> itemPoolOptions = {
     &IceTrapValue,
     &RemoveDoubleDefense,
     &ProgressiveGoronSword,
+};
+
+Option FastBunnyHood       = Option::Bool("Fast Bunny Hood",        {"Off", "On"},                                                          {fastBunnyHoodDesc});
+Option KeepFWWarpPoint     = Option::Bool("Keep FW Warp Point",     {"Off", "On"},                                                          {keepFWWarpPointDesc});
+Option DamageMultiplier    = Option::U8  ("Damage Multiplier",      {"x1/2", "x1", "x2", "x4", "x8", "x16", "OHKO"},                        {damageMultiDesc},                                                                                                OptionCategory::Setting,    DAMAGEMULTIPLIER_DEFAULT);
+Option Permadeath          = Option::Bool("Permadeath",             {"Off", "On"},                                                          {permadeathDesc});
+Option RandomTrapDmg       = Option::U8  ("Random Trap Damage",     {"Off", "Basic", "Advanced"},                                           {randomTrapDmgDesc, basicTrapDmgDesc, advancedTrapDmgDesc},                                                       OptionCategory::Setting,    RANDOMTRAPS_BASIC);
+Option FireTrap            = Option::Bool(2, "Fire Trap",           {"Off", "On"},                                                          {fireTrapDesc},                                                                                                   OptionCategory::Setting,    ON);
+Option AntiFairyTrap       = Option::Bool(2, "Anti-Fairy Trap",     {"Off", "On"},                                                          {antiFairyTrapDesc},                                                                                              OptionCategory::Setting,    ON);
+Option CurseTraps          = Option::Bool(2, "Curse Traps",         {"Off", "On"},                                                          {curseTrapsDesc},                                                                                                 OptionCategory::Setting);
+Option ScreenTraps         = Option::Bool(4, "Screen Traps",        {"Off", "On"},                                                          {screenTrapsDesc},                                                                                                OptionCategory::Setting);
+Option ExtraArrowEffects   = Option::Bool("Extra Arrow Effects",    {"Off", "On"},                                                          {extraArrowEffectsDesc});
+Option HyperActors         = Option::U8  ("Hyper Actors",           {"All Off", "All On", "Choose"},                                        {hyperActorsDesc});
+Option HyperBosses         = Option::Bool(2, "Hyper Bosses",        {"Off", "On"},                                                          {hyperBossesDesc});
+Option HyperMiddleBosses   = Option::Bool(2, "Hyper Middle Bosses", {"Off", "On"},                                                          {hyperMiddleBossesDesc});
+Option HyperEnemies        = Option::Bool(2, "Hyper Enemies",       {"Off", "On"},                                                          {hyperEnemiesDesc});
+Option FreeCamera          = Option::Bool("Free Camera",            {"Off", "On"},                                                          {freeCamDesc},                                                                                                    OptionCategory::Setting,    ON);
+Option RandomGsLocations   = Option::Bool("Random GS Locations",    {"Off", "On"},                                                          {randomGsLocationsDesc});
+Option GsLocGuaranteeNew   = Option::Bool(2, "Guarantee New",       {"Off", "On"},                                                          {gsLocGuaranteeNewDesc});
+std::vector<Option*> gameplayOptions = {
+    &FastBunnyHood,
+    &KeepFWWarpPoint,
+    &DamageMultiplier,
+    &Permadeath,
+    &RandomTrapDmg,
+    &FireTrap,
+    &AntiFairyTrap,
+    &CurseTraps,
+    &ScreenTraps,
+    &ExtraArrowEffects,
+    &HyperActors,
+    &HyperBosses,
+    &HyperMiddleBosses,
+    &HyperEnemies,
+    &FreeCamera,
+    &RandomGsLocations,
+    &GsLocGuaranteeNew,
 };
 
 // Excluded Locations (Individual definitions made in ItemLocation class)
@@ -1306,6 +1309,7 @@ Menu timesaverSettings        = Menu::SubMenu("Timesaver Settings",         &tim
 Menu miscSettings             = Menu::SubMenu("Misc Settings",              &miscOptions);
 Menu itemPoolSettings         = Menu::SubMenu("Item Pool Settings",         &itemPoolOptions);
 Menu itemUsabilitySettings    = Menu::SubMenu("Item Usability Settings",    &itemUsabilityOptions);
+Menu gameplaySettings         = Menu::SubMenu("Gameplay Settings",          &gameplayOptions);
 Menu multiplayerSettings      = Menu::SubMenu("Multiplayer Settings",       &multiplayerOptions);
 Menu personalization          = Menu::SubMenu("Personalization Settings",   &personalizationOptions, menuPersonalizationDesc);
 Menu settingsPresets          = Menu::SubMenu("Settings Presets",           &settingsPresetItems);
@@ -1323,6 +1327,7 @@ std::vector<Menu *> mainMenu = {
     &miscSettings,
     &itemPoolSettings,
     &itemUsabilitySettings,
+    &gameplaySettings,
     &multiplayerSettings,
     &personalization,
     &settingsPresets,
@@ -2191,14 +2196,18 @@ void ForceChange(u32 kDown, Option* currentSetting) {
             LACSTokenCount.Hide();
         }
 
-        if (KeyRings.Is(ON)) {
+        if (KeyRings.Is(KEYRINGS_CHOOSE)) {
             for (Option* option : keyRingOptions) {
                 option->Unhide();
             }
         } else {
             for (Option* option : keyRingOptions) {
                 option->Hide();
-                option->SetSelectedIndex(0);
+                if (KeyRings.Is(KEYRINGS_OFF)) {
+                    option->SetSelectedIndex(OFF);
+                } else if (KeyRings.Is(KEYRINGS_ON)) {
+                    option->SetSelectedIndex(ON);
+                }
             }
         }
     }
@@ -2247,26 +2256,7 @@ void ForceChange(u32 kDown, Option* currentSetting) {
         ScreenTraps.SetSelectedIndex(0);
     }
 
-    static const std::vector<Option*> hyperActorOptions = {
-        &HyperBosses,
-        &HyperMiddleBosses,
-        &HyperEnemies,
-    };
-    if (HyperActors.Is(HYPERACTORS_OFF)) {
-        for (auto op : hyperActorOptions) {
-            op->SetSelectedIndex(OFF);
-            op->Hide();
-        }
-    } else if (HyperActors.Is(HYPERACTORS_ON)) {
-        for (auto op : hyperActorOptions) {
-            op->SetSelectedIndex(ON);
-            op->Hide();
-        }
-    } else {
-        for (auto op : hyperActorOptions) {
-            op->Unhide();
-        }
-    }
+    ToggleSet(gameplayOptions, &HyperActors, &HyperBosses, &HyperEnemies);
 
     if (FreeCamera) {
         FreeCamControl.Unhide();
@@ -2901,10 +2891,11 @@ void UpdateSettings() {
     }
     if (KeyRings) {
         // Rangom Key Rings
-        if (KeyRings.Is(2)) {
+        if (KeyRings.Is(KEYRINGS_RANDOM)) {
             auto keyRings = keyRingOptions;
             Shuffle(keyRings);
-            for (size_t i = 0; i < Random(0, keyRings.size()); i++) {
+            auto amount = Random(0, keyRings.size() + 1);
+            for (size_t i = 0; i < amount; i++) {
                 keyRings[i]->SetSelectedIndex(ON);
             }
         }
