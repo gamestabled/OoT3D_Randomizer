@@ -605,7 +605,9 @@ static Text BuildDungeonRewardText(ItemID itemID, const ItemKey itemKey) {
     std::vector<LocationKey> itemKeyLocations = FilterFromPool(
         allLocations, [itemKey](const LocationKey loc) { return Location(loc)->GetPlacedItemKey() == itemKey; });
     LocationKey location = itemKeyLocations.empty() ? LINKS_POCKET : itemKeyLocations[0];
-    Location(location)->SetAsHinted();
+    if (Settings::ToTAltarHints || Settings::CompassesShowReward) {
+        Location(location)->SetAsHinted();
+    }
     // Calling ITEM_OBTAINED draws the passed in itemID to the left side of the textbox
     return Text() + "^" + ITEM_OBTAINED(itemID) + "#" +
            GetHintRegion(Location(location)->GetParentRegionKey())->GetHint().GetText() + "#...";
