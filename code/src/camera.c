@@ -241,24 +241,13 @@ void Camera_FreeCamUpdate(Vec3s* out, Camera* camera) {
         out->z = camera->inputDir.z = camera->camDir.z = 0;
 
         // Update camera setting
-        CollisionPoly* floorPoly;
-        s16 newSetting;
-        Vec3f headPos;
-        headPos.x = camera->player->actor.world.pos.x;
-        headPos.y = camera->player->actor.world.pos.y + (gSaveContext.linkAge ? 44 : 68);
-        headPos.z = camera->player->actor.world.pos.z;
+        s16 bgId          = camera->player->actor.floorBgId;
+        s16 newCamDataIdx = Camera_GetCamDataId(&camera->globalCtx->colCtx, camera->player->actor.floorPoly, bgId);
+        s16 newSetting =
+            (bgId == 0x32) ? camera->globalCtx->colCtx.stat.colHeader->camDataList[newCamDataIdx].setting : 0;
 
-        camera->playerGroundY = BgCheck_EntityRaycastFloor5(camera->globalCtx, &camera->globalCtx->colCtx, &floorPoly,
-                                                            &camera->bgCheckId, camera->player, &headPos);
-        s16 newCamDataIdx     = Camera_GetCamDataId(&camera->globalCtx->colCtx, floorPoly, camera->bgCheckId);
-        if (camera->bgCheckId == 0x32)
-            newSetting = camera->globalCtx->colCtx.stat.colHeader->camDataList[newCamDataIdx].setting;
-        else
-            newSetting = camera->globalCtx->colCtx.dyna.actorMeshArr[camera->bgCheckId]
-                             .colHeader->camDataList[newCamDataIdx]
-                             .setting;
-
-        if (newCamDataIdx != -1 && newSetting && (newSetting != 0x35 || gSaveContext.linkAge)) {
+        if (newCamDataIdx != -1 && newSetting && (newSetting != 0x35 || gSaveContext.linkAge) &&
+            camera->player->actor.world.pos.y - camera->player->actor.floorHeight < 2) {
             camera->camDataIdx = newCamDataIdx;
             if (newSetting != camera->setting) {
                 camera->prevSetting = camera->setting;
