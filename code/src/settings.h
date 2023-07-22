@@ -567,6 +567,7 @@ typedef struct {
     u8 mapsShowDungeonMode;
     u8 chestAnimations;
     u8 chestAppearance;
+    u8 chestAgony;
     u8 generateSpoilerLog;
     u8 ingameSpoilers;
     u8 menuOpeningButton;

@@ -876,7 +876,7 @@ string_view chestAnimDesc             = "Choose if you want the slow animation t
                                         "if a chest contains a major item.\n";             //
                                                                                            //
 /*------------------------------                                                           //
-|     CHEST SIZE AND COLOR     |                                                           //
+|       CHEST APPEARANCE       |                                                           //
 ------------------------------*/                                                           //
 string_view chestVanillaDesc          = "Chests will appear as they do in the base game."; //
 string_view chestTextureDesc          = "Chest texture will reflect its contents\n"        //
@@ -898,6 +898,8 @@ string_view chestClassicDesc          = "This is the behavior of CSMC in previou
                                         "Lesser Items          ->   Small Wooden Chests\n" //
                                         "Boss Keys             ->   Big Fancy Chests\n"    //
                                         "Small Keys            ->   Small Fancy Chests";   //
+string_view chestAgonyDesc            = "The Chest Appearance Mod will only apply\n"       //
+                                        "after obtaining the Shard of Agony.\n";           //
                                                                                            //
 /*------------------------------                                                           //
 |        INGAME SPOILERS       |                                                           //
