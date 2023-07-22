@@ -238,6 +238,13 @@ typedef enum {
 } GanonsBossKeySetting;
 
 typedef enum {
+    KEYRINGS_OFF,
+    KEYRINGS_ON,
+    KEYRINGS_CHOOSE,
+    KEYRINGS_RANDOM,
+} KeyRingsSetting;
+
+typedef enum {
     KINGZORASPEED_FAST,
     KINGZORASPEED_VANILLA,
     KINGZORASPEED_RANDOM,
@@ -256,6 +263,12 @@ typedef enum {
     SONGREPLAYS_SKIP_NO_SFX,
     SONGREPLAYS_SKIP_KEEP_SFX,
 } SkipSongReplaysSetting;
+
+typedef enum {
+    NAVINOTIFS_SILENCED,
+    NAVINOTIFS_NORMAL,
+    NAVINOTIFS_CONSTANT,
+} NaviNotificationsSetting;
 
 typedef enum {
     INCLUDE,
@@ -289,6 +302,7 @@ typedef enum {
     HINTDISTRIBUTION_BALANCED,
     HINTDISTRIBUTION_STRONG,
     HINTDISTRIBUTION_VERYSTRONG,
+    HINTDISTRIBUTION_PLAYTHROUGH,
 } HintDistributionSettings;
 
 typedef enum {
@@ -542,6 +556,7 @@ typedef struct {
     u8 gossipStoneHints;
     u8 totAltarHints;
     u8 ganonHints;
+    u8 sheikHints;
     u8 dampeHint;
     u8 compassesShowReward;
     u8 compassesShowWotH;
@@ -600,7 +615,7 @@ typedef struct {
     u8 motionControl;
     u8 playMusic;
     u8 playSFX;
-    u8 silenceNavi;
+    u8 naviNotifications;
     u8 ignoreMaskReaction;
     u8 freeCamControl;
 

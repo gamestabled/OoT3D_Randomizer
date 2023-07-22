@@ -6,6 +6,7 @@
 // #include "z3Dequipment.h"
 #include "z3Dcutscene.h"
 #include "z3Ditem.h"
+#include "z3Dmath.h"
 
 // #include "hid.h"
 
@@ -344,6 +345,19 @@ typedef struct {
 } StaticCollisionContext; // size = 0x50
 
 typedef struct {
+    /* 0x00 */ Actor* actor;
+    /* 0x04 */ CollisionHeader* colHeader;
+    /* 0x08 */ char unk_04[0x0C];
+    /* 0x14 */ Vec3f scale1;
+    /* 0x20 */ Vec3s rot1;
+    /* 0x28 */ Vec3f pos1;
+    /* 0x34 */ Vec3f scale2;
+    /* 0x40 */ Vec3s rot2;
+    /* 0x48 */ Vec3f pos2;
+    /* 0x54 */ char unk_54[0x18];
+} ActorMesh; // size = 0x6C
+
+typedef struct {
     /* 0x0000 */ char unk_00[0x04];
     /* 0x0004 */ ActorMesh actorMeshArr[50];
     /* 0x151C */ u16 flags[50];
@@ -558,7 +572,7 @@ typedef struct GlobalContext {
     /* 0x3234 */ char unk_3234[0x0824];
     /* 0x3A58 */ ObjectContext objectCtx;
     /* 0x43DC */ char unk_43DC[0x0854];
-    /* 0x4C30 */ u8 roomNum;
+    /* 0x4C30 */ s8 roomNum;
     /* 0x4C31 */ char unk_4C31[0x0FCF];
     /* 0x5C00 */ u8 linkAgeOnLoad;
     /* 0x5C01 */ u8 unk_5C01;
@@ -810,6 +824,9 @@ typedef void (*Model_DisableMeshGroupByIndex_proc)(SkeletonAnimationModel* skel,
 typedef s32 (*Player_InBlockingCsMode_proc)(GlobalContext* globalCtx, Player* player);
 #define Player_InBlockingCsMode ((Player_InBlockingCsMode_proc)0x35DB20)
 
+typedef u32 (*PauseContext_GetState_proc)(void);
+#define PauseContext_GetState ((PauseContext_GetState_proc)0x3695F8)
+
 typedef s32 (*Camera_CheckWater_proc)(Camera* camera);
 #define Camera_CheckWater ((Camera_CheckWater_proc)0x2D06A0)
 
@@ -834,5 +851,14 @@ typedef s16 (*Camera_GetCamDataId_proc)(CollisionContext* colCtx, CollisionPoly*
     #define Camera_GetCamDataId_addr 0x47BFD8
 #endif
 #define Camera_GetCamDataId ((Camera_GetCamDataId_proc)Camera_GetCamDataId_addr)
+
+typedef s32 (*Animation_GetLastFrame_proc)(SkelAnime* anime, s32 animation_index);
+#define Animation_GetLastFrame_addr 0x36AE14
+#define Animation_GetLastFrame ((Animation_GetLastFrame_proc)Animation_GetLastFrame_addr)
+
+typedef void (*Animation_Change_proc)(SkelAnime* anime, s32 animation_index, f32 play_speed, f32 start_frame,
+                                      f32 end_frame, f32 morph_frames, s32 mode) __attribute__((pcs("aapcs-vfp")));
+#define Animation_Change_addr 0x375C08
+#define Animation_Change ((Animation_Change_proc)Animation_Change_addr)
 
 #endif //_Z3D_H_

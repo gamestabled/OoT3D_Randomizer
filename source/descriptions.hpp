@@ -255,6 +255,9 @@ extern string_view uselessHintsDesc;
 extern string_view balancedHintsDesc;
 extern string_view strongHintsDesc;
 extern string_view veryStrongHintsDesc;
+extern string_view playthroughHintsDesc;
+
+extern string_view bonusGossipHintsDesc;
 
 extern string_view miscHintsDesc;
 extern string_view totAltarHintsDesc;
@@ -346,7 +349,7 @@ extern string_view mp_SharedHealthDesc;
 extern string_view mp_SharedRupeesDesc;
 extern string_view mp_SharedAmmoDesc;
 
-extern string_view silenceNaviDesc;
+extern string_view naviNotificationsDesc;
 extern string_view ignoreMaskReactionDesc;
 
 extern string_view naviColorsDesc;
@@ -387,6 +390,8 @@ extern string_view hyperBossesDesc;
 extern string_view hyperMiddleBossesDesc;
 extern string_view hyperEnemiesDesc;
 extern string_view freeCamDesc;
+extern string_view randomGsLocationsDesc;
+extern string_view gsLocGuaranteeNewDesc;
 
 extern string_view ToggleAllTricksDesc;
 

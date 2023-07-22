@@ -1241,14 +1241,18 @@ hook_RunAnimationSpeed:
     vmul.f32 s17,s1
     bx lr
 
-.global hook_SilenceNavi
-hook_SilenceNavi:
+.global hook_NaviNotifications
+hook_NaviNotifications:
     push {r0-r12, lr}
-    bl IsNaviSilenced
+    bl Navi_GetNotificationOption
     cmp r0,#0x1
     pop {r0-r12, lr}
-    beq 0x26808C
-    cmp r0,r2
+    # Silenced
+    blt 0x267E3C
+    # Constant
+    bgt 0x267E14
+    # Normal
+    ldr r0,[r0,#0x4C]
     bx lr
 
 .global hook_ChestMinigame_KeyChestVisibility
@@ -1786,15 +1790,6 @@ hook_AboutToPickUpActor:
     subeq lr,lr,#0x8
     bx lr
 
-.global hook_GoronPotGuaranteeReward
-hook_GoronPotGuaranteeReward:
-    mov r3,#0x0
-    push {r0-r12, lr}
-    cpy r0,r4
-    bl BgSpot18Basket_SetRotation
-    pop {r0-r12, lr}
-    bx lr
-
 .global hook_TargetReticleColor
 hook_TargetReticleColor:
     mov r4,#0x0
@@ -1825,6 +1820,23 @@ hook_TargetPointerColor:
 .else
     b 0x47BB30
 .endif
+
+.global hook_ShadowShip_Speed
+hook_ShadowShip_Speed:
+    add r0,r4,#0x6C
+    push {r0-r12,lr}
+    vpush {s0-s1}
+    bl ShadowShip_HasActiveStalfos
+    vpop {s0-s1}
+    cmp r0,#0x1
+    mov r0,#0x5
+    vmov s2,r0
+    vcvt.f32.s32 s2,s2
+    pop {r0-r12,lr}
+    vmul.f32 s1,s2
+    bxeq lr
+    vmul.f32 s0,s2
+    bx lr
 
 .global hook_MaskSalesmanBorrowMask
 hook_MaskSalesmanBorrowMask:
@@ -1900,6 +1912,174 @@ hook_CamUpdate:
     bxeq lr
     bl Camera_FreeCamUpdate
     ldmia sp!,{r4-r11,pc}
+
+.global hook_Sheik_GetTextID
+hook_Sheik_GetTextID:
+    push {r0, r2-r12, lr}
+    cpy r0,r4
+    bl Sheik_GetTextID
+    cpy r1,r0
+    pop {r0, r2-r12, lr}
+    b 0x2A4B4C
+
+.global hook_OnActorSetup_SceneChange
+hook_OnActorSetup_SceneChange:
+    cpy r4,r5
+    push {r0-r12, lr}
+    cpy r0,r5
+    bl ActorSetup_ShouldSkipEntry
+    cmp r0,#0x1
+    pop {r0-r12, lr}
+    # Continue like normal
+    bxne lr
+    # Iterate actor entry pointer and skip
+    add r5,#0x10
+.if _EUR_==1
+    b 0x4522C4
+.else
+    b 0x4522A4
+.endif
+
+.global hook_AfterActorSetup_SceneChange
+hook_AfterActorSetup_SceneChange:
+    strb r0,[r7,#0xC03]
+    push {r0-r12, lr}
+    bl ActorSetup_After
+    pop {r0-r12, lr}
+.if _EUR_==1
+    b 0x4522DC
+.else
+    b 0x4522BC
+.endif
+
+.global hook_OnActorSetup_RoomChange
+hook_OnActorSetup_RoomChange:
+    cpy r4,r6
+    push {r0-r12, lr}
+    cpy r0,r6
+    bl ActorSetup_ShouldSkipEntry
+    cmp r0,#0x1
+    pop {r0-r12, lr}
+    # Continue like normal
+    bxne lr
+    # Iterate actor entry pointer and skip
+    add r6,#0x10
+.if _EUR_==1
+    b 0x461444
+.else
+    b 0x461424
+.endif
+
+.global hook_AfterActorSetup_RoomChange
+hook_AfterActorSetup_RoomChange:
+    strb r10,[r8,#0xC03]
+    push {r0-r12, lr}
+    bl ActorSetup_After
+    pop {r0-r12, lr}
+.if _EUR_==1
+    b 0x461458
+.else
+    b 0x461438
+.endif
+
+.global hook_RandomGsLoc_CustomTangibilityCheck
+hook_RandomGsLoc_CustomTangibilityCheck:
+    sub sp,sp,#0x18
+    push {r0-r12, lr}
+    mov r1,#0x1
+    mov r2,#0x0
+    bl Gs_HasAltLoc
+    cmp r0,#0x1
+    pop {r0-r12, lr}
+    # Has original location, run original function
+    bne 0x3415B4
+    push {r0-r12, lr}
+    bl Gs_CustomTangibilityCheck
+    cmp r0,#0x1
+    pop {r0-r12, lr}
+    # Return true
+    beq 0x341BDC
+    # Return false
+    b 0x341BEC
+
+.global hook_RandomGsLoc_CustomTokenSpawnOffset
+hook_RandomGsLoc_CustomTokenSpawnOffset:
+    vadd.f32 s0,s3,s0
+    push {r0-r12, lr}
+    cpy r0,r4
+    mov r1,#0x1
+    mov r2,#0x0
+    bl Gs_HasAltLoc
+    cmp r0,#0x1
+    pop {r0-r12, lr}
+    bxne lr
+    push {r0-r12, lr}
+    cpy r0,r4
+    bl Gs_GetCustomTokenSpawnPos
+    vldr s0,[r0,#0x0]
+    vldr s1,[r0,#0x4]
+    vldr s2,[r0,#0x8]
+    pop {r0-r12, lr}
+    bx lr
+
+.global hook_RandomGsLoc_BlockSpawn_Crate
+hook_RandomGsLoc_BlockSpawn_Crate:
+    push {r0-r12, lr}
+    cpy r0,r4
+    mov r1,#0x2
+    mov r2,#0x1
+    bl Gs_HasAltLoc
+    cmp r0,#0x1
+    pop {r0-r12, lr}
+    # If true
+    beq 0x3BCAA4
+    # If false
+    orr r0,r2,#0x8000
+    bx lr
+
+.global hook_RandomGsLoc_BlockSpawn_Tree
+hook_RandomGsLoc_BlockSpawn_Tree:
+    push {r0-r12, lr}
+    cpy r0,r4
+    mov r1,#0x3
+    mov r2,#0x1
+    bl Gs_HasAltLoc
+    cmp r0,#0x1
+    pop {r0-r12, lr}
+    # If true
+    beq 0x16C47C
+    # If false
+    orr r0,r0,#0xE000
+    bx lr
+
+.global hook_RandomGsLoc_BlockSpawn_Soil
+hook_RandomGsLoc_BlockSpawn_Soil:
+    push {r0-r12, lr}
+    cpy r0,r4
+    mov r1,#0x4
+    mov r2,#0x1
+    bl Gs_HasAltLoc
+    cmp r0,#0x1
+    pop {r0-r12, lr}
+    # If true
+    beq 0x3BF6D0
+    # If false
+    ldrh r0,[r4,#0x1C]
+    bx lr
+
+.global hook_RandomGsLoc_SkipSoilJingle
+hook_RandomGsLoc_SkipSoilJingle:
+    push {r0-r12, lr}
+    mov r1,#0x4
+    mov r2,#0x1
+    bl Gs_HasAltLoc
+    cmp r0,#0x1
+    pop {r0-r12, lr}
+    # If true
+    beq 0x15DC34
+    # If false
+    ldrsh r0,[r0,#0x1C]
+    bx lr
 
 @ ----------------------------------
 @ ----------------------------------

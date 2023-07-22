@@ -249,18 +249,6 @@ typedef struct DynaPolyActor {
 } DynaPolyActor; // size = 0x1BC
 
 typedef struct {
-    /* 0x00 */ Actor* actor;
-    /* 0x04 */ char unk_04[0x10];
-    /* 0x14 */ Vec3f scale1;
-    /* 0x20 */ Vec3s rot1;
-    /* 0x28 */ Vec3f pos1;
-    /* 0x34 */ Vec3f scale2;
-    /* 0x40 */ Vec3s rot2;
-    /* 0x48 */ Vec3f pos2;
-    /* 0x54 */ char unk_54[0x18];
-} ActorMesh; // size = 0x6C
-
-typedef struct {
     /* 0x0000 */ Actor actor;
     /* 0x01A4 */ char unk_148[0x0005];
     /* 0x01A9 */ s8 heldItemActionParam;
@@ -346,5 +334,8 @@ void Actor_Kill(Actor* actor);
 typedef u32 (*Actor_HasParent_proc)(Actor* actor, struct GlobalContext* globalCtx);
 #define Actor_HasParent_addr 0x371E40
 #define Actor_HasParent ((Actor_HasParent_proc)Actor_HasParent_addr)
+
+typedef f32 (*Actor_WorldDistXYZToActor_proc)(Actor* a, Actor* b) __attribute__((pcs("aapcs-vfp")));
+#define Actor_WorldDistXYZToActor ((Actor_WorldDistXYZToActor_proc)0x3306C4)
 
 #endif

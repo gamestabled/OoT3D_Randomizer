@@ -240,10 +240,14 @@ void Camera_FreeCamUpdate(Vec3s* out, Camera* camera) {
         out->y = camera->inputDir.y = camera->camDir.y = yaw;
         out->z = camera->inputDir.z = camera->camDir.z = 0;
 
-        // Pretty much entirely to let the alcoves in SpT reclaim control of the camera
-        s16 newCamDataIdx = Camera_GetCamDataId(&camera->globalCtx->colCtx, camera->player->actor.floorPoly, 0x32);
-        s16 newSetting    = camera->globalCtx->colCtx.stat.colHeader->camDataList[newCamDataIdx].setting;
-        if (newCamDataIdx != -1 && newSetting && (newSetting != 0x35 || gSaveContext.linkAge)) {
+        // Update camera setting
+        s16 bgId          = camera->player->actor.floorBgId;
+        s16 newCamDataIdx = Camera_GetCamDataId(&camera->globalCtx->colCtx, camera->player->actor.floorPoly, bgId);
+        s16 newSetting =
+            (bgId == 0x32) ? camera->globalCtx->colCtx.stat.colHeader->camDataList[newCamDataIdx].setting : 0;
+
+        if (newCamDataIdx != -1 && newSetting && (newSetting != 0x35 || gSaveContext.linkAge) &&
+            camera->player->actor.world.pos.y - camera->player->actor.floorHeight < 2) {
             camera->camDataIdx = newCamDataIdx;
             if (newSetting != camera->setting) {
                 camera->prevSetting = camera->setting;

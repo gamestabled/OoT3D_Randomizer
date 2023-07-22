@@ -1662,10 +1662,10 @@ MultiplyPlayerSpeed_patch:
 RunAnimationSpeed_patch:
     bl hook_RunAnimationSpeed
 
-.section .patch_SilenceNavi
-.global SilenceNavi_patch
-SilenceNavi_patch:
-    bl hook_SilenceNavi
+.section .patch_NaviNotifications
+.global NaviNotifications_patch
+NaviNotifications_patch:
+    bl hook_NaviNotifications
 
 .section .patch_ChestMinigame_RewardChestVisibility
 .global ChestMinigame_RewardChestVisibility_patch
@@ -2078,11 +2078,6 @@ SetFWPlayerParams_patch:
 AboutToPickUpActor_patch:
     bl hook_AboutToPickUpActor
 
-.section .patch_GoronPotGuaranteeReward
-.global GoronPotGuaranteeReward_patch
-GoronPotGuaranteeReward_patch:
-    bl hook_GoronPotGuaranteeReward
-
 .section .patch_TargetReticleColor
 .global TargetReticleColor_patch
 TargetReticleColor_patch:
@@ -2098,15 +2093,10 @@ TargetPointerColor_patch:
 ShadowShip_CSTimer_patch:
     .word 0xC3
 
-.section .patch_ShadowShip_Accel
-.global ShadowShip_Accel_patch
-ShadowShip_Accel_patch:
-    .word 0x3F800000
-
-.section .patch_ShadowShip_TopSpeed
-.global ShadowShip_TopSpeed_patch
-ShadowShip_TopSpeed_patch:
-    .word 0x41A00000
+.section .patch_ShadowShip_Speed
+.global ShadowShip_Speed_patch
+ShadowShip_Speed_patch:
+    bl hook_ShadowShip_Speed
 
 .section .patch_MaskSalesmanCheckNoMaskOne
 .global MaskSalesmanCheckNoMaskOne_patch
@@ -2154,6 +2144,61 @@ CamRoll_patch:
 .global CamUpdate_patch
 CamUpdate_patch:
     bl hook_CamUpdate
+
+.section .patch_Sheik_GetTextID
+.global Sheik_GetTextID_patch
+Sheik_GetTextID_patch:
+    b hook_Sheik_GetTextID
+
+.section .patch_OnActorSetup_SceneChange
+.global OnActorSetup_SceneChange_patch
+OnActorSetup_SceneChange_patch:
+    bl hook_OnActorSetup_SceneChange
+
+.section .patch_AfterActorSetup_SceneChange
+.global AfterActorSetup_SceneChange_patch
+AfterActorSetup_SceneChange_patch:
+    b hook_AfterActorSetup_SceneChange
+
+.section .patch_OnActorSetup_RoomChange
+.global OnActorSetup_RoomChange_patch
+OnActorSetup_RoomChange_patch:
+    bl hook_OnActorSetup_RoomChange
+
+.section .patch_AfterActorSetup_RoomChange
+.global AfterActorSetup_RoomChange_patch
+AfterActorSetup_RoomChange_patch:
+    b hook_AfterActorSetup_RoomChange
+
+.section .patch_RandomGsLoc_CustomTangibilityCheck
+.global RandomGsLoc_CustomTangibilityCheck_patch
+RandomGsLoc_CustomTangibilityCheck_patch:
+    b hook_RandomGsLoc_CustomTangibilityCheck
+
+.section .patch_RandomGsLoc_CustomTokenSpawnOffset
+.global RandomGsLoc_CustomTokenSpawnOffset_patch
+RandomGsLoc_CustomTokenSpawnOffset_patch:
+    bl hook_RandomGsLoc_CustomTokenSpawnOffset
+
+.section .patch_RandomGsLoc_BlockSpawn_Crate
+.global RandomGsLoc_BlockSpawn_Crate_patch
+RandomGsLoc_BlockSpawn_Crate_patch:
+    bl hook_RandomGsLoc_BlockSpawn_Crate
+
+.section .patch_RandomGsLoc_BlockSpawn_Tree
+.global RandomGsLoc_BlockSpawn_Tree_patch
+RandomGsLoc_BlockSpawn_Tree_patch:
+    bl hook_RandomGsLoc_BlockSpawn_Tree
+
+.section .patch_RandomGsLoc_BlockSpawn_Soil
+.global RandomGsLoc_BlockSpawn_Soil_patch
+RandomGsLoc_BlockSpawn_Soil_patch:
+    bl hook_RandomGsLoc_BlockSpawn_Soil
+
+.section .patch_RandomGsLoc_SkipSoilJingle
+.global RandomGsLoc_SkipSoilJingle_patch
+RandomGsLoc_SkipSoilJingle_patch:
+    bl hook_RandomGsLoc_SkipSoilJingle
 
 @ ----------------------------------
 @ ----------------------------------

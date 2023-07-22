@@ -299,6 +299,7 @@ u8 DungeonCount            = 0;
 bool HasAllStones          = false;
 bool HasAllMedallions      = false;
 bool CanBuildRainbowBridge = false;
+bool BuiltRainbowBridge    = false;
 bool CanTriggerLACS        = false;
 
 // Other
@@ -769,7 +770,7 @@ void UpdateHelpers() {
     CanOpenBombGrotto   = CanBlastOrSmash && (ShardOfAgony || LogicGrottosWithoutAgony);
     CanOpenStormGrotto  = CanPlay(SongOfStorms) && (ShardOfAgony || LogicGrottosWithoutAgony);
     HookshotOrBoomerang = CanUse(HOOKSHOT) || CanUse(BOOMERANG);
-    CanGetNightTimeGS   = (CanPlay(SunsSong) || !NightGSExpectSuns);
+    CanGetNightTimeGS   = AtNight && (CanPlay(SunsSong) || !NightGSExpectSuns);
 
     GuaranteeTradePath = ShuffleInteriorEntrances || ShuffleOverworldEntrances || LogicBiggoronBolero ||
                          CanBlastOrSmash || StopGCRollingGoronAsAdult;
@@ -1194,6 +1195,7 @@ void LogicReset() {
     HasAllStones          = false;
     HasAllMedallions      = false;
     CanBuildRainbowBridge = false;
+    BuiltRainbowBridge    = false;
     CanTriggerLACS        = false;
 
     // Other

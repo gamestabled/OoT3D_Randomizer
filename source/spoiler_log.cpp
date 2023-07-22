@@ -10,6 +10,7 @@
 #include "tinyxml2.h"
 #include "utils.hpp"
 #include "shops.hpp"
+#include "gold_skulltulas.hpp"
 
 #include <3ds.h>
 #include <cstdio>
@@ -533,6 +534,39 @@ static void WriteRequiredTrials(tinyxml2::XMLDocument& spoilerLog) {
     }
 }
 
+// Writes the area and a description of where any moved Gold Skulltulas are.
+static void WriteNewGsLocations(tinyxml2::XMLDocument& spoilerLog) {
+    if (!Settings::RandomGsLocations) {
+        return;
+    }
+
+    auto parentNode = spoilerLog.NewElement("gold-skulltulas");
+
+    for (auto gs : gsTable) {
+        if (!gs.second->IsRelevant() || gs.second->GetAssignedLocation() == nullptr) {
+            continue;
+        }
+
+        auto node = parentNode->InsertNewChildElement("gs");
+
+        node->SetAttribute("name", Location(gs.first)->GetName().c_str());
+
+        constexpr int16_t LONGEST_NAME = 56; // The longest name of a location.
+        // Insert a padding so we get a kind of table in the XML document.
+        int16_t requiredPadding = LONGEST_NAME - Location(gs.first)->GetName().length();
+        if (requiredPadding >= 0) {
+            std::string padding(requiredPadding, ' ');
+            node->SetAttribute("_", padding.c_str());
+        }
+
+        std::string locationStr = AreaTable(gs.second->GetAssignedLocation()->areaKey)->regionName + ": " +
+                                  gs.second->GetAssignedLocation()->description.data();
+        node->SetText(locationStr.c_str());
+    }
+
+    spoilerLog.RootElement()->InsertEndChild(parentNode);
+}
+
 // Writes the intended playthrough to the spoiler log, separated into spheres.
 static void WritePlaythrough(tinyxml2::XMLDocument& spoilerLog) {
     auto playthroughNode = spoilerLog.NewElement("playthrough");
@@ -637,6 +671,7 @@ bool SpoilerLog_Write() {
     }
     WriteMasterQuestDungeons(spoilerLog);
     WriteRequiredTrials(spoilerLog);
+    WriteNewGsLocations(spoilerLog);
     WritePlaythrough(spoilerLog);
     WriteWayOfTheHeroLocation(spoilerLog);
 
@@ -678,6 +713,7 @@ bool PlacementLog_Write() {
     WriteEnabledGlitches(placementLog);
     WriteMasterQuestDungeons(placementLog);
     WriteRequiredTrials(placementLog);
+    WriteNewGsLocations(placementLog);
 
     placementtxt = "\n" + placementtxt;
 

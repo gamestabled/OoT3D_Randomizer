@@ -449,6 +449,7 @@ extern Option Racing;
 extern Option GossipStoneHints;
 extern Option ClearerHints;
 extern Option HintDistribution;
+extern Option BonusGossipHints;
 extern Option MiscHints;
 extern Option ToTAltarHints;
 extern Option GanonHints;
@@ -476,6 +477,8 @@ extern Option HyperBosses;
 extern Option HyperMiddleBosses;
 extern Option HyperEnemies;
 extern Option FreeCamera;
+extern Option RandomGsLocations;
+extern Option GsLocGuaranteeNew;
 extern bool HasNightStart;
 
 extern Option FaroresWindAnywhere;
@@ -723,7 +726,7 @@ extern Option CameraControl;
 extern Option MotionControl;
 extern Option TogglePlayMusic;
 extern Option TogglePlaySFX;
-extern Option SilenceNavi;
+extern Option NaviNotifications;
 extern Option IgnoreMaskReaction;
 extern Option FreeCamControl;
 

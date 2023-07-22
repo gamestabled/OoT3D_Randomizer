@@ -120,6 +120,10 @@ SECTIONS
 		*(.patch_FairyPickupHealAmount)
 	}
 
+	.patch_RandomGsLoc_SkipSoilJingle 0x15DBD8 : {
+		*(.patch_RandomGsLoc_SkipSoilJingle)
+	}
+
 	.patch_GrannyBottleCheck 0x161044 : {
 		*(.patch_GrannyBottleCheck)
 	}
@@ -174,6 +178,10 @@ SECTIONS
 
 	.patch_CheckFadoCanSpawnInLostWoods 0x1657EC : {
 		*(.patch_CheckFadoCanSpawnInLostWoods)
+	}
+
+	.patch_RandomGsLoc_BlockSpawn_Tree 0x16C43C : {
+		*(.patch_RandomGsLoc_BlockSpawn_Tree)
 	}
 
 	.patch_MedigoronSetRewardFlag 0x16C918 : {
@@ -572,8 +580,8 @@ SECTIONS
 		*(.patch_GanonDrawMasterSword)
 	}
 
-	.patch_SilenceNavi 0x26807C : {
-		*(.patch_SilenceNavi)
+	.patch_NaviNotifications 0x267E04 : {
+		*(.patch_NaviNotifications)
 	}
 
 	.patch_CheckGerudoToken_269884 0x269884 : {
@@ -638,6 +646,10 @@ SECTIONS
 
 	.patch_LostWoodsShootingGameTwo 0x2990E8 : {
 		*(.patch_LostWoodsShootingGameTwo)
+	}
+
+	.patch_Sheik_GetTextID 0x2A4B44 : {
+		*(.patch_Sheik_GetTextID)
 	}
 
 	.patch_SerenadeCheckChestFlag 0x2B2544 : {
@@ -798,6 +810,10 @@ SECTIONS
 
 	.patch_FWandWarpSongTimerDepletion 0x33DE84 : {
 		*(.patch_FWandWarpSongTimerDepletion)
+	}
+
+	.patch_RandomGsLoc_CustomTangibilityCheck 0x3415B0 : {
+		*(.patch_RandomGsLoc_CustomTangibilityCheck)
 	}
 
 	.patch_MasterQuestGoldSkulltulaCheck 0x3415C8 : {
@@ -996,6 +1012,14 @@ SECTIONS
 		*(.patch_GerudoArcheryOne)
 	}
 
+	.patch_RandomGsLoc_CustomTokenSpawnOffset 0x3B94C4 : {
+		*(.patch_RandomGsLoc_CustomTokenSpawnOffset)
+	}
+
+	.patch_RandomGsLoc_BlockSpawn_Crate 0x3BCA68 : {
+		*(.patch_RandomGsLoc_BlockSpawn_Crate)
+	}
+
 	.patch_MovableBlockCooldownTimer 0x3BD46C : {
 		*(.patch_MovableBlockCooldownTimer)
 	}
@@ -1012,12 +1036,12 @@ SECTIONS
 		*(.patch_MilkCrateSpeed)
 	}
 
-	.patch_ForestTempleBasementPuzzleDelay 0x3BFA8C : {
-		*(.patch_ForestTempleBasementPuzzleDelay)
+	.patch_RandomGsLoc_BlockSpawn_Soil 0x3BF690 : {
+		*(.patch_RandomGsLoc_BlockSpawn_Soil)
 	}
 
-	.patch_GoronPotGuaranteeReward 0x3C148C : {
-		*(.patch_GoronPotGuaranteeReward)
+	.patch_ForestTempleBasementPuzzleDelay 0x3BFA8C : {
+		*(.patch_ForestTempleBasementPuzzleDelay)
 	}
 
 	.patch_GerudoArcheryTwo 0x3C2D80 : {
@@ -1064,12 +1088,8 @@ SECTIONS
 		*(.patch_MidoCheckDekuTreeClearFour)
 	}
 
-	.patch_ShadowShip_Accel 0x3DFBD8 : {
-		*(.patch_ShadowShip_Accel)
-	}
-
-	.patch_ShadowShip_TopSpeed 0x3DFBDC : {
-		*(.patch_ShadowShip_TopSpeed)
+	.patch_ShadowShip_Speed 0x3DFB30 : {
+		*(.patch_ShadowShip_Speed)
 	}
 
 	.patch_BombPurchaseableCheck 0x3CE800 : {
@@ -1328,6 +1348,14 @@ SECTIONS
 		*(.patch_OpenSaveDontSpoilTradeItems)
 	}
 
+	.patch_OnActorSetup_SceneChange 0x452270 : {
+		*(.patch_OnActorSetup_SceneChange)
+	}
+
+	.patch_AfterActorSetup_SceneChange 0x4522D8 : {
+		*(.patch_AfterActorSetup_SceneChange)
+	}
+
 	.patch_before_GlobalContext_Update 0x4523B0 : {
 		*(.patch_before_GlobalContext_Update)
 	}
@@ -1398,6 +1426,14 @@ SECTIONS
 
 	.patch_ChildDontEquipSwordSlotByDefault 0x45F4BC : {
 		*(.patch_ChildDontEquipSwordSlotByDefault)
+	}
+
+	.patch_OnActorSetup_RoomChange 0x4613E4 : {
+		*(.patch_OnActorSetup_RoomChange)
+	}
+
+	.patch_AfterActorSetup_RoomChange 0x461454 : {
+		*(.patch_AfterActorSetup_RoomChange)
 	}
 
 	.patch_HyperActors 0x4617B0 : {

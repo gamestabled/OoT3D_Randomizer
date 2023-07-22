@@ -219,6 +219,40 @@ static void CreateLocationHint(const std::vector<LocationKey>& possibleHintLocat
     AddHint(finalHint, gossipStone, { QM_GREEN, QM_RED });
 }
 
+static void CreateAreaLocationHint(LocationKey hintedLocation) {
+    PlacementLog_Msg("\tLocation: ");
+    PlacementLog_Msg(Location(hintedLocation)->GetName());
+    PlacementLog_Msg("\n");
+
+    PlacementLog_Msg("\tItem: ");
+    PlacementLog_Msg(Location(hintedLocation)->GetPlacedItemName().GetNAEnglish());
+    PlacementLog_Msg("\n");
+
+    // return if there aren't any gossip stones available
+    const std::vector<LocationKey> accessibleGossipStones = GetAccessibleGossipStones(hintedLocation);
+    if (accessibleGossipStones.empty()) {
+        PlacementLog_Msg("\tNO GOSSIP STONES TO PLACE HINT\n\n");
+        return;
+    }
+
+    LocationKey gossipStone = RandomElement(accessibleGossipStones);
+    Location(hintedLocation)->SetAsHinted();
+
+    // make hint text
+    Text prefix       = Hint(PREFIX).GetText();
+    Text itemHintText = Location(hintedLocation)->GetPlacedItem().GetHint().GetText();
+    Text foundAt      = Hint(CAN_BE_FOUND_AT).GetText();
+    Text areaHintText = Hint(GetLocationRegionHintKey(hintedLocation)).GetText();
+
+    Text finalHint = prefix + "#" + itemHintText + "# " + foundAt + " #" + areaHintText + "#.";
+    finalHint.SetFormPerLanguage();
+    PlacementLog_Msg("\tMessage: ");
+    PlacementLog_Msg(finalHint.NAenglish);
+    PlacementLog_Msg("\n\n");
+
+    AddHint(finalHint, gossipStone, { QM_RED, QM_GREEN });
+}
+
 static void CreateWothHint(u8* remainingDungeonWothHints) {
     // get locations that are in the current playthrough
     std::vector<LocationKey> possibleHintLocations = {};
@@ -510,11 +544,10 @@ static void CreateGanonText() {
     }
     text = text + "!";
 
+    // Get the location of the master sword
+    auto masterSwordLocation = FilterFromPool(
+        allLocations, [](const LocationKey loc) { return Location(loc)->GetPlacedItemKey() == MASTER_SWORD; });
     if (ShuffleMasterSword) {
-        // Get the location of the master sword
-        auto masterSwordLocation = FilterFromPool(
-            allLocations, [](const LocationKey loc) { return Location(loc)->GetPlacedItemKey() == MASTER_SWORD; });
-
         // Add second text box
         text = text + "^";
         if (masterSwordLocation.empty()) {
@@ -527,6 +560,44 @@ static void CreateGanonText() {
     }
 
     CreateMessageFromTextObject(0x70CC, 0, 2, 3, AddColorsAndFormat(text));
+
+    // Sheik
+    {
+        Text sheikText;
+
+        sheikText = Hint(SHEIK_LINE01).GetText();
+        CreateMessageFromTextObject(0x9150, 0, 0, 0, AddColorsAndFormat(sheikText, { QM_RED }));
+
+        sheikText = Hint(SHEIK_LINE02).GetText();
+        CreateMessageFromTextObject(0x9151, 0, 0, 0, AddColorsAndFormat(sheikText));
+
+        if (lightArrowLocation.empty()) {
+            sheikText = Hint(SHEIK_LIGHT_ARROW_LOCATION_HINT).GetText() + "#" + Hint(YOUR_POCKET).GetText() + "#";
+        } else {
+            sheikText = Hint(SHEIK_LIGHT_ARROW_LOCATION_HINT).GetText() + "#" +
+                        GetHintRegion(Location(lightArrowLocation[0])->GetParentRegionKey())->GetHint().GetText() + "#";
+        }
+        sheikText.EURgerman += " versteckt hat";
+        sheikText += ".";
+        if (ShuffleMasterSword) {
+            // Add second text box
+            sheikText += "^";
+            if (masterSwordLocation.empty()) {
+                sheikText += Hint(SHEIK_MASTER_SWORD_LOCATION_HINT).GetText() + "#" + Hint(YOUR_POCKET).GetText() + "#";
+            } else {
+                sheikText +=
+                    Hint(SHEIK_MASTER_SWORD_LOCATION_HINT).GetText() + "#" +
+                    GetHintRegion(Location(masterSwordLocation[0])->GetParentRegionKey())->GetHint().GetText() + "#";
+            }
+            sheikText.EURgerman += " versteckt";
+            sheikText += ".";
+        }
+        CreateMessageFromTextObject(0x9152, 0, 0, 0,
+                                    AddColorsAndFormat(sheikText, { QM_RED, QM_GREEN, QM_RED, QM_GREEN }));
+
+        sheikText = Hint(SHEIK_LINE03).GetText();
+        CreateMessageFromTextObject(0x9153, 0, 0, 0, AddColorsAndFormat(sheikText));
+    }
 }
 
 static void CreateDampeHint() {
@@ -797,161 +868,250 @@ void CreateMerchantsHints() {
 void CreateGossipStoneHints() {
 
     PlacementLog_Msg("\nNOW CREATING HINTS\n");
-    const HintSetting& hintSetting = hintSettingTable[Settings::HintDistribution.Value<u8>()];
 
-    u8 remainingDungeonWothHints   = hintSetting.dungeonsWothLimit;
-    u8 remainingDungeonBarrenHints = hintSetting.dungeonsBarrenLimit;
+    if (Settings::HintDistribution.Is(HINTDISTRIBUTION_PLAYTHROUGH)) {
+        // Playthrough items that should not be hinted, such as those that are abundant or already hinted
+        std::vector<ItemKey> ignoredItems = {
+            // Small Collectibles
+            GOLD_SKULLTULA_TOKEN, PIECE_OF_HEART, HEART_CONTAINER, TREASURE_GAME_HEART,
+            // Small Keys
+            FOREST_TEMPLE_SMALL_KEY, FIRE_TEMPLE_SMALL_KEY, WATER_TEMPLE_SMALL_KEY, SPIRIT_TEMPLE_SMALL_KEY,
+            SHADOW_TEMPLE_SMALL_KEY, BOTTOM_OF_THE_WELL_SMALL_KEY, GERUDO_TRAINING_GROUNDS_SMALL_KEY,
+            GERUDO_FORTRESS_SMALL_KEY, GANONS_CASTLE_SMALL_KEY
+        };
+        const auto ignore = [&](std::vector<ItemKey> v) {
+            ignoredItems.insert(ignoredItems.end(), v.begin(), v.end());
+        };
+        if (Settings::BossKeysanity.Is(BOSSKEYSANITY_OWN_DUNGEON)) {
+            ignore({ FOREST_TEMPLE_BOSS_KEY, FIRE_TEMPLE_BOSS_KEY, WATER_TEMPLE_BOSS_KEY, SPIRIT_TEMPLE_BOSS_KEY,
+                     SHADOW_TEMPLE_BOSS_KEY, GANONS_CASTLE_BOSS_KEY });
+        }
+        if (Settings::ToTAltarHints || Settings::CompassesShowReward) {
+            ignore({ KOKIRI_EMERALD, GORON_RUBY, ZORA_SAPPHIRE, FOREST_MEDALLION, FIRE_MEDALLION, WATER_MEDALLION,
+                     SPIRIT_MEDALLION, SHADOW_MEDALLION, LIGHT_MEDALLION });
+        }
+        if (Settings::GanonHints) {
+            ignore({ MASTER_SWORD, LIGHT_ARROWS });
+        }
+        if (Settings::GanonsBossKey.Is(GANONSBOSSKEY_LACS_VANILLA) ||
+            Settings::GanonsBossKey.Is(GANONSBOSSKEY_LACS_MEDALLIONS) ||
+            Settings::GanonsBossKey.Is(GANONSBOSSKEY_LACS_STONES) ||
+            Settings::GanonsBossKey.Is(GANONSBOSSKEY_LACS_REWARDS) ||
+            Settings::GanonsBossKey.Is(GANONSBOSSKEY_LACS_DUNGEONS) ||
+            Settings::GanonsBossKey.Is(GANONSBOSSKEY_LACS_TOKENS)) {
+            ignore({ GANONS_CASTLE_BOSS_KEY });
+        }
 
-    // Add 'always' location hints
-    if (hintSetting.distTable[static_cast<int>(HintType::Always)].copies > 0) {
-        // Only filter locations that had a random item placed at them (e.g. don't get cow locations if shuffle cows is
-        // off)
-        auto alwaysHintLocations = FilterFromPool(allLocations, [](const LocationKey loc) {
-            return Location(loc)->GetHint().GetType() == HintCategory::Always && Location(loc)->IsHintable() &&
-                   !(Location(loc)->IsHintedAt());
-        });
-
-        for (auto& hint : conditionalAlwaysHints) {
-            LocationKey loc = hint.first;
-            if (hint.second() && Location(loc)->IsHintable() && !Location(loc)->IsHintedAt()) {
-                alwaysHintLocations.push_back(loc);
+        // Create playthrough hints
+        for (auto& sphere : playthroughLocations) {
+            for (auto& playthroughLoc : sphere) {
+                const auto isIgnoredItem = [&](ItemKey item) {
+                    for (auto& ignoredItem : ignoredItems) {
+                        if (item == ignoredItem) {
+                            return true;
+                        }
+                    }
+                    return false;
+                };
+                auto& item = Location(playthroughLoc)->GetPlacedItem();
+                if (item.IsMajorItem() && !isIgnoredItem(item.GetHintKey())) {
+                    CreateAreaLocationHint(playthroughLoc);
+                }
             }
         }
 
-        for (LocationKey location : alwaysHintLocations) {
-            CreateLocationHint({ location });
+        // Bonus Hints
+        if (Settings::BonusGossipHints) {
+            std::vector<ItemKey> bonusItems = { SUNS_SONG };
+            std::vector<ItemKey> warpSongs  = { PRELUDE_OF_LIGHT,  MINUET_OF_FOREST,  BOLERO_OF_FIRE,
+                                                SERENADE_OF_WATER, REQUIEM_OF_SPIRIT, NOCTURNE_OF_SHADOW };
+            Shuffle(warpSongs);
+            bonusItems.insert(bonusItems.end(), warpSongs.begin(), warpSongs.end());
+
+            for (auto& bonusItem : bonusItems) {
+                // Skip if item is already in playthrough, so no double hint
+                const auto bonusItemAlreadyInPlaythrough = [&] {
+                    for (auto& sphere : playthroughLocations) {
+                        for (auto& playthroughLoc : sphere) {
+                            if (Location(playthroughLoc)->GetPlacedItemKey() == bonusItem) {
+                                return true;
+                            }
+                        }
+                    }
+                    return false;
+                };
+                if (bonusItemAlreadyInPlaythrough()) {
+                    continue;
+                }
+
+                auto bonusLocations = FilterFromPool(allLocations, [&](const LocationKey loc) {
+                    return Location(loc)->GetPlacedItemKey() == bonusItem;
+                });
+                if (bonusLocations.size() > 0) {
+                    CreateAreaLocationHint(RandomElement(bonusLocations));
+                }
+            }
         }
-    }
+    } else {
+        const HintSetting& hintSetting = hintSettingTable[Settings::HintDistribution.Value<u8>()];
 
-    // Add 'trial' location hints
-    if (hintSetting.distTable[static_cast<int>(HintType::Trial)].copies > 0) {
-        CreateTrialHints();
-    }
+        u8 remainingDungeonWothHints   = hintSetting.dungeonsWothLimit;
+        u8 remainingDungeonBarrenHints = hintSetting.dungeonsBarrenLimit;
 
-    // create a vector with each hint type proportional to it's weight in the distribution setting.
-    // ootr uses a weighted probability function to decide hint types, but selecting randomly from
-    // this vector will do for now
-    std::vector<HintType> remainingHintTypes = {};
-    for (HintDistributionSetting hds : hintSetting.distTable) {
-        remainingHintTypes.insert(remainingHintTypes.end(), hds.weight, hds.type);
-    }
-    Shuffle(remainingHintTypes);
-
-    // get barren regions
-    auto barrenLocations = CalculateBarrenRegions();
-
-    // Calculate dungeon woth/barren info
-
-    std::vector<std::string> dungeonNames = { "Deku Tree",     "Dodongos Cavern", "Jabu Jabus Belly",
-                                              "Forest Temple", "Fire Temple",     "Water Temple",
-                                              "Spirit Temple", "Shadow Temple",   "Bottom of the Well",
-                                              "Ice Cavern" };
-    // Get list of all barren dungeons
-    std::vector<std::string> barrenDungeons;
-    for (LocationKey barrenLocation : barrenLocations) {
-        std::string barrenRegion = GetHintRegion(Location(barrenLocation)->GetParentRegionKey())->scene;
-        bool isDungeon = std::find(dungeonNames.begin(), dungeonNames.end(), barrenRegion) != dungeonNames.end();
-        // If it hasn't already been added to the list and is a dungeon, add to list
-        if (isDungeon &&
-            std::find(barrenDungeons.begin(), barrenDungeons.end(), barrenRegion) == barrenDungeons.end()) {
-            barrenDungeons.push_back(barrenRegion);
-        }
-    }
-    PlacementLog_Msg("\nBarren Dungeons:\n");
-    for (std::string barrenDungeon : barrenDungeons) {
-        PlacementLog_Msg(barrenDungeon + "\n");
-    }
-
-    // Get list of all woth dungeons
-    std::vector<std::string> wothDungeons;
-    for (LocationKey wothLocation : wothLocations) {
-        std::string wothRegion = GetHintRegion(Location(wothLocation)->GetParentRegionKey())->scene;
-        bool isDungeon         = std::find(dungeonNames.begin(), dungeonNames.end(), wothRegion) != dungeonNames.end();
-        // If it hasn't already been added to the list and is a dungeon, add to list
-        if (isDungeon && std::find(wothDungeons.begin(), wothDungeons.end(), wothRegion) == wothDungeons.end()) {
-            wothDungeons.push_back(wothRegion);
-        }
-    }
-    PlacementLog_Msg("\nWoth Dungeons:\n");
-    for (std::string wothDungeon : wothDungeons) {
-        PlacementLog_Msg(wothDungeon + "\n");
-    }
-
-    // Set DungeonInfo array for each dungeon
-    for (uint i = 0; i < dungeonInfoData.size(); i++) {
-        std::string dungeonName = dungeonNames[i];
-        if (std::find(barrenDungeons.begin(), barrenDungeons.end(), dungeonName) != barrenDungeons.end()) {
-            dungeonInfoData[i] = DungeonInfo::DUNGEON_BARREN;
-        } else if (std::find(wothDungeons.begin(), wothDungeons.end(), dungeonName) != wothDungeons.end()) {
-            dungeonInfoData[i] = DungeonInfo::DUNGEON_WOTH;
-        } else {
-            dungeonInfoData[i] = DungeonInfo::DUNGEON_NEITHER;
-        }
-    }
-
-    std::array<std::string, 13> hintTypeNames = {
-        "Trial", "Always", "WotH",      "Barren",  "Entrance", "Sometimes", "Random",
-        "Item",  "Song",   "Overworld", "Dungeon", "Junk",     "NamedItem",
-    };
-
-    // while there are still gossip stones remaining
-    while (FilterFromPool(gossipStoneLocations, [](const LocationKey loc) {
-               return Location(loc)->GetPlacedItemKey() == NONE;
-           }).size() != 0) {
-        // TODO: fixed hint types
-
-        if (remainingHintTypes.empty()) {
-            break;
-        }
-
-        // get a random hint type from the remaining hints
-        HintType type = RandomElement(remainingHintTypes, true);
-
-        PlacementLog_Msg("Attempting to make hint of type: ");
-        PlacementLog_Msg(hintTypeNames[static_cast<int>(type)]);
-        PlacementLog_Msg("\n");
-
-        // create the appropriate hint for the type
-        if (type == HintType::Woth) {
-            CreateWothHint(&remainingDungeonWothHints);
-
-        } else if (type == HintType::Barren) {
-            CreateBarrenHint(&remainingDungeonBarrenHints, barrenLocations);
-
-        } else if (type == HintType::Sometimes) {
-            std::vector<LocationKey> sometimesHintLocations = FilterFromPool(allLocations, [](const LocationKey loc) {
-                return Location(loc)->GetHint().GetType() == HintCategory::Sometimes && Location(loc)->IsHintable() &&
+        // Add 'always' location hints
+        if (hintSetting.distTable[static_cast<int>(HintType::Always)].copies > 0) {
+            // Only filter locations that had a random item placed at them (e.g. don't get cow locations if shuffle cows
+            // is off)
+            auto alwaysHintLocations = FilterFromPool(allLocations, [](const LocationKey loc) {
+                return Location(loc)->GetHint().GetType() == HintCategory::Always && Location(loc)->IsHintable() &&
                        !(Location(loc)->IsHintedAt());
             });
-            CreateLocationHint(sometimesHintLocations);
 
-        } else if (type == HintType::Random) {
-            CreateRandomLocationHint();
+            for (auto& hint : conditionalAlwaysHints) {
+                LocationKey loc = hint.first;
+                if (hint.second() && Location(loc)->IsHintable() && !Location(loc)->IsHintedAt()) {
+                    alwaysHintLocations.push_back(loc);
+                }
+            }
 
-        } else if (type == HintType::Item) {
-            CreateGoodItemHint();
+            for (LocationKey location : alwaysHintLocations) {
+                CreateLocationHint({ location });
+            }
+        }
 
-        } else if (type == HintType::Song) {
-            std::vector<LocationKey> songHintLocations = FilterFromPool(allLocations, [](const LocationKey loc) {
-                return Location(loc)->IsCategory(Category::cSong) && Location(loc)->IsHintable() &&
-                       !(Location(loc)->IsHintedAt());
-            });
-            CreateLocationHint(songHintLocations);
+        // Add 'trial' location hints
+        if (hintSetting.distTable[static_cast<int>(HintType::Trial)].copies > 0) {
+            CreateTrialHints();
+        }
 
-        } else if (type == HintType::Overworld) {
-            std::vector<LocationKey> overworldHintLocations = FilterFromPool(allLocations, [](const LocationKey loc) {
-                return Location(loc)->IsOverworld() && Location(loc)->IsHintable() && !(Location(loc)->IsHintedAt());
-            });
-            CreateLocationHint(overworldHintLocations);
+        // create a vector with each hint type proportional to it's weight in the distribution setting.
+        // ootr uses a weighted probability function to decide hint types, but selecting randomly from
+        // this vector will do for now
+        std::vector<HintType> remainingHintTypes = {};
+        for (HintDistributionSetting hds : hintSetting.distTable) {
+            remainingHintTypes.insert(remainingHintTypes.end(), hds.weight, hds.type);
+        }
+        Shuffle(remainingHintTypes);
 
-        } else if (type == HintType::Dungeon) {
-            std::vector<LocationKey> dungeonHintLocations = FilterFromPool(allLocations, [](const LocationKey loc) {
-                return Location(loc)->IsDungeon() && Location(loc)->IsHintable() && !(Location(loc)->IsHintedAt());
-            });
-            CreateLocationHint(dungeonHintLocations);
+        // get barren regions
+        auto barrenLocations = CalculateBarrenRegions();
 
-        } else if (type == HintType::Junk) {
-            CreateJunkHint();
+        // Calculate dungeon woth/barren info
+
+        std::vector<std::string> dungeonNames = { "Deku Tree",     "Dodongos Cavern", "Jabu Jabus Belly",
+                                                  "Forest Temple", "Fire Temple",     "Water Temple",
+                                                  "Spirit Temple", "Shadow Temple",   "Bottom of the Well",
+                                                  "Ice Cavern" };
+        // Get list of all barren dungeons
+        std::vector<std::string> barrenDungeons;
+        for (LocationKey barrenLocation : barrenLocations) {
+            std::string barrenRegion = GetHintRegion(Location(barrenLocation)->GetParentRegionKey())->scene;
+            bool isDungeon = std::find(dungeonNames.begin(), dungeonNames.end(), barrenRegion) != dungeonNames.end();
+            // If it hasn't already been added to the list and is a dungeon, add to list
+            if (isDungeon &&
+                std::find(barrenDungeons.begin(), barrenDungeons.end(), barrenRegion) == barrenDungeons.end()) {
+                barrenDungeons.push_back(barrenRegion);
+            }
+        }
+        PlacementLog_Msg("\nBarren Dungeons:\n");
+        for (std::string barrenDungeon : barrenDungeons) {
+            PlacementLog_Msg(barrenDungeon + "\n");
+        }
+
+        // Get list of all woth dungeons
+        std::vector<std::string> wothDungeons;
+        for (LocationKey wothLocation : wothLocations) {
+            std::string wothRegion = GetHintRegion(Location(wothLocation)->GetParentRegionKey())->scene;
+            bool isDungeon = std::find(dungeonNames.begin(), dungeonNames.end(), wothRegion) != dungeonNames.end();
+            // If it hasn't already been added to the list and is a dungeon, add to list
+            if (isDungeon && std::find(wothDungeons.begin(), wothDungeons.end(), wothRegion) == wothDungeons.end()) {
+                wothDungeons.push_back(wothRegion);
+            }
+        }
+        PlacementLog_Msg("\nWoth Dungeons:\n");
+        for (std::string wothDungeon : wothDungeons) {
+            PlacementLog_Msg(wothDungeon + "\n");
+        }
+
+        // Set DungeonInfo array for each dungeon
+        for (uint i = 0; i < dungeonInfoData.size(); i++) {
+            std::string dungeonName = dungeonNames[i];
+            if (std::find(barrenDungeons.begin(), barrenDungeons.end(), dungeonName) != barrenDungeons.end()) {
+                dungeonInfoData[i] = DungeonInfo::DUNGEON_BARREN;
+            } else if (std::find(wothDungeons.begin(), wothDungeons.end(), dungeonName) != wothDungeons.end()) {
+                dungeonInfoData[i] = DungeonInfo::DUNGEON_WOTH;
+            } else {
+                dungeonInfoData[i] = DungeonInfo::DUNGEON_NEITHER;
+            }
+        }
+
+        std::array<std::string, 13> hintTypeNames = {
+            "Trial", "Always", "WotH",      "Barren",  "Entrance", "Sometimes", "Random",
+            "Item",  "Song",   "Overworld", "Dungeon", "Junk",     "NamedItem",
+        };
+
+        // while there are still gossip stones remaining
+        while (FilterFromPool(gossipStoneLocations, [](const LocationKey loc) {
+                   return Location(loc)->GetPlacedItemKey() == NONE;
+               }).size() != 0) {
+            // TODO: fixed hint types
+
+            if (remainingHintTypes.empty()) {
+                break;
+            }
+
+            // get a random hint type from the remaining hints
+            HintType type = RandomElement(remainingHintTypes, true);
+
+            PlacementLog_Msg("Attempting to make hint of type: ");
+            PlacementLog_Msg(hintTypeNames[static_cast<int>(type)]);
+            PlacementLog_Msg("\n");
+
+            // create the appropriate hint for the type
+            if (type == HintType::Woth) {
+                CreateWothHint(&remainingDungeonWothHints);
+
+            } else if (type == HintType::Barren) {
+                CreateBarrenHint(&remainingDungeonBarrenHints, barrenLocations);
+
+            } else if (type == HintType::Sometimes) {
+                std::vector<LocationKey> sometimesHintLocations =
+                    FilterFromPool(allLocations, [](const LocationKey loc) {
+                        return Location(loc)->GetHint().GetType() == HintCategory::Sometimes &&
+                               Location(loc)->IsHintable() && !(Location(loc)->IsHintedAt());
+                    });
+                CreateLocationHint(sometimesHintLocations);
+
+            } else if (type == HintType::Random) {
+                CreateRandomLocationHint();
+
+            } else if (type == HintType::Item) {
+                CreateGoodItemHint();
+
+            } else if (type == HintType::Song) {
+                std::vector<LocationKey> songHintLocations = FilterFromPool(allLocations, [](const LocationKey loc) {
+                    return Location(loc)->IsCategory(Category::cSong) && Location(loc)->IsHintable() &&
+                           !(Location(loc)->IsHintedAt());
+                });
+                CreateLocationHint(songHintLocations);
+
+            } else if (type == HintType::Overworld) {
+                std::vector<LocationKey> overworldHintLocations =
+                    FilterFromPool(allLocations, [](const LocationKey loc) {
+                        return Location(loc)->IsOverworld() && Location(loc)->IsHintable() &&
+                               !(Location(loc)->IsHintedAt());
+                    });
+                CreateLocationHint(overworldHintLocations);
+
+            } else if (type == HintType::Dungeon) {
+                std::vector<LocationKey> dungeonHintLocations = FilterFromPool(allLocations, [](const LocationKey loc) {
+                    return Location(loc)->IsDungeon() && Location(loc)->IsHintable() && !(Location(loc)->IsHintedAt());
+                });
+                CreateLocationHint(dungeonHintLocations);
+
+            } else if (type == HintType::Junk) {
+                CreateJunkHint();
+            }
         }
     }
 

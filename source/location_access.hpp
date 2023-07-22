@@ -136,6 +136,8 @@ class Area {
 
     bool UpdateEvents(SearchMode mode);
 
+    void AddLocation(LocationAccess location);
+
     void AddExit(AreaKey parentKey, AreaKey newExitKey, ConditionFn condition);
 
     void RemoveExit(Entrance* exitToRemove);

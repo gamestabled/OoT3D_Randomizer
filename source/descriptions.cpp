@@ -778,6 +778,16 @@ string_view uselessHintsDesc          = "Only junk hints.";                     
 string_view balancedHintsDesc         = "Recommended hint spread.";                        //
 string_view strongHintsDesc           = "More useful hints.";                              //
 string_view veryStrongHintsDesc       = "Many powerful hints.";                            //
+string_view playthroughHintsDesc      = "The playthrough locations will be hinted at what\n"
+                                        "they contain and in what general area they are.\n"//
+                                        "\n"                                               //
+                                        "Not compatible with No Logic.";                   //
+                                                                                           //
+/*------------------------------                                                           //
+|      BONUS GOSSIP HINTS      |                                                           //
+------------------------------*/                                                           //
+string_view bonusGossipHintsDesc      = "Adds Sun's Song and warp songs to gossip stone\n" //
+                                        "hints after all playthrough hints have been set.";//
                                                                                            //
 /*------------------------------                                                           //
 |     MISCELLANEOUS HINTS      |                                                           //
@@ -794,7 +804,10 @@ string_view totAltarHintsDesc         = "The Temple of Time altar will reveal th
                                         "and Rainbow Bridge as adult.";                    //
 string_view ganonHintsDesc            = "Talking to Ganondorf in his boss room will tell\n"//
                                         "you the location of the Light Arrows and, if it\n"//
-                                        "was shuffled, the Master Sword.";                 //
+                                        "was shuffled, the Master Sword.\n"                //
+                                        "\n"                                               //
+                                        "When trials are on, Sheik will appear to relay\n" //
+                                        "these hints in Ganon's Castle.";                  //
 string_view dampeHintDesc            =  "Reading Dampe's diary will reveal the location\n" //
                                         "of a single progressive hookshot.";               //
 /*------------------------------                                                           //
@@ -1115,7 +1128,10 @@ string_view mp_SharedAmmoDesc         = "Syncs ammo when shared progress is on,\
 /*------------------------------                                                           //
 |       INGAME DEFAULTS        |                                                           //
 ------------------------------*/                                                           //
-string_view silenceNaviDesc           = "Prevents Navi from alerting you about advice.";   //
+string_view naviNotificationsDesc     = "Adjust how much Navi should bother you.\n"        //
+                                        "Silenced prevents it completely, while Constant\n"//
+                                        "can be used to allow repeated attempts at related\n"
+                                        "glitches without having to reload the save.";     //
 string_view ignoreMaskReactionDesc    = "Causes NPCs to respond normally when wearing\n"   //
                                         "masks. Does not apply to trade quest dialouges."; //
                                                                                            //
@@ -1243,6 +1259,24 @@ string_view freeCamDesc               = "Use the C-stick to control the camera o
                                         "systems and Citra.\n\n"                           //
                                         "Go to Personalization Settings > Ingame Defaults\n"
                                         "for camera control options.";                     //
+                                                                                           //
+/*------------------------------                                                           //
+|      RANDOM GS LOCATIONS     |                                                           //
+------------------------------*/                                                           //
+string_view randomGsLocationsDesc     = "Moves Gold Skulltulas to different locations\n"   //
+                                        "around the same area as the original.\n"          //
+                                        "The age they appear in is always the same as the\n"
+                                        "original. If it hides during the night mostly\n"  //
+                                        "depends on if the sun can reach it.\n"            //
+                                        "They will never be in generic areas, such as\n"   //
+                                        "Business Scrub grottos, Fairy Fountains, etc.\n"  //
+                                        "Some new locations are only available with certain"
+                                        "settings enabled, like tricks and glitches.\n"    //
+                                        "The logic is updated for any that are moved.";    //
+                                                                                           //
+string_view gsLocGuaranteeNewDesc     = "Excludes the original location from the Gold\n"   //
+                                        "Skulltula's available locations pool.";           //
+                                                                                           //
                                                                                            //--------------//
 /*------------------------------                                                                           //
 |  DETAILED LOGIC EXPLANATIONS |                                                                           //

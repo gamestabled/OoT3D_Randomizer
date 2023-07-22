@@ -64,6 +64,7 @@ enum class HintCategory {
     LightArrow,
     MasterSword,
     GanonLine,
+    SheikLine,
     DampeHint,
     MerchantsDialogs,
 };
@@ -166,6 +167,12 @@ class HintText {
                           Text&& clearText = {}) {
         return HintText{ std::move(obscureText), std::move(ambiguousText), std::move(clearText),
                          HintCategory::GanonLine };
+    }
+
+    static auto SheikLine(std::vector<Text>&& obscureText, std::vector<Text>&& ambiguousText = {},
+                          Text&& clearText = {}) {
+        return HintText{ std::move(obscureText), std::move(ambiguousText), std::move(clearText),
+                         HintCategory::SheikLine };
     }
 
     static auto MerchantsDialogs(std::vector<Text>&& obscureText, std::vector<Text>&& ambiguousText = {},

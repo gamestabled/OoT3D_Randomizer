@@ -117,7 +117,6 @@ void AreaTable_Init_CastleTown() {
         {
             // Locations
             LocationAccess(HC_MALON_EGG, { [] { return true; } }),
-            LocationAccess(HC_GS_TREE, { [] { return CanChildAttack; } }),
             LocationAccess(HC_MALON_GOSSIP_STONE, { [] { return true; } }),
             LocationAccess(HC_ROCK_WALL_GOSSIP_STONE, { [] { return true; } }),
         },
@@ -178,52 +177,45 @@ void AreaTable_Init_CastleTown() {
                  Entrance(CASTLE_GROUNDS, { [] { return true; } }),
              });
 
-    areaTable[HC_STORMS_GROTTO] = Area(
-        "HC Storms Grotto", "HC Storms Grotto", NONE, NO_DAY_NIGHT_CYCLE,
-        {
-            // Events
-            EventAccess(&NutPot, { [] { return NutPot || CanBlastOrSmash; } }),
-            EventAccess(&GossipStoneFairy,
-                        { [] { return GossipStoneFairy || (CanBlastOrSmash && CanSummonGossipFairy); } }),
-            EventAccess(&WanderingBugs, { [] { return WanderingBugs || CanBlastOrSmash; } }),
-        },
-        {
-            // Locations
-            LocationAccess(
-                HC_GS_STORMS_GROTTO,
-                { [] { return CanBlastOrSmash && HookshotOrBoomerang; },
-                  /*Glitched*/ [] { return CanDoGlitch(GlitchType::BombHover, GlitchDifficulty::INTERMEDIATE); } }),
-            LocationAccess(HC_STORMS_GROTTO_GOSSIP_STONE, { [] { return CanBlastOrSmash; } }),
-        },
-        {
-            // Exits
-            Entrance(CASTLE_GROUNDS, { [] { return true; } }),
-        });
+    areaTable[HC_STORMS_GROTTO] =
+        Area("HC Storms Grotto", "HC Storms Grotto", NONE, NO_DAY_NIGHT_CYCLE,
+             {
+                 // Events
+                 EventAccess(&NutPot, { [] { return NutPot || CanBlastOrSmash; } }),
+                 EventAccess(&GossipStoneFairy,
+                             { [] { return GossipStoneFairy || (CanBlastOrSmash && CanSummonGossipFairy); } }),
+                 EventAccess(&WanderingBugs, { [] { return WanderingBugs || CanBlastOrSmash; } }),
+             },
+             {
+                 // Locations
+                 LocationAccess(HC_STORMS_GROTTO_GOSSIP_STONE, { [] { return CanBlastOrSmash; } }),
+             },
+             {
+                 // Exits
+                 Entrance(CASTLE_GROUNDS, { [] { return true; } }),
+             });
 
-    areaTable[GANONS_CASTLE_GROUNDS] = Area(
-        "Ganon's Castle Grounds", "Castle Grounds", OUTSIDE_GANONS_CASTLE, NO_DAY_NIGHT_CYCLE, {},
-        {
-            // Locations                                   //the terrain was lowered such that you can't get this GS
-            // with a simple sword slash
-            LocationAccess(OGC_GS, { [] {
-                               return CanUse(DINS_FIRE) || CanUseProjectile || (CanJumpslash && LogicOutsideGanonsGS);
-                           } }),
-        },
-        {
-            // Exits
-            Entrance(CASTLE_GROUNDS, { [] { return AtNight; } }),
-            Entrance(OGC_GREAT_FAIRY_FOUNTAIN, { [] { return CanUse(GOLDEN_GAUNTLETS) && AtNight; } }),
-            Entrance(GANONS_CASTLE_ENTRYWAY,
-                     { [] { return CanBuildRainbowBridge; },
-                       /*Glitched*/
-                       [] {
-                           return (HasBombchus && CanDoGlitch(GlitchType::BombHover, GlitchDifficulty::NOVICE)) ||
-                                  CanDoGlitch(GlitchType::HoverBoost, GlitchDifficulty::ADVANCED) ||
-                                  (HoverBoots && CanShield && Bombs &&
-                                   CanDoGlitch(GlitchType::SuperSlide, GlitchDifficulty::EXPERT)) ||
-                                  (HoverBoots && CanDoGlitch(GlitchType::Megaflip, GlitchDifficulty::ADVANCED));
-                       } }),
-        });
+    areaTable[GANONS_CASTLE_GROUNDS] =
+        Area("Ganon's Castle Grounds", "Castle Grounds", OUTSIDE_GANONS_CASTLE, NO_DAY_NIGHT_CYCLE,
+             {
+                 EventAccess(&BuiltRainbowBridge, { [] { return CanBuildRainbowBridge; } }),
+             },
+             {},
+             {
+                 // Exits
+                 Entrance(CASTLE_GROUNDS, { [] { return AtNight; } }),
+                 Entrance(OGC_GREAT_FAIRY_FOUNTAIN, { [] { return CanUse(GOLDEN_GAUNTLETS) && AtNight; } }),
+                 Entrance(GANONS_CASTLE_LEDGE,
+                          { [] { return BuiltRainbowBridge; },
+                            /*Glitched*/
+                            [] {
+                                return (HasBombchus && CanDoGlitch(GlitchType::BombHover, GlitchDifficulty::NOVICE)) ||
+                                       CanDoGlitch(GlitchType::HoverBoost, GlitchDifficulty::ADVANCED) ||
+                                       (HoverBoots && CanShield && Bombs &&
+                                        CanDoGlitch(GlitchType::SuperSlide, GlitchDifficulty::EXPERT)) ||
+                                       (HoverBoots && CanDoGlitch(GlitchType::Megaflip, GlitchDifficulty::ADVANCED));
+                            } }),
+             });
 
     areaTable[OGC_GREAT_FAIRY_FOUNTAIN] =
         Area("OGC Great Fairy Fountain", "OGC Great Fairy Fountain", NONE, NO_DAY_NIGHT_CYCLE, {},
@@ -247,12 +239,36 @@ void AreaTable_Init_CastleTown() {
                  Entrance(CASTLE_GROUNDS, { [] { return true; } }),
              });
 
+    areaTable[CASTLE_GROUNDS_FROM_GANONS_CASTLE] = Area(
+        "Castle Grounds From Ganon's Castle", "Castle Grounds From Ganon's Castle", NONE, NO_DAY_NIGHT_CYCLE, {}, {},
+        {
+            // Exits
+            Entrance(HYRULE_CASTLE_GROUNDS, { [] { return IsChild; } }),
+            Entrance(GANONS_CASTLE_LEDGE, { [] { return IsAdult; } }),
+        });
+
+    areaTable[GANONS_CASTLE_LEDGE] =
+        Area("Ganon's Castle Ledge", "OGC Ganon's Castle Ledge", NONE, NO_DAY_NIGHT_CYCLE, {}, {},
+             {
+                 // Exits
+                 Entrance(GANONS_CASTLE_GROUNDS,
+                          { [] { return BuiltRainbowBridge; },
+                            /* Glitched */
+                            [] {
+                                return (HasBombchus && CanDoGlitch(GlitchType::BombHover, GlitchDifficulty::NOVICE)) ||
+                                       CanDoGlitch(GlitchType::HoverBoost, GlitchDifficulty::ADVANCED) ||
+                                       (HoverBoots && CanShield && Bombs &&
+                                        CanDoGlitch(GlitchType::SuperSlide, GlitchDifficulty::EXPERT)) ||
+                                       (HoverBoots && CanDoGlitch(GlitchType::Megaflip, GlitchDifficulty::ADVANCED));
+                            } }),
+                 Entrance(GANONS_CASTLE_ENTRYWAY, { [] { return true; } }),
+             });
+
     areaTable[MARKET_GUARD_HOUSE] =
         Area("Market Guard House", "Market Guard House", NONE, NO_DAY_NIGHT_CYCLE, {},
              {
                  // Locations
                  LocationAccess(MARKET_10_BIG_POES, { [] { return IsAdult && BigPoeKill; } }),
-                 LocationAccess(MARKET_GS_GUARD_HOUSE, { [] { return IsChild; } }),
              },
              {
                  // Exits

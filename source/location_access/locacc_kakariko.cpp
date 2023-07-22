@@ -1,6 +1,7 @@
 #include "location_access.hpp"
 #include "logic.hpp"
 #include "entrance.hpp"
+#include "gold_skulltulas.hpp"
 
 using namespace Logic;
 using namespace Settings;
@@ -25,22 +26,6 @@ void AreaTable_Init_Kakariko() {
             LocationAccess(KAK_ANJU_AS_ADULT, { [] { return IsAdult && AtDay; } }),
             LocationAccess(KAK_TRADE_POCKET_CUCCO,
                            { [] { return IsAdult && AtDay && PocketEgg && WakeUpAdultTalon; } }),
-            LocationAccess(KAK_GS_HOUSE_UNDER_CONSTRUCTION, { [] { return IsChild && AtNight && CanGetNightTimeGS; } }),
-            LocationAccess(KAK_GS_SKULLTULA_HOUSE, { [] { return IsChild && AtNight && CanGetNightTimeGS; } }),
-            LocationAccess(KAK_GS_GUARDS_HOUSE, { [] { return IsChild && AtNight && CanGetNightTimeGS; } }),
-            LocationAccess(KAK_GS_TREE, { [] { return IsChild && AtNight && CanGetNightTimeGS; } }),
-            LocationAccess(KAK_GS_WATCHTOWER,
-                           { [] {
-                                return IsChild && (Slingshot || HasBombchus || CanUse(BOW) || CanUse(LONGSHOT)) &&
-                                       AtNight && CanGetNightTimeGS;
-                            },
-                             /*Glitched*/
-                             [] {
-                                 return IsChild && AtNight && CanGetNightTimeGS &&
-                                        (CanDoGlitch(GlitchType::ISG, GlitchDifficulty::NOVICE) ||
-                                         CanDoGlitch(GlitchType::SuperStab, GlitchDifficulty::NOVICE) ||
-                                         (Sticks && CanDoGlitch(GlitchType::QPA, GlitchDifficulty::INTERMEDIATE)));
-                             } }),
         },
         {
             // Exits
@@ -89,8 +74,9 @@ void AreaTable_Init_Kakariko() {
                        } }),
             Entrance(KAK_ROOFTOP,
                      { [] {
-                          return CanUse(HOOKSHOT) || (LogicManOnRoof && (IsAdult || AtDay || Slingshot || HasBombchus ||
-                                                                         CanUse(BOW) || CanUse(LONGSHOT)));
+                          return CanUse(HOOKSHOT) ||
+                                 (LogicManOnRoof && (IsAdult || AtDay || Gs_IsMoved(KAK_GS_WATCHTOWER) || Slingshot ||
+                                                     HasBombchus || CanUse(BOW) || CanUse(LONGSHOT)));
                       },
                        /*Glitched*/
                        [] { return LogicManOnRoof && CanDoGlitch(GlitchType::ISG, GlitchDifficulty::NOVICE); } }),
@@ -118,19 +104,13 @@ void AreaTable_Init_Kakariko() {
                  Entrance(KAKARIKO_VILLAGE, { [] { return true; } }),
              });
 
-    areaTable[KAK_IMPAS_ROOFTOP] = Area(
-        "Kak Impas Rooftop", "Kakariko Village", KAKARIKO_VILLAGE, NO_DAY_NIGHT_CYCLE, {},
-        {
-            // Locations
-            LocationAccess(KAK_GS_ABOVE_IMPAS_HOUSE, { [] {
-                               return IsAdult && AtNight && CanGetNightTimeGS && (CanJumpslash || CanUseProjectile);
-                           } }),
-        },
-        {
-            // Exits
-            Entrance(KAK_IMPAS_LEDGE, { [] { return true; } }),
-            Entrance(KAKARIKO_VILLAGE, { [] { return true; } }),
-        });
+    areaTable[KAK_IMPAS_ROOFTOP] =
+        Area("Kak Impas Rooftop", "Kakariko Village", KAKARIKO_VILLAGE, NO_DAY_NIGHT_CYCLE, {}, {},
+             {
+                 // Exits
+                 Entrance(KAK_IMPAS_LEDGE, { [] { return true; } }),
+                 Entrance(KAKARIKO_VILLAGE, { [] { return true; } }),
+             });
 
     areaTable[KAK_ROOFTOP] = Area("Kak Rooftop", "Kakariko Village", KAKARIKO_VILLAGE, NO_DAY_NIGHT_CYCLE, {},
                                   {
@@ -385,14 +365,6 @@ void AreaTable_Init_Kakariko() {
                              } }),
             LocationAccess(GRAVEYARD_DAMPE_GRAVEDIGGING_TOUR,
                            { [] { return IsChild && AtNight; } }), // TODO: This needs to change
-            LocationAccess(GRAVEYARD_GS_WALL,
-                           { [] { return IsChild && HookshotOrBoomerang && AtNight && CanGetNightTimeGS; },
-                             /*Glitched*/
-                             [] {
-                                 return IsChild && AtNight && CanGetNightTimeGS &&
-                                        CanDoGlitch(GlitchType::BombHover, GlitchDifficulty::INTERMEDIATE);
-                             } }),
-            LocationAccess(GRAVEYARD_GS_BEAN_PATCH, { [] { return CanPlantBugs && CanChildAttack; } }),
         },
         {
             // Exits

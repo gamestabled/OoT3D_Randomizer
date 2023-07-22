@@ -182,26 +182,36 @@ void AreaTable_Init_SpiritTemple() {
                 Entrance(SPIRIT_TEMPLE_CHILD_CLIMB, { [] { return true; } }),
             });
 
-        areaTable[SPIRIT_TEMPLE_OUTDOOR_HANDS] =
-            Area("Spirit Temple Outdoor Hands", "Spirit Temple", SPIRIT_TEMPLE, NO_DAY_NIGHT_CYCLE, {},
-                 {
-                     // Locations
-                     LocationAccess(SPIRIT_TEMPLE_SILVER_GAUNTLETS_CHEST, { [] {
-                                        return (SmallKeys(SPIRIT_TEMPLE, 3) && Longshot && HasExplosives) ||
-                                               SmallKeys(SPIRIT_TEMPLE, 5);
-                                    } }),
-                     LocationAccess(SPIRIT_TEMPLE_MIRROR_SHIELD_CHEST, { [] {
-                                        return SmallKeys(SPIRIT_TEMPLE, 4) && CanUse(SILVER_GAUNTLETS) && HasExplosives;
-                                    } }),
-                 },
-                 {
-                     // Exits
-                     Entrance(DESERT_COLOSSUS, { [] {
-                                  return (IsChild && SmallKeys(SPIRIT_TEMPLE, 5)) ||
-                                         (CanUse(SILVER_GAUNTLETS) && ((SmallKeys(SPIRIT_TEMPLE, 3) && HasExplosives) ||
-                                                                       SmallKeys(SPIRIT_TEMPLE, 5)));
-                              } }),
-                 });
+        areaTable[SPIRIT_TEMPLE_OUTDOOR_HANDS] = Area(
+            "Spirit Temple Outdoor Hands", "Spirit Temple", SPIRIT_TEMPLE, NO_DAY_NIGHT_CYCLE, {},
+            {
+                // Locations
+                LocationAccess(SPIRIT_TEMPLE_SILVER_GAUNTLETS_CHEST, { [] {
+                                   return (SmallKeys(SPIRIT_TEMPLE, 3) && Longshot && HasExplosives) ||
+                                          SmallKeys(SPIRIT_TEMPLE, 5);
+                               } }),
+                LocationAccess(SPIRIT_TEMPLE_MIRROR_SHIELD_CHEST, { [] {
+                                   return SmallKeys(SPIRIT_TEMPLE, 4) && CanUse(SILVER_GAUNTLETS) && HasExplosives;
+                               } }),
+            },
+            {
+                // Exits
+                Entrance(DESERT_COLOSSUS, { [] {
+                             return (IsChild && SmallKeys(SPIRIT_TEMPLE, 5)) ||
+                                    (CanUse(SILVER_GAUNTLETS) &&
+                                     ((SmallKeys(SPIRIT_TEMPLE, 3) && HasExplosives) || SmallKeys(SPIRIT_TEMPLE, 5)));
+                         } }),
+                Entrance(COLOSSUS_MEGALITH,
+                         { [] { return false; },
+                           /*Glitched*/
+                           [] {
+                               return ((IsChild && SmallKeys(SPIRIT_TEMPLE, 5)) ||
+                                       (CanUse(SILVER_GAUNTLETS) && ((SmallKeys(SPIRIT_TEMPLE, 3) && HasExplosives) ||
+                                                                     SmallKeys(SPIRIT_TEMPLE, 5)))) &&
+                                      (CanDoGlitch(GlitchType::Megaflip, GlitchDifficulty::ADVANCED) ||
+                                       CanDoGlitch(GlitchType::HoverBoost, GlitchDifficulty::INTERMEDIATE));
+                           } }),
+            });
 
         areaTable[SPIRIT_TEMPLE_BEYOND_CENTRAL_LOCKED_DOOR] = Area(
             "Spirit Temple Beyond Central Locked Door", "Spirit Temple", SPIRIT_TEMPLE, NO_DAY_NIGHT_CYCLE, {},
@@ -383,6 +393,16 @@ void AreaTable_Init_SpiritTemple() {
                      // Trick: (SmallKeys(SPIRIT_TEMPLE, 7) && (CanPlay(SongOfTime) || LogicSpiritMQSunBlockSoT ||
                      // IsAdult)) || (SmallKeys(SPIRIT_TEMPLE, 4) && CanPlay(SongOfTime) && (LogicLensSpiritMQ ||
                      // CanUse(LENS_OF_TRUTH)) && IsAdult)
+                     Entrance(COLOSSUS_MEGALITH,
+                              { [] { return false; },
+                                /*Glitched*/
+                                [] {
+                                    return ((SmallKeys(SPIRIT_TEMPLE, 7) && (CanPlay(SongOfTime) || IsAdult)) ||
+                                            (SmallKeys(SPIRIT_TEMPLE, 4) && CanPlay(SongOfTime) && CanJumpslash &&
+                                             (LogicLensSpiritMQ || CanUse(LENS_OF_TRUTH)) && IsAdult)) &&
+                                           (CanDoGlitch(GlitchType::Megaflip, GlitchDifficulty::ADVANCED) ||
+                                            CanDoGlitch(GlitchType::HoverBoost, GlitchDifficulty::INTERMEDIATE));
+                                } }),
                  });
 
         areaTable[SPIRIT_TEMPLE_MQ_LOWER_ADULT] =
