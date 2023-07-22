@@ -80,11 +80,13 @@ void EnBox_rInit(Actor* thisx, GlobalContext* globalCtx) {
         *((u8*)(*cmbMan) + 0x59C) = 1;
         *((u8*)(*cmbMan) + 0x530) = 1;
 
-        if (type == CHEST_MAJOR) {
-            cmabMan = ZAR_GetCMABByIndex(&rExtendedObjectCtx.status[exObjectBankIdx].zarInfo, TEXANIM_GOLD_CHEST);
-            TexAnim_Spawn(this->skelAnime.unk_28->unk_0C, cmabMan);
-        } else if (type == CHEST_SMALL_KEY) {
-            cmabMan = ZAR_GetCMABByIndex(&rExtendedObjectCtx.status[exObjectBankIdx].zarInfo, TEXANIM_KEY_CHEST);
+        static const u32 chestType_to_assetIndex[CHESTTYPE_MAX] = { TEXANIM_GOLD_CHEST, 0, 0,
+                                                                    TEXANIM_KEY_CHEST,  0, TEXANIM_HEART_CHEST,
+                                                                    TEXANIM_SKULL_CHEST };
+
+        u32 assetIndex = chestType_to_assetIndex[type];
+        if (assetIndex != 0) {
+            cmabMan = ZAR_GetCMABByIndex(&rExtendedObjectCtx.status[exObjectBankIdx].zarInfo, assetIndex);
             TexAnim_Spawn(this->skelAnime.unk_28->unk_0C, cmabMan);
         }
     }

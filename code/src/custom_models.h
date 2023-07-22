@@ -41,6 +41,8 @@ typedef enum {
     TEXANIM_BOSS_KEY,
     TEXANIM_GOLD_CHEST,
     TEXANIM_KEY_CHEST,
+    TEXANIM_HEART_CHEST,
+    TEXANIM_SKULL_CHEST,
 } CustomGeneralAssetsTexAnims;
 
 typedef enum {

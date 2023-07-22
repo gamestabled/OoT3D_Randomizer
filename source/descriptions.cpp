@@ -875,19 +875,23 @@ string_view chestAnimDesc             = "Choose if you want the slow animation t
 string_view chestVanillaDesc          = "Chests will appear as they do in the base game."; //
 string_view chestTextureDesc          = "Chest texture will reflect its contents\n"        //
                                         "regardless of size.\n"                            //
-                                        "Major Items    =    Gilded Chests\n"              //
-                                        "Lesser Items   =    Normal Chests\n"              //
-                                        "Boss Keys      =    Fancy Chests\n"               //
-                                        "Small Keys     =    Silver Chests";               //
+                                        "\n"                                               //
+                                        "Major Items           ->    Gilded Chests\n"      //
+                                        "Boss Keys             ->    Fancy Chests\n"       //
+                                        "Small Keys            ->    Silver Chests\n"      //
+                                        "Hearts                ->    Heart Chests\n"       //
+                                        "Gold Skulltula Tokens ->    Webbed Chests\n"      //
+                                        "Everything else       ->    Wooden Chests";       //
 string_view chestSizeTextureDesc      = "In addition to the texture change, major items\n" //
                                         "and boss keys will be in big chests, and\n"       //
                                         "everything else will be in small chests.";        //
 string_view chestClassicDesc          = "This is the behavior of CSMC in previous\n"       //
                                         "versions of the randomizer.\n"                    //
-                                        "Major Items    =    Big Wooden Chests\n"          //
-                                        "Lesser Items   =    Small Wooden Chests\n"        //
-                                        "Boss Keys      =    Big Fancy Chests\n"           //
-                                        "Small Keys     =    Small Fancy Chests";          //
+                                        "\n"                                               //
+                                        "Major Items           ->   Big Wooden Chests\n"   //
+                                        "Lesser Items          ->   Small Wooden Chests\n" //
+                                        "Boss Keys             ->   Big Fancy Chests\n"    //
+                                        "Small Keys            ->   Small Fancy Chests";   //
                                                                                            //
 /*------------------------------                                                           //
 |        INGAME SPOILERS       |                                                           //
