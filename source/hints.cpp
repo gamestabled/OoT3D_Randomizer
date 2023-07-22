@@ -533,12 +533,13 @@ static void CreateDampeHint() {
     auto hookshotLocation = FilterFromPool(
         allLocations, [](const LocationKey loc) { return Location(loc)->GetPlacedItemKey() == PROGRESSIVE_HOOKSHOT; });
 
-    auto dampeHint = Hint(PROGRESSIVE_HOOKSHOT_LOCATION_HINT).GetText() + "#" + GetHintRegion(Location(hookshotLocation[0])->GetParentRegionKey())->GetHint().GetText();
-    dampeHint = dampeHint + ".";
+    auto hookLocHint = hookshotLocation.empty()
+                           ? Hint(YOUR_POCKET)
+                           : GetHintRegion(Location(hookshotLocation[0])->GetParentRegionKey())->GetHint();
 
-    CreateMessageFromTextObject(0x5003, 0, 2, 3, AddColorsAndFormat(dampeHint, { QM_PINK }));
-    
-
+    auto dampeText = Hint(DAMPE_DIARY_HINT).GetText();
+    dampeText.Replace("%s", hookLocHint.GetText());
+    CreateMessageFromTextObject(0x5003, 0, 2, 3, AddColorsAndFormat(dampeText, { QM_PINK, QM_RED }));
 }
 
 // Find the location which has the given itemKey and create the generic altar text for the reward

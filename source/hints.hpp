@@ -156,7 +156,7 @@ class HintText {
                          HintCategory::MasterSword };
     }
 
-    static auto ProgressiveHookshot(std::vector<Text>&& obscureText, std::vector<Text>&& ambiguousText = {},
+    static auto DampeHint(std::vector<Text>&& obscureText, std::vector<Text>&& ambiguousText = {},
                             Text&& clearText = {}) {
         return HintText{ std::move(obscureText), std::move(ambiguousText), std::move(clearText),
                          HintCategory::DampeHint };

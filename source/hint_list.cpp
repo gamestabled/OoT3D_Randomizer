@@ -2121,19 +2121,6 @@ void HintTable_Init() {
                 /*german*/"Und selbst wenn doch, die legendäre Klinge wirst du niemals finden "},
     });
 
-    /*----------------------------------
-    |PROGRESSIVE HOOKSHOT LOCATION TEXT|
-    -----------------------------------*/
-
-    hintTable[PROGRESSIVE_HOOKSHOT_LOCATION_HINT] = HintText::ProgressiveHookshot({
-                     // obscure text
-                     Text{"Whoever reads this, if you seek my prized stretching keepsake, please enter ",
-                /*french*/"Quiconque lit ceci, si vous cherchez mon précieux souvenir d'étirement, veuillez entrer ",
-               /*spanish*/"Quienquiera que lea esto, si busca mi preciado recuerdo de estiramiento, ingrese ",
-               /*italian*/"Chiunque stia leggendo questo, se stai cercando il mio oggetto prezioso, per favore entra ",
-                /*german*/"Wer auch immer dies liest, wenn Sie mein wertvolles Stretching-Andenken suchen, treten Sie bitte ein "},
-    });
-
     /*--------------------------
     |      GANON LINE TEXT     |
     ---------------------------*/
@@ -2302,6 +2289,19 @@ void HintTable_Init() {
                /*spanish*/". Vendo por #100 rupias#.&"+TWO_WAY_CHOICE()+"#Comprar&No comprar#",
                /*italian*/"! Che ne dici di #100 rupie#?&"+TWO_WAY_CHOICE()+"#Aggiudicato!&Non mi serve...#",
                 /*german*/"! Sagen wir #100 Rubine#!&"+TWO_WAY_CHOICE()+"#Gerne!&Auf keinen Fall!#"},
+    });
+
+    /*----------------------------------
+    |         DAMPÉ DIARY TEXT         |
+    -----------------------------------*/
+
+    hintTable[DAMPE_DIARY_HINT] = HintText::DampeHint({
+                     // obscure text
+                     Text{"Whoever reads this, please enter #%s#. I will let you have my stretching, shrinking #keepsake#.^I'm waiting for you.&--Dampé",
+                /*french*/"Toi, le petit curieux qui lit ce journal, viens dans #%s#. Et peut-être auras-tu droit à mon précieux #trésor#.^Je t'attends...&--Igor",
+               /*spanish*/"A quien lea estas palabras: Entra en #%s# y mi fantástico #tesoro# será para ti.^Te espero.&- Dampé",
+               /*italian*/"Chiunque legga questo, visiti #%s#. Gli darò il mio #tesoro# BOING BOING.^Firmato: Danpei",
+                /*german*/"Wer immer dies liest, der möge #%s# betreten. Ihm gebe ich meinen langen, kurzen #Schatz#^Ich warte! Boris"},
     });
 }
 // clang-format on
