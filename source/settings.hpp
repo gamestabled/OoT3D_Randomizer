@@ -454,6 +454,7 @@ extern Option MiscHints;
 extern Option ToTAltarHints;
 extern Option GanonHints;
 extern Option DampeHint;
+extern Option SkulltulaHints;
 extern Option CompassesShowReward;
 extern Option CompassesShowWotH;
 extern Option MapsShowDungeonMode;

@@ -54,6 +54,7 @@
 #include "deku_scrubs.h"
 #include "bean_plant.h"
 #include "sheik.h"
+#include "skulltula_people.h"
 
 #define OBJECT_GI_KEY 170
 #define OBJECT_GI_BOSSKEY 185
@@ -200,6 +201,8 @@ void Actor_Init() {
     gActorOverlayTable[0x17E].initInfo->update = OceffSpot_rUpdate;
 
     gActorOverlayTable[0x185].initInfo->update = EnWonderTalk2_rUpdate;
+
+    gActorOverlayTable[0x188].initInfo->update = EnSsh_rUpdate;
 
     gActorOverlayTable[0x18A].initInfo->update = OceffWipe_rUpdate;
     gActorOverlayTable[0x18B].initInfo->update = OceffStorm_rUpdate;

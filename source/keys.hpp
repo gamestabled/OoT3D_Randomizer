@@ -1735,5 +1735,7 @@ typedef enum {
 
     DAMPE_DIARY_HINT,
 
+    HOUSE_OF_SKULLTULA_HINT,
+
     KEY_ENUM_MAX,
 } Key;

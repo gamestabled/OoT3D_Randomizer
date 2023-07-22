@@ -2352,6 +2352,19 @@ void HintTable_Init() {
                /*italian*/"Chiunque legga questo, visiti #%s#. Gli darò il mio #tesoro# BOING BOING.^Firmato: Danpei",
                 /*german*/"Wer immer dies liest, der möge #%s# betreten. Ihm gebe ich meinen langen, kurzen #Schatz#^Ich warte! Boris"},
     });
+
+    /*----------------------------------
+    |     HOUSE OF SKULLTULA HINTS     |
+    -----------------------------------*/
+
+    hintTable[HOUSE_OF_SKULLTULA_HINT] = HintText::SkulltulaHints({
+                     // obscure text
+                     Text{"Yeaaarrgh! I'm cursed!! Please save me by destroying #%d Spiders of the Curse# and I will give you #%s#.",
+                /*french*/"Beuaaaaark! Je suis maudit! Détruit #%d Araignées de la Malédiction# et j'aurai quelque chose à te donner (#%s#).",
+               /*spanish*/"Grrrrrr! Estoy maldito! Please save me by destroying #%d Spiders of the Curse# and I will give you #%s#.",
+               /*italian*/"Ahhhhhhhh! Questa maledizione è davvero terribile! Ti prego, salvami distruggendo #%d Aracnule d'oro# e ti darò #%s#.",
+                /*german*/"Aarrrgh! Ich bin verflucht!^Bitte rette mich, indem du #%d Skulltulas# zerstörst und ich werde dir dafür #%s# geben!"},
+    });
 }
 // clang-format on
 s32 StonesRequiredBySettings() {
