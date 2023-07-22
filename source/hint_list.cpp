@@ -2277,58 +2277,41 @@ void HintTable_Init() {
     |      MERCHANTS' ITEMS     |
     ---------------------------*/
 
-    hintTable[MEDIGORON_DIALOG_FIRST] = HintText::MerchantsDialogs({
+    hintTable[MEDIGORON_DIALOG] = HintText::MerchantsDialogs({
                      // obscure text
-                     Text{"How about buying ",
-                /*french*/"Veux-tu acheter ",
-               /*spanish*/"¿Me compras ",
-               /*italian*/"Che ne dici? Vuoi comprrrarrre ",
-                /*german*/"Möchtest du "},
-    });
-
-    hintTable[MEDIGORON_DIALOG_SECOND] = HintText::MerchantsDialogs({
-                     // obscure text
-                     Text{" for #200 Rupees#?&"+TWO_WAY_CHOICE()+"#Buy&Don't buy#",
-                /*french*/" pour #200 rubis#?&"+TWO_WAY_CHOICE()+"#Acheter&Ne pas acheter#",
-               /*spanish*/" por #200 rupias#?&"+TWO_WAY_CHOICE()+"#Comprar&No comprar#",
-               /*italian*/" per #200 rupie#?&"+TWO_WAY_CHOICE()+"#Sì&No#",
-                /*german*/" für #200 Rubine# kaufen?&"+TWO_WAY_CHOICE()+"#Klar!&Nie im Leben!#"},
+                     Text{"How about buying %s for #200 Rupees#?&"+TWO_WAY_CHOICE()+"#Buy&Don't buy#",
+                /*french*/"Veux-tu acheter %s pour #200 rubis#?&"+TWO_WAY_CHOICE()+"#Acheter&Ne pas acheter#",
+               /*spanish*/"¿Me compras %s por #200 rupias#?&"+TWO_WAY_CHOICE()+"#Comprar&No comprar#",
+               /*italian*/"Che ne dici? Vuoi comprrrarrre %s per #200 rupie#?&"+TWO_WAY_CHOICE()+"#Sì&No#",
+                /*german*/"Möchtest du %s für #200 Rubine# kaufen?&"+TWO_WAY_CHOICE()+"#Klar!&Nie im Leben!#"},
     });
 
     hintTable[CARPET_SALESMAN_DIALOG_FIRST] = HintText::MerchantsDialogs({
                      // obscure text
-                     Text{"Welcome!^I am selling stuff, strange and rare, from&all over the world to everybody. Today's&special is...^",
-                /*french*/"Bienvenue!^Je vends des objets rares et merveilleux du&monde entier. En spécial aujourd'hui...^",
-               /*spanish*/"¡Acércate!^Vendo productos extraños y difíciles de&encontrar... De todo el mundo a todo el&mundo. La oferta de hoy es...^¡",
-               /*italian*/"Benvenuto!^Vendo merce strana e introvabile che&proviene da ogni parte del mondo.&Oggi il pezzo forte è...^",
-                /*german*/"Willkommen!^Ich verkaufe hier seltsame,&seltene Sachen aus der ganzen Welt.^Mein heutiges Angebot...&"},
+                     Text{"Welcome!^I am selling stuff, strange and rare, from&all over the world to everybody. Today's&special is...^"
+                          "%s! Terrifying! I won't tell you what it is until I see the money...^How about #200 Rupees#?&&"+TWO_WAY_CHOICE()+"#Buy&Don't buy#",
+                /*french*/"Bienvenue!^Je vends des objets rares et merveilleux du&monde entier. En spécial aujourd'hui...^"
+                          "%s! Un concentré de puissance! Mais montre tes rubis avant que je te dise ce que c'est...^Disons #200 rubis#?&&"+TWO_WAY_CHOICE()+"#Acheter&Ne pas acheter#",
+               /*spanish*/"¡Acércate!^Vendo productos extraños y difíciles de&encontrar... De todo el mundo a todo el&mundo. La oferta de hoy es...^"
+                          "¡%s! ¡Terrorífico! No te revelaré su nombre hasta que vea el dinero...^#200 rupias#, ¿qué te parece?&&"+TWO_WAY_CHOICE()+"#Comprar&No comprar#",
+               /*italian*/"Benvenuto!^Vendo merce strana e introvabile che&proviene da ogni parte del mondo.&Oggi il pezzo forte è...^"
+                          "%s! Non ti dico di che si tratta finché non vedo la grana.^Hai #200 rupie#?&&"+TWO_WAY_CHOICE()+"#Tieni!&Veramente no...#",
+                /*german*/"Willkommen!^Ich verkaufe hier seltsame,&seltene Sachen aus der ganzen Welt.^Mein heutiges Angebot...&"
+                          "%s!&Furchterregend oder? Ich erzähle Euch mehr, wenn ich Geld sehe...^Wie wär's mit #200 Rubinen#?&&"+TWO_WAY_CHOICE()+"#Aber sicher!&Ich bin weg!#"},
     });
 
     hintTable[CARPET_SALESMAN_DIALOG_SECOND] = HintText::MerchantsDialogs({
                      // obscure text
-                     Text{"! Terrifying! I won't tell you what it is until I see the money...^How about #200 Rupees#?&&"+TWO_WAY_CHOICE()+"#Buy&Don't buy#",
-                /*french*/"! Un concentré de puissance! Mais montre tes rubis avant que je te dise ce que c'est...^Disons #200 rubis#?&&"+TWO_WAY_CHOICE()+"#Acheter&Ne pas acheter#",
-               /*spanish*/"! ¡Terrorífico! No te revelaré su nombre hasta que vea el dinero...^#200 rupias#, ¿qué te parece?&&"+TWO_WAY_CHOICE()+"#Comprar&No comprar#",
-               /*italian*/"! Non ti dico di che si tratta finché non vedo la grana.^Hai #200 rupie#?&&"+TWO_WAY_CHOICE()+"#Tieni!&Veramente no...#",
-                /*german*/"!&Furchterregend oder? Ich erzähle Euch mehr, wenn ich Geld sehe...^Wie wär's mit #200 Rubinen#?&&"+TWO_WAY_CHOICE()+"#Aber sicher!&Ich bin weg!#"},
-    });
-
-    hintTable[CARPET_SALESMAN_DIALOG_THIRD] = HintText::MerchantsDialogs({
-                     // obscure text
-                     Text{"Thank you very much!^What I'm selling is... #",
-                /*french*/"Merci beaucoup!^Cet objet extraordinaire est... #",
-               /*spanish*/"¡Muchas gracias!^Lo que vendo es... #¡",
-               /*italian*/"Grazie!^Hai appena comprato... #",
-                /*german*/"Vielen herzlichen Dank!&#"},
-    });
-
-    hintTable[CARPET_SALESMAN_DIALOG_FOURTH] = HintText::MerchantsDialogs({
-                     // obscure text
-                     Text{"!#^The mark that will lead you to the #Spirit&Temple# is the #flag on the "+IF_NOT_MQ()+"left"+MQ_ELSE()+"right"+MQ_END()+"# outside the shop. Be seeing you!",
-                /*french*/"!#^La marque qui te mènera au #Temple de l'esprit# est le #drapeau "+IF_NOT_MQ()+"gauche"+MQ_ELSE()+"droite"+MQ_END()+"# en sortant d'ici. À la prochaine!",
-               /*spanish*/"!#^La marca que te guiará al #Templo del&Espíritu# es la #bandera que está a la&"+IF_NOT_MQ()+"izquierda"+MQ_ELSE()+"derecha"+MQ_END()+"# al salir de aquí. ¡Nos vemos!",
-               /*italian*/"!#^La direzione per il #Santuario dello Spirito# è indicata dalla #bandiera sulla "+IF_NOT_MQ()+"sinistra"+MQ_ELSE()+"destra"+MQ_END()+"# del negozio. A presto!",
-                /*german*/"#! Toll oder?^Das Zeichen, welches Euch zum&#Geistertempel# führt, ist die #Flagge&zur "+IF_NOT_MQ()+"Linken"+MQ_ELSE()+"Rechten"+MQ_END()+"# außerhalb des Ladens.^Schaut mal wieder vorbei!"},
+                     Text{"Thank you very much!^What I'm selling is... "
+                          "#%s!#^The mark that will lead you to the #Spirit&Temple# is the #flag on the "+IF_NOT_MQ()+"left"+MQ_ELSE()+"right"+MQ_END()+"# outside the shop. Be seeing you!",
+                /*french*/"Merci beaucoup!^Cet objet extraordinaire est... "
+                          "#%s!#^La marque qui te mènera au #Temple de l'esprit# est le #drapeau "+IF_NOT_MQ()+"gauche"+MQ_ELSE()+"droite"+MQ_END()+"# en sortant d'ici. À la prochaine!",
+               /*spanish*/"¡Muchas gracias!^Lo que vendo es... "
+                          "¡#%s!#^La marca que te guiará al #Templo del&Espíritu# es la #bandera que está a la&"+IF_NOT_MQ()+"izquierda"+MQ_ELSE()+"derecha"+MQ_END()+"# al salir de aquí. ¡Nos vemos!",
+               /*italian*/"Grazie!^Hai appena comprato... "
+                          "#%s!#^La direzione per il #Santuario dello Spirito# è indicata dalla #bandiera sulla "+IF_NOT_MQ()+"sinistra"+MQ_ELSE()+"destra"+MQ_END()+"# del negozio. A presto!",
+                /*german*/"Vielen herzlichen Dank!&"
+                          "#%s#! Toll oder?^Das Zeichen, welches Euch zum&#Geistertempel# führt, ist die #Flagge&zur "+IF_NOT_MQ()+"Linken"+MQ_ELSE()+"Rechten"+MQ_END()+"# außerhalb des Ladens.^Schaut mal wieder vorbei!"},
     });
 
     hintTable[GRANNY_DIALOG] = HintText::MerchantsDialogs({

@@ -870,13 +870,13 @@ void CreateMerchantsHints() {
 
     Text grannyCapitalItemText = grannyItemText.Capitalize();
 
-    Text medigoronText =
-        Hint(MEDIGORON_DIALOG_FIRST).GetText() + medigoronItemText + Hint(MEDIGORON_DIALOG_SECOND).GetText();
+    Text medigoronText = Hint(MEDIGORON_DIALOG).GetText();
+    medigoronText.Replace("%s", medigoronItemText);
     Text grannyText            = grannyCapitalItemText + Hint(GRANNY_DIALOG).GetText();
-    Text carpetSalesmanTextOne = Hint(CARPET_SALESMAN_DIALOG_FIRST).GetText() + carpetSalesmanItemText +
-                                 Hint(CARPET_SALESMAN_DIALOG_SECOND).GetText();
-    Text carpetSalesmanTextTwo = Hint(CARPET_SALESMAN_DIALOG_THIRD).GetText() + carpetSalesmanItemClearText +
-                                 Hint(CARPET_SALESMAN_DIALOG_FOURTH).GetText();
+    Text carpetSalesmanTextOne = Hint(CARPET_SALESMAN_DIALOG_FIRST).GetText();
+    carpetSalesmanTextOne.Replace("%s", carpetSalesmanItemText);
+    Text carpetSalesmanTextTwo = Hint(CARPET_SALESMAN_DIALOG_SECOND).GetText();
+    carpetSalesmanTextTwo.Replace("%s", carpetSalesmanItemClearText);
 
     CreateMessageFromTextObject(0x9120, 0, 2, 3, AddColorsAndFormat(medigoronText, { QM_RED, QM_GREEN }));
     CreateMessageFromTextObject(0x9121, 0, 2, 3, AddColorsAndFormat(grannyText, { QM_RED, QM_GREEN }));
