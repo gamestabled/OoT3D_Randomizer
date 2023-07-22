@@ -56,6 +56,8 @@ void Cutscene_OverrideLACS(void) {
             break;
         case LACSCONDITION_TOKENS:
             conditionMet = LACS_ConditionTokens();
+        case LACSCONDITION_HEARTS:
+            conditionMet = gSaveContext.healthCapacity >= gSettingsContext.lacsHeartCount * 16;
             break;
     }
     if (conditionMet) {

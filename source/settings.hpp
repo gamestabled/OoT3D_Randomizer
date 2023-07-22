@@ -344,6 +344,9 @@ bool GlitchEnabled(Option& glitchOption, GlitchDifficulty glitchDifficulty);
 /// Checks if the misc glitch is enabled.
 /// Always returns false if logic is not set to Glitched.
 bool GlitchEnabled(Option& glitchOption);
+/// @brief Checks if incompatible settings are selected and prints error message.
+/// @return True if settings are valid.
+bool ValidateSettings();
 
 extern std::string seed;
 extern std::string version;
@@ -361,6 +364,7 @@ extern Option BridgeMedallionCount;
 extern Option BridgeRewardCount;
 extern Option BridgeDungeonCount;
 extern Option BridgeTokenCount;
+extern Option BridgeHeartCount;
 extern Option RandomGanonsTrials;
 extern Option GanonsTrialsCount;
 
@@ -417,6 +421,7 @@ extern Option LACSStoneCount;
 extern Option LACSRewardCount;
 extern Option LACSDungeonCount;
 extern Option LACSTokenCount;
+extern Option LACSHeartCount;
 extern Option KeyRings;
 extern Option RingFortress;
 extern Option RingForest;

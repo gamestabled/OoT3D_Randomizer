@@ -666,6 +666,9 @@ static Text BuildBridgeReqsText() {
 
     } else if (Bridge.Is(RAINBOWBRIDGE_TOKENS)) {
         bridgeText = BuildCountReq(BRIDGE_TOKENS_HINT, BridgeTokenCount);
+
+    } else if (Bridge.Is(RAINBOWBRIDGE_HEARTS)) {
+        bridgeText = BuildCountReq(BRIDGE_HEARTS_HINT, BridgeHeartCount);
     }
 
     return Text() + ITEM_OBTAINED(ITEM_ARROW_LIGHT) + bridgeText + "^";
@@ -709,6 +712,9 @@ static Text BuildGanonBossKeyText() {
 
     } else if (GanonsBossKey.Is(GANONSBOSSKEY_LACS_TOKENS)) {
         ganonBossKeyText = BuildCountReq(LACS_TOKENS_HINT, LACSTokenCount);
+
+    } else if (GanonsBossKey.Is(GANONSBOSSKEY_LACS_HEARTS)) {
+        ganonBossKeyText = BuildCountReq(LACS_HEARTS_HINT, LACSHeartCount);
     }
 
     return Text() + ITEM_OBTAINED(ITEM_KEY_BOSS) + ganonBossKeyText + "^";
