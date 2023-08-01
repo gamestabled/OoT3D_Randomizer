@@ -98,7 +98,7 @@ class Item {
         }
 
         if (hintKey == HEART_CONTAINER || hintKey == PIECE_OF_HEART || hintKey == TREASURE_GAME_HEART) {
-            return false;
+            return Bridge.Is(RAINBOWBRIDGE_HEARTS) || LACSCondition == LACSCONDITION_HEARTS;
         }
 
         if (type == ITEMTYPE_SMALLKEY && (Keysanity.Is(KEYSANITY_VANILLA) || Keysanity.Is(KEYSANITY_OWN_DUNGEON))) {

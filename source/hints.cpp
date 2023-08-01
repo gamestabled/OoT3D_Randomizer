@@ -883,12 +883,7 @@ void CreateGossipStoneHints() {
         if (Settings::GanonHints) {
             ignore({ MASTER_SWORD, LIGHT_ARROWS });
         }
-        if (Settings::GanonsBossKey.Is(GANONSBOSSKEY_LACS_VANILLA) ||
-            Settings::GanonsBossKey.Is(GANONSBOSSKEY_LACS_MEDALLIONS) ||
-            Settings::GanonsBossKey.Is(GANONSBOSSKEY_LACS_STONES) ||
-            Settings::GanonsBossKey.Is(GANONSBOSSKEY_LACS_REWARDS) ||
-            Settings::GanonsBossKey.Is(GANONSBOSSKEY_LACS_DUNGEONS) ||
-            Settings::GanonsBossKey.Is(GANONSBOSSKEY_LACS_TOKENS)) {
+        if (Settings::GanonsBossKey.Value<u8>() >= GANONSBOSSKEY_LACS_VANILLA) {
             ignore({ GANONS_CASTLE_BOSS_KEY });
         }
 
