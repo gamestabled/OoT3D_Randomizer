@@ -17,6 +17,9 @@ typedef enum {
     CHEST_BOSS_KEY,
     CHEST_SMALL_KEY,
     CHEST_BOMBCHUS,
+    CHEST_HEART,
+    CHEST_SKULL,
+    CHESTTYPE_MAX,
 } ChestType;
 
 void EnBox_rInit(Actor* thisx, GlobalContext* globalCtx);
