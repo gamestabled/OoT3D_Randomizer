@@ -61,12 +61,14 @@ Option OpenDoorOfTime      = Option::U8  ("Door of Time",           {"Open", "Cl
 Option ZorasFountain       = Option::U8  ("Zora's Fountain",        {"Normal", "Adult", "Open"},                                                  {fountainNormal, fountainAdult, fountainOpen});
 Option OpenJabu            = Option::U8  ("Jabu-Jabu",              {"Closed", "Open"},                                                           {jabuJabuCloseDesc, jabuJabuOpenDesc});
 Option GerudoFortress      = Option::U8  ("Gerudo Fortress",        {"Normal", "Fast", "Open"},                                                   {gerudoNormal, gerudoFast, gerudoOpen});
-Option Bridge              = Option::U8  ("Rainbow Bridge",         {"Open", "Vanilla", "Stones", "Medallions", "Rewards", "Dungeons", "Tokens"}, {bridgeOpen, bridgeVanilla, bridgeStones, bridgeMedallions, bridgeRewards, bridgeDungeons, bridgeTokens},   OptionCategory::Setting,    RAINBOWBRIDGE_MEDALLIONS);
+Option Bridge              = Option::U8  ("Rainbow Bridge",         {"Open", "Vanilla", "Stones", "Medallions", "Rewards", "Dungeons", "Tokens", "Hearts"},
+                                                                     {bridgeOpen, bridgeVanilla, bridgeStones, bridgeMedallions, bridgeRewards, bridgeDungeons, bridgeTokens, bridgeHearts},                                                                  OptionCategory::Setting,    RAINBOWBRIDGE_MEDALLIONS);
 Option BridgeStoneCount    = Option::U8  (2, "Stone Count",         {NumOpts(0, 3)},                                                              {bridgeStoneCountDesc},                                                                                     OptionCategory::Setting,    1,                          true);
 Option BridgeMedallionCount= Option::U8  (2, "Medallion Count",     {NumOpts(0, 6)},                                                              {bridgeMedallionCountDesc},                                                                                 OptionCategory::Setting,    6);
 Option BridgeRewardCount   = Option::U8  (2, "Reward Count",        {NumOpts(0, 9)},                                                              {bridgeRewardCountDesc},                                                                                    OptionCategory::Setting,    1,                          true);
 Option BridgeDungeonCount  = Option::U8  (2, "Dungeon Count",       {NumOpts(0, 8)},                                                              {bridgeDungeonCountDesc},                                                                                   OptionCategory::Setting,    1,                          true);
 Option BridgeTokenCount    = Option::U8  (2, "Token Count",         {NumOpts(0, 100)},                                                            {bridgeTokenCountDesc},                                                                                     OptionCategory::Setting,    1,                          true);
+Option BridgeHeartCount    = Option::U8  (2, "Heart Count",         {NumOpts(0, 20)},                                                             {bridgeHeartCountDesc},                                                                                     OptionCategory::Setting,    1,                          true);
 Option RandomGanonsTrials  = Option::Bool("Random Ganon's Trials",  {"Off", "On"},                                                                {randomGanonsTrialsDesc},                                                                                   OptionCategory::Setting,    ON);
 Option GanonsTrialsCount   = Option::U8  (2, "Trial Count",         {NumOpts(0, 6)},                                                              {ganonsTrialCountDesc},                                                                                     OptionCategory::Setting,    1,                          true);
 std::vector<Option *> openOptions = {
@@ -83,6 +85,7 @@ std::vector<Option *> openOptions = {
     &BridgeRewardCount,
     &BridgeDungeonCount,
     &BridgeTokenCount,
+    &BridgeHeartCount,
     &RandomGanonsTrials,
     &GanonsTrialsCount,
 };
@@ -219,23 +222,25 @@ std::vector<Option *> shuffleOptions = {
 };
 
 // Shuffle Dungeon Items
-Option RandomizeDungeon    = Option::Bool("Randomize Settings",        {"No","Yes"},                                                           {dungeonRandomize},                                                                                                    OptionCategory::Toggle);
+Option RandomizeDungeon    = Option::Bool("Randomize Settings",        {"No","Yes"},                                                           {dungeonRandomize},                                                                                               OptionCategory::Toggle);
 Option MapsAndCompasses    = Option::U8  ("Maps/Compasses",            {"Start With", "Vanilla", "Own Dungeon", "Any Dungeon", "Overworld", "Anywhere"},
-                                                                        {mapCompassStartWith, mapCompassVanilla, mapCompassOwnDungeon, mapCompassAnyDungeon, mapCompassOverworld, mapCompassAnywhere},                                                            OptionCategory::Setting,    MAPSANDCOMPASSES_OWN_DUNGEON);
+                                                                        {mapCompassStartWith, mapCompassVanilla, mapCompassOwnDungeon, mapCompassAnyDungeon, mapCompassOverworld, mapCompassAnywhere},                                                           OptionCategory::Setting,    MAPSANDCOMPASSES_OWN_DUNGEON);
 Option Keysanity           = Option::U8  ("Small Keys",                {"Start With", "Vanilla", "Own Dungeon", "Any Dungeon", "Overworld", "Anywhere"},
-                                                                        {smallKeyStartWith, smallKeyVanilla, smallKeyOwnDungeon, smallKeyAnyDungeon, smallKeyOverworld, smallKeyAnywhere},                                                                        OptionCategory::Setting,    KEYSANITY_OWN_DUNGEON);
+                                                                        {smallKeyStartWith, smallKeyVanilla, smallKeyOwnDungeon, smallKeyAnyDungeon, smallKeyOverworld, smallKeyAnywhere},                                                                       OptionCategory::Setting,    KEYSANITY_OWN_DUNGEON);
 Option GerudoKeys          = Option::U8  ("Gerudo Fortress Keys",      {"Vanilla", "Any Dungeon", "Overworld", "Anywhere"},
                                                                         {gerudoKeysVanilla, gerudoKeysAnyDungeon, gerudoKeysOverworld, gerudoKeysAnywhere});
 Option BossKeysanity       = Option::U8  ("Boss Keys",                 {"Start With", "Vanilla", "Own Dungeon", "Any Dungeon", "Overworld", "Anywhere"},
-                                                                        {bossKeyStartWith, bossKeyVanilla, bossKeyOwnDungeon, bossKeyAnyDungeon, bossKeyOverworld, bossKeyAnywhere},                                                                              OptionCategory::Setting,    BOSSKEYSANITY_OWN_DUNGEON);
-Option GanonsBossKey       = Option::U8  ("Ganon's Boss Key",          {"Start With", "Vanilla", "Own Dungeon", "Any Dungeon", "Overworld", "Anywhere", "LACS-Vanilla", "LACS-Medallions", "LACS-Stones", "LACS-Rewards", "LACS-Dungeons", "LACS-Tokens"},
-                                                                        {ganonKeyStartWith, ganonKeyVanilla, ganonKeyOwnDungeon, ganonKeyAnyDungeon, ganonKeyOverworld, ganonKeyAnywhere, ganonKeyLACS},                                                          OptionCategory::Setting,    GANONSBOSSKEY_OWN_DUNGEON);
+                                                                        {bossKeyStartWith, bossKeyVanilla, bossKeyOwnDungeon, bossKeyAnyDungeon, bossKeyOverworld, bossKeyAnywhere},                                                                             OptionCategory::Setting,    BOSSKEYSANITY_OWN_DUNGEON);
+Option GanonsBossKey       = Option::U8  ("Ganon's Boss Key",          {"Start With", "Vanilla", "Own Dungeon", "Any Dungeon", "Overworld", "Anywhere",
+                                                                        "LACS-Vanilla", "LACS-Medallions", "LACS-Stones", "LACS-Rewards", "LACS-Dungeons", "LACS-Tokens", "LACS-Hearts"},
+                                                                        {ganonKeyStartWith, ganonKeyVanilla, ganonKeyOwnDungeon, ganonKeyAnyDungeon, ganonKeyOverworld, ganonKeyAnywhere, ganonKeyLACS},                                                         OptionCategory::Setting,    GANONSBOSSKEY_OWN_DUNGEON);
 u8 LACSCondition           = 0;
 Option LACSMedallionCount  = Option::U8  (2, "Medallion Count",        {NumOpts(0, 6)},                                                        {lacsMedallionCountDesc},                                                                                         OptionCategory::Setting,    1,                          true);
 Option LACSStoneCount      = Option::U8  (2, "Stone Count",            {NumOpts(0, 3)},                                                        {lacsStoneCountDesc},                                                                                             OptionCategory::Setting,    1,                          true);
 Option LACSRewardCount     = Option::U8  (2, "Reward Count",           {NumOpts(0, 9)},                                                        {lacsRewardCountDesc},                                                                                            OptionCategory::Setting,    1,                          true);
 Option LACSDungeonCount    = Option::U8  (2, "Dungeon Count",          {NumOpts(0, 8)},                                                        {lacsDungeonCountDesc},                                                                                           OptionCategory::Setting,    1,                          true);
 Option LACSTokenCount      = Option::U8  (2, "Token Count",            {NumOpts(0, 100)},                                                      {lacsTokenCountDesc},                                                                                             OptionCategory::Setting,    1,                          true);
+Option LACSHeartCount      = Option::U8  (2, "Heart Count",            {NumOpts(0, 20)},                                                       {lacsHeartCountDesc},                                                                                             OptionCategory::Setting,    1,                          true);
 Option KeyRings            = Option::U8  ("Key Rings",                 {"All Off", "All On", "Choose", "Random"},                              {keyRingDesc});
 Option RingFortress        = Option::Bool(2, "Gerudo Fortress",        {"Off", "On"},                                                          {keyRingDesc},                                                                                                    OptionCategory::Setting);
 Option RingForest          = Option::Bool(2, "Forest Temple",          {"Off", "On"},                                                          {keyRingDesc},                                                                                                    OptionCategory::Setting);
@@ -259,6 +264,7 @@ std::vector<Option *> shuffleDungeonItemOptions = {
     &LACSRewardCount,
     &LACSDungeonCount,
     &LACSTokenCount,
+    &LACSHeartCount,
     &KeyRings,
     &RingFortress,
     &RingForest,
@@ -1369,6 +1375,7 @@ SettingsContext FillContext() {
     ctx.bridgeRewardCount    = BridgeRewardCount.Value<u8>();
     ctx.bridgeDungeonCount   = BridgeDungeonCount.Value<u8>();
     ctx.bridgeTokenCount     = BridgeTokenCount.Value<u8>();
+    ctx.bridgeHeartCount     = BridgeHeartCount.Value<u8>();
     ctx.randomGanonsTrials   = (RandomGanonsTrials) ? 1 : 0;
     ctx.ganonsTrialsCount    = GanonsTrialsCount.Value<u8>();
 
@@ -1422,6 +1429,7 @@ SettingsContext FillContext() {
     ctx.lacsRewardCount    = LACSRewardCount.Value<u8>();
     ctx.lacsDungeonCount   = LACSDungeonCount.Value<u8>();
     ctx.lacsTokenCount     = LACSTokenCount.Value<u8>();
+    ctx.lacsHeartCount     = LACSHeartCount.Value<u8>();
 
     ctx.ringFortress = (RingFortress) ? 1 : 0;
     ctx.ringForest   = (RingForest) ? 1 : 0;
@@ -2024,8 +2032,16 @@ void ForceChange(u32 kDown, Option* currentSetting) {
         if (Bridge.Is(RAINBOWBRIDGE_TOKENS)) {
             BridgeTokenCount.Unhide();
         } else {
-            BridgeTokenCount.SetSelectedIndex(1);
+            BridgeTokenCount.SetSelectedIndex(100);
             BridgeTokenCount.Hide();
+        }
+
+        // Only show heart count option if Hearts is selected
+        if (Bridge.Is(RAINBOWBRIDGE_HEARTS)) {
+            BridgeHeartCount.Unhide();
+        } else {
+            BridgeHeartCount.SetSelectedIndex(20);
+            BridgeHeartCount.Hide();
         }
 
         // Only show Trial Count option if Random Trial Count is off
@@ -2194,6 +2210,14 @@ void ForceChange(u32 kDown, Option* currentSetting) {
         } else {
             LACSTokenCount.SetSelectedIndex(100);
             LACSTokenCount.Hide();
+        }
+
+        // Only show Heart Count if setting Ganons Boss Key to LACS Hearts
+        if (GanonsBossKey.Is(GANONSBOSSKEY_LACS_HEARTS)) {
+            LACSHeartCount.Unhide();
+        } else {
+            LACSHeartCount.SetSelectedIndex(20);
+            LACSHeartCount.Hide();
         }
 
         if (KeyRings.Is(KEYRINGS_CHOOSE)) {
@@ -2965,6 +2989,8 @@ void UpdateSettings() {
         LACSCondition = LACSCONDITION_DUNGEONS;
     } else if (GanonsBossKey.Is(GANONSBOSSKEY_LACS_TOKENS)) {
         LACSCondition = LACSCONDITION_TOKENS;
+    } else if (GanonsBossKey.Is(GANONSBOSSKEY_LACS_HEARTS)) {
+        LACSCondition = LACSCONDITION_HEARTS;
     } else {
         LACSCondition = LACSCONDITION_VANILLA;
     }
@@ -3065,4 +3091,26 @@ bool GlitchEnabled(Option& glitchOption) {
 
     return Logic.Is(LOGIC_GLITCHED) && isMiscGlitch() && glitchOption;
 }
+
+bool ValidateSettings() {
+    s32 maxHearts = 20;
+    switch (ItemPoolValue.Value<u8>()) {
+        case ITEMPOOL_MINIMAL:
+            maxHearts = 3;
+            break;
+        case ITEMPOOL_SCARCE:
+            maxHearts = 12;
+            break;
+    }
+    if ((Bridge.Is(RAINBOWBRIDGE_HEARTS) && BridgeHeartCount.Value<u8>() > maxHearts) ||
+        (GanonsBossKey.Is(GANONSBOSSKEY_LACS_HEARTS) && LACSHeartCount.Value<u8>() > maxHearts)) {
+        printf("\x1b[6;0HNot enough Hearts in pool!\n\n"
+               "Please choose a different Item Pool\n"
+               "setting or lower the Hearts requirement.");
+        return false;
+    }
+
+    return true;
+}
+
 } // namespace Settings

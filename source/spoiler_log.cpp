@@ -225,12 +225,8 @@ void WriteIngameSpoilerLog() {
         if (key == GANON) {
             splrDatLoc->ItemLocations[spoilerItemIndex].CollectType = COLLECTTYPE_NEVER;
             splrDatLoc->ItemLocations[spoilerItemIndex].RevealType  = REVEALTYPE_ALWAYS;
-        } else if (key == TOT_LIGHT_ARROWS_CUTSCENE && (Settings::GanonsBossKey.Is(GANONSBOSSKEY_LACS_VANILLA) ||
-                                                        Settings::GanonsBossKey.Is(GANONSBOSSKEY_LACS_MEDALLIONS) ||
-                                                        Settings::GanonsBossKey.Is(GANONSBOSSKEY_LACS_STONES) ||
-                                                        Settings::GanonsBossKey.Is(GANONSBOSSKEY_LACS_REWARDS) ||
-                                                        Settings::GanonsBossKey.Is(GANONSBOSSKEY_LACS_DUNGEONS) ||
-                                                        Settings::GanonsBossKey.Is(GANONSBOSSKEY_LACS_TOKENS))) {
+        } else if (key == TOT_LIGHT_ARROWS_CUTSCENE &&
+                   (Settings::GanonsBossKey.Value<u8>() >= GANONSBOSSKEY_LACS_VANILLA)) {
             splrDatLoc->ItemLocations[spoilerItemIndex].RevealType = REVEALTYPE_ALWAYS;
         } else if (key == MARKET_BOMBCHU_BOWLING_BOMBCHUS) {
             splrDatLoc->ItemLocations[spoilerItemIndex].CollectType = COLLECTTYPE_REPEATABLE;

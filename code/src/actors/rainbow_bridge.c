@@ -46,6 +46,8 @@ u32 BgGjyoBridge_CheckCondition(void) {
             return BgGjyoBridge_ConditionDungeons();
         case RAINBOWBRIDGE_TOKENS:
             return gSaveContext.gsTokens >= gSettingsContext.bridgeTokenCount;
+        case RAINBOWBRIDGE_HEARTS:
+            return gSaveContext.healthCapacity >= gSettingsContext.bridgeHeartCount * 16;
         default:
             return BgGjyoBridge_ConditionVanilla();
     }

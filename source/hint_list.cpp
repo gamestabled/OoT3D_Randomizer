@@ -1855,6 +1855,15 @@ void HintTable_Init() {
                 /*german*/"Die Weisen werden darauf&warten, dass der Held #%d&|Skulltula-Symbol|Skulltula-Symbole|# sammelt."},
     });
 
+    hintTable[BRIDGE_HEARTS_HINT] = HintText::Bridge({
+                     // obscure text
+                     Text{"The awakened ones will await for the&Hero to collect #%d |Heart|Hearts|#.",
+                /*french*/"Les êtres de sagesse attendront le&héros muni de #%d |cœur|cœurs|#.",
+               /*spanish*/"Los sabios aguardarán a que el héroe&obtenga #%d |corazón|corazones|#.",
+               /*italian*/"I Saggi aspetteranno che l'Eroe&ottenga #%d |cuore|cuori|#.",
+                /*german*/"Die Weisen werden darauf&warten, dass der Held #%d&|Herz|Herzen|# sammelt."},
+    });
+
     /*--------------------------
     | GANON BOSS KEY HINT TEXT |
     ---------------------------*/
@@ -1978,6 +1987,15 @@ void HintTable_Init() {
                /*spanish*/"Y Zelda entregará la llave&del #señor del mal# tras obtener&#%d |símbolo|símbolos| de&skulltula dorada#.",
                /*italian*/"E la chiave del #re del male# sarà&ricevuta da Zelda dopo aver ottenuto&#%d |teschio|teschi| d'oro#.",
                 /*german*/"Und der #Schlüssel des Bösen# wird&von Zelda verliehen, sobald #%d&|Skulltula-Symbol# gesammelt wurde|Skulltula-Symbole# gesammelt wurden|."},
+    });
+
+    hintTable[LACS_HEARTS_HINT] = HintText::LACS({
+                     // obscure text                                                     singular  plural
+                     Text{"And the #evil one#'s key will be&provided by Zelda once #%d |Heart#&is|Hearts#&are| retrieved.",
+                /*french*/"Aussi, Zelda crééra la clé du&#Malin# avec #%d |cœur|cœurs|#.",
+               /*spanish*/"Y Zelda entregará la llave&del #señor del mal# tras obtener&#%d |corazón|corazones|#.",
+               /*italian*/"E la chiave del #re del male# sarà&ricevuta da Zelda dopo aver ottenuto&#%d |cuore|cuori|#.",
+                /*german*/"Und der #Schlüssel des Bösen# wird&von Zelda verliehen, sobald #%d&|Herz# gesammelt wurde|Herzen# gesammelt wurden|."},
     });
     /*--------------------------
     |     TRIAL HINT TEXT      |

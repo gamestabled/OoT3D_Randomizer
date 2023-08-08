@@ -812,7 +812,8 @@ void UpdateHelpers() {
         (Bridge.Is(RAINBOWBRIDGE_MEDALLIONS) && MedallionCount >= BridgeMedallionCount.Value<u8>()) ||
         (Bridge.Is(RAINBOWBRIDGE_REWARDS) && StoneCount + MedallionCount >= BridgeRewardCount.Value<u8>()) ||
         (Bridge.Is(RAINBOWBRIDGE_DUNGEONS) && DungeonCount >= BridgeDungeonCount.Value<u8>()) ||
-        (Bridge.Is(RAINBOWBRIDGE_TOKENS) && GoldSkulltulaTokens >= BridgeTokenCount.Value<u8>());
+        (Bridge.Is(RAINBOWBRIDGE_TOKENS) && GoldSkulltulaTokens >= BridgeTokenCount.Value<u8>()) ||
+        (Bridge.Is(RAINBOWBRIDGE_HEARTS) && Hearts >= BridgeHeartCount.Value<u8>());
 
     CanTriggerLACS =
         (LACSCondition == LACSCONDITION_VANILLA && ShadowMedallion && SpiritMedallion) ||
@@ -820,7 +821,8 @@ void UpdateHelpers() {
         (LACSCondition == LACSCONDITION_MEDALLIONS && MedallionCount >= LACSMedallionCount.Value<u8>()) ||
         (LACSCondition == LACSCONDITION_REWARDS && StoneCount + MedallionCount >= LACSRewardCount.Value<u8>()) ||
         (LACSCondition == LACSCONDITION_DUNGEONS && DungeonCount >= LACSDungeonCount.Value<u8>()) ||
-        (LACSCondition == LACSCONDITION_TOKENS && GoldSkulltulaTokens >= LACSTokenCount.Value<u8>());
+        (LACSCondition == LACSCONDITION_TOKENS && GoldSkulltulaTokens >= LACSTokenCount.Value<u8>()) ||
+        (LACSCondition == LACSCONDITION_HEARTS && Hearts >= LACSHeartCount.Value<u8>());
 }
 
 bool SmallKeys(Key dungeon, u8 requiredAmount) {

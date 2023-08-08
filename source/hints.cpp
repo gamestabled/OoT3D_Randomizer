@@ -666,6 +666,9 @@ static Text BuildBridgeReqsText() {
 
     } else if (Bridge.Is(RAINBOWBRIDGE_TOKENS)) {
         bridgeText = BuildCountReq(BRIDGE_TOKENS_HINT, BridgeTokenCount);
+
+    } else if (Bridge.Is(RAINBOWBRIDGE_HEARTS)) {
+        bridgeText = BuildCountReq(BRIDGE_HEARTS_HINT, BridgeHeartCount);
     }
 
     return Text() + ITEM_OBTAINED(ITEM_ARROW_LIGHT) + bridgeText + "^";
@@ -709,6 +712,9 @@ static Text BuildGanonBossKeyText() {
 
     } else if (GanonsBossKey.Is(GANONSBOSSKEY_LACS_TOKENS)) {
         ganonBossKeyText = BuildCountReq(LACS_TOKENS_HINT, LACSTokenCount);
+
+    } else if (GanonsBossKey.Is(GANONSBOSSKEY_LACS_HEARTS)) {
+        ganonBossKeyText = BuildCountReq(LACS_HEARTS_HINT, LACSHeartCount);
     }
 
     return Text() + ITEM_OBTAINED(ITEM_KEY_BOSS) + ganonBossKeyText + "^";
@@ -877,12 +883,7 @@ void CreateGossipStoneHints() {
         if (Settings::GanonHints) {
             ignore({ MASTER_SWORD, LIGHT_ARROWS });
         }
-        if (Settings::GanonsBossKey.Is(GANONSBOSSKEY_LACS_VANILLA) ||
-            Settings::GanonsBossKey.Is(GANONSBOSSKEY_LACS_MEDALLIONS) ||
-            Settings::GanonsBossKey.Is(GANONSBOSSKEY_LACS_STONES) ||
-            Settings::GanonsBossKey.Is(GANONSBOSSKEY_LACS_REWARDS) ||
-            Settings::GanonsBossKey.Is(GANONSBOSSKEY_LACS_DUNGEONS) ||
-            Settings::GanonsBossKey.Is(GANONSBOSSKEY_LACS_TOKENS)) {
+        if (Settings::GanonsBossKey.Value<u8>() >= GANONSBOSSKEY_LACS_VANILLA) {
             ignore({ GANONS_CASTLE_BOSS_KEY });
         }
 

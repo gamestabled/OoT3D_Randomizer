@@ -204,7 +204,10 @@ void MoveCursor(u32 kDown, bool updatedByHeld) {
 
 void MenuUpdate(u32 kDown, bool updatedByHeld) {
     consoleSelect(&bottomScreen);
-    consoleClear();
+    if (currentMenu->mode != POST_GENERATE || (kDown & KEY_B)) {
+        // Don't clear console if ValidateSettings printed error
+        consoleClear();
+    }
 
     // Check for menu change
     // If user pressed A on a non-option, non-action menu, they're navigating to a new menu
@@ -706,6 +709,10 @@ static void RestoreOverrides() {
 }
 
 void GenerateRandomizer() {
+
+    if (!Settings::ValidateSettings()) {
+        return;
+    }
 
     consoleSelect(&topScreen);
     consoleClear();
