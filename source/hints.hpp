@@ -65,7 +65,9 @@ enum class HintCategory {
     MasterSword,
     GanonLine,
     SheikLine,
+    DampeHint,
     MerchantsDialogs,
+    SkulltulaHints,
 };
 
 class HintText {
@@ -156,6 +158,12 @@ class HintText {
                          HintCategory::MasterSword };
     }
 
+    static auto DampeHint(std::vector<Text>&& obscureText, std::vector<Text>&& ambiguousText = {},
+                          Text&& clearText = {}) {
+        return HintText{ std::move(obscureText), std::move(ambiguousText), std::move(clearText),
+                         HintCategory::DampeHint };
+    }
+
     static auto GanonLine(std::vector<Text>&& obscureText, std::vector<Text>&& ambiguousText = {},
                           Text&& clearText = {}) {
         return HintText{ std::move(obscureText), std::move(ambiguousText), std::move(clearText),
@@ -172,6 +180,12 @@ class HintText {
                                  Text&& clearText = {}) {
         return HintText{ std::move(obscureText), std::move(ambiguousText), std::move(clearText),
                          HintCategory::MerchantsDialogs };
+    }
+
+    static auto SkulltulaHints(std::vector<Text>&& obscureText, std::vector<Text>&& ambiguousText = {},
+                               Text&& clearText = {}) {
+        return HintText{ std::move(obscureText), std::move(ambiguousText), std::move(clearText),
+                         HintCategory::SkulltulaHints };
     }
 
     Text& GetObscure() {

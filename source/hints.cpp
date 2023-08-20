@@ -600,6 +600,36 @@ static void CreateGanonText() {
     }
 }
 
+static void CreateDampeHint() {
+    auto hookshotLocation = FilterFromPool(
+        allLocations, [](const LocationKey loc) { return Location(loc)->GetPlacedItemKey() == PROGRESSIVE_HOOKSHOT; });
+
+    auto hookLocHint = hookshotLocation.empty()
+                           ? Hint(YOUR_POCKET)
+                           : GetHintRegion(Location(hookshotLocation[0])->GetParentRegionKey())->GetHint();
+
+    auto dampeText = Hint(DAMPE_DIARY_HINT).GetText();
+    dampeText.Replace("%s", hookLocHint.GetText());
+    CreateMessageFromTextObject(0x5003, 0, 2, 3, AddColorsAndFormat(dampeText, { QM_PINK, QM_RED }));
+}
+
+static void CreateSkulltulaHints() {
+    // Create a message for each cursed man that gives a reward.
+    for (int i = 0; i < 5; i++) {
+        ItemLocation* location = Location(KAK_10_GOLD_SKULLTULA_REWARD + i);
+        Text rewardItemText    = location->GetPlacedItem().GetHint().GetTextCopy();
+        rewardItemText.Replace("$", "");
+
+        Text hintText = Hint(HOUSE_OF_SKULLTULA_HINT).GetTextCopy();
+        hintText.Replace("%d", std::to_string((i + 1) * 10));
+        hintText.Replace("%s", rewardItemText);
+
+        CreateMessageFromTextObject(0x9400 + i, 0, 2, 3, AddColorsAndFormat(hintText, { QM_RED, QM_GREEN }));
+
+        location->SetAsHinted();
+    }
+}
+
 // Find the location which has the given itemKey and create the generic altar text for the reward
 static Text BuildDungeonRewardText(ItemID itemID, const ItemKey itemKey) {
     std::vector<LocationKey> itemKeyLocations = FilterFromPool(
@@ -813,6 +843,9 @@ void CreateMiscHints() {
     if (GanonHints) {
         CreateGanonText();
     }
+    if (DampeHint) {
+        CreateDampeHint();
+    }
     if (ToTAltarHints) {
         CreateAltarText(rewardHints);
     }
@@ -820,6 +853,9 @@ void CreateMiscHints() {
 
     if (ShuffleMerchants.IsNot(SHUFFLEMERCHANTS_OFF)) {
         CreateMerchantsHints();
+    }
+    if (SkulltulaHints) {
+        CreateSkulltulaHints();
     }
 }
 
@@ -842,13 +878,13 @@ void CreateMerchantsHints() {
 
     Text grannyCapitalItemText = grannyItemText.Capitalize();
 
-    Text medigoronText =
-        Hint(MEDIGORON_DIALOG_FIRST).GetText() + medigoronItemText + Hint(MEDIGORON_DIALOG_SECOND).GetText();
+    Text medigoronText = Hint(MEDIGORON_DIALOG).GetText();
+    medigoronText.Replace("%s", medigoronItemText);
     Text grannyText            = grannyCapitalItemText + Hint(GRANNY_DIALOG).GetText();
-    Text carpetSalesmanTextOne = Hint(CARPET_SALESMAN_DIALOG_FIRST).GetText() + carpetSalesmanItemText +
-                                 Hint(CARPET_SALESMAN_DIALOG_SECOND).GetText();
-    Text carpetSalesmanTextTwo = Hint(CARPET_SALESMAN_DIALOG_THIRD).GetText() + carpetSalesmanItemClearText +
-                                 Hint(CARPET_SALESMAN_DIALOG_FOURTH).GetText();
+    Text carpetSalesmanTextOne = Hint(CARPET_SALESMAN_DIALOG_FIRST).GetText();
+    carpetSalesmanTextOne.Replace("%s", carpetSalesmanItemText);
+    Text carpetSalesmanTextTwo = Hint(CARPET_SALESMAN_DIALOG_SECOND).GetText();
+    carpetSalesmanTextTwo.Replace("%s", carpetSalesmanItemClearText);
 
     CreateMessageFromTextObject(0x9120, 0, 2, 3, AddColorsAndFormat(medigoronText, { QM_RED, QM_GREEN }));
     CreateMessageFromTextObject(0x9121, 0, 2, 3, AddColorsAndFormat(grannyText, { QM_RED, QM_GREEN }));

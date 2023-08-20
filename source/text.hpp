@@ -1,6 +1,7 @@
 #pragma once
 
 #include <string>
+#include <vector>
 
 #define PLURAL 0
 #define SINGULAR 1
@@ -132,6 +133,25 @@ class Text {
                 str->replace(position, oldStr.length(), newStr);
                 position = str->find(oldStr);
             }
+        }
+    }
+
+    void Replace(std::string oldStr, Text newText) {
+
+        std::vector<std::string> newStrings = { newText.GetNAEnglish(),  newText.GetNAFrench(),
+                                                newText.GetNASpanish(),  newText.GetEUREnglish(),
+                                                newText.GetEURFrench(),  newText.GetEURSpanish(),
+                                                newText.GetEURItalian(), newText.GetEURGerman() };
+
+        int languageCounter = 0;
+        for (std::string* str :
+             { &NAenglish, &NAfrench, &NAspanish, &EURenglish, &EURfrench, &EURspanish, &EURitalian, &EURgerman }) {
+            size_t position = str->find(oldStr);
+            while (position != std::string::npos) {
+                str->replace(position, oldStr.length(), newStrings[languageCounter]);
+                position = str->find(oldStr);
+            }
+            languageCounter++;
         }
     }
 

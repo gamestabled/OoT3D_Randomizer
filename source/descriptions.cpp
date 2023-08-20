@@ -814,6 +814,11 @@ string_view ganonHintsDesc            = "Talking to Ganondorf in his boss room w
                                         "\n"                                               //
                                         "When trials are on, Sheik will appear to relay\n" //
                                         "these hints in Ganon's Castle.";                  //
+string_view dampeHintDesc            =  "Reading Dampe's diary will reveal the location\n" //
+                                        "of a single progressive hookshot.";               //
+string_view skulltulaHintDesc        =  "Talking to a cursed House of Skulltula resident\n"//
+                                        "will tell you the reward they will give you for\n"//
+                                        "removing their curse.";                           //
 /*------------------------------                                                           //
 |  MAP AND COMPASS GIVES INFO  |                                                           //
 ------------------------------*/                                                           //
