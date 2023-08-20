@@ -331,6 +331,7 @@ Option MapsShowDungeonMode = Option::U8  ("Maps Show Dungeon Modes",{"No", "Yes"
 Option StartingTime        = Option::U8  ("Starting Time",          {"Day", "Night"},                                                       {startingTimeDesc});
 Option ChestAnimations     = Option::Bool("Chest Animations",       {"Always Fast", "Match Contents"},                                      {chestAnimDesc});
 Option ChestAppearance     = Option::U8  ("Chest Appearance Mod",   {"Vanilla", "Texture", "Size & Texture", "Classic CSMC"},               {chestVanillaDesc, chestTextureDesc, chestSizeTextureDesc, chestClassicDesc});
+Option ChestAgony          = Option::Bool(2, "Need Shard of Agony", {"No", "Yes"},                                                          {chestAgonyDesc});
 Option GenerateSpoilerLog  = Option::Bool("Generate Spoiler Log",   {"No", "Yes"},                                                          {""},                                                                                                             OptionCategory::Setting,    ON);
 Option IngameSpoilers      = Option::Bool("Ingame Spoilers",        {"Hide", "Show"},                                                       {ingameSpoilersHideDesc, ingameSpoilersShowDesc });
 bool HasNightStart         = false;
@@ -349,6 +350,7 @@ std::vector<Option *> miscOptions = {
     &StartingTime,
     &ChestAnimations,
     &ChestAppearance,
+    &ChestAgony,
     &GenerateSpoilerLog,
     &IngameSpoilers,
 };
@@ -1471,6 +1473,7 @@ SettingsContext FillContext() {
     ctx.startingTime        = StartingTime.Value<u8>();
     ctx.chestAnimations     = (ChestAnimations) ? 1 : 0;
     ctx.chestAppearance     = ChestAppearance.Value<u8>();
+    ctx.chestAgony          = (ChestAgony) ? 1 : 0;
     ctx.generateSpoilerLog  = (GenerateSpoilerLog) ? 1 : 0;
     ctx.ingameSpoilers      = (IngameSpoilers) ? 1 : 0;
     ctx.menuOpeningButton   = MenuOpeningButton.Value<u8>();
@@ -2260,6 +2263,13 @@ void ForceChange(u32 kDown, Option* currentSetting) {
 
     // Manage toggle for misc hints options
     ToggleSet(miscOptions, &MiscHints, &ToTAltarHints, &GanonHints);
+
+    if (ChestAppearance.IsNot(CHESTAPPEARANCE_VANILLA)) {
+        ChestAgony.Unhide();
+    } else {
+        ChestAgony.Hide();
+        ChestAgony.SetSelectedIndex(0);
+    }
 
     // Only show advanced trap options if random trap damage is set to "Advanced"
     if (RandomTrapDmg.Is(RANDOMTRAPS_ADVANCED)) {

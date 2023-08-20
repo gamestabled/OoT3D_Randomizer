@@ -24,6 +24,7 @@ typedef enum {
 
 void EnBox_rInit(Actor* thisx, GlobalContext* globalCtx);
 void EnBox_rUpdate(Actor* thisx, GlobalContext* globalCtx);
+void Chest_ChangeAppearance(Actor* thisx, GlobalContext* globalCtx);
 u8 Chest_OverrideAnimation();
 u8 Chest_OverrideIceSmoke(Actor* thisx);
 

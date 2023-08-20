@@ -466,6 +466,7 @@ extern Option Permadeath;
 extern Option StartingTime;
 extern Option ChestAnimations;
 extern Option ChestAppearance;
+extern Option ChestAgony;
 extern Option GenerateSpoilerLog;
 extern Option IngameSpoilers;
 extern Option MenuOpeningButton;

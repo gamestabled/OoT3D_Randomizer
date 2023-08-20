@@ -26,15 +26,32 @@ u32 isBombchuMajor(void) {
 }
 
 void EnBox_rInit(Actor* thisx, GlobalContext* globalCtx) {
-    EnBox* this    = (EnBox*)thisx;
+    EnBox_Init(thisx, globalCtx);
     sLastTrapChest = 0;
 
-    u8 vanilla = (gSettingsContext.chestAppearance == CHESTAPPEARANCE_VANILLA) ||
-                 (globalCtx->sceneNum == 16 && thisx->room != 6); // treasure chest shop, final room
+    if ((gSettingsContext.chestAppearance != CHESTAPPEARANCE_VANILLA)) {
+        // Set mipmap count to 1 for both chest models, to avoid issues with custom textures
+        void** cmbMan             = ZAR_GetCMBByIndex(((EnBox*)thisx)->zarInfo, 1);
+        *((u8*)(*cmbMan) + 0x59C) = 1;
+        *((u8*)(*cmbMan) + 0x530) = 1;
+
+        // Change Appearance depending on settings
+        if (!gSettingsContext.chestAgony || ((gSaveContext.questItems >> 21) & 1)) { // shard of agony inventory flag
+            Chest_ChangeAppearance(thisx, globalCtx);
+        }
+    }
+}
+
+void Chest_ChangeAppearance(Actor* thisx, GlobalContext* globalCtx) {
+    EnBox* this = (EnBox*)thisx;
+
+    if (globalCtx->sceneNum == 16 && thisx->room != 6) { // treasure chest shop, not final room
+        return;
+    }
 
     ItemOverride thisOverride = ItemOverride_Lookup(thisx, globalCtx->sceneNum, 0);
     ItemRow* thisItemRow;
-    if (vanilla || thisOverride.key.all == 0) {
+    if (thisOverride.key.all == 0) {
         thisItemRow = ItemTable_GetItemRowFromIndex((thisx->params & 0x0FE0) >> 5); // get type from vanilla item table
     } else {
         thisItemRow = ItemTable_GetItemRow(ItemTable_ResolveUpgrades(thisOverride.value.itemId));
@@ -44,11 +61,8 @@ void EnBox_rInit(Actor* thisx, GlobalContext* globalCtx) {
         type = isBombchuMajor() ? CHEST_MAJOR : CHEST_JUNK;
     }
 
-    EnBox_Init(thisx, globalCtx);
-
     // Change Chest Model
-    if (type == CHEST_BOSS_KEY ||
-        ((gSettingsContext.chestAppearance != CHESTAPPEARANCE_VANILLA) && (type == CHEST_SMALL_KEY))) {
+    if (type == CHEST_BOSS_KEY || type == CHEST_SMALL_KEY) {
         // 0: Fancy Chest   1: Wooden Chest   2: Fancy Lid   3: Wooden Lid
         Model_EnableMeshGroupByIndex(this->skelAnime.unk_28, 0);
         Model_EnableMeshGroupByIndex(this->skelAnime.unk_28, 2);
@@ -61,11 +75,6 @@ void EnBox_rInit(Actor* thisx, GlobalContext* globalCtx) {
         Model_DisableMeshGroupByIndex(this->skelAnime.unk_28, 2);
     }
 
-    // Stop here for vanilla settings
-    if (vanilla) {
-        return;
-    }
-
     // Change Chest Texture
     if (gSettingsContext.chestAppearance == CHESTAPPEARANCE_TEXTURE ||
         gSettingsContext.chestAppearance == CHESTAPPEARANCE_SIZE_AND_TEXTURE) {
@@ -74,11 +83,6 @@ void EnBox_rInit(Actor* thisx, GlobalContext* globalCtx) {
         if (exObjectBankIdx < 0) {
             exObjectBankIdx = Object_Spawn(&rExtendedObjectCtx, OBJECT_CUSTOM_GENERAL_ASSETS);
         }
-
-        void** cmbMan = ZAR_GetCMBByIndex(this->zarInfo, 1);
-        // Set mipmap count to 1 for both chest models
-        *((u8*)(*cmbMan) + 0x59C) = 1;
-        *((u8*)(*cmbMan) + 0x530) = 1;
 
         static const u32 chestType_to_assetIndex[CHESTTYPE_MAX] = { TEXANIM_GOLD_CHEST, 0, 0,
                                                                     TEXANIM_KEY_CHEST,  0, TEXANIM_HEART_CHEST,

@@ -286,6 +286,8 @@ extern string_view chestTextureDesc;
 extern string_view chestSizeTextureDesc;
 extern string_view chestClassicDesc;
 
+extern string_view chestAgonyDesc;
+
 extern string_view ingameSpoilersShowDesc;
 extern string_view ingameSpoilersHideDesc;
 
