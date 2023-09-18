@@ -1027,6 +1027,12 @@ void Entrance_OverrideSpawnScene(void) {
             gGlobalContext->linkActorEntry->pos.y = 0x0623;
             gGlobalContext->linkActorEntry->pos.z = 0xFF22;
         }
+
+        // Modify Ganon's Castle exit spawn to set Link's speed to a stationary spawn to avoid
+        // Link walking off the ledge when the bridge is not spawned yet
+        if (gGlobalContext->sceneNum == 100 && gGlobalContext->curSpawn == 1) {
+            gGlobalContext->linkActorEntry->params = 0x0DFF; // Stationary spawn
+        }
     }
 
     // Repair the authentically bugged scene/spawn info for leaving Barinade's boss room -> JabuJabu's belly
