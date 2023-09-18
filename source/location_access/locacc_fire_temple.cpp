@@ -62,8 +62,10 @@ void AreaTable_Init_FireTemple() {
                      Entrance(FIRE_TEMPLE_BOSS_ENTRYWAY,
                               { [] {
                                    return BossKeyFireTemple &&
-                                          ((IsAdult && LogicFireBossDoorJump) || CanUse(HOVER_BOOTS) ||
-                                           Here(FIRE_TEMPLE_FIRE_MAZE_UPPER, [] { return CanUse(MEGATON_HAMMER); }));
+                                          ((IsAdult &&
+                                            (LogicFireBossDoorJump || Here(FIRE_TEMPLE_FIRE_MAZE_UPPER,
+                                                                           [] { return CanUse(MEGATON_HAMMER); }))) ||
+                                           CanUse(HOVER_BOOTS));
                                },
                                 /*Glitched*/
                                 [] {
