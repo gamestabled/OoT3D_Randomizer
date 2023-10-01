@@ -293,6 +293,13 @@ void ShopsanityItem_InitializeRegularShopItem(EnGirlA* item, GlobalContext* glob
         item->itemCount           = shopItemEntry->count;
         item->actor.textId        = shopItemEntry->itemDescTextId;
         item->itemBuyPromptTextId = shopItemEntry->itemBuyPromptTextId;
+
+        // EnGirlA_Draw checks the params to make the blue flame rotate
+        if (item->getItemId == GI_BLUE_FIRE) {
+            item->actor.params = SI_BLUE_FIRE;
+        } else if (item->actor.params == SI_BLUE_FIRE) {
+            item->actor.params = 0;
+        }
     }
 }
 

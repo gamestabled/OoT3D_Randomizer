@@ -178,7 +178,13 @@ void Model_UpdateMatrix(Model* model) {
     nn_math_MTX44 scaleMtx;
     Actor_SetModelMatrixWrapper(model->actor, &model->saModel->mtx);
     if (model->saModel2 != NULL) {
+        f32 tempRotY = model->actor->shape.rot.y;
+        // The second model should always face the camera, except for Skull Token
+        if (model->itemRow->graphicId != 0x63) {
+            model->actor->shape.rot.y = gGlobalContext->mainCamera.camDir.y;
+        }
         Actor_SetModelMatrixWrapper(model->actor, &model->saModel2->mtx);
+        model->actor->shape.rot.y = tempRotY;
     }
 
     for (s32 i = 0; i < 4; ++i) {
