@@ -394,7 +394,10 @@ void ItemOverride_Update(void) {
     CustomModel_Update();
     u8 readyStatus = ItemOverride_PlayerIsReady();
     if (readyStatus) {
-        ItemOverride_PopIceTrap();
+        if (readyStatus == READY_ON_LAND) { // Ice traps effects only work on land
+            ItemOverride_PopIceTrap();
+        }
+
         if (IceTrap_IsPending()) {
             IceTrap_Give();
         } else {
