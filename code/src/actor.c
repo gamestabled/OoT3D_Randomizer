@@ -253,26 +253,6 @@ void Actor_Init() {
 
     // Define object 128 to be by default the same as object 185
     strncpy(gObjectTable[OBJECT_CUSTOM_BOSS_KEYS].filename, gObjectTable[OBJECT_GI_BOSSKEY].filename, 0x40);
-
-    // Define draw item 3 (corresponding to gid 4) to be double defense custom model
-    gDrawItemTable[3].objectId       = OBJECT_CUSTOM_DOUBLE_DEFENSE;
-    gDrawItemTable[3].objectModelIdx = 0;
-
-    // Define draw item 4 (corresponding to gid 5) to be a child song custom model
-    gDrawItemTable[4].objectId       = OBJECT_CUSTOM_CHILD_SONGS;
-    gDrawItemTable[4].objectModelIdx = 2;
-
-    // Define draw item 5 (corresponding to gid 6) to be an adult song custom model
-    gDrawItemTable[5].objectId       = OBJECT_CUSTOM_ADULT_SONGS;
-    gDrawItemTable[5].objectModelIdx = 0;
-
-    // Define draw item 6 (corresponding to gid 7) to be small key custom model
-    gDrawItemTable[6].objectId       = OBJECT_CUSTOM_SMALL_KEY_FOREST;
-    gDrawItemTable[6].objectModelIdx = 0;
-
-    // Define draw item 7 (corresponding to gid 8) to be boss key custom model
-    gDrawItemTable[7].objectId       = OBJECT_CUSTOM_BOSS_KEYS;
-    gDrawItemTable[7].objectModelIdx = 0;
 }
 
 void ActorSetup_Extra() {

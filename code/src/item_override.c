@@ -24,12 +24,12 @@ static ItemOverride rPendingOverrideQueue[3] = { 0 };
 static Actor* rDummyActor                    = NULL;
 
 static ItemOverride rActiveItemOverride = { 0 };
+DrawItemTableEntry rActiveDrawItem      = { 0 };
 ItemRow* rActiveItemRow                 = NULL;
 // Split active_item_row into variables for convenience in ASM
 u32 rActiveItemActionId  = 0;
 u32 rActiveItemTextId    = 0;
 u32 rActiveItemObjectId  = 0;
-u32 rActiveItemGraphicId = 0;
 u32 rActiveItemChestType = 0;
 
 static u8 rSatisfiedPendingFrames      = 0;
@@ -189,7 +189,7 @@ static void ItemOverride_Activate(ItemOverride override) {
     ItemRow* itemRow   = ItemTable_GetItemRow(resolvedItemId);
     u8 looksLikeItemId = override.value.looksLikeItemId;
 
-    if (override.value.itemId == 0x7C) { // Ice trap
+    if (override.value.itemId == GI_ICE_TRAP) {
         looksLikeItemId = 0;
     }
 
@@ -197,18 +197,26 @@ static void ItemOverride_Activate(ItemOverride override) {
     rActiveItemRow       = itemRow;
     rActiveItemActionId  = itemRow->actionId;
     rActiveItemTextId    = itemRow->textId;
-    rActiveItemObjectId  = itemRow->objectId;
-    rActiveItemGraphicId = looksLikeItemId ? ItemTable_GetItemRow(looksLikeItemId)->graphicId : itemRow->graphicId;
     rActiveItemChestType = itemRow->chestType;
+
+    ItemRow* drawItemRow = looksLikeItemId ? ItemTable_GetItemRow(looksLikeItemId) : itemRow;
+    rActiveDrawItem      = (DrawItemTableEntry){
+             .objectId        = drawItemRow->objectId,
+             .objectModelIdx  = drawItemRow->objectModelIdx,
+             .cmabIndex       = drawItemRow->cmabIndex,
+             .objectModelIdx2 = drawItemRow->objectModelIdx2,
+             .cmabIndex2      = drawItemRow->cmabIndex2,
+    };
+    rActiveItemObjectId = rActiveDrawItem.objectId;
 }
 
 static void ItemOverride_Clear(void) {
     rActiveItemOverride  = (ItemOverride){ 0 };
+    rActiveDrawItem      = (DrawItemTableEntry){ 0 };
     rActiveItemRow       = NULL;
     rActiveItemActionId  = 0;
     rActiveItemTextId    = 0;
     rActiveItemObjectId  = 0;
-    rActiveItemGraphicId = 0;
     rActiveItemChestType = 0;
 }
 
@@ -504,59 +512,26 @@ void ItemOverride_GetSkulltulaToken(Actor* tokenActor) {
     }
 }
 
-void ItemOverride_EditDrawGetItemBeforeModelSpawn(void) {
-    void* cmb;
+static s32 ItemOverride_IsDrawItemVanilla(void) {
+    return rActiveItemRow == NULL ||          // No item override
+           PLAYER->itemActionParam >= 0x2B || // Using trade item
+           PauseContext_GetState() != 0;      // On pause screen
+}
 
-    switch (rActiveItemGraphicId) {
-        case GID_CUSTOM_DOUBLE_DEFENSE:
-            cmb = (void*)(((char*)PLAYER->giDrawSpace) + 0xA4);
-            CustomModel_EditHeartContainerToDoubleDefense(cmb);
-            break;
-        case GID_CUSTOM_CHILD_SONGS:
-            cmb = (void*)(((char*)PLAYER->giDrawSpace) + 0x2E60);
-            CustomModel_SetOcarinaToRGBA565(cmb);
-            break;
-        case GID_CUSTOM_ADULT_SONGS:
-            cmb = (void*)(((char*)PLAYER->giDrawSpace) + 0xE8);
-            CustomModel_SetOcarinaToRGBA565(cmb);
-            break;
-        case GID_CUSTOM_SMALL_KEYS:
-            cmb = (void*)(((char*)PLAYER->giDrawSpace) + 0x74);
-            CustomModel_ApplyColorEditsToSmallKey(cmb, rActiveItemRow->special);
-            break;
-        case GID_CUSTOM_BOSS_KEYS:
-            cmb = (void*)(((char*)PLAYER->giDrawSpace) + 0x78);
-            CustomModel_SetBossKeyToRGBA565(cmb);
-            break;
+void ItemOverride_EditDrawGetItemBeforeModelSpawn(void) {
+    if (ItemOverride_IsDrawItemVanilla()) {
+        return;
     }
+
+    CustomModels_EditItemCMB(PLAYER->giDrawSpace, rActiveItemObjectId, rActiveItemRow->special);
 }
 
 void ItemOverride_EditDrawGetItemAfterModelSpawn(SkeletonAnimationModel* model) {
-    void* cmabMan;
-
-    switch (rActiveItemGraphicId) {
-        case GID_CUSTOM_CHILD_SONGS:
-            cmabMan = ExtendedObject_GetCMABByIndex(OBJECT_CUSTOM_GENERAL_ASSETS, TEXANIM_CHILD_SONG);
-            TexAnim_Spawn(model->unk_0C, cmabMan);
-            model->unk_0C->animSpeed = 0.0f;
-            model->unk_0C->animMode  = 0;
-            model->unk_0C->curFrame  = rActiveItemRow->special;
-            break;
-        case GID_CUSTOM_ADULT_SONGS:
-            cmabMan = ExtendedObject_GetCMABByIndex(OBJECT_CUSTOM_GENERAL_ASSETS, TEXANIM_ADULT_SONG);
-            TexAnim_Spawn(model->unk_0C, cmabMan);
-            model->unk_0C->animSpeed = 0.0f;
-            model->unk_0C->animMode  = 0;
-            model->unk_0C->curFrame  = rActiveItemRow->special;
-            break;
-        case GID_CUSTOM_BOSS_KEYS:
-            cmabMan = ExtendedObject_GetCMABByIndex(OBJECT_CUSTOM_GENERAL_ASSETS, TEXANIM_BOSS_KEY);
-            TexAnim_Spawn(model->unk_0C, cmabMan);
-            model->unk_0C->animSpeed = 0.0f;
-            model->unk_0C->animMode  = 0;
-            model->unk_0C->curFrame  = rActiveItemRow->special;
-            break;
+    if (ItemOverride_IsDrawItemVanilla()) {
+        return;
     }
+
+    CustomModels_ApplyItemCMAB(model, rActiveItemObjectId, rActiveItemRow->special);
 }
 
 s32 ItemOverride_GiveSariasGift(void) {
@@ -601,4 +576,24 @@ void ItemOverride_CheckStartingItem() {
         }
         EventSet(0x00);
     }
+}
+
+DrawItemTableEntry* ItemOverride_GetDrawItem(DrawItemTableEntry* original) {
+    if (ItemOverride_IsDrawItemVanilla()) {
+        return original;
+    }
+    return &rActiveDrawItem;
+}
+
+// Overrides setting PLAYER->giDrawIdPlusOne, which is used to set the mesh for rupee models.
+s16 ItemOverride_OverrideGiDrawIdPlusOne(s16 originalDrawItemID) {
+    if (ItemOverride_IsDrawItemVanilla()) {
+        return originalDrawItemID;
+    }
+
+    if (rActiveItemObjectId == 0x017F) { // Set the mesh for rupees
+        return rActiveItemRow->special + 1;
+    }
+
+    return 1; // Default value that won't change the mesh.
 }

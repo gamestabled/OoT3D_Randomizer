@@ -298,7 +298,9 @@ typedef struct {
     /* 0x2227 */ s8 meleeWeaponState;
     /* 0x2228 */ char unk_2228[0x0020];
     /* 0x2248 */ s16 fishingState; // 1: casting line, 2: can reel, 3: holding catch
-    /* 0x224A */ char unk_224A[0x023E];
+    /* 0x224A */ char unk_224A[0x0004];
+    /* 0x224E */ s16 giDrawIdPlusOne; // used to change mesh for rupee models
+    /* 0x2250 */ char unk_2250[0x0238];
     /* 0x2488 */ s8 invincibilityTimer; // prevents damage when nonzero
                                         // (positive = visible, counts towards zero each frame)
     /* 0x2489 */ char unk_2489[0x27B];

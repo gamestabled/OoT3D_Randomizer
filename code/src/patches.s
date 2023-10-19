@@ -41,25 +41,25 @@ OverrideTextID_patch:
 OverrideItemID_patch:
     b hook_OverrideItemID
 
-.section .patch_OverrideGraphicID_35495C
-.global OverrideGraphicID_patch_35495C
-OverrideGraphicID_patch_35495C:
-    bl hook_OverrideGraphicID_35495C
+.section .patch_OverrideDrawItemOne
+.global OverrideDrawItemOne_patch
+OverrideDrawItemOne_patch:
+    b hook_OverrideDrawItemOne
 
-.section .patch_OverrideGraphicID_354BB8
-.global OverrideGraphicID_patch_354BB8
-OverrideGraphicID_patch_354BB8:
-    bl hook_OverrideGraphicID_354BB8
+.section .patch_OverrideDrawItemTwo
+.global OverrideDrawItemTwo_patch
+OverrideDrawItemTwo_patch:
+    bl hook_OverrideDrawItemTwo
 
-.section .patch_OverrideGraphicID_4BC604
-.global OverrideGraphicID_patch_4BC604
-OverrideGraphicID_patch_4BC604:
-    bl hook_OverrideGraphicID_351B94
+.section .patch_OverrideDrawItemThree
+.global OverrideDrawItemThree_patch
+OverrideDrawItemThree_patch:
+    bl hook_OverrideDrawItemThree
 
-.section .patch_OverrideGraphicID_4BD5D0
-.global OverrideGraphicID_patch_4BD5D0
-OverrideGraphicID_patch_4BD5D0:
-    bl hook_OverrideGraphicID_351B94
+.section .patch_OverrideGiDrawIdPlusOne
+.global OverrideGiDrawIdPlusOne_patch
+OverrideGiDrawIdPlusOne_patch:
+    bl hook_OverrideGiDrawIdPlusOne
 
 .section .patch_EditDrawGetItemBeforeModelSpawn
 .global EditDrawGetItemBeforeModelSpawn_patch

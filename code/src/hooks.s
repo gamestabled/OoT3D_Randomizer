@@ -96,61 +96,38 @@ noOverrideItemID:
     ldrb r1,[r6,#0x0]
     b 0x2BC1D4
 
-# Puts override graphic ID into r0, no other effects
-# If no active override, puts -0x1
-# Need to wrap around this for individual cases because of differing register usage
-.global hook_OverrideGraphicID
-.global rActiveItemGraphicId_addr
-.rActiveItemGraphicId_addr:
-    .word rActiveItemGraphicId
-hook_OverrideGraphicID:
-    ldr r0,.rActiveItemRow_addr
-    ldr r0,[r0]
-    cmp r0,#0x0
-    beq noOverrideGraphicID
-
-    ldr r0,.rActiveItemGraphicId_addr
-    ldr r0,[r0]
-    b returnGraphicID
-noOverrideGraphicID:
-    mov r0,#-0x1
-returnGraphicID:
+.global hook_OverrideDrawItemOne
+hook_OverrideDrawItemOne:
+    push {r1-r12, lr}
+    bl ItemOverride_GetDrawItem
+    pop {r1-r12, lr}
+    ldrh r0,[r0]
     bx lr
 
-.global hook_OverrideGraphicID_351B94
-hook_OverrideGraphicID_351B94:
-    push {r0,r1,lr}
-    bl hook_OverrideGraphicID
-    cpy r1,r0
-    cmp r1,#-0x1
-    pop {r0}
-    bne returnGraphicID_351B94
-    ldrsh r1,[r0,#-0x4]
-returnGraphicID_351B94:
-    cpy r0,r1
-    pop {r1,lr}
+.global hook_OverrideDrawItemTwo
+hook_OverrideDrawItemTwo:
+    add r0,r1,r0,lsl #0x1
+    push {r1-r12, lr}
+    bl ItemOverride_GetDrawItem
+    pop {r1-r12, lr}
     bx lr
 
-.global hook_OverrideGraphicID_35495C
-hook_OverrideGraphicID_35495C:
-    push {lr}
-    bl hook_OverrideGraphicID
-    cmp r0,#-0x1
-    bne returnGraphicID_35495C
-    ldrsh r0,[r6,#0x2]
-returnGraphicID_35495C:
-    pop {lr}
+.global hook_OverrideDrawItemThree
+hook_OverrideDrawItemThree:
+    add r5,r0,r1,lsl #0x1
+    push {r0-r4,r6-r12, lr}
+    cpy r0,r5
+    bl ItemOverride_GetDrawItem
+    cpy r5,r0
+    pop {r0-r4,r6-r12, lr}
     bx lr
 
-.global hook_OverrideGraphicID_354BB8
-hook_OverrideGraphicID_354BB8:
-    push {lr}
-    bl hook_OverrideGraphicID
-    cmp r0,#-0x1
-    bne returnGraphicID_354BB8
-    ldrsh r0,[r6,#0x2]
-returnGraphicID_354BB8:
-    pop {lr}
+.global hook_OverrideGiDrawIdPlusOne
+hook_OverrideGiDrawIdPlusOne:
+    push {r1-r12, lr}
+    bl ItemOverride_OverrideGiDrawIdPlusOne
+    pop {r1-r12, lr}
+    strh r0,[r6,#0x4e]
     bx lr
 
 .global hook_EditDrawGetItemBeforeModelSpawn
