@@ -29,6 +29,14 @@ void AreaTable_Init_GanonsCastle() {
                  {
                      // Exits
                      Entrance(GANONS_CASTLE_ENTRYWAY, { [] { return true; } }),
+                     Entrance(GANONS_CASTLE_MAIN, { [] { return true; } }),
+                 });
+
+        areaTable[GANONS_CASTLE_MAIN] =
+            Area("Ganon's Castle Main", "Ganon's Castle", GANONS_CASTLE, NO_DAY_NIGHT_CYCLE, {}, {},
+                 {
+                     // Exits
+                     Entrance(GANONS_CASTLE_LOBBY, { [] { return true; } }),
                      Entrance(GANONS_CASTLE_FOREST_TRIAL, { [] { return true; } }),
                      Entrance(GANONS_CASTLE_FIRE_TRIAL, { [] { return true; } }),
                      Entrance(GANONS_CASTLE_WATER_TRIAL, { [] { return true; } }),
@@ -192,14 +200,22 @@ void AreaTable_Init_GanonsCastle() {
     |   MASTER QUEST DUNGEON    |
     ---------------------------*/
     if (Dungeon::GanonsCastle.IsMQ()) {
-        areaTable[GANONS_CASTLE_MQ_LOBBY] = Area(
-            "Ganon's Castle MQ Lobby", "Ganons Castle", GANONS_CASTLE, NO_DAY_NIGHT_CYCLE, {}, {},
+        areaTable[GANONS_CASTLE_MQ_LOBBY] =
+            Area("Ganon's Castle MQ Lobby", "Ganons Castle", GANONS_CASTLE, NO_DAY_NIGHT_CYCLE, {}, {},
+                 {
+                     // Exits
+                     Entrance(GANONS_CASTLE_ENTRYWAY, { [] { return true; } }),
+                     Entrance(GANONS_CASTLE_MQ_MAIN, { [] {
+                                  return (CanUse(MASTER_SWORD) || CanUse(BIGGORON_SWORD)) ||
+                                         ((HasExplosives || Nuts || CanUse(BOOMERANG)) && CanJumpslash);
+                              } }),
+                 });
+
+        areaTable[GANONS_CASTLE_MQ_MAIN] = Area(
+            "Ganon's Castle MQ Main", "Ganons Castle", GANONS_CASTLE, NO_DAY_NIGHT_CYCLE, {}, {},
             {
                 // Exits
-                Entrance(GANONS_CASTLE_ENTRYWAY, { [] {
-                             return (CanUse(MASTER_SWORD) || CanUse(BIGGORON_SWORD)) ||
-                                    ((HasExplosives || Nuts || CanUse(BOOMERANG)) && CanJumpslash);
-                         } }),
+                Entrance(GANONS_CASTLE_MQ_LOBBY, { [] { return true; } }),
                 Entrance(GANONS_CASTLE_MQ_FOREST_TRIAL, { [] { return true; } }),
                 Entrance(GANONS_CASTLE_MQ_FIRE_TRIAL, { [] { return true; } }),
                 Entrance(GANONS_CASTLE_MQ_WATER_TRIAL, { [] { return true; } }),
