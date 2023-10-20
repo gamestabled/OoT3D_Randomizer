@@ -410,7 +410,7 @@ void AreaTable_Init_GerudoValley() {
                  Entrance(COLOSSUS_GROTTO, { [] { return CanUse(SILVER_GAUNTLETS); } }),
              });
 
-    areaTable[COLOSSUS_MEGALITH] = Area("Colossus Megalith", "Desert Colossus", NONE, DAY_NIGHT_CYCLE, {},
+    areaTable[COLOSSUS_MEGALITH] = Area("Colossus Megalith", "Desert Colossus", DESERT_COLOSSUS, DAY_NIGHT_CYCLE, {},
                                         {
                                             // Locations
                                             LocationAccess(COLOSSUS_FREESTANDING_POH, { [] { return true; } }),
