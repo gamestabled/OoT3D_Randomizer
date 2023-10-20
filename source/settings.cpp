@@ -2935,8 +2935,12 @@ void UpdateSettings() {
             auto keyRings = keyRingOptions;
             Shuffle(keyRings);
             auto amount = Random(0, keyRings.size() + 1);
-            for (size_t i = 0; i < amount; i++) {
-                keyRings[i]->SetSelectedIndex(ON);
+            for (size_t i = 0; i < keyRings.size(); i++) {
+                if (i < amount) {
+                    keyRings[i]->SetSelectedIndex(ON);
+                } else {
+                    keyRings[i]->SetSelectedIndex(OFF);
+                }
             }
         }
         if (RingWell) {
