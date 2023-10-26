@@ -1313,6 +1313,11 @@ int ShuffleAllEntrances() {
         }
     }
 
+    // Verify one more time that everything is okay
+    if (!ValidateWorld(nullptr)) {
+        return ENTRANCE_SHUFFLE_FAILURE;
+    }
+
     return ENTRANCE_SHUFFLE_SUCCESS;
 }
 
