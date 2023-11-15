@@ -532,6 +532,7 @@ void SaveFile_SetStartingInventory(void) {
     // Set Epona as freed if Skip Epona Race is enabled and Epona's Song is in the starting inventory
     if (gSettingsContext.skipEponaRace == SKIP && (gSaveContext.questItems >> 13) & 0x1) {
         EventSet(0x18);
+        gSaveContext.horseData.pos.y = 0xF000; // place Epona OoB, so you can't reach her without playing the song
     }
 }
 
