@@ -43,9 +43,9 @@ u32 SetSFX(u32 original) {
 
     if (gSettingsContext.shuffleSFXCategorically) {
         if (gSettingsContext.shuffleSFX == SHUFFLESFX_SCENESPECIFIC) {
-            return rSfxData.rSFXOverrides_Types[type][(sfxID + gGlobalContext->sceneNum) % rSfxData.rSeqMaxes[type]];
+            return rSfxData.rSFXOverrides_Types[type][(sfxID + gGlobalContext->sceneNum) % rSfxData.rSeqCounts[type]];
         } else if (gSettingsContext.shuffleSFX == SHUFFLESFX_CHAOS) {
-            return rSfxData.rSFXOverrides_Types[type][(sfxID + gRandInt) % rSfxData.rSeqMaxes[type]];
+            return rSfxData.rSFXOverrides_Types[type][(sfxID + gRandInt) % rSfxData.rSeqCounts[type]];
         }
     } else {
         if (gSettingsContext.shuffleSFX == SHUFFLESFX_SCENESPECIFIC) {

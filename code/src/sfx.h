@@ -46,7 +46,7 @@ typedef enum {
 
 typedef struct {
     /// Contains the amount of sound effects in each group, excluding SEQ_NOCAT and SEQ_NOSHUFFLE.
-    u16 rSeqMaxes[SEQTYPE_COUNT];
+    u16 rSeqCounts[SEQTYPE_COUNT];
 
     /// Contains the original list of SeqTypes.
     /// Can be used to check which type a sound effect is.
