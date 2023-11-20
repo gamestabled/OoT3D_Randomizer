@@ -164,11 +164,13 @@ u8 Camera_FreeCamEnabled(Camera* camera) {
     }
 
     // Titlescreen or cutscene or no player or targeting or first person or cutscene or horse or crawlspace or special
-    // camera state/setting (MK balcony, chu bowling, static, rotating, hedge maze, GF cells, shops, back alley)
+    // camera state/setting (MK balcony, chu bowling, static, rotating, hedge maze, door transitions, GF cells, shops,
+    // back alley)
     if (!IsInGame() || camera != &camera->globalCtx->mainCamera || !camera->player ||
         camera->player->stateFlags1 & 0x20938230 || camera->player->stateFlags2 & 0x00040000 || camera->status != 7 ||
         camera->setting == 0x14 || camera->setting == 0x15 || camera->setting == 0x19 || camera->setting == 0x1A ||
-        camera->setting == 0x1B || camera->setting == 0x23 || camera->setting == 0x40 || camera->setting == 0x46) {
+        camera->setting == 0x1B || camera->setting == 0x1D || camera->setting == 0x23 || camera->setting == 0x40 ||
+        camera->setting == 0x46) {
         freeCamEnabled = 0;
     }
 
