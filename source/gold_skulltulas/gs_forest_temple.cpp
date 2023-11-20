@@ -105,10 +105,13 @@ void GsTable_Init_ForestTemple() {
               GsTimeCondition{ GS_TIME_ALWAYS },
               SettingRequirements{ nullptr },
               PosRot{
-                  { 115, 858, 115 },
+                  { 115, 858, 140 },
                   { 16384, 0, 0 },
               },
-              { [] { return HookshotOrBoomerang || ((CanUseProjectile || CanUse(DINS_FIRE)) && CanUse(HOVER_BOOTS)); },
+              { [] {
+                   return CanJumpslash || HookshotOrBoomerang ||
+                          ((CanUseProjectile || CanUse(DINS_FIRE)) && CanUse(HOVER_BOOTS));
+               },
                 /*Glitched*/
                 [] {
                     return (Bombs && CanDoGlitch(GlitchType::ISG, GlitchDifficulty::INTERMEDIATE) &&
