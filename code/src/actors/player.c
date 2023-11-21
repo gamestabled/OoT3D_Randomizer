@@ -27,12 +27,20 @@
 #define PlayerDListGroup_EmptySheathAdult ((void*)0x53C4D8)
 #define PlayerDListGroup_EmptySheathChildWithHylianShield ((void*)0x53C4DC)
 
+#define OBJECT_LINK_OPENING 0x19F
+
 u16 healthDecrement = 0;
 u8 storedMask       = 0;
 
 void** Player_EditAndRetrieveCMB(ZARInfo* zarInfo, u32 objModelIdx) {
     void** cmbMan = ZAR_GetCMBByIndex(zarInfo, objModelIdx);
     void* cmb     = *cmbMan;
+
+    if (gActorOverlayTable[0].initInfo->objectId == OBJECT_LINK_OPENING) {
+        // Title Screen Link uses a different object, so don't apply the custom tunic patches
+        // to avoid displaying a broken tunic.
+        return cmbMan;
+    }
 
     if (gSettingsContext.customTunicColors == ON) {
         if (gSaveContext.linkAge == AGE_ADULT) {
@@ -52,7 +60,7 @@ void** Player_EditAndRetrieveCMB(ZARInfo* zarInfo, u32 objModelIdx) {
 }
 
 void* Player_GetCustomTunicCMAB(ZARInfo* originalZarInfo, u32 originalIndex) {
-    if (gSettingsContext.customTunicColors == OFF) {
+    if (gSettingsContext.customTunicColors == OFF || gActorOverlayTable[0].initInfo->objectId == OBJECT_LINK_OPENING) {
         return ZAR_GetCMABByIndex(originalZarInfo, originalIndex);
     }
     s16 exObjectBankIdx = Object_GetIndex(&rExtendedObjectCtx, OBJECT_CUSTOM_GENERAL_ASSETS);
