@@ -141,23 +141,25 @@ void GsTable_Init_CastleTown() {
               { [] {
                   return IsChild && CanGetNightTimeGS && (CanJumpslash || CanUseProjectile || CanUse(DINS_FIRE));
               } } },
+            // Can become inaccessible if the guards start blocking during day time.
+            // TODO: Decide if the garden should always be open or if this should be removed.
             // https://noclip.website/#oot3d/nakaniwa;ShareData=AE$m_9vfZdTi+]mTbqHC+)/!KRcb;wUiU+_9L_kFVFpi?8o,BO9JmZv97ju?+5
-            { HC_GARDEN,
-              "Under the stone bridge where Zelda stands.",
-              GsScene{ 0x4A },
-              Room{ 0 },
-              GsTimeCondition{ GS_TIME_ALWAYS },
-              SettingRequirements{ nullptr },
-              PosRot{
-                  { -430, 64, -10 },
-                  { -32768, 0, 0 },
-              },
-              { [] { return IsChild && (CanJumpslash || CanUseProjectile); },
-                /*Glitched*/
-                [] {
-                    return IsChild && CanDoGlitch(GlitchType::RestrictedItems, GlitchDifficulty::NOVICE) &&
-                           (HasBottle || (FaroresWind && FaroresWindAnywhere)) && CanUse(DINS_FIRE);
-                } } },
+            //{ HC_GARDEN,
+            //  "Under the stone bridge where Zelda stands.",
+            //  GsScene{ 0x4A },
+            //  Room{ 0 },
+            //  GsTimeCondition{ GS_TIME_ALWAYS },
+            //  SettingRequirements{ nullptr },
+            //  PosRot{
+            //      { -430, 64, -10 },
+            //      { -32768, 0, 0 },
+            //  },
+            //  { [] { return IsChild && (CanJumpslash || CanUseProjectile); },
+            //    /*Glitched*/
+            //    [] {
+            //        return IsChild && CanDoGlitch(GlitchType::RestrictedItems, GlitchDifficulty::NOVICE) &&
+            //               (HasBottle || (FaroresWind && FaroresWindAnywhere)) && CanUse(DINS_FIRE);
+            //    } } },
         });
 
     gsTable[MARKET_GS_GUARD_HOUSE] = new GoldSkulltulaData( //
