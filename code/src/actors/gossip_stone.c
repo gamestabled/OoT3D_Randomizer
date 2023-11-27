@@ -1,6 +1,5 @@
 #include "gossip_stone.h"
 #include "z3D/z3D.h"
-#include "settings.h"
 
 #define EnGs_Init_addr 0x16461C
 #define EnGs_Init ((ActorFunc)EnGs_Init_addr)
@@ -19,16 +18,4 @@ void EnGs_rInit(Actor* thisx, GlobalContext* globalCtx) {
     }
 
     EnGs_Init(thisx, globalCtx);
-}
-
-#define EnHintstone_Update_addr 0x281834
-#define EnHintstone_Update ((ActorFunc)EnHintstone_Update_addr)
-
-void EnHintstone_rUpdate(Actor* thisx, GlobalContext* globalCtx) {
-    // Destroy the hintstones on Citra as they cause huge lag when entered
-    if (gSettingsContext.playOption == PLAY_ON_CITRA) {
-        Actor_Kill(thisx);
-        return;
-    }
-    EnHintstone_Update(thisx, globalCtx);
 }
