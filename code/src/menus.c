@@ -4,6 +4,7 @@
 #include "savefile.h"
 #include "settings.h"
 #include "dungeon_rewards.h"
+#include "item_override.h"
 
 #define gItemsMenuSpritesManager (*(MenuSpriteManager**)0x506734)
 #define gBowMenuSpritesManager (*(MenuSpriteManager**)0x506738)
@@ -147,6 +148,7 @@ u16 GearMenu_GetRewardHint(void) {
 }
 
 u16 SaveMenu_IgnoreOpen(void) {
-    return (gSettingsContext.menuOpeningButton == 0 && rInputCtx.cur.sel) ||
+    return ItemOverride_IsAPendingOverride() || // safety check to avoid missing pending overrides by save-warping
+           (gSettingsContext.menuOpeningButton == 0 && rInputCtx.cur.sel) ||
            (gSettingsContext.menuOpeningButton == 1 && rInputCtx.cur.strt);
 }
