@@ -627,6 +627,10 @@ typedef struct {
     u8 freeCamControl;
 
     u8 customTunicColors;
+    u8 rainbowChildTunic;
+    u8 rainbowKokiriTunic;
+    u8 rainbowGoronTunic;
+    u8 rainbowZoraTunic;
     u8 customNaviColors;
     u8 rainbowIdleNaviInnerColor;
     u8 rainbowNPCNaviInnerColor;

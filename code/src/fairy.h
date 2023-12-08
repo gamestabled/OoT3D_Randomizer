@@ -11,8 +11,6 @@ typedef struct EnElf {
     /* 0x938 */ Color_RGBAf outerColor;
 } EnElf;
 
-#define gNaviColorList ((NaviColor*)0x50C998)
-
 void Fairy_UpdateRainbowNaviColors(EnElf* navi);
 void Fairy_ResetRainbowCMABs(void);
 

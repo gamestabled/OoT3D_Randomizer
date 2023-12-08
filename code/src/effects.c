@@ -45,35 +45,16 @@ s32 forceTrailEffectUpdate(EffectBlure* effect) {
     return effect->numElements;
 }
 
-void changeRainbowColorRGBA8(Color_RGBA8* color) {
-#define COLOR_SPEED 17 // 255 = 3*17*5
-    if (color->r == 0xFF && color->g != 0xFF && color->b == 0)
-        color->g += COLOR_SPEED;
-    else if (color->r != 0 && color->g == 0xFF && color->b == 0)
-        color->r -= COLOR_SPEED;
-    else if (color->r == 0 && color->g == 0xFF && color->b != 0xFF)
-        color->b += COLOR_SPEED;
-    else if (color->r == 0 && color->g != 0 && color->b == 0xFF)
-        color->g -= COLOR_SPEED;
-    else if (color->r != 0xFF && color->g == 0 && color->b == 0xFF)
-        color->r += COLOR_SPEED;
-    else if (color->r == 0xFF && color->g == 0 && color->b != 0)
-        color->b -= COLOR_SPEED;
-    else {
-        color->r = 0xFF;
-        color->g = 0;
-        color->b = 0;
-    }
-}
-
+#define SWORD_CYCLE_FRAMES_INNER 18
+#define SWORD_CYCLE_FRAMES_OUTER 15
 void updateSwordTrailColors(EffectBlure* effect) {
     if (gSettingsContext.rainbowSwordTrailInnerColor) {
-        changeRainbowColorRGBA8(&effect->p2StartColor);
-        changeRainbowColorRGBA8(&effect->p2EndColor);
+        Colors_ChangeRainbowColorRGBA8(&effect->p2StartColor, SWORD_CYCLE_FRAMES_INNER, 0);
+        Colors_ChangeRainbowColorRGBA8(&effect->p2EndColor, SWORD_CYCLE_FRAMES_INNER, 0);
     }
     if (gSettingsContext.rainbowSwordTrailOuterColor) {
-        changeRainbowColorRGBA8(&effect->p1StartColor);
-        changeRainbowColorRGBA8(&effect->p1EndColor);
+        Colors_ChangeRainbowColorRGBA8(&effect->p1StartColor, SWORD_CYCLE_FRAMES_OUTER, 0);
+        Colors_ChangeRainbowColorRGBA8(&effect->p1EndColor, SWORD_CYCLE_FRAMES_OUTER, 0);
     }
 }
 
@@ -101,6 +82,8 @@ s32 handleLongTrails(u8 durationSetting, EffectBlure* effect, Vec3f* p1, Vec3f* 
     return 0;
 }
 
+#define BOOM_CYCLE_FRAMES_INNER 9
+#define BOOM_CYCLE_FRAMES_OUTER 7
 u32 updateBoomerangTrailEffect(EffectBlure* effect, Vec3f* p1, Vec3f* p2) {
     u8 isRainbow = gSettingsContext.boomerangTrailColorMode == TRAILCOLOR_RAINBOW ||
                    gSettingsContext.boomerangTrailColorMode == TRAILCOLOR_RAINBOW_SIMPLEMODE;
@@ -154,24 +137,26 @@ u32 updateBoomerangTrailEffect(EffectBlure* effect, Vec3f* p1, Vec3f* p2) {
     }
 
     if (isRainbow) {
-        changeRainbowColorRGBA8(&effect->p2StartColor);
-        changeRainbowColorRGBA8(&effect->p2EndColor);
-        changeRainbowColorRGBA8(&effect->p1StartColor);
-        changeRainbowColorRGBA8(&effect->p1EndColor);
+        Colors_ChangeRainbowColorRGBA8(&effect->p2StartColor, BOOM_CYCLE_FRAMES_INNER, 0);
+        Colors_ChangeRainbowColorRGBA8(&effect->p2EndColor, BOOM_CYCLE_FRAMES_INNER, 2);
+        Colors_ChangeRainbowColorRGBA8(&effect->p1StartColor, BOOM_CYCLE_FRAMES_OUTER, 0);
+        Colors_ChangeRainbowColorRGBA8(&effect->p1EndColor, BOOM_CYCLE_FRAMES_OUTER, 2);
     }
 
     return handleLongTrails(gSettingsContext.boomerangTrailDuration, effect, p1, p2);
 }
 
+#define BOMBCHU_CYCLE_FRAMES_INNER 12
+#define BOMBCHU_CYCLE_FRAMES_OUTER 9
 u32 updateChuTrailColors(EffectBlure* effect, Vec3f* p1, Vec3f* p2) {
 
     if (gSettingsContext.rainbowChuTrailInnerColor) {
-        changeRainbowColorRGBA8(&effect->p2StartColor);
-        changeRainbowColorRGBA8(&effect->p2EndColor);
+        Colors_ChangeRainbowColorRGBA8(&effect->p2StartColor, BOMBCHU_CYCLE_FRAMES_INNER, 0);
+        Colors_ChangeRainbowColorRGBA8(&effect->p2EndColor, BOMBCHU_CYCLE_FRAMES_INNER, 2);
     }
     if (gSettingsContext.rainbowChuTrailOuterColor) {
-        changeRainbowColorRGBA8(&effect->p1StartColor);
-        changeRainbowColorRGBA8(&effect->p1EndColor);
+        Colors_ChangeRainbowColorRGBA8(&effect->p1StartColor, BOMBCHU_CYCLE_FRAMES_OUTER, 0);
+        Colors_ChangeRainbowColorRGBA8(&effect->p1EndColor, BOMBCHU_CYCLE_FRAMES_OUTER, 2);
     }
 
     switch (gSettingsContext.bombchuTrailDuration) {

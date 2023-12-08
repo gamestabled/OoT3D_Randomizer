@@ -9,6 +9,8 @@
 #include "arrow.h"
 #include "grotto.h"
 #include "item_override.h"
+#include "colors.h"
+#include "common.h"
 
 #define PlayerActor_Init_addr 0x191844
 #define PlayerActor_Init ((ActorFunc)PlayerActor_Init_addr)
@@ -167,6 +169,9 @@ void PlayerActor_rDraw(Actor* thisx, GlobalContext* globalCtx) {
             PLAYER->sheathDLists = PlayerDListGroup_EmptySheathChildWithHylianShield;
         }
     }
+
+    Player_UpdateRainbowTunic();
+
     PlayerActor_Draw(thisx, globalCtx);
 }
 
@@ -210,4 +215,41 @@ s32 Player_CanPickUpThisActor(Actor* interactedActor) {
         default:
             return 1;
     }
+}
+
+#define TUNIC_CYCLE_FRAMES 30
+void Player_UpdateRainbowTunic(void) {
+    u8 currentTunic     = (gSaveContext.equips.equipment >> 8) & 3;
+    s16 exObjectBankIdx = Object_GetIndex(&rExtendedObjectCtx, OBJECT_CUSTOM_GENERAL_ASSETS);
+    void* cmabManager;
+    char* cmabChunk;
+    u8 redOffset, greenOffset, blueOffset;
+
+    if (gSaveContext.linkAge == AGE_CHILD) {
+        if (gSettingsContext.rainbowChildTunic == OFF) {
+            return;
+        }
+        cmabManager = ZAR_GetCMABByIndex(&rExtendedObjectCtx.status[exObjectBankIdx].zarInfo, TEXANIM_CHILD_LINK_BODY);
+        redOffset   = 0x70;
+        greenOffset = 0x88;
+        blueOffset  = 0xA0;
+    } else { // AGE_ADULT
+        if ((currentTunic == 1 && gSettingsContext.rainbowKokiriTunic == OFF) ||
+            (currentTunic == 2 && gSettingsContext.rainbowGoronTunic == OFF) ||
+            (currentTunic == 3 && gSettingsContext.rainbowZoraTunic == OFF)) {
+            return;
+        }
+        cmabManager = ZAR_GetCMABByIndex(&rExtendedObjectCtx.status[exObjectBankIdx].zarInfo, TEXANIM_LINK_BODY);
+        redOffset   = 0x70 + 8 * (currentTunic - 1);
+        greenOffset = 0x98 + 8 * (currentTunic - 1);
+        blueOffset  = 0xC0 + 8 * (currentTunic - 1);
+    }
+
+    cmabChunk = *((char**)cmabManager);
+
+    Color_RGBA8 color = Colors_GetRainbowColor(rGameplayFrames, TUNIC_CYCLE_FRAMES);
+
+    *(f32*)(cmabChunk + redOffset)   = color.r / 255.0f;
+    *(f32*)(cmabChunk + greenOffset) = color.g / 255.0f;
+    *(f32*)(cmabChunk + blueOffset)  = color.b / 255.0f;
 }

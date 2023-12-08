@@ -36,7 +36,7 @@ struct Color_RGBA8 {
 };
 
 extern const std::array<std::string_view, 13> gauntletColors;
-extern const std::array<std::string_view, 28> tunicColors;
+extern const std::array<std::string_view, 29> tunicColors;
 extern const std::array<std::string_view, 20> naviInnerColors;
 extern const std::array<std::string_view, 20> naviOuterColors;
 extern const std::array<std::string_view, 13> weaponTrailColors;
