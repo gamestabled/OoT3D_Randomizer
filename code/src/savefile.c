@@ -60,7 +60,8 @@ void SaveFile_Init(u32 fileBaseIndex) {
     gSaveContext.eventChkInf[0x4] |= 0x8020; // Entered MS chamber, Pulled MS from pedestal
     gSaveContext.eventChkInf[0xC] |= 0x0020; // Sheik Spawned at MS pedestal as Adult
 
-    gSaveContext.sceneFlags[5].swch |= 0x00010000; // remove Ruto cutscene in Water Temple
+    gSaveContext.sceneFlags[0x05].swch |= 0x00010000; // Met Ruto in Water Temple
+    gSaveContext.sceneFlags[0x5C].swch |= 0x80000000; // Spoke to owl in Desert Colossus (required for music to play)
 
     gSaveContext.otherNewEventFlags |= 0x01; // Club Moblin cutscene
 
