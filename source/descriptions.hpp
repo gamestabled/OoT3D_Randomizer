@@ -379,6 +379,8 @@ extern string_view mirrorWorldSceneDesc;
 extern string_view mirrorWorldEntranceDesc;
 extern string_view mirrorWorldRandomDesc;
 
+extern string_view betaSoldOutDesc;
+
 extern string_view musicRandoDesc;
 extern string_view shuffleBGMDesc;
 extern string_view shuffleMelodiesDesc;

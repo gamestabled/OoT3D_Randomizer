@@ -1222,6 +1222,13 @@ string_view mirrorWorldEntranceDesc   = "Different entrances to the same region 
 string_view mirrorWorldRandomDesc     = "Whether the world is mirrored may change after\n" //
                                         "every loading zone inconsistently.";              //
 /*------------------------------                                                           //
+| SOLD OUT COSMETIC SHOP MODEL |                                                           //
+------------------------------*/                                                           //
+string_view betaSoldOutDesc           = "The game contains an unused model for sold out\n" //
+                                        "items in shops. It's a remade version of the N64\n"
+                                        "model, spelling \"Sold Out\" in English.\n\n"     //
+                                        "This setting enables its use in shops.";          //
+/*------------------------------                                                           //
 |        SHUFFLE MUSIC         |                                                           //
 ------------------------------*/                                                           //
 string_view musicRandoDesc            = "Randomize the music in the game.";                //
