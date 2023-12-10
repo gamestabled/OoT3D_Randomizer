@@ -536,13 +536,15 @@ typedef struct GameState {
     /* 0x04 */ void (*main)(struct GameState*);
     /* 0x08 */ void (*destroy)(struct GameState*); // "cleanup"
     /* 0x0C */ void (*init)(struct GameState*);
-    // TODO
+    /* 0x10 */ u32 size;
+    /* 0x14 */ char unk_14[0xED];
+    /* 0x101*/ u8 running;
 } GameState;
+_Static_assert(sizeof(GameState) == 0x104, "GameState size");
 
 // Global Context (ram start: 0871E840)
 typedef struct GlobalContext {
-    // /* 0x0000 */ GameState state;
-    /* 0x0000 */ char unk_0[0x0104];
+    /* 0x0000 */ GameState state;
     /* 0x0104 */ s16 sceneNum;
     /* 0x0106 */ char unk_106[0x0012];
     /* 0x0118 */ SubGlobalContext_118 sub118;
