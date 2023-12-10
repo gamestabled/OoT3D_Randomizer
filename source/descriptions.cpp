@@ -850,6 +850,8 @@ string_view dampeHintDesc            =  "Reading Dampe's diary will reveal the l
 string_view skulltulaHintDesc        =  "Talking to a cursed House of Skulltula resident\n"//
                                         "will tell you the reward they will give you for\n"//
                                         "removing their curse.";                           //
+string_view fishingHintsDesc         =  "The aquarium at the fishing pond will show what\n"//
+                                        "reward you can win as your current age.";         //
 /*------------------------------                                                           //
 |  MAP AND COMPASS GIVES INFO  |                                                           //
 ------------------------------*/                                                           //

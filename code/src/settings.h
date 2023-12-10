@@ -564,6 +564,7 @@ typedef struct {
     u8 sheikHints;
     u8 dampeHint;
     u8 skulltulaHints;
+    u8 fishingHints;
     u8 compassesShowReward;
     u8 compassesShowWotH;
     u8 mapsShowDungeonMode;

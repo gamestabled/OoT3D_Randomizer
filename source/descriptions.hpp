@@ -275,6 +275,7 @@ extern string_view totAltarHintsDesc;
 extern string_view ganonHintsDesc;
 extern string_view dampeHintDesc;
 extern string_view skulltulaHintDesc;
+extern string_view fishingHintsDesc;
 
 extern string_view compassesShowRewardsDesc;
 extern string_view compassesShowWotHDesc;
