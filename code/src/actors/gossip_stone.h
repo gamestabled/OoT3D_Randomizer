@@ -5,6 +5,4 @@
 
 void EnGs_rInit(Actor* thisx, GlobalContext* globalCtx);
 
-void EnHintstone_rUpdate(Actor* thisx, GlobalContext* globalCtx);
-
 #endif //_GOSSIP_STONE_H_
