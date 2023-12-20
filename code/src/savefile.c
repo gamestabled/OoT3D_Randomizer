@@ -60,7 +60,8 @@ void SaveFile_Init(u32 fileBaseIndex) {
     gSaveContext.eventChkInf[0x4] |= 0x8020; // Entered MS chamber, Pulled MS from pedestal
     gSaveContext.eventChkInf[0xC] |= 0x0020; // Sheik Spawned at MS pedestal as Adult
 
-    gSaveContext.sceneFlags[5].swch |= 0x00010000; // remove Ruto cutscene in Water Temple
+    gSaveContext.sceneFlags[0x05].swch |= 0x00010000; // Met Ruto in Water Temple
+    gSaveContext.sceneFlags[0x5C].swch |= 0x80000000; // Spoke to owl in Desert Colossus (required for music to play)
 
     gSaveContext.otherNewEventFlags |= 0x01; // Club Moblin cutscene
 
@@ -532,6 +533,7 @@ void SaveFile_SetStartingInventory(void) {
     // Set Epona as freed if Skip Epona Race is enabled and Epona's Song is in the starting inventory
     if (gSettingsContext.skipEponaRace == SKIP && (gSaveContext.questItems >> 13) & 0x1) {
         EventSet(0x18);
+        gSaveContext.horseData.pos.y = 0xF000; // place Epona OoB, so you can't reach her without playing the song
     }
 }
 

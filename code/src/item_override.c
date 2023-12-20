@@ -341,7 +341,6 @@ static u32 ItemOverride_PlayerIsReadyInWater(void) {
         (PLAYER->stateFlags2 & 0x000C0000) == 0 && PLAYER->actor.draw != NULL &&
         gGlobalContext->actorCtx.titleCtx.delayTimer == 0 && gGlobalContext->actorCtx.titleCtx.durationTimer == 0 &&
         gGlobalContext->actorCtx.titleCtx.alpha == 0 && (PLAYER->stateFlags1 & 0x08000000) != 0 && // Player is Swimming
-        (PLAYER->stateFlags2 & 0x400) != 0 &&           // Player is underwater
         (PLAYER->stateFlags1 & 0x400) == 0 &&           // Player is not already receiving an item when surfacing
         gGlobalContext->sceneLoadFlag == 0 &&           // Another scene isn't about to be loaded
         rPendingOverrideQueue[0].key.type == OVR_TEMPLE // Must be an item received for completing a dungeon
@@ -394,12 +393,18 @@ void ItemOverride_Update(void) {
     CustomModel_Update();
     u8 readyStatus = ItemOverride_PlayerIsReady();
     if (readyStatus) {
-        ItemOverride_PopIceTrap();
+        if (readyStatus == READY_ON_LAND) { // Ice traps effects only work on land
+            ItemOverride_PopIceTrap();
+        }
+
         if (IceTrap_IsPending()) {
             IceTrap_Give();
         } else {
             ItemOverride_TryPendingItem();
             if (readyStatus == READY_IN_WATER) {
+                // Force underwater player flag in order to play the correct get-item
+                // animation even if Link is at the water's surface.
+                PLAYER->stateFlags2 |= 0x400;
                 SetupItemInWater(PLAYER, gGlobalContext);
                 rDummyActor->parent = NULL;
                 ItemOverride_PopPendingOverride();
