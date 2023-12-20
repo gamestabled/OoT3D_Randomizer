@@ -110,11 +110,14 @@ void MusicCategoryNode::AddNewSeqData(SequenceData seqData) {
 }
 
 void MusicCategoryNode::AddExternalSeqDatas(FS_Archive sdmcArchive) {
+    // Make sure directory exists to avoid issues
+    FSUSER_CreateDirectory(sdmcArchive, fsMakePath(PATH_ASCII, GetFullPath().c_str()), FS_ATTRIBUTE_DIRECTORY);
+
     for (const auto& bcseq : fs::directory_iterator(GetFullPath())) {
         if (bcseq.is_regular_file() && bcseq.path().extension().string() == bcseqExtension) {
             std::array<u32, 4> banks = { 7, 7, 7, 7 }; // Set banks to Orchestra by default
             u16 chFlags              = -1;             // Enable all channel flags by default
-            u8 volume                = 127;            // 100% by default
+            u8 volume                = 127;            // 100% (assumed, as it's unsigned) by default
 
             // Check for cmeta file
             auto fileName = bcseq.path().stem().string();

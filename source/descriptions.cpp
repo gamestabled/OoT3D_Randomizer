@@ -1290,7 +1290,10 @@ string_view randomGsLocationsDesc     = "Moves Gold Skulltulas to different loca
                                         "The logic is updated for any that are moved.";    //
                                                                                            //
 string_view gsLocGuaranteeNewDesc     = "Excludes the original location from the Gold\n"   //
-                                        "Skulltula's available locations pool.";           //
+                                        "Skulltula's available locations pool.\n"          //
+                                        "\n"                                               //
+                                        "If no new locations are available, the original\n"//
+                                        "will be used regardless.";                        //
                                                                                            //
                                                                                            //--------------//
 /*------------------------------                                                                           //
