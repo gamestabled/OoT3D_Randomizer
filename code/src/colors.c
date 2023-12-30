@@ -2,7 +2,8 @@
 #include "colors.h"
 #include "common.h"
 
-// This function is taken from OoTR: https://github.com/OoTRandomizer/OoT-Randomizer/blob/1827fbb8089d3fe3e816a297a5f3ce2c99a6e0c5/ASM/c/rainbow.c
+// This function is taken from OoTR:
+// https://github.com/OoTRandomizer/OoT-Randomizer/blob/1827fbb8089d3fe3e816a297a5f3ce2c99a6e0c5/ASM/c/rainbow.c
 Color_RGBA8 Colors_GetRainbowColor(u32 curFrame, u32 stepFrames) {
     static Color_RGBA8 cycleColors[] = {
         { 0xE0, 0x10, 0x10, 0x00 }, // red
@@ -35,7 +36,7 @@ Color_RGBA8 Colors_GetRainbowColor(u32 curFrame, u32 stepFrames) {
 
 void Colors_ChangeRainbowColorRGBA8(Color_RGBA8* color, u32 stepFrames, u8 stepOffset) {
     Color_RGBA8 newColor = Colors_GetRainbowColor(rGameplayFrames + stepOffset * stepFrames, stepFrames);
-    color->r = newColor.r;
-    color->g = newColor.g;
-    color->b = newColor.b;
+    color->r             = newColor.r;
+    color->g             = newColor.g;
+    color->b             = newColor.b;
 }

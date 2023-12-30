@@ -72,7 +72,7 @@ void Fairy_ApplyColorToTargetCMAB(void* cmab, Color_RGBA8 color8) {
 void Fairy_UpdateRainbowNaviColors(EnElf* navi) {
     if (Fairy_IsNaviInnerRainbowForActorType(lastTargetActorType)) {
         Color_RGBA8 newColor = Colors_GetRainbowColor(rGameplayFrames, NAVI_CYCLE_FRAMES_INNER);
-        staticRainbowColor = newColor;
+        staticRainbowColor   = newColor;
         // Navi color components go up to 255.0f instead of 1.0f
         navi->innerColor.r = newColor.r / 1.0f;
         navi->innerColor.g = newColor.g / 1.0f;
@@ -80,9 +80,9 @@ void Fairy_UpdateRainbowNaviColors(EnElf* navi) {
     }
     if (Fairy_IsNaviOuterRainbowForActorType(lastTargetActorType)) {
         Color_RGBA8 newColor = Colors_GetRainbowColor(rGameplayFrames, NAVI_CYCLE_FRAMES_OUTER);
-        navi->outerColor.r = newColor.r / 1.0f;
-        navi->outerColor.g = newColor.g / 1.0f;
-        navi->outerColor.b = newColor.b / 1.0f;
+        navi->outerColor.r   = newColor.r / 1.0f;
+        navi->outerColor.g   = newColor.g / 1.0f;
+        navi->outerColor.b   = newColor.b / 1.0f;
     }
 
     // Handle target pointer color
