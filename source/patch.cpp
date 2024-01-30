@@ -520,13 +520,6 @@ bool WriteAllPatches() {
         p1StartColor.a = 0xC0;
         p2StartColor.a = 0xC0;
     }
-    // Make rainbow colors start at different points
-    if (ctx.rainbowSwordTrailOuterColor) {
-        p1EndColor.g = 0xFF;
-    }
-    if (ctx.rainbowSwordTrailInnerColor) {
-        p2StartColor.b = 0xFF;
-    }
 
     const std::array rSwordTrailColors{ p1StartColor, p2StartColor, p1EndColor, p2EndColor };
 
@@ -541,22 +534,22 @@ bool WriteAllPatches() {
     const u32 SWORDTRAILDURATION_ADDR = 0x0053C146;
     char rSwordTrailDuration          = 6;
     switch (Settings::SwordTrailDuration.Value<u8>()) {
-        case 0:
+        case TRAILDURATION_DISABLED:
             rSwordTrailDuration = 0;
             break;
-        case 1:
+        case TRAILDURATION_VERYSHORT:
             rSwordTrailDuration = 3;
             break;
-        case 2:
+        case TRAILDURATION_VANILLA:
             rSwordTrailDuration = 6;
             break;
-        case 3:
+        case TRAILDURATION_LONG:
             rSwordTrailDuration = 16;
             break;
-        case 4:
+        case TRAILDURATION_VERYLONG:
             rSwordTrailDuration = 24;
             break;
-        case 5:
+        case TRAILDURATION_LIGHTSABER:
             rSwordTrailDuration = 32;
             break;
     }
@@ -593,13 +586,6 @@ bool WriteAllPatches() {
     p2StartColor.a = 0x82;
     p1EndColor.a   = 0x34;
     p2EndColor.a   = 0x62;
-    // Make rainbow colors start at different points
-    if (ctx.rainbowChuTrailOuterColor) {
-        p1EndColor.g = 0xFF;
-    }
-    if (ctx.rainbowChuTrailInnerColor) {
-        p2StartColor.b = 0xFF;
-    }
 
     const std::array rBombchuTrailColors{ p1StartColor, p2StartColor, p1EndColor, p2EndColor };
 

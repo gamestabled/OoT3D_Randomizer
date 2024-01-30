@@ -2,10 +2,12 @@
 #include "fairy.h"
 #include "settings.h"
 #include "objects.h"
+#include "common.h"
 
 #define NAVI_COLORS_ARRAY ((Color_RGBA8*)0x50C998)
-#define FAIRY_COLOR_SPEED 17   // 255 = 3*17*5
-#define FAIRY_COLOR_MAX 255.0f // max value for RGB components
+
+#define NAVI_CYCLE_FRAMES_OUTER 18
+#define NAVI_CYCLE_FRAMES_INNER 21
 
 static u8 lastTargetActorType = 0;
 // Data to manage the rainbow colors
@@ -45,31 +47,42 @@ u8 Fairy_IsNaviOuterRainbowForActorType(u8 type) {
     }
 }
 
-void Fairy_ApplyColorToTargetCMAB(void* cmab, Color_RGBA8 color) {
+void Fairy_ApplyColorToTargetCMAB(void* cmab, Color_RGBA8 color8) {
+    Color_RGBAf colorF = {
+        .r = color8.r / 255.0f,
+        .g = color8.g / 255.0f,
+        .b = color8.b / 255.0f,
+        .a = color8.a / 255.0f,
+    };
+
     // keyframe 1
-    *(f32*)(cmab + 0x6C) = color.r / 255.0f;
-    *(f32*)(cmab + 0xAC) = color.g / 255.0f;
-    *(f32*)(cmab + 0xEC) = color.b / 255.0f;
+    *(f32*)(cmab + 0x6C) = colorF.r;
+    *(f32*)(cmab + 0xAC) = colorF.g;
+    *(f32*)(cmab + 0xEC) = colorF.b;
     // keyframe 2
-    *(f32*)(cmab + 0x7C) = color.r / 255.0f;
-    *(f32*)(cmab + 0xBC) = color.g / 255.0f;
-    *(f32*)(cmab + 0xFC) = color.b / 255.0f;
+    *(f32*)(cmab + 0x7C) = colorF.r;
+    *(f32*)(cmab + 0xBC) = colorF.g;
+    *(f32*)(cmab + 0xFC) = colorF.b;
     // keyframe 3
-    *(f32*)(cmab + 0x8C)  = color.r / 255.0f;
-    *(f32*)(cmab + 0xCC)  = color.g / 255.0f;
-    *(f32*)(cmab + 0x10C) = color.b / 255.0f;
+    *(f32*)(cmab + 0x8C)  = colorF.r;
+    *(f32*)(cmab + 0xCC)  = colorF.g;
+    *(f32*)(cmab + 0x10C) = colorF.b;
 }
 
 void Fairy_UpdateRainbowNaviColors(EnElf* navi) {
     if (Fairy_IsNaviInnerRainbowForActorType(lastTargetActorType)) {
-        Colors_ChangeRainbowColorRGBAf(&(navi->innerColor), FAIRY_COLOR_SPEED, FAIRY_COLOR_MAX);
-        staticRainbowColor.r = navi->innerColor.r;
-        staticRainbowColor.g = navi->innerColor.g;
-        staticRainbowColor.b = navi->innerColor.b;
-        staticRainbowColor.a = 0xFF;
+        Color_RGBA8 newColor = Colors_GetRainbowColor(rGameplayFrames, NAVI_CYCLE_FRAMES_INNER);
+        staticRainbowColor   = newColor;
+        // Navi color components go up to 255.0f instead of 1.0f
+        navi->innerColor.r = newColor.r / 1.0f;
+        navi->innerColor.g = newColor.g / 1.0f;
+        navi->innerColor.b = newColor.b / 1.0f;
     }
     if (Fairy_IsNaviOuterRainbowForActorType(lastTargetActorType)) {
-        Colors_ChangeRainbowColorRGBAf(&(navi->outerColor), FAIRY_COLOR_SPEED, FAIRY_COLOR_MAX);
+        Color_RGBA8 newColor = Colors_GetRainbowColor(rGameplayFrames, NAVI_CYCLE_FRAMES_OUTER);
+        navi->outerColor.r   = newColor.r / 1.0f;
+        navi->outerColor.g   = newColor.g / 1.0f;
+        navi->outerColor.b   = newColor.b / 1.0f;
     }
 
     // Handle target pointer color

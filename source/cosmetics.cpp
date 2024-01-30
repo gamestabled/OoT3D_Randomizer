@@ -54,7 +54,7 @@ const std::array<std::string_view, 13> gauntletColors = {
     "5B8A06", // Lime
     "800080", // Purple
 };
-const std::array<std::string_view, 28> tunicColors = {
+const std::array<std::string_view, 29> tunicColors = {
     "168A0E", // Kokiri Green
     "96000E", // Goron Red
     "002A8E", // Zora Blue
@@ -83,6 +83,7 @@ const std::array<std::string_view, 28> tunicColors = {
     "52314F", // Mauve
     "505A59", // Silver
     "F16F16", // Gold
+    "FF0000", // Rainbow (placeholder)
 };
 const std::array<std::string_view, 20> naviInnerColors = {
     "FFFFFF", // White

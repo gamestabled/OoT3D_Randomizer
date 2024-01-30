@@ -1083,8 +1083,10 @@ static std::vector<std::string> childTunicOptions = {
     "Mauve",
     "Silver",
     "Gold",
+    "Rainbow",
     "Same as Kokiri",
 };
+#define RAINBOW_TUNIC (childTunicOptions.size() - 2)
 #define SAME_AS_KOKIRI (childTunicOptions.size() - 1)
 static std::vector<std::string> tunicOptions = VectorCopyExceptLastElement(childTunicOptions);
 
@@ -1537,6 +1539,10 @@ SettingsContext FillContext() {
     ctx.freeCamControl     = FreeCamControl.Value<u8>();
 
     ctx.customTunicColors           = (CustomTunicColors) ? 1 : 0;
+    ctx.rainbowChildTunic           = (ChildTunicColor.Value<u8>() == RAINBOW_TUNIC) ? 1 : 0;
+    ctx.rainbowKokiriTunic          = (KokiriTunicColor.Value<u8>() == RAINBOW_TUNIC) ? 1 : 0;
+    ctx.rainbowGoronTunic           = (GoronTunicColor.Value<u8>() == RAINBOW_TUNIC) ? 1 : 0;
+    ctx.rainbowZoraTunic            = (ZoraTunicColor.Value<u8>() == RAINBOW_TUNIC) ? 1 : 0;
     ctx.customNaviColors            = (CustomNaviColors) ? 1 : 0;
     ctx.rainbowIdleNaviInnerColor   = (IdleNaviInnerColor.Value<u8>() == RAINBOW_NAVI) ? 1 : 0;
     ctx.rainbowNPCNaviInnerColor    = (NPCNaviInnerColor.Value<u8>() == RAINBOW_NAVI) ? 1 : 0;
@@ -2794,6 +2800,7 @@ static void UpdateCosmetics() {
     ChooseFinalColor(ZoraTunicColor, finalZoraTunicColor, tunicColors);
     if (ChildTunicColor.Is(SAME_AS_KOKIRI)) {
         finalChildTunicColor = finalKokiriTunicColor;
+        ChildTunicColor.SetSelectedIndex(KokiriTunicColor.Value<u8>());
     } else {
         ChooseFinalColor(ChildTunicColor, finalChildTunicColor, tunicColors);
     }

@@ -19,6 +19,7 @@
 
 GlobalContext* gGlobalContext = NULL;
 static u8 rRandomizerInit     = 0;
+u32 rGameplayFrames           = 0;
 
 void set_GlobalContext(GlobalContext* globalCtx) {
     gGlobalContext = globalCtx;
@@ -39,6 +40,7 @@ void before_GlobalContext_Update(GlobalContext* globalCtx) {
         set_GlobalContext(globalCtx);
         rRandomizerInit = 1;
     }
+    rGameplayFrames++;
     ItemOverride_Update();
     ActorSetup_Extra();
     Model_UpdateAll(globalCtx);
