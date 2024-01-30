@@ -43,31 +43,9 @@ void Model_Init(Model* model, GlobalContext* globalCtx) {
     // Should probably parse the ZAR to find the CMBs correctly,
     // but this is fine for now
     void* ZARBuf = rExtendedObjectCtx.status[model->objectBankIdx - OBJECT_EXCHANGE_BANK_MAX].zarInfo.buf;
-    void* cmb;
 
     // edit the cmbs for custom models
-    switch (model->itemRow->objectId) {
-        case OBJECT_CUSTOM_SMALL_KEY_FOREST:
-        case OBJECT_CUSTOM_SMALL_KEY_FIRE:
-        case OBJECT_CUSTOM_SMALL_KEY_WATER:
-        case OBJECT_CUSTOM_SMALL_KEY_SHADOW:
-        case OBJECT_CUSTOM_SMALL_KEY_BOTW:
-        case OBJECT_CUSTOM_SMALL_KEY_SPIRIT:
-        case OBJECT_CUSTOM_SMALL_KEY_FORTRESS:
-        case OBJECT_CUSTOM_SMALL_KEY_GTG:
-        case OBJECT_CUSTOM_SMALL_KEY_GANON:
-            cmb = (void*)(((char*)ZARBuf) + 0x74);
-            CustomModel_ApplyColorEditsToSmallKey(cmb, model->itemRow->special);
-            break;
-        case OBJECT_CUSTOM_BOSS_KEYS:
-            cmb = (void*)(((char*)ZARBuf) + 0x78);
-            CustomModel_SetBossKeyToRGBA565(cmb);
-            break;
-        case OBJECT_CUSTOM_DOUBLE_DEFENSE:
-            cmb = (void*)(((char*)ZARBuf) + 0xA4);
-            CustomModel_EditHeartContainerToDoubleDefense(cmb);
-            break;
-    }
+    CustomModels_EditItemCMB(ZARBuf, model->itemRow->objectId, model->itemRow->special);
 
     model->saModel =
         SkeletonAnimationModel_Spawn(model->actor, globalCtx, model->itemRow->objectId, model->itemRow->objectModelIdx);
@@ -76,26 +54,9 @@ void Model_Init(Model* model, GlobalContext* globalCtx) {
         SkeletonAnimationModel_SetMesh(model->saModel, model->itemRow->special);
     }
 
-    if (model->itemRow->objectId == OBJECT_CUSTOM_CHILD_SONGS) {
-        void* cmb = (void*)(((char*)ZARBuf) + 0x2E60);
-        CustomModel_SetOcarinaToRGBA565(cmb);
-        Model_SetAnim(model->saModel, OBJECT_CUSTOM_GENERAL_ASSETS, TEXANIM_CHILD_SONG);
-        model->saModel->unk_0C->animSpeed = 0.0f;
-        model->saModel->unk_0C->animMode  = 0;
-        model->saModel->unk_0C->curFrame  = model->itemRow->special;
-    } else if (model->itemRow->objectId == OBJECT_CUSTOM_ADULT_SONGS) {
-        void* cmb = (void*)(((char*)ZARBuf) + 0xE8);
-        CustomModel_SetOcarinaToRGBA565(cmb);
-        Model_SetAnim(model->saModel, OBJECT_CUSTOM_GENERAL_ASSETS, TEXANIM_ADULT_SONG);
-        model->saModel->unk_0C->animSpeed = 0.0f;
-        model->saModel->unk_0C->animMode  = 0;
-        model->saModel->unk_0C->curFrame  = model->itemRow->special;
-    } else if (model->itemRow->objectId == OBJECT_CUSTOM_BOSS_KEYS) {
-        Model_SetAnim(model->saModel, OBJECT_CUSTOM_GENERAL_ASSETS, TEXANIM_BOSS_KEY);
-        model->saModel->unk_0C->animSpeed = 0.0f;
-        model->saModel->unk_0C->animMode  = 0;
-        model->saModel->unk_0C->curFrame  = model->itemRow->special;
-    } else if (model->itemRow->cmabIndex >= 0) {
+    CustomModels_ApplyItemCMAB(model->saModel, model->itemRow->objectId, model->itemRow->special);
+
+    if (model->itemRow->cmabIndex >= 0) {
         Model_SetAnim(model->saModel, model->itemRow->objectId, model->itemRow->cmabIndex);
         model->saModel->unk_0C->animSpeed = 2.0f;
         model->saModel->unk_0C->animMode  = 1;
@@ -178,7 +139,13 @@ void Model_UpdateMatrix(Model* model) {
     nn_math_MTX44 scaleMtx;
     Actor_SetModelMatrixWrapper(model->actor, &model->saModel->mtx);
     if (model->saModel2 != NULL) {
+        f32 tempRotY = model->actor->shape.rot.y;
+        // The second model should always face the camera, except for Skull Token
+        if (model->itemRow->objectId != 0x015C) {
+            model->actor->shape.rot.y = gGlobalContext->mainCamera.camDir.y;
+        }
         Actor_SetModelMatrixWrapper(model->actor, &model->saModel2->mtx);
+        model->actor->shape.rot.y = tempRotY;
     }
 
     for (s32 i = 0; i < 4; ++i) {
@@ -276,12 +243,7 @@ void Model_Create(Model* model, GlobalContext* globalCtx) {
         newModel->saModel       = NULL;
         newModel->saModel2      = NULL;
         switch (newModel->itemRow->objectId) {
-            case 0x0024: // Skulltula token
-                newModel->scale = 0.25f;
-                break;
             case 0x00BA: // Medallions
-                         // newModel->scale = ((globalCtx->sceneNum == 0x44) ? 0.2f : 0.082f);
-                         // break;
             case 0x019C: // Kokiri Emerald
             case 0x019D: // Goron Ruby
             case 0x019E: // Zora Sapphire

@@ -623,7 +623,9 @@ typedef struct {
 typedef struct {
     /* 0x00 */ s16 objectId;
     /* 0x02 */ u8 objectModelIdx;
-    /* 0x03 */ char unk_03[0x3];
+    /* 0x03 */ u8 cmabIndex;
+    /* 0x04 */ u8 objectModelIdx2;
+    /* 0x05 */ u8 cmabIndex2;
 } DrawItemTableEntry;
 
 typedef struct {

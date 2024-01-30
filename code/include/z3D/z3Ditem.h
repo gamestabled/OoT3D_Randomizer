@@ -321,7 +321,120 @@ typedef enum {
     /* 0x7B */ GI_BULLET_BAG_50,
     /* 0x7C */ GI_ICE_TRAP, // freezes link when opened from a chest
     /* 0x7D */ GI_TEXT_0,   // no model appears over Link, shows text id 0 (pocket egg)
-    /* 0x7E */ GI_SWORD_MASTER
+
+    // The following values are custom items added by the randomizer
+
+    /* 0x7E */ GI_SWORD_MASTER,
+
+    /* 0x7F */ GI_7F, // unused
+
+    /* 0x80 */ GI_PROG_HOOKSHOT,
+    /* 0x81 */ GI_PROG_STRENGTH,
+    /* 0x82 */ GI_PROG_BOMB_BAG,
+    /* 0x83 */ GI_PROG_BOW,
+    /* 0x84 */ GI_PROG_SLINGSHOT,
+    /* 0x85 */ GI_PROG_WALLET,
+    /* 0x86 */ GI_PROG_SCALE,
+    /* 0x87 */ GI_PROG_NUT_UPGRADE,
+    /* 0x88 */ GI_PROG_STICK_UPGRADE,
+    /* 0x89 */ GI_PROG_BOMBCHUS,
+    /* 0x8A */ GI_PROG_MAGIC_METER,
+    /* 0x8B */ GI_PROG_OCARINA,
+
+    /* 0x8C */ GI_BOTTLE_RED_POTION,
+    /* 0x8D */ GI_BOTTLE_GREEN_POTION,
+    /* 0x8E */ GI_BOTTLE_BLUE_POTION,
+    /* 0x8F */ GI_BOTTLE_FAIRY,
+    /* 0x90 */ GI_BOTTLE_FISH,
+    /* 0x91 */ GI_BOTTLE_BLUE_FIRE,
+    /* 0x92 */ GI_BOTTLE_BUGS,
+    /* 0x93 */ GI_BOTTLE_BIG_POE,
+    /* 0x94 */ GI_BOTTLE_POE,
+
+    /* 0x95 */ GI_FOREST_BOSS_KEY,
+    /* 0x96 */ GI_FIRE_BOSS_KEY,
+    /* 0x97 */ GI_WATER_BOSS_KEY,
+    /* 0x98 */ GI_SPIRIT_BOSS_KEY,
+    /* 0x99 */ GI_SHADOW_BOSS_KEY,
+    /* 0x9A */ GI_GANON_BOSS_KEY,
+
+    /* 0x9B */ GI_DEKU_COMPASS,
+    /* 0x9C */ GI_DODONGO_COMPASS,
+    /* 0x9D */ GI_JABU_COMPASS,
+    /* 0x9E */ GI_FOREST_COMPASS,
+    /* 0x9F */ GI_FIRE_COMPASS,
+    /* 0xA0 */ GI_WATER_COMPASS,
+    /* 0xA1 */ GI_SPIRIT_COMPASS,
+    /* 0xA2 */ GI_SHADOW_COMPASS,
+    /* 0xA3 */ GI_BOTW_COMPASS,
+    /* 0xA4 */ GI_ICE_CAVERN_COMPASS,
+
+    /* 0xA5 */ GI_DEKU_MAP,
+    /* 0xA6 */ GI_DODONGO_MAP,
+    /* 0xA7 */ GI_JABU_MAP,
+    /* 0xA8 */ GI_FOREST_MAP,
+    /* 0xA9 */ GI_FIRE_MAP,
+    /* 0xAA */ GI_WATER_MAP,
+    /* 0xAB */ GI_SPIRIT_MAP,
+    /* 0xAC */ GI_SHADOW_MAP,
+    /* 0xAD */ GI_BOTW_MAP,
+    /* 0xAE */ GI_ICE_CAVERN_MAP,
+
+    /* 0xAF */ GI_FOREST_SMALL_KEY,
+    /* 0xB0 */ GI_FIRE_SMALL_KEY,
+    /* 0xB1 */ GI_WATER_SMALL_KEY,
+    /* 0xB2 */ GI_SPIRIT_SMALL_KEY,
+    /* 0xB3 */ GI_SHADOW_SMALL_KEY,
+    /* 0xB4 */ GI_BOTW_SMALL_KEY,
+    /* 0xB5 */ GI_GTG_SMALL_KEY,
+    /* 0xB6 */ GI_FORTRESS_SMALL_KEY,
+    /* 0xB7 */ GI_GANON_SMALL_KEY,
+
+    /* 0xB8 */ GI_DOUBLE_DEFENSE,
+    /* 0xB9 */ GI_MAGIC_METER,
+    /* 0xBA */ GI_DOUBLE_MAGIC,
+
+    /* 0xBB */ GI_MINUET,
+    /* 0xBC */ GI_BOLERO,
+    /* 0xBD */ GI_SERENADE,
+    /* 0xBE */ GI_REQUIEM,
+    /* 0xBF */ GI_NOCTURNE,
+    /* 0xC0 */ GI_PRELUDE,
+    /* 0xC1 */ GI_ZELDA_LULLABY,
+    /* 0xC2 */ GI_EPONA_SONG,
+    /* 0xC3 */ GI_SARIA_SONG,
+    /* 0xC4 */ GI_SUN_SONG,
+    /* 0xC5 */ GI_SONG_OF_TIME,
+    /* 0xC6 */ GI_SONG_OF_STORMS,
+
+    /* 0xC7 */ GI_TYCOON_WALLET,
+    /* 0xC8 */ GI_LETTER_RUTO_2,
+    /* 0xC9 */ GI_MAGIC_BEAN_PACK,
+    /* 0xCA */ GI_TRIFORCE_PIECE, // unused
+
+    /* 0xCB */ GI_KOKIRI_EMERALD,
+    /* 0xCC */ GI_GORON_RUBY,
+    /* 0xCD */ GI_ZORA_SAPPHIRE,
+
+    /* 0xCE */ GI_FOREST_MEDALLION,
+    /* 0xCF */ GI_FIRE_MEDALLION,
+    /* 0xD0 */ GI_WATER_MEDALLION,
+    /* 0xD1 */ GI_SPIRIT_MEDALLION,
+    /* 0xD2 */ GI_SHADOW_MEDALLION,
+    /* 0xD3 */ GI_LIGHT_MEDALLION,
+
+    /* 0xD4 */ GI_PROG_GORON_SWORD,
+
+    /* 0xD5 */ GI_FOREST_KEY_RING,
+    /* 0xD6 */ GI_FIRE_KEY_RING,
+    /* 0xD7 */ GI_WATER_KEY_RING,
+    /* 0xD8 */ GI_SPIRIT_KEY_RING,
+    /* 0xD9 */ GI_SHADOW_KEY_RING,
+    /* 0xDA */ GI_BOTW_KEY_RING,
+    /* 0xDB */ GI_GTG_KEY_RING,
+    /* 0xDC */ GI_FORTRESS_KEY_RING,
+    /* 0xDD */ GI_GANON_KEY_RING,
+    /* 0xDE */ GI_CHEST_GAME_KEY,
 } GetItemID;
 
 typedef enum {

@@ -13,17 +13,11 @@ The following custom objectIds are currently being used:
 127: Ganon Small Key
 128: Boss Keys
 
-The following custom graphicIds are currently being used:
-4: Double Defense
-5: Child Songs
-6: Adult Songs
-7: Small Keys
-8: Boss Keys
-
 To use a custom asset, currently:
-    -make an editing function in custom_models.c
-    -assign it an objectId and graphicId in item_table.c
-    -add it to gObjectTable and gDrawItemTable in Actor_Init
-    -add a case for the objectId in Model_Init
-    -add a case for the graphicId in ItemOverride_EditDrawGetItem
-    -add it to this txt file
+    - choose an unused objectId to be repurposed for the custom item
+    - in Actor_Init, edit the unused entry in the gObjectTable to be a copy of another object (which will be the base for the modifications)
+    - in CustomModels_EditItemCMB, add a case for the objectId and make a function to edit the CMB model inside the ZAR object file
+    - if you need to apply a custom texture to the model:
+        - add a CMAB file with the new texture in the custom archive (romfs/zelda_gi_melody.zar)
+        - in CustomModels_ApplyItemCMAB, add a case for the objectId
+    - add the objectId to this txt file

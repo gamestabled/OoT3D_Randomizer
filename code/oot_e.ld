@@ -740,6 +740,10 @@ SECTIONS
 		*(.patch_CorrectCompassChestsTwo)
 	}
 
+	.patch_OverrideDrawItemOne 0x2F7498 : {
+		*(.patch_OverrideDrawItemOne)
+	}
+
 	.patch_SaveGame 0x2FBFA8 : {
 		*(.patch_SaveGame)
 	}
@@ -750,6 +754,10 @@ SECTIONS
 
 	.patch_Gfx_Update 0x310254 : {
 		*(.patch_Gfx_Update)
+	}
+
+	.patch_OverrideDrawItemTwo 0x3148A8 : {
+		*(.patch_OverrideDrawItemTwo)
 	}
 
 	.patch_OoBBombchuOne 0x315120 : {
@@ -842,14 +850,6 @@ SECTIONS
 
 	.patch_ApplyDamageMultiplier 0x352DC0 : {
 		*(.patch_ApplyDamageMultiplier)
-	}
-
-	.patch_OverrideGraphicID_35495C 0x35495C : {
-		*(.patch_OverrideGraphicID_35495C)
-	}
-
-	.patch_OverrideGraphicID_354BB8 0x354BB8 : {
-		*(.patch_OverrideGraphicID_354BB8)
 	}
 
 	.patch_FastChests 0x354CD4 : {
@@ -982,6 +982,10 @@ SECTIONS
 
 	.patch_LullabyLocation 0x3A0A7C : {
 		*(.patch_LullabyLocation)
+	}
+
+	.patch_OverrideDrawItemThree 0x3A0EA8 : {
+		*(.patch_OverrideDrawItemThree)
 	}
 
 	.patch_KokiriCheckOpenForest 0x3ACCFC : {
@@ -1552,12 +1556,8 @@ SECTIONS
 		*(.patch_CriticalHealthCheckThree)
 	}
 
-	.patch_OverrideGraphicID_4BC604 0x4BC604 : {
-		*(.patch_OverrideGraphicID_4BC604)
-	}
-
-	.patch_OverrideGraphicID_4BD5D0 0x4BD5D0 : {
-		*(.patch_OverrideGraphicID_4BD5D0)
+	.patch_OverrideGiDrawIdPlusOne 0x4BC610 : {
+		*(.patch_OverrideGiDrawIdPlusOne)
 	}
 
 	.patch_EditDrawGetItemBeforeModelSpawn 0x4C0FD0 : {

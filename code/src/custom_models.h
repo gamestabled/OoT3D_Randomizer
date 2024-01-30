@@ -3,12 +3,10 @@
 
 void CustomModel_EditLinkToCustomTunic(void* linkCMB);
 void CustomModel_EditChildLinkToCustomTunic(void* linkCMB);
-void CustomModel_EditHeartContainerToDoubleDefense(void* heartContainerCMB);
-void CustomModel_ApplyColorEditsToSmallKey(void* smallKeyCMB, s32 keyType);
 void CustomModel_EditTitleScreenLogo(void* titleScreenZAR);
-void CustomModel_SetOcarinaToRGBA565(void* fairyOcarinaCMB);
-void CustomModel_SetBossKeyToRGBA565(void* bossKeyCMB);
 void CustomModel_Update(void);
+void CustomModels_EditItemCMB(void* ZARBuf, u16 objectId, s8 special);
+void CustomModels_ApplyItemCMAB(SkeletonAnimationModel* model, u16 objectId, s8 special);
 
 #define OBJECT_CUSTOM_DOUBLE_DEFENSE 4
 #define OBJECT_CUSTOM_CHILD_SONGS 5
@@ -24,12 +22,6 @@ void CustomModel_Update(void);
 #define OBJECT_CUSTOM_SMALL_KEY_GANON 127
 #define OBJECT_CUSTOM_BOSS_KEYS 128
 #define OBJECT_CUSTOM_GENERAL_ASSETS 182
-
-#define GID_CUSTOM_DOUBLE_DEFENSE 4
-#define GID_CUSTOM_CHILD_SONGS 5
-#define GID_CUSTOM_ADULT_SONGS 6
-#define GID_CUSTOM_SMALL_KEYS 7
-#define GID_CUSTOM_BOSS_KEYS 8
 
 typedef enum {
     TEXANIM_COPY_NINTENDO,

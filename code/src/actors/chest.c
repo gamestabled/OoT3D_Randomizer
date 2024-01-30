@@ -52,7 +52,7 @@ void Chest_ChangeAppearance(Actor* thisx, GlobalContext* globalCtx) {
     ItemOverride thisOverride = ItemOverride_Lookup(thisx, globalCtx->sceneNum, 0);
     ItemRow* thisItemRow;
     if (thisOverride.key.all == 0) {
-        thisItemRow = ItemTable_GetItemRowFromIndex((thisx->params & 0x0FE0) >> 5); // get type from vanilla item table
+        thisItemRow = ItemTable_GetItemRow((thisx->params & 0x0FE0) >> 5); // get type from vanilla item table
     } else {
         thisItemRow = ItemTable_GetItemRow(ItemTable_ResolveUpgrades(thisOverride.value.itemId));
     }
