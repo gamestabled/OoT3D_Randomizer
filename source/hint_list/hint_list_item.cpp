@@ -1956,4 +1956,427 @@ void HintTable_Init_Item() {
     //                      Text{"An Error (Please Report This)", /*french*/"une erreur (signaler S.V.P.)", /*spanish*/"un error (repórtelo si es posible)", /*italian*/"un errore (segnalalo per favore)", /*german*/"ein Fehler (Bitte melden)"}
     //                    }
     // );
+
+    hintTable[SOUL_ITEM_POE] = HintText::Item({
+                       // obscure text
+                       Text{"the Soul of all Poes", /*french*/"", /*spanish*/"", /*italian*/"l'anima di Poo", /*german*/""},
+                     }, {
+                       // ambiguous text
+                       Text{"a Soul", /*french*/"", /*spanish*/"", /*italian*/"un'anima", /*german*/""},
+                     }
+    );
+
+    hintTable[SOUL_ITEM_OCTOROK] = HintText::Item({
+                       // obscure text
+                       Text{"the Octorok Soul", /*french*/"", /*spanish*/"", /*italian*/"l'anima di Octorok", /*german*/""},
+                     }, {
+                       // ambiguous text
+                       Text{"a Soul", /*french*/"", /*spanish*/"", /*italian*/"un'anima", /*german*/""},
+                     }
+    );
+
+    hintTable[SOUL_ITEM_KEESE] = HintText::Item({
+                       // obscure text
+                       Text{"the Keese Soul", /*french*/"", /*spanish*/"", /*italian*/"l'anima di Pipistrello", /*german*/""},
+                     }, {
+                       // ambiguous text
+                       Text{"a Soul", /*french*/"", /*spanish*/"", /*italian*/"un'anima", /*german*/""},
+                     }
+    );
+
+    hintTable[SOUL_ITEM_TEKTITE] = HintText::Item({
+                       // obscure text
+                       Text{"the Tektite Soul", /*french*/"", /*spanish*/"", /*italian*/"l'anima di Tektite", /*german*/""},
+                     }, {
+                       // ambiguous text
+                       Text{"a Soul", /*french*/"", /*spanish*/"", /*italian*/"un'anima", /*german*/""},
+                     }
+    );
+
+    hintTable[SOUL_ITEM_LEEVER] = HintText::Item({
+                       // obscure text
+                       Text{"the Leever Soul", /*french*/"", /*spanish*/"", /*italian*/"l'anima di Leever", /*german*/""},
+                     }, {
+                       // ambiguous text
+                       Text{"a Soul", /*french*/"", /*spanish*/"", /*italian*/"un'anima", /*german*/""},
+                     }
+    );
+
+    hintTable[SOUL_ITEM_PEAHAT] = HintText::Item({
+                       // obscure text
+                       Text{"the Peahat Soul", /*french*/"", /*spanish*/"", /*italian*/"l'anima di Bulbocottero", /*german*/""},
+                     }, {
+                       // ambiguous text
+                       Text{"a Soul", /*french*/"", /*spanish*/"", /*italian*/"un'anima", /*german*/""},
+                     }
+    );
+
+    hintTable[SOUL_ITEM_LIZALFOS] = HintText::Item({
+                       // obscure text
+                       Text{"the Lizalfos and Dinolfos Soul", /*french*/"", /*spanish*/"", /*italian*/"l'anima di Lizalfos e Dinolfos", /*german*/""},
+                     }, {
+                       // ambiguous text
+                       Text{"a Soul", /*french*/"", /*spanish*/"", /*italian*/"un'anima", /*german*/""},
+                     }
+    );
+
+    hintTable[SOUL_ITEM_SHABOM] = HintText::Item({
+                       // obscure text
+                       Text{"the Shabom Soul", /*french*/"", /*spanish*/"", /*italian*/"l'anima di Shabom", /*german*/""},
+                     }, {
+                       // ambiguous text
+                       Text{"a Soul", /*french*/"", /*spanish*/"", /*italian*/"un'anima", /*german*/""},
+                     }
+    );
+
+    hintTable[SOUL_ITEM_BIRI_BARI] = HintText::Item({
+                       // obscure text
+                       Text{"the Biri and Bari Soul", /*french*/"", /*spanish*/"", /*italian*/"l'anima di Cnidiri e Cnidari", /*german*/""},
+                     }, {
+                       // ambiguous text
+                       Text{"a Soul", /*french*/"", /*spanish*/"", /*italian*/"un'anima", /*german*/""},
+                     }
+    );
+
+    hintTable[SOUL_ITEM_TAILPASARAN] = HintText::Item({
+                       // obscure text
+                       Text{"the Tailpasaran Soul", /*french*/"", /*spanish*/"", /*italian*/"l'anima di Trivolt", /*german*/""},
+                     }, {
+                       // ambiguous text
+                       Text{"a Soul", /*french*/"", /*spanish*/"", /*italian*/"un'anima", /*german*/""},
+                     }
+    );
+
+    hintTable[SOUL_ITEM_SKULLTULA] = HintText::Item({
+                       // obscure text
+                       Text{"the Skulltula Soul", /*french*/"", /*spanish*/"", /*italian*/"l'anima di Aracnula", /*german*/""},
+                     }, {
+                       // ambiguous text
+                       Text{"a Soul", /*french*/"", /*spanish*/"", /*italian*/"un'anima", /*german*/""},
+                     }
+    );
+
+    hintTable[SOUL_ITEM_TORCH_SLUG] = HintText::Item({
+                       // obscure text
+                       Text{"the Torch Slug Soul", /*french*/"", /*spanish*/"", /*italian*/"l'anima di Lumaca di lava", /*german*/""},
+                     }, {
+                       // ambiguous text
+                       Text{"a Soul", /*french*/"", /*spanish*/"", /*italian*/"un'anima", /*german*/""},
+                     }
+    );
+
+    hintTable[SOUL_ITEM_STINGER] = HintText::Item({
+                       // obscure text
+                       Text{"the Stinger Soul", /*french*/"", /*spanish*/"", /*italian*/"l'anima di Trigone volante", /*german*/""},
+                     }, {
+                       // ambiguous text
+                       Text{"a Soul", /*french*/"", /*spanish*/"", /*italian*/"un'anima", /*german*/""},
+                     }
+    );
+
+    hintTable[SOUL_ITEM_MOBLIN] = HintText::Item({
+                       // obscure text
+                       Text{"the Moblin Soul", /*french*/"", /*spanish*/"", /*italian*/"l'anima di Grublin", /*german*/""},
+                     }, {
+                       // ambiguous text
+                       Text{"a Soul", /*french*/"", /*spanish*/"", /*italian*/"un'anima", /*german*/""},
+                     }
+    );
+
+    hintTable[SOUL_ITEM_ARMOS] = HintText::Item({
+                       // obscure text
+                       Text{"the Armos Soul", /*french*/"", /*spanish*/"", /*italian*/"l'anima di Armos", /*german*/""},
+                     }, {
+                       // ambiguous text
+                       Text{"a Soul", /*french*/"", /*spanish*/"", /*italian*/"un'anima", /*german*/""},
+                     }
+    );
+
+    hintTable[SOUL_ITEM_DEKU_BABA] = HintText::Item({
+                       // obscure text
+                       Text{"the Deku Baba Soul", /*french*/"", /*spanish*/"", /*italian*/"l'anima di Deku Baba", /*german*/""},
+                     }, {
+                       // ambiguous text
+                       Text{"a Soul", /*french*/"", /*spanish*/"", /*italian*/"un'anima", /*german*/""},
+                     }
+    );
+
+    hintTable[SOUL_ITEM_BUBBLE] = HintText::Item({
+                       // obscure text
+                       Text{"the Bubble Soul", /*french*/"", /*spanish*/"", /*italian*/"l'anima di Nembo", /*german*/""},
+                     }, {
+                       // ambiguous text
+                       Text{"a Soul", /*french*/"", /*spanish*/"", /*italian*/"un'anima", /*german*/""},
+                     }
+    );
+
+    hintTable[SOUL_ITEM_FLYING_TRAP] = HintText::Item({
+                       // obscure text
+                       Text{"the Flying Pot & Tile Soul", /*french*/"", /*spanish*/"", /*italian*/"l'anima di Vaso e Piastrella volante", /*german*/""},
+                     }, {
+                       // ambiguous text
+                       Text{"a Soul", /*french*/"", /*spanish*/"", /*italian*/"un'anima", /*german*/""},
+                     }
+    );
+
+    hintTable[SOUL_ITEM_BEAMOS] = HintText::Item({
+                       // obscure text
+                       Text{"the Beamos Soul", /*french*/"", /*spanish*/"", /*italian*/"l'anima di Laseros", /*german*/""},
+                     }, {
+                       // ambiguous text
+                       Text{"a Soul", /*french*/"", /*spanish*/"", /*italian*/"un'anima", /*german*/""},
+                     }
+    );
+
+    hintTable[SOUL_ITEM_WALLMASTER] = HintText::Item({
+                       // obscure text
+                       Text{"the Wallmaster & Floormaster Soul", /*french*/"", /*spanish*/"", /*italian*/"l'anima di Mano Diabolica e Mano Rapace", /*german*/""},
+                     }, {
+                       // ambiguous text
+                       Text{"a Soul", /*french*/"", /*spanish*/"", /*italian*/"un'anima", /*german*/""},
+                     }
+    );
+
+    hintTable[SOUL_ITEM_REDEAD_GIBDO] = HintText::Item({
+                       // obscure text
+                       Text{"the Redead and Gibdo Soul", /*french*/"", /*spanish*/"", /*italian*/"l'anima di Zombie e Ghibdo", /*german*/""},
+                     }, {
+                       // ambiguous text
+                       Text{"a Soul", /*french*/"", /*spanish*/"", /*italian*/"un'anima", /*german*/""},
+                     }
+    );
+
+    hintTable[SOUL_ITEM_SHELL_BLADE] = HintText::Item({
+                       // obscure text
+                       Text{"the Shell Blade Soul", /*french*/"", /*spanish*/"", /*italian*/"l'anima di Ostrice", /*german*/""},
+                     }, {
+                       // ambiguous text
+                       Text{"a Soul", /*french*/"", /*spanish*/"", /*italian*/"un'anima", /*german*/""},
+                     }
+    );
+
+    hintTable[SOUL_ITEM_LIKE_LIKE] = HintText::Item({
+                       // obscure text
+                       Text{"the Like Like Soul", /*french*/"", /*spanish*/"", /*italian*/"l'anima di Like Like", /*german*/""},
+                     }, {
+                       // ambiguous text
+                       Text{"a Soul", /*french*/"", /*spanish*/"", /*italian*/"un'anima", /*german*/""},
+                     }
+    );
+
+    hintTable[SOUL_ITEM_TENTACLE] = HintText::Item({
+                       // obscure text
+                       Text{"the Parasitic Tentacle Soul", /*french*/"", /*spanish*/"", /*italian*/"l'anima di Tentacolo", /*german*/""},
+                     }, {
+                       // ambiguous text
+                       Text{"a Soul", /*french*/"", /*spanish*/"", /*italian*/"un'anima", /*german*/""},
+                     }
+    );
+
+    hintTable[SOUL_ITEM_ANUBIS] = HintText::Item({
+                       // obscure text
+                       Text{"the Anubis Soul", /*french*/"", /*spanish*/"", /*italian*/"l'anima di Anubi", /*german*/""},
+                     }, {
+                       // ambiguous text
+                       Text{"a Soul", /*french*/"", /*spanish*/"", /*italian*/"un'anima", /*german*/""},
+                     }
+    );
+
+    hintTable[SOUL_ITEM_SPIKE] = HintText::Item({
+                       // obscure text
+                       Text{"the Spike Soul", /*french*/"", /*spanish*/"", /*italian*/"l'anima di Riccio di Ferro", /*german*/""},
+                     }, {
+                       // ambiguous text
+                       Text{"a Soul", /*french*/"", /*spanish*/"", /*italian*/"un'anima", /*german*/""},
+                     }
+    );
+
+    hintTable[SOUL_ITEM_SKULL_KID] = HintText::Item({
+                       // obscure text
+                       Text{"the Skull Kid Soul", /*french*/"", /*spanish*/"", /*italian*/"l'anima di Bimbo Perduto", /*german*/""},
+                     }, {
+                       // ambiguous text
+                       Text{"a Soul", /*french*/"", /*spanish*/"", /*italian*/"un'anima", /*german*/""},
+                     }
+    );
+
+    hintTable[SOUL_ITEM_FREEZARD] = HintText::Item({
+                       // obscure text
+                       Text{"the Freezard Soul", /*french*/"", /*spanish*/"", /*italian*/"l'anima di Freezard", /*german*/""},
+                     }, {
+                       // ambiguous text
+                       Text{"a Soul", /*french*/"", /*spanish*/"", /*italian*/"un'anima", /*german*/""},
+                     }
+    );
+
+    hintTable[SOUL_ITEM_DEKU_SCRUB] = HintText::Item({
+                       // obscure text
+                       Text{"the Deku Scrub Soul", /*french*/"", /*spanish*/"", /*italian*/"l'anima di Cespuglio Deku", /*german*/""},
+                     }, {
+                       // ambiguous text
+                       Text{"a Soul", /*french*/"", /*spanish*/"", /*italian*/"un'anima", /*german*/""},
+                     }
+    );
+
+    hintTable[SOUL_ITEM_WOLFOS] = HintText::Item({
+                       // obscure text
+                       Text{"the Wolfos Soul", /*french*/"", /*spanish*/"", /*italian*/"l'anima di Lupo", /*german*/""},
+                     }, {
+                       // ambiguous text
+                       Text{"a Soul", /*french*/"", /*spanish*/"", /*italian*/"un'anima", /*german*/""},
+                     }
+    );
+
+    hintTable[SOUL_ITEM_STALCHILD] = HintText::Item({
+                       // obscure text
+                       Text{"the Stalchild Soul", /*french*/"", /*spanish*/"", /*italian*/"l'anima di Stalfosso", /*german*/""},
+                     }, {
+                       // ambiguous text
+                       Text{"a Soul", /*french*/"", /*spanish*/"", /*italian*/"un'anima", /*german*/""},
+                     }
+    );
+
+    hintTable[SOUL_ITEM_GUAY] = HintText::Item({
+                       // obscure text
+                       Text{"the Guay Soul", /*french*/"", /*spanish*/"", /*italian*/"l'anima di Corvacchia", /*german*/""},
+                     }, {
+                       // ambiguous text
+                       Text{"a Soul", /*french*/"", /*spanish*/"", /*italian*/"un'anima", /*german*/""},
+                     }
+    );
+
+    hintTable[SOUL_ITEM_DOOR_MIMIC] = HintText::Item({
+                       // obscure text
+                       Text{"the Door Mimic Soul", /*french*/"", /*spanish*/"", /*italian*/"l'anima di Porta ingannevole", /*german*/""},
+                     }, {
+                       // ambiguous text
+                       Text{"a Soul", /*french*/"", /*spanish*/"", /*italian*/"un'anima", /*german*/""},
+                     }
+    );
+
+    hintTable[SOUL_ITEM_STALFOS] = HintText::Item({
+                       // obscure text
+                       Text{"the Stalfos Soul", /*french*/"", /*spanish*/"", /*italian*/"l'anima di Stalfos", /*german*/""},
+                     }, {
+                       // ambiguous text
+                       Text{"a Soul", /*french*/"", /*spanish*/"", /*italian*/"un'anima", /*german*/""},
+                     }
+    );
+
+    hintTable[SOUL_ITEM_DARK_LINK] = HintText::Item({
+                       // obscure text
+                       Text{"the Dark Link Soul", /*french*/"", /*spanish*/"", /*italian*/"l'anima di Link Oscuro", /*german*/""},
+                     }, {
+                       // ambiguous text
+                       Text{"a Soul", /*french*/"", /*spanish*/"", /*italian*/"un'anima", /*german*/""},
+                     }
+    );
+
+    hintTable[SOUL_ITEM_FLARE_DANCER] = HintText::Item({
+                       // obscure text
+                       Text{"the Flare Dancer Soul", /*french*/"", /*spanish*/"", /*italian*/"l'anima di Fiammerino", /*german*/""},
+                     }, {
+                       // ambiguous text
+                       Text{"a Soul", /*french*/"", /*spanish*/"", /*italian*/"un'anima", /*german*/""},
+                     }
+    );
+
+    hintTable[SOUL_ITEM_DEAD_HAND] = HintText::Item({
+                       // obscure text
+                       Text{"the Dead Hand Soul", /*french*/"", /*spanish*/"", /*italian*/"l'anima di Smaniosso", /*german*/""},
+                     }, {
+                       // ambiguous text
+                       Text{"a Soul", /*french*/"", /*spanish*/"", /*italian*/"un'anima", /*german*/""},
+                     }
+    );
+
+    hintTable[SOUL_ITEM_GERUDO] = HintText::Item({
+                       // obscure text
+                       Text{"the Gerudo Soul", /*french*/"", /*spanish*/"", /*italian*/"l'anima di Gerudo", /*german*/""},
+                     }, {
+                       // ambiguous text
+                       Text{"a Soul", /*french*/"", /*spanish*/"", /*italian*/"un'anima", /*german*/""},
+                     }
+    );
+
+    hintTable[SOUL_ITEM_GOHMA] = HintText::Item({
+                       // obscure text
+                       Text{"the Gohma Soul", /*french*/"", /*spanish*/"", /*italian*/"l'anima di Gohma", /*german*/""},
+                     }, {
+                       // ambiguous text
+                       Text{"a Soul", /*french*/"", /*spanish*/"", /*italian*/"un'anima", /*german*/""},
+                     }
+    );
+
+    hintTable[SOUL_ITEM_DODONGO] = HintText::Item({
+                       // obscure text
+                       Text{"the Dodongo Soul", /*french*/"", /*spanish*/"", /*italian*/"l'anima di Dodongo", /*german*/""},
+                     }, {
+                       // ambiguous text
+                       Text{"a Soul", /*french*/"", /*spanish*/"", /*italian*/"un'anima", /*german*/""},
+                     }
+    );
+
+    hintTable[SOUL_ITEM_BARINADE] = HintText::Item({
+                       // obscure text
+                       Text{"the Barinade Soul", /*french*/"", /*spanish*/"", /*italian*/"l'anima di Cnidade", /*german*/""},
+                     }, {
+                       // ambiguous text
+                       Text{"a Soul", /*french*/"", /*spanish*/"", /*italian*/"un'anima", /*german*/""},
+                     }
+    );
+
+    hintTable[SOUL_ITEM_PHANTOM_GANON] = HintText::Item({
+                       // obscure text
+                       Text{"the Phantom Ganon Soul", /*french*/"", /*spanish*/"", /*italian*/"l'anima di Spettro Ganon", /*german*/""},
+                     }, {
+                       // ambiguous text
+                       Text{"a Soul", /*french*/"", /*spanish*/"", /*italian*/"un'anima", /*german*/""},
+                     }
+    );
+
+    hintTable[SOUL_ITEM_VOLVAGIA] = HintText::Item({
+                       // obscure text
+                       Text{"the Volvagia Soul", /*french*/"", /*spanish*/"", /*italian*/"l'anima di Varubaja", /*german*/""},
+                     }, {
+                       // ambiguous text
+                       Text{"a Soul", /*french*/"", /*spanish*/"", /*italian*/"un'anima", /*german*/""},
+                     }
+    );
+
+    hintTable[SOUL_ITEM_MORPHA] = HintText::Item({
+                       // obscure text
+                       Text{"the Morpha Soul", /*french*/"", /*spanish*/"", /*italian*/"l'anima di Morpha", /*german*/""},
+                     }, {
+                       // ambiguous text
+                       Text{"a Soul", /*french*/"", /*spanish*/"", /*italian*/"un'anima", /*german*/""},
+                     }
+    );
+
+    hintTable[SOUL_ITEM_BONGO_BONGO] = HintText::Item({
+                       // obscure text
+                       Text{"the Bongo Bongo Soul", /*french*/"", /*spanish*/"", /*italian*/"l'anima di Bongo Bongo", /*german*/""},
+                     }, {
+                       // ambiguous text
+                       Text{"a Soul", /*french*/"", /*spanish*/"", /*italian*/"un'anima", /*german*/""},
+                     }
+    );
+
+    hintTable[SOUL_ITEM_TWINROVA] = HintText::Item({
+                       // obscure text
+                       Text{"the Twinrova Soul", /*french*/"", /*spanish*/"", /*italian*/"l'anima di Duerova", /*german*/""},
+                     }, {
+                       // ambiguous text
+                       Text{"a Soul", /*french*/"", /*spanish*/"", /*italian*/"un'anima", /*german*/""},
+                     }
+    );
+
+    hintTable[SOUL_ITEM_GANON] = HintText::Item({
+                       // obscure text
+                       Text{"the Ganon Soul", /*french*/"", /*spanish*/"", /*italian*/"l'anima di Ganon", /*german*/""},
+                     }, {
+                       // ambiguous text
+                       Text{"a Soul", /*french*/"", /*spanish*/"", /*italian*/"un'anima", /*german*/""},
+                     }
+    );
 }

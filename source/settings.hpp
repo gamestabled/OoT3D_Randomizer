@@ -314,6 +314,18 @@ class Menu {
         settingBound = 0;
     }
 
+    void Lock() {
+        locked = true;
+    }
+
+    void Unlock() {
+        locked = false;
+    }
+
+    bool IsLocked() const {
+        return locked;
+    }
+
     std::string name;
     MenuType type;
     std::vector<Option*>* settingsList;
@@ -324,6 +336,7 @@ class Menu {
     int selectedSetting          = 0;
     std::string_view description = "";
     bool printInSpoiler          = true;
+    bool locked                  = false;
 };
 
 namespace Settings {
@@ -409,6 +422,7 @@ extern Option ShuffleMerchants;
 extern Option ShuffleFrogSongRupees;
 extern Option ShuffleAdultTradeQuest;
 extern Option ShuffleChestMinigame;
+extern Option ShuffleEnemySouls;
 
 extern Option MapsAndCompasses;
 extern Option Keysanity;
@@ -814,6 +828,7 @@ extern std::vector<Option*> startingItemsOptions;
 extern std::vector<Option*> startingSongsOptions;
 extern std::vector<Option*> startingEquipmentOptions;
 extern std::vector<Option*> startingStonesMedallionsOptions;
+extern std::vector<Option*> startingEnemySoulsOptions;
 extern std::vector<Option*> startingOtherOptions;
 extern std::vector<Option*> trickOptions;
 extern std::vector<Option*> glitchCategories;

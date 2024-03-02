@@ -161,8 +161,8 @@ void SaveFile_Init(u32 fileBaseIndex) {
         gSaveContext.eventChkInf[0x0] |= 0x0010;
     }
 
-    SaveFile_SetStartingInventory();
     SaveFile_InitExtSaveData(fileBaseIndex + gSaveContext.fileNum, 1);
+    SaveFile_SetStartingInventory();
 
     // Ingame Defaults
     gSaveContext.zTargetingSetting    = gSettingsContext.zTargeting;
@@ -534,6 +534,11 @@ void SaveFile_SetStartingInventory(void) {
     if (gSettingsContext.skipEponaRace == SKIP && (gSaveContext.questItems >> 13) & 0x1) {
         EventSet(0x18);
         gSaveContext.horseData.pos.y = 0xF000; // place Epona OoB, so you can't reach her without playing the song
+    }
+
+    // Set owned enemy souls. If the shuffle option is disabled, these values will be ignored.
+    for (u32 i = 0; i < sizeof(gSettingsContext.startingEnemySouls); i++) {
+        gExtSaveData.extInf[EXTINF_ENEMYSOULSFLAGS_START + i] = gSettingsContext.startingEnemySouls[i];
     }
 }
 

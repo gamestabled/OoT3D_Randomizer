@@ -164,19 +164,22 @@ void MoveCursor(u32 kDown, bool updatedByHeld) {
             }
         }
 
-        if (kDown & KEY_UP) {
-            currentMenu->menuIdx--;
-        }
-        if (kDown & KEY_DOWN) {
-            currentMenu->menuIdx++;
-        }
+        // If this is a sub-menu, loop through items until an unlocked one is reached
+        do {
+            if (kDown & KEY_UP) {
+                currentMenu->menuIdx--;
+            }
+            if (kDown & KEY_DOWN) {
+                currentMenu->menuIdx++;
+            }
 
-        // Bounds checking
-        if (currentMenu->menuIdx == max) {
-            currentMenu->menuIdx = 0;
-        } else if (currentMenu->menuIdx == 0xFFFF) {
-            currentMenu->menuIdx = max - 1;
-        }
+            // Bounds checking
+            if (currentMenu->menuIdx == max) {
+                currentMenu->menuIdx = 0;
+            } else if (currentMenu->menuIdx == 0xFFFF) {
+                currentMenu->menuIdx = max - 1;
+            }
+        } while (currentMenu->mode == SUB_MENU && currentMenu->itemsList->at(currentMenu->menuIdx)->IsLocked());
 
         // Scroll Check
         u16 max_entries_on_screen = MAX_SUBMENUS_ON_SCREEN;
@@ -562,14 +565,17 @@ void PrintSubMenu() {
         if (i >= currentMenu->itemsList->size())
             break;
 
-        u8 row = 3 + i;
+        u8 row             = 3 + i;
+        Menu* selectedMenu = currentMenu->itemsList->at(currentMenu->settingBound + i);
         // make the current menu green
         if (currentMenu->menuIdx == currentMenu->settingBound + i) {
             printf("\x1b[%d;%dH%s>", row, 2, GREEN);
-            printf("\x1b[%d;%dH%s%s", row, 3, currentMenu->itemsList->at(currentMenu->settingBound + i)->name.c_str(),
-                   RESET);
+            printf("\x1b[%d;%dH%s%s", row, 3, selectedMenu->name.c_str(), RESET);
+        } else if (selectedMenu->IsLocked()) {
+            // Make locked menus gray.
+            printf("\x1b[%d;%dH%s%s%s", row, 3, DIM, selectedMenu->name.c_str(), RESET);
         } else {
-            printf("\x1b[%d;%dH%s", row, 3, currentMenu->itemsList->at(currentMenu->settingBound + i)->name.c_str());
+            printf("\x1b[%d;%dH%s", row, 3, selectedMenu->name.c_str());
         }
     }
 

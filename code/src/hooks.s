@@ -310,10 +310,10 @@ hook_ApplyDamageMultiplier:
     pop {r0-r3, r5-r12, lr}
     bx lr
 
-.global hook_HyperActors
-hook_HyperActors:
+.global hook_ActorUpdate
+hook_ActorUpdate:
     push {r0-r12, lr}
-    bl HyperActors_Main
+    bl Actor_rUpdate
     pop {r0-r12, lr}
     bx lr
 
@@ -1723,9 +1723,11 @@ hook_CollisionATvsAC:
     push {r0-r12,lr}
     cpy r0,r1  @ AT collider
     cpy r1,r12 @ AC collider
-    bl RedIce_CheckIceArrow
+    bl Actor_CollisionATvsAC
+    cmp r0,#0x1
     pop {r0-r12,lr}
-    bx lr
+    bxeq lr
+    b 0x3192E4
 
 .global hook_CollisionCheck_SetAll_Once
 hook_CollisionCheck_SetAll_Once:
@@ -2056,6 +2058,66 @@ hook_RandomGsLoc_SkipSoilJingle:
     beq 0x15DC34
     # If false
     ldrsh r0,[r0,#0x1C]
+    bx lr
+
+.global hook_ActorDraw
+hook_ActorDraw:
+    push {r0-r12, lr}
+    bl Actor_rDraw
+    pop {r0-r12, lr}
+    bx lr
+
+.global hook_FlyingPotCollision
+hook_FlyingPotCollision:
+    strh r0,[r4,#0xBE]
+    push {r0-r12, lr}
+    cpy r0,r4 @ Actor
+    bl FlyingTraps_Pot_OnImpact
+    cmp r0,#0x1
+    pop {r0-r12, lr}
+    bne 0x11DEE4 @ Skip collision checks and return
+    bx lr
+
+.global hook_FlyingTileCollision
+hook_FlyingTileCollision:
+    cpy r0,r5
+    push {r0-r12, lr}
+    cpy r0,r4 @ Actor
+    bl FlyingTraps_Tile_OnImpact
+    cmp r0,#0x1
+    pop {r0-r12, lr}
+    addne lr,lr,#0x8 @ Skip setting actionFunc
+    bx lr
+
+.global hook_ShabomAfterDamagePlayer
+hook_ShabomAfterDamagePlayer:
+    push {r0-r12, lr}
+    bl Shabom_CheckEnemySoul
+    cmp r0,#0x0
+    pop {r0-r12, lr}
+    beq 0x3B511C @ Skip popping
+    strh r10,[r5,#0x80]
+
+.global hook_DodongoAfterSwallowBomb
+hook_DodongoAfterSwallowBomb:
+    mov r1,#0xA
+    push {r0-r12, lr}
+    cpy r0,r4 @ Actor
+    bl Dodongos_AfterSwallowBomb_Normal
+    cmp r0,#0x0
+    pop {r0-r12, lr}
+    bne 0x11E4F4
+    bx lr
+
+.global hook_BabyDodongoAfterSwallowBomb
+hook_BabyDodongoAfterSwallowBomb:
+    mov r3,#0x8
+    push {r0-r12, lr}
+    cpy r0,r4 @ Actor
+    bl Dodongos_AfterSwallowBomb_Baby
+    cmp r0,#0x0
+    pop {r0-r12, lr}
+    bne 0x1C4370
     bx lr
 
 @ ----------------------------------

@@ -198,6 +198,56 @@ extern u8 PieceOfHeart;
 extern u8 HeartContainer;
 extern bool DoubleDefense;
 
+// Some souls are not currently relevant in logic. If they become such in the future, uncomment their declaration here
+// and update their item in item_list.cpp to be an advancement item and use the relevant logic variable.
+extern bool SoulPoe;
+extern bool SoulOctorok;
+extern bool SoulKeese;
+// extern bool SoulTektite;
+// extern bool SoulLeever;
+// extern bool SoulPeahat;
+extern bool SoulLizalfosDinolfos;
+extern bool SoulShabom;
+// extern bool SoulBiriBari;
+// extern bool SoulTailpasaran;
+extern bool SoulSkulltula;
+extern bool SoulTorchSlug;
+extern bool SoulStinger;
+extern bool SoulMoblin;
+extern bool SoulArmos;
+extern bool SoulDekuBaba;
+extern bool SoulBubble;
+extern bool SoulFlyingTrap;
+extern bool SoulBeamos;
+extern bool SoulWallmaster;
+extern bool SoulRedeadGibdo;
+extern bool SoulShellBlade;
+extern bool SoulLikeLike;
+extern bool SoulParasiticTentacle;
+extern bool SoulAnubis;
+extern bool SoulSpike;
+// extern bool SoulSkullKid;
+extern bool SoulFreezard;
+extern bool SoulDekuScrub;
+extern bool SoulWolfos;
+// extern bool SoulStalchild;
+// extern bool SoulGuay;
+extern bool SoulDoorMimic;
+extern bool SoulStalfos;
+extern bool SoulDarkLink;
+extern bool SoulFlareDancer;
+extern bool SoulDeadHand;
+extern bool SoulGerudo;
+extern bool SoulGohma;
+extern bool SoulDodongo;
+extern bool SoulBarinade;
+extern bool SoulPhantomGanon;
+extern bool SoulVolvagia;
+extern bool SoulMorpha;
+extern bool SoulBongoBongo;
+extern bool SoulTwinrova;
+extern bool SoulGanon;
+
 /* --- HELPERS --- */
 /* These are used to simplify reading the logic, but need to be updated
 /  every time a base value is updated.                       */

@@ -51,9 +51,11 @@ void AreaTable_Init_ShadowTemple() {
             },
             {
                 // Locations
-                LocationAccess(SHADOW_TEMPLE_MAP_CHEST, { [] { return CanJumpslash; } }),
+                LocationAccess(SHADOW_TEMPLE_MAP_CHEST,
+                               { [] { return SoulRedeadGibdo && SoulKeese && CanJumpslash; } }),
                 LocationAccess(SHADOW_TEMPLE_HOVER_BOOTS_CHEST, { [] {
-                                   return CanUse(KOKIRI_SWORD) || CanUse(MASTER_SWORD) || CanUse(BIGGORON_SWORD);
+                                   return SoulDeadHand &&
+                                          (CanUse(KOKIRI_SWORD) || CanUse(MASTER_SWORD) || CanUse(BIGGORON_SWORD));
                                } }),
             },
             {
@@ -72,7 +74,7 @@ void AreaTable_Init_ShadowTemple() {
                  },
                  {
                      // Locations
-                     LocationAccess(SHADOW_TEMPLE_COMPASS_CHEST, { [] { return CanJumpslash; } }),
+                     LocationAccess(SHADOW_TEMPLE_COMPASS_CHEST, { [] { return SoulRedeadGibdo && CanJumpslash; } }),
                      LocationAccess(SHADOW_TEMPLE_EARLY_SILVER_RUPEE_CHEST,
                                     { [] { return CanUse(HOVER_BOOTS) || CanUse(HOOKSHOT); } }),
                      LocationAccess(SHADOW_TEMPLE_GS_NEAR_SHIP, { [] { return false; },
@@ -100,15 +102,23 @@ void AreaTable_Init_ShadowTemple() {
             Area("Shadow Temple Huge Pit", "Shadow Temple", SHADOW_TEMPLE, NO_DAY_NIGHT_CYCLE, {},
                  {
                      // Locations
-                     LocationAccess(SHADOW_TEMPLE_INVISIBLE_BLADES_VISIBLE_CHEST, { [] { return CanJumpslash; } }),
-                     LocationAccess(SHADOW_TEMPLE_INVISIBLE_BLADES_INVISIBLE_CHEST, { [] { return CanJumpslash; } }),
+                     LocationAccess(
+                         SHADOW_TEMPLE_INVISIBLE_BLADES_VISIBLE_CHEST,
+                         { [] { return SoulKeese && SoulLikeLike && CanJumpslash; },
+                           /*Glitched*/
+                           [] { return CanDoGlitch(GlitchType::HookshotClip, GlitchDifficulty::INTERMEDIATE); } }),
+                     LocationAccess(
+                         SHADOW_TEMPLE_INVISIBLE_BLADES_INVISIBLE_CHEST,
+                         { [] { return SoulKeese && SoulLikeLike && CanJumpslash; },
+                           /*Glitched*/
+                           [] { return CanDoGlitch(GlitchType::HookshotClip, GlitchDifficulty::INTERMEDIATE); } }),
                      LocationAccess(SHADOW_TEMPLE_FALLING_SPIKES_LOWER_CHEST, { [] { return true; } }),
                      LocationAccess(SHADOW_TEMPLE_FALLING_SPIKES_UPPER_CHEST,
                                     { [] { return LogicShadowUmbrella || GoronBracelet; } }),
                      LocationAccess(SHADOW_TEMPLE_FALLING_SPIKES_SWITCH_CHEST,
                                     { [] { return LogicShadowUmbrella || GoronBracelet; } }),
                      LocationAccess(SHADOW_TEMPLE_INVISIBLE_SPIKES_CHEST, { [] {
-                                        return SmallKeys(SHADOW_TEMPLE, 2, 3) &&
+                                        return SoulRedeadGibdo && SmallKeys(SHADOW_TEMPLE, 2, 3) &&
                                                (LogicLensShadowBack || CanUse(LENS_OF_TRUTH));
                                     } }),
                      LocationAccess(SHADOW_TEMPLE_FREESTANDING_KEY, { [] {
@@ -116,7 +126,11 @@ void AreaTable_Init_ShadowTemple() {
                                                (LogicLensShadowBack || CanUse(LENS_OF_TRUTH)) && Hookshot &&
                                                (Bombs || GoronBracelet || (LogicShadowFreestandingKey && HasBombchus));
                                     } }),
-                     LocationAccess(SHADOW_TEMPLE_GS_LIKE_LIKE_ROOM, { [] { return CanJumpslash; } }),
+                     LocationAccess(
+                         SHADOW_TEMPLE_GS_LIKE_LIKE_ROOM,
+                         { [] { return SoulKeese && SoulLikeLike && CanJumpslash; },
+                           /*Glitched*/
+                           [] { return CanDoGlitch(GlitchType::HookshotClip, GlitchDifficulty::INTERMEDIATE); } }),
                      LocationAccess(SHADOW_TEMPLE_GS_FALLING_SPIKES_ROOM, { [] { return Hookshot; } }),
                      LocationAccess(SHADOW_TEMPLE_GS_SINGLE_GIANT_POT, { [] {
                                         return SmallKeys(SHADOW_TEMPLE, 2, 3) &&
@@ -136,7 +150,8 @@ void AreaTable_Init_ShadowTemple() {
             {
                 // Locations
                 LocationAccess(SHADOW_TEMPLE_WIND_HINT_CHEST, { [] { return true; } }),
-                LocationAccess(SHADOW_TEMPLE_AFTER_WIND_ENEMY_CHEST, { [] { return CanJumpslash; } }),
+                LocationAccess(SHADOW_TEMPLE_AFTER_WIND_ENEMY_CHEST,
+                               { [] { return SoulFlyingTrap && SoulRedeadGibdo && CanJumpslash; } }),
                 LocationAccess(SHADOW_TEMPLE_AFTER_WIND_HIDDEN_CHEST, { [] { return true; } }),
                 LocationAccess(SHADOW_TEMPLE_GS_NEAR_SHIP,
                                { [] { return CanJumpslash && CanUse(LONGSHOT) && SmallKeys(SHADOW_TEMPLE, 4, 5); } }),
@@ -153,7 +168,8 @@ void AreaTable_Init_ShadowTemple() {
                 // Locations
                 LocationAccess(SHADOW_TEMPLE_SPIKE_WALLS_LEFT_CHEST, { [] { return CanUse(DINS_FIRE); } }),
                 LocationAccess(SHADOW_TEMPLE_BOSS_KEY_CHEST, { [] { return CanUse(DINS_FIRE); } }),
-                LocationAccess(SHADOW_TEMPLE_INVISIBLE_FLOORMASTER_CHEST, { [] { return CanJumpslash; } }),
+                LocationAccess(SHADOW_TEMPLE_INVISIBLE_FLOORMASTER_CHEST,
+                               { [] { return SoulWallmaster && CanJumpslash; } }),
                 LocationAccess(SHADOW_TEMPLE_GS_TRIPLE_GIANT_POT, { [] { return CanAdultAttack; } }),
             },
             {
@@ -325,7 +341,8 @@ void AreaTable_Init_ShadowTemple() {
                  // Events
                  EventAccess(&ShadowTempleClear, { [] {
                      return ShadowTempleClear ||
-                            ((CanUse(LENS_OF_TRUTH) || ((Dungeon::ShadowTemple.IsVanilla() && LogicLensShadowBack) ||
+                            (SoulBongoBongo &&
+                             (CanUse(LENS_OF_TRUTH) || ((Dungeon::ShadowTemple.IsVanilla() && LogicLensShadowBack) ||
                                                         (Dungeon::ShadowTemple.IsMQ() && LogicLensShadowMQBack))) &&
                              (CanUse(KOKIRI_SWORD) || CanUse(MASTER_SWORD) || CanUse(BIGGORON_SWORD)) &&
                              (CanUse(HOOKSHOT) || CanUse(BOW) || CanUse(SLINGSHOT) || LogicShadowBongo));

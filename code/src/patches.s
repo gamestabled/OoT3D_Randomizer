@@ -1239,10 +1239,10 @@ SariasSongHintsOne_patch:
 SariasSongHintsTwo_patch:
     bl Hints_GetNextSariasSongHint
 
-.section .patch_HyperActors
-.global HyperActors_patch
-HyperActors_patch:
-    bl hook_HyperActors
+.section .patch_ActorUpdate
+.global ActorUpdate_patch
+ActorUpdate_patch:
+    bl hook_ActorUpdate
 
 .section .patch_TitleCardUpdate
 .global TitleCardUpdate_patch
@@ -2199,6 +2199,36 @@ RandomGsLoc_BlockSpawn_Soil_patch:
 .global RandomGsLoc_SkipSoilJingle_patch
 RandomGsLoc_SkipSoilJingle_patch:
     bl hook_RandomGsLoc_SkipSoilJingle
+
+.section .patch_ActorDraw
+.global ActorDraw_patch
+ActorDraw_patch:
+    bl hook_ActorDraw
+
+.section .patch_FlyingPotCollision
+.global FlyingPotCollision_patch
+FlyingPotCollision_patch:
+    bl hook_FlyingPotCollision
+
+.section .patch_FlyingTileCollision
+.global FlyingTileCollision_patch
+FlyingTileCollision_patch:
+    bl hook_FlyingTileCollision
+
+.section .patch_ShabomAfterDamagePlayer
+.global ShabomAfterDamagePlayer_patch
+ShabomAfterDamagePlayer_patch:
+    bl hook_ShabomAfterDamagePlayer
+
+.section .patch_DodongoAfterSwallowBomb
+.global DodongoAfterSwallowBomb_patch
+DodongoAfterSwallowBomb_patch:
+    bl hook_DodongoAfterSwallowBomb
+
+.section .patch_BabyDodongoAfterSwallowBomb
+.global BabyDodongoAfterSwallowBomb_patch
+BabyDodongoAfterSwallowBomb_patch:
+    bl hook_BabyDodongoAfterSwallowBomb
 
 @ ----------------------------------
 @ ----------------------------------

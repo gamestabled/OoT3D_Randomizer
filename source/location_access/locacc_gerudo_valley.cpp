@@ -198,27 +198,32 @@ void AreaTable_Init_GerudoValley() {
                                                   (GerudoToken || CanUse(BOW) || CanUse(HOOKSHOT) ||
                                                    CanUse(HOVER_BOOTS) || LogicGerudoKitchen);
                                        } }),
-            LocationAccess(GF_NORTH_F1_CARPENTER,
-                           { [] { return CanUse(KOKIRI_SWORD) || CanUse(MASTER_SWORD) || CanUse(BIGGORON_SWORD); },
-                             /*Glitched*/ [] { return CanDoGlitch(GlitchType::ISG, GlitchDifficulty::NOVICE); } }),
+            LocationAccess(
+                GF_NORTH_F1_CARPENTER,
+                { [] { return SoulGerudo && (CanUse(KOKIRI_SWORD) || CanUse(MASTER_SWORD) || CanUse(BIGGORON_SWORD)); },
+                  /*Glitched*/ [] { return SoulGerudo && CanDoGlitch(GlitchType::ISG, GlitchDifficulty::NOVICE); } }),
             LocationAccess(GF_NORTH_F2_CARPENTER, { [] {
-                                                       return (CanUse(KOKIRI_SWORD) || CanUse(MASTER_SWORD) ||
+                                                       return SoulGerudo &&
+                                                              (CanUse(KOKIRI_SWORD) || CanUse(MASTER_SWORD) ||
                                                                CanUse(BIGGORON_SWORD)) &&
                                                               (GerudoToken || CanUse(BOW) || CanUse(HOOKSHOT) ||
                                                                CanUse(HOVER_BOOTS) || LogicGerudoKitchen);
                                                    },
                                                     /*Glitched*/
                                                     [] {
-                                                        return CanDoGlitch(GlitchType::ISG, GlitchDifficulty::NOVICE) &&
+                                                        return SoulGerudo &&
+                                                               CanDoGlitch(GlitchType::ISG, GlitchDifficulty::NOVICE) &&
                                                                (GerudoToken || CanUse(BOW) || CanUse(HOOKSHOT) ||
                                                                 CanUse(HOVER_BOOTS) || LogicGerudoKitchen);
                                                     } }),
-            LocationAccess(GF_SOUTH_F1_CARPENTER,
-                           { [] { return CanUse(KOKIRI_SWORD) || CanUse(MASTER_SWORD) || CanUse(BIGGORON_SWORD); },
-                             /*Glitched*/ [] { return CanDoGlitch(GlitchType::ISG, GlitchDifficulty::NOVICE); } }),
-            LocationAccess(GF_SOUTH_F2_CARPENTER,
-                           { [] { return CanUse(KOKIRI_SWORD) || CanUse(MASTER_SWORD) || CanUse(BIGGORON_SWORD); },
-                             /*Glitched*/ [] { return CanDoGlitch(GlitchType::ISG, GlitchDifficulty::NOVICE); } }),
+            LocationAccess(
+                GF_SOUTH_F1_CARPENTER,
+                { [] { return SoulGerudo && (CanUse(KOKIRI_SWORD) || CanUse(MASTER_SWORD) || CanUse(BIGGORON_SWORD)); },
+                  /*Glitched*/ [] { return SoulGerudo && CanDoGlitch(GlitchType::ISG, GlitchDifficulty::NOVICE); } }),
+            LocationAccess(
+                GF_SOUTH_F2_CARPENTER,
+                { [] { return SoulGerudo && (CanUse(KOKIRI_SWORD) || CanUse(MASTER_SWORD) || CanUse(BIGGORON_SWORD)); },
+                  /*Glitched*/ [] { return SoulGerudo && CanDoGlitch(GlitchType::ISG, GlitchDifficulty::NOVICE); } }),
             LocationAccess(GF_GERUDO_TOKEN, { [] { return CanFinishGerudoFortress; } }),
         },
         {

@@ -70,13 +70,6 @@ GhostData* Multiplayer_Ghosts_GetGhostData(u16 networkID) {
     return NULL;
 }
 
-typedef void (*EffectSsDeadDb_Spawn_proc)(GlobalContext* globalCtx, Vec3f* position, Vec3f* velocity,
-                                          Vec3f* acceleration, s16 scale, s16 scale_step, s16 prim_r, s16 prim_g,
-                                          s16 prim_b, s16 prim_a, s16 env_r, s16 env_g, s16 env_b, s16 unused,
-                                          s32 frame_duration, s16 play_sound);
-#define EffectSsDeadDb_Spawn_addr 0x3642F4
-#define EffectSsDeadDb_Spawn ((EffectSsDeadDb_Spawn_proc)EffectSsDeadDb_Spawn_addr)
-
 void Multiplayer_Ghosts_DrawAll(void) {
     for (size_t i = 0; i < ARRAY_SIZE(ghosts); i++) {
         LinkGhost* ghost = &ghosts[i];
