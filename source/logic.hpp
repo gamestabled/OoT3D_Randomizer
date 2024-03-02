@@ -197,6 +197,7 @@ extern bool MagicRefill;
 extern u8 PieceOfHeart;
 extern u8 HeartContainer;
 extern bool DoubleDefense;
+extern u8 TriforcePieces;
 
 /* --- HELPERS --- */
 /* These are used to simplify reading the logic, but need to be updated

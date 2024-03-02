@@ -727,6 +727,9 @@ static Text BuildGanonBossKeyText() {
     } else if (GanonsBossKey.Is(GANONSBOSSKEY_ANYWHERE)) {
         ganonBossKeyText = Hint(GANON_BK_ANYWHERE_HINT).GetText();
 
+    } else if (GanonsBossKey.Is(GANONSBOSSKEY_TRIFORCE)) {
+        ganonBossKeyText = Hint(GANON_BK_TRIFORCE_HINT).GetText();
+
     } else if (GanonsBossKey.Is(GANONSBOSSKEY_LACS_VANILLA)) {
         ganonBossKeyText = Hint(LACS_VANILLA_HINT).GetText();
 

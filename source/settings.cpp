@@ -128,6 +128,9 @@ Option MQBotW                    = Option::U8  (2, "Bottom of the Well",  {"Vani
 Option MQIceCavern               = Option::U8  (2, "Ice Cavern",          {"Vanilla", "Master Quest", "Random"},                             {setDungeonTypesDesc});
 Option MQGTG                     = Option::U8  (2, "Training Grounds",    {"Vanilla", "Master Quest", "Random"},                             {setDungeonTypesDesc});
 Option MQCastle                  = Option::U8  (2, "Ganon's Castle",      {"Vanilla", "Master Quest", "Random"},                             {setDungeonTypesDesc});
+Option TriforceHunt              = Option::Bool("Triforce Hunt",          {"Off", "On"},                                                     {triforceHuntDesc});
+Option TriforcePiecesTotal       = Option::U8  (2, "Total pieces",        {NumOpts(1, 200)},                                                 {triforcePiecesTotalDesc},                                                                                       OptionCategory::Setting,    29);
+Option TriforcePiecesRequired    = Option::U8  (2, "Required pieces",     {NumOpts(1, 100)},                                                 {triforcePiecesRequiredDesc},                                                                                    OptionCategory::Setting,    19);
 std::vector<Option *> worldOptions = {
     &RandomizeWorld,
     &StartingAge,
@@ -163,6 +166,9 @@ std::vector<Option *> worldOptions = {
     &MQIceCavern,
     &MQGTG,
     &MQCastle,
+    &TriforceHunt,
+    &TriforcePiecesTotal,
+    &TriforcePiecesRequired,
 };
 std::vector<Option *> dungeonOptions = {
     &MQDeku,
@@ -231,9 +237,9 @@ Option GerudoKeys          = Option::U8  ("Gerudo Fortress Keys",      {"Vanilla
                                                                         {gerudoKeysVanilla, gerudoKeysAnyDungeon, gerudoKeysOverworld, gerudoKeysAnywhere});
 Option BossKeysanity       = Option::U8  ("Boss Keys",                 {"Start With", "Vanilla", "Own Dungeon", "Any Dungeon", "Overworld", "Anywhere"},
                                                                         {bossKeyStartWith, bossKeyVanilla, bossKeyOwnDungeon, bossKeyAnyDungeon, bossKeyOverworld, bossKeyAnywhere},                                                                             OptionCategory::Setting,    BOSSKEYSANITY_OWN_DUNGEON);
-Option GanonsBossKey       = Option::U8  ("Ganon's Boss Key",          {"Start With", "Vanilla", "Own Dungeon", "Any Dungeon", "Overworld", "Anywhere",
+Option GanonsBossKey       = Option::U8  ("Ganon's Boss Key",          {"Start With", "Vanilla", "Own Dungeon", "Any Dungeon", "Overworld", "Anywhere", "Triforce",
                                                                         "LACS-Vanilla", "LACS-Medallions", "LACS-Stones", "LACS-Rewards", "LACS-Dungeons", "LACS-Tokens", "LACS-Hearts"},
-                                                                        {ganonKeyStartWith, ganonKeyVanilla, ganonKeyOwnDungeon, ganonKeyAnyDungeon, ganonKeyOverworld, ganonKeyAnywhere, ganonKeyLACS},                                                         OptionCategory::Setting,    GANONSBOSSKEY_OWN_DUNGEON);
+                                                                        {ganonKeyStartWith, ganonKeyVanilla, ganonKeyOwnDungeon, ganonKeyAnyDungeon, ganonKeyOverworld, ganonKeyAnywhere, "", ganonKeyLACS},                                                         OptionCategory::Setting,    GANONSBOSSKEY_OWN_DUNGEON);
 u8 LACSCondition           = 0;
 Option LACSMedallionCount  = Option::U8  (2, "Medallion Count",        {NumOpts(0, 6)},                                                        {lacsMedallionCountDesc},                                                                                         OptionCategory::Setting,    1,                          true);
 Option LACSStoneCount      = Option::U8  (2, "Stone Count",            {NumOpts(0, 3)},                                                        {lacsStoneCountDesc},                                                                                             OptionCategory::Setting,    1,                          true);
@@ -1409,6 +1415,10 @@ SettingsContext FillContext() {
     ctx.randomMQDungeons          = (MQDungeonCount.Value<u8>() == 13) ? 1 : 0;
     ctx.mqDungeonCount            = MQSet;
 
+    ctx.triforceHunt           = (TriforceHunt) ? 1 : 0;
+    ctx.triforcePiecesTotal    = TriforcePiecesTotal.Value<u8>() + 1;
+    ctx.triforcePiecesRequired = TriforcePiecesRequired.Value<u8>() + 1;
+
     ctx.shuffleRewards         = ShuffleRewards.Value<u8>();
     ctx.linksPocketItem        = LinksPocketItem.Value<u8>();
     ctx.shuffleSongs           = ShuffleSongs.Value<u8>();
@@ -2151,6 +2161,45 @@ void ForceChange(u32 kDown, Option* currentSetting) {
             MixGrottos.Hide();
             MixGrottos.SetSelectedIndex(OFF);
         }
+
+        if (TriforceHunt) {
+            TriforcePiecesTotal.Unhide();
+            TriforcePiecesRequired.Unhide();
+        } else {
+            TriforcePiecesTotal.Hide();
+            TriforcePiecesRequired.Hide();
+        }
+    }
+
+    // If Triforce Hunt is enabled, lock Ganon BK setting to the "Triforce" option.
+    // Otherwise, make that option unselectable by switching to the next one over.
+    if (TriforceHunt) {
+        GanonsBossKey.SetSelectedIndex(GANONSBOSSKEY_TRIFORCE);
+        GanonsBossKey.Lock();
+    } else {
+        GanonsBossKey.Unlock();
+        if (GanonsBossKey.Is(GANONSBOSSKEY_TRIFORCE)) {
+            if (currentSetting == &GanonsBossKey) {
+                GanonsBossKey.ScrollOptionIndex(kDown);
+            } else {
+                GanonsBossKey.SetSelectedIndex(GANONSBOSSKEY_START_WITH);
+            }
+            GanonsBossKey.SetVariable();
+        }
+    }
+
+    // Make sure the required pieces are less than the total pieces
+    if (TriforcePiecesRequired.Value<u8>() > TriforcePiecesTotal.Value<u8>()) {
+        if (currentSetting == &TriforcePiecesTotal) {
+            TriforcePiecesRequired.SetSelectedIndex(currentSetting->GetSelectedOptionIndex());
+        } else if (currentSetting == &TriforcePiecesRequired) {
+            TriforcePiecesTotal.SetSelectedIndex(currentSetting->GetSelectedOptionIndex());
+        } else { // randomized settings
+            // invert amounts
+            u8 temp = TriforcePiecesRequired.GetSelectedOptionIndex();
+            TriforcePiecesRequired.SetSelectedIndex(TriforcePiecesTotal.GetSelectedOptionIndex());
+            TriforcePiecesTotal.SetSelectedIndex(temp);
+        }
     }
 
     if (SetDungeonTypes) {
@@ -2626,6 +2675,7 @@ std::vector<std::pair<Option*, u8>> racingOverrides = {
 
 // Options that should be overridden and then restored after generating when vanilla logic is enabled
 std::vector<std::pair<Option*, u8>> vanillaLogicOverrides = {
+    { &TriforceHunt, OFF },
     { &LinksPocketItem, LINKSPOCKETITEM_DUNGEON_REWARD },
     { &ShuffleRewards, REWARDSHUFFLE_END_OF_DUNGEON },
     { &ShuffleSongs, SONGSHUFFLE_SONG_LOCATIONS },

@@ -269,7 +269,9 @@ typedef struct {
     /* 0x01C0 */ void* leftHandDLists;
     /* 0x01C4 */ void* sheathDLists;
     /* 0x01C8 */ void* waistDLists;
-    /* 0x01CC */ char unk_1CC[0x80];
+    /* 0x01CC */ char unk_1CC[0x78];
+    /* 0x0244 */ SkeletonAnimationModel* giModel1;
+    /* 0x0248 */ SkeletonAnimationModel* giModel2;
     /* 0x024C */ void* giDrawSpace;
     /* 0x0250 */ char unk_250[0x0004];
     /* 0x0254 */ struct SkelAnime skelAnime;

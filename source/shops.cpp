@@ -663,6 +663,11 @@ void InitTrickNames() {
         Text{ "Recovery Heart", "Quart de cœur", "Corazón", "Cuore", "Herz" },
         Text{ "Piece of Heart", "Cœur d'énergie", "Pieza de corazón", "Frammento di cuore", "Herzteil" }
     };
+    trickNameTable[GI_TRIFORCE_PIECE] = {
+        Text{ "Piece of Cheese", "Morceau de Fromage", "Piece of Cheese", "Frammento di Formaggio", "Piece of Cheese" },
+        Text{ "Triforce Shard", "Éclat de Triforce", "Triforce Shard", "Pezzo della Triforza", "Triforce Shard" },
+        Text{ "Shiny Rock", "Caiiloux Brillant", "Shiny Rock", "Oro 24K", "Shiny Rock" }
+    };
 
     /*
       //Names for individual upgrades, in case progressive names are replaced

@@ -20,29 +20,6 @@ void ItemEffect_FullHeal(SaveContext* saveCtx, s16 arg1, s16 arg2) {
     }
 }
 
-// void give_triforce_piece(SaveContext* saveCtx, s16 arg1, s16 arg2) {
-//     save->scene_flags[0x48].unk_00_ += 1; //Unused word in scene x48.
-//     set_triforce_render();
-
-//     // Trigger win when the target is hit
-//     if (save->scene_flags[0x48].unk_00_ == triforce_pieces_requied) {
-//         // Give GC boss key to allow beating the game again afterwards
-//         give_dungeon_item(save, 0x01, 10);
-
-//         // Save Game
-//         save->entrance_index = z64_game.entrance_index;
-//         save->scene_index = z64_game.scene_index;
-//         commit_scene_flags(&z64_game);
-//         save_game(&z64_game + 0x1F74);
-
-//         // warp to start of credits sequence
-//         z64_file.cutscene_next = 0xFFF8;
-//         z64_game.entrance_index = 0x00A0;
-//         z64_game.scene_load_flag = 0x14;
-//         z64_game.fadeout_transition = 0x01;
-//     }
-// }
-
 void ItemEffect_GiveTycoonWallet(SaveContext* saveCtx, s16 arg1, s16 arg2) {
     saveCtx->upgrades |= 3 << 12;
     if (gSettingsContext.startingMaxRupees)
@@ -168,6 +145,22 @@ void ItemEffect_EquipMasterSword(void) {
 void ItemEffect_BeanPack(SaveContext* saveCtx, s16 arg1, s16 arg2) {
     saveCtx->items[SLOT_BEAN] = ITEM_BEAN;
     saveCtx->ammo[SLOT_BEAN] += 10; // 10 Magic Beans
+}
+
+void ItemEffect_TriforcePiece(SaveContext* saveCtx, s16 arg1, s16 arg2) {
+    gExtSaveData.extInf[EXTINF_TRIFORCE_PIECES]++;
+    if (gSettingsContext.triforceHunt &&
+        gExtSaveData.extInf[EXTINF_TRIFORCE_PIECES] == gSettingsContext.triforcePiecesRequired) {
+        // Save progress
+        SaveGame(gGlobalContext, FALSE);
+        // Warp to Ganon sealing cutscene
+        gGlobalContext->nextEntranceIndex = 0x00A0;
+        gSaveContext.nextCutsceneIndex    = 0xFFF8;
+        gEntranceTable[0x00A0].field |= 0x8000; // continue playing background music (namely get item fanfare)
+        gGlobalContext->fadeOutTransition = 0x2F;
+        gGlobalContext->sceneLoadFlag     = 0x14;
+        PLAYER->stateFlags1 |= 1; // Loading area
+    }
 }
 
 // With the No Ammo Drops option on, when the player gets an ammo upgrade,

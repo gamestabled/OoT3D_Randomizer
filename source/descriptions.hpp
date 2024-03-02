@@ -112,6 +112,10 @@ extern string_view scarceHeartsDesc;
 extern string_view mqDungeonCountDesc;
 extern string_view setDungeonTypesDesc;
 
+extern string_view triforceHuntDesc;
+extern string_view triforcePiecesTotalDesc;
+extern string_view triforcePiecesRequiredDesc;
+
 extern string_view shuffleRewardsEndOfDungeon;
 extern string_view shuffleRewardsAnyDungeon;
 extern string_view shuffleRewardsOverworld;

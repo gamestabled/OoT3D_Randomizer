@@ -863,4 +863,8 @@ typedef void (*Animation_Change_proc)(SkelAnime* anime, s32 animation_index, f32
 #define Animation_Change_addr 0x375C08
 #define Animation_Change ((Animation_Change_proc)Animation_Change_addr)
 
+typedef void (*SaveGame_proc)(GlobalContext* globalCtx, u8 isSaveFileCreation);
+#define SaveGame_addr 0x2FDAC8
+#define SaveGame ((SaveGame_proc)SaveGame_addr)
+
 #endif //_Z3D_H_

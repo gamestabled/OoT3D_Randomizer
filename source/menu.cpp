@@ -202,7 +202,7 @@ void MoveCursor(u32 kDown, bool updatedByHeld) {
     }
 }
 
-void MenuUpdate(u32 kDown, bool updatedByHeld) {
+void MenuUpdate(u32 kDown, bool updatedByHeld, u32 kHeld) {
     consoleSelect(&bottomScreen);
     if (currentMenu->mode != POST_GENERATE || (kDown & KEY_B)) {
         // Don't clear console if ValidateSettings printed error
@@ -267,7 +267,7 @@ void MenuUpdate(u32 kDown, bool updatedByHeld) {
     if (currentMenu->mode == MAIN_MENU) {
         PrintMainMenu();
     } else if (currentMenu->mode == OPTION_MENU) {
-        UpdateOptionSubMenu(kDown);
+        UpdateOptionSubMenu(kDown, kHeld);
         PrintOptionSubMenu();
     } else if (currentMenu->mode == LOAD_PREMADE_PRESET) {
         UpdatePremadePresetsMenu(kDown);
@@ -331,17 +331,9 @@ void UpdateCustomCosmeticColors(u32 kDown) {
     }
 }
 
-void UpdateOptionSubMenu(u32 kDown) {
-    if ((kDown & KEY_RIGHT) != 0) {
-        currentSetting->NextOptionIndex();
-    }
-    if ((kDown & KEY_LEFT) != 0) {
-        currentSetting->PrevOptionIndex();
-    }
-
-    // Bounds checking
-    currentSetting->SanitizeSelectedOptionIndex();
-
+void UpdateOptionSubMenu(u32 kDown, u32 kHeld) {
+    bool fastScrolling = kHeld & KEY_A;
+    currentSetting->ScrollOptionIndex(kDown, fastScrolling);
     currentSetting->SetVariable();
     Settings::ForceChange(kDown, currentSetting);
     UpdateCustomCosmeticColors(kDown);

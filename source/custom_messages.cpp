@@ -1055,6 +1055,17 @@ void CreateAlwaysIncludedMessages() {
         rutoDialog.Replace("$", ""); // Plural marker
         CreateMessageFromTextObject(0x4050, 0, 2, 3, AddColorsAndFormat(rutoDialog, { itemColor }));
     }
+
+    // Triforce Piece
+    {
+        Text triforceMsg =
+            Text{ /*english*/ "You found a piece of the #Triforce#!&You have #" + TRIFORCE_PIECE_COUNT() + "#!",
+                  /*french */ "",
+                  /*spanish*/ "",
+                  /*italian*/ "Hai ottenuto un frammento della #Triforza#!&Ne hai #" + TRIFORCE_PIECE_COUNT() + "#!",
+                  /*german */ "" };
+        CreateMessageFromTextObject(0x9003, 0, 2, 3, AddColorsAndFormat(triforceMsg, { QM_RED, QM_RED }));
+    }
 }
 
 std::vector<Text> CreateBaseCompassTexts() {
@@ -1356,5 +1367,8 @@ std::string MQ_ELSE() {
 }
 std::string MQ_END() {
     return "\x7F\x2B"s;
+}
+std::string TRIFORCE_PIECE_COUNT() {
+    return "\x7F\x30"s;
 }
 } // namespace CustomMessages
