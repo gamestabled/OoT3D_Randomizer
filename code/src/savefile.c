@@ -161,8 +161,8 @@ void SaveFile_Init(u32 fileBaseIndex) {
         gSaveContext.eventChkInf[0x0] |= 0x0010;
     }
 
-    SaveFile_SetStartingInventory();
     SaveFile_InitExtSaveData(fileBaseIndex + gSaveContext.fileNum, 1);
+    SaveFile_SetStartingInventory();
 
     // Ingame Defaults
     gSaveContext.zTargetingSetting    = gSettingsContext.zTargeting;
@@ -535,6 +535,9 @@ void SaveFile_SetStartingInventory(void) {
         EventSet(0x18);
         gSaveContext.horseData.pos.y = 0xF000; // place Epona OoB, so you can't reach her without playing the song
     }
+
+    // Set owned ocarina buttons. If the shuffle option is disabled, this value will be ignored.
+    gExtSaveData.extInf[EXTINF_OCARINA_BUTTONS] = gSettingsContext.startingOcarinaButtons;
 }
 
 // We will use the "unk" flags in DMT to represent adult trade ownership

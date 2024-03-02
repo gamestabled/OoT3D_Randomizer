@@ -514,6 +514,7 @@ typedef struct {
     u8 shuffleFrogSongRupees;
     u8 shuffleAdultTradeQuest;
     u8 shuffleChestMinigame;
+    u8 shuffleOcarinaButtons;
 
     u8 mapsAndCompasses;
     u8 keysanity;
@@ -724,6 +725,8 @@ typedef struct {
     u32 startingDungeonReward;
     u32 startingEquipment;
     u32 startingUpgrades;
+
+    u8 startingOcarinaButtons;
 
     u8 startingTokens;
 

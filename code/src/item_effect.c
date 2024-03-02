@@ -6,6 +6,7 @@
 #include "dungeon.h"
 #include "common.h"
 #include "actors/chest.h"
+#include "ocarina_notes.h"
 
 void ItemEffect_None(SaveContext* saveCtx, s16 arg1, s16 arg2) {
 }
@@ -432,4 +433,8 @@ void ItemEffect_ShardOfAgony(SaveContext* saveCtx, s16 arg1, s16 arg2) {
             Chest_ChangeAppearance(chest, gGlobalContext);
         }
     }
+}
+
+void ItemEffect_OcarinaNote(SaveContext* saveCtx, s16 buttonId, s16 arg2) {
+    OcarinaNotes_RegisterButtonOwned(buttonId);
 }

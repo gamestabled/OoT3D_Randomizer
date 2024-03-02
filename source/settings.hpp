@@ -314,6 +314,18 @@ class Menu {
         settingBound = 0;
     }
 
+    void Lock() {
+        locked = true;
+    }
+
+    void Unlock() {
+        locked = false;
+    }
+
+    bool IsLocked() const {
+        return locked;
+    }
+
     std::string name;
     MenuType type;
     std::vector<Option*>* settingsList;
@@ -324,6 +336,7 @@ class Menu {
     int selectedSetting          = 0;
     std::string_view description = "";
     bool printInSpoiler          = true;
+    bool locked                  = false;
 };
 
 namespace Settings {
@@ -409,6 +422,7 @@ extern Option ShuffleMerchants;
 extern Option ShuffleFrogSongRupees;
 extern Option ShuffleAdultTradeQuest;
 extern Option ShuffleChestMinigame;
+extern Option ShuffleOcarinaButtons;
 
 extern Option MapsAndCompasses;
 extern Option Keysanity;
@@ -581,6 +595,12 @@ extern Option StartingSpiritMedallion;
 extern Option StartingShadowMedallion;
 extern Option StartingLightMedallion;
 extern Option StartingSkulltulaToken;
+
+extern Option StartingOcarinaButtonL;
+extern Option StartingOcarinaButtonR;
+extern Option StartingOcarinaButtonX;
+extern Option StartingOcarinaButtonY;
+extern Option StartingOcarinaButtonA;
 
 // Logic Settings
 extern Option Logic;
@@ -814,6 +834,7 @@ extern std::vector<Option*> startingItemsOptions;
 extern std::vector<Option*> startingSongsOptions;
 extern std::vector<Option*> startingEquipmentOptions;
 extern std::vector<Option*> startingStonesMedallionsOptions;
+extern std::vector<Option*> startingOcarinaButtonsOptions;
 extern std::vector<Option*> startingOtherOptions;
 extern std::vector<Option*> trickOptions;
 extern std::vector<Option*> glitchCategories;

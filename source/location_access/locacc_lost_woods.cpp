@@ -220,7 +220,7 @@ void AreaTable_Init_LostWoods() {
             LocationAccess(LW_TRADE_COJIRO, { [] { return IsAdult && Cojiro; } }),
             LocationAccess(LW_TRADE_ODD_POULTICE, { [] { return IsAdult && OddPoultice && Cojiro; } }),
             LocationAccess(LW_OCARINA_MEMORY_GAME,
-                           { [] { return IsChild && Ocarina; },
+                           { [] { return IsChild && Ocarina && (OcarinaButtonsCount >= 5); },
                              /*Glitched*/
                              [] {
                                  return IsChild &&

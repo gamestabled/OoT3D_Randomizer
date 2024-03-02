@@ -36,4 +36,5 @@ void ItemEffect_GrannySellsPotions(SaveContext* saveCtx, s16 arg1, s16 arg2);
 void ItemEffect_OwnAdultTrade(SaveContext* saveCtx, s16 arg1, s16 arg2);
 void ItemEffect_GiveWeirdEgg(SaveContext* saveCtx, s16 arg1, s16 arg2);
 void ItemEffect_ShardOfAgony(SaveContext* saveCtx, s16 arg1, s16 arg2);
+void ItemEffect_OcarinaNote(SaveContext* saveCtx, s16 buttonId, s16 arg2);
 #endif //_ITEM_EFFECT_H_

@@ -435,6 +435,12 @@ typedef enum {
     /* 0xDC */ GI_FORTRESS_KEY_RING,
     /* 0xDD */ GI_GANON_KEY_RING,
     /* 0xDE */ GI_CHEST_GAME_KEY,
+
+    /* 0xDF */ GI_OCARINA_BUTTON_L,
+    /* 0xE0 */ GI_OCARINA_BUTTON_R,
+    /* 0xE1 */ GI_OCARINA_BUTTON_X,
+    /* 0xE2 */ GI_OCARINA_BUTTON_Y,
+    /* 0xE3 */ GI_OCARINA_BUTTON_A,
 } GetItemID;
 
 typedef enum {

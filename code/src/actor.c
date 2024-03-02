@@ -61,6 +61,7 @@
 #define OBJECT_GI_HEARTS 189
 #define OBJECT_GI_OCARINA 222
 #define OBJECT_GI_OCARINA_0 270
+#define OBJECT_GI_SOLD_OUT 328
 
 typedef void (*TitleCard_Update_proc)(GlobalContext* globalCtx, TitleCardContext* titleCtx);
 #ifdef Version_EUR
@@ -253,6 +254,9 @@ void Actor_Init() {
 
     // Define object 128 to be by default the same as object 185
     strncpy(gObjectTable[OBJECT_CUSTOM_BOSS_KEYS].filename, gObjectTable[OBJECT_GI_BOSSKEY].filename, 0x40);
+
+    // Define object 291 to be by default the same as object 328
+    strncpy(gObjectTable[OBJECT_CUSTOM_OCARINA_BUTTON].filename, gObjectTable[OBJECT_GI_SOLD_OUT].filename, 0x40);
 }
 
 void ActorSetup_Extra() {

@@ -1956,4 +1956,49 @@ void HintTable_Init_Item() {
     //                      Text{"An Error (Please Report This)", /*french*/"une erreur (signaler S.V.P.)", /*spanish*/"un error (repórtelo si es posible)", /*italian*/"un errore (segnalalo per favore)", /*german*/"ein Fehler (Bitte melden)"}
     //                    }
     // );
+
+    hintTable[OCA_BUTTON_ITEM_L] = HintText::Item({
+                       // obscure text
+                       Text{"the Ocarina L Button", /*french*/"", /*spanish*/"", /*italian*/"il pulsante L dell'ocarina", /*german*/""},
+                     }, {
+                       // ambiguous text
+                       Text{"something to play songs", /*french*/"", /*spanish*/"", /*italian*/"qualcosa per suonare melodie", /*german*/""},
+                     }
+    );
+
+    hintTable[OCA_BUTTON_ITEM_R] = HintText::Item({
+                       // obscure text
+                       Text{"the Ocarina R Button", /*french*/"", /*spanish*/"", /*italian*/"il pulsante R dell'ocarina", /*german*/""},
+                     }, {
+                       // ambiguous text
+                       Text{"something to play songs", /*french*/"", /*spanish*/"", /*italian*/"qualcosa per suonare melodie", /*german*/""},
+                     }
+    );
+
+    hintTable[OCA_BUTTON_ITEM_X] = HintText::Item({
+                       // obscure text
+                       Text{"the Ocarina X Button", /*french*/"", /*spanish*/"", /*italian*/"il pulsante X dell'ocarina", /*german*/""},
+                     }, {
+                       // ambiguous text
+                       Text{"something to play songs", /*french*/"", /*spanish*/"", /*italian*/"qualcosa per suonare melodie", /*german*/""},
+                     }
+    );
+
+    hintTable[OCA_BUTTON_ITEM_Y] = HintText::Item({
+                       // obscure text
+                       Text{"the Ocarina Y Button", /*french*/"", /*spanish*/"", /*italian*/"il pulsante Y dell'ocarina", /*german*/""},
+                     }, {
+                       // ambiguous text
+                       Text{"something to play songs", /*french*/"", /*spanish*/"", /*italian*/"qualcosa per suonare melodie", /*german*/""},
+                     }
+    );
+
+    hintTable[OCA_BUTTON_ITEM_A] = HintText::Item({
+                       // obscure text
+                       Text{"the Ocarina A Button", /*french*/"", /*spanish*/"", /*italian*/"il pulsante A dell'ocarina", /*german*/""},
+                     }, {
+                       // ambiguous text
+                       Text{"something to play songs", /*french*/"", /*spanish*/"", /*italian*/"qualcosa per suonare melodie", /*german*/""},
+                     }
+    );
 }

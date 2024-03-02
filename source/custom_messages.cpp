@@ -1055,6 +1055,13 @@ void CreateAlwaysIncludedMessages() {
         rutoDialog.Replace("$", ""); // Plural marker
         CreateMessageFromTextObject(0x4050, 0, 2, 3, AddColorsAndFormat(rutoDialog, { itemColor }));
     }
+
+    for (ItemKey key = OCA_BUTTON_ITEM_L; key <= OCA_BUTTON_ITEM_A; key++) {
+        Text text = Text{ "You got the #", "Vous obtenez #", "¡Has obtenido #", "Hai ottenuto il #", "Du hast #" } +
+                    ItemTable(key).GetName() + "#!";
+
+        CreateMessageFromTextObject(0x93F0 + key - OCA_BUTTON_ITEM_L, 0, 2, 3, AddColorsAndFormat(text, { QM_RED }));
+    }
 }
 
 std::vector<Text> CreateBaseCompassTexts() {

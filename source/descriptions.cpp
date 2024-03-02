@@ -531,6 +531,13 @@ string_view chestMinigameDesc         = "The 5 key chests in the Treasure Chest 
                                         "If you choose the \"pack\" option, you will get\n"//
                                         "all the keys at once, in a single item.";         //
 /*------------------------------                                                           //
+|   SHUFFLE OCARINA BUTTONS    |                                                           //
+------------------------------*/                                                           //
+string_view ocarinaButtonsDesc        = "Enabling this locks all Ocarina inputs, and adds\n"
+                                        "5 new items to find that each unlock one of the 5\n"
+                                        "Ocarina notes.\n\n"                               //
+                                        "They can also be added to the Starting Inventory.";
+/*------------------------------                                                           //
 |      MAPS AND COMPASSES      |                                                           //
 ------------------------------*/                                                           //
 string_view mapCompassStartWith       = "Maps and Compasses are given to you from the\n"   //

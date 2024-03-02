@@ -254,6 +254,9 @@ const std::array<ItemKey, 10> tradeItems = {
     EYEDROPS,
     CLAIM_CHECK,
 };
+const std::array<ItemKey, 5> ocarinaNoteButtons = {
+    OCA_BUTTON_ITEM_L, OCA_BUTTON_ITEM_R, OCA_BUTTON_ITEM_X, OCA_BUTTON_ITEM_Y, OCA_BUTTON_ITEM_A,
+};
 
 void AddItemToPool(std::vector<ItemKey>& pool, ItemKey item, size_t count /*= 1*/) {
     pool.insert(pool.end(), count, item);
@@ -1008,6 +1011,13 @@ void GenerateItemPool() {
         IceTrapModels.push_back(0xD4); // Progressive Goron Sword
     } else {
         IceTrapModels.push_back(GI_SWORD_BGS);
+    }
+
+    if (ShuffleOcarinaButtons) {
+        AddItemsToPool(ItemPool, ocarinaNoteButtons);
+        if (ItemPoolValue.Is(ITEMPOOL_PLENTIFUL)) {
+            AddItemsToPool(PendingJunkPool, ocarinaNoteButtons);
+        }
     }
 
     // Replace ice traps with junk from the pending junk pool if necessary

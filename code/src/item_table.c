@@ -3,6 +3,7 @@
 #include "item_effect.h"
 #include "rHeap.h"
 #include "chest.h"
+#include "ocarina_notes.h"
 #include <stddef.h>
 
 #define ITEM_ROW(baseItemId_, chestType_, actionId_, textId_, objectId_, objectModelIdx_, cmabIndex_,             \
@@ -273,6 +274,12 @@ static ItemRow rItemTable[] = {
     [GI_GANON_KEY_RING]     = ITEM_ROW(0x53, CHEST_SMALL_KEY, 0x41, 0x9308,   0x007F, 0x00, 0xFF, 0xFF, 0xFF,   0x08, ItemUpgrade_None, ItemEffect_GiveSmallKeyRing, DUNGEON_INSIDE_GANONS_CASTLE, -1), // Ganon's Castle Small Key ring
 
     [GI_CHEST_GAME_KEY]     = ITEM_ROW(0x53, CHEST_SMALL_KEY, 0x41, 0x00F3,   0x00AA, 0x00, 0xFF, 0xFF, 0xFF,   0xFF, ItemUpgrade_None, ItemEffect_GiveSmallKey, DUNGEON_TREASURE_CHEST_SHOP, -1), // Small Key (Chest Game)
+
+    [GI_OCARINA_BUTTON_L]   = ITEM_ROW(0x53, CHEST_MAJOR,     0x41, 0x93F0,   0x0123, 0x00, 0xFF, 0xFF, 0xFF,   0x00, ItemUpgrade_None, ItemEffect_OcarinaNote, OCARINA_BUTTON_L, -1), // Ocarina Note Button L
+    [GI_OCARINA_BUTTON_R]   = ITEM_ROW(0x53, CHEST_MAJOR,     0x41, 0x93F1,   0x0123, 0x00, 0xFF, 0xFF, 0xFF,   0x01, ItemUpgrade_None, ItemEffect_OcarinaNote, OCARINA_BUTTON_R, -1), // Ocarina Note Button R
+    [GI_OCARINA_BUTTON_X]   = ITEM_ROW(0x53, CHEST_MAJOR,     0x41, 0x93F2,   0x0123, 0x00, 0xFF, 0xFF, 0xFF,   0x02, ItemUpgrade_None, ItemEffect_OcarinaNote, OCARINA_BUTTON_X, -1), // Ocarina Note Button X
+    [GI_OCARINA_BUTTON_Y]   = ITEM_ROW(0x53, CHEST_MAJOR,     0x41, 0x93F3,   0x0123, 0x00, 0xFF, 0xFF, 0xFF,   0x03, ItemUpgrade_None, ItemEffect_OcarinaNote, OCARINA_BUTTON_Y, -1), // Ocarina Note Button Y
+    [GI_OCARINA_BUTTON_A]   = ITEM_ROW(0x53, CHEST_MAJOR,     0x41, 0x93F4,   0x0123, 0x00, 0xFF, 0xFF, 0xFF,   0x04, ItemUpgrade_None, ItemEffect_OcarinaNote, OCARINA_BUTTON_A, -1), // Ocarina Note Button A
 
 };
 // clang-format on

@@ -2200,6 +2200,18 @@ RandomGsLoc_BlockSpawn_Soil_patch:
 RandomGsLoc_SkipSoilJingle_patch:
     bl hook_RandomGsLoc_SkipSoilJingle
 
+.section .patch_OcarinaNoteButtonsDraw
+.global OcarinaNoteButtonsDraw_patch
+OcarinaNoteButtonsDraw_patch:
+    push {lr}
+    bl hook_OcarinaNoteButtonsDraw
+    pop {lr}
+
+.section .patch_OcarinaNoteButtonsPress
+.global OcarinaNoteButtonsPress_patch
+OcarinaNoteButtonsPress_patch:
+    bl hook_OcarinaNoteButtonsPress
+
 @ ----------------------------------
 @ ----------------------------------
 
