@@ -1367,7 +1367,6 @@ SettingsContext FillContext() {
     ctx.hashIndexes[2]  = hashIconIndexes[2];
     ctx.hashIndexes[3]  = hashIconIndexes[3];
     ctx.hashIndexes[4]  = hashIconIndexes[4];
-    ctx.playOption      = PlayOption;
     ctx.region          = Region;
 
     ctx.logic                = Logic.Value<u8>();

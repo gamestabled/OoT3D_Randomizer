@@ -823,7 +823,7 @@ static void Gfx_ShowMenu(void) {
     pressed = 0;
 
     Draw_ClearFramebuffer();
-    if (gSettingsContext.playOption == PLAY_ON_CONSOLE) {
+    if (!playingOnCitra) {
         Draw_FlushFramebuffer();
     }
 
@@ -968,7 +968,7 @@ static void Gfx_ShowMenu(void) {
                 showingLegend = false;
                 Draw_ClearBackbuffer();
                 Draw_CopyBackBuffer();
-                if (gSettingsContext.playOption == PLAY_ON_CONSOLE) {
+                if (!playingOnCitra) {
                     Draw_FlushFramebuffer();
                 }
                 break;
@@ -1005,7 +1005,7 @@ static void Gfx_ShowMenu(void) {
         Gfx_DrawButtonPrompts();
         Gfx_DrawHeader();
         Draw_CopyBackBuffer();
-        if (gSettingsContext.playOption == PLAY_ON_CONSOLE) {
+        if (!playingOnCitra) {
             Draw_FlushFramebuffer();
         }
 
@@ -1016,7 +1016,7 @@ static void Gfx_ShowMenu(void) {
 
 static void Gfx_ShowMultiplayerSyncMenu(void) {
     Draw_ClearFramebuffer();
-    if (gSettingsContext.playOption == PLAY_ON_CONSOLE) {
+    if (!playingOnCitra) {
         Draw_FlushFramebuffer();
     }
 
@@ -1059,7 +1059,7 @@ static void Gfx_ShowMultiplayerSyncMenu(void) {
 
                 Draw_ClearBackbuffer();
                 Draw_CopyBackBuffer();
-                if (gSettingsContext.playOption == PLAY_ON_CONSOLE) {
+                if (!playingOnCitra) {
                     Draw_FlushFramebuffer();
                 }
                 mp_isSyncing     = false;
@@ -1080,7 +1080,7 @@ static void Gfx_ShowMultiplayerSyncMenu(void) {
 
                 Draw_ClearBackbuffer();
                 Draw_CopyBackBuffer();
-                if (gSettingsContext.playOption == PLAY_ON_CONSOLE) {
+                if (!playingOnCitra) {
                     Draw_FlushFramebuffer();
                 }
                 mp_isSyncing = false;
@@ -1090,7 +1090,7 @@ static void Gfx_ShowMultiplayerSyncMenu(void) {
         }
 
         Draw_CopyBackBuffer();
-        if (gSettingsContext.playOption == PLAY_ON_CONSOLE) {
+        if (!playingOnCitra) {
             Draw_FlushFramebuffer();
         }
 
