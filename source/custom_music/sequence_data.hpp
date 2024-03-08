@@ -5,13 +5,18 @@
 #include <string>
 #include <array>
 
+#include "cmeta_interpreter.hpp"
+
 static const std::string CustomMusicRootPath = "/OoT3DR/Custom Music/";
+static const std::string bcseqExtension      = ".bcseq";
+static const std::string cmetaExtension      = ".cmeta";
 
 class SequenceData {
   public:
     SequenceData();
     SequenceData(std::vector<u8>* rawBytesPtr_, std::array<u32, 4> banks_, u16 chFlags_, u8 volume_);
-    SequenceData(std::string filePath_, std::array<u32, 4> banks_, u16 chFlags_, u8 volume_);
+    SequenceData(std::string bcseqPath_, CMetaInterpreter& ci);
+    SequenceData(std::string bcseqPath_, std::string cmetaPath_);
     ~SequenceData();
 
     /// Returns the raw bytes of the sequence.
@@ -19,13 +24,17 @@ class SequenceData {
     ///   If this Sequence Data is empty, returns an empty byte vector.
     /// - PATH Type: Returns the raw bytes of the external sequence.
     ///   Reads the file only the first time this is called.
-    std::vector<u8> GetData(FS_Archive archive_);
+    std::vector<u8>& GetData(FS_Archive archive_);
+
     /// Returns the bank index.
     std::array<u32, 4> GetBanks();
     /// Returns the bits of the set flags.
     u16 GetChFlags();
     /// Returns the volume.
     u8 GetVolume();
+
+    /// Keeps track of if the meta data has been set
+    bool valuesSet = false;
 
   private:
     enum DataType {
@@ -39,7 +48,9 @@ class SequenceData {
     std::vector<u8>* rawBytesPtr;
 
     /// PATH Type: The full path to the external sequence
-    std::string filePath;
+    std::string bcseqPath;
+    /// PATH Type: The full path to the cmeta file
+    std::string cmetaPath;
     /// PATH Type: The raw bytes of the external sequence
     std::vector<u8> rawBytes;
 
@@ -81,6 +92,9 @@ class MusicCategoryNode {
 
     /// Returns all leaves in this node's children.
     std::vector<MusicCategoryLeaf*> GetAllLeaves();
+    /// Returns the first (and hopefully only) node in this family tree with the same name.
+    /// If no match was found, returns nullptr.
+    MusicCategoryNode* GetNodeByName(const std::string name);
 
     const std::string Name;
 
