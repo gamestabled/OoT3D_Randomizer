@@ -12,12 +12,8 @@ u8 TriforceWarpStatus = TRIFORCEWARP_OFF;
 void Triforce_HandleCreditsWarp(void) {
     static s32 sPreviousTextState = 0; // used to add a one-frame delay
 
-    if (!IsInGame()) {
-        TriforceWarpStatus = TRIFORCEWARP_OFF;
-    }
-
     if ((TriforceWarpStatus == TRIFORCEWARP_WHEN_TEXT_COMPLETE && sPreviousTextState == TEXT_STATE_DONE) ||
-        (TriforceWarpStatus == TRIFORCEWARP_WHEN_PLAYER_READY && !gIsBottomScreenDimmed &&
+        (TriforceWarpStatus == TRIFORCEWARP_WHEN_PLAYER_READY && IsInGame() && !gIsBottomScreenDimmed &&
          PauseContext_GetState() == 0 && gGlobalContext->sceneLoadFlag == 0 && !isItemOverrideActive &&
          gGlobalContext->csCtx.state == 0 && !ItemOverride_IsAPendingOverride())) {
         // Save progress
