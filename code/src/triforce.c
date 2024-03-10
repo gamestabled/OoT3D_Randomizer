@@ -1,9 +1,6 @@
 #include "triforce.h"
 #include "item_override.h"
-#include "savefile.h"
-#include "settings.h"
 #include "common.h"
-#include "item_override.h"
 
 #define TEXT_STATE_DONE 6
 

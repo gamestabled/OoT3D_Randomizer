@@ -8,7 +8,6 @@
 #include "entrance.h"
 #include "savefile.h"
 #include "common.h"
-#include "triforce.h"
 
 #include <stddef.h>
 
