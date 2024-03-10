@@ -835,8 +835,7 @@ void SaveFile_BeforeLoadGame(u32 saveNumber) {
 
 void SaveFile_AfterLoadGame(void) {
     // Give Ganon BK if Triforce Hunt has been completed
-    if (gSettingsContext.triforceHunt == ON &&
-        gExtSaveData.extInf[EXTINF_TRIFORCE_PIECES] >= gSettingsContext.triforcePiecesRequired &&
+    if (gSettingsContext.triforceHunt == ON && gExtSaveData.triforcePieces >= gSettingsContext.triforcePiecesRequired &&
         (gSaveContext.dungeonItems[DUNGEON_GANONS_TOWER] & 1) == 0) {
 
         ItemOverride_PushHardcodedItem(GI_GANON_BOSS_KEY);

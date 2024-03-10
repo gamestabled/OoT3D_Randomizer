@@ -79,6 +79,7 @@ typedef struct {
     u8 extInf[EXTINF_SIZE];
     u32 scenesDiscovered[SAVEFILE_SCENES_DISCOVERED_IDX_COUNT];
     u32 entrancesDiscovered[SAVEFILE_ENTRANCES_DISCOVERED_IDX_COUNT];
+    u8 triforcePieces;
 } MultiplayerSaveContext;
 
 static MultiplayerSaveContext mSaveContext;
@@ -142,6 +143,7 @@ static void Multiplayer_Overwrite_mSaveContext(void) {
     for (size_t i = 0; i < SAVEFILE_ENTRANCES_DISCOVERED_IDX_COUNT; i++) {
         mSaveContext.entrancesDiscovered[i] = gExtSaveData.entrancesDiscovered[i];
     }
+    mSaveContext.triforcePieces = gExtSaveData.triforcePieces;
 }
 
 static void Multiplayer_Overwrite_gSaveContext(void) {
@@ -203,6 +205,7 @@ static void Multiplayer_Overwrite_gSaveContext(void) {
     for (size_t i = 0; i < SAVEFILE_ENTRANCES_DISCOVERED_IDX_COUNT; i++) {
         gExtSaveData.entrancesDiscovered[i] = mSaveContext.entrancesDiscovered[i];
     }
+    gExtSaveData.triforcePieces = mSaveContext.triforcePieces;
 }
 
 void Multiplayer_OnFileLoad(void) {
@@ -265,6 +268,7 @@ u8 prevFishingFlags;
 u32 prevWorldMapAreaData;
 u32 prevAdultTrade;
 u8 prevExtInf[EXTINF_SIZE];
+u8 prevTriforcePieces;
 s16 prevHealth;
 s16 prevRupees;
 
@@ -305,6 +309,7 @@ typedef enum {
     PACKET_EXTINF,
     PACKET_DISCOVEREDSCENE,
     PACKET_DISCOVEREDENTRANCE,
+    PACKET_TRIFORCEPIECES,
     PACKET_UNLOCKEDDOOR,
     PACKET_ACTORUPDATE,
     PACKET_ACTORSPAWN,
@@ -517,6 +522,9 @@ static void Multiplayer_Sync_Init(void) {
     for (size_t i = 0; i < EXTINF_SIZE; i++) {
         prevExtInf[i] = gExtSaveData.extInf[i];
     }
+
+    // Triforce Pieces
+    prevTriforcePieces = gExtSaveData.triforcePieces;
 
     // Health
     prevHealth = gSaveContext.health;
@@ -858,6 +866,12 @@ static void Multiplayer_Sync_SharedProgress(void) {
         }
         prevExtInf[index] = gExtSaveData.extInf[index];
     }
+
+    // Triforce Pieces
+    if (prevTriforcePieces != gExtSaveData.triforcePieces) {
+        Multiplayer_Send_TriforcePieces(gExtSaveData.triforcePieces - prevTriforcePieces);
+    }
+    prevTriforcePieces = gExtSaveData.triforcePieces;
 }
 
 void Multiplayer_Sync_UpdatePrevActorFlags(void) {
@@ -1100,6 +1114,7 @@ void Multiplayer_Send_BaseSync(u16 targetID) {
     for (size_t i = 0; i < ARRAY_SIZE(mSaveContext.extInf); i++) {
         mBuffer[memSpacer++] = mSaveContext.extInf[i];
     }
+    mBuffer[memSpacer++] = mSaveContext.triforcePieces;
     mBuffer[memSpacer++] = mSaveContext.health;
     mBuffer[memSpacer++] = mSaveContext.rupees;
     Multiplayer_SendPacket(memSpacer, targetID);
@@ -1157,6 +1172,7 @@ void Multiplayer_Receive_BaseSync(u16 senderID) {
     for (size_t i = 0; i < ARRAY_SIZE(mSaveContext.extInf); i++) {
         mSaveContext.extInf[i] = mBuffer[memSpacer++];
     }
+    mSaveContext.triforcePieces = mBuffer[memSpacer++];
     if (gSettingsContext.mp_SharedHealth) {
         mSaveContext.health = mBuffer[memSpacer++];
     } else {
@@ -2159,6 +2175,29 @@ void Multiplayer_Receive_DiscoveredEntrance(u16 senderID) {
     mSaveContext.entrancesDiscovered[index] |= bit;
 }
 
+void Multiplayer_Send_TriforcePieces(u32 piecesDiff) {
+    if (!IsSendReceiveReady() || gSettingsContext.mp_SharedProgress == OFF) {
+        return;
+    }
+    memset(mBuffer, 0, mBufSize);
+    u8 memSpacer = PrepareSharedProgressPacket(PACKET_TRIFORCEPIECES);
+
+    mBuffer[memSpacer++] = piecesDiff;
+    Multiplayer_SendPacket(memSpacer, UDS_BROADCAST_NETWORKNODEID);
+}
+
+void Multiplayer_Receive_TriforcePieces(u16 senderID) {
+    if (!IsInSameSyncGroup() || gSettingsContext.mp_SharedProgress == OFF) {
+        return;
+    }
+    u8 memSpacer = GetSharedProgressMemSpacerOffset();
+
+    u32 piecesDiff = mBuffer[memSpacer++];
+
+    mSaveContext.triforcePieces += piecesDiff;
+    prevTriforcePieces += piecesDiff;
+}
+
 void Multiplayer_Send_UnlockedDoor(u32 flag) {
     if (!IsSendReceiveReady() || gSettingsContext.mp_SharedProgress == OFF) {
         return;
@@ -2643,6 +2682,7 @@ static void Multiplayer_UnpackPacket(u16 senderID) {
         Multiplayer_Receive_ExtInfBit,
         Multiplayer_Receive_DiscoveredScene,
         Multiplayer_Receive_DiscoveredEntrance,
+        Multiplayer_Receive_TriforcePieces,
         Multiplayer_Receive_UnlockedDoor,
         Multiplayer_Receive_ActorUpdate,
         Multiplayer_Receive_ActorSpawn,

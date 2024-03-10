@@ -148,9 +148,9 @@ void ItemEffect_BeanPack(SaveContext* saveCtx, s16 arg1, s16 arg2) {
 }
 
 void ItemEffect_TriforcePiece(SaveContext* saveCtx, s16 arg1, s16 arg2) {
-    gExtSaveData.extInf[EXTINF_TRIFORCE_PIECES]++;
+    gExtSaveData.triforcePieces++;
     if (gSettingsContext.triforceHunt &&
-        gExtSaveData.extInf[EXTINF_TRIFORCE_PIECES] == gSettingsContext.triforcePiecesRequired) {
+        gExtSaveData.triforcePieces == gSettingsContext.triforcePiecesRequired) {
         // Save progress
         SaveGame(gGlobalContext, FALSE);
         // Warp to Ganon sealing cutscene

@@ -58,7 +58,7 @@ u32 Message_HandleTextControlCode(TextControlCode ctrl, void* textObj, UnkTextCo
     // When a custom control code is found, copy what FUN_0040b7d8 does to insert the player name,
     // but instead insert a custom string.
     if (ctrl == TEXT_CTRL_TRIFORCE_PIECE_COUNT) {
-        snprintf_(str, MESSAGE_MAX_CUSTOM_STRING_SIZE, "%d", gExtSaveData.extInf[EXTINF_TRIFORCE_PIECES]);
+        snprintf_(str, MESSAGE_MAX_CUSTOM_STRING_SIZE, "%d", gExtSaveData.triforcePieces);
         utf8_to_utf16(utf16Str, (u8*)str, strlen(str));
         Message_UnkControlCodeHandler(textObj, &data);
         data->unk_05         = 0;

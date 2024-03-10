@@ -370,11 +370,11 @@ static void Gfx_DrawSeedHash(void) {
 
     if (gSettingsContext.triforceHunt) {
         Draw_DrawString(10, 16 + (SPACING_Y * offsetY++), COLOR_TITLE, "Triforce Pieces:");
-        u8 triforceDone = gExtSaveData.extInf[EXTINF_TRIFORCE_PIECES] >= gSettingsContext.triforcePiecesRequired;
-        Draw_DrawFormattedString(
-            10 + (SPACING_X * 4), 16 + (SPACING_Y * offsetY++), triforceDone ? COLOR_YELLOW : COLOR_WHITE, "%d / %d",
-            gExtSaveData.extInf[EXTINF_TRIFORCE_PIECES],
-            triforceDone ? gSettingsContext.triforcePiecesTotal : gSettingsContext.triforcePiecesRequired);
+        u8 triforceDone = gExtSaveData.triforcePieces >= gSettingsContext.triforcePiecesRequired;
+        Draw_DrawFormattedString(10 + (SPACING_X * 4), 16 + (SPACING_Y * offsetY++),
+                                 triforceDone ? COLOR_YELLOW : COLOR_WHITE, "%d / %d", gExtSaveData.triforcePieces,
+                                 triforceDone ? gSettingsContext.triforcePiecesTotal
+                                              : gSettingsContext.triforcePiecesRequired);
         offsetY++;
     }
 
