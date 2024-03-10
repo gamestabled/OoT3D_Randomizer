@@ -47,14 +47,14 @@ void AreaTable_Init_SpiritTemple() {
                                                 ((Nuts || Boomerang) && (Sticks || KokiriSword || Slingshot)));
                                     } }),
                      LocationAccess(SPIRIT_TEMPLE_CHILD_EARLY_TORCHES_CHEST, { [] {
-                                        return SoulKeese && SoulArmos &&
+                                        return SoulAnubis && SoulKeese && SoulArmos &&
                                                (Boomerang || Slingshot || (HasExplosives && LogicSpiritChildBombchu)) &&
                                                (HasExplosives ||
                                                 ((Nuts || Boomerang) && (Sticks || KokiriSword || Slingshot))) &&
                                                (Sticks || CanUse(DINS_FIRE));
                                     } }),
                      LocationAccess(SPIRIT_TEMPLE_GS_METAL_FENCE, { [] {
-                                        return SoulKeese && SoulArmos &&
+                                        return SoulAnubis && SoulKeese && SoulArmos &&
                                                (Boomerang || Slingshot || (HasExplosives && LogicSpiritChildBombchu)) &&
                                                (HasExplosives ||
                                                 ((Nuts || Boomerang) && (Sticks || KokiriSword || Slingshot)));
@@ -179,8 +179,7 @@ void AreaTable_Init_SpiritTemple() {
             },
             {
                 // Exits
-                Entrance(SPIRIT_TEMPLE_OUTDOOR_HANDS,
-                         { [] { return SoulAnubis && SoulBeamos && SoulGerudo && (CanJumpslash || HasExplosives); } }),
+                Entrance(SPIRIT_TEMPLE_OUTDOOR_HANDS, { [] { return SoulGerudo && (CanJumpslash || HasExplosives); } }),
                 Entrance(SPIRIT_TEMPLE_BEYOND_CENTRAL_LOCKED_DOOR,
                          { [] { return SmallKeys(SPIRIT_TEMPLE, 4) && CanUse(SILVER_GAUNTLETS); } }),
                 Entrance(SPIRIT_TEMPLE_CHILD_CLIMB, { [] { return true; } }),
@@ -191,11 +190,13 @@ void AreaTable_Init_SpiritTemple() {
             {
                 // Locations
                 LocationAccess(SPIRIT_TEMPLE_SILVER_GAUNTLETS_CHEST, { [] {
-                                   return (SmallKeys(SPIRIT_TEMPLE, 3) && Longshot && HasExplosives) ||
+                                   return (SmallKeys(SPIRIT_TEMPLE, 3) && SoulAnubis && SoulBeamos && Longshot &&
+                                           HasExplosives) ||
                                           SmallKeys(SPIRIT_TEMPLE, 5);
                                } }),
                 LocationAccess(SPIRIT_TEMPLE_MIRROR_SHIELD_CHEST, { [] {
-                                   return SmallKeys(SPIRIT_TEMPLE, 4) && CanUse(SILVER_GAUNTLETS) && HasExplosives;
+                                   return SmallKeys(SPIRIT_TEMPLE, 4) && SoulAnubis && SoulBeamos &&
+                                          CanUse(SILVER_GAUNTLETS) && HasExplosives;
                                } }),
             },
             {
@@ -225,10 +226,14 @@ void AreaTable_Init_SpiritTemple() {
                                         return (MirrorShield || (ExtraArrowEffects && CanUse(LIGHT_ARROWS))) &&
                                                SoulAnubis && SoulBeamos && HasExplosives;
                                     } }),
-                     LocationAccess(SPIRIT_TEMPLE_HALLWAY_LEFT_INVISIBLE_CHEST,
-                                    { [] { return (LogicLensSpirit || CanUse(LENS_OF_TRUTH)) && HasExplosives; } }),
-                     LocationAccess(SPIRIT_TEMPLE_HALLWAY_RIGHT_INVISIBLE_CHEST,
-                                    { [] { return (LogicLensSpirit || CanUse(LENS_OF_TRUTH)) && HasExplosives; } }),
+                     LocationAccess(SPIRIT_TEMPLE_HALLWAY_LEFT_INVISIBLE_CHEST, { [] {
+                                        return SoulAnubis && SoulBeamos && (LogicLensSpirit || CanUse(LENS_OF_TRUTH)) &&
+                                               HasExplosives;
+                                    } }),
+                     LocationAccess(SPIRIT_TEMPLE_HALLWAY_RIGHT_INVISIBLE_CHEST, { [] {
+                                        return SoulAnubis && SoulBeamos && (LogicLensSpirit || CanUse(LENS_OF_TRUTH)) &&
+                                               HasExplosives;
+                                    } }),
                  },
                  {
                      // Exits
