@@ -943,6 +943,10 @@ hook_TurboTextSignalNPC:
     push {r0-r12, lr}
     bl Settings_IsTurboText
     cmp r0,#0x0
+    @ If about to warp to credits, signal NPC so that
+    @ the collection flag is set before the game is saved
+    bleq Triforce_IsWaitingForText
+    cmp r0,#0x0
     pop {r0-r12, lr}
     movne r4,#0x1
     bx lr

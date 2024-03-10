@@ -6,6 +6,7 @@
 #include "dungeon.h"
 #include "common.h"
 #include "actors/chest.h"
+#include "triforce.h"
 
 void ItemEffect_None(SaveContext* saveCtx, s16 arg1, s16 arg2) {
 }
@@ -149,17 +150,8 @@ void ItemEffect_BeanPack(SaveContext* saveCtx, s16 arg1, s16 arg2) {
 
 void ItemEffect_TriforcePiece(SaveContext* saveCtx, s16 arg1, s16 arg2) {
     gExtSaveData.triforcePieces++;
-    if (gSettingsContext.triforceHunt &&
-        gExtSaveData.triforcePieces == gSettingsContext.triforcePiecesRequired) {
-        // Save progress
-        SaveGame(gGlobalContext, FALSE);
-        // Warp to Ganon sealing cutscene
-        gGlobalContext->nextEntranceIndex = 0x00A0;
-        gSaveContext.nextCutsceneIndex    = 0xFFF8;
-        gEntranceTable[0x00A0].field |= 0x8000; // continue playing background music (namely get item fanfare)
-        gGlobalContext->fadeOutTransition = 0x2F;
-        gGlobalContext->sceneLoadFlag     = 0x14;
-        PLAYER->stateFlags1 |= 1; // Loading area
+    if (gSettingsContext.triforceHunt && gExtSaveData.triforcePieces == gSettingsContext.triforcePiecesRequired) {
+        TriforceWarpStatus = TRIFORCEWARP_WHEN_TEXT_COMPLETE;
     }
 }
 

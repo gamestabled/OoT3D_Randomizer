@@ -8,6 +8,8 @@
 #include "entrance.h"
 #include "savefile.h"
 #include "common.h"
+#include "triforce.h"
+
 #include <stddef.h>
 
 #include "z3D/z3D.h"
@@ -26,6 +28,7 @@ static Actor* rDummyActor                    = NULL;
 static ItemOverride rActiveItemOverride = { 0 };
 DrawItemTableEntry rActiveDrawItem      = { 0 };
 ItemRow* rActiveItemRow                 = NULL;
+u32 isItemOverrideActive                = FALSE;
 // Split active_item_row into variables for convenience in ASM
 u32 rActiveItemActionId  = 0;
 u32 rActiveItemTextId    = 0;
@@ -193,6 +196,7 @@ static void ItemOverride_Activate(ItemOverride override) {
         looksLikeItemId = 0;
     }
 
+    isItemOverrideActive = TRUE;
     rActiveItemOverride  = override;
     rActiveItemRow       = itemRow;
     rActiveItemActionId  = itemRow->actionId;
@@ -211,6 +215,7 @@ static void ItemOverride_Activate(ItemOverride override) {
 }
 
 static void ItemOverride_Clear(void) {
+    isItemOverrideActive = FALSE;
     rActiveItemOverride  = (ItemOverride){ 0 };
     rActiveDrawItem      = (DrawItemTableEntry){ 0 };
     rActiveItemRow       = NULL;

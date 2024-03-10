@@ -9,6 +9,7 @@
 #include "savefile.h"
 #include "settings.h"
 #include "giants_knife.h"
+#include "triforce.h"
 
 #include "web.h"
 #include "skulltula.h"
@@ -2195,6 +2196,12 @@ void Multiplayer_Receive_TriforcePieces(u16 senderID) {
     u32 piecesDiff = mBuffer[memSpacer++];
 
     mSaveContext.triforcePieces += piecesDiff;
+
+    if ((prevTriforcePieces < gSettingsContext.triforcePiecesRequired) &&
+        (mSaveContext.triforcePieces >= gSettingsContext.triforcePiecesRequired)) {
+        TriforceWarpStatus = TRIFORCEWARP_WHEN_PLAYER_READY;
+    }
+
     prevTriforcePieces += piecesDiff;
 }
 
