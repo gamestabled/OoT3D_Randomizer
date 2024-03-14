@@ -1057,8 +1057,8 @@ void CreateAlwaysIncludedMessages() {
     }
 
     for (ItemKey soulKey = SOUL_ITEM_POE; soulKey <= SOUL_ITEM_GANON; soulKey++) {
-        Text soulText = Text{ "You got the #", "Vous obtenez #", "¡Has obtenido #", "Hai ottenuto l'#", "Du hast #" } +
-                        ItemTable(soulKey).GetName() + "#!";
+        Text soulText = Text{ "You got #", "Vous obtenez #", "¡Has obtenido #", "Hai ottenuto #", "Du hast #" } +
+                        hintTable[soulKey].GetClear() + "#!";
 
         CreateMessageFromTextObject(0x9450 + soulKey - SOUL_ITEM_POE, 0, 2, 3,
                                     AddColorsAndFormat(soulText, { QM_RED }));

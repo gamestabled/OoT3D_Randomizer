@@ -92,7 +92,7 @@ SoulMenuInfo SoulMenuNames[SOUL_MAX] = {
     { SOUL_TENTACLE, "Parasitic Tentacle" },
     { SOUL_PEAHAT, "Peahat" },
     { SOUL_POE, "Poe (all)" },
-    { SOUL_REDEAD_GIBDO, "Redead, Gibdo" },
+    { SOUL_REDEAD_GIBDO, "ReDead, Gibdo" },
     { SOUL_SHABOM, "Shabom" },
     { SOUL_SHELL_BLADE, "Shell Blade" },
     { SOUL_SKULL_KID, "Skull Kid" },
