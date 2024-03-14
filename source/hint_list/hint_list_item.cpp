@@ -1959,46 +1959,46 @@ void HintTable_Init_Item() {
 
     hintTable[OCA_BUTTON_ITEM_L] = HintText::Item({
                        // obscure text
-                       Text{"the Ocarina L Button", /*french*/"", /*spanish*/"", /*italian*/"il pulsante L dell'ocarina", /*german*/""},
+                       Text{"the Ocarina L Button", /*french*/"le bouton L de l'ocarina", /*spanish*/"el botón L de la ocarina", /*italian*/"il pulsante L dell'ocarina", /*german*/"der Ocarina L-Knopf"},
                      }, {
                        // ambiguous text
-                       Text{"something to play songs", /*french*/"", /*spanish*/"", /*italian*/"qualcosa per suonare melodie", /*german*/""},
+                       Text{"something to play songs", /*french*/"quelque chose qui fait des sons", /*spanish*/"algo para tocar canciones", /*italian*/"qualcosa per suonare melodie", /*german*/"etwas um Lieder zu spielen"},
                      }
     );
 
     hintTable[OCA_BUTTON_ITEM_R] = HintText::Item({
                        // obscure text
-                       Text{"the Ocarina R Button", /*french*/"", /*spanish*/"", /*italian*/"il pulsante R dell'ocarina", /*german*/""},
+                       Text{"the Ocarina R Button", /*french*/"le bouton R de l'ocarina", /*spanish*/"el botón R de la ocarina", /*italian*/"il pulsante R dell'ocarina", /*german*/"der Ocarina R-Knopf"},
                      }, {
                        // ambiguous text
-                       Text{"something to play songs", /*french*/"", /*spanish*/"", /*italian*/"qualcosa per suonare melodie", /*german*/""},
+                       Text{"something to play songs", /*french*/"quelque chose qui fait des sons", /*spanish*/"algo para tocar canciones", /*italian*/"qualcosa per suonare melodie", /*german*/"etwas um Lieder zu spielen"},
                      }
     );
 
     hintTable[OCA_BUTTON_ITEM_X] = HintText::Item({
                        // obscure text
-                       Text{"the Ocarina X Button", /*french*/"", /*spanish*/"", /*italian*/"il pulsante X dell'ocarina", /*german*/""},
+                       Text{"the Ocarina X Button", /*french*/"le bouton X de l'ocarina", /*spanish*/"el botón X de la ocarina", /*italian*/"il pulsante X dell'ocarina", /*german*/"der Ocarina X-Knopf"},
                      }, {
                        // ambiguous text
-                       Text{"something to play songs", /*french*/"", /*spanish*/"", /*italian*/"qualcosa per suonare melodie", /*german*/""},
+                       Text{"something to play songs", /*french*/"quelque chose qui fait des sons", /*spanish*/"algo para tocar canciones", /*italian*/"qualcosa per suonare melodie", /*german*/"etwas um Lieder zu spielen"},
                      }
     );
 
     hintTable[OCA_BUTTON_ITEM_Y] = HintText::Item({
                        // obscure text
-                       Text{"the Ocarina Y Button", /*french*/"", /*spanish*/"", /*italian*/"il pulsante Y dell'ocarina", /*german*/""},
+                       Text{"the Ocarina Y Button", /*french*/"le bouton Y de l'ocarina", /*spanish*/"el botón Y de la ocarina", /*italian*/"il pulsante Y dell'ocarina", /*german*/"der Ocarina Y-Knopf"},
                      }, {
                        // ambiguous text
-                       Text{"something to play songs", /*french*/"", /*spanish*/"", /*italian*/"qualcosa per suonare melodie", /*german*/""},
+                       Text{"something to play songs", /*french*/"quelque chose qui fait des sons", /*spanish*/"algo para tocar canciones", /*italian*/"qualcosa per suonare melodie", /*german*/"etwas um Lieder zu spielen"},
                      }
     );
 
     hintTable[OCA_BUTTON_ITEM_A] = HintText::Item({
                        // obscure text
-                       Text{"the Ocarina A Button", /*french*/"", /*spanish*/"", /*italian*/"il pulsante A dell'ocarina", /*german*/""},
+                       Text{"the Ocarina A Button", /*french*/"le bouton A de l'ocarina", /*spanish*/"el botón A de la ocarina", /*italian*/"il pulsante A dell'ocarina", /*german*/"der Ocarina A-Knopf"},
                      }, {
                        // ambiguous text
-                       Text{"something to play songs", /*french*/"", /*spanish*/"", /*italian*/"qualcosa per suonare melodie", /*german*/""},
+                       Text{"something to play songs", /*french*/"quelque chose qui fait des sons", /*spanish*/"algo para tocar canciones", /*italian*/"qualcosa per suonare melodie", /*german*/"etwas um Lieder zu spielen"},
                      }
     );
 }
