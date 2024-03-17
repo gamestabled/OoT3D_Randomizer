@@ -908,7 +908,9 @@ void CreateGossipStoneHints() {
             // Small Keys
             FOREST_TEMPLE_SMALL_KEY, FIRE_TEMPLE_SMALL_KEY, WATER_TEMPLE_SMALL_KEY, SPIRIT_TEMPLE_SMALL_KEY,
             SHADOW_TEMPLE_SMALL_KEY, BOTTOM_OF_THE_WELL_SMALL_KEY, GERUDO_TRAINING_GROUNDS_SMALL_KEY,
-            GERUDO_FORTRESS_SMALL_KEY, GANONS_CASTLE_SMALL_KEY
+            GERUDO_FORTRESS_SMALL_KEY, GANONS_CASTLE_SMALL_KEY,
+            //
+            TRIFORCE_PIECE
         };
         const auto ignore = [&](std::vector<ItemKey> v) {
             ignoredItems.insert(ignoredItems.end(), v.begin(), v.end());
