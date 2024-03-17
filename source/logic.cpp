@@ -203,6 +203,7 @@ bool MagicRefill   = false;
 u8 PieceOfHeart    = 0;
 u8 HeartContainer  = 0;
 bool DoubleDefense = false;
+u8 TriforcePieces  = 0;
 
 /* --- HELPERS, EVENTS, AND LOCATION ACCESS --- */
 /* These are used to simplify reading the logic, but need to be updated
@@ -1109,6 +1110,7 @@ void LogicReset() {
     PieceOfHeart   = 0;
     HeartContainer = 0;
     DoubleDefense  = false;
+    TriforcePieces = 0;
 
     /* --- HELPERS, EVENTS, AND LOCATION ACCESS --- */
     /* These are used to simplify reading the logic, but need to be updated

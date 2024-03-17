@@ -227,6 +227,14 @@ static void CustomModel_SetBossKeyToRGBA565(void* bossKeyCMB) {
     EDIT_BYTE(0x44B, 0x00);
 }
 
+static void CustomModel_EditTriforce(void* triforceCMB) {
+    char* BASE_ = (char*)triforceCMB;
+
+    // Set number of vertices from 0x120 to 0x60 so only one triangle will be drawn.
+    EDIT_BYTE(0x3FC, 0x60);
+    EDIT_BYTE(0x3FD, 0x00);
+}
+
 void CustomModel_Update(void) {
     // Make sure custom_assets is loaded
     if (ExtendedObject_GetIndex(&gGlobalContext->objectCtx, OBJECT_CUSTOM_GENERAL_ASSETS) < 0) {
@@ -266,6 +274,10 @@ void CustomModels_EditItemCMB(void* ZARBuf, u16 objectId, s8 special) {
             cmb = ((char*)ZARBuf) + 0x78;
             CustomModel_SetBossKeyToRGBA565(cmb);
             break;
+        case OBJECT_CUSTOM_TRIFORCE_PIECE:
+            cmb = ((char*)ZARBuf) + 0xF0;
+            CustomModel_EditTriforce(cmb);
+            break;
     }
 }
 
@@ -295,4 +307,27 @@ void CustomModels_ApplyItemCMAB(SkeletonAnimationModel* model, u16 objectId, s8 
             model->unk_0C->curFrame  = special;
             break;
     }
+}
+
+void CustomModels_UpdateMatrix(nn_math_MTX34* modelMtx, u16 objectId) {
+    f32 scale;
+    Vec3f posOffset;
+
+    switch (objectId) {
+        case OBJECT_CUSTOM_TRIFORCE_PIECE:
+            scale     = 0.05f;
+            posOffset = (Vec3f){ 0.0f, -800.0f, 0.0f };
+            break;
+        default:
+            return;
+    }
+
+    nn_math_MTX44 scaleMtx = { 0 };
+    scaleMtx.data[0][0]    = scale;
+    scaleMtx.data[1][1]    = scale;
+    scaleMtx.data[2][2]    = scale;
+    scaleMtx.data[3][3]    = 1.0f;
+
+    Matrix_Multiply(modelMtx, modelMtx, &scaleMtx);
+    Matrix_UpdatePosition(modelMtx, modelMtx, &posOffset);
 }

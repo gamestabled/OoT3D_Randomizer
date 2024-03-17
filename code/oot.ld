@@ -708,20 +708,12 @@ SECTIONS
 	    *(.patch_CamRoll)
 	}
 
-	.patch_InstantTextFirstLine 0x2E049C : {
-		*(.patch_InstantTextFirstLine)
+	.patch_CheckForTextControlCode 0x2E0490 : {
+	    * (.patch_CheckForTextControlCode)
 	}
 
-	.patch_InstantTextBoxBreak 0x2E0664 : {
-		*(.patch_InstantTextBoxBreak)
-	}
-
-	.patch_InstantTextRemoveOff 0x2E06C8 : {
-		*(.patch_InstantTextRemoveOff)
-	}
-
-	.patch_SkippableText 0x2E09BC : {
-		*(.patch_SkippableText)
+	.patch_HandleTextControlCode 0x2E057C : {
+	    * (.patch_HandleTextControlCode)
 	}
 
 	.patch_SceneInitAfterCopyScenes 0x2EAFDC : {
@@ -1244,8 +1236,12 @@ SECTIONS
 		*(.patch_GearMenuEmptySlot)
 	}
 
-	.patch_LoadGame 0x447380 : {
-		*(.patch_LoadGame)
+	.patch_BeforeLoadGame 0x447380 : {
+		*(.patch_BeforeLoadGame)
+	}
+
+	.patch_AfterLoadGame 0x449F00 : {
+		*(.patch_AfterLoadGame)
 	}
 
 	.patch_DontSetMotionSetting 0x447410 : {
@@ -1566,6 +1562,10 @@ SECTIONS
 
 	.patch_HookshotRotation 0x4C2524 : {
 		*(.patch_HookshotRotation)
+	}
+
+	.patch_EditDrawGetItemAfterMatrixUpdate 0x4C4D14 : {
+		*(.patch_EditDrawGetItemAfterMatrixUpdate)
 	}
 
 	.patch_EditDrawGetItemAfterModelSpawn 0x4C61A4 : {

@@ -56,4 +56,5 @@ std::string CENTER_TEXT();
 std::string IF_NOT_MQ();
 std::string MQ_ELSE();
 std::string MQ_END();
+std::string TRIFORCE_PIECE_COUNT();
 } // namespace CustomMessages

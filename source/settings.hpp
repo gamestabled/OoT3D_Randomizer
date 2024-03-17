@@ -130,19 +130,19 @@ class Option {
         return selectedOption;
     }
 
-    void NextOptionIndex() {
-        ++selectedOption;
-    }
+    void ScrollOptionIndex(u32 kDown, bool fastScrolling = false) {
+        u32 scrollSpeed = (fastScrolling && options.size() > 2) ? 10 : 1;
 
-    void PrevOptionIndex() {
-        --selectedOption;
-    }
-
-    void SanitizeSelectedOptionIndex() {
-        if (selectedOption == options.size()) {
-            selectedOption = 0;
-        } else if (selectedOption == 0xFF) {
-            selectedOption = static_cast<u8>(options.size() - 1);
+        if ((kDown & KEY_RIGHT) != 0) {
+            selectedOption += scrollSpeed;
+            if (selectedOption >= options.size()) {
+                selectedOption %= options.size();
+            }
+        } else if ((kDown & KEY_LEFT) != 0) {
+            selectedOption -= scrollSpeed;
+            if (selectedOption >= options.size()) {
+                selectedOption = (options.size() - 1) - ((UINT8_MAX - selectedOption) % options.size());
+            }
         }
     }
 
@@ -390,6 +390,9 @@ extern Option AmmoDrops;
 extern Option HeartDropRefill;
 extern Option MQDungeonCount;
 extern Option SetDungeonTypes;
+extern Option TriforceHunt;
+extern Option TriforcePiecesTotal;
+extern Option TriforcePiecesRequired;
 
 extern Option ShuffleRewards;
 extern Option LinksPocketItem;

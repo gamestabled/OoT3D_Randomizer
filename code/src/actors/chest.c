@@ -173,7 +173,7 @@ void EnBox_rUpdate(Actor* thisx, GlobalContext* globalCtx) {
 u8 Chest_OverrideAnimation() {
 
     if ((gSettingsContext.chestAnimations == CHESTANIMATIONS_ALWAYSFAST) ||
-        (rActiveItemActionId == 0)) // The animation is always fast for unused chests that aren't randomized
+        (!isItemOverrideActive)) // The animation is always fast for unused chests that aren't randomized
         return FALSE;
 
     switch (rActiveItemChestType) {

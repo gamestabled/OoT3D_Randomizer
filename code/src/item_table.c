@@ -247,7 +247,7 @@ static ItemRow rItemTable[] = {
     [GI_TYCOON_WALLET]      = ITEM_ROW(0x53, CHEST_MAJOR,     0x41, 0x09F7,   0x00D1, 0x01, 0xFF, 0xFF, 0xFF,   0xFF, ItemUpgrade_None, ItemEffect_GiveTycoonWallet, 3, -1), // Tycoon's Wallet
     [GI_LETTER_RUTO_2]      = ITEM_ROW(0x53, CHEST_MAJOR,     0x14, 0x9099,   0x010B, 0x00, 0xFF, 0xFF, 0xFF,   0xFF, ItemUpgrade_None, ItemEffect_None,            -1, -1), // Redundant Letter Bottle
     [GI_MAGIC_BEAN_PACK]    = ITEM_ROW(0x53, CHEST_MAJOR,     0x41, 0x0048,   0x00F3, 0x00, 0xFF, 0xFF, 0xFF,   0xFF, ItemUpgrade_None, ItemEffect_BeanPack,        -1, -1), // Magic Bean Pack
-//  [GI_TRIFORCE_PIECE]     = ITEM_ROW(0x53, CHEST_MAJOR,     0x41, 0x9003,   0x0193, 0x00, 0xFF, 0xFF, 0xFF,   0xFF, ItemUpgrade_None, give_triforce_piece,        -1, -1), // Triforce piece
+    [GI_TRIFORCE_PIECE]     = ITEM_ROW(0x53, CHEST_MAJOR,     0x41, 0x9003,   0x016E, 0x00, 0xFF, 0xFF, 0xFF,   0xFF, ItemUpgrade_None, ItemEffect_TriforcePiece,   -1, -1), // Triforce piece
 
     [GI_KOKIRI_EMERALD]     = ITEM_ROW(0x53, CHEST_MAJOR,     0x41, 0x0080,   0x019C, 0x00, 0xFF, 0xFF, 0xFF,   0xFF, ItemUpgrade_None, ItemEffect_GiveStone, 0x0004, -1), // Kokiri Emerald
     [GI_GORON_RUBY]         = ITEM_ROW(0x53, CHEST_MAJOR,     0x41, 0x0081,   0x019D, 0x00, 0xFF, 0xFF, 0xFF,   0xFF, ItemUpgrade_None, ItemEffect_GiveStone, 0x0008, -1), // Goron Ruby

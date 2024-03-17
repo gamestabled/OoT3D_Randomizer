@@ -342,6 +342,20 @@ string_view mqDungeonCountDesc        = "Specify the number of Master Quest dung
 string_view setDungeonTypesDesc       = "If set, you can choose specific dungeons to be\n" //
                                         "vanilla, MQ, or random";                          //
 /*------------------------------                                                           //
+|         TRIFORCE HUNT        |                                                           //
+------------------------------*/                                                           //
+string_view triforceHuntDesc          = "Pieces of the Triforce have been scattered around\n"
+                                        "the world. Find some of them to beat the game.\n" //
+                                        "\n"                                               //
+                                        "Game is saved on completion, and Ganon's Castle\n"//
+                                        "key is given if beating the game again is desired.";
+string_view triforcePiecesTotalDesc   = "Set the total number of pieces that will appear\n"//
+                                        "in the world.\n\n"                                //
+                                        "Hold A to scroll faster.";                        //
+string_view triforcePiecesRequiredDesc= "Set the number of pieces required to beat the\n"  //
+                                        "game.\n\n"                                        //
+                                        "Hold A to scroll faster.";                        //
+/*------------------------------                                                           //
 |   SHUFFLE DUNGEON REWARDS    |                                                           //
 ------------------------------*/                                                           //
 string_view shuffleRewardsEndOfDungeon= "Medallions and Spiritual Stones will be given as\n"

@@ -672,6 +672,7 @@ extern const char DungeonNames[][25];
 #define gDrawItemTable ((DrawItemTableEntry*)0x4D88C8)
 #define gRestrictionFlags ((RestrictionFlags*)0x539DC4)
 #define PLAYER ((Player*)gGlobalContext->actorCtx.actorList[ACTORTYPE_PLAYER].first)
+#define gIsBottomScreenDimmed (*(s32*)0x5043EC)
 
 #define GearSlot(X) (X - ITEM_SWORD_KOKIRI)
 
@@ -862,5 +863,12 @@ typedef void (*Animation_Change_proc)(SkelAnime* anime, s32 animation_index, f32
                                       f32 end_frame, f32 morph_frames, s32 mode) __attribute__((pcs("aapcs-vfp")));
 #define Animation_Change_addr 0x375C08
 #define Animation_Change ((Animation_Change_proc)Animation_Change_addr)
+
+typedef void (*SaveGame_proc)(GlobalContext* globalCtx, u8 isSaveFileCreation);
+#define SaveGame_addr 0x2FDAC8
+#define SaveGame ((SaveGame_proc)SaveGame_addr)
+
+typedef s32 (*Message_GetState_proc)(void);
+#define Message_GetState ((Message_GetState_proc)0x3769d8)
 
 #endif //_Z3D_H_

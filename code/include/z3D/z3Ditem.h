@@ -410,7 +410,7 @@ typedef enum {
     /* 0xC7 */ GI_TYCOON_WALLET,
     /* 0xC8 */ GI_LETTER_RUTO_2,
     /* 0xC9 */ GI_MAGIC_BEAN_PACK,
-    /* 0xCA */ GI_TRIFORCE_PIECE, // unused
+    /* 0xCA */ GI_TRIFORCE_PIECE,
 
     /* 0xCB */ GI_KOKIRI_EMERALD,
     /* 0xCC */ GI_GORON_RUBY,
