@@ -12,6 +12,7 @@ The following custom objectIds are currently being used:
 126: GTG Small Key
 127: Ganon Small Key
 128: Boss Keys
+291: Ocarina Note Buttons
 
 To use a custom asset, currently:
     - choose an unused objectId to be repurposed for the custom item

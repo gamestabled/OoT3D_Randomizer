@@ -181,6 +181,12 @@ void GenerateStartingInventory() {
             AddItemToInventory(TREASURE_GAME_HEART);
         }
     }
+
+    AddItemToInventory(OCA_BUTTON_ITEM_L, StartingOcarinaButtonL.Value<u8>());
+    AddItemToInventory(OCA_BUTTON_ITEM_R, StartingOcarinaButtonR.Value<u8>());
+    AddItemToInventory(OCA_BUTTON_ITEM_X, StartingOcarinaButtonX.Value<u8>());
+    AddItemToInventory(OCA_BUTTON_ITEM_Y, StartingOcarinaButtonY.Value<u8>());
+    AddItemToInventory(OCA_BUTTON_ITEM_A, StartingOcarinaButtonA.Value<u8>());
 }
 
 bool StartingInventoryHasBottle() {
