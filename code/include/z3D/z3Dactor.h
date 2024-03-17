@@ -148,9 +148,9 @@ typedef struct {
 
 typedef struct {
     /* 0x00 */ Collider base;
-    /* 0x18 */      // ColliderInfo info;
-    /* 0x40 */      // Cylinderf dim;
-} ColliderCylinder; // size = 0x58
+    /* 0x18 */ char unk_18[0x28]; // ColliderInfo info;
+    /* 0x40 */ char unk_40[0x18]; // Cylinderf dim;
+} ColliderCylinder;               // size = 0x58
 
 typedef struct {
     /* 0x00 */ Vec3s rot; // Current actor shape rotation

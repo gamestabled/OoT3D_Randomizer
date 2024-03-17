@@ -10,7 +10,7 @@ void AreaTable_Init_HyruleField() {
         "Hyrule Field", "Hyrule Field", HYRULE_FIELD, DAY_NIGHT_CYCLE,
         {
             // Events
-            EventAccess(&BigPoeKill, { [] { return CanUse(BOW) && CanRideEpona && HasBottle; } }),
+            EventAccess(&BigPoeKill, { [] { return SoulPoe && CanUse(BOW) && CanRideEpona && HasBottle; } }),
         },
         {
             // Locations

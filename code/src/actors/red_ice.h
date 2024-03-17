@@ -24,4 +24,6 @@ typedef struct BgIceShelter {
     /* 0x0270 */ s16 alpha;
 } BgIceShelter; // size = 0x0204
 
+void RedIce_CheckIceArrow(Collider* at, Collider* ac);
+
 #endif

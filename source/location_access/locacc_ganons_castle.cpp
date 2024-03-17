@@ -77,7 +77,8 @@ void AreaTable_Init_GanonsCastle() {
             },
             {
                 // Locations
-                LocationAccess(GANONS_CASTLE_FOREST_TRIAL_CHEST, { [] { return CanAdultDamage || CanChildDamage; } }),
+                LocationAccess(GANONS_CASTLE_FOREST_TRIAL_CHEST,
+                               { [] { return SoulWolfos && (CanAdultDamage || CanChildDamage); } }),
             },
             {});
 
@@ -91,21 +92,22 @@ void AreaTable_Init_GanonsCastle() {
             },
             {}, {});
 
-        areaTable[GANONS_CASTLE_WATER_TRIAL] = Area(
-            "Ganon's Castle Water Trial", "Ganon's Castle", GANONS_CASTLE, NO_DAY_NIGHT_CYCLE,
-            {
-                // Events
-                EventAccess(&BlueFireAccess, { [] { return BlueFireAccess || HasBottle; } }),
-                EventAccess(&FairyPot, { [] { return FairyPot || BlueFire; } }),
-                EventAccess(&WaterTrialClear,
-                            { [] { return BlueFire && IsAdult && CanUse(MEGATON_HAMMER) && CanUse(LIGHT_ARROWS); } }),
-            },
-            {
-                // Locations
-                LocationAccess(GANONS_CASTLE_WATER_TRIAL_LEFT_CHEST, { [] { return true; } }),
-                LocationAccess(GANONS_CASTLE_WATER_TRIAL_RIGHT_CHEST, { [] { return true; } }),
-            },
-            {});
+        areaTable[GANONS_CASTLE_WATER_TRIAL] =
+            Area("Ganon's Castle Water Trial", "Ganon's Castle", GANONS_CASTLE, NO_DAY_NIGHT_CYCLE,
+                 {
+                     // Events
+                     EventAccess(&BlueFireAccess, { [] { return BlueFireAccess || HasBottle; } }),
+                     EventAccess(&FairyPot, { [] { return FairyPot || BlueFire; } }),
+                     EventAccess(&WaterTrialClear, { [] {
+                         return SoulFreezard && BlueFire && IsAdult && CanUse(MEGATON_HAMMER) && CanUse(LIGHT_ARROWS);
+                     } }),
+                 },
+                 {
+                     // Locations
+                     LocationAccess(GANONS_CASTLE_WATER_TRIAL_LEFT_CHEST, { [] { return true; } }),
+                     LocationAccess(GANONS_CASTLE_WATER_TRIAL_RIGHT_CHEST, { [] { return true; } }),
+                 },
+                 {});
 
         areaTable[GANONS_CASTLE_SHADOW_TRIAL] =
             Area("Ganon's Castle Shadow Trial", "Ganon's Castle", GANONS_CASTLE, NO_DAY_NIGHT_CYCLE,
@@ -114,8 +116,8 @@ void AreaTable_Init_GanonsCastle() {
                      EventAccess(&ShadowTrialClear, { [] {
                          return CanUse(LIGHT_ARROWS) && CanUse(MEGATON_HAMMER) &&
                                 ((FireArrows && (LogicLensCastle || CanUse(LENS_OF_TRUTH))) ||
-                                 (CanUse(LONGSHOT) &&
-                                  (CanUse(HOVER_BOOTS) || (DinsFire && (LogicLensCastle || CanUse(LENS_OF_TRUTH))))));
+                                 (CanUse(LONGSHOT) && ((SoulLikeLike && CanUse(HOVER_BOOTS)) ||
+                                                       (DinsFire && (LogicLensCastle || CanUse(LENS_OF_TRUTH))))));
                      } }),
                  },
                  {
@@ -126,7 +128,8 @@ void AreaTable_Init_GanonsCastle() {
                                     } }),
                      LocationAccess(GANONS_CASTLE_SHADOW_TRIAL_GOLDEN_GAUNTLETS_CHEST, { [] {
                                         return CanUse(FIRE_ARROWS) ||
-                                               (CanUse(LONGSHOT) && (CanUse(HOVER_BOOTS) || CanUse(DINS_FIRE)));
+                                               (CanUse(LONGSHOT) &&
+                                                ((SoulLikeLike && CanUse(HOVER_BOOTS)) || CanUse(DINS_FIRE)));
                                     } }),
                  },
                  {});
@@ -172,29 +175,34 @@ void AreaTable_Init_GanonsCastle() {
                      LocationAccess(GANONS_CASTLE_LIGHT_TRIAL_FIRST_RIGHT_CHEST, { [] { return true; } }),
                      LocationAccess(GANONS_CASTLE_LIGHT_TRIAL_SECOND_RIGHT_CHEST, { [] { return true; } }),
                      LocationAccess(GANONS_CASTLE_LIGHT_TRIAL_THIRD_RIGHT_CHEST, { [] { return true; } }),
-                     LocationAccess(GANONS_CASTLE_LIGHT_TRIAL_INVISIBLE_ENEMIES_CHEST,
-                                    { [] { return LogicLensCastle || CanUse(LENS_OF_TRUTH); } }),
+                     LocationAccess(GANONS_CASTLE_LIGHT_TRIAL_INVISIBLE_ENEMIES_CHEST, { [] {
+                                        return SoulSkulltula && SoulKeese && (LogicLensCastle || CanUse(LENS_OF_TRUTH));
+                                    } }),
                      LocationAccess(GANONS_CASTLE_LIGHT_TRIAL_LULLABY_CHEST,
                                     { [] { return CanPlay(ZeldasLullaby) && SmallKeys(GANONS_CASTLE, 1); } }),
                  },
                  {});
     }
 
-    areaTable[GANONS_CASTLE_TOWER] = Area(
-        "Ganon's Castle Tower", "Ganons Castle", GANONS_CASTLE, NO_DAY_NIGHT_CYCLE, {},
-        {
-            // Locations
-            LocationAccess(GANONS_TOWER_BOSS_KEY_CHEST,
-                           { [] { return CanUse(KOKIRI_SWORD) || CanUse(MASTER_SWORD) || CanUse(BIGGORON_SWORD); } }),
-            LocationAccess(GANONDORF_HINT, { [] {
-                               return BossKeyGanonsCastle &&
-                                      (CanUse(KOKIRI_SWORD) || CanUse(MASTER_SWORD) || CanUse(BIGGORON_SWORD));
-                           } }),
-            LocationAccess(GANON, { [] {
-                               return BossKeyGanonsCastle && CanUse(LIGHT_ARROWS) && CanUse(MASTER_SWORD) && Hearts > 0;
-                           } }),
-        },
-        {});
+    areaTable[GANONS_CASTLE_TOWER] =
+        Area("Ganon's Castle Tower", "Ganons Castle", GANONS_CASTLE, NO_DAY_NIGHT_CYCLE, {},
+             {
+                 // Locations
+                 LocationAccess(GANONS_TOWER_BOSS_KEY_CHEST, { [] {
+                                    return SoulLizalfosDinolfos && SoulStalfos &&
+                                           (CanUse(KOKIRI_SWORD) || CanUse(MASTER_SWORD) || CanUse(BIGGORON_SWORD));
+                                } }),
+                 LocationAccess(GANONDORF_HINT, { [] {
+                                    return SoulLizalfosDinolfos && SoulStalfos && SoulGerudo && BossKeyGanonsCastle &&
+                                           (CanUse(KOKIRI_SWORD) || CanUse(MASTER_SWORD) || CanUse(BIGGORON_SWORD));
+                                } }),
+                 LocationAccess(GANON, { [] {
+                                    return SoulLizalfosDinolfos && SoulStalfos && SoulGerudo && SoulGanon &&
+                                           BossKeyGanonsCastle && CanUse(LIGHT_ARROWS) && CanUse(MASTER_SWORD) &&
+                                           Hearts > 0;
+                                } }),
+             },
+             {});
 
     /*---------------------------
     |   MASTER QUEST DUNGEON    |

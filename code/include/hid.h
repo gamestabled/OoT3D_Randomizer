@@ -116,4 +116,10 @@ typedef struct {
 #define CPAD_UP (1 << 30)
 #define CPAD_DOWN (1 << 31)
 
+// Generic catch-all directions
+#define PAD_RIGHT (BUTTON_RIGHT | CPAD_RIGHT)
+#define PAD_LEFT (BUTTON_LEFT | CPAD_LEFT)
+#define PAD_UP (BUTTON_UP | CPAD_UP)
+#define PAD_DOWN (BUTTON_DOWN | CPAD_DOWN)
+
 #endif // HID_H

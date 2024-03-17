@@ -227,6 +227,32 @@ static void CustomModel_SetBossKeyToRGBA565(void* bossKeyCMB) {
     EDIT_BYTE(0x44B, 0x00);
 }
 
+static void CustomModel_EditShopFairyToEnemySoul(void* ZARBuf) {
+    char* caseCMB  = (((char*)ZARBuf) + 0x178);
+    char* fairyCMB = (((char*)ZARBuf) + 0x25F8);
+    char* BASE_;
+
+    BASE_ = caseCMB;
+    // Colors used for base and top
+    EDIT_BYTE(0x154, 0x00);
+    EDIT_BYTE(0x155, 0x00);
+    EDIT_BYTE(0x156, 0x00);
+    EDIT_BYTE(0x158, 0x10);
+    EDIT_BYTE(0x159, 0x00);
+    EDIT_BYTE(0x15A, 0xFF);
+
+    // Color used for glass part
+    EDIT_BYTE(0x2B4, 0x40);
+    EDIT_BYTE(0x2B5, 0x00);
+    EDIT_BYTE(0x2B6, 0xFF);
+
+    BASE_ = fairyCMB;
+    // Color used for fairy orb
+    EDIT_BYTE(0x13C, 0x00);
+    EDIT_BYTE(0x13D, 0x40);
+    EDIT_BYTE(0x13E, 0x00);
+}
+
 void CustomModel_Update(void) {
     // Make sure custom_assets is loaded
     if (ExtendedObject_GetIndex(&gGlobalContext->objectCtx, OBJECT_CUSTOM_GENERAL_ASSETS) < 0) {
@@ -265,6 +291,10 @@ void CustomModels_EditItemCMB(void* ZARBuf, u16 objectId, s8 special) {
         case OBJECT_CUSTOM_BOSS_KEYS:
             cmb = ((char*)ZARBuf) + 0x78;
             CustomModel_SetBossKeyToRGBA565(cmb);
+            break;
+        case OBJECT_CUSTOM_ENEMY_SOUL:
+            // This function takes the ZARBuf instead of the CMB
+            CustomModel_EditShopFairyToEnemySoul(ZARBuf);
             break;
     }
 }
