@@ -305,7 +305,10 @@ typedef struct {
     /* 0x2250 */ char unk_2250[0x0238];
     /* 0x2488 */ s8 invincibilityTimer; // prevents damage when nonzero
                                         // (positive = visible, counts towards zero each frame)
-    /* 0x2489 */ char unk_2489[0x27B];
+    /* 0x2489 */ char unk_2489[0x0053];
+    /* 0x24DC */ void* cmbMan;
+    /* 0x24E0 */ void* zarInfo;
+    /* 0x24E4 */ char unk_24E4[0x0220];
     /* 0x2704 */ struct SkeletonAnimationModel_unk_0C* bodyTexAnim;
 } Player; // total size (from init vars): 2A4C
 

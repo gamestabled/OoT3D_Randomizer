@@ -42,7 +42,7 @@ udsBindContext bindctx;
 
 static void Multiplayer_Sync_Init();
 static void Multiplayer_Sync_SharedProgress();
-static void Multiplayer_SendPacket(u8 packageSize, u16 targetID);
+static void Multiplayer_SendPacket(u16 packageSize, u16 targetID);
 static void Multiplayer_UnpackPacket(u16 senderID);
 
 typedef struct {
@@ -417,7 +417,7 @@ void Multiplayer_Run(void) {
             // Ready to go! This update is only called in-game with the gfx menu closed
             if (IsInGameOrBossChallenge()) {
                 Multiplayer_Update(1);
-                Multiplayer_Ghosts_DrawAll();
+                Multiplayer_Ghosts_SpawnPuppets();
             }
             break;
     }
@@ -895,7 +895,7 @@ void Multiplayer_Send_GhostPing(void) {
 }
 
 void Multiplayer_Receive_GhostPing(u16 senderID) {
-    Multiplayer_Ghosts_UpdateGhost(senderID, NULL);
+    Multiplayer_Ghosts_UpdateGhostData(senderID, NULL);
 }
 
 void Multiplayer_Send_GhostData(void) {
@@ -903,13 +903,41 @@ void Multiplayer_Send_GhostData(void) {
         return;
     }
     memset(mBuffer, 0, mBufSize);
-    u8 memSpacer         = 0;
+    u16 memSpacer        = 0;
     mBuffer[memSpacer++] = PACKET_GHOSTDATA; // 0: Identifier
 
     GhostData ghostData;
     ghostData.currentScene = gGlobalContext->sceneNum;
     ghostData.age          = gSaveContext.linkAge;
     ghostData.position     = PLAYER->actor.world.pos;
+    ghostData.rotation     = PLAYER->actor.shape.rot;
+
+    ghostData.meshGroups1 = 0;
+    ghostData.meshGroups2 = 0;
+    s32 meshGroupCount    = Model_GetMeshGroupCount(PLAYER->skelAnime.unk_28);
+
+    for (size_t index = 0; index < BIT_COUNT(u32); index++) {
+        if (index > meshGroupCount) {
+            break;
+        }
+        if (Model_IsMeshGroupUsed(PLAYER->skelAnime.unk_28, index)) {
+            ghostData.meshGroups1 |= 1 << index;
+        }
+    }
+    for (size_t index = BIT_COUNT(u32); index < meshGroupCount; index++) {
+        if (Model_IsMeshGroupUsed(PLAYER->skelAnime.unk_28, index)) {
+            ghostData.meshGroups2 |= 1 << (index - BIT_COUNT(u32));
+        }
+    }
+
+    // Always have body enabled
+    if (gSaveContext.linkAge == 0) {
+        ghostData.meshGroups2 |= 0xE0000000;
+    } else {
+        ghostData.meshGroups1 |= 0x7000000;
+    }
+
+    memcpy(&ghostData.jointTable, PLAYER->skelAnime.jointTable, sizeof(Vec3s[LINK_JOINT_COUNT]));
 
     memcpy(&mBuffer[memSpacer], &ghostData, sizeof(GhostData));
     memSpacer += sizeof(GhostData) / 4;
@@ -921,7 +949,7 @@ void Multiplayer_Receive_GhostData(u16 senderID) {
     GhostData ghostData;
     memcpy(&ghostData, &mBuffer[1], sizeof(GhostData));
 
-    Multiplayer_Ghosts_UpdateGhost(senderID, &ghostData);
+    Multiplayer_Ghosts_UpdateGhostData(senderID, &ghostData);
 }
 
 void Multiplayer_Send_LinkSFX(u32 sfxID_) {
@@ -2614,7 +2642,7 @@ void Multiplayer_Receive_AmmoChange(u16 senderID) {
 
 // Send & Receive
 
-static void Multiplayer_SendPacket(u8 packageSize, u16 targetID) {
+static void Multiplayer_SendPacket(u16 packageSize, u16 targetID) {
     udsSendTo(targetID, data_channel, UDS_SENDFLAG_Default, mBuffer, packageSize * sizeof(mBuffer[0]));
 }
 

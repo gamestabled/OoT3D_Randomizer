@@ -846,6 +846,12 @@ typedef s32 (*Audio_PlayActorSfx2_proc)(Actor* actor, s32 sfxID);
 #define Audio_PlayActorSfx2_addr 0x375BCC
 #define Audio_PlayActorSfx2 ((Audio_PlayActorSfx2_proc)Audio_PlayActorSfx2_addr)
 
+typedef s32 (*Model_GetMeshGroupCount_proc)(SkeletonAnimationModel* skelAnimeModel);
+#define Model_GetMeshGroupCount ((Model_GetMeshGroupCount_proc)0x2BB71C)
+
+typedef s32 (*Model_IsMeshGroupUsed_proc)(SkeletonAnimationModel* skelAnimeModel, s32 param);
+#define Model_IsMeshGroupUsed ((Model_IsMeshGroupUsed_proc)0x4C6880)
+
 typedef void (*Model_EnableMeshGroupByIndex_proc)(SkeletonAnimationModel* skel, u32 index);
 #define Model_EnableMeshGroupByIndex ((Model_EnableMeshGroupByIndex_proc)0x37266C)
 
