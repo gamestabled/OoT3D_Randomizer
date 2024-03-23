@@ -188,7 +188,12 @@ typedef struct {
     /* 0x1594 */ char unk_1594[0x000C];
     /* 0x15A0 */ u16 nextCutsceneIndex;
     /* 0x15A2 */ u8 cutsceneTrigger;
-    /* 0x15A3 */ char unk_15A3[0x008];
+    /* 0x15A3 */ u8 chamberCutsceneNum;
+    /* 0x15A4 */ u16 nextDayTime; // "next_zelda_time"
+    /* 0x15A6 */ u8 transFadeDuration;
+    /* 0x15A7 */ u8 transWipeSpeed;
+    /* 0x15A8 */ u16 skyboxTime;
+    /* 0x15AA */ u8 dogIsLost;
     /* 0x15AB */ u8 nextTransition;
     /* 0x15AC */ char unk_15AC[0x006];
     /* 0x15B2 */ s16 healthAccumulator;
