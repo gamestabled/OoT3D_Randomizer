@@ -937,17 +937,27 @@ void Multiplayer_Send_GhostData(void) {
         ghostData.meshGroups1 |= 0x7000000;
     }
 
-    memcpy(&ghostData.jointTable, PLAYER->skelAnime.jointTable, sizeof(Vec3s[LINK_JOINT_COUNT]));
+    if (playingOnCitra) {
+        memcpy(&ghostData.jointTable, PLAYER->skelAnime.jointTable, sizeof(Vec3s[LINK_JOINT_COUNT]));
+    }
 
     memcpy(&mBuffer[memSpacer], &ghostData, sizeof(GhostData));
     memSpacer += sizeof(GhostData) / 4;
+
+    if (!playingOnCitra) {
+        memSpacer -= sizeof(Vec3s[LINK_JOINT_COUNT]) / 4;
+    }
 
     Multiplayer_SendPacket(memSpacer, UDS_BROADCAST_NETWORKNODEID);
 }
 
 void Multiplayer_Receive_GhostData(u16 senderID) {
     GhostData ghostData;
-    memcpy(&ghostData, &mBuffer[1], sizeof(GhostData));
+    u32 packetSize = sizeof(GhostData);
+    if (!playingOnCitra) {
+        packetSize -= sizeof(Vec3s[LINK_JOINT_COUNT]);
+    }
+    memcpy(&ghostData, &mBuffer[1], packetSize);
 
     Multiplayer_Ghosts_UpdateGhostData(senderID, &ghostData);
 }

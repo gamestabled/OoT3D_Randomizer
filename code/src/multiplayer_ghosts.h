@@ -17,7 +17,7 @@ typedef struct {
     // Animation vars here
     u32 meshGroups1;
     u32 meshGroups2;
-    Vec3s jointTable[LINK_JOINT_COUNT];
+    Vec3s jointTable[LINK_JOINT_COUNT]; // ALWAYS KEEP LAST
 } GhostData;
 
 typedef struct {

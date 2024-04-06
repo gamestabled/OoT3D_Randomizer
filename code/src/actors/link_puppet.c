@@ -20,6 +20,11 @@ ActorInit EnLinkPuppet_InitVars = {
     EnLinkPuppet_Draw,    //
 };
 
+// When posing the model by copying the joint table, the model for some reason gets raised about 12 units.
+u32 ChildYPosOffset() {
+    return playingOnCitra ? 12 : 0;
+}
+
 typedef void (*SkelAnime_InitLink_proc)(SkelAnime* skelAnime, ZARInfo* zarInfo, GlobalContext* globalCtx, void* cmbMan,
                                         void* param_5, u32 animation, s32 limbBufCount, void* jointTable,
                                         void* morphTable);
@@ -82,7 +87,13 @@ void EnLinkPuppet_Update(Actor* thisx, GlobalContext* globalCtx) {
             Model_DisableMeshGroupByIndex(this->skelAnime.unk_28, index + BIT_COUNT(u32));
         }
     }
-    memcpy(this->skelAnime.jointTable, this->ghostPtr->ghostData.jointTable, sizeof(Vec3s[LINK_JOINT_COUNT]));
+    if (playingOnCitra) {
+        memcpy(this->skelAnime.jointTable, this->ghostPtr->ghostData.jointTable, sizeof(Vec3s[LINK_JOINT_COUNT]));
+    }
+
+    if (this->ghostPtr->ghostData.age != 0) {
+        this->base.world.pos.y -= ChildYPosOffset();
+    }
 }
 
 typedef void (*SkelAnime_DrawOpa_proc)(SkelAnime* skelAnime, nn_math_MTX34* modelMtx, u32* overrideLimbDraw,
@@ -128,14 +139,9 @@ void EnLinkPuppet_Draw(Actor* thisx, GlobalContext* globalCtx) {
         s16 envB = 100 * colorB[(this->base.params - 1) % ARRAY_SIZE(colorB)];
 
         Vec3f spawnPos = this->base.world.pos;
-        spawnPos.y += (this->ghostPtr->ghostData.age == 0 ? 50 : 35);
+        spawnPos.y += (this->ghostPtr->ghostData.age == 0 ? 50 : (35 + ChildYPosOffset()));
         EffectSsDeadDb_Spawn(gGlobalContext, &spawnPos, &vecEmpty, &vecEmpty,
                              this->ghostPtr->ghostData.age == 0 ? 100 : 70, -1, 80, 80, 80, 0xFF, envR, envG, envB, 1,
                              8, 0);
     }
-}
-
-// Returns the ID of the puppet, starting at 0!
-u16 EnLinkPuppet_GetID(EnLinkPuppet* this) {
-    return this->base.params & 0xFF;
 }
