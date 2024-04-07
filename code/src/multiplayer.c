@@ -937,15 +937,17 @@ void Multiplayer_Send_GhostData(void) {
         ghostData.meshGroups1 |= 0x7000000;
     }
 
+    ghostData.currentTunic = PLAYER->currentTunic;
+
     if (playingOnCitra) {
-        memcpy(&ghostData.jointTable, PLAYER->skelAnime.jointTable, sizeof(Vec3s[LINK_JOINT_COUNT]));
+        memcpy(&ghostData.jointTable, PLAYER->skelAnime.jointTable, sizeof(ghostData.jointTable));
     }
 
     memcpy(&mBuffer[memSpacer], &ghostData, sizeof(GhostData));
     memSpacer += sizeof(GhostData) / 4;
 
     if (!playingOnCitra) {
-        memSpacer -= sizeof(Vec3s[LINK_JOINT_COUNT]) / 4;
+        memSpacer -= sizeof(ghostData.jointTable) / 4;
     }
 
     Multiplayer_SendPacket(memSpacer, UDS_BROADCAST_NETWORKNODEID);
@@ -955,7 +957,7 @@ void Multiplayer_Receive_GhostData(u16 senderID) {
     GhostData ghostData;
     u32 packetSize = sizeof(GhostData);
     if (!playingOnCitra) {
-        packetSize -= sizeof(Vec3s[LINK_JOINT_COUNT]);
+        packetSize -= sizeof(ghostData.jointTable);
     }
     memcpy(&ghostData, &mBuffer[1], packetSize);
 

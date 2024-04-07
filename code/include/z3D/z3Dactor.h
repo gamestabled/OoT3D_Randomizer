@@ -250,7 +250,11 @@ typedef struct DynaPolyActor {
 
 typedef struct {
     /* 0x0000 */ Actor actor;
-    /* 0x01A4 */ char unk_148[0x0005];
+    /* 0x01A4 */ s8 currentTunic;
+    /* 0x01A5 */ s8 currentSword;
+    /* 0x01A6 */ s8 currentShield;
+    /* 0x01A7 */ s8 currentBoots;
+    /* 0x01A8 */ s8 heldItemButton;
     /* 0x01A9 */ s8 heldItemActionParam;
     /* 0x01AA */ u8 heldItemId;
     /* 0x01AB */ char unk_1AB[0x1];

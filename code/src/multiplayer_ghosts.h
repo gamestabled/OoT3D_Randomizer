@@ -4,20 +4,22 @@
 #include "3ds/types.h"
 #include "z3D/z3D.h"
 
-// ASSUMED! Game crashes when copying more than this while paused.
-#define LINK_JOINT_COUNT 217
-// 48 for adult, 26 for child?
-#define LINK_MESH_GROUP_COUNT 48
+#define LINK_LIMB_COUNT 25
+
+// Filler struct to match allocated size in SkelAnime_InitLink
+typedef struct {
+    u8 data[0x34];
+} JointData;
 
 typedef struct {
     s16 currentScene;
     s32 age;
     Vec3f position;
     Vec3s rotation;
-    // Animation vars here
     u32 meshGroups1;
     u32 meshGroups2;
-    Vec3s jointTable[LINK_JOINT_COUNT]; // ALWAYS KEEP LAST
+    s8 currentTunic;
+    JointData jointTable[LINK_LIMB_COUNT]; // ALWAYS KEEP LAST
 } GhostData;
 
 typedef struct {

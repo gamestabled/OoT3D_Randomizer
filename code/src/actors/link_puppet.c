@@ -2,6 +2,9 @@
 #include <string.h>
 
 #include "link_puppet.h"
+#include "objects.h"
+#include "custom_models.h"
+#include "settings.h"
 #include "common.h"
 
 // Draw at most three extra Links. More can cause graphical issues that persist until game restart.
@@ -22,7 +25,7 @@ ActorInit EnLinkPuppet_InitVars = {
 
 // When posing the model by copying the joint table, the model for some reason gets raised about 12 units.
 u32 ChildYPosOffset() {
-    return playingOnCitra ? 12 : 0;
+    return playingOnCitra ? 12.5f : 0;
 }
 
 typedef void (*SkelAnime_InitLink_proc)(SkelAnime* skelAnime, ZARInfo* zarInfo, GlobalContext* globalCtx, void* cmbMan,
@@ -36,6 +39,25 @@ void EnLinkPuppet_Init(Actor* thisx, GlobalContext* globalCtx) {
     this->base.room = -1;
 
     SkelAnime_InitLink(&this->skelAnime, PLAYER->zarInfo, globalCtx, PLAYER->cmbMan, thisx->unk_178, 0, 9, NULL, NULL);
+
+    // Tunic
+    void* cmabMan = NULL;
+    if (gSettingsContext.customTunicColors == ON) {
+        s16 exObjectBankIdx = Object_GetIndex(&rExtendedObjectCtx, OBJECT_CUSTOM_GENERAL_ASSETS);
+        if (exObjectBankIdx >= 0) {
+            cmabMan = ZAR_GetCMABByIndex(&rExtendedObjectCtx.status[exObjectBankIdx].zarInfo,
+                                         (gSaveContext.linkAge == 0) ? TEXANIM_LINK_BODY : TEXANIM_CHILD_LINK_BODY);
+        }
+    } else if (gSaveContext.linkAge == 0) {
+        cmabMan = ZAR_GetCMABByIndex(PLAYER->zarInfo, 2);
+    }
+    if (cmabMan != NULL) {
+        TexAnim_Spawn(this->skelAnime.unk_28->unk_0C, cmabMan);
+    }
+    this->skelAnime.unk_28->unk_0C->animSpeed = 0.0f;
+    this->skelAnime.unk_28->unk_0C->animMode  = 0;
+
+    // Mesh Groups
     for (size_t index = 0; index < BIT_COUNT(this->ghostPtr->ghostData.meshGroups1); index++) {
         Model_DisableMeshGroupByIndex(this->skelAnime.unk_28, index);
     }
@@ -73,6 +95,8 @@ void EnLinkPuppet_Update(Actor* thisx, GlobalContext* globalCtx) {
 
     this->base.world.pos = this->ghostPtr->ghostData.position;
     this->base.shape.rot = this->ghostPtr->ghostData.rotation;
+
+    // Mesh Groups
     for (size_t index = 0; index < BIT_COUNT(this->ghostPtr->ghostData.meshGroups1); index++) {
         if (this->ghostPtr->ghostData.meshGroups1 & (0b1 << index)) {
             Model_EnableMeshGroupByIndex(this->skelAnime.unk_28, index);
@@ -87,10 +111,17 @@ void EnLinkPuppet_Update(Actor* thisx, GlobalContext* globalCtx) {
             Model_DisableMeshGroupByIndex(this->skelAnime.unk_28, index + BIT_COUNT(u32));
         }
     }
+
+    // Tunic
+    this->skelAnime.unk_28->unk_0C->curFrame = this->ghostPtr->ghostData.currentTunic;
+
+    // Limbs
     if (playingOnCitra) {
-        memcpy(this->skelAnime.jointTable, this->ghostPtr->ghostData.jointTable, sizeof(Vec3s[LINK_JOINT_COUNT]));
+        memcpy(this->skelAnime.jointTable, this->ghostPtr->ghostData.jointTable,
+               sizeof(this->ghostPtr->ghostData.jointTable));
     }
 
+    // Child Y position workaround
     if (this->ghostPtr->ghostData.age != 0) {
         this->base.world.pos.y -= ChildYPosOffset();
     }
