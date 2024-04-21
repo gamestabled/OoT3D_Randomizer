@@ -453,7 +453,7 @@ typedef struct OcLine OcLine; // TODO
 #define COLLISION_CHECK_OC_MAX 50
 #define COLLISION_CHECK_OC_LINE_MAX 3
 
-typedef struct {
+typedef struct CollisionCheckContext {
     /* 0x000 */ s16 colAtCount;
     /* 0x002 */ u16 sacFlags;
     /* 0x004 */ Collider* colAt[COLLISION_CHECK_AT_MAX];

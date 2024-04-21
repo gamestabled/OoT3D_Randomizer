@@ -73,14 +73,5 @@ void after_GlobalContext_Update() {
         }
     }
 
-    // CitraPrint("PLAYER->actor.shape.unk_06: 0x%X\n", PLAYER->actor.shape.unk_06);
-    // CitraPrint("1 - draw_10: 0x%X", PLAYER->skelAnime.unk_28->unk_0C->unk_00);
-    // CitraPrint("2 - draw_10: 0x%X", PLAYER->skelAnime.unk_28->unk_10);
-    // CitraPrint("unk_00: 0x%X", PLAYER->skelAnime.unk_28->unk_10->unk_00);
-    // CitraPrint("unk_04: 0x%X", PLAYER->skelAnime.unk_28->unk_10->unk_04);
-    // CitraPrint("unk_08: 0x%X", PLAYER->skelAnime.unk_28->unk_10->unk_08);
-    // CitraPrint("unk_0C: 0x%X", PLAYER->skelAnime.unk_28->unk_10->unk_0C);
-    // CitraPrint("unk_10: 0x%X\n", PLAYER->skelAnime.unk_28->unk_10->unk_10);
-
     Multiplayer_Sync_Update();
 }

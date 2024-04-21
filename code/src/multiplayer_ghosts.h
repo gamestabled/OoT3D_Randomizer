@@ -32,7 +32,6 @@ typedef struct {
 void Multiplayer_Ghosts_Tick(void);
 void Multiplayer_Ghosts_UpdateGhostData(u16 networkID, GhostData* ghostData);
 void Multiplayer_Ghosts_UpdateGhostData_JointTable(u16 networkID, LimbData* limbData);
-void Multiplayer_Ghosts_UpdateGhostData_MorphTable(u16 networkID, LimbData* limbData);
 GhostData* Multiplayer_Ghosts_GetGhostData(u16 networkID);
 void Multiplayer_Ghosts_SpawnPuppets(void);
 

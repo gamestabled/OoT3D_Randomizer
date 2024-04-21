@@ -6,15 +6,16 @@
 
 typedef struct {
     Actor base;
-    SkelAnime skelAnime;
     LinkGhost* ghostPtr;
+    SkelAnime skelAnime;
+    ColliderCylinder collider;
 } EnLinkPuppet;
 
 extern ActorInit EnLinkPuppet_InitVars;
 
-void EnLinkPuppet_Init(Actor* thisx, GlobalContext* globalCtx);
-void EnLinkPuppet_Destroy(Actor* thisx, GlobalContext* globalCtx);
-void EnLinkPuppet_Update(Actor* thisx, GlobalContext* globalCtx);
-void EnLinkPuppet_Draw(Actor* thisx, GlobalContext* globalCtx);
+void EnLinkPuppet_Init(EnLinkPuppet* this, GlobalContext* globalCtx);
+void EnLinkPuppet_Destroy(EnLinkPuppet* this, GlobalContext* globalCtx);
+void EnLinkPuppet_Update(EnLinkPuppet* this, GlobalContext* globalCtx);
+void EnLinkPuppet_Draw(EnLinkPuppet* this, GlobalContext* globalCtx);
 
 #endif //_LINK_PUPPET_H_

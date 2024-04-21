@@ -99,6 +99,7 @@ void Multiplayer_Ghosts_SpawnPuppets(void) {
             if (puppet == NULL) {
                 continue;
             }
+            // It's important to run the init after this is set
             puppet->ghostPtr = ghost;
         }
     }

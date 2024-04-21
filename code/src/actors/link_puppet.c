@@ -11,16 +11,36 @@
 #define MAX_PUPPETS_AT_ONCE 3
 
 ActorInit EnLinkPuppet_InitVars = {
-    0x1,                  // ID
-    ACTORTYPE_NPC,        // Type
-    0xFF,                 // Room
-    0b110000,             // Flags
-    21,                   // Object ID (20: Adult, 21: Child)
-    sizeof(EnLinkPuppet), //
-    EnLinkPuppet_Init,    //
-    EnLinkPuppet_Destroy, //
-    EnLinkPuppet_Update,  //
-    EnLinkPuppet_Draw,    //
+    0x1,                             // ID
+    ACTORTYPE_NPC,                   // Type
+    0xFF,                            // Room
+    0x2000410,                       // Flags
+    21,                              // Object ID (20: Adult, 21: Child)
+    sizeof(EnLinkPuppet),            //
+    (ActorFunc)EnLinkPuppet_Init,    //
+    (ActorFunc)EnLinkPuppet_Destroy, //
+    (ActorFunc)EnLinkPuppet_Update,  //
+    (ActorFunc)EnLinkPuppet_Draw,    //
+};
+
+static ColliderCylinderInit EnLinkPupper_ColliderCylinderInit = {
+    {
+        0x7,
+        0x0,
+        0x9,
+        0x9,
+        0x10,
+        0x1,
+    },
+    {
+        0x1,
+        { 0x0, 0x0, 0x0 },
+        { 0xFFCFFFFF, 0x0, 0x0 },
+        0x0,
+        0x5,
+        0x1,
+    },
+    { 12.0f, 50.0f, 0.0f, { 0.0f, 0.0f, 0.0f } },
 };
 
 typedef void (*SkelAnime_InitLink_proc)(SkelAnime* skelAnime, ZARInfo* zarInfo, GlobalContext* globalCtx, void* cmbMan,
@@ -31,12 +51,10 @@ typedef void (*SkelAnime_InitLink_proc)(SkelAnime* skelAnime, ZARInfo* zarInfo, 
 // When posing the model by copying the joint table, the model for some reason gets raised about 12 units.
 static const f32 childOffsetY = 12.5f;
 
-void EnLinkPuppet_Init(Actor* thisx, GlobalContext* globalCtx) {
-    EnLinkPuppet* this = (EnLinkPuppet*)thisx;
-
+void EnLinkPuppet_Init(EnLinkPuppet* this, GlobalContext* globalCtx) {
     this->base.room = -1;
 
-    SkelAnime_InitLink(&this->skelAnime, PLAYER->zarInfo, globalCtx, PLAYER->cmbMan, thisx->unk_178, 0, 9,
+    SkelAnime_InitLink(&this->skelAnime, PLAYER->zarInfo, globalCtx, PLAYER->cmbMan, this->base.unk_178, 0, 9,
                        this->ghostPtr->ghostData.jointTable, NULL);
 
     // Tunic
@@ -63,32 +81,26 @@ void EnLinkPuppet_Init(Actor* thisx, GlobalContext* globalCtx) {
     for (size_t index = 0; index < BIT_COUNT(this->ghostPtr->ghostData.meshGroups2); index++) {
         Model_DisableMeshGroupByIndex(this->skelAnime.unk_28, index + BIT_COUNT(u32));
     }
+
+    // Collision
+    Collider_InitCylinder(gGlobalContext, &this->collider);
+    Collider_SetCylinder(gGlobalContext, &this->collider, &this->base, &EnLinkPupper_ColliderCylinderInit);
+
+    // Shadow
+    f32 feetShadowScale = (this->ghostPtr->ghostData.age == 0) ? 90.0f : 60.0f;
+    ActorShape_Init(&this->base.shape, 0.0f, (void*)0x1D04F4, feetShadowScale);
 }
 
 typedef void (*SkelAnime_Free2_proc)(SkelAnime* anime);
 #define SkelAnime_Free2 ((SkelAnime_Free2_proc)0x350BE0)
 
-void EnLinkPuppet_Destroy(Actor* thisx, GlobalContext* globalCtx) {
-    EnLinkPuppet* this = (EnLinkPuppet*)thisx;
-
+void EnLinkPuppet_Destroy(EnLinkPuppet* this, GlobalContext* globalCtx) {
     SkelAnime_Free2(&this->skelAnime);
 }
 
-void EnLinkPuppet_Update(Actor* thisx, GlobalContext* globalCtx) {
-    EnLinkPuppet* this = (EnLinkPuppet*)thisx;
-
-    if (this->ghostPtr == NULL) {
-        // Need to set the ghost data pointer first!
-        return;
-    }
-
-    if (!this->ghostPtr->inUse) {
-        Actor_Kill(thisx);
-        return;
-    }
-
-    if (this->ghostPtr->ghostData.currentScene != gGlobalContext->sceneNum) {
-        Actor_Kill(thisx);
+void EnLinkPuppet_Update(EnLinkPuppet* this, GlobalContext* globalCtx) {
+    if (!this->ghostPtr->inUse || this->ghostPtr->ghostData.currentScene != gGlobalContext->sceneNum) {
+        Actor_Kill(&this->base);
         return;
     }
 
@@ -114,14 +126,31 @@ void EnLinkPuppet_Update(Actor* thisx, GlobalContext* globalCtx) {
     // Tunic
     this->skelAnime.unk_28->unk_0C->curFrame = this->ghostPtr->ghostData.currentTunic;
 
+    // Collider
+    Collider_UpdateCylinder(&this->base, &this->collider);
+    CollisionCheck_SetOC(gGlobalContext, &gGlobalContext->colChkCtx, &this->collider);
+    CollisionCheck_SetAC(gGlobalContext, &gGlobalContext->colChkCtx, &this->collider);
+
+    // Shadow
+    f32 ceilingCheckHeight = (this->ghostPtr->ghostData.age == 0) ? 56.0f : 40.0f;
+    Actor_UpdateBgCheckInfo(gGlobalContext, (Actor*)this, 26.0f, 6.0f, ceilingCheckHeight, 7);
+
     // Child Y position workaround
     if (this->ghostPtr->ghostData.age != 0) {
         this->base.world.pos.y -= childOffsetY;
     }
 }
 
-typedef void (*SkelAnime_DrawOpa_proc)(SkelAnime* skelAnime, nn_math_MTX34* modelMtx, u32* overrideLimbDraw,
-                                       u32* postLimbDraw, Actor* param_5, u32 param_6);
+#define Vec3f_PlayerFeet_unk ((Vec3f*)0x53CACC)
+void EnLinkPuppet_PostLimbDraw(GlobalContext* globalCtx, s32 limbIndex, nn_math_MTX34* mtx, EnLinkPuppet* this) {
+    if (limbIndex != 0x15) {
+        Actor_SetFeetPos((Actor*)this, mtx, limbIndex, 5, &Vec3f_PlayerFeet_unk[gSaveContext.linkAge], 8,
+                         &Vec3f_PlayerFeet_unk[gSaveContext.linkAge]);
+    }
+}
+
+typedef void (*SkelAnime_DrawOpa_proc)(SkelAnime* skelAnime, nn_math_MTX34* modelMtx, void* overrideLimbDraw,
+                                       void* postLimbDraw, Actor* param_5, u32 param_6);
 #define SkelAnime_DrawOpa ((SkelAnime_DrawOpa_proc)0x35E240)
 
 typedef void (*EffectSsDeadDb_Spawn_proc)(GlobalContext* globalCtx, Vec3f* position, Vec3f* velocity,
@@ -131,14 +160,12 @@ typedef void (*EffectSsDeadDb_Spawn_proc)(GlobalContext* globalCtx, Vec3f* posit
 #define EffectSsDeadDb_Spawn_addr 0x3642F4
 #define EffectSsDeadDb_Spawn ((EffectSsDeadDb_Spawn_proc)EffectSsDeadDb_Spawn_addr)
 
-void EnLinkPuppet_Draw(Actor* thisx, GlobalContext* globalCtx) {
-    EnLinkPuppet* this = (EnLinkPuppet*)thisx;
-
+void EnLinkPuppet_Draw(EnLinkPuppet* this, GlobalContext* globalCtx) {
     // Check how many Link puppets already exist before this one.
     u8 linkPuppetCount = 0;
     Actor* firstActor  = gGlobalContext->actorCtx.actorList[EnLinkPuppet_InitVars.type].first;
     for (Actor* actor = firstActor; actor != NULL; actor = actor->next) {
-        if (actor == thisx) {
+        if (actor == &this->base) {
             break;
         }
         if (actor->id == EnLinkPuppet_InitVars.id) {
@@ -147,7 +174,7 @@ void EnLinkPuppet_Draw(Actor* thisx, GlobalContext* globalCtx) {
     }
 
     if (linkPuppetCount < MAX_PUPPETS_AT_ONCE && this->ghostPtr->ghostData.age == gSaveContext.linkAge) {
-        SkelAnime_DrawOpa(&this->skelAnime, &this->base.modelMtx, NULL, NULL, thisx, 0);
+        SkelAnime_DrawOpa(&this->skelAnime, &this->base.modelMtx, NULL, EnLinkPuppet_PostLimbDraw, &this->base, 0);
         return;
     }
 
