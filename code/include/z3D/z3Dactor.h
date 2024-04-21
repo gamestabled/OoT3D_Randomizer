@@ -29,7 +29,11 @@ typedef struct {
 } SkeletonAnimationModel_VTable;
 
 typedef struct SkeletonAnimationModel_unk_10 {
-    /* 0x00 */ char unk_00[0x14];
+    /* 0x00 */ void* unk_00;
+    /* 0x04 */ void* unk_04;
+    /* 0x08 */ s32 unk_08;
+    /* 0x0C */ s32 unk_0C;
+    /* 0x10 */ s32 unk_10;
 } SkeletonAnimationModel_unk_10; // size = 0x14
 
 typedef struct SkeletonAnimationModel_unk_0C {
@@ -279,7 +283,9 @@ typedef struct {
     /* 0x024C */ void* giDrawSpace;
     /* 0x0250 */ char unk_250[0x0004];
     /* 0x0254 */ struct SkelAnime skelAnime;
-    /* 0x02D8 */ char unk_2D8[0x0F4C];
+    /* 0x02D8 */ char jointTable[0x514];
+    /* 0x07EC */ char morphTable[0x514];
+    /* 0x0D00 */ char unk_2D8[0x0524];
     /* 0x1224 */ Actor* heldActor;
     /* 0x1228 */ char unk_1228[0x84];
     /* 0x12AC */ u8 getItemId;

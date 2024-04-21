@@ -9,17 +9,17 @@
 // Filler struct to match allocated size in SkelAnime_InitLink
 typedef struct {
     u8 data[0x34];
-} JointData;
+} LimbData;
 
 typedef struct {
-    s16 currentScene;
+    s32 currentScene;
     s32 age;
     Vec3f position;
     Vec3s rotation;
     u32 meshGroups1;
     u32 meshGroups2;
-    s8 currentTunic;
-    JointData jointTable[LINK_LIMB_COUNT]; // ALWAYS KEEP LAST
+    s32 currentTunic;
+    LimbData jointTable[LINK_LIMB_COUNT]; // ALWAYS KEEP LAST
 } GhostData;
 
 typedef struct {
@@ -31,8 +31,9 @@ typedef struct {
 
 void Multiplayer_Ghosts_Tick(void);
 void Multiplayer_Ghosts_UpdateGhostData(u16 networkID, GhostData* ghostData);
+void Multiplayer_Ghosts_UpdateGhostData_JointTable(u16 networkID, LimbData* limbData);
+void Multiplayer_Ghosts_UpdateGhostData_MorphTable(u16 networkID, LimbData* limbData);
 GhostData* Multiplayer_Ghosts_GetGhostData(u16 networkID);
-// Updates the data of the existing puppet actors, or spawns new ones in the scene
 void Multiplayer_Ghosts_SpawnPuppets(void);
 
 #endif //_MULTIPLAYER_GHOSTS_H_

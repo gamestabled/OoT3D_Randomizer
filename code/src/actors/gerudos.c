@@ -18,7 +18,7 @@ void EnGe1_rInit(Actor* thisx, GlobalContext* globalCtx) {
     if ((self->actor.params & 0xFF) == GE1_TYPE_GATE_OPERATOR) {
         if (gSettingsContext.shuffleGerudoToken || gSettingsContext.shuffleOverworldEntrances
             /* || gSettingsContext.shuffleInteriorEntrances || gSettingsContexts.shuffleSpawnPositions*/) {
-            Actor_Spawn(&globalCtx->actorCtx, globalCtx, 0x138, -1358.0f, 88.0f, -3018.0f, 0, 0x95B0, 0, 0x0302);
+            Actor_Spawn(&globalCtx->actorCtx, globalCtx, 0x138, -1358.0f, 88.0f, -3018.0f, 0, 0x95B0, 0, 0x0302, FALSE);
         }
     } else if ((self->actor.params & 0xFF) == GE1_TYPE_EXTRA_GATE_OPERATOR) {
         self->actor.params &= ~0xFF;

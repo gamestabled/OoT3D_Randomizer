@@ -62,7 +62,7 @@ void GsQueue_Update(void) {
 
             Actor_Spawn(&gGlobalContext->actorCtx, gGlobalContext, 0x95,      //
                         gs->posRot.pos.x, gs->posRot.pos.y, gs->posRot.pos.z, //
-                        gs->posRot.rot.x, gs->posRot.rot.y, gs->posRot.rot.z, params);
+                        gs->posRot.rot.x, gs->posRot.rot.y, gs->posRot.rot.z, params, FALSE);
 
             gsSpawnQueue[i] = NULL;
         }

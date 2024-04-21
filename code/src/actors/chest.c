@@ -246,16 +246,16 @@ u8 Chest_OverrideIceSmoke(Actor* thisx) {
             case ICETRAP_BOMB_SIMPLE:
             case ICETRAP_BOMB_KNOCKDOWN:
                 sBomb = Actor_Spawn(&gGlobalContext->actorCtx, gGlobalContext, 0x10, thisx->world.pos.x,
-                                    thisx->world.pos.y, thisx->world.pos.z, 0, 0, 0, 0);
+                                    thisx->world.pos.y, thisx->world.pos.z, 0, 0, 0, 0, FALSE);
                 break;
             case ICETRAP_ANTIFAIRY:
                 sFairy = (EnElf*)Actor_Spawn(&gGlobalContext->actorCtx, gGlobalContext, 0x18, thisx->world.pos.x,
-                                             thisx->world.pos.y, thisx->world.pos.z, 0, 0, 0, 0x5);
+                                             thisx->world.pos.y, thisx->world.pos.z, 0, 0, 0, 0x5, FALSE);
                 PLAYER->actor.home.pos.y = -5000; // Make Link airborne for a frame to cancel the get item event
                 break;
             case ICETRAP_RUPPY:
                 Actor_Spawn(&gGlobalContext->actorCtx, gGlobalContext, 0x131, thisx->world.pos.x,
-                            thisx->world.pos.y + 30, thisx->world.pos.z, 0, 0, 0, 0x2);
+                            thisx->world.pos.y + 30, thisx->world.pos.z, 0, 0, 0, 0x2, FALSE);
                 PLAYER->actor.home.pos.y = -5000; // Make Link airborne for a frame to cancel the get item event
                 break;
             case ICETRAP_FIRE:

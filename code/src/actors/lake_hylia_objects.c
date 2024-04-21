@@ -35,15 +35,15 @@ void BgSpot06Objects_rUpdate(Actor* thisx, GlobalContext* globalCtx) {
         }
 
         // Spawn a floor switch
-        floorSwitch =
-            Actor_Spawn(&globalCtx->actorCtx, globalCtx, 0x12A, -896.0f, -1243.0f, 6953.0f, 0, 0, 0, switchParams);
+        floorSwitch = Actor_Spawn(&globalCtx->actorCtx, globalCtx, 0x12A, -896.0f, -1243.0f, 6953.0f, 0, 0, 0,
+                                  switchParams, FALSE);
 
         // Spawn a sign
-        Actor_Spawn(&globalCtx->actorCtx, globalCtx, 0x141, -970.0f, -1242.0f, 6954.0f, 0, 0, 0, 0x0046);
+        Actor_Spawn(&globalCtx->actorCtx, globalCtx, 0x141, -970.0f, -1242.0f, 6954.0f, 0, 0, 0, 0x0046, FALSE);
 
         // Spawn a Navi check spot
         if (!(gSaveContext.eventChkInf[4] & 0x0400)) { // Water Temple blue warp not cleared
-            Actor_Spawn(&globalCtx->actorCtx, globalCtx, 0x173, -896.0f, -1243.0f, 6953.0f, 0, 0, 0, 0x3DB3);
+            Actor_Spawn(&globalCtx->actorCtx, globalCtx, 0x173, -896.0f, -1243.0f, 6953.0f, 0, 0, 0, 0x3DB3, FALSE);
         }
 
         actionCounter++;

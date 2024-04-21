@@ -48,7 +48,17 @@ void Multiplayer_Ghosts_UpdateGhostData(u16 networkID, GhostData* ghostData) {
     // Set vars
     ghostX->lastTick = svcGetSystemTick();
     if (ghostData != NULL) {
-        ghostX->ghostData = *ghostData;
+        memcpy(&ghostX->ghostData, ghostData, sizeof(GhostData) - sizeof(ghostData->jointTable));
+    }
+}
+
+void Multiplayer_Ghosts_UpdateGhostData_JointTable(u16 networkID, LimbData* limbData) {
+    for (size_t i = 0; i < ARRAY_SIZE(ghosts); i++) {
+        LinkGhost* ghost = &ghosts[i];
+        if (ghost->inUse && ghost->networkID == networkID) {
+            memcpy(&ghost->ghostData.jointTable, limbData, sizeof(ghost->ghostData.jointTable));
+            return;
+        }
     }
 }
 
@@ -62,34 +72,30 @@ GhostData* Multiplayer_Ghosts_GetGhostData(u16 networkID) {
     return NULL;
 }
 
+bool IsPuppetSpawned(LinkGhost* ghost) {
+    Actor* firstActor = gGlobalContext->actorCtx.actorList[EnLinkPuppet_InitVars.type].first;
+    for (Actor* actor = firstActor; actor != NULL; actor = actor->next) {
+        if (actor->id != EnLinkPuppet_InitVars.id) {
+            continue;
+        }
+        EnLinkPuppet* link_puppet = (EnLinkPuppet*)actor;
+        if (link_puppet->base.params == ghost->networkID) {
+            return true;
+        }
+    }
+    return false;
+}
+
 void Multiplayer_Ghosts_SpawnPuppets(void) {
     for (size_t i = 0; i < ARRAY_SIZE(ghosts); i++) {
         LinkGhost* ghost = &ghosts[i];
 
-        if (ghost->inUse && ghost->ghostData.currentScene == gGlobalContext->sceneNum) {
-            bool alreadyExists = false;
-            // If puppet already is spawned, skip
-            Actor* firstActor = gGlobalContext->actorCtx.actorList[EnLinkPuppet_InitVars.type].first;
-            for (Actor* actor = firstActor; actor != NULL; actor = actor->next) {
-                if (actor->id != EnLinkPuppet_InitVars.id) {
-                    continue;
-                }
-                EnLinkPuppet* link_puppet = (EnLinkPuppet*)actor;
-                if (link_puppet->base.params == ghost->networkID) {
-                    alreadyExists = true;
-                    break;
-                }
-                return;
-            }
-            if (alreadyExists) {
-                continue;
-            }
-            // Otherwise, spawn it
-            EnLinkPuppet_InitVars.objectId = gSaveContext.linkAge == 0 ? 20 : 21;
+        if (ghost->inUse && ghost->ghostData.currentScene == gGlobalContext->sceneNum && !IsPuppetSpawned(ghost)) {
+            EnLinkPuppet_InitVars.objectId = (gSaveContext.linkAge == 0) ? 20 : 21;
             EnLinkPuppet* puppet           = (EnLinkPuppet*)Actor_Spawn(
                           &gGlobalContext->actorCtx, gGlobalContext, EnLinkPuppet_InitVars.id,                   //
                           ghost->ghostData.position.x, ghost->ghostData.position.y, ghost->ghostData.position.z, //
-                          0, 0, 0, ghost->networkID);
+                          0, 0, 0, ghost->networkID, FALSE);
             if (puppet == NULL) {
                 continue;
             }

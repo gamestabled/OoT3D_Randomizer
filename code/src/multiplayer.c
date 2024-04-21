@@ -277,6 +277,7 @@ typedef enum {
     // Ghost Data
     PACKET_GHOSTPING,
     PACKET_GHOSTDATA,
+    PACKET_GHOSTDATA_JOINTTABLE,
     PACKET_LINKSFX,
     // Shared Progress
     PACKET_FULLSYNCREQUEST,
@@ -431,6 +432,9 @@ void Multiplayer_Update(u8 fromGlobalContextUpdate) {
     Multiplayer_Ghosts_Tick();
     if (fromGlobalContextUpdate) {
         Multiplayer_Send_GhostData();
+        if (playingOnCitra) {
+            Multiplayer_Send_GhostData_JointTable();
+        }
     } else {
         Multiplayer_Send_GhostPing();
     }
@@ -931,37 +935,47 @@ void Multiplayer_Send_GhostData(void) {
     }
 
     // Always have body enabled
-    if (gSaveContext.linkAge == 0) {
-        ghostData.meshGroups2 |= 0xE0000000;
-    } else {
-        ghostData.meshGroups1 |= 0x7000000;
+    if (gSaveContext.gameMode == 0) {
+        if (gSaveContext.linkAge == 0) {
+            ghostData.meshGroups2 |= 0x6000;
+        } else {
+            ghostData.meshGroups1 |= 0x7000000;
+        }
     }
 
     ghostData.currentTunic = PLAYER->currentTunic;
 
-    if (playingOnCitra) {
-        memcpy(&ghostData.jointTable, PLAYER->skelAnime.jointTable, sizeof(ghostData.jointTable));
-    }
-
-    memcpy(&mBuffer[memSpacer], &ghostData, sizeof(GhostData));
-    memSpacer += sizeof(GhostData) / 4;
-
-    if (!playingOnCitra) {
-        memSpacer -= sizeof(ghostData.jointTable) / 4;
-    }
+    u32 totalSize = sizeof(GhostData) - sizeof(ghostData.jointTable);
+    memcpy(&mBuffer[memSpacer], &ghostData, totalSize);
+    memSpacer += totalSize / 4;
 
     Multiplayer_SendPacket(memSpacer, UDS_BROADCAST_NETWORKNODEID);
 }
 
 void Multiplayer_Receive_GhostData(u16 senderID) {
     GhostData ghostData;
-    u32 packetSize = sizeof(GhostData);
-    if (!playingOnCitra) {
-        packetSize -= sizeof(ghostData.jointTable);
-    }
+    u32 packetSize = sizeof(GhostData) - sizeof(ghostData.jointTable);
     memcpy(&ghostData, &mBuffer[1], packetSize);
 
     Multiplayer_Ghosts_UpdateGhostData(senderID, &ghostData);
+}
+
+void Multiplayer_Send_GhostData_JointTable(void) {
+    if (!IsSendReceiveReady()) {
+        return;
+    }
+    memset(mBuffer, 0, mBufSize);
+    u16 memSpacer        = 0;
+    mBuffer[memSpacer++] = PACKET_GHOSTDATA_JOINTTABLE; // 0: Identifier
+
+    memcpy(&mBuffer[memSpacer], &PLAYER->jointTable, sizeof(PLAYER->jointTable));
+    memSpacer += sizeof(PLAYER->jointTable) / 4;
+
+    Multiplayer_SendPacket(memSpacer, UDS_BROADCAST_NETWORKNODEID);
+}
+
+void Multiplayer_Receive_GhostData_JointTable(u16 senderID) {
+    Multiplayer_Ghosts_UpdateGhostData_JointTable(senderID, (LimbData*)&mBuffer[1]);
 }
 
 void Multiplayer_Send_LinkSFX(u32 sfxID_) {
@@ -2459,7 +2473,7 @@ void Multiplayer_Receive_ActorUpdate(u16 senderID) {
                 Flags_SetSwitch(gGlobalContext, lastBeanPlant_Params & 0x3F);
                 Actor_Spawn(&gGlobalContext->actorCtx, gGlobalContext, actorId, lastBeanPlant_Home.pos.x,
                             lastBeanPlant_Home.pos.y, lastBeanPlant_Home.pos.z, lastBeanPlant_Home.rot.x,
-                            lastBeanPlant_Home.rot.y, lastBeanPlant_Home.rot.z, lastBeanPlant_Params);
+                            lastBeanPlant_Home.rot.y, lastBeanPlant_Home.rot.z, lastBeanPlant_Params, FALSE);
             }
             break;
     }
@@ -2501,7 +2515,7 @@ void Multiplayer_Receive_ActorSpawn(u16 senderID) {
     s16 params = mBuffer[memSpacer++];
 
     Actor_Spawn(&gGlobalContext->actorCtx, gGlobalContext, actorId, rcvdPosRot.pos.x, rcvdPosRot.pos.y,
-                rcvdPosRot.pos.z, rcvdPosRot.rot.x, rcvdPosRot.rot.y, rcvdPosRot.rot.z, params);
+                rcvdPosRot.pos.z, rcvdPosRot.rot.x, rcvdPosRot.rot.y, rcvdPosRot.rot.z, params, FALSE);
 }
 
 // Etc
@@ -2696,6 +2710,7 @@ static void Multiplayer_UnpackPacket(u16 senderID) {
         // Ghost Data
         Multiplayer_Receive_GhostPing,
         Multiplayer_Receive_GhostData,
+        Multiplayer_Receive_GhostData_JointTable,
         Multiplayer_Receive_LinkSFX,
         // Shared Progress
         Multiplayer_Receive_FullSyncRequest,

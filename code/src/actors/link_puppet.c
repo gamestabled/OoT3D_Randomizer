@@ -23,22 +23,21 @@ ActorInit EnLinkPuppet_InitVars = {
     EnLinkPuppet_Draw,    //
 };
 
-// When posing the model by copying the joint table, the model for some reason gets raised about 12 units.
-u32 ChildYPosOffset() {
-    return playingOnCitra ? 12.5f : 0;
-}
-
 typedef void (*SkelAnime_InitLink_proc)(SkelAnime* skelAnime, ZARInfo* zarInfo, GlobalContext* globalCtx, void* cmbMan,
                                         void* param_5, u32 animation, s32 limbBufCount, void* jointTable,
                                         void* morphTable);
 #define SkelAnime_InitLink ((SkelAnime_InitLink_proc)0x3413EC)
+
+// When posing the model by copying the joint table, the model for some reason gets raised about 12 units.
+static const f32 childOffsetY = 12.5f;
 
 void EnLinkPuppet_Init(Actor* thisx, GlobalContext* globalCtx) {
     EnLinkPuppet* this = (EnLinkPuppet*)thisx;
 
     this->base.room = -1;
 
-    SkelAnime_InitLink(&this->skelAnime, PLAYER->zarInfo, globalCtx, PLAYER->cmbMan, thisx->unk_178, 0, 9, NULL, NULL);
+    SkelAnime_InitLink(&this->skelAnime, PLAYER->zarInfo, globalCtx, PLAYER->cmbMan, thisx->unk_178, 0, 9,
+                       this->ghostPtr->ghostData.jointTable, NULL);
 
     // Tunic
     void* cmabMan = NULL;
@@ -115,15 +114,9 @@ void EnLinkPuppet_Update(Actor* thisx, GlobalContext* globalCtx) {
     // Tunic
     this->skelAnime.unk_28->unk_0C->curFrame = this->ghostPtr->ghostData.currentTunic;
 
-    // Limbs
-    if (playingOnCitra) {
-        memcpy(this->skelAnime.jointTable, this->ghostPtr->ghostData.jointTable,
-               sizeof(this->ghostPtr->ghostData.jointTable));
-    }
-
     // Child Y position workaround
     if (this->ghostPtr->ghostData.age != 0) {
-        this->base.world.pos.y -= ChildYPosOffset();
+        this->base.world.pos.y -= childOffsetY;
     }
 }
 
@@ -170,7 +163,7 @@ void EnLinkPuppet_Draw(Actor* thisx, GlobalContext* globalCtx) {
         s16 envB = 100 * colorB[(this->base.params - 1) % ARRAY_SIZE(colorB)];
 
         Vec3f spawnPos = this->base.world.pos;
-        spawnPos.y += (this->ghostPtr->ghostData.age == 0 ? 50 : (35 + ChildYPosOffset()));
+        spawnPos.y += (this->ghostPtr->ghostData.age == 0) ? 50 : (35 + childOffsetY);
         EffectSsDeadDb_Spawn(gGlobalContext, &spawnPos, &vecEmpty, &vecEmpty,
                              this->ghostPtr->ghostData.age == 0 ? 100 : 70, -1, 80, 80, 80, 0xFF, envR, envG, envB, 1,
                              8, 0);
