@@ -14,8 +14,10 @@ void AreaTable_Init_BottomOfTheWell() {
         "Bottom of the Well Entryway", "Bottom of the Well", BOTTOM_OF_THE_WELL, NO_DAY_NIGHT_CYCLE, {}, {},
         {
             // Exits
-            Entrance(BOTTOM_OF_THE_WELL_MAIN_AREA,
-                     { [] { return Dungeon::BottomOfTheWell.IsVanilla() && IsChild && (CanChildAttack || Nuts); } }),
+            Entrance(BOTTOM_OF_THE_WELL_MAIN_AREA, { [] {
+                         return Dungeon::BottomOfTheWell.IsVanilla() && IsChild && SoulSkulltula &&
+                                (CanChildAttack || Nuts);
+                     } }),
             Entrance(BOTTOM_OF_THE_WELL_MQ_PERIMETER, { [] { return Dungeon::BottomOfTheWell.IsMQ() && IsChild; },
                                                         /*Glitched*/
                                                         [] {
@@ -53,7 +55,8 @@ void AreaTable_Init_BottomOfTheWell() {
                                { [] { return (LogicLensBotw || CanUse(LENS_OF_TRUTH)) && HasExplosives; } }),
                 LocationAccess(BOTTOM_OF_THE_WELL_FREESTANDING_KEY, { [] { return Sticks || CanUse(DINS_FIRE); } }),
                 LocationAccess(BOTTOM_OF_THE_WELL_LENS_OF_TRUTH_CHEST, { [] {
-                                   return CanPlay(ZeldasLullaby) && (KokiriSword || (Sticks && LogicChildDeadhand));
+                                   return SoulDeadHand && CanPlay(ZeldasLullaby) &&
+                                          (KokiriSword || (Sticks && LogicChildDeadhand));
                                } }),
                 LocationAccess(BOTTOM_OF_THE_WELL_INVISIBLE_CHEST,
                                { [] { return CanPlay(ZeldasLullaby) && (LogicLensBotw || CanUse(LENS_OF_TRUTH)); } }),

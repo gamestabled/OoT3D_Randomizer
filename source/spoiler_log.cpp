@@ -427,6 +427,10 @@ static void WriteStartingInventory(tinyxml2::XMLDocument& spoilerLog) {
         &Settings::startingStonesMedallionsOptions,
     };
 
+    if (Settings::ShuffleEnemySouls) {
+        startingInventoryOptions.push_back(&Settings::startingEnemySoulsOptions);
+    }
+
     if (Settings::ShuffleOcarinaButtons) {
         startingInventoryOptions.push_back(&Settings::startingOcarinaButtonsOptions);
     }

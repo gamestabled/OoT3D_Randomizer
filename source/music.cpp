@@ -1,10 +1,14 @@
-#include "music.hpp"
-#include "random.hpp"
 #include <3ds.h>
 #include <cstdlib>
+#include <filesystem>
+#include <functional>
+
+#include "music.hpp"
+#include "random.hpp"
 #include "settings.hpp"
 #include "sound_archive.hpp"
 #include "sequence_data.hpp"
+#include "cmeta_interpreter.hpp"
 
 namespace Music {
 // clang-format off
@@ -148,7 +152,6 @@ static MusicCategoryLeaf mcBgm_TempleTime("Temple of Time", 43);
 static MusicCategoryLeaf mcBgm_Windmill("Windmill", 61);
 static MusicCategoryLeaf mcBgm_ShopTheme("Shop Theme", 70);
 static MusicCategoryLeaf mcBgm_Drugstore("Drugstore", 80);
-static MusicCategoryLeaf mcBgm_Underground("Underground", 83);
 // BGM: Dungeons
 static MusicCategoryLeaf mcBgm_MiscDungeon("Misc Dungeon", 10);
 static MusicCategoryLeaf mcBgm_InsideDekuTree("Deku Tree", 14);
@@ -160,6 +163,7 @@ static MusicCategoryLeaf mcBgm_SpiritTemple("Spirit Temple", 48);
 static MusicCategoryLeaf mcBgm_IceCavern("Ice Cavern", 73);
 static MusicCategoryLeaf mcBgm_ShadowTemple("Shadow Temple", 76);
 static MusicCategoryLeaf mcBgm_WaterTemple("Water Temple", 77);
+static MusicCategoryLeaf mcBgm_GanonsCastle("Ganon's Castle", 83);
 // BGM: Area Themes
 static MusicCategoryNode mcBgm_Overworld("Overworld", {
                                                           &mcBgm_HyruleField,
@@ -180,7 +184,6 @@ static MusicCategoryNode mcBgm_Interiors("Interiors", {
                                                           &mcBgm_Windmill,
                                                           &mcBgm_ShopTheme,
                                                           &mcBgm_Drugstore,
-                                                          &mcBgm_Underground,
                                                       });
 static MusicCategoryNode mcBgm_Dungeons("Dungeons", {
                                                         &mcBgm_MiscDungeon,
@@ -193,6 +196,7 @@ static MusicCategoryNode mcBgm_Dungeons("Dungeons", {
                                                         &mcBgm_IceCavern,
                                                         &mcBgm_ShadowTemple,
                                                         &mcBgm_WaterTemple,
+                                                        &mcBgm_GanonsCastle,
                                                     });
 // BGM: Event Music
 static MusicCategoryLeaf mcBgm_TitleScreen("Title Screen", 16);
@@ -457,8 +461,55 @@ int ShuffleMusic_Archive() {
 
     // Add external sequences
     if (Settings::CustomMusic) {
+        // This adds the categorized sequences, inside the node folders
         mcBgm_Root.AddExternalSeqDatas(sdmcArchive);
         mcMelodies_Root.AddExternalSeqDatas(sdmcArchive);
+
+        // This adds the sequences uncategorized in the Custom Music folder, but not in any node
+        std::function<void(std::string)> addUncategorizedSeqDatas = [&](std::string folderPath) {
+            namespace fs = std::filesystem;
+            for (const auto& bcseq : fs::directory_iterator(folderPath)) {
+                if (bcseq.is_directory()) {
+                    // Exclamation mark indicates a tree node
+                    if (bcseq.path().stem().string().front() == '!') {
+                        continue;
+                    } else {
+                        addUncategorizedSeqDatas(bcseq.path().string());
+                    }
+                } else if (bcseq.is_regular_file() && bcseq.path().extension().string() == bcseqExtension) {
+                    for (const auto& cmeta : fs::directory_iterator(folderPath)) {
+                        if (cmeta.is_regular_file() && cmeta.path().stem().string() == bcseq.path().stem().string() &&
+                            cmeta.path().extension().string() == cmetaExtension) {
+
+                            CMetaInterpreter ci(cmeta.path().string());
+
+                            MusicCategoryNode* n = nullptr;
+
+                            n = mcBgm_Root.GetNodeByName(ci.GetCategory());
+                            if (n != nullptr) {
+                                if (Settings::ShuffleBGM.Is(SHUFFLEMUSIC_MIXED)) {
+                                    mcBgm_Root.AddNewSeqData(SequenceData(bcseq.path().string(), ci));
+                                } else {
+                                    n->AddNewSeqData(SequenceData(bcseq.path().string(), ci));
+                                }
+                                break;
+                            }
+                            n = mcMelodies_Root.GetNodeByName(ci.GetCategory());
+                            if (n != nullptr) {
+                                if (Settings::ShuffleMelodies.Is(SHUFFLEMUSIC_MIXED)) {
+                                    mcMelodies_Root.AddNewSeqData(SequenceData(bcseq.path().string(), ci));
+                                } else {
+                                    n->AddNewSeqData(SequenceData(bcseq.path().string(), ci));
+                                }
+                                break;
+                            }
+                            break;
+                        }
+                    }
+                }
+            }
+        };
+        addUncategorizedSeqDatas(CustomMusicRootPath);
     }
 
     // Shuffle

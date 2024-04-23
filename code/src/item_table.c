@@ -1,6 +1,7 @@
 #include "item_table.h"
 #include "item_upgrade.h"
 #include "item_effect.h"
+#include "enemy_souls.h"
 #include "rHeap.h"
 #include "chest.h"
 #include "ocarina_notes.h"
@@ -275,12 +276,59 @@ static ItemRow rItemTable[] = {
 
     [GI_CHEST_GAME_KEY]     = ITEM_ROW(0x53, CHEST_SMALL_KEY, 0x41, 0x00F3,   0x00AA, 0x00, 0xFF, 0xFF, 0xFF,   0xFF, ItemUpgrade_None, ItemEffect_GiveSmallKey, DUNGEON_TREASURE_CHEST_SHOP, -1), // Small Key (Chest Game)
 
+    [GI_SOUL_POE]           = ITEM_ROW(0x53, CHEST_MAJOR,     0x41, 0x9450,   0x00E4, 0x00, 0xFF, 0x01, 0x00,   0xFF, ItemUpgrade_None, ItemEffect_EnemySoul, SOUL_POE,                   -1), // Poe Soul
+    [GI_SOUL_OCTOROK]       = ITEM_ROW(0x53, CHEST_MAJOR,     0x41, 0x9451,   0x00E4, 0x00, 0xFF, 0x01, 0x00,   0xFF, ItemUpgrade_None, ItemEffect_EnemySoul, SOUL_OCTOROK,               -1), // Octorok Soul
+    [GI_SOUL_KEESE]         = ITEM_ROW(0x53, CHEST_MAJOR,     0x41, 0x9452,   0x00E4, 0x00, 0xFF, 0x01, 0x00,   0xFF, ItemUpgrade_None, ItemEffect_EnemySoul, SOUL_KEESE,                 -1), // Keese Soul
+    [GI_SOUL_TEKTITE]       = ITEM_ROW(0x53, CHEST_MAJOR,     0x41, 0x9453,   0x00E4, 0x00, 0xFF, 0x01, 0x00,   0xFF, ItemUpgrade_None, ItemEffect_EnemySoul, SOUL_TEKTITE,               -1), // Tektite Soul
+    [GI_SOUL_LEEVER]        = ITEM_ROW(0x53, CHEST_MAJOR,     0x41, 0x9454,   0x00E4, 0x00, 0xFF, 0x01, 0x00,   0xFF, ItemUpgrade_None, ItemEffect_EnemySoul, SOUL_LEEVER,                -1), // Leever Soul
+    [GI_SOUL_PEAHAT]        = ITEM_ROW(0x53, CHEST_MAJOR,     0x41, 0x9455,   0x00E4, 0x00, 0xFF, 0x01, 0x00,   0xFF, ItemUpgrade_None, ItemEffect_EnemySoul, SOUL_PEAHAT,                -1), // Peahat Soul
+    [GI_SOUL_LIZALFOS]      = ITEM_ROW(0x53, CHEST_MAJOR,     0x41, 0x9456,   0x00E4, 0x00, 0xFF, 0x01, 0x00,   0xFF, ItemUpgrade_None, ItemEffect_EnemySoul, SOUL_LIZALFOS,              -1), // Lizalfos and Dinolfos Soul
+    [GI_SOUL_SHABOM]        = ITEM_ROW(0x53, CHEST_MAJOR,     0x41, 0x9457,   0x00E4, 0x00, 0xFF, 0x01, 0x00,   0xFF, ItemUpgrade_None, ItemEffect_EnemySoul, SOUL_SHABOM,                -1), // Shabom Soul
+    [GI_SOUL_BIRI_BARI]     = ITEM_ROW(0x53, CHEST_MAJOR,     0x41, 0x9458,   0x00E4, 0x00, 0xFF, 0x01, 0x00,   0xFF, ItemUpgrade_None, ItemEffect_EnemySoul, SOUL_BIRI_BARI,             -1), // Biri and Bari Soul
+    [GI_SOUL_TAILPASARAN]   = ITEM_ROW(0x53, CHEST_MAJOR,     0x41, 0x9459,   0x00E4, 0x00, 0xFF, 0x01, 0x00,   0xFF, ItemUpgrade_None, ItemEffect_EnemySoul, SOUL_TAILPASARAN,           -1), // Tailpasaran Soul
+    [GI_SOUL_SKULLTULA]     = ITEM_ROW(0x53, CHEST_MAJOR,     0x41, 0x945A,   0x00E4, 0x00, 0xFF, 0x01, 0x00,   0xFF, ItemUpgrade_None, ItemEffect_EnemySoul, SOUL_SKULLTULA,             -1), // Skulltula Soul
+    [GI_SOUL_TORCH_SLUG]    = ITEM_ROW(0x53, CHEST_MAJOR,     0x41, 0x945B,   0x00E4, 0x00, 0xFF, 0x01, 0x00,   0xFF, ItemUpgrade_None, ItemEffect_EnemySoul, SOUL_TORCH_SLUG,            -1), // Torch Slug Soul
+    [GI_SOUL_STINGER]       = ITEM_ROW(0x53, CHEST_MAJOR,     0x41, 0x945C,   0x00E4, 0x00, 0xFF, 0x01, 0x00,   0xFF, ItemUpgrade_None, ItemEffect_EnemySoul, SOUL_STINGER,               -1), // Stinger Soul
+    [GI_SOUL_MOBLIN]        = ITEM_ROW(0x53, CHEST_MAJOR,     0x41, 0x945D,   0x00E4, 0x00, 0xFF, 0x01, 0x00,   0xFF, ItemUpgrade_None, ItemEffect_EnemySoul, SOUL_MOBLIN,                -1), // Moblin Soul
+    [GI_SOUL_ARMOS]         = ITEM_ROW(0x53, CHEST_MAJOR,     0x41, 0x945E,   0x00E4, 0x00, 0xFF, 0x01, 0x00,   0xFF, ItemUpgrade_None, ItemEffect_EnemySoul, SOUL_ARMOS,                 -1), // Armos Soul
+    [GI_SOUL_DEKU_BABA]     = ITEM_ROW(0x53, CHEST_MAJOR,     0x41, 0x945F,   0x00E4, 0x00, 0xFF, 0x01, 0x00,   0xFF, ItemUpgrade_None, ItemEffect_EnemySoul, SOUL_DEKU_BABA,             -1), // Deku Baba Soul
+    [GI_SOUL_BUBBLE]        = ITEM_ROW(0x53, CHEST_MAJOR,     0x41, 0x9460,   0x00E4, 0x00, 0xFF, 0x01, 0x00,   0xFF, ItemUpgrade_None, ItemEffect_EnemySoul, SOUL_BUBBLE,                -1), // Bubble Soul
+    [GI_SOUL_FLYING_TRAP]   = ITEM_ROW(0x53, CHEST_MAJOR,     0x41, 0x9461,   0x00E4, 0x00, 0xFF, 0x01, 0x00,   0xFF, ItemUpgrade_None, ItemEffect_EnemySoul, SOUL_FLYING_TRAP,           -1), // Flying Pot & Tile Soul
+    [GI_SOUL_BEAMOS]        = ITEM_ROW(0x53, CHEST_MAJOR,     0x41, 0x9462,   0x00E4, 0x00, 0xFF, 0x01, 0x00,   0xFF, ItemUpgrade_None, ItemEffect_EnemySoul, SOUL_BEAMOS,                -1), // Beamos Soul
+    [GI_SOUL_WALLMASTER]    = ITEM_ROW(0x53, CHEST_MAJOR,     0x41, 0x9463,   0x00E4, 0x00, 0xFF, 0x01, 0x00,   0xFF, ItemUpgrade_None, ItemEffect_EnemySoul, SOUL_WALLMASTER,            -1), // Wallmaster & Floormaster Soul
+    [GI_SOUL_REDEAD_GIBDO]  = ITEM_ROW(0x53, CHEST_MAJOR,     0x41, 0x9464,   0x00E4, 0x00, 0xFF, 0x01, 0x00,   0xFF, ItemUpgrade_None, ItemEffect_EnemySoul, SOUL_REDEAD_GIBDO,          -1), // Redead and Gibdo Soul
+    [GI_SOUL_SHELL_BLADE]   = ITEM_ROW(0x53, CHEST_MAJOR,     0x41, 0x9465,   0x00E4, 0x00, 0xFF, 0x01, 0x00,   0xFF, ItemUpgrade_None, ItemEffect_EnemySoul, SOUL_SHELL_BLADE,           -1), // Shell Blade Soul
+    [GI_SOUL_LIKE_LIKE]     = ITEM_ROW(0x53, CHEST_MAJOR,     0x41, 0x9466,   0x00E4, 0x00, 0xFF, 0x01, 0x00,   0xFF, ItemUpgrade_None, ItemEffect_EnemySoul, SOUL_LIKE_LIKE,             -1), // Like Like Soul
+    [GI_SOUL_TENTACLE]      = ITEM_ROW(0x53, CHEST_MAJOR,     0x41, 0x9467,   0x00E4, 0x00, 0xFF, 0x01, 0x00,   0xFF, ItemUpgrade_None, ItemEffect_EnemySoul, SOUL_TENTACLE,              -1), // Parasitic Tentacle Soul
+    [GI_SOUL_ANUBIS]        = ITEM_ROW(0x53, CHEST_MAJOR,     0x41, 0x9468,   0x00E4, 0x00, 0xFF, 0x01, 0x00,   0xFF, ItemUpgrade_None, ItemEffect_EnemySoul, SOUL_ANUBIS,                -1), // Anubis Soul
+    [GI_SOUL_SPIKE]         = ITEM_ROW(0x53, CHEST_MAJOR,     0x41, 0x9469,   0x00E4, 0x00, 0xFF, 0x01, 0x00,   0xFF, ItemUpgrade_None, ItemEffect_EnemySoul, SOUL_SPIKE,                 -1), // Spike Soul
+    [GI_SOUL_SKULL_KID]     = ITEM_ROW(0x53, CHEST_MAJOR,     0x41, 0x946A,   0x00E4, 0x00, 0xFF, 0x01, 0x00,   0xFF, ItemUpgrade_None, ItemEffect_EnemySoul, SOUL_SKULL_KID,             -1), // Skull Kid Soul
+    [GI_SOUL_FREEZARD]      = ITEM_ROW(0x53, CHEST_MAJOR,     0x41, 0x946B,   0x00E4, 0x00, 0xFF, 0x01, 0x00,   0xFF, ItemUpgrade_None, ItemEffect_EnemySoul, SOUL_FREEZARD,              -1), // Freezard Soul
+    [GI_SOUL_DEKU_SCRUB]    = ITEM_ROW(0x53, CHEST_MAJOR,     0x41, 0x946C,   0x00E4, 0x00, 0xFF, 0x01, 0x00,   0xFF, ItemUpgrade_None, ItemEffect_EnemySoul, SOUL_DEKU_SCRUB,            -1), // Deku Scrub Soul
+    [GI_SOUL_WOLFOS]        = ITEM_ROW(0x53, CHEST_MAJOR,     0x41, 0x946D,   0x00E4, 0x00, 0xFF, 0x01, 0x00,   0xFF, ItemUpgrade_None, ItemEffect_EnemySoul, SOUL_WOLFOS,                -1), // Wolfos Soul
+    [GI_SOUL_STALCHILD]     = ITEM_ROW(0x53, CHEST_MAJOR,     0x41, 0x946E,   0x00E4, 0x00, 0xFF, 0x01, 0x00,   0xFF, ItemUpgrade_None, ItemEffect_EnemySoul, SOUL_STALCHILD,             -1), // Stalchild Soul
+    [GI_SOUL_GUAY]          = ITEM_ROW(0x53, CHEST_MAJOR,     0x41, 0x946F,   0x00E4, 0x00, 0xFF, 0x01, 0x00,   0xFF, ItemUpgrade_None, ItemEffect_EnemySoul, SOUL_GUAY,                  -1), // Guay Soul
+    [GI_SOUL_DOOR_MIMIC]    = ITEM_ROW(0x53, CHEST_MAJOR,     0x41, 0x9470,   0x00E4, 0x00, 0xFF, 0x01, 0x00,   0xFF, ItemUpgrade_None, ItemEffect_EnemySoul, SOUL_DOOR_MIMIC,            -1), // Door Mimic Soul
+    [GI_SOUL_STALFOS]       = ITEM_ROW(0x53, CHEST_MAJOR,     0x41, 0x9471,   0x00E4, 0x00, 0xFF, 0x01, 0x00,   0xFF, ItemUpgrade_None, ItemEffect_EnemySoul, SOUL_STALFOS,               -1), // Stalfos Soul
+    [GI_SOUL_DARK_LINK]     = ITEM_ROW(0x53, CHEST_MAJOR,     0x41, 0x9472,   0x00E4, 0x00, 0xFF, 0x01, 0x00,   0xFF, ItemUpgrade_None, ItemEffect_EnemySoul, SOUL_DARK_LINK,             -1), // Dark Link Soul
+    [GI_SOUL_FLARE_DANCER]  = ITEM_ROW(0x53, CHEST_MAJOR,     0x41, 0x9473,   0x00E4, 0x00, 0xFF, 0x01, 0x00,   0xFF, ItemUpgrade_None, ItemEffect_EnemySoul, SOUL_FLARE_DANCER,          -1), // Flare Dancer Soul
+    [GI_SOUL_DEAD_HAND]     = ITEM_ROW(0x53, CHEST_MAJOR,     0x41, 0x9474,   0x00E4, 0x00, 0xFF, 0x01, 0x00,   0xFF, ItemUpgrade_None, ItemEffect_EnemySoul, SOUL_DEAD_HAND,             -1), // Dead Hand Soul
+    [GI_SOUL_GERUDO]        = ITEM_ROW(0x53, CHEST_MAJOR,     0x41, 0x9475,   0x00E4, 0x00, 0xFF, 0x01, 0x00,   0xFF, ItemUpgrade_None, ItemEffect_EnemySoul, SOUL_GERUDO,                -1), // Gerudo Soul
+    [GI_SOUL_GOHMA]         = ITEM_ROW(0x53, CHEST_MAJOR,     0x41, 0x9476,   0x00E4, 0x00, 0xFF, 0x01, 0x00,   0xFF, ItemUpgrade_None, ItemEffect_EnemySoul, SOUL_GOHMA,                 -1), // Gohma Soul
+    [GI_SOUL_DODONGO]       = ITEM_ROW(0x53, CHEST_MAJOR,     0x41, 0x9477,   0x00E4, 0x00, 0xFF, 0x01, 0x00,   0xFF, ItemUpgrade_None, ItemEffect_EnemySoul, SOUL_DODONGO,               -1), // Dodongo Soul
+    [GI_SOUL_BARINADE]      = ITEM_ROW(0x53, CHEST_MAJOR,     0x41, 0x9478,   0x00E4, 0x00, 0xFF, 0x01, 0x00,   0xFF, ItemUpgrade_None, ItemEffect_EnemySoul, SOUL_BARINADE,              -1), // Barinade Soul
+    [GI_SOUL_PHANTOM_GANON] = ITEM_ROW(0x53, CHEST_MAJOR,     0x41, 0x9479,   0x00E4, 0x00, 0xFF, 0x01, 0x00,   0xFF, ItemUpgrade_None, ItemEffect_EnemySoul, SOUL_PHANTOM_GANON,         -1), // Phantom Ganon Soul
+    [GI_SOUL_VOLVAGIA]      = ITEM_ROW(0x53, CHEST_MAJOR,     0x41, 0x947A,   0x00E4, 0x00, 0xFF, 0x01, 0x00,   0xFF, ItemUpgrade_None, ItemEffect_EnemySoul, SOUL_VOLVAGIA,              -1), // Volvagia Soul
+    [GI_SOUL_MORPHA]        = ITEM_ROW(0x53, CHEST_MAJOR,     0x41, 0x947B,   0x00E4, 0x00, 0xFF, 0x01, 0x00,   0xFF, ItemUpgrade_None, ItemEffect_EnemySoul, SOUL_MORPHA,                -1), // Morpha Soul
+    [GI_SOUL_BONGO_BONGO]   = ITEM_ROW(0x53, CHEST_MAJOR,     0x41, 0x947C,   0x00E4, 0x00, 0xFF, 0x01, 0x00,   0xFF, ItemUpgrade_None, ItemEffect_EnemySoul, SOUL_BONGO_BONGO,           -1), // Bongo Bongo Soul
+    [GI_SOUL_TWINROVA]      = ITEM_ROW(0x53, CHEST_MAJOR,     0x41, 0x947D,   0x00E4, 0x00, 0xFF, 0x01, 0x00,   0xFF, ItemUpgrade_None, ItemEffect_EnemySoul, SOUL_TWINROVA,              -1), // Twinrova Soul
+    [GI_SOUL_GANON]         = ITEM_ROW(0x53, CHEST_MAJOR,     0x41, 0x947E,   0x00E4, 0x00, 0xFF, 0x01, 0x00,   0xFF, ItemUpgrade_None, ItemEffect_EnemySoul, SOUL_GANON,                 -1), // Ganon Soul
+
     [GI_OCARINA_BUTTON_L]   = ITEM_ROW(0x53, CHEST_MAJOR,     0x41, 0x93F0,   0x0123, 0x00, 0xFF, 0xFF, 0xFF,   0x00, ItemUpgrade_None, ItemEffect_OcarinaNote, OCARINA_BUTTON_L, -1), // Ocarina Note Button L
     [GI_OCARINA_BUTTON_R]   = ITEM_ROW(0x53, CHEST_MAJOR,     0x41, 0x93F1,   0x0123, 0x00, 0xFF, 0xFF, 0xFF,   0x01, ItemUpgrade_None, ItemEffect_OcarinaNote, OCARINA_BUTTON_R, -1), // Ocarina Note Button R
     [GI_OCARINA_BUTTON_X]   = ITEM_ROW(0x53, CHEST_MAJOR,     0x41, 0x93F2,   0x0123, 0x00, 0xFF, 0xFF, 0xFF,   0x02, ItemUpgrade_None, ItemEffect_OcarinaNote, OCARINA_BUTTON_X, -1), // Ocarina Note Button X
     [GI_OCARINA_BUTTON_Y]   = ITEM_ROW(0x53, CHEST_MAJOR,     0x41, 0x93F3,   0x0123, 0x00, 0xFF, 0xFF, 0xFF,   0x03, ItemUpgrade_None, ItemEffect_OcarinaNote, OCARINA_BUTTON_Y, -1), // Ocarina Note Button Y
     [GI_OCARINA_BUTTON_A]   = ITEM_ROW(0x53, CHEST_MAJOR,     0x41, 0x93F4,   0x0123, 0x00, 0xFF, 0xFF, 0xFF,   0x04, ItemUpgrade_None, ItemEffect_OcarinaNote, OCARINA_BUTTON_A, -1), // Ocarina Note Button A
-
 };
 // clang-format on
 

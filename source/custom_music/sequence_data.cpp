@@ -1,13 +1,11 @@
 #include <filesystem>
+#include <functional>
 
 #include "sequence_data.hpp"
 #include "ctr_binary_data.hpp"
 #include "random.hpp"
 
 namespace fs = std::filesystem;
-
-static const std::string bcseqExtension = ".bcseq";
-static const std::string cmetaExtension = ".cmeta";
 
 // Sequence Data
 
@@ -19,13 +17,19 @@ SequenceData::SequenceData(std::vector<u8>* rawBytesPtr_, std::array<u32, 4> ban
     : dataType(DataType_Raw), rawBytesPtr(rawBytesPtr_), banks(banks_), chFlags(chFlags_), volume(volume_) {
 }
 
-SequenceData::SequenceData(std::string filePath_, std::array<u32, 4> banks_, u16 chFlags_, u8 volume_)
-    : dataType(DataType_Path), filePath(filePath_), banks(banks_), chFlags(chFlags_), volume(volume_) {
+SequenceData::SequenceData(std::string bcseqPath_, CMetaInterpreter& ci)
+    : dataType(DataType_Path), bcseqPath(bcseqPath_), banks(ci.GetBanks()), chFlags(ci.GetChannelFlags()),
+      volume(ci.GetVolume()) {
+    valuesSet = true;
+}
+
+SequenceData::SequenceData(std::string bcseqPath_, std::string cmetaPath_)
+    : dataType(DataType_Path), bcseqPath(bcseqPath_), cmetaPath(cmetaPath_) {
 }
 
 SequenceData::~SequenceData() = default;
 
-std::vector<u8> SequenceData::GetData(FS_Archive archive_) {
+std::vector<u8>& SequenceData::GetData(FS_Archive archive_) {
     // Pointer to original file
     if (dataType == DataType_Raw && rawBytesPtr != nullptr) {
         return *rawBytesPtr;
@@ -33,9 +37,16 @@ std::vector<u8> SequenceData::GetData(FS_Archive archive_) {
     // External sequence, or empty data
     else {
         if (dataType == DataType_Path && rawBytes.empty()) {
-            BinaryDataReader br(archive_, filePath);
+            BinaryDataReader br(archive_, bcseqPath);
             rawBytes = br.ReadAll();
             br.Close();
+            if (!valuesSet) {
+                CMetaInterpreter ci(cmetaPath);
+                banks     = ci.GetBanks();
+                chFlags   = ci.GetChannelFlags();
+                volume    = ci.GetVolume();
+                valuesSet = true;
+            }
         }
         return rawBytes;
     }
@@ -66,7 +77,8 @@ MusicCategoryNode::~MusicCategoryNode() = default;
 
 std::string MusicCategoryNode::GetFullPath() {
     if (fullPath.empty()) {
-        std::string finalPath = Name + '/';
+        // The exclamation point implies that the folder is a node
+        std::string finalPath = "!" + Name + '/';
         if (parent != nullptr) {
             finalPath.insert(0, parent->GetFullPath());
         } else {
@@ -113,43 +125,30 @@ void MusicCategoryNode::AddExternalSeqDatas(FS_Archive sdmcArchive) {
     // Make sure directory exists to avoid issues
     FSUSER_CreateDirectory(sdmcArchive, fsMakePath(PATH_ASCII, GetFullPath().c_str()), FS_ATTRIBUTE_DIRECTORY);
 
-    for (const auto& bcseq : fs::directory_iterator(GetFullPath())) {
-        if (bcseq.is_regular_file() && bcseq.path().extension().string() == bcseqExtension) {
-            std::array<u32, 4> banks = { 7, 7, 7, 7 }; // Set banks to Orchestra by default
-            u16 chFlags              = -1;             // Enable all channel flags by default
-            u8 volume                = 127;            // 100% (assumed, as it's unsigned) by default
+    std::function<void(std::string)> addCategorizedSeqDatas = [&](std::string folderPath) {
+        namespace fs = std::filesystem;
+        for (const auto& bcseq : fs::directory_iterator(folderPath)) {
+            if (bcseq.is_directory()) {
+                // Exclamation mark indicates a tree node
+                if (bcseq.path().stem().string().front() == '!') {
+                    continue;
+                } else {
+                    addCategorizedSeqDatas(bcseq.path().string());
+                }
+            } else if (bcseq.is_regular_file() && bcseq.path().extension().string() == bcseqExtension) {
+                for (const auto& cmeta : fs::directory_iterator(folderPath)) {
+                    if (cmeta.is_regular_file() && cmeta.path().stem().string() == bcseq.path().stem().string() &&
+                        cmeta.path().extension().string() == cmetaExtension) {
 
-            // Check for cmeta file
-            auto fileName = bcseq.path().stem().string();
-            for (const auto& cmeta : fs::directory_iterator(GetFullPath())) {
-                if (cmeta.is_regular_file() && cmeta.path().stem().string() == fileName &&
-                    cmeta.path().extension().string() == cmetaExtension) {
-
-                    BinaryDataReader br(sdmcArchive, cmeta.path().string());
-                    // Bank
-                    for (size_t bnkIdx = 0; bnkIdx < 4; bnkIdx++) {
-                        if (br.GetFileSize() >= bnkIdx + 1) {
-                            banks[bnkIdx] = br.ReadByte();
-                        } else {
-                            break;
-                        }
+                        AddNewSeqData(SequenceData(bcseq.path().string(), cmeta.path().string()));
+                        break;
                     }
-                    // Channel Flags
-                    if (br.GetFileSize() >= 6) {
-                        chFlags = br.ReadU16();
-                    }
-                    // Volume
-                    if (br.GetFileSize() >= 7) {
-                        volume = br.ReadByte();
-                    }
-                    br.Close();
-                    break;
                 }
             }
-
-            seqDatas.push_back(SequenceData(bcseq.path().string(), banks, chFlags, volume));
         }
-    }
+    };
+    addCategorizedSeqDatas(GetFullPath());
+
     for (auto child : children) {
         child->AddExternalSeqDatas(sdmcArchive);
     }
@@ -214,6 +213,20 @@ std::vector<MusicCategoryLeaf*> MusicCategoryNode::GetAllLeaves() {
         }
     }
     return leaves;
+}
+
+MusicCategoryNode* MusicCategoryNode::GetNodeByName(const std::string name) {
+    if (this->Name == name) {
+        return this;
+    }
+    MusicCategoryNode* out;
+    for (auto child : children) {
+        out = child->GetNodeByName(name);
+        if (out != nullptr) {
+            return out;
+        }
+    }
+    return nullptr;
 }
 
 void MusicCategoryNode::ForDynamicCast() {

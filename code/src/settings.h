@@ -443,18 +443,12 @@ typedef enum {
 } MirrorWorld;
 
 typedef enum {
-    PLAY_ON_CONSOLE,
-    PLAY_ON_CITRA,
-} PlayOption;
-
-typedef enum {
     REGION_NA,
     REGION_EUR
 } REGION;
 
 typedef struct {
     u8 hashIndexes[5];
-    u8 playOption;
     u8 region;
 
     u8 logic;
@@ -514,6 +508,7 @@ typedef struct {
     u8 shuffleFrogSongRupees;
     u8 shuffleAdultTradeQuest;
     u8 shuffleChestMinigame;
+    u8 shuffleEnemySouls;
     u8 shuffleOcarinaButtons;
 
     u8 mapsAndCompasses;
@@ -726,6 +721,7 @@ typedef struct {
     u32 startingEquipment;
     u32 startingUpgrades;
 
+    u8 startingEnemySouls[8];
     u8 startingOcarinaButtons;
 
     u8 startingTokens;

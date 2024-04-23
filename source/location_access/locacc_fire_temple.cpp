@@ -83,10 +83,10 @@ void AreaTable_Init_FireTemple() {
                      // Exits
                      Entrance(FIRE_TEMPLE_FIRST_ROOM, { [] { return SmallKeys(FIRE_TEMPLE, 8) || !IsKeysanity; } }),
                      Entrance(FIRE_TEMPLE_LOOP_TILES, { [] {
-                                  return Here(FIRE_TEMPLE_LOOP_ENEMIES, [] {
-                                      return CanUse(KOKIRI_SWORD) || CanUse(MASTER_SWORD) || CanUse(BIGGORON_SWORD) ||
-                                             CanUse(MEGATON_HAMMER);
-                                  });
+                                  return SoulKeese && SoulTorchSlug && Here(FIRE_TEMPLE_LOOP_ENEMIES, [] {
+                                             return CanUse(KOKIRI_SWORD) || CanUse(MASTER_SWORD) ||
+                                                    CanUse(BIGGORON_SWORD) || CanUse(MEGATON_HAMMER);
+                                         });
                               } }),
                  });
 
@@ -102,32 +102,34 @@ void AreaTable_Init_FireTemple() {
                      Entrance(FIRE_TEMPLE_LOOP_FLARE_DANCER, { [] { return true; } }),
                  });
 
-        areaTable[FIRE_TEMPLE_LOOP_FLARE_DANCER] =
-            Area("Fire Temple Loop Flare Dancer", "Fire Temple", FIRE_TEMPLE, NO_DAY_NIGHT_CYCLE, {},
-                 {
-                     // Locations
-                     LocationAccess(FIRE_TEMPLE_FLARE_DANCER_CHEST,
-                                    { [] { return (HasExplosives || CanUse(MEGATON_HAMMER)) && IsAdult; },
-                                      /*Glitched*/
-                                      [] {
-                                          return (CanDoGlitch(GlitchType::BombHover, GlitchDifficulty::INTERMEDIATE) &&
-                                                  CanDoGlitch(GlitchType::ISG, GlitchDifficulty::INTERMEDIATE)) ||
-                                                 (CanDoGlitch(GlitchType::ActionSwap, GlitchDifficulty::ADVANCED) &&
-                                                  HasBombchus && CanShield &&
-                                                  (Slingshot || CanUse(BOW) || CanUse(HOOKSHOT)));
-                                      } }),
-                 },
-                 {
-                     // Exits
-                     Entrance(FIRE_TEMPLE_LOOP_TILES, { [] { return true; } }),
-                     Entrance(FIRE_TEMPLE_LOOP_HAMMER_SWITCH, { [] {
-                                  return Here(FIRE_TEMPLE_LOOP_FLARE_DANCER, [] {
-                                      return (HasExplosives || CanUse(MEGATON_HAMMER) || CanUse(HOOKSHOT)) &&
-                                             (CanUse(KOKIRI_SWORD) || CanUse(MASTER_SWORD) || CanUse(BIGGORON_SWORD) ||
-                                              CanUse(SLINGSHOT) || CanUse(BOOMERANG));
-                                  });
-                              } }),
-                 });
+        areaTable[FIRE_TEMPLE_LOOP_FLARE_DANCER] = Area(
+            "Fire Temple Loop Flare Dancer", "Fire Temple", FIRE_TEMPLE, NO_DAY_NIGHT_CYCLE, {},
+            {
+                // Locations
+                LocationAccess(FIRE_TEMPLE_FLARE_DANCER_CHEST,
+                               { [] { return SoulFlareDancer && (HasExplosives || CanUse(MEGATON_HAMMER)) && IsAdult; },
+                                 /*Glitched*/
+                                 [] {
+                                     return SoulFlareDancer &&
+                                            ((CanDoGlitch(GlitchType::BombHover, GlitchDifficulty::INTERMEDIATE) &&
+                                              CanDoGlitch(GlitchType::ISG, GlitchDifficulty::INTERMEDIATE)) ||
+                                             (CanDoGlitch(GlitchType::ActionSwap, GlitchDifficulty::ADVANCED) &&
+                                              HasBombchus && CanShield &&
+                                              (Slingshot || CanUse(BOW) || CanUse(HOOKSHOT))));
+                                 } }),
+            },
+            {
+                // Exits
+                Entrance(FIRE_TEMPLE_LOOP_TILES, { [] { return true; } }),
+                Entrance(FIRE_TEMPLE_LOOP_HAMMER_SWITCH, { [] {
+                             return Here(FIRE_TEMPLE_LOOP_FLARE_DANCER, [] {
+                                 return SoulFlareDancer &&
+                                        (HasExplosives || CanUse(MEGATON_HAMMER) || CanUse(HOOKSHOT)) &&
+                                        (CanUse(KOKIRI_SWORD) || CanUse(MASTER_SWORD) || CanUse(BIGGORON_SWORD) ||
+                                         CanUse(SLINGSHOT) || CanUse(BOOMERANG));
+                             });
+                         } }),
+            });
 
         areaTable[FIRE_TEMPLE_LOOP_HAMMER_SWITCH] =
             Area("Fire Temple Loop Hammer Switch", "Fire Temple", FIRE_TEMPLE, NO_DAY_NIGHT_CYCLE,
@@ -551,18 +553,18 @@ void AreaTable_Init_FireTemple() {
                  {
                      // Exits
                      Entrance(FIRE_TEMPLE_LATE_FIRE_MAZE, { [] {
-                                  return Here(FIRE_TEMPLE_UPPER_FLARE_DANCER, [] {
-                                      return (HasExplosives || CanUse(MEGATON_HAMMER) || CanUse(HOOKSHOT)) &&
-                                             (CanUse(KOKIRI_SWORD) || CanUse(MASTER_SWORD) || CanUse(BIGGORON_SWORD) ||
-                                              CanUse(SLINGSHOT) || CanUse(BOOMERANG));
-                                  });
+                                  return SoulFlareDancer && Here(FIRE_TEMPLE_UPPER_FLARE_DANCER, [] {
+                                             return (HasExplosives || CanUse(MEGATON_HAMMER) || CanUse(HOOKSHOT)) &&
+                                                    (CanUse(KOKIRI_SWORD) || CanUse(MASTER_SWORD) ||
+                                                     CanUse(BIGGORON_SWORD) || CanUse(SLINGSHOT) || CanUse(BOOMERANG));
+                                         });
                               } }),
                      Entrance(FIRE_TEMPLE_WEST_CLIMB, { [] {
-                                  return Here(FIRE_TEMPLE_UPPER_FLARE_DANCER, [] {
-                                      return (HasExplosives || CanUse(MEGATON_HAMMER) || CanUse(HOOKSHOT)) &&
-                                             (CanUse(KOKIRI_SWORD) || CanUse(MASTER_SWORD) || CanUse(BIGGORON_SWORD) ||
-                                              CanUse(SLINGSHOT) || CanUse(BOOMERANG));
-                                  });
+                                  return SoulFlareDancer && Here(FIRE_TEMPLE_UPPER_FLARE_DANCER, [] {
+                                             return (HasExplosives || CanUse(MEGATON_HAMMER) || CanUse(HOOKSHOT)) &&
+                                                    (CanUse(KOKIRI_SWORD) || CanUse(MASTER_SWORD) ||
+                                                     CanUse(BIGGORON_SWORD) || CanUse(SLINGSHOT) || CanUse(BOOMERANG));
+                                         });
                               } }),
                  });
 
@@ -775,27 +777,27 @@ void AreaTable_Init_FireTemple() {
                  Entrance(FIRE_TEMPLE_BOSS_ROOM, { [] { return true; } }),
              });
 
-    areaTable[FIRE_TEMPLE_BOSS_ROOM] =
-        Area("Fire Temple Boss Room", "Fire Temple", NONE, NO_DAY_NIGHT_CYCLE,
-             {
-                 // Events
-                 EventAccess(&FireTempleClear,
-                             { [] { return FireTempleClear || (FireTimer >= 64 && CanUse(MEGATON_HAMMER)); },
-                               /*Glitched*/
-                               [] {
-                                   return FireTimer >= 48 &&
-                                          ((CanUse(STICKS) && CanDoGlitch(GlitchType::QPA, GlitchDifficulty::NOVICE)) ||
-                                           CanUse(MEGATON_HAMMER)) &&
-                                          Bombs && CanDoGlitch(GlitchType::ISG, GlitchDifficulty::INTERMEDIATE);
-                               } }),
-             },
-             {
-                 // Locations
-                 LocationAccess(FIRE_TEMPLE_VOLVAGIA_HEART, { [] { return FireTempleClear; } }),
-                 LocationAccess(VOLVAGIA, { [] { return FireTempleClear; } }),
-             },
-             {
-                 // Exits
-                 Entrance(FIRE_TEMPLE_BOSS_ENTRYWAY, { [] { return false; } }),
-             });
+    areaTable[FIRE_TEMPLE_BOSS_ROOM] = Area(
+        "Fire Temple Boss Room", "Fire Temple", NONE, NO_DAY_NIGHT_CYCLE,
+        {
+            // Events
+            EventAccess(&FireTempleClear,
+                        { [] { return FireTempleClear || (SoulVolvagia && FireTimer >= 64 && CanUse(MEGATON_HAMMER)); },
+                          /*Glitched*/
+                          [] {
+                              return SoulVolvagia && FireTimer >= 48 &&
+                                     ((CanUse(STICKS) && CanDoGlitch(GlitchType::QPA, GlitchDifficulty::NOVICE)) ||
+                                      CanUse(MEGATON_HAMMER)) &&
+                                     Bombs && CanDoGlitch(GlitchType::ISG, GlitchDifficulty::INTERMEDIATE);
+                          } }),
+        },
+        {
+            // Locations
+            LocationAccess(FIRE_TEMPLE_VOLVAGIA_HEART, { [] { return FireTempleClear; } }),
+            LocationAccess(VOLVAGIA, { [] { return FireTempleClear; } }),
+        },
+        {
+            // Exits
+            Entrance(FIRE_TEMPLE_BOSS_ENTRYWAY, { [] { return false; } }),
+        });
 }

@@ -11,6 +11,7 @@
 #define TICKS_PER_SEC 268123480
 #define SEQ_AUDIO_BLANK 0x1000142
 
+extern u8 playingOnCitra;
 extern u32 rGameplayFrames; // globalCtx->gameplayFrames is not accurate, it doesn't increment on file 3
 
 /// Returns 1 if the bit is set in value1 but not in value2, -1 if vice versa, and 0 if they're the same

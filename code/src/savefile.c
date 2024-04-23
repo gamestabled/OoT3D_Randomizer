@@ -538,6 +538,11 @@ void SaveFile_SetStartingInventory(void) {
 
     // Set owned ocarina buttons. If the shuffle option is disabled, this value will be ignored.
     gExtSaveData.extInf[EXTINF_OCARINA_BUTTONS] = gSettingsContext.startingOcarinaButtons;
+
+    // Set owned enemy souls. If the shuffle option is disabled, these values will be ignored.
+    for (u32 i = 0; i < sizeof(gSettingsContext.startingEnemySouls); i++) {
+        gExtSaveData.extInf[EXTINF_ENEMYSOULSFLAGS_START + i] = gSettingsContext.startingEnemySouls[i];
+    }
 }
 
 // We will use the "unk" flags in DMT to represent adult trade ownership
