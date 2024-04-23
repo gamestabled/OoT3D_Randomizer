@@ -253,6 +253,12 @@ static void CustomModel_EditShopFairyToEnemySoul(void* ZARBuf) {
     EDIT_BYTE(0x13E, 0x00);
 }
 
+static void CustomModel_SetSoldOutToRGBA565(void* soldOutCMB) {
+    char* BASE_ = (char*)soldOutCMB;
+
+    EDIT_BYTE(0x274, 0x5B); // ImageFormat: 0x6758 -> 0x675B
+}
+
 void CustomModel_Update(void) {
     // Make sure custom_assets is loaded
     if (ExtendedObject_GetIndex(&gGlobalContext->objectCtx, OBJECT_CUSTOM_GENERAL_ASSETS) < 0) {
@@ -296,6 +302,10 @@ void CustomModels_EditItemCMB(void* ZARBuf, u16 objectId, s8 special) {
             // This function takes the ZARBuf instead of the CMB
             CustomModel_EditShopFairyToEnemySoul(ZARBuf);
             break;
+        case OBJECT_CUSTOM_OCARINA_BUTTON:
+            cmb = ((char*)ZARBuf) + 0xA4;
+            CustomModel_SetSoldOutToRGBA565(cmb);
+            break;
     }
 }
 
@@ -324,5 +334,11 @@ void CustomModels_ApplyItemCMAB(SkeletonAnimationModel* model, u16 objectId, s8 
             model->unk_0C->animMode  = 0;
             model->unk_0C->curFrame  = special;
             break;
+        case OBJECT_CUSTOM_OCARINA_BUTTON:
+            cmabMan = ExtendedObject_GetCMABByIndex(OBJECT_CUSTOM_GENERAL_ASSETS, TEXANIM_OCARINA_NOTE_BUTTON);
+            TexAnim_Spawn(model->unk_0C, cmabMan);
+            model->unk_0C->animSpeed = 0.0f;
+            model->unk_0C->animMode  = 0;
+            model->unk_0C->curFrame  = special;
     }
 }

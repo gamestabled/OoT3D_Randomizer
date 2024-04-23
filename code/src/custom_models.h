@@ -23,6 +23,7 @@ void CustomModels_ApplyItemCMAB(SkeletonAnimationModel* model, u16 objectId, s8 
 #define OBJECT_CUSTOM_BOSS_KEYS 128
 #define OBJECT_CUSTOM_GENERAL_ASSETS 182
 #define OBJECT_CUSTOM_ENEMY_SOUL 228
+#define OBJECT_CUSTOM_OCARINA_BUTTON 291
 
 typedef enum {
     TEXANIM_COPY_NINTENDO,
@@ -36,6 +37,7 @@ typedef enum {
     TEXANIM_KEY_CHEST,
     TEXANIM_HEART_CHEST,
     TEXANIM_SKULL_CHEST,
+    TEXANIM_OCARINA_NOTE_BUTTON,
 } CustomGeneralAssetsTexAnims;
 
 typedef enum {

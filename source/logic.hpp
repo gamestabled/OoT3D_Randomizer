@@ -74,6 +74,26 @@ extern bool EyedropsAccess;
 extern bool DisableTradeRevert;
 
 // Songs
+extern bool ZeldasLullaby_item;
+extern bool SariasSong_item;
+extern bool SunsSong_item;
+extern bool SongOfStorms_item;
+extern bool EponasSong_item;
+extern bool SongOfTime_item;
+extern bool MinuetOfForest_item;
+extern bool BoleroOfFire_item;
+extern bool SerenadeOfWater_item;
+extern bool RequiemOfSpirit_item;
+extern bool NocturneOfShadow_item;
+extern bool PreludeOfLight_item;
+// Ocarina notes buttons
+extern bool OcarinaButtonL;
+extern bool OcarinaButtonR;
+extern bool OcarinaButtonX;
+extern bool OcarinaButtonY;
+extern bool OcarinaButtonA;
+extern u8 OcarinaButtonsCount;
+// Songs + their ocarina notes
 extern bool ZeldasLullaby;
 extern bool SariasSong;
 extern bool SunsSong;

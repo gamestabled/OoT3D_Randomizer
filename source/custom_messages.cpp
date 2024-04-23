@@ -1063,6 +1063,13 @@ void CreateAlwaysIncludedMessages() {
         CreateMessageFromTextObject(0x9450 + soulKey - SOUL_ITEM_POE, 0, 2, 3,
                                     AddColorsAndFormat(soulText, { QM_RED }));
     }
+
+    for (ItemKey key = OCA_BUTTON_ITEM_L; key <= OCA_BUTTON_ITEM_A; key++) {
+        Text text = Text{ "You got #", "Vous obtenez #", "¡Has obtenido #", "Hai ottenuto #", "Du hast #" } +
+                    hintTable[key].GetClear() + "#!";
+
+        CreateMessageFromTextObject(0x93F0 + key - OCA_BUTTON_ITEM_L, 0, 2, 3, AddColorsAndFormat(text, { QM_RED }));
+    }
 }
 
 std::vector<Text> CreateBaseCompassTexts() {

@@ -484,6 +484,12 @@ typedef enum {
     /* 0x10C */ GI_SOUL_TWINROVA,
     /* 0x10D */ GI_SOUL_GANON,
 
+    /* 0x10E */ GI_OCARINA_BUTTON_L,
+    /* 0x10F */ GI_OCARINA_BUTTON_R,
+    /* 0x110 */ GI_OCARINA_BUTTON_X,
+    /* 0x111 */ GI_OCARINA_BUTTON_Y,
+    /* 0x112 */ GI_OCARINA_BUTTON_A,
+
 } GetItemID;
 
 typedef enum {

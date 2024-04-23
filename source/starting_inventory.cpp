@@ -189,6 +189,12 @@ void GenerateStartingInventory() {
         ItemKey soulItem = SOUL_ITEM_POE + SoulMenuNames[i].soulId;
         AddItemToInventory(soulItem, opt->Value<u8>());
     }
+
+    AddItemToInventory(OCA_BUTTON_ITEM_L, StartingOcarinaButtonL.Value<u8>());
+    AddItemToInventory(OCA_BUTTON_ITEM_R, StartingOcarinaButtonR.Value<u8>());
+    AddItemToInventory(OCA_BUTTON_ITEM_X, StartingOcarinaButtonX.Value<u8>());
+    AddItemToInventory(OCA_BUTTON_ITEM_Y, StartingOcarinaButtonY.Value<u8>());
+    AddItemToInventory(OCA_BUTTON_ITEM_A, StartingOcarinaButtonA.Value<u8>());
 }
 
 bool StartingInventoryHasBottle() {

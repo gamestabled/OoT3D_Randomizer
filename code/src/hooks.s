@@ -2120,6 +2120,24 @@ hook_BabyDodongoAfterSwallowBomb:
     bne 0x1C4370
     bx lr
 
+.global hook_OcarinaNoteButtonsDraw
+hook_OcarinaNoteButtonsDraw:
+    push {r0-r12, lr}
+    bl OcarinaNotes_MoveButtons
+    pop {r0-r12, lr}
+    mov r2,r2,lsl #0x1 @ original code
+    cmp r2,#0x0        @ original code
+    mov r3,r3,lsl #0x1 @ original code
+    bx lr
+
+.global hook_OcarinaNoteButtonsPress
+hook_OcarinaNoteButtonsPress:
+    cpy r0,r6
+    push {r1-r12, lr}
+    bl OcarinaNotes_HandleInputs
+    pop {r1-r12, lr}
+    bx lr
+
 @ ----------------------------------
 @ ----------------------------------
 

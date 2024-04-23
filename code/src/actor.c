@@ -68,6 +68,7 @@
 #define OBJECT_GI_OCARINA 222
 #define OBJECT_GI_OCARINA_0 270
 #define OBJECT_GI_SHOP_FAIRY 375
+#define OBJECT_GI_SOLD_OUT 328
 
 typedef void (*TitleCard_Update_proc)(GlobalContext* globalCtx, TitleCardContext* titleCtx);
 #ifdef Version_EUR
@@ -267,6 +268,9 @@ void Actor_Init() {
 
     // Define object 228 to be by default the same as object 375
     strncpy(gObjectTable[OBJECT_CUSTOM_ENEMY_SOUL].filename, gObjectTable[OBJECT_GI_SHOP_FAIRY].filename, 0x40);
+
+    // Define object 291 to be by default the same as object 328
+    strncpy(gObjectTable[OBJECT_CUSTOM_OCARINA_BUTTON].filename, gObjectTable[OBJECT_GI_SOLD_OUT].filename, 0x40);
 }
 
 void ActorSetup_Extra() {

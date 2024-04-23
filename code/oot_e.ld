@@ -764,6 +764,10 @@ SECTIONS
 		*(.patch_OverrideDrawItemOne)
 	}
 
+	.patch_OcarinaNoteButtonsDraw 0x2F9430 : {
+	    * (.patch_OcarinaNoteButtonsDraw)
+	}
+
 	.patch_SaveGame 0x2FBFA8 : {
 		*(.patch_SaveGame)
 	}
@@ -1242,6 +1246,10 @@ SECTIONS
 
 	.patch_SleepQueryCallback 0x3FD6C4 : {
 		*(.patch_SleepQueryCallback)
+	}
+
+	.patch_OcarinaNoteButtonsPress 0x41AAD0 : {
+	    * (.patch_OcarinaNoteButtonsPress)
 	}
 
 	.patch_CurseTrapDizzyStick 0x41AB48 : {

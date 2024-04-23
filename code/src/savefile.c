@@ -536,6 +536,9 @@ void SaveFile_SetStartingInventory(void) {
         gSaveContext.horseData.pos.y = 0xF000; // place Epona OoB, so you can't reach her without playing the song
     }
 
+    // Set owned ocarina buttons. If the shuffle option is disabled, this value will be ignored.
+    gExtSaveData.extInf[EXTINF_OCARINA_BUTTONS] = gSettingsContext.startingOcarinaButtons;
+
     // Set owned enemy souls. If the shuffle option is disabled, these values will be ignored.
     for (u32 i = 0; i < sizeof(gSettingsContext.startingEnemySouls); i++) {
         gExtSaveData.extInf[EXTINF_ENEMYSOULSFLAGS_START + i] = gSettingsContext.startingEnemySouls[i];

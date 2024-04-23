@@ -203,6 +203,7 @@ Option ShuffleAdultTradeQuest = Option::Bool("Shuffle Adult Trade",    {"Off", "
 Option ShuffleChestMinigame   = Option::U8  ("Shuffle Chest Minigame", {"Off", "On (Separate)", "On (Pack)"},                             {chestMinigameDesc});
 Option ShuffleFrogSongRupees  = Option::Bool("Shuffle Frog Rupees",    {"Off", "On"},                                                     {frogSongRupeesDesc});
 Option ShuffleEnemySouls      = Option::U8  ("Shuffle Enemy Souls",    {"Off", "On"},                                                     {enemySoulDesc});
+Option ShuffleOcarinaButtons  = Option::Bool("Shuffle Ocarina Buttons",{"Off", "On"},                                                     {ocarinaButtonsDesc});
 std::vector<Option *> shuffleOptions = {
     &RandomizeShuffle,
     &ShuffleRewards,
@@ -224,6 +225,7 @@ std::vector<Option *> shuffleOptions = {
     &ShuffleChestMinigame,
     &ShuffleFrogSongRupees,
     &ShuffleEnemySouls,
+    &ShuffleOcarinaButtons,
 };
 
 // Shuffle Dungeon Items
@@ -677,6 +679,19 @@ std::vector<Option *> startingEnemySoulsOptions = [](){
     return options;
 }();
 
+Option StartingOcarinaButtonL = Option::U8  ("Ocarina Button L", {"Off", "On"}, {""});
+Option StartingOcarinaButtonR = Option::U8  ("Ocarina Button R", {"Off", "On"}, {""});
+Option StartingOcarinaButtonX = Option::U8  ("Ocarina Button X", {"Off", "On"}, {""});
+Option StartingOcarinaButtonY = Option::U8  ("Ocarina Button Y", {"Off", "On"}, {""});
+Option StartingOcarinaButtonA = Option::U8  ("Ocarina Button A", {"Off", "On"}, {""});
+std::vector<Option *> startingOcarinaButtonsOptions = {
+    &StartingOcarinaButtonL,
+    &StartingOcarinaButtonR,
+    &StartingOcarinaButtonX,
+    &StartingOcarinaButtonY,
+    &StartingOcarinaButtonA,
+};
+
 Option StartingConsumables      = Option::Bool("Start with Consumables", {"No",               "Yes"},                                                     {startWithConsumablesDesc});
 Option StartingMaxRupees        = Option::Bool("Start with Max Rupees",  {"No",               "Yes"},                                                     {startWithMaxRupeesDesc});
 Option StartingSkulltulaToken   = Option::U8  ("Gold Skulltula Tokens",  {NumOpts(0, 100)},                                                               {""});
@@ -691,6 +706,7 @@ Menu startingSongs            = Menu::SubMenu("Ocarina Songs",        &startingS
 Menu startingEquipment        = Menu::SubMenu("Equipment & Upgrades", &startingEquipmentOptions,        "", false);
 Menu startingStonesMedallions = Menu::SubMenu("Stones & Medallions",  &startingStonesMedallionsOptions, "", false);
 Menu startingEnemySouls       = Menu::SubMenu("Enemy Souls",          &startingEnemySoulsOptions,       "", false);
+Menu startingOcarinaButtons   = Menu::SubMenu("Ocarina Buttons",      &startingOcarinaButtonsOptions,   "", false);
 Menu startingOthers           = Menu::SubMenu("Other",                &startingOthersOptions,           "", false);
 std::vector<Menu *> startingInventoryOptions = {
     &startingItems,
@@ -698,6 +714,7 @@ std::vector<Menu *> startingInventoryOptions = {
     &startingEquipment,
     &startingStonesMedallions,
     &startingEnemySouls,
+    &startingOcarinaButtons,
     &startingOthers,
 };
 Option Logic              = Option::U8  ("Logic",                   {"Glitchless", "Glitched", "No Logic", "Vanilla"}, {logicGlitchless, logicGlitched, logicNoLogic, logicVanilla});
@@ -1445,6 +1462,7 @@ SettingsContext FillContext() {
     ctx.shuffleAdultTradeQuest = (ShuffleAdultTradeQuest) ? 1 : 0;
     ctx.shuffleChestMinigame   = ShuffleChestMinigame.Value<u8>();
     ctx.shuffleEnemySouls      = ShuffleEnemySouls.Value<u8>();
+    ctx.shuffleOcarinaButtons  = (ShuffleOcarinaButtons) ? 1 : 0;
 
     ctx.mapsAndCompasses   = MapsAndCompasses.Value<u8>();
     ctx.keysanity          = Keysanity.Value<u8>();
@@ -1683,6 +1701,12 @@ SettingsContext FillContext() {
         Option* opt    = startingEnemySoulsOptions.at(i);
         ctx.startingEnemySouls[soulBitIdx >> 3] |= opt->Value<u8>() << (soulBitIdx & 0b111);
     }
+
+    ctx.startingOcarinaButtons |= StartingOcarinaButtonL.Value<u8>() << 0;
+    ctx.startingOcarinaButtons |= StartingOcarinaButtonR.Value<u8>() << 1;
+    ctx.startingOcarinaButtons |= StartingOcarinaButtonX.Value<u8>() << 2;
+    ctx.startingOcarinaButtons |= StartingOcarinaButtonY.Value<u8>() << 3;
+    ctx.startingOcarinaButtons |= StartingOcarinaButtonA.Value<u8>() << 4;
 
     ctx.startingTokens = StartingSkulltulaToken.Value<u8>();
 
@@ -2220,6 +2244,13 @@ void ForceChange(u32 kDown, Option* currentSetting) {
         startingInventory.ResetMenuIndex();
     }
 
+    if (ShuffleOcarinaButtons || RandomizeShuffle) {
+        startingOcarinaButtons.Unlock();
+    } else {
+        startingOcarinaButtons.Lock();
+        startingInventory.ResetMenuIndex();
+    }
+
     if (!RandomizeDungeon) {
         // Only show Medallion Count if setting Ganons Boss Key to LACS Medallions
         if (GanonsBossKey.Is(GANONSBOSSKEY_LACS_MEDALLIONS)) {
@@ -2672,6 +2703,7 @@ std::vector<std::pair<Option*, u8>> vanillaLogicOverrides = {
     { &ShuffleChestMinigame, SHUFFLECHESTMINIGAME_OFF },
     { &ShuffleFrogSongRupees, SHUFFLEFROGSONGRUPEES_OFF },
     { &ShuffleEnemySouls, OFF },
+    { &ShuffleOcarinaButtons, OFF },
     { &Keysanity, KEYSANITY_ANY_DUNGEON }, // Set small keys to any dungeon so FiT basement door will be locked
     { &GossipStoneHints, HINTS_NO_HINTS },
 };

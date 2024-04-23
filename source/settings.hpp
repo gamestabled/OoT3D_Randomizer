@@ -423,6 +423,7 @@ extern Option ShuffleFrogSongRupees;
 extern Option ShuffleAdultTradeQuest;
 extern Option ShuffleChestMinigame;
 extern Option ShuffleEnemySouls;
+extern Option ShuffleOcarinaButtons;
 
 extern Option MapsAndCompasses;
 extern Option Keysanity;
@@ -595,6 +596,12 @@ extern Option StartingSpiritMedallion;
 extern Option StartingShadowMedallion;
 extern Option StartingLightMedallion;
 extern Option StartingSkulltulaToken;
+
+extern Option StartingOcarinaButtonL;
+extern Option StartingOcarinaButtonR;
+extern Option StartingOcarinaButtonX;
+extern Option StartingOcarinaButtonY;
+extern Option StartingOcarinaButtonA;
 
 // Logic Settings
 extern Option Logic;
@@ -829,6 +836,7 @@ extern std::vector<Option*> startingSongsOptions;
 extern std::vector<Option*> startingEquipmentOptions;
 extern std::vector<Option*> startingStonesMedallionsOptions;
 extern std::vector<Option*> startingEnemySoulsOptions;
+extern std::vector<Option*> startingOcarinaButtonsOptions;
 extern std::vector<Option*> startingOtherOptions;
 extern std::vector<Option*> trickOptions;
 extern std::vector<Option*> glitchCategories;

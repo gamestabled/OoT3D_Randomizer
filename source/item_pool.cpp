@@ -266,6 +266,9 @@ const std::array<ItemKey, 47> enemySouls = {
     SOUL_ITEM_BARINADE,     SOUL_ITEM_PHANTOM_GANON, SOUL_ITEM_VOLVAGIA,    SOUL_ITEM_MORPHA,     SOUL_ITEM_BONGO_BONGO,
     SOUL_ITEM_TWINROVA,     SOUL_ITEM_GANON,
 };
+const std::array<ItemKey, 5> ocarinaNoteButtons = {
+    OCA_BUTTON_ITEM_L, OCA_BUTTON_ITEM_R, OCA_BUTTON_ITEM_X, OCA_BUTTON_ITEM_Y, OCA_BUTTON_ITEM_A,
+};
 
 void AddItemToPool(std::vector<ItemKey>& pool, ItemKey item, size_t count /*= 1*/) {
     pool.insert(pool.end(), count, item);
@@ -1026,6 +1029,13 @@ void GenerateItemPool() {
         AddItemsToPool(ItemPool, enemySouls);
         if (ItemPoolValue.Is(ITEMPOOL_PLENTIFUL)) {
             AddItemsToPool(PendingJunkPool, enemySouls);
+        }
+    }
+
+    if (ShuffleOcarinaButtons) {
+        AddItemsToPool(ItemPool, ocarinaNoteButtons);
+        if (ItemPoolValue.Is(ITEMPOOL_PLENTIFUL)) {
+            AddItemsToPool(PendingJunkPool, ocarinaNoteButtons);
         }
     }
 

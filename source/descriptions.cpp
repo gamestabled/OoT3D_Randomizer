@@ -541,6 +541,13 @@ string_view enemySoulDesc             = "Enemies will be invincible and appear a
                                         "souls in the Starting Inventory.\n\n"             //
                                         "WARNING: Incompatible with Master Quest Logic.";  //
 /*------------------------------                                                           //
+|   SHUFFLE OCARINA BUTTONS    |                                                           //
+------------------------------*/                                                           //
+string_view ocarinaButtonsDesc        = "Enabling this locks all Ocarina inputs, and adds\n"
+                                        "5 new items to find that each unlock one of the 5\n"
+                                        "Ocarina notes.\n\n"                               //
+                                        "They can also be added to the Starting Inventory.";
+/*------------------------------                                                           //
 |      MAPS AND COMPASSES      |                                                           //
 ------------------------------*/                                                           //
 string_view mapCompassStartWith       = "Maps and Compasses are given to you from the\n"   //

@@ -509,6 +509,7 @@ typedef struct {
     u8 shuffleAdultTradeQuest;
     u8 shuffleChestMinigame;
     u8 shuffleEnemySouls;
+    u8 shuffleOcarinaButtons;
 
     u8 mapsAndCompasses;
     u8 keysanity;
@@ -721,6 +722,7 @@ typedef struct {
     u32 startingUpgrades;
 
     u8 startingEnemySouls[8];
+    u8 startingOcarinaButtons;
 
     u8 startingTokens;
 
