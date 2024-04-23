@@ -74,6 +74,26 @@ extern bool EyedropsAccess;
 extern bool DisableTradeRevert;
 
 // Songs
+extern bool ZeldasLullaby_item;
+extern bool SariasSong_item;
+extern bool SunsSong_item;
+extern bool SongOfStorms_item;
+extern bool EponasSong_item;
+extern bool SongOfTime_item;
+extern bool MinuetOfForest_item;
+extern bool BoleroOfFire_item;
+extern bool SerenadeOfWater_item;
+extern bool RequiemOfSpirit_item;
+extern bool NocturneOfShadow_item;
+extern bool PreludeOfLight_item;
+// Ocarina notes buttons
+extern bool OcarinaButtonL;
+extern bool OcarinaButtonR;
+extern bool OcarinaButtonX;
+extern bool OcarinaButtonY;
+extern bool OcarinaButtonA;
+extern u8 OcarinaButtonsCount;
+// Songs + their ocarina notes
 extern bool ZeldasLullaby;
 extern bool SariasSong;
 extern bool SunsSong;
@@ -198,6 +218,54 @@ extern u8 PieceOfHeart;
 extern u8 HeartContainer;
 extern bool DoubleDefense;
 extern u8 TriforcePieces;
+
+extern bool SoulPoe;
+extern bool SoulOctorok;
+extern bool SoulKeese;
+extern bool SoulTektite;
+extern bool SoulLeever;
+extern bool SoulPeahat;
+extern bool SoulLizalfosDinolfos;
+extern bool SoulShabom;
+extern bool SoulBiriBari;
+extern bool SoulTailpasaran;
+extern bool SoulSkulltula;
+extern bool SoulTorchSlug;
+extern bool SoulStinger;
+extern bool SoulMoblin;
+extern bool SoulArmos;
+extern bool SoulDekuBaba;
+extern bool SoulBubble;
+extern bool SoulFlyingTrap;
+extern bool SoulBeamos;
+extern bool SoulWallmaster;
+extern bool SoulRedeadGibdo;
+extern bool SoulShellBlade;
+extern bool SoulLikeLike;
+extern bool SoulParasiticTentacle;
+extern bool SoulAnubis;
+extern bool SoulSpike;
+extern bool SoulSkullKid;
+extern bool SoulFreezard;
+extern bool SoulDekuScrub;
+extern bool SoulWolfos;
+extern bool SoulStalchild;
+extern bool SoulGuay;
+extern bool SoulDoorMimic;
+extern bool SoulStalfos;
+extern bool SoulDarkLink;
+extern bool SoulFlareDancer;
+extern bool SoulDeadHand;
+extern bool SoulGerudo;
+extern bool SoulGohma;
+extern bool SoulDodongo;
+extern bool SoulBarinade;
+extern bool SoulPhantomGanon;
+extern bool SoulVolvagia;
+extern bool SoulMorpha;
+extern bool SoulBongoBongo;
+extern bool SoulTwinrova;
+extern bool SoulGanon;
 
 /* --- HELPERS --- */
 /* These are used to simplify reading the logic, but need to be updated

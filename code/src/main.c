@@ -17,6 +17,7 @@
 #include "z3D/z3D.h"
 #include "3ds/extdata.h"
 #include "3ds/services/irrst.h"
+#include "3ds/svc.h"
 
 GlobalContext* gGlobalContext = NULL;
 static u8 rRandomizerInit     = 0;
@@ -40,6 +41,10 @@ void before_GlobalContext_Update(GlobalContext* globalCtx) {
         Randomizer_Init();
         set_GlobalContext(globalCtx);
         rRandomizerInit = 1;
+
+        s64 output = 0;
+        svcGetSystemInfo(&output, 0x20000, 0);
+        playingOnCitra = (output != 0);
     }
     rGameplayFrames++;
     ItemOverride_Update();

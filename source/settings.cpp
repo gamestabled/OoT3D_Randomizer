@@ -15,6 +15,9 @@
 #include "keys.hpp"
 #include "gold_skulltulas.hpp"
 
+#define CREATE_SOULMENUNAMES
+#include "../code/src/enemy_souls.h"
+
 using namespace Cosmetics;
 using namespace Dungeon;
 using namespace Trial;
@@ -205,6 +208,8 @@ Option ShuffleMerchants       = Option::U8  ("Shuffle Merchants",      {"Off", "
 Option ShuffleAdultTradeQuest = Option::Bool("Shuffle Adult Trade",    {"Off", "On"},                                                     {adultTradeDesc});
 Option ShuffleChestMinigame   = Option::U8  ("Shuffle Chest Minigame", {"Off", "On (Separate)", "On (Pack)"},                             {chestMinigameDesc});
 Option ShuffleFrogSongRupees  = Option::Bool("Shuffle Frog Rupees",    {"Off", "On"},                                                     {frogSongRupeesDesc});
+Option ShuffleEnemySouls      = Option::U8  ("Shuffle Enemy Souls",    {"Off", "On"},                                                     {enemySoulDesc});
+Option ShuffleOcarinaButtons  = Option::Bool("Shuffle Ocarina Buttons",{"Off", "On"},                                                     {ocarinaButtonsDesc});
 std::vector<Option *> shuffleOptions = {
     &RandomizeShuffle,
     &ShuffleRewards,
@@ -225,6 +230,8 @@ std::vector<Option *> shuffleOptions = {
     &ShuffleAdultTradeQuest,
     &ShuffleChestMinigame,
     &ShuffleFrogSongRupees,
+    &ShuffleEnemySouls,
+    &ShuffleOcarinaButtons,
 };
 
 // Shuffle Dungeon Items
@@ -665,6 +672,32 @@ std::vector<Option *> startingStonesMedallionsOptions = {
     &StartingShadowMedallion,
 };
 
+// Initialize startingEnemySoulsOptions with one Option for each element in SoulMenuNames
+std::vector<Option> startEnSoOptObjects;
+std::vector<Option *> startingEnemySoulsOptions = [](){
+    startEnSoOptObjects.reserve(SOUL_MAX);
+    std::vector<Option *> options = {};
+    for (SoulMenuInfo info : SoulMenuNames) {
+        Option opt = Option::U8 (info.name, {"Off", "On"}, {""});
+        startEnSoOptObjects.push_back(std::move(opt));
+        options.push_back(&startEnSoOptObjects.back());
+    }
+    return options;
+}();
+
+Option StartingOcarinaButtonL = Option::U8  ("Ocarina Button L", {"Off", "On"}, {""});
+Option StartingOcarinaButtonR = Option::U8  ("Ocarina Button R", {"Off", "On"}, {""});
+Option StartingOcarinaButtonX = Option::U8  ("Ocarina Button X", {"Off", "On"}, {""});
+Option StartingOcarinaButtonY = Option::U8  ("Ocarina Button Y", {"Off", "On"}, {""});
+Option StartingOcarinaButtonA = Option::U8  ("Ocarina Button A", {"Off", "On"}, {""});
+std::vector<Option *> startingOcarinaButtonsOptions = {
+    &StartingOcarinaButtonL,
+    &StartingOcarinaButtonR,
+    &StartingOcarinaButtonX,
+    &StartingOcarinaButtonY,
+    &StartingOcarinaButtonA,
+};
+
 Option StartingConsumables      = Option::Bool("Start with Consumables", {"No",               "Yes"},                                                     {startWithConsumablesDesc});
 Option StartingMaxRupees        = Option::Bool("Start with Max Rupees",  {"No",               "Yes"},                                                     {startWithMaxRupeesDesc});
 Option StartingSkulltulaToken   = Option::U8  ("Gold Skulltula Tokens",  {NumOpts(0, 100)},                                                               {""});
@@ -678,12 +711,16 @@ Menu startingItems            = Menu::SubMenu("Items",                &startingI
 Menu startingSongs            = Menu::SubMenu("Ocarina Songs",        &startingSongsOptions,            "", false);
 Menu startingEquipment        = Menu::SubMenu("Equipment & Upgrades", &startingEquipmentOptions,        "", false);
 Menu startingStonesMedallions = Menu::SubMenu("Stones & Medallions",  &startingStonesMedallionsOptions, "", false);
+Menu startingEnemySouls       = Menu::SubMenu("Enemy Souls",          &startingEnemySoulsOptions,       "", false);
+Menu startingOcarinaButtons   = Menu::SubMenu("Ocarina Buttons",      &startingOcarinaButtonsOptions,   "", false);
 Menu startingOthers           = Menu::SubMenu("Other",                &startingOthersOptions,           "", false);
 std::vector<Menu *> startingInventoryOptions = {
     &startingItems,
     &startingSongs,
     &startingEquipment,
     &startingStonesMedallions,
+    &startingEnemySouls,
+    &startingOcarinaButtons,
     &startingOthers,
 };
 Option Logic              = Option::U8  ("Logic",                   {"Glitchless", "Glitched", "No Logic", "Vanilla"}, {logicGlitchless, logicGlitched, logicNoLogic, logicVanilla});
@@ -1373,7 +1410,6 @@ SettingsContext FillContext() {
     ctx.hashIndexes[2]  = hashIconIndexes[2];
     ctx.hashIndexes[3]  = hashIconIndexes[3];
     ctx.hashIndexes[4]  = hashIconIndexes[4];
-    ctx.playOption      = PlayOption;
     ctx.region          = Region;
 
     ctx.logic                = Logic.Value<u8>();
@@ -1435,6 +1471,8 @@ SettingsContext FillContext() {
     ctx.shuffleFrogSongRupees  = (ShuffleFrogSongRupees) ? 1 : 0;
     ctx.shuffleAdultTradeQuest = (ShuffleAdultTradeQuest) ? 1 : 0;
     ctx.shuffleChestMinigame   = ShuffleChestMinigame.Value<u8>();
+    ctx.shuffleEnemySouls      = ShuffleEnemySouls.Value<u8>();
+    ctx.shuffleOcarinaButtons  = (ShuffleOcarinaButtons) ? 1 : 0;
 
     ctx.mapsAndCompasses   = MapsAndCompasses.Value<u8>();
     ctx.keysanity          = Keysanity.Value<u8>();
@@ -1666,6 +1704,19 @@ SettingsContext FillContext() {
     ctx.startingDungeonReward |= StartingWaterMedallion.Value<u8>() << 2;
     ctx.startingDungeonReward |= StartingSpiritMedallion.Value<u8>() << 3;
     ctx.startingDungeonReward |= StartingShadowMedallion.Value<u8>() << 4;
+
+    // Starting enemy souls
+    for (u32 i = 0; i < SOUL_MAX; i++) {
+        u32 soulBitIdx = SoulMenuNames[i].soulId;
+        Option* opt    = startingEnemySoulsOptions.at(i);
+        ctx.startingEnemySouls[soulBitIdx >> 3] |= opt->Value<u8>() << (soulBitIdx & 0b111);
+    }
+
+    ctx.startingOcarinaButtons |= StartingOcarinaButtonL.Value<u8>() << 0;
+    ctx.startingOcarinaButtons |= StartingOcarinaButtonR.Value<u8>() << 1;
+    ctx.startingOcarinaButtons |= StartingOcarinaButtonX.Value<u8>() << 2;
+    ctx.startingOcarinaButtons |= StartingOcarinaButtonY.Value<u8>() << 3;
+    ctx.startingOcarinaButtons |= StartingOcarinaButtonA.Value<u8>() << 4;
 
     ctx.startingTokens = StartingSkulltulaToken.Value<u8>();
 
@@ -2235,6 +2286,20 @@ void ForceChange(u32 kDown, Option* currentSetting) {
         LinksPocketItem.Unlock();
     }
 
+    if (ShuffleEnemySouls || RandomizeShuffle) {
+        startingEnemySouls.Unlock();
+    } else {
+        startingEnemySouls.Lock();
+        startingInventory.ResetMenuIndex();
+    }
+
+    if (ShuffleOcarinaButtons || RandomizeShuffle) {
+        startingOcarinaButtons.Unlock();
+    } else {
+        startingOcarinaButtons.Lock();
+        startingInventory.ResetMenuIndex();
+    }
+
     if (!RandomizeDungeon) {
         // Only show Medallion Count if setting Ganons Boss Key to LACS Medallions
         if (GanonsBossKey.Is(GANONSBOSSKEY_LACS_MEDALLIONS)) {
@@ -2687,6 +2752,8 @@ std::vector<std::pair<Option*, u8>> vanillaLogicOverrides = {
     { &ShuffleAdultTradeQuest, SHUFFLEADULTTRADEQUEST_ON },
     { &ShuffleChestMinigame, SHUFFLECHESTMINIGAME_OFF },
     { &ShuffleFrogSongRupees, SHUFFLEFROGSONGRUPEES_OFF },
+    { &ShuffleEnemySouls, OFF },
+    { &ShuffleOcarinaButtons, OFF },
     { &Keysanity, KEYSANITY_ANY_DUNGEON }, // Set small keys to any dungeon so FiT basement door will be locked
     { &GossipStoneHints, HINTS_NO_HINTS },
 };
@@ -2804,6 +2871,7 @@ void RandomizeAllSettings(const bool selectOptions /*= false*/) {
 
     // resolve any settings that need to change
     if (selectOptions) {
+        ValidateSettings();
         ForceChange(0, nullptr);
     }
 }
@@ -3169,7 +3237,15 @@ bool GlitchEnabled(Option& glitchOption) {
     return Logic.Is(LOGIC_GLITCHED) && isMiscGlitch() && glitchOption;
 }
 
+// This function checks for conflicting settings similarly to ForceChange, but:
+// - it only gets called when generating a seed instead of after any input on settings menus, and
+// - it only changes the selected options if the setting is hidden (randomized), otherwise it prints an error message to
+//   let the player choose how to solve the conflict.
 bool ValidateSettings() {
+    bool valid = true;
+    u8 posY    = 5;
+
+    // Check Heart requirements
     s32 maxHearts = 20;
     switch (ItemPoolValue.Value<u8>()) {
         case ITEMPOOL_MINIMAL:
@@ -3179,15 +3255,54 @@ bool ValidateSettings() {
             maxHearts = 12;
             break;
     }
-    if ((Bridge.Is(RAINBOWBRIDGE_HEARTS) && BridgeHeartCount.Value<u8>() > maxHearts) ||
-        (GanonsBossKey.Is(GANONSBOSSKEY_LACS_HEARTS) && LACSHeartCount.Value<u8>() > maxHearts)) {
-        printf("\x1b[6;0HNot enough Hearts in pool!\n\n"
+    bool printHeartError = false;
+    if (Bridge.Is(RAINBOWBRIDGE_HEARTS) && BridgeHeartCount.Value<u8>() > maxHearts) {
+        if (BridgeHeartCount.IsHidden()) {
+            BridgeHeartCount.SetSelectedIndex(maxHearts);
+        } else {
+            printHeartError = true;
+        }
+    }
+    if (GanonsBossKey.Is(GANONSBOSSKEY_LACS_HEARTS) && LACSHeartCount.Value<u8>() > maxHearts) {
+        if (LACSHeartCount.IsHidden()) {
+            LACSHeartCount.SetSelectedIndex(maxHearts);
+        } else {
+            printHeartError = true;
+        }
+    }
+    if (printHeartError) {
+        printf("\x1b[%d;0H"
+               "----------------------------------------"
+               "Not enough Hearts in pool!\n\n"
                "Please choose a different Item Pool\n"
-               "setting or lower the Hearts requirement.");
-        return false;
+               "setting or lower the Hearts requirement."
+               "----------------------------------------",
+               posY);
+        valid = false;
+        posY += 7;
     }
 
-    return true;
+    // Check that there are no MQ dungeons with Enemy Souls
+    if (ShuffleEnemySouls && Logic.IsNot(LOGIC_NONE) && Logic.IsNot(LOGIC_VANILLA) && MQDungeonCount.IsNot(0)) {
+        if (ShuffleEnemySouls.IsHidden()) {
+            ShuffleEnemySouls.SetSelectedIndex(OFF);
+        } else {
+            printf("\x1b[%d;0H"
+                   "----------------------------------------"
+                   "Enemy Soul Shuffle currently does not\n"
+                   "have logic for Master Quest dungeons.\n\n"
+                   "Please disable one of the following:\n"
+                   " - MQ Dungeons (setting Count to 0)\n"
+                   " - Logic\n"
+                   " - Enemy Soul Shuffle\n"
+                   "----------------------------------------",
+                   posY);
+            valid = false;
+            posY += 10;
+        }
+    }
+
+    return valid;
 }
 
 } // namespace Settings

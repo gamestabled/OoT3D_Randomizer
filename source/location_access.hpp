@@ -8,6 +8,7 @@
 #include "hint_list.hpp"
 #include "keys.hpp"
 #include "fill.hpp"
+#include "item_location.hpp"
 
 typedef bool (*ConditionFn)();
 
@@ -76,6 +77,9 @@ class LocationAccess {
     bool GetConditionsMet() const {
         if (Settings::Logic.Is(LOGIC_NONE) || Settings::Logic.Is(LOGIC_VANILLA)) {
             return true;
+        } else if ((!Logic::SoulSkulltula && Location(location)->IsCategory(Category::cSkulltula)) ||
+                   (!Logic::SoulDekuScrub && Location(location)->IsCategory(Category::cDekuScrub))) {
+            return false;
         } else if (Settings::Logic.Is(LOGIC_GLITCHLESS)) {
             return conditions_met[0]();
         } else if (Settings::Logic.Is(LOGIC_GLITCHED)) {

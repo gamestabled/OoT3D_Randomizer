@@ -23,6 +23,8 @@ void CustomModels_UpdateMatrix(nn_math_MTX34* modelMtx, u16 objectId);
 #define OBJECT_CUSTOM_SMALL_KEY_GANON 127
 #define OBJECT_CUSTOM_BOSS_KEYS 128
 #define OBJECT_CUSTOM_GENERAL_ASSETS 182
+#define OBJECT_CUSTOM_ENEMY_SOUL 228
+#define OBJECT_CUSTOM_OCARINA_BUTTON 291
 #define OBJECT_CUSTOM_TRIFORCE_PIECE 366
 
 typedef enum {
@@ -37,6 +39,7 @@ typedef enum {
     TEXANIM_KEY_CHEST,
     TEXANIM_HEART_CHEST,
     TEXANIM_SKULL_CHEST,
+    TEXANIM_OCARINA_NOTE_BUTTON,
 } CustomGeneralAssetsTexAnims;
 
 typedef enum {

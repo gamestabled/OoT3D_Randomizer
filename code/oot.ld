@@ -48,6 +48,14 @@ SECTIONS
 		*(.patch_ItemEtceteraModelDraw)
 	}
 
+	.patch_FlyingPotCollision 0x11DB34 : {
+		*(.patch_FlyingPotCollision)
+	}
+
+	.patch_DodongoAfterSwallowBomb 0x11E4B8 : {
+		*(.patch_DodongoAfterSwallowBomb)
+	}
+
 	.patch_SariasSongItemGive 0x12C84C : {
 		*(.patch_SariasSongItemGive)
 	}
@@ -396,6 +404,10 @@ SECTIONS
 		*(.patch_FishingSizeIgnoreAdult)
 	}
 
+	.patch_BabyDodongoAfterSwallowBomb 0x1C42DC : {
+		*(.patch_BabyDodongoAfterSwallowBomb)
+	}
+
 	.patch_BiggoronAfterGiveItem 0x1C4E4C : {
 		*(.patch_BiggoronAfterGiveItem)
 	}
@@ -596,6 +608,10 @@ SECTIONS
 		*(.patch_BoleroLocation)
 	}
 
+	.patch_FlyingTileCollision 0x26E730 : {
+		*(.patch_FlyingTileCollision)
+	}
+
 	.patch_RedBoulderExplode 0x26FE7C : {
 		*(.patch_RedBoulderExplode)
 	}
@@ -700,6 +716,10 @@ SECTIONS
 		*(.patch_GetCustomMessageTextOne)
 	}
 
+	.patch_ActorDraw 0x2D6310 : {
+		*(.patch_ActorDraw)
+	}
+
 	.patch_CamUpdate 0x2D84C8 : {
 	    * (.patch_CamUpdate)
 	}
@@ -734,6 +754,10 @@ SECTIONS
 
 	.patch_OverrideDrawItemOne 0x2F7498 : {
 		*(.patch_OverrideDrawItemOne)
+	}
+
+	.patch_OcarinaNoteButtonsDraw 0x2F9430 : {
+	    * (.patch_OcarinaNoteButtonsDraw)
 	}
 
 	.patch_SaveGame 0x2FBFA8 : {
@@ -1008,6 +1032,10 @@ SECTIONS
 		*(.patch_GerudoArcheryOne)
 	}
 
+	.patch_ShabomAfterDamagePlayer 0x3B5060 : {
+		*(.patch_ShabomAfterDamagePlayer)
+	}
+
 	.patch_RandomGsLoc_CustomTokenSpawnOffset 0x3B94C4 : {
 		*(.patch_RandomGsLoc_CustomTokenSpawnOffset)
 	}
@@ -1210,6 +1238,10 @@ SECTIONS
 
 	.patch_SleepQueryCallback 0x3FD6C4 : {
 		*(.patch_SleepQueryCallback)
+	}
+
+	.patch_OcarinaNoteButtonsPress 0x41AAAC : {
+	    * (.patch_OcarinaNoteButtonsPress)
 	}
 
 	.patch_CurseTrapDizzyStick 0x41AB24 : {
@@ -1436,8 +1468,8 @@ SECTIONS
 		*(.patch_AfterActorSetup_RoomChange)
 	}
 
-	.patch_HyperActors 0x461790 : {
-		*(.patch_HyperActors)
+	.patch_ActorUpdate 0x461790 : {
+		*(.patch_ActorUpdate)
 	}
 
 	.patch_TitleCardUpdate 0x4618B8 : {

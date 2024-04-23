@@ -545,6 +545,23 @@ string_view chestMinigameDesc         = "The 5 key chests in the Treasure Chest 
                                         "If you choose the \"pack\" option, you will get\n"//
                                         "all the keys at once, in a single item.";         //
 /*------------------------------                                                           //
+|     SHUFFLE ENEMY SOULS      |                                                           //
+------------------------------*/                                                           //
+string_view enemySoulDesc             = "Enemies will be invincible and appear as a purple\n"
+                                        "flame until you find their \"soul\".\n"           //
+                                        "Each enemy type will have a soul added into the\n"//
+                                        "item pool.\n\n"                                   //
+                                        "You can exclude some enemies by adding their\n"   //
+                                        "souls in the Starting Inventory.\n\n"             //
+                                        "WARNING: Incompatible with Master Quest Logic.";  //
+/*------------------------------                                                           //
+|   SHUFFLE OCARINA BUTTONS    |                                                           //
+------------------------------*/                                                           //
+string_view ocarinaButtonsDesc        = "Enabling this locks all Ocarina inputs, and adds\n"
+                                        "5 new items to find that each unlock one of the 5\n"
+                                        "Ocarina notes.\n\n"                               //
+                                        "They can also be added to the Starting Inventory.";
+/*------------------------------                                                           //
 |      MAPS AND COMPASSES      |                                                           //
 ------------------------------*/                                                           //
 string_view mapCompassStartWith       = "Maps and Compasses are given to you from the\n"   //

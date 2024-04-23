@@ -1956,4 +1956,472 @@ void HintTable_Init_Item() {
     //                      Text{"An Error (Please Report This)", /*french*/"une erreur (signaler S.V.P.)", /*spanish*/"un error (repórtelo si es posible)", /*italian*/"un errore (segnalalo per favore)", /*german*/"ein Fehler (Bitte melden)"}
     //                    }
     // );
+
+    hintTable[SOUL_ITEM_POE] = HintText::Item({
+                       // obscure text
+                       Text{"the Poe Soul", /*french*/"l'Essence d'Esprit", /*spanish*/"el alma de Poe", /*italian*/"l'anima di Poo", /*german*/"die Seele von Irrlichtern"},
+                     }, {
+                       // ambiguous text
+                       Text{"a Soul", /*french*/"une Essence", /*spanish*/"un alma", /*italian*/"un'anima", /*german*/"eine Seele"},
+                     }
+    );
+
+    hintTable[SOUL_ITEM_OCTOROK] = HintText::Item({
+                       // obscure text
+                       Text{"the Octorok Soul", /*french*/"l'Essence d'Octorok", /*spanish*/"el alma de Octorok", /*italian*/"l'anima di Octorok", /*german*/"die Seele von Oktorok"},
+                     }, {
+                       // ambiguous text
+                       Text{"a Soul", /*french*/"une Essence", /*spanish*/"un alma", /*italian*/"un'anima", /*german*/"eine Seele"},
+                     }
+    );
+
+    hintTable[SOUL_ITEM_KEESE] = HintText::Item({
+                       // obscure text
+                       Text{"the Keese Soul", /*french*/"l'Essence de Saigneur", /*spanish*/"el alma de Keese", /*italian*/"l'anima di Pipistrello", /*german*/"die Seele von Flederbeißern"},
+                     }, {
+                       // ambiguous text
+                       Text{"a Soul", /*french*/"une Essence", /*spanish*/"un alma", /*italian*/"un'anima", /*german*/"eine Seele"},
+                     }
+    );
+
+    hintTable[SOUL_ITEM_TEKTITE] = HintText::Item({
+                       // obscure text
+                       Text{"the Tektite Soul", /*french*/"l'Essence d'Araknon", /*spanish*/"el alma de Tektite", /*italian*/"l'anima di Tektite", /*german*/"die Seele von Arachnos"},
+                     }, {
+                       // ambiguous text
+                       Text{"a Soul", /*french*/"une Essence", /*spanish*/"un alma", /*italian*/"un'anima", /*german*/"eine Seele"},
+                     }
+    );
+
+    hintTable[SOUL_ITEM_LEEVER] = HintText::Item({
+                       // obscure text
+                       Text{"the Leever Soul", /*french*/"l'Essence de Leever", /*spanish*/"el alma de Leever", /*italian*/"l'anima di Leever", /*german*/"die Seele von Sandkillern"},
+                     }, {
+                       // ambiguous text
+                       Text{"a Soul", /*french*/"une Essence", /*spanish*/"un alma", /*italian*/"un'anima", /*german*/"eine Seele"},
+                     }
+    );
+
+    hintTable[SOUL_ITEM_PEAHAT] = HintText::Item({
+                       // obscure text
+                       Text{"the Peahat Soul", /*french*/"l'Essence de Peahat", /*spanish*/"el alma de Peahat", /*italian*/"l'anima di Bulbocottero", /*german*/"die Seele von Killeranas"},
+                     }, {
+                       // ambiguous text
+                       Text{"a Soul", /*french*/"une Essence", /*spanish*/"un alma", /*italian*/"un'anima", /*german*/"eine Seele"},
+                     }
+    );
+
+    hintTable[SOUL_ITEM_LIZALFOS] = HintText::Item({
+                       // obscure text
+                       Text{"the Lizalfos and Dinolfos Soul", /*french*/"les Essences de Lézalfos et de Dinolfos", /*spanish*/"el alma de Lizalfos y Dinolfos", /*italian*/"l'anima di Lizalfos e Dinolfos", /*german*/"die Seele von Echsalfos und Dinodorus"},
+                     }, {
+                       // ambiguous text
+                       Text{"a Soul", /*french*/"une Essence", /*spanish*/"un alma", /*italian*/"un'anima", /*german*/"eine Seele"},
+                     }
+    );
+
+    hintTable[SOUL_ITEM_SHABOM] = HintText::Item({
+                       // obscure text
+                       Text{"the Shabom Soul", /*french*/"l'Essence de Bulld'O", /*spanish*/"el alma de Shabom", /*italian*/"l'anima di Shabom", /*german*/"die Seele von Blubberblasen"},
+                     }, {
+                       // ambiguous text
+                       Text{"a Soul", /*french*/"une Essence", /*spanish*/"un alma", /*italian*/"un'anima", /*german*/"eine Seele"},
+                     }
+    );
+
+    hintTable[SOUL_ITEM_BIRI_BARI] = HintText::Item({
+                       // obscure text
+                       Text{"the Biri and Bari Soul", /*french*/"l'Essence de Biri et de Bari", /*spanish*/"el alma de Biri y Bari", /*italian*/"l'anima di Cnidiri e Cnidari", /*german*/"die Seele von Zappelquallen"},
+                     }, {
+                       // ambiguous text
+                       Text{"a Soul", /*french*/"une Essence", /*spanish*/"un alma", /*italian*/"un'anima", /*german*/"eine Seele"},
+                     }
+    );
+
+    hintTable[SOUL_ITEM_TAILPASARAN] = HintText::Item({
+                       // obscure text
+                       Text{"the Tailpasaran Soul", /*french*/"l'Essence de Tailpasaran", /*spanish*/"el alma de Tailpasaran", /*italian*/"l'anima di Trivolt", /*german*/"die Seele von Zangengreifern"},
+                     }, {
+                       // ambiguous text
+                       Text{"a Soul", /*french*/"une Essence", /*spanish*/"un alma", /*italian*/"un'anima", /*german*/"eine Seele"},
+                     }
+    );
+
+    hintTable[SOUL_ITEM_SKULLTULA] = HintText::Item({
+                       // obscure text
+                       Text{"the Skulltula Soul", /*french*/"l'Essence de Skulltula", /*spanish*/"el alma de Skulltula", /*italian*/"l'anima di Aracnula", /*german*/"die Seele von Skulltulas"},
+                     }, {
+                       // ambiguous text
+                       Text{"a Soul", /*french*/"une Essence", /*spanish*/"un alma", /*italian*/"un'anima", /*german*/"eine Seele"},
+                     }
+    );
+
+    hintTable[SOUL_ITEM_TORCH_SLUG] = HintText::Item({
+                       // obscure text
+                       Text{"the Torch Slug Soul", /*french*/"l'Essence de Feu Visqueux", /*spanish*/"el alma de Llamababa", /*italian*/"l'anima di Lumaca di lava", /*german*/"die Seele von Lavaschleimen"},
+                     }, {
+                       // ambiguous text
+                       Text{"a Soul", /*french*/"une Essence", /*spanish*/"un alma", /*italian*/"un'anima", /*german*/"eine Seele"},
+                     }
+    );
+
+    hintTable[SOUL_ITEM_STINGER] = HintText::Item({
+                       // obscure text
+                       Text{"the Stinger Soul", /*french*/"l'Essence de Manta", /*spanish*/"el alma de Stinger", /*italian*/"l'anima di Trigone volante", /*german*/"die Seele von Elektromantas"},
+                     }, {
+                       // ambiguous text
+                       Text{"a Soul", /*french*/"une Essence", /*spanish*/"un alma", /*italian*/"un'anima", /*german*/"eine Seele"},
+                     }
+    );
+
+    hintTable[SOUL_ITEM_MOBLIN] = HintText::Item({
+                       // obscure text
+                       Text{"the Moblin Soul", /*french*/"l'Essence de Moblin", /*spanish*/"el alma de Moblin", /*italian*/"l'anima di Grublin", /*german*/"die Seele von Moblin"},
+                     }, {
+                       // ambiguous text
+                       Text{"a Soul", /*french*/"une Essence", /*spanish*/"un alma", /*italian*/"un'anima", /*german*/"eine Seele"},
+                     }
+    );
+
+    hintTable[SOUL_ITEM_ARMOS] = HintText::Item({
+                       // obscure text
+                       Text{"the Armos Soul", /*french*/"l'Essence d'Armos", /*spanish*/"el alma de Armos", /*italian*/"l'anima di Armos", /*german*/"die Seele von Armos-Rittern"},
+                     }, {
+                       // ambiguous text
+                       Text{"a Soul", /*french*/"une Essence", /*spanish*/"un alma", /*italian*/"un'anima", /*german*/"eine Seele"},
+                     }
+    );
+
+    hintTable[SOUL_ITEM_DEKU_BABA] = HintText::Item({
+                       // obscure text
+                       Text{"the Deku Baba Soul", /*french*/"l'Essence de Mojo Baba", /*spanish*/"el alma de Baba Deku", /*italian*/"l'anima di Deku Baba", /*german*/"die Seele von Dekuranhas"},
+                     }, {
+                       // ambiguous text
+                       Text{"a Soul", /*french*/"une Essence", /*spanish*/"un alma", /*italian*/"un'anima", /*german*/"eine Seele"},
+                     }
+    );
+
+    hintTable[SOUL_ITEM_BUBBLE] = HintText::Item({
+                       // obscure text
+                       Text{"the Bubble Soul", /*french*/"l'Essence de Tetdoss", /*spanish*/"el alma de Bubble", /*italian*/"l'anima di Nembo", /*german*/"die Seele von Totenschädeln"},
+                     }, {
+                       // ambiguous text
+                       Text{"a Soul", /*french*/"une Essence", /*spanish*/"un alma", /*italian*/"un'anima", /*german*/"eine Seele"},
+                     }
+    );
+
+    hintTable[SOUL_ITEM_FLYING_TRAP] = HintText::Item({
+                       // obscure text
+                       Text{"the Flying Pot and Tile Soul", /*french*/"les Essences de jarres et de dalles volantes", /*spanish*/"el alma de Jarrones y Baldosas voladoras", /*italian*/"l'anima di Vasi e Piastrelle volanti", /*german*/"die Seele von fliegenden Krügen und Fliesen"},
+                     }, {
+                       // ambiguous text
+                       Text{"a Soul", /*french*/"une Essence", /*spanish*/"un alma", /*italian*/"un'anima", /*german*/"eine Seele"},
+                     }
+    );
+
+    hintTable[SOUL_ITEM_BEAMOS] = HintText::Item({
+                       // obscure text
+                       Text{"the Beamos Soul", /*french*/"l'Essence de Sentinelle", /*spanish*/"el alma de Beamos", /*italian*/"l'anima di Laseros", /*german*/"die Seele von Strahlzyklopen"},
+                     }, {
+                       // ambiguous text
+                       Text{"a Soul", /*french*/"une Essence", /*spanish*/"un alma", /*italian*/"un'anima", /*german*/"eine Seele"},
+                     }
+    );
+
+    hintTable[SOUL_ITEM_WALLMASTER] = HintText::Item({
+                       // obscure text
+                       Text{"the Wallmaster and Floormaster Soul", /*french*/"les Essences de Clapoir et de Grossbaffe", /*spanish*/"el alma de Wallmaster y Floormaster", /*italian*/"l'anima di Mano Diabolica e Mano Rapace", /*german*/"die Seele von Todesgrapschern und Terrorgrapschern"},
+                     }, {
+                       // ambiguous text
+                       Text{"a Soul", /*french*/"une Essence", /*spanish*/"un alma", /*italian*/"un'anima", /*german*/"eine Seele"},
+                     }
+    );
+
+    hintTable[SOUL_ITEM_REDEAD_GIBDO] = HintText::Item({
+                       // obscure text
+                       Text{"the ReDead and Gibdo Soul", /*french*/"les Essences d'Effroi et de Gibdo", /*spanish*/"el alma de ReDead y Gibdo", /*italian*/"l'anima di Zombie e Ghibdo", /*german*/"die Seele von Zombies und Wickel-Zombies"},
+                     }, {
+                       // ambiguous text
+                       Text{"a Soul", /*french*/"une Essence", /*spanish*/"un alma", /*italian*/"un'anima", /*german*/"eine Seele"},
+                     }
+    );
+
+    hintTable[SOUL_ITEM_SHELL_BLADE] = HintText::Item({
+                       // obscure text
+                       Text{"the Shell Blade Soul", /*french*/"l'Essence de Coquillos", /*spanish*/"el alma de Moluscuchilla", /*italian*/"l'anima di Ostrice", /*german*/"die Seele von Killermuscheln"},
+                     }, {
+                       // ambiguous text
+                       Text{"a Soul", /*french*/"une Essence", /*spanish*/"un alma", /*italian*/"un'anima", /*german*/"eine Seele"},
+                     }
+    );
+
+    hintTable[SOUL_ITEM_LIKE_LIKE] = HintText::Item({
+                       // obscure text
+                       Text{"the Like Like Soul", /*french*/"l'Essence de Pudding", /*spanish*/"el alma de Like Like", /*italian*/"l'anima di Like Like", /*german*/"die Seele von Raubschleimen"},
+                     }, {
+                       // ambiguous text
+                       Text{"a Soul", /*french*/"une Essence", /*spanish*/"un alma", /*italian*/"un'anima", /*german*/"eine Seele"},
+                     }
+    );
+
+    hintTable[SOUL_ITEM_TENTACLE] = HintText::Item({
+                       // obscure text
+                       Text{"the Parasitic Tentacle Soul", /*french*/"l'Essence de Tentacule Parasite", /*spanish*/"el alma de Tentáculo Parásito", /*italian*/"l'anima di Tentacolo", /*german*/"die Seele von Parasiten-Tentakeln"},
+                     }, {
+                       // ambiguous text
+                       Text{"a Soul", /*french*/"une Essence", /*spanish*/"un alma", /*italian*/"un'anima", /*german*/"eine Seele"},
+                     }
+    );
+
+    hintTable[SOUL_ITEM_ANUBIS] = HintText::Item({
+                       // obscure text
+                       Text{"the Anubis Soul", /*french*/"l'Essence d'Anubis", /*spanish*/"el alma de Anubis", /*italian*/"l'anima di Anubi", /*german*/"die Seele von Anubis"},
+                     }, {
+                       // ambiguous text
+                       Text{"a Soul", /*french*/"une Essence", /*spanish*/"un alma", /*italian*/"un'anima", /*german*/"eine Seele"},
+                     }
+    );
+
+    hintTable[SOUL_ITEM_SPIKE] = HintText::Item({
+                       // obscure text
+                       Text{"the Spike Soul", /*french*/"l'Essence de Spike", /*spanish*/"el alma de Erizo Metálico", /*italian*/"l'anima di Riccio di Ferro", /*german*/"die Seele von Stachelsteinen"},
+                     }, {
+                       // ambiguous text
+                       Text{"a Soul", /*french*/"une Essence", /*spanish*/"un alma", /*italian*/"un'anima", /*german*/"eine Seele"},
+                     }
+    );
+
+    hintTable[SOUL_ITEM_SKULL_KID] = HintText::Item({
+                       // obscure text
+                       Text{"the Skull Kid Soul", /*french*/"l'Essence de Skull Kid", /*spanish*/"el alma de Skull Kid", /*italian*/"l'anima di Bimbo Perduto", /*german*/"die Seele von Horror-Kid"},
+                     }, {
+                       // ambiguous text
+                       Text{"a Soul", /*french*/"une Essence", /*spanish*/"un alma", /*italian*/"un'anima", /*german*/"eine Seele"},
+                     }
+    );
+
+    hintTable[SOUL_ITEM_FREEZARD] = HintText::Item({
+                       // obscure text
+                       Text{"the Freezard Soul", /*french*/"l'Essence de Mr. Freezzard", /*spanish*/"el alma de Freezard", /*italian*/"l'anima di Freezard", /*german*/"die Seele von Frostechsen"},
+                     }, {
+                       // ambiguous text
+                       Text{"a Soul", /*french*/"une Essence", /*spanish*/"un alma", /*italian*/"un'anima", /*german*/"eine Seele"},
+                     }
+    );
+
+    hintTable[SOUL_ITEM_DEKU_SCRUB] = HintText::Item({
+                       // obscure text
+                       Text{"the Deku Scrub Soul", /*french*/"l'Essence de Peste Mojo", /*spanish*/"el alma de Matorral Deku", /*italian*/"l'anima di Cespuglio Deku", /*german*/"die Seele von Laubkerlen"},
+                     }, {
+                       // ambiguous text
+                       Text{"a Soul", /*french*/"une Essence", /*spanish*/"un alma", /*italian*/"un'anima", /*german*/"eine Seele"},
+                     }
+    );
+
+    hintTable[SOUL_ITEM_WOLFOS] = HintText::Item({
+                       // obscure text
+                       Text{"the Wolfos Soul", /*french*/"l'Essence de Lobo", /*spanish*/"el alma de Wolfos", /*italian*/"l'anima di Lupo", /*german*/"die Seele von Wolfos"},
+                     }, {
+                       // ambiguous text
+                       Text{"a Soul", /*french*/"une Essence", /*spanish*/"un alma", /*italian*/"un'anima", /*german*/"eine Seele"},
+                     }
+    );
+
+    hintTable[SOUL_ITEM_STALCHILD] = HintText::Item({
+                       // obscure text
+                       Text{"the Stalchild Soul", /*french*/"l'Essence de Sakdoss", /*spanish*/"el alma de Stalchild", /*italian*/"l'anima di Stalfosso", /*german*/"die Seele von Knochengängern"},
+                     }, {
+                       // ambiguous text
+                       Text{"a Soul", /*french*/"une Essence", /*spanish*/"un alma", /*italian*/"un'anima", /*german*/"eine Seele"},
+                     }
+    );
+
+    hintTable[SOUL_ITEM_GUAY] = HintText::Item({
+                       // obscure text
+                       Text{"the Guay Soul", /*french*/"l'Essence de Toukor", /*spanish*/"el alma de Guay", /*italian*/"l'anima di Corvacchia", /*german*/"die Seele von Wüstenkrähen"},
+                     }, {
+                       // ambiguous text
+                       Text{"a Soul", /*french*/"une Essence", /*spanish*/"un alma", /*italian*/"un'anima", /*german*/"eine Seele"},
+                     }
+    );
+
+    hintTable[SOUL_ITEM_DOOR_MIMIC] = HintText::Item({
+                       // obscure text
+                       Text{"the Door Mimic Soul", /*french*/"l'Essence de Simili-Porte", /*spanish*/"el alma de Puerta Falsa", /*italian*/"l'anima di Porta Falsa", /*german*/"die Seele von Türmimics"},
+                     }, {
+                       // ambiguous text
+                       Text{"a Soul", /*french*/"une Essence", /*spanish*/"un alma", /*italian*/"un'anima", /*german*/"eine Seele"},
+                     }
+    );
+
+    hintTable[SOUL_ITEM_STALFOS] = HintText::Item({
+                       // obscure text
+                       Text{"the Stalfos Soul", /*french*/"l'Essence de Stalfos", /*spanish*/"el alma de Stalfos", /*italian*/"l'anima di Stalfos", /*german*/"die Seele von Stalfos"},
+                     }, {
+                       // ambiguous text
+                       Text{"a Soul", /*french*/"une Essence", /*spanish*/"un alma", /*italian*/"un'anima", /*german*/"eine Seele"},
+                     }
+    );
+
+    hintTable[SOUL_ITEM_DARK_LINK] = HintText::Item({
+                       // obscure text
+                       Text{"the Dark Link Soul", /*french*/"l'Essence de l'ombre de @", /*spanish*/"el alma de @ Oscuro", /*italian*/"l'anima di @ Oscuro", /*german*/"die Seele von schwarzen @"},
+                     }, {
+                       // ambiguous text
+                       Text{"a Soul", /*french*/"une Essence", /*spanish*/"un alma", /*italian*/"un'anima", /*german*/"eine Seele"},
+                     }
+    );
+
+    hintTable[SOUL_ITEM_FLARE_DANCER] = HintText::Item({
+                       // obscure text
+                       Text{"the Flare Dancer Soul", /*french*/"l'Essence de Danse-Flamme", /*spanish*/"el alma de Bailafuego", /*italian*/"l'anima di Fiammerino", /*german*/"die Seele von Flammenderwischen"},
+                     }, {
+                       // ambiguous text
+                       Text{"a Soul", /*french*/"une Essence", /*spanish*/"un alma", /*italian*/"un'anima", /*german*/"eine Seele"},
+                     }
+    );
+
+    hintTable[SOUL_ITEM_DEAD_HAND] = HintText::Item({
+                       // obscure text
+                       Text{"the Dead Hand Soul", /*french*/"l'Essence de Poigneur", /*spanish*/"el alma de Mano Muerta", /*italian*/"l'anima di Smaniosso", /*german*/"die Seele von Hirnsaugern"},
+                     }, {
+                       // ambiguous text
+                       Text{"a Soul", /*french*/"une Essence", /*spanish*/"un alma", /*italian*/"un'anima", /*german*/"eine Seele"},
+                     }
+    );
+
+    hintTable[SOUL_ITEM_GERUDO] = HintText::Item({
+                       // obscure text
+                       Text{"the Gerudo Soul", /*french*/"l'Essence de Voleuse Gerudo", /*spanish*/"el alma de Gerudo", /*italian*/"l'anima di Gerudo", /*german*/"die Seele von Gerudos"},
+                     }, {
+                       // ambiguous text
+                       Text{"a Soul", /*french*/"une Essence", /*spanish*/"un alma", /*italian*/"un'anima", /*german*/"eine Seele"},
+                     }
+    );
+
+    hintTable[SOUL_ITEM_GOHMA] = HintText::Item({
+                       // obscure text
+                       Text{"the Gohma Soul", /*french*/"l'Essence de Gohma", /*spanish*/"el alma de Gohma", /*italian*/"l'anima di Gohma", /*german*/"die Seele von Gohma"},
+                     }, {
+                       // ambiguous text
+                       Text{"a Soul", /*french*/"une Essence", /*spanish*/"un alma", /*italian*/"un'anima", /*german*/"eine Seele"},
+                     }
+    );
+
+    hintTable[SOUL_ITEM_DODONGO] = HintText::Item({
+                       // obscure text
+                       Text{"the Dodongo Soul", /*french*/"l'Essence de Dodongo", /*spanish*/"el alma de Dodongo", /*italian*/"l'anima di Dodongo", /*german*/"die Seele von Dodongos"},
+                     }, {
+                       // ambiguous text
+                       Text{"a Soul", /*french*/"une Essence", /*spanish*/"un alma", /*italian*/"un'anima", /*german*/"eine Seele"},
+                     }
+    );
+
+    hintTable[SOUL_ITEM_BARINADE] = HintText::Item({
+                       // obscure text
+                       Text{"the Barinade Soul", /*french*/"l'Essence de Barinade", /*spanish*/"el alma de Barinade", /*italian*/"l'anima di Cnidade", /*german*/"die Seele von Barinade"},
+                     }, {
+                       // ambiguous text
+                       Text{"a Soul", /*french*/"une Essence", /*spanish*/"un alma", /*italian*/"un'anima", /*german*/"eine Seele"},
+                     }
+    );
+
+    hintTable[SOUL_ITEM_PHANTOM_GANON] = HintText::Item({
+                       // obscure text
+                       Text{"the Phantom Ganon Soul", /*french*/"l'Essence de Ganon Spectral", /*spanish*/"el alma de Ganon Fantasma", /*italian*/"l'anima di Spettro Ganon", /*german*/"die Seele von Phantom-Ganon"},
+                     }, {
+                       // ambiguous text
+                       Text{"a Soul", /*french*/"une Essence", /*spanish*/"un alma", /*italian*/"un'anima", /*german*/"eine Seele"},
+                     }
+    );
+
+    hintTable[SOUL_ITEM_VOLVAGIA] = HintText::Item({
+                       // obscure text
+                       Text{"the Volvagia Soul", /*french*/"l'Essence de Volcania", /*spanish*/"el alma de Volvagia", /*italian*/"l'anima di Varubaja", /*german*/"die Seele von Volvagia"},
+                     }, {
+                       // ambiguous text
+                       Text{"a Soul", /*french*/"une Essence", /*spanish*/"un alma", /*italian*/"un'anima", /*german*/"eine Seele"},
+                     }
+    );
+
+    hintTable[SOUL_ITEM_MORPHA] = HintText::Item({
+                       // obscure text
+                       Text{"the Morpha Soul", /*french*/"l'Essence de Morpha", /*spanish*/"el alma de Morpha", /*italian*/"l'anima di Morpha", /*german*/"die Seele von Morpha"},
+                     }, {
+                       // ambiguous text
+                       Text{"a Soul", /*french*/"une Essence", /*spanish*/"un alma", /*italian*/"un'anima", /*german*/"eine Seele"},
+                     }
+    );
+
+    hintTable[SOUL_ITEM_BONGO_BONGO] = HintText::Item({
+                       // obscure text
+                       Text{"the Bongo Bongo Soul", /*french*/"l'Essence de Bongo Bongo", /*spanish*/"el alma de Bongo Bongo", /*italian*/"l'anima di Bongo Bongo", /*german*/"die Seele von Bongo Bongo"},
+                     }, {
+                       // ambiguous text
+                       Text{"a Soul", /*french*/"une Essence", /*spanish*/"un alma", /*italian*/"un'anima", /*german*/"eine Seele"},
+                     }
+    );
+
+    hintTable[SOUL_ITEM_TWINROVA] = HintText::Item({
+                       // obscure text
+                       Text{"the Twinrova Soul", /*french*/"l'Essence des Sorcières Jumelles", /*spanish*/"el alma de Birova", /*italian*/"l'anima di Duerova", /*german*/"die Seele von Twinrova"},
+                     }, {
+                       // ambiguous text
+                       Text{"a Soul", /*french*/"une Essence", /*spanish*/"un alma", /*italian*/"un'anima", /*german*/"eine Seele"},
+                     }
+    );
+
+    hintTable[SOUL_ITEM_GANON] = HintText::Item({
+                       // obscure text
+                       Text{"the Ganon Soul", /*french*/"l'Essence de Ganon", /*spanish*/"el alma de Ganon", /*italian*/"l'anima di Ganon", /*german*/"die Seele von Ganon"},
+                     }, {
+                       // ambiguous text
+                       Text{"a Soul", /*french*/"une Essence", /*spanish*/"un alma", /*italian*/"un'anima", /*german*/"eine Seele"},
+                     }
+    );
+
+    hintTable[OCA_BUTTON_ITEM_L] = HintText::Item({
+                       // obscure text
+                       Text{"the Ocarina L Button", /*french*/"le bouton L de l'ocarina", /*spanish*/"el botón L de la ocarina", /*italian*/"il pulsante L dell'ocarina", /*german*/"der Ocarina L-Knopf"},
+                     }, {
+                       // ambiguous text
+                       Text{"something to play songs", /*french*/"quelque chose qui fait des sons", /*spanish*/"algo para tocar canciones", /*italian*/"qualcosa per suonare melodie", /*german*/"etwas um Lieder zu spielen"},
+                     }
+    );
+
+    hintTable[OCA_BUTTON_ITEM_R] = HintText::Item({
+                       // obscure text
+                       Text{"the Ocarina R Button", /*french*/"le bouton R de l'ocarina", /*spanish*/"el botón R de la ocarina", /*italian*/"il pulsante R dell'ocarina", /*german*/"der Ocarina R-Knopf"},
+                     }, {
+                       // ambiguous text
+                       Text{"something to play songs", /*french*/"quelque chose qui fait des sons", /*spanish*/"algo para tocar canciones", /*italian*/"qualcosa per suonare melodie", /*german*/"etwas um Lieder zu spielen"},
+                     }
+    );
+
+    hintTable[OCA_BUTTON_ITEM_X] = HintText::Item({
+                       // obscure text
+                       Text{"the Ocarina X Button", /*french*/"le bouton X de l'ocarina", /*spanish*/"el botón X de la ocarina", /*italian*/"il pulsante X dell'ocarina", /*german*/"der Ocarina X-Knopf"},
+                     }, {
+                       // ambiguous text
+                       Text{"something to play songs", /*french*/"quelque chose qui fait des sons", /*spanish*/"algo para tocar canciones", /*italian*/"qualcosa per suonare melodie", /*german*/"etwas um Lieder zu spielen"},
+                     }
+    );
+
+    hintTable[OCA_BUTTON_ITEM_Y] = HintText::Item({
+                       // obscure text
+                       Text{"the Ocarina Y Button", /*french*/"le bouton Y de l'ocarina", /*spanish*/"el botón Y de la ocarina", /*italian*/"il pulsante Y dell'ocarina", /*german*/"der Ocarina Y-Knopf"},
+                     }, {
+                       // ambiguous text
+                       Text{"something to play songs", /*french*/"quelque chose qui fait des sons", /*spanish*/"algo para tocar canciones", /*italian*/"qualcosa per suonare melodie", /*german*/"etwas um Lieder zu spielen"},
+                     }
+    );
+
+    hintTable[OCA_BUTTON_ITEM_A] = HintText::Item({
+                       // obscure text
+                       Text{"the Ocarina A Button", /*french*/"le bouton A de l'ocarina", /*spanish*/"el botón A de la ocarina", /*italian*/"il pulsante A dell'ocarina", /*german*/"der Ocarina A-Knopf"},
+                     }, {
+                       // ambiguous text
+                       Text{"something to play songs", /*french*/"quelque chose qui fait des sons", /*spanish*/"algo para tocar canciones", /*italian*/"qualcosa per suonare melodie", /*german*/"etwas um Lieder zu spielen"},
+                     }
+    );
 }

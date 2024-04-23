@@ -172,6 +172,10 @@ extern string_view adultTradeDesc;
 
 extern string_view chestMinigameDesc;
 
+extern string_view enemySoulDesc;
+
+extern string_view ocarinaButtonsDesc;
+
 extern string_view mapCompassStartWith;
 extern string_view mapCompassVanilla;
 extern string_view mapCompassOwnDungeon;

@@ -188,7 +188,12 @@ typedef struct {
     /* 0x1594 */ char unk_1594[0x000C];
     /* 0x15A0 */ u16 nextCutsceneIndex;
     /* 0x15A2 */ u8 cutsceneTrigger;
-    /* 0x15A3 */ char unk_15A3[0x008];
+    /* 0x15A3 */ u8 chamberCutsceneNum;
+    /* 0x15A4 */ u16 nextDayTime; // "next_zelda_time"
+    /* 0x15A6 */ u8 transFadeDuration;
+    /* 0x15A7 */ u8 transWipeSpeed;
+    /* 0x15A8 */ u16 skyboxTime;
+    /* 0x15AA */ u8 dogIsLost;
     /* 0x15AB */ u8 nextTransition;
     /* 0x15AC */ char unk_15AC[0x006];
     /* 0x15B2 */ s16 healthAccumulator;
@@ -403,7 +408,7 @@ typedef struct {
 typedef struct {
     /* 0x0000 */ u8 unk_00;
     /* 0x0001 */ char unk_01[0x01];
-    /* 0x0002 */ u8 unk_02;
+    /* 0x0002 */ u8 hammerQuakeFlag;
     /* 0x0003 */ u8 unk_03;
     /* 0x0004 */ char unk_04[0x04];
     /* 0x0008 */ u8 total; // total number of actors loaded
@@ -573,7 +578,8 @@ typedef struct GlobalContext {
     /* 0x3A58 */ ObjectContext objectCtx;
     /* 0x43DC */ char unk_43DC[0x0854];
     /* 0x4C30 */ s8 roomNum;
-    /* 0x4C31 */ char unk_4C31[0x0FCF];
+    /* 0x4C31 */ char unk_4C31[0x0FCB];
+    /* 0x5BFC */ u32 gameplayFrames;
     /* 0x5C00 */ u8 linkAgeOnLoad;
     /* 0x5C01 */ u8 unk_5C01;
     /* 0x5C02 */ u8 curSpawn;
@@ -655,6 +661,27 @@ typedef struct TargetContext {
     // ... size unknown
 } TargetContext;
 
+typedef struct SAModelListEntry {
+    SkeletonAnimationModel* saModel;
+    u32 unk;
+} SAModelListEntry;
+
+typedef struct SubMainClass_180 {
+    /* 0x000 */ char unk_00[0x8];
+    /* 0x008 */ s32 saModelsCount1;
+    /* 0x00C */ s32 saModelsCount2;
+    /* 0x010 */ char unk_10[0x10];
+    /* 0x020 */ SAModelListEntry* saModelsList1; // 3D models
+    /* 0x024 */ SAModelListEntry* saModelsList2; // 2D billboards
+    /* ... size unknown*/
+} SubMainClass_180;
+
+typedef struct MainClass {
+    /* 0x000 */ char unk_00[0x180];
+    /* 0x180 */ SubMainClass_180 sub180;
+    /* ... size unknown*/
+} MainClass;
+
 extern GlobalContext* gGlobalContext;
 extern const u32 ItemSlots[];
 extern const char DungeonNames[][25];
@@ -672,6 +699,7 @@ extern const char DungeonNames[][25];
 #define gDrawItemTable ((DrawItemTableEntry*)0x4D88C8)
 #define gRestrictionFlags ((RestrictionFlags*)0x539DC4)
 #define PLAYER ((Player*)gGlobalContext->actorCtx.actorList[ACTORTYPE_PLAYER].first)
+#define gMainClass ((MainClass*)0x5BE5B8)
 #define gIsBottomScreenDimmed (*(s32*)0x5043EC)
 
 #define GearSlot(X) (X - ITEM_SWORD_KOKIRI)
@@ -863,6 +891,13 @@ typedef void (*Animation_Change_proc)(SkelAnime* anime, s32 animation_index, f32
                                       f32 end_frame, f32 morph_frames, s32 mode) __attribute__((pcs("aapcs-vfp")));
 #define Animation_Change_addr 0x375C08
 #define Animation_Change ((Animation_Change_proc)Animation_Change_addr)
+
+typedef void (*EffectSsDeadDb_Spawn_proc)(GlobalContext* globalCtx, Vec3f* position, Vec3f* velocity,
+                                          Vec3f* acceleration, s16 scale, s16 scale_step, s16 prim_r, s16 prim_g,
+                                          s16 prim_b, s16 prim_a, s16 env_r, s16 env_g, s16 env_b, s16 unused,
+                                          s32 frame_duration, s16 play_sound);
+#define EffectSsDeadDb_Spawn_addr 0x3642F4
+#define EffectSsDeadDb_Spawn ((EffectSsDeadDb_Spawn_proc)EffectSsDeadDb_Spawn_addr)
 
 typedef void (*SaveGame_proc)(GlobalContext* globalCtx, u8 isSaveFileCreation);
 #define SaveGame_addr 0x2FDAC8

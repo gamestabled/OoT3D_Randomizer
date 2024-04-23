@@ -1,5 +1,8 @@
 #include "z3D/z3D.h"
 #include "common.h"
+#include "actor.h"
+#include "savefile.h"
+#include "enemy_souls.h"
 #include "owl.h"
 #include "item00.h"
 #include "heart_container.h"
@@ -55,12 +58,17 @@
 #include "bean_plant.h"
 #include "sheik.h"
 #include "skulltula_people.h"
+#include "red_ice.h"
+#include "shabom.h"
+#include "anubis.h"
 
 #define OBJECT_GI_KEY 170
 #define OBJECT_GI_BOSSKEY 185
 #define OBJECT_GI_HEARTS 189
 #define OBJECT_GI_OCARINA 222
 #define OBJECT_GI_OCARINA_0 270
+#define OBJECT_GI_SHOP_FAIRY 375
+#define OBJECT_GI_SOLD_OUT 328
 #define OBJECT_TRIFORCE 149
 
 typedef void (*TitleCard_Update_proc)(GlobalContext* globalCtx, TitleCardContext* titleCtx);
@@ -91,6 +99,8 @@ void Actor_Init() {
     gActorOverlayTable[0x15].initInfo->destroy = EnItem00_rDestroy;
     gActorOverlayTable[0x15].initInfo->update  = EnItem00_rUpdate;
     gActorOverlayTable[0x15].initInfo->draw    = EnItem00_rDraw;
+
+    // gActorOverlayTable[0x2D].initInfo->update = EnBubble_rUpdate;
 
     gActorOverlayTable[0x2E].initInfo->init   = DoorShutter_rInit;
     gActorOverlayTable[0x2E].initInfo->update = (ActorFunc)DoorShutter_rUpdate;
@@ -135,6 +145,8 @@ void Actor_Init() {
     gActorOverlayTable[0xDC].initInfo->update  = Boss_Tw_rUpdate;
     gActorOverlayTable[0xDC].initInfo->draw    = Boss_Tw_rDraw;
     gActorOverlayTable[0xDC].initInfo->destroy = Boss_Tw_rDestroy;
+
+    gActorOverlayTable[0xE0].initInfo->update = EnAnubice_rUpdate;
 
     gActorOverlayTable[0xE6].initInfo->init = BgBdanSwitch_rInit;
 
@@ -255,6 +267,12 @@ void Actor_Init() {
     // Define object 128 to be by default the same as object 185
     strncpy(gObjectTable[OBJECT_CUSTOM_BOSS_KEYS].filename, gObjectTable[OBJECT_GI_BOSSKEY].filename, 0x40);
 
+    // Define object 228 to be by default the same as object 375
+    strncpy(gObjectTable[OBJECT_CUSTOM_ENEMY_SOUL].filename, gObjectTable[OBJECT_GI_SHOP_FAIRY].filename, 0x40);
+
+    // Define object 291 to be by default the same as object 328
+    strncpy(gObjectTable[OBJECT_CUSTOM_OCARINA_BUTTON].filename, gObjectTable[OBJECT_GI_SOLD_OUT].filename, 0x40);
+
     // Define object 366 to be by default the same as object 149
     strncpy(gObjectTable[OBJECT_CUSTOM_TRIFORCE_PIECE].filename, gObjectTable[OBJECT_TRIFORCE].filename, 0x40);
 }
@@ -304,8 +322,6 @@ void HyperActors_UpdateAgain(Actor* thisx) {
 }
 
 void HyperActors_Main(Actor* thisx, GlobalContext* globalCtx) {
-    thisx->update(thisx, globalCtx);
-
     if (!IsInGame() || thisx->update == NULL || (PLAYER != NULL && Player_InBlockingCsMode(globalCtx, PLAYER))) {
         return;
     }
@@ -406,4 +422,62 @@ void HyperActors_Main(Actor* thisx, GlobalContext* globalCtx) {
             HyperActors_UpdateAgain(thisx);
         }
     }
+}
+
+void Actor_rUpdate(Actor* actor, GlobalContext* globalCtx) {
+    u8 tempHammerQuakeFlag = globalCtx->actorCtx.hammerQuakeFlag;
+
+    if (!EnemySouls_CheckSoulForActor(actor)) {
+        globalCtx->actorCtx.hammerQuakeFlag = 0;
+    }
+
+    actor->update(actor, globalCtx);
+    HyperActors_Main(actor, globalCtx);
+
+    if (tempHammerQuakeFlag != 0) {
+        globalCtx->actorCtx.hammerQuakeFlag = tempHammerQuakeFlag;
+    }
+}
+
+void Actor_rDraw(Actor* actor, GlobalContext* globalCtx) {
+    static Vec3f vecAcc = { 0 };
+    static Vec3f vecVel = { 0 };
+
+    // As a temporary way to mark invulnerable enemies whose soul has not been collected yet,
+    // the model will not be rendered and a flame will take its place.
+    s32 shouldDrawSoulless = !EnemySouls_CheckSoulForActor(actor) &&   // soul not owned;
+                             actor->scale.x != 0 &&                    // if scale is 0, enemy is invisible;
+                             actor->id != 0x11D && actor->id != 0x06B; // flying traps will appear normal.
+    if (shouldDrawSoulless && (PauseContext_GetState() == 0)) {
+        s32 velFrameIdx = (rGameplayFrames % 16);
+        s32 accFrameIdx = (rGameplayFrames % 4);
+        s32 bossMult    = (actor->type == ACTORTYPE_BOSS ? 4 : 1);
+        vecAcc.y        = 0.12f * accFrameIdx * bossMult;
+        vecVel.x        = 0.5f * Math_SinS(0x1000 * velFrameIdx) * bossMult;
+        vecVel.z        = 0.5f * Math_CosS(0x1000 * velFrameIdx) * bossMult;
+        s16 scale       = 150 * bossMult;
+        EffectSsDeadDb_Spawn(globalCtx, &actor->focus.pos, &vecVel, &vecAcc, scale, -1, 0x6E, 0x05, 0xFF, 0xFF, 0x28,
+                             0x00, 0xFF, 1, 8, 0);
+    }
+
+    s32 origSaModelsCount1 = gMainClass->sub180.saModelsCount1;
+    s32 origSaModelsCount2 = gMainClass->sub180.saModelsCount2;
+
+    actor->draw(actor, globalCtx);
+
+    if (shouldDrawSoulless) {
+        // make enemy invisible
+        gMainClass->sub180.saModelsCount1 = origSaModelsCount1; // 3D models
+        gMainClass->sub180.saModelsCount2 = origSaModelsCount2; // 2D billboards
+    }
+}
+
+s32 Actor_CollisionATvsAC(Collider* at, Collider* ac) {
+    RedIce_CheckIceArrow(at, ac);
+
+    if (ac->actor != 0 && !EnemySouls_CheckSoulForActor(ac->actor)) {
+        return 0; // ignore this collision
+    }
+
+    return 1; // continue as normal
 }

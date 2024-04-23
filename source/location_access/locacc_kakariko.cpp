@@ -316,19 +316,20 @@ void AreaTable_Init_Kakariko() {
             Entrance(KAK_BACKYARD, { [] { return true; } }),
         });
 
-    areaTable[KAK_REDEAD_GROTTO] = Area("Kak Redead Grotto", "Kak Redead Grotto", NONE, NO_DAY_NIGHT_CYCLE, {},
-                                        {
-                                            // Locations
-                                            LocationAccess(KAK_REDEAD_GROTTO_CHEST, { [] {
-                                                               return CanUse(STICKS) || CanUse(KOKIRI_SWORD) ||
-                                                                      CanUse(DINS_FIRE) || CanUse(MEGATON_HAMMER) ||
-                                                                      CanUse(MASTER_SWORD) || CanUse(BIGGORON_SWORD);
-                                                           } }),
-                                        },
-                                        {
-                                            // Exits
-                                            Entrance(KAKARIKO_VILLAGE, { [] { return true; } }),
-                                        });
+    areaTable[KAK_REDEAD_GROTTO] =
+        Area("Kak Redead Grotto", "Kak Redead Grotto", NONE, NO_DAY_NIGHT_CYCLE, {},
+             {
+                 // Locations
+                 LocationAccess(KAK_REDEAD_GROTTO_CHEST, { [] {
+                                    return SoulRedeadGibdo &&
+                                           (CanUse(STICKS) || CanUse(KOKIRI_SWORD) || CanUse(DINS_FIRE) ||
+                                            CanUse(MEGATON_HAMMER) || CanUse(MASTER_SWORD) || CanUse(BIGGORON_SWORD));
+                                } }),
+             },
+             {
+                 // Exits
+                 Entrance(KAKARIKO_VILLAGE, { [] { return true; } }),
+             });
 
     areaTable[KAK_OPEN_GROTTO] = Area("Kak Open Grotto", "Kak Open Grotto", NONE, NO_DAY_NIGHT_CYCLE, grottoEvents,
                                       {
@@ -442,8 +443,9 @@ void AreaTable_Init_Kakariko() {
                      { [] { return HasFireSource; },
                        /*Glitched*/
                        [] { return CanUse(STICKS) && CanDoGlitch(GlitchType::QPA, GlitchDifficulty::INTERMEDIATE); } }),
-                 LocationAccess(SONG_FROM_COMPOSERS_GRAVE,
-                                { [] { return CanUseProjectile || CanJumpslash || CanUse(MEGATON_HAMMER); } }),
+                 LocationAccess(SONG_FROM_COMPOSERS_GRAVE, { [] {
+                                    return SoulKeese && (CanUseProjectile || CanJumpslash || CanUse(MEGATON_HAMMER));
+                                } }),
              },
              {
                  // Exits

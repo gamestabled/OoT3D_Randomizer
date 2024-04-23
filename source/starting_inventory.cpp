@@ -7,6 +7,8 @@
 #include "item_list.hpp"
 #include "settings.hpp"
 
+#include "../code/src/enemy_souls.h"
+
 using namespace Settings;
 using namespace Dungeon;
 
@@ -181,6 +183,18 @@ void GenerateStartingInventory() {
             AddItemToInventory(TREASURE_GAME_HEART);
         }
     }
+
+    for (u32 i = 0; i < SOUL_MAX; i++) {
+        Option* opt      = startingEnemySoulsOptions.at(i);
+        ItemKey soulItem = SOUL_ITEM_POE + SoulMenuNames[i].soulId;
+        AddItemToInventory(soulItem, opt->Value<u8>());
+    }
+
+    AddItemToInventory(OCA_BUTTON_ITEM_L, StartingOcarinaButtonL.Value<u8>());
+    AddItemToInventory(OCA_BUTTON_ITEM_R, StartingOcarinaButtonR.Value<u8>());
+    AddItemToInventory(OCA_BUTTON_ITEM_X, StartingOcarinaButtonX.Value<u8>());
+    AddItemToInventory(OCA_BUTTON_ITEM_Y, StartingOcarinaButtonY.Value<u8>());
+    AddItemToInventory(OCA_BUTTON_ITEM_A, StartingOcarinaButtonA.Value<u8>());
 }
 
 bool StartingInventoryHasBottle() {

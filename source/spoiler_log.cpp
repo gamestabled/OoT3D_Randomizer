@@ -427,6 +427,14 @@ static void WriteStartingInventory(tinyxml2::XMLDocument& spoilerLog) {
         &Settings::startingStonesMedallionsOptions,
     };
 
+    if (Settings::ShuffleEnemySouls) {
+        startingInventoryOptions.push_back(&Settings::startingEnemySoulsOptions);
+    }
+
+    if (Settings::ShuffleOcarinaButtons) {
+        startingInventoryOptions.push_back(&Settings::startingOcarinaButtonsOptions);
+    }
+
     for (std::vector<Option*>* menu : startingInventoryOptions) {
         for (size_t i = 0; i < menu->size(); ++i) {
             const auto setting = menu->at(i);

@@ -10,7 +10,7 @@ void AreaTable_Init_HyruleField() {
         "Hyrule Field", "Hyrule Field", HYRULE_FIELD, DAY_NIGHT_CYCLE,
         {
             // Events
-            EventAccess(&BigPoeKill, { [] { return CanUse(BOW) && CanRideEpona && HasBottle; } }),
+            EventAccess(&BigPoeKill, { [] { return SoulPoe && CanUse(BOW) && CanRideEpona && HasBottle; } }),
         },
         {
             // Locations
@@ -196,7 +196,7 @@ void AreaTable_Init_HyruleField() {
             EventAccess(&ButterflyFairy, { [] { return ButterflyFairy || CanUse(STICKS); } }),
             EventAccess(&BugShrub, { [] { return BugShrub || (IsChild && CanCutShrubs); } }),
             EventAccess(&ChildScarecrow,
-                        { [] { return ChildScarecrow || (IsChild && Ocarina); },
+                        { [] { return ChildScarecrow || (IsChild && Ocarina && (OcarinaButtonsCount >= 2)); },
                           /*Glitched*/
                           [] {
                               return (CanDoGlitch(GlitchType::OutdoorBombOI, GlitchDifficulty::INTERMEDIATE) ||
@@ -208,17 +208,17 @@ void AreaTable_Init_HyruleField() {
                                        CanDoGlitch(GlitchType::ActionSwap, GlitchDifficulty::NOVICE))) &&
                                      IsChild;
                           } }),
-            EventAccess(&AdultScarecrow, { [] { return AdultScarecrow || (IsAdult && Ocarina); },
-                                           /*Glitched*/
-                                           [] {
-                                               return (CanDoGlitch(GlitchType::OutdoorBombOI,
-                                                                   GlitchDifficulty::INTERMEDIATE) ||
-                                                       ((Bugs || Fish) && CanShield &&
-                                                        CanDoGlitch(GlitchType::QPA, GlitchDifficulty::ADVANCED)) ||
-                                                       ((Bugs || Fish) && CanDoGlitch(GlitchType::ActionSwap,
-                                                                                      GlitchDifficulty::NOVICE))) &&
-                                                      IsAdult;
-                                           } }),
+            EventAccess(&AdultScarecrow,
+                        { [] { return AdultScarecrow || (IsAdult && Ocarina && (OcarinaButtonsCount >= 2)); },
+                          /*Glitched*/
+                          [] {
+                              return (CanDoGlitch(GlitchType::OutdoorBombOI, GlitchDifficulty::INTERMEDIATE) ||
+                                      ((Bugs || Fish) && CanShield &&
+                                       CanDoGlitch(GlitchType::QPA, GlitchDifficulty::ADVANCED)) ||
+                                      ((Bugs || Fish) &&
+                                       CanDoGlitch(GlitchType::ActionSwap, GlitchDifficulty::NOVICE))) &&
+                                     IsAdult;
+                          } }),
         },
         {
             // Locations
