@@ -251,11 +251,14 @@ void AreaTable_Init() {
     areaTable.fill(Area("Invalid Area", "Invalid Area", NONE, NO_DAY_NIGHT_CYCLE, {}, {}, {}));
 
     // name, scene, hint text,                       events, locations, exits
-    areaTable[ROOT] = Area("Root", "", LINKS_POCKET, NO_DAY_NIGHT_CYCLE, {},
-                           { // Locations
-                             LocationAccess(LINKS_POCKET, { [] { return true; } }) },
-                           { // Exits
-                             Entrance(ROOT_EXITS, { [] { return true; } }) });
+    areaTable[ROOT] =
+        Area("Root", "", LINKS_POCKET, NO_DAY_NIGHT_CYCLE, {},
+             { // Locations
+               LocationAccess(LINKS_POCKET, { [] { return true; } }),
+               LocationAccess(
+                   GANON, { [] { return TriforceHunt && TriforcePieces >= TriforcePiecesTotal.Value<u8>() + 1; } }) },
+             { // Exits
+               Entrance(ROOT_EXITS, { [] { return true; } }) });
 
     areaTable[ROOT_EXITS] =
         Area("Root Exits", "", NONE, NO_DAY_NIGHT_CYCLE, {}, {},

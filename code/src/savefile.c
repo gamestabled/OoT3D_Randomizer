@@ -836,3 +836,16 @@ void SaveFile_LoadFileSwordless(void) {
         gExtSaveData.extInf[EXTINF_MASTERSWORDFLAGS] |= 2;
     }
 }
+
+void SaveFile_BeforeLoadGame(u32 saveNumber) {
+    SaveFile_LoadExtSaveData(saveNumber);
+}
+
+void SaveFile_AfterLoadGame(void) {
+    // Give Ganon BK if Triforce Hunt has been completed
+    if (gSettingsContext.triforceHunt == ON && gExtSaveData.triforcePieces >= gSettingsContext.triforcePiecesRequired &&
+        (gSaveContext.dungeonItems[DUNGEON_GANONS_TOWER] & 1) == 0) {
+
+        ItemOverride_PushHardcodedItem(GI_GANON_BOSS_KEY);
+    }
+}

@@ -23,6 +23,7 @@ void ItemEffect_GiveUpgrade(SaveContext* saveCtx, s16 arg1, s16 arg2);
 void ItemEffect_IceTrap(SaveContext* saveCtx, s16 arg1, s16 arg2);
 void ItemEffect_GiveMasterSword(SaveContext* saveCtx, s16 arg1, s16 arg2);
 void ItemEffect_BeanPack(SaveContext* saveCtx, s16 arg1, s16 arg2);
+void ItemEffect_TriforcePiece(SaveContext* saveCtx, s16 arg1, s16 arg2);
 void ItemEffect_RupeeAmmo(SaveContext* saveCtx);
 void ItemEffect_FillWalletUpgrade(SaveContext* saveCtx, s16 arg1, s16 arg2);
 void ItemEffect_OpenMaskShop(SaveContext* saveCtx, s16 arg1, s16 arg2);

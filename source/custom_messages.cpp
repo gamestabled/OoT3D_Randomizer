@@ -1070,6 +1070,18 @@ void CreateAlwaysIncludedMessages() {
 
         CreateMessageFromTextObject(0x93F0 + key - OCA_BUTTON_ITEM_L, 0, 2, 3, AddColorsAndFormat(text, { QM_RED }));
     }
+
+    // Triforce Piece
+    {
+        Text triforceMsg = Text{
+            /*english*/ "You found a piece of the #Triforce#!&You have #" + TRIFORCE_PIECE_COUNT() + "#!",
+            /*french */ "Vous obtenez un morceau de la #Triforce#!&Vous en avez #" + TRIFORCE_PIECE_COUNT() + "#!",
+            /*spanish*/ "¡Has encontrado un fragmento de la Trifuerza!&¡Tienes #" + TRIFORCE_PIECE_COUNT() + "#!",
+            /*italian*/ "Hai trovato un frammento della #Triforza#!&Ne hai #" + TRIFORCE_PIECE_COUNT() + "#!",
+            /*german */ "Du hast ein Teil des #Triforce# gefunden!&Du hast jetzt #" + TRIFORCE_PIECE_COUNT() + "#!"
+        };
+        CreateMessageFromTextObject(0x9003, 0, 2, 3, AddColorsAndFormat(triforceMsg, { QM_RED, QM_RED }));
+    }
 }
 
 std::vector<Text> CreateBaseCompassTexts() {
@@ -1371,5 +1383,8 @@ std::string MQ_ELSE() {
 }
 std::string MQ_END() {
     return "\x7F\x2B"s;
+}
+std::string TRIFORCE_PIECE_COUNT() {
+    return "\x7F\x30"s;
 }
 } // namespace CustomMessages

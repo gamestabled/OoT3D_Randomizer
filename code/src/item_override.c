@@ -8,6 +8,7 @@
 #include "entrance.h"
 #include "savefile.h"
 #include "common.h"
+
 #include <stddef.h>
 
 #include "z3D/z3D.h"
@@ -26,6 +27,7 @@ static Actor* rDummyActor                    = NULL;
 static ItemOverride rActiveItemOverride = { 0 };
 DrawItemTableEntry rActiveDrawItem      = { 0 };
 ItemRow* rActiveItemRow                 = NULL;
+u32 isItemOverrideActive                = FALSE;
 // Split active_item_row into variables for convenience in ASM
 u32 rActiveItemActionId  = 0;
 u32 rActiveItemTextId    = 0;
@@ -193,6 +195,7 @@ static void ItemOverride_Activate(ItemOverride override) {
         looksLikeItemId = 0;
     }
 
+    isItemOverrideActive = TRUE;
     rActiveItemOverride  = override;
     rActiveItemRow       = itemRow;
     rActiveItemActionId  = itemRow->actionId;
@@ -211,6 +214,7 @@ static void ItemOverride_Activate(ItemOverride override) {
 }
 
 static void ItemOverride_Clear(void) {
+    isItemOverrideActive = FALSE;
     rActiveItemOverride  = (ItemOverride){ 0 };
     rActiveDrawItem      = (DrawItemTableEntry){ 0 };
     rActiveItemRow       = NULL;
@@ -322,7 +326,6 @@ void ItemOverride_AfterItemReceived(void) {
         return;
     }
     ItemOverride_AfterKeyReceived(key);
-    ItemOverride_Clear();
 }
 
 static u32 ItemOverride_PlayerIsReadyOnLand(void) {
@@ -418,6 +421,14 @@ void ItemOverride_Update(void) {
                 ItemOverride_PopPendingOverride();
             }
         }
+    }
+
+    // Clear the active override once the GetItem process has finished,
+    // or when walking away from a chest without opening it or a collectible without collecting it.
+    // This will also keep the override if the player is doing a GIM-like glitch.
+    if (rActiveItemRow != NULL &&
+        (PLAYER->getItemId == 0 || (PLAYER->interactRangeActor == NULL && (PLAYER->stateFlags1 & 0x400) == 0))) {
+        ItemOverride_Clear();
     }
 }
 
@@ -534,6 +545,15 @@ void ItemOverride_EditDrawGetItemAfterModelSpawn(SkeletonAnimationModel* model) 
     CustomModels_ApplyItemCMAB(model, rActiveItemObjectId, rActiveItemRow->special);
 }
 
+// Called every frame while the GetItem is drawn
+void ItemOverride_EditDrawGetItemAfterMatrixUpdate(SkeletonAnimationModel* model) {
+    if (ItemOverride_IsDrawItemVanilla()) {
+        return;
+    }
+
+    CustomModels_UpdateMatrix(&model->mtx, rActiveItemObjectId);
+}
+
 s32 ItemOverride_GiveSariasGift(void) {
     u32 receivedGift = EventCheck(0xC1);
     if (receivedGift == 0 &&
@@ -596,4 +616,17 @@ s16 ItemOverride_OverrideGiDrawIdPlusOne(s16 originalDrawItemID) {
     }
 
     return 1; // Default value that won't change the mesh.
+}
+
+void ItemOverride_PushHardcodedItem(s16 getItemId) {
+    ItemOverride override = {
+        .key =  {
+            .type = OVR_DELAYED, // random value to have non-zero key
+        },
+        .value = {
+            .itemId = getItemId,
+            .player = 0xFF,
+        }
+    };
+    ItemOverride_PushPendingOverride(override);
 }

@@ -71,6 +71,11 @@ EditDrawGetItemBeforeModelSpawn_patch:
 EditDrawGetItemAfterModelSpawn_patch:
     bl hook_EditDrawDetItemAfterModelSpawn
 
+.section .patch_EditDrawGetItemAfterMatrixUpdate
+.global EditDrawGetItemAfterMatrixUpdate_patch
+EditDrawGetItemAfterMatrixUpdate_patch:
+    bl hook_EditDrawGetItemAfterMatrixUpdate
+
 .section .patch_NoLensOfTruthNaviText
     nop
 
@@ -1335,26 +1340,6 @@ SongOfTimeJingle_patch:
 GKSetDurability_patch:
     b hook_GKSetDurability
 
-.section .patch_SkippableText
-.global SkippableText_patch
-SkippableText_patch:
-    b hook_SkippableText
-
-.section .patch_InstantTextFirstLine
-.global InstantTextFirstLine_patch
-InstantTextFirstLine_patch:
-    bl hook_InstantTextFirstLine
-
-.section .patch_InstantTextBoxBreak
-.global InstantTextBoxBreak_patch
-InstantTextBoxBreak_patch:
-    b hook_InstantTextBoxBreak
-
-.section .patch_InstantTextRemoveOff
-.global InstantTextRemoveOff_patch
-InstantTextRemoveOff_patch:
-    b hook_InstantTextRemoveOff
-
 .section .patch_TurboTextAdvance
 .global TurboTextAdvance_patch
 TurboTextAdvance_patch:
@@ -1582,10 +1567,15 @@ EnteredLocation_patch:
 LostWoodsBridgeMusic_patch:
     bl hook_LostWoodsBridgeMusic
 
-.section .patch_LoadGame
-.global .LoadGame_patch
-LoadGame_patch:
-    b hook_LoadGame
+.section .patch_BeforeLoadGame
+.global BeforeLoadGame_patch
+BeforeLoadGame_patch:
+    b hook_BeforeLoadGame
+
+.section .patch_AfterLoadGame
+.global AfterLoadGame_patch
+AfterLoadGame_patch:
+    b hook_AfterLoadGame
 
 .section .patch_SaveGame
 .global .SaveGame_patch
@@ -2241,6 +2231,16 @@ OcarinaNoteButtonsDraw_patch:
 .global OcarinaNoteButtonsPress_patch
 OcarinaNoteButtonsPress_patch:
     bl hook_OcarinaNoteButtonsPress
+
+.section .patch_HandleTextControlCode
+.global HandleTextControlCode_patch
+HandleTextControlCode_patch:
+    bl hook_HandleTextControlCode
+
+.section .patch_CheckForTextControlCode
+.global CheckForTextControlCode_patch
+CheckForTextControlCode_patch:
+    bl hook_CheckForTextControlCode
 
 @ ----------------------------------
 @ ----------------------------------

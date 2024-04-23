@@ -146,6 +146,14 @@ hook_EditDrawDetItemAfterModelSpawn:
     str r0,[r6,#0x78]
     bx lr
 
+.global hook_EditDrawGetItemAfterMatrixUpdate
+hook_EditDrawGetItemAfterMatrixUpdate:
+    push {r0-r12, lr}
+    cpy r0,r1 @ SkeletonAnimationModel
+    bl ItemOverride_EditDrawGetItemAfterMatrixUpdate
+    pop {r0-r12, lr}
+    b 0x330B98
+
 # TODO: Text ID in game gets messed up,
 # Gives the "What's that?" text instead of
 # the text about moving the statue
@@ -847,62 +855,6 @@ hook_GKSetDurability:
     pop {r0-r12, lr}
     b 0x376BE0
 
-.global hook_SkippableText
-hook_SkippableText:
-    push {r0-r12, lr}
-    bl Settings_GetQuickTextOption
-    cmp r0,#0x1
-    pop {r0-r12, lr}
-    beq 0x2E0ED4
-    ldr r0,[r5,#0x0]
-    b 0x2E09C0
-
-.global hook_InstantTextFirstLine
-hook_InstantTextFirstLine:
-    cmp r9,#0x0
-    bgt NoInstantText
-    push {r0-r12, lr}
-    bl Settings_GetQuickTextOption
-    cmp r0,#0x2
-    pop {r0-r12, lr}
-    blt NoInstantText
-    push {r0-r12, lr}
-    ldr r0,[r5,#0x0]
-    ldr r1,[r0,#0x20]
-    cpy r0,r5
-    blx r1
-    strb r11,[r4,#0x24]
-    pop {r0-r12, lr}
-NoInstantText:
-    cmp r10,#0xFF
-    bx lr
-
-.global hook_InstantTextBoxBreak
-hook_InstantTextBoxBreak:
-    push {r0-r12, lr}
-    bl Settings_GetQuickTextOption
-    cmp r0,#0x2
-    pop {r0-r12, lr}
-    blt 0x2E0EE0
-    push {r0-r12, lr}
-    ldr r0,[r5,#0x0]
-    ldr r1,[r0,#0x20]
-    cpy r0,r5
-    blx r1
-    strb r11,[r4,#0x24]
-    pop {r0-r12, lr}
-    b 0x2E0EE0
-
-.global hook_InstantTextRemoveOff
-hook_InstantTextRemoveOff:
-    push {r0-r12, lr}
-    bl Settings_GetQuickTextOption
-    cmp r0,#0x2
-    pop {r0-r12, lr}
-    bge 0x2E0ED4
-    ldr r0,[r5,#0x0]
-    b 0x2E06CC
-
 .global hook_TurboTextAdvance
 hook_TurboTextAdvance:
     push {r0-r12, lr}
@@ -991,6 +943,10 @@ hook_TurboTextSignalNPC:
     push {r0-r12, lr}
     bl Settings_IsTurboText
     cmp r0,#0x0
+    @ If about to warp to credits, signal NPC so that
+    @ the collection flag is set before the game is saved
+    bleq Triforce_IsWaitingForText
+    cmp r0,#0x0
     pop {r0-r12, lr}
     movne r4,#0x1
     bx lr
@@ -1076,17 +1032,24 @@ hook_LostWoodsBridgeMusic:
     pop {r0-r12, lr}
     bx lr
 
-.global hook_LoadGame
-hook_LoadGame:
+.global hook_BeforeLoadGame
+hook_BeforeLoadGame:
     add r0, r4, r5
     push {r0-r12, lr}
-    bl SaveFile_LoadExtSaveData
+    bl SaveFile_BeforeLoadGame
     pop {r0-r12, lr}
 .if _EUR_==1
     b 0x4473A4
 .else
     b 0x447384
 .endif
+
+.global hook_AfterLoadGame
+hook_AfterLoadGame:
+    push {r0-r12, lr}
+    bl SaveFile_AfterLoadGame
+    pop {r0-r12, lr}
+    pop {r4-r6, pc}
 
 .global hook_SaveGame
 hook_SaveGame:
@@ -2135,6 +2098,27 @@ hook_OcarinaNoteButtonsPress:
     cpy r0,r6
     push {r1-r12, lr}
     bl OcarinaNotes_HandleInputs
+    pop {r1-r12, lr}
+    bx lr
+
+.global hook_HandleTextControlCode
+hook_HandleTextControlCode:
+    ldrb r0,[r6,#0x4] @ Control Code identifier
+    push {r0-r12, lr}
+    cpy r1,r5 @ Text Object
+    cpy r2,r3 @ Unk pointer
+    bl Message_HandleTextControlCode
+    cmp r0,#0x0
+    pop {r0-r12, lr}
+    bxeq lr    @ Not a custom control char, resume base game code
+    b 0x2E0ED4 @ Handled custom control char, skip base game code
+
+.global hook_CheckForTextControlCode
+hook_CheckForTextControlCode:
+    push {r1-r12, lr}
+    cpy r2,r5 @ Text Object
+    cpy r3,r9 @ Char Index (loop counter)
+    bl Message_rCheckForControlCodes
     pop {r1-r12, lr}
     bx lr
 

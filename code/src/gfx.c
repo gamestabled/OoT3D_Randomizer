@@ -376,6 +376,16 @@ static void Gfx_DrawSeedHash(void) {
                              minutes, seconds);
     offsetY++;
 
+    if (gSettingsContext.triforceHunt) {
+        Draw_DrawString(10, 16 + (SPACING_Y * offsetY++), COLOR_TITLE, "Triforce Pieces:");
+        u8 triforceDone = gExtSaveData.triforcePieces >= gSettingsContext.triforcePiecesRequired;
+        Draw_DrawFormattedString(10 + (SPACING_X * 4), 16 + (SPACING_Y * offsetY++),
+                                 triforceDone ? COLOR_YELLOW : COLOR_WHITE, "%d / %d", gExtSaveData.triforcePieces,
+                                 triforceDone ? gSettingsContext.triforcePiecesTotal
+                                              : gSettingsContext.triforcePiecesRequired);
+        offsetY++;
+    }
+
     if (gSettingsContext.mp_Enabled) {
         Draw_DrawFormattedString(10, 16 + (SPACING_Y * offsetY++), COLOR_TITLE, "Multiplayer:");
         s16 playerCount = Multiplayer_PlayerCount();

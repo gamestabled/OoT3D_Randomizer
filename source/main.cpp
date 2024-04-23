@@ -43,7 +43,7 @@ int main() {
 
         // send inputs off to the menu
         if (kDown)
-            MenuUpdate(kDown, updatedByHeld);
+            MenuUpdate(kDown, updatedByHeld, kHeld);
 
         // launch oot3d directly by holding L and R (cartridge only)
         if (kHeld & KEY_L && kHeld & KEY_R) {

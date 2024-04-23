@@ -223,6 +223,7 @@ bool MagicRefill   = false;
 u8 PieceOfHeart    = 0;
 u8 HeartContainer  = 0;
 bool DoubleDefense = false;
+u8 TriforcePieces  = 0;
 
 bool SoulPoe               = false;
 bool SoulOctorok           = false;
@@ -1212,6 +1213,7 @@ void LogicReset() {
     PieceOfHeart   = 0;
     HeartContainer = 0;
     DoubleDefense  = false;
+    TriforcePieces = 0;
 
     SoulPoe               = ShuffleEnemySouls.Is(OFF);
     SoulOctorok           = ShuffleEnemySouls.Is(OFF);

@@ -33,7 +33,7 @@
 #define WHITE "\x1b[37m"
 
 void ModeChangeInit();
-void UpdateOptionSubMenu(u32 kDown);
+void UpdateOptionSubMenu(u32 kDown, u32 kHeld);
 void UpdatePremadePresetsMenu(u32 kDown);
 void UpdateCustomPresetsMenu(u32 kDown);
 void UpdateResetToDefaultsMenu(u32 kdown);
@@ -51,4 +51,4 @@ void GenerateRandomizer();
 std::string GetInput(const char* hintText);
 
 extern void MenuInit();
-extern void MenuUpdate(u32 kDown, bool updatedByHeld);
+extern void MenuUpdate(u32 kDown, bool updatedByHeld, u32 kHeld);

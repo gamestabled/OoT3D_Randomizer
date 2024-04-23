@@ -69,6 +69,7 @@
 #define OBJECT_GI_OCARINA_0 270
 #define OBJECT_GI_SHOP_FAIRY 375
 #define OBJECT_GI_SOLD_OUT 328
+#define OBJECT_TRIFORCE 149
 
 typedef void (*TitleCard_Update_proc)(GlobalContext* globalCtx, TitleCardContext* titleCtx);
 #ifdef Version_EUR
@@ -271,6 +272,9 @@ void Actor_Init() {
 
     // Define object 291 to be by default the same as object 328
     strncpy(gObjectTable[OBJECT_CUSTOM_OCARINA_BUTTON].filename, gObjectTable[OBJECT_GI_SOLD_OUT].filename, 0x40);
+
+    // Define object 366 to be by default the same as object 149
+    strncpy(gObjectTable[OBJECT_CUSTOM_TRIFORCE_PIECE].filename, gObjectTable[OBJECT_TRIFORCE].filename, 0x40);
 }
 
 void ActorSetup_Extra() {

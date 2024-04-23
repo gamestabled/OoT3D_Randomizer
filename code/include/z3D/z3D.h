@@ -700,6 +700,7 @@ extern const char DungeonNames[][25];
 #define gRestrictionFlags ((RestrictionFlags*)0x539DC4)
 #define PLAYER ((Player*)gGlobalContext->actorCtx.actorList[ACTORTYPE_PLAYER].first)
 #define gMainClass ((MainClass*)0x5BE5B8)
+#define gIsBottomScreenDimmed (*(s32*)0x5043EC)
 
 #define GearSlot(X) (X - ITEM_SWORD_KOKIRI)
 
@@ -897,5 +898,12 @@ typedef void (*EffectSsDeadDb_Spawn_proc)(GlobalContext* globalCtx, Vec3f* posit
                                           s32 frame_duration, s16 play_sound);
 #define EffectSsDeadDb_Spawn_addr 0x3642F4
 #define EffectSsDeadDb_Spawn ((EffectSsDeadDb_Spawn_proc)EffectSsDeadDb_Spawn_addr)
+
+typedef void (*SaveGame_proc)(GlobalContext* globalCtx, u8 isSaveFileCreation);
+#define SaveGame_addr 0x2FDAC8
+#define SaveGame ((SaveGame_proc)SaveGame_addr)
+
+typedef s32 (*Message_GetState_proc)(void);
+#define Message_GetState ((Message_GetState_proc)0x3769d8)
 
 #endif //_Z3D_H_

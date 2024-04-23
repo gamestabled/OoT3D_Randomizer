@@ -755,6 +755,11 @@ void GenerateItemPool() {
         }
     }
 
+    if (TriforceHunt) {
+        AddItemToMainPool(TRIFORCE_PIECE, TriforcePiecesTotal.Value<u8>() + 1);
+        IceTrapModels.push_back(GI_TRIFORCE_PIECE);
+    }
+
     if (ItemPoolValue.Is(ITEMPOOL_PLENTIFUL)) {
         if (ShuffleGerudoToken) {
             AddItemToPool(PendingJunkPool, GERUDO_TOKEN);
@@ -999,7 +1004,7 @@ void GenerateItemPool() {
         PlaceItemInLocation(TOT_LIGHT_ARROWS_CUTSCENE, GANONS_CASTLE_BOSS_KEY);
     } else if (GanonsBossKey.Is(GANONSBOSSKEY_VANILLA)) {
         PlaceItemInLocation(GANONS_TOWER_BOSS_KEY_CHEST, GANONS_CASTLE_BOSS_KEY);
-    } else {
+    } else if (GanonsBossKey.IsNot(GANONSBOSSKEY_TRIFORCE)) {
         AddItemToMainPool(GANONS_CASTLE_BOSS_KEY);
     }
 

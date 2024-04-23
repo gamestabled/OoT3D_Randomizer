@@ -7,6 +7,7 @@ void CustomModel_EditTitleScreenLogo(void* titleScreenZAR);
 void CustomModel_Update(void);
 void CustomModels_EditItemCMB(void* ZARBuf, u16 objectId, s8 special);
 void CustomModels_ApplyItemCMAB(SkeletonAnimationModel* model, u16 objectId, s8 special);
+void CustomModels_UpdateMatrix(nn_math_MTX34* modelMtx, u16 objectId);
 
 #define OBJECT_CUSTOM_DOUBLE_DEFENSE 4
 #define OBJECT_CUSTOM_CHILD_SONGS 5
@@ -24,6 +25,7 @@ void CustomModels_ApplyItemCMAB(SkeletonAnimationModel* model, u16 objectId, s8 
 #define OBJECT_CUSTOM_GENERAL_ASSETS 182
 #define OBJECT_CUSTOM_ENEMY_SOUL 228
 #define OBJECT_CUSTOM_OCARINA_BUTTON 291
+#define OBJECT_CUSTOM_TRIFORCE_PIECE 366
 
 typedef enum {
     TEXANIM_COPY_NINTENDO,

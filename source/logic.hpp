@@ -217,6 +217,7 @@ extern bool MagicRefill;
 extern u8 PieceOfHeart;
 extern u8 HeartContainer;
 extern bool DoubleDefense;
+extern u8 TriforcePieces;
 
 extern bool SoulPoe;
 extern bool SoulOctorok;
