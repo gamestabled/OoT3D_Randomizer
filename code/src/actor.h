@@ -5,5 +5,6 @@
 
 void Actor_Init();
 void ActorSetup_Extra();
+s32 Actor_CollisionATvsAC(Collider* at, Collider* ac);
 
 #endif //_ACTOR_H_
