@@ -453,7 +453,7 @@ typedef struct OcLine OcLine; // TODO
 #define COLLISION_CHECK_OC_MAX 50
 #define COLLISION_CHECK_OC_LINE_MAX 3
 
-typedef struct {
+typedef struct CollisionCheckContext {
     /* 0x000 */ s16 colAtCount;
     /* 0x002 */ u16 sacFlags;
     /* 0x004 */ Collider* colAt[COLLISION_CHECK_AT_MAX];
@@ -780,8 +780,8 @@ typedef void (*PlaySound_proc)(u32);
 #define PlaySound ((PlaySound_proc)PlaySound_addr)
 
 typedef Actor* (*Actor_Spawn_proc)(ActorContext* actorCtx, GlobalContext* globalCtx, s16 actorId, float posX,
-                                   float posY, float posZ, s16 rotX, s16 rotY, s16 rotZ, s16 params)
-    __attribute__((pcs("aapcs-vfp")));
+                                   float posY, float posZ, s16 rotX, s16 rotY, s16 rotZ, s16 params,
+                                   s32 initImmediately) __attribute__((pcs("aapcs-vfp")));
 #define Actor_Spawn_addr 0x3738D0
 #define Actor_Spawn ((Actor_Spawn_proc)Actor_Spawn_addr)
 
@@ -845,6 +845,12 @@ typedef s32 (*BossChallenge_IsActive_proc)(void);
 typedef s32 (*Audio_PlayActorSfx2_proc)(Actor* actor, s32 sfxID);
 #define Audio_PlayActorSfx2_addr 0x375BCC
 #define Audio_PlayActorSfx2 ((Audio_PlayActorSfx2_proc)Audio_PlayActorSfx2_addr)
+
+typedef s32 (*Model_GetMeshGroupCount_proc)(SkeletonAnimationModel* skelAnimeModel);
+#define Model_GetMeshGroupCount ((Model_GetMeshGroupCount_proc)0x2BB71C)
+
+typedef s32 (*Model_IsMeshGroupUsed_proc)(SkeletonAnimationModel* skelAnimeModel, s32 param);
+#define Model_IsMeshGroupUsed ((Model_IsMeshGroupUsed_proc)0x4C6880)
 
 typedef void (*Model_EnableMeshGroupByIndex_proc)(SkeletonAnimationModel* skel, u32 index);
 #define Model_EnableMeshGroupByIndex ((Model_EnableMeshGroupByIndex_proc)0x37266C)

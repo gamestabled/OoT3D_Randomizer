@@ -21,6 +21,7 @@ void Multiplayer_OnFileLoad(void);
 // Ghost Data
 void Multiplayer_Send_GhostPing(void);
 void Multiplayer_Send_GhostData(void);
+void Multiplayer_Send_GhostData_JointTable(void);
 void Multiplayer_Send_LinkSFX(u32 sfxID);
 // Shared Progress
 u8 Multiplayer_GetNeededPacketsMask(void);

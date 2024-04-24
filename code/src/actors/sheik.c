@@ -61,7 +61,7 @@ void Sheik_Spawn(void) {
         EnXc* sheik = (EnXc*)Actor_Spawn(&gGlobalContext->actorCtx, gGlobalContext, 0x48, //
                                          pos.x, pos.y, pos.z,                             //
                                          rot.x, rot.y, rot.z,                             //
-                                         100);
+                                         100, FALSE);
         if (sheik == (void*)0) {
             return;
         }

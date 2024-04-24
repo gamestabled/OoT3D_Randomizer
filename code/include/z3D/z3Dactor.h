@@ -2,6 +2,7 @@
 #define _Z3DACTOR_H_
 
 #include "z3Dvec.h"
+#include "z3Dcollision_check.h"
 
 struct Actor;
 struct GlobalContext;
@@ -29,7 +30,11 @@ typedef struct {
 } SkeletonAnimationModel_VTable;
 
 typedef struct SkeletonAnimationModel_unk_10 {
-    /* 0x00 */ char unk_00[0x14];
+    /* 0x00 */ void* unk_00;
+    /* 0x04 */ void* unk_04;
+    /* 0x08 */ s32 unk_08;
+    /* 0x0C */ s32 unk_0C;
+    /* 0x10 */ s32 unk_10;
 } SkeletonAnimationModel_unk_10; // size = 0x14
 
 typedef struct SkeletonAnimationModel_unk_0C {
@@ -134,33 +139,17 @@ typedef struct {
 } CollisionCheckInfo; // size = 0x1C
 
 typedef struct {
-    /* 0x00 */ struct Actor* actor; // Attached actor
-    /* 0x04 */ struct Actor* at;    // Actor attached to what it collided with as an AT collider.
-    /* 0x08 */ struct Actor* ac;    // Actor attached to what it collided with as an AC collider.
-    /* 0x0C */ struct Actor* oc;    // Actor attached to what it collided with as an OC collider.
-    /* 0x10 */ u8 atFlags;          // Information flags for AT collisions.
-    /* 0x11 */ u8 acFlags;          // Information flags for AC collisions.
-    /* 0x12 */ u8 ocFlags1;         // Information flags for OC collisions.
-    /* 0x13 */ u8 ocFlags2;         // Flags related to which colliders it can OC collide with.
-    /* 0x14 */ u8 colType;          // Determines hitmarks and sound effects during AC collisions.
-    /* 0x15 */ u8 shape;            // JntSph, Cylinder, Tris, or Quad
-} Collider;                         // size = 0x18
-
-typedef struct {
-    /* 0x00 */ Collider base;
-    /* 0x18 */ char unk_18[0x28]; // ColliderInfo info;
-    /* 0x40 */ char unk_40[0x18]; // Cylinderf dim;
-} ColliderCylinder;               // size = 0x58
-
-typedef struct {
     /* 0x00 */ Vec3s rot; // Current actor shape rotation
-    /* 0x06 */ u8 unk_06;
-    /* 0x08 */ f32 unk_08; // Model y axis offset. Represents model space units. collision mesh related
+    /* 0x06 */ s16 face;
+    /* 0x08 */ f32 yOffset; // Model y axis offset. Represents model space units. collision mesh related
     /* 0x0C */ void (*shadowDrawFunc)(struct Actor*, struct LightMapper*, struct GlobalContext*);
-    /* 0x10 */ f32 unk_10;
-    /* 0x14 */ u8 unk_14;
-    /* 0x15 */ u8 unk_15;
-} ActorShape; // size = 0x18
+    /* 0x10 */ f32 shadowScale;
+    /* 0x14 */ u8 shadowAlpha;
+    /* 0x15 */ u8 feetFloorFlag;
+    /* 0x16 */ char unk_16[2]; // Required padding?
+    /* 0x18 */ Vec3f feetPos[2];
+} ActorShape; // size = 0x30
+_Static_assert(sizeof(ActorShape) == 0x30, "ActorShape size");
 
 typedef struct Actor {
     /* 0x000 */ s16 id;      // Actor Id
@@ -197,7 +186,6 @@ typedef struct Actor {
     /* 0x09C */ f32 yDistToPlayer;             // Dist is negative if the actor is above the player
     /* 0x0A0 */ CollisionCheckInfo colChkInfo; // Variables related to the Collision Check system
     /* 0x0BC */ ActorShape shape;              // Variables related to the physical shape of the actor
-    /* 0x0D4 */ Vec3f unk_D4[2];
     /* 0x0EC */ Vec3f unk_EC; // Stores result of some vector transformation involving actor xyz vector, and a matrix at
                               // Global Context + 11D60
     /* 0x0F8 */ f32 unk_F8;   // Related to above
@@ -235,6 +223,7 @@ typedef struct Actor {
     /* 0x1A0 */ f32 unk_1A0;
     /* From here on, the structure and size varies for each actor */
 } Actor; // size = 0x1A4
+_Static_assert(sizeof(Actor) == 0x1A4, "Actor size");
 
 typedef struct DynaPolyActor {
     /* 0x000 */ struct Actor actor;
@@ -250,7 +239,11 @@ typedef struct DynaPolyActor {
 
 typedef struct {
     /* 0x0000 */ Actor actor;
-    /* 0x01A4 */ char unk_148[0x0005];
+    /* 0x01A4 */ s8 currentTunic;
+    /* 0x01A5 */ s8 currentSword;
+    /* 0x01A6 */ s8 currentShield;
+    /* 0x01A7 */ s8 currentBoots;
+    /* 0x01A8 */ s8 heldItemButton;
     /* 0x01A9 */ s8 heldItemActionParam;
     /* 0x01AA */ u8 heldItemId;
     /* 0x01AB */ char unk_1AB[0x1];
@@ -275,7 +268,9 @@ typedef struct {
     /* 0x024C */ void* giDrawSpace;
     /* 0x0250 */ char unk_250[0x0004];
     /* 0x0254 */ struct SkelAnime skelAnime;
-    /* 0x02D8 */ char unk_2D8[0x0F4C];
+    /* 0x02D8 */ char jointTable[0x514];
+    /* 0x07EC */ char morphTable[0x514];
+    /* 0x0D00 */ char unk_2D8[0x0524];
     /* 0x1224 */ Actor* heldActor;
     /* 0x1228 */ char unk_1228[0x84];
     /* 0x12AC */ u8 getItemId;
@@ -305,9 +300,14 @@ typedef struct {
     /* 0x2250 */ char unk_2250[0x0238];
     /* 0x2488 */ s8 invincibilityTimer; // prevents damage when nonzero
                                         // (positive = visible, counts towards zero each frame)
-    /* 0x2489 */ char unk_2489[0x27B];
+    /* 0x2489 */ char unk_2489[0x0053];
+    /* 0x24DC */ void* cmbMan;
+    /* 0x24E0 */ void* zarInfo;
+    /* 0x24E4 */ char unk_24E4[0x0220];
     /* 0x2704 */ struct SkeletonAnimationModel_unk_0C* bodyTexAnim;
+    /* 0x2708 */ char unk_2708[0x344];
 } Player; // total size (from init vars): 2A4C
+_Static_assert(sizeof(Player) == 0x2A4C, "Player size");
 
 typedef enum {
     /* 0x00 */ ACTORTYPE_SWITCH,
@@ -341,5 +341,18 @@ typedef u32 (*Actor_HasParent_proc)(Actor* actor, struct GlobalContext* globalCt
 
 typedef f32 (*Actor_WorldDistXYZToActor_proc)(Actor* a, Actor* b) __attribute__((pcs("aapcs-vfp")));
 #define Actor_WorldDistXYZToActor ((Actor_WorldDistXYZToActor_proc)0x3306C4)
+
+typedef void (*ActorShape_Init_proc)(ActorShape* shape, f32 yOffset, void* shadowDrawFunc, f32 shadowScale)
+    __attribute__((pcs("aapcs-vfp")));
+#define ActorShape_Init ((ActorShape_Init_proc)0x372D4C)
+
+typedef void (*Actor_SetFeetPos_proc)(Actor* actor, nn_math_MTX34* mtx, int param_3, int param_4, Vec3f* param_5,
+                                      int param_6, Vec3f* param_7);
+#define Actor_SetFeetPos ((Actor_SetFeetPos_proc)0x34CBB4)
+
+typedef void (*Actor_UpdateBgCheckInfo_proc)(struct GlobalContext* globalCtx, Actor* actor, f32 wallCheckHeight,
+                                             f32 wallCheckRadius, f32 ceilingCheckHeight, s32 flags)
+    __attribute__((pcs("aapcs-vfp")));
+#define Actor_UpdateBgCheckInfo ((Actor_UpdateBgCheckInfo_proc)0x376340)
 
 #endif
