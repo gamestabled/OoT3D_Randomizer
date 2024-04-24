@@ -10,7 +10,7 @@ jobs:
 
     steps:
     - name: Checkout Project
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4.1.3
 
     - name: Format Project
       uses: DoozyX/clang-format-lint-action@v0.15
@@ -27,7 +27,7 @@ jobs:
 
     steps:
     - name: Checkout Project
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4.1.3
 
     - name: Compile Project
       run: make -j
