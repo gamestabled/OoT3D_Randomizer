@@ -2,11 +2,9 @@
 #include "z3D/actors/z_en_ex_item.h"
 #include "models.h"
 
-#define EnExItem_Init_addr 0x20FC50
-#define EnExItem_Init ((ActorFunc)EnExItem_Init_addr)
+#define EnExItem_Init ((ActorFunc)GAME_ADDR(0x20FC50))
 
-#define EnExItem_Destroy_addr 0x20FDE0
-#define EnExItem_Destroy ((ActorFunc)EnExItem_Destroy_addr)
+#define EnExItem_Destroy ((ActorFunc)GAME_ADDR(0x20FDE0))
 
 #define THIS ((EnExItem*)thisx)
 

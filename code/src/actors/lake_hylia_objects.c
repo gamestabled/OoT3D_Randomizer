@@ -2,11 +2,9 @@
 #include "lake_hylia_objects.h"
 #include "objects.h"
 
-#define BgSpot06Objects_Update_addr 0x3833F8
-#define BgSpot06Objects_Update ((ActorFunc)BgSpot06Objects_Update_addr)
+#define BgSpot06Objects_Update ((ActorFunc)GAME_ADDR(0x3833F8))
 
-#define BgSpot06Objects_Destroy_addr 0x2AD1E4
-#define BgSpot06Objects_Destroy ((ActorFunc)BgSpot06Objects_Destroy_addr)
+#define BgSpot06Objects_Destroy ((ActorFunc)GAME_ADDR(0x2AD1E4))
 
 static u8 actionCounter = 0; // used to perform some actions on subsequent frames
 static s8 waterMovement = 0; // to be used when implementing moving water plane

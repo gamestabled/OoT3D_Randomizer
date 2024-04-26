@@ -31,7 +31,7 @@ typedef struct {
     /* 0x283 */ u8 unkDrawMode2;
 } EffectBlure; // size = ??
 
-#define EffectBlure_Update ((void (*)(EffectBlure*))0x227000)
+#define EffectBlure_Update ((void (*)(EffectBlure*))GAME_ADDR(0x227000))
 
 // This function is called when a new effect element tries to spawn but there's no space left.
 // The vanilla game simply fails to spawn the new element, but with the randomizer extended duration setting,

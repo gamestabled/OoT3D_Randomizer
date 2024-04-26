@@ -1,11 +1,9 @@
 #include "z3D/z3D.h"
 #include "settings.h"
 
-#define EnOwl_Init_Addr 0x18DB28
-#define EnOwl_Init ((ActorFunc)EnOwl_Init_Addr)
+#define EnOwl_Init ((ActorFunc)GAME_ADDR(0x18DB28))
 
-#define EnOwl_Update_Addr 0x1DCB60
-#define EnOwl_Update ((ActorFunc)EnOwl_Update_Addr)
+#define EnOwl_Update ((ActorFunc)GAME_ADDR(0x1DCB60))
 
 static u8 shortcutActivated = 0xFF;
 

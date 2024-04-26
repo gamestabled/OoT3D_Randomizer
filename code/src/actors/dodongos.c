@@ -2,8 +2,8 @@
 #include "dodongos.h"
 #include "enemy_souls.h"
 
-#define EnDodongo_Idle ((EnDodongoActionFunc)0x3E4FE8)
-#define EnDodojr_JumpAttackBounce ((EnDodojrActionFunc)0x3D069C)
+#define EnDodongo_Idle ((EnDodongoActionFunc)GAME_ADDR(0x3E4FE8))
+#define EnDodojr_JumpAttackBounce ((EnDodojrActionFunc)GAME_ADDR(0x3D069C))
 
 s32 Dodongos_AfterSwallowBomb_Normal(EnDodongo* this) {
     if (!EnemySouls_CheckSoulForActor(&this->base)) {

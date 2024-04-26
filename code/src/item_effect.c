@@ -160,8 +160,7 @@ void ItemEffect_TriforcePiece(SaveContext* saveCtx, s16 arg1, s16 arg2) {
 // With the No Ammo Drops option on, when the player gets an ammo upgrade,
 // the ammo count increases by 10 instead of being set to the maximum
 typedef void (*Inventory_ChangeUpgrade_proc)(u32 upgrade, u32 value);
-#define Inventory_ChangeUpgrade_addr 0x33C730
-#define Inventory_ChangeUpgrade ((Inventory_ChangeUpgrade_proc)Inventory_ChangeUpgrade_addr)
+#define Inventory_ChangeUpgrade ((Inventory_ChangeUpgrade_proc)GAME_ADDR(0x33C730))
 
 void ItemEffect_GiveUpgrade(SaveContext* saveCtx, s16 arg1, s16 arg2) {
     Inventory_ChangeUpgrade(arg2, arg1);

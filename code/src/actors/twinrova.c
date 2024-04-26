@@ -1,19 +1,15 @@
 #include "z3D/z3D.h"
 #include "twinrova.h"
 
-#define Boss_Tw_Init_addr 0x1A7E18
-#define Boss_Tw_Init ((ActorFunc)Boss_Tw_Init_addr)
+#define Boss_Tw_Init ((ActorFunc)GAME_ADDR(0x1A7E18))
 
-#define Boss_Tw_Update_addr 0x1EF880
-#define Boss_Tw_Update ((ActorFunc)Boss_Tw_Update_addr)
+#define Boss_Tw_Update ((ActorFunc)GAME_ADDR(0x1EF880))
 
-#define Boss_Tw_Draw_addr 0x1EEDF0
-#define Boss_Tw_Draw ((ActorFunc)Boss_Tw_Draw_addr)
+#define Boss_Tw_Draw ((ActorFunc)GAME_ADDR(0x1EEDF0))
 
-#define Boss_Tw_Destroy_addr 0x1A88E8
-#define Boss_Tw_Destroy ((ActorFunc)Boss_Tw_Destroy_addr)
+#define Boss_Tw_Destroy ((ActorFunc)GAME_ADDR(0x1A88E8))
 
-#define PlayActorMusic ((void (*)(u8 unk, u32 music))0x36EC40)
+#define PlayActorMusic ((void (*)(u8 unk, u32 music))GAME_ADDR(0x36EC40))
 
 #define BOSS_BATTLE_BGM 0x1000589
 

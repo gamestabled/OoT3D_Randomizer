@@ -2,13 +2,11 @@
 #include "settings.h"
 #include "chest_minigame.h"
 
-#define EnTakaraMan_Init_addr 0x26DEB8
-#define EnTakaraMan_Init ((ActorFunc)EnTakaraMan_Init_addr)
+#define EnTakaraMan_Init ((ActorFunc)GAME_ADDR(0x26DEB8))
 
-#define EnChanger_Init_addr 0x20EC50
-#define EnChanger_Init ((ActorFunc)EnChanger_Init_addr)
+#define EnChanger_Init ((ActorFunc)GAME_ADDR(0x20EC50))
 
-#define sLoserGetItemIds ((s32*)0x521774)
+#define sLoserGetItemIds ((s32*)GAME_ADDR(0x521774))
 
 void EnTakaraMan_rInit(Actor* thisx, GlobalContext* globalCtx) {
     if (gSettingsContext.shuffleChestMinigame) {

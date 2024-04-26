@@ -3,10 +3,9 @@
 
 #define CsTimer (gGlobalContext->csCtx.frames)
 
-#define BgSpot02Objects_Update_addr 0x3831AC
-#define BgSpot02Objects_Update ((ActorFunc)BgSpot02Objects_Update_addr)
+#define BgSpot02Objects_Update ((ActorFunc)GAME_ADDR(0x3831AC))
 
-#define BgSpot02Objects_Explode (void*)0x205EDC
+#define BgSpot02Objects_Explode (void*)GAME_ADDR(0x205EDC)
 
 void BgSpot02Objects_rUpdate(Actor* thisx, GlobalContext* globalCtx) {
     BgSpot02Objects_Update(thisx, globalCtx);

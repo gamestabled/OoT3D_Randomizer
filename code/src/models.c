@@ -9,22 +9,17 @@
 #include <stddef.h>
 
 typedef void (*SkeletonAnimationModel_MatrixCopy_proc)(SkeletonAnimationModel* glModel, nn_math_MTX34* mtx);
-#define SkeletonAnimationModel_MatrixCopy_addr 0x3721E0
-#define SkeletonAnimationModel_MatrixCopy \
-    ((SkeletonAnimationModel_MatrixCopy_proc)SkeletonAnimationModel_MatrixCopy_addr)
+#define SkeletonAnimationModel_MatrixCopy ((SkeletonAnimationModel_MatrixCopy_proc)GAME_ADDR(0x3721E0))
 
 typedef void (*SkeletonAnimationModel_Draw_proc)(SkeletonAnimationModel* glModel, s32 param_2);
-#define SkeletonAnimationModel_Draw_addr 0x372170
-#define SkeletonAnimationModel_Draw ((SkeletonAnimationModel_Draw_proc)SkeletonAnimationModel_Draw_addr)
+#define SkeletonAnimationModel_Draw ((SkeletonAnimationModel_Draw_proc)GAME_ADDR(0x372170))
 
 typedef void (*SkeletonAnimationModel_SpawnAt_proc)(Actor* actor, GlobalContext* globalCtx,
                                                     SkeletonAnimationModel** glModel, s32 objModelIdx);
-#define SkeletonAnimationModel_SpawnAt_addr 0x372F38
-#define SkeletonAnimationModel_SpawnAt ((SkeletonAnimationModel_SpawnAt_proc)SkeletonAnimationModel_SpawnAt_addr)
+#define SkeletonAnimationModel_SpawnAt ((SkeletonAnimationModel_SpawnAt_proc)GAME_ADDR(0x372F38))
 
 typedef void (*Actor_SetModelMatrix_proc)(f32 x, f32 y, f32 z, nn_math_MTX34* mtx, ActorShape* shape);
-#define Actor_SetModelMatrix_addr 0x3679D0
-#define Actor_SetModelMatrix ((Actor_SetModelMatrix_proc)Actor_SetModelMatrix_addr)
+#define Actor_SetModelMatrix ((Actor_SetModelMatrix_proc)GAME_ADDR(0x3679D0))
 
 #define LOADEDMODELS_MAX 16
 Model ModelContext[LOADEDMODELS_MAX] = { 0 };

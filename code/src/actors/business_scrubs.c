@@ -2,11 +2,9 @@
 #include "settings.h"
 #include "multiplayer.h"
 
-#define EnDns_Update_addr 0x1D67CC
-#define EnDns_Update ((ActorFunc)EnDns_Update_addr)
+#define EnDns_Update ((ActorFunc)GAME_ADDR(0x1D67CC))
 
-#define EnShopnuts_Init_addr 0x22ED2C
-#define EnShopnuts_Init ((ActorFunc)EnShopnuts_Init_addr)
+#define EnShopnuts_Init ((ActorFunc)GAME_ADDR(0x22ED2C))
 
 u32 EnDns_rPurchaseableCheck(EnDns* scrub);
 void EnDns_rSetRupeesAndFlags(EnDns* scrub);
@@ -27,8 +25,7 @@ static const DnsItemEntry Scrub_A = { 40, 1, 0x79, EnDns_rPurchaseableCheck, EnD
 const DnsItemEntry* rScrubTable[] = { &Scrub_0, &Scrub_1, &Scrub_2, &Scrub_3, &Scrub_4, &Scrub_5,
                                       &Scrub_6, &Scrub_7, &Scrub_8, &Scrub_9, &Scrub_A };
 
-#define Vanilla_DnsItemEntries_addr 0x522384
-#define VanillaScrubTable ((DnsItemEntry**)Vanilla_DnsItemEntries_addr)
+#define VanillaScrubTable ((DnsItemEntry**)GAME_ADDR(0x522384))
 
 s16 rScrubRandomItemPrices[11] = { 0 };
 
@@ -105,16 +102,15 @@ void EnShopnuts_rInit(Actor* thisx, GlobalContext* globalCtx) {
     EnShopnuts_Init(&scrub->actor, globalCtx);
 }
 
-#define EnDns_Talk (void*)0x161960
-#define FUN_00161828 (void*)0x161828
-#define FUN_003CE92C (void*)0x3CE92C
-#define FUN_00100434 (void*)0x100434
-#define EnDns_SetupBurrow (void*)0x3C3C04
-#define EnDns_Burrow (void*)0x3CEA64
+#define EnDns_Talk (void*)GAME_ADDR(0x161960)
+#define FUN_00161828 (void*)GAME_ADDR(0x161828)
+#define FUN_003CE92C (void*)GAME_ADDR(0x3CE92C)
+#define FUN_00100434 (void*)GAME_ADDR(0x100434)
+#define EnDns_SetupBurrow (void*)GAME_ADDR(0x3C3C04)
+#define EnDns_Burrow (void*)GAME_ADDR(0x3CEA64)
 
 typedef u32 (*EnDns_ChangeAnim_proc)(EnDns* globalCtx, u8 arg1);
-#define EnDns_ChangeAnim_addr 0x37693C
-#define EnDns_ChangeAnim ((EnDns_ChangeAnim_proc)EnDns_ChangeAnim_addr)
+#define EnDns_ChangeAnim ((EnDns_ChangeAnim_proc)GAME_ADDR(0x37693C))
 
 void EnDns_rUpdate(Actor* thisx, GlobalContext* globalCtx) {
     EnDns* scrub = (EnDns*)thisx;

@@ -4,7 +4,7 @@
 #include "objects.h"
 #include "common.h"
 
-#define NAVI_COLORS_ARRAY ((Color_RGBA8*)0x50C998)
+#define NAVI_COLORS_ARRAY ((Color_RGBA8*)GAME_ADDR(0x50C998))
 
 #define NAVI_CYCLE_FRAMES_OUTER 18
 #define NAVI_CYCLE_FRAMES_INNER 21

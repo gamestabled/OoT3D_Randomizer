@@ -5,7 +5,7 @@
 #include "savefile.h"
 #include "settings.h"
 
-#define GyroDrawHUDIcon *(u8*)0x4FC648
+#define GyroDrawHUDIcon (*(u8*)GAME_ADDR(0x4FC648))
 s16 pitch = 0, yaw = 0;
 f32 dist = 0;
 

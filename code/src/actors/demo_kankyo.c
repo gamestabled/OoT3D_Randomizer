@@ -4,8 +4,7 @@
 #include "entrance.h"
 #include "grotto.h"
 
-#define DemoKankyo_Update_addr 0x262EA4
-#define DemoKankyo_Update ((ActorFunc)DemoKankyo_Update_addr)
+#define DemoKankyo_Update ((ActorFunc)GAME_ADDR(0x262EA4))
 
 #define CsTimer (globalCtx->csCtx.frames)
 

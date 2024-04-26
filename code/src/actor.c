@@ -73,12 +73,7 @@
 #define OBJECT_TRIFORCE 149
 
 typedef void (*TitleCard_Update_proc)(GlobalContext* globalCtx, TitleCardContext* titleCtx);
-#ifdef Version_EUR
-    #define TitleCard_Update_addr 0x47955C
-#else
-    #define TitleCard_Update_addr 0x47953C
-#endif
-#define TitleCard_Update ((TitleCard_Update_proc)TitleCard_Update_addr)
+#define TitleCard_Update ((TitleCard_Update_proc)GAME_ADDR(0x47953C))
 
 void Actor_Init() {
     gActorOverlayTable[0x0].initInfo->init    = PlayerActor_rInit;

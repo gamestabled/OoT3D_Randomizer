@@ -25,15 +25,12 @@ void Model_SetAnim(SkeletonAnimationModel* model, s16 objectId, u32 objectAnimId
 
 typedef SkeletonAnimationModel* (*SkeletonAnimationModel_Spawn_proc)(Actor* actor, GlobalContext* globalCtx, s16 objId,
                                                                      s32 objModelIdX);
-#define SkeletonAnimationModel_Spawn_addr 0x36A924
-#define SkeletonAnimationModel_Spawn ((SkeletonAnimationModel_Spawn_proc)SkeletonAnimationModel_Spawn_addr)
+#define SkeletonAnimationModel_Spawn ((SkeletonAnimationModel_Spawn_proc)GAME_ADDR(0x36A924))
 
 typedef void (*SkeletonAnimationModel_SetMesh_proc)(SkeletonAnimationModel* glModel, s32 mesh);
-#define SkeletonAnimationModel_SetMesh_addr 0x369178
-#define SkeletonAnimationModel_SetMesh ((SkeletonAnimationModel_SetMesh_proc)SkeletonAnimationModel_SetMesh_addr)
+#define SkeletonAnimationModel_SetMesh ((SkeletonAnimationModel_SetMesh_proc)GAME_ADDR(0x369178))
 
 typedef void (*DeleteModel_At_proc)(SkeletonAnimationModel** model);
-#define DeleteModel_At_addr 0x357248
-#define DeleteModel_At ((DeleteModel_At_proc)DeleteModel_At_addr)
+#define DeleteModel_At ((DeleteModel_At_proc)GAME_ADDR(0x357248))
 
 #endif //_MODELS_H_

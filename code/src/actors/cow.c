@@ -3,11 +3,9 @@
 #include "entrance.h"
 #include "cow.h"
 
-#define EnCow_Init_addr 0x189FD4
-#define EnCow_Init ((ActorFunc)EnCow_Init_addr)
+#define EnCow_Init ((ActorFunc)GAME_ADDR(0x189FD4))
 
-#define EnCow_Destroy_addr 0x18A3E4
-#define EnCow_Destroy ((ActorFunc)EnCow_Destroy_addr)
+#define EnCow_Destroy ((ActorFunc)GAME_ADDR(0x18A3E4))
 
 static s32 sNumCows = 0;
 

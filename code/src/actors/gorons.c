@@ -4,7 +4,7 @@
 
 #include "gorons.h"
 
-#define EnGo2_SetGetItem ((EnGo2_ActionFunc)0x133EBC)
+#define EnGo2_SetGetItem ((EnGo2_ActionFunc)GAME_ADDR(0x133EBC))
 
 void EnGo2_rBiggoronSetTextId(EnGo2* self) {
     Player* player = PLAYER;

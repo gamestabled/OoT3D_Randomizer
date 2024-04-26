@@ -60,7 +60,7 @@ enum OcarinaSprites {
     OCS_YELLOW_MARKER_5,
 }; // max 0x6C
 
-#define OcarinaUIStruct (*((void**)0x5093EC))
+#define OcarinaUIStruct (*((void**)GAME_ADDR(0x5093EC)))
 
 s32 OcarinaNotes_IsButtonOwned(OcarinaNoteButton button);
 void OcarinaNotes_RegisterButtonOwned(OcarinaNoteButton button);

@@ -10,11 +10,9 @@
 #include "objects.h"
 #include "custom_models.h"
 
-#define EnBox_Init_addr 0x1899EC
-#define EnBox_Init ((ActorFunc)EnBox_Init_addr)
+#define EnBox_Init ((ActorFunc)GAME_ADDR(0x1899EC))
 
-#define EnBox_Update_addr 0x1D5B70
-#define EnBox_Update ((ActorFunc)EnBox_Update_addr)
+#define EnBox_Update ((ActorFunc)GAME_ADDR(0x1D5B70))
 
 static Actor* sLastTrapChest = 0;
 static Actor* sBomb          = 0;

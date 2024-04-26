@@ -46,7 +46,7 @@ static ColliderCylinderInit EnLinkPupper_ColliderCylinderInit = {
 typedef void (*SkelAnime_InitLink_proc)(SkelAnime* skelAnime, ZARInfo* zarInfo, GlobalContext* globalCtx, void* cmbMan,
                                         void* param_5, u32 animation, s32 limbBufCount, void* jointTable,
                                         void* morphTable);
-#define SkelAnime_InitLink ((SkelAnime_InitLink_proc)0x3413EC)
+#define SkelAnime_InitLink ((SkelAnime_InitLink_proc)GAME_ADDR(0x3413EC))
 
 // When posing the model by copying the joint table, the model for some reason gets raised about 12 units.
 static const f32 childOffsetY = 12.5f;
@@ -92,7 +92,7 @@ void EnLinkPuppet_Init(EnLinkPuppet* this, GlobalContext* globalCtx) {
 }
 
 typedef void (*SkelAnime_Free2_proc)(SkelAnime* anime);
-#define SkelAnime_Free2 ((SkelAnime_Free2_proc)0x350BE0)
+#define SkelAnime_Free2 ((SkelAnime_Free2_proc)GAME_ADDR(0x350BE0))
 
 void EnLinkPuppet_Destroy(EnLinkPuppet* this, GlobalContext* globalCtx) {
     SkelAnime_Free2(&this->skelAnime);
@@ -141,7 +141,7 @@ void EnLinkPuppet_Update(EnLinkPuppet* this, GlobalContext* globalCtx) {
     }
 }
 
-#define Vec3f_PlayerFeet_unk ((Vec3f*)0x53CACC)
+#define Vec3f_PlayerFeet_unk ((Vec3f*)GAME_ADDR(0x53CACC))
 void EnLinkPuppet_PostLimbDraw(GlobalContext* globalCtx, s32 limbIndex, nn_math_MTX34* mtx, EnLinkPuppet* this) {
     if (limbIndex != 0x15) {
         Actor_SetFeetPos((Actor*)this, mtx, limbIndex, 5, &Vec3f_PlayerFeet_unk[gSaveContext.linkAge], 8,
@@ -151,14 +151,7 @@ void EnLinkPuppet_PostLimbDraw(GlobalContext* globalCtx, s32 limbIndex, nn_math_
 
 typedef void (*SkelAnime_DrawOpa_proc)(SkelAnime* skelAnime, nn_math_MTX34* modelMtx, void* overrideLimbDraw,
                                        void* postLimbDraw, Actor* param_5, u32 param_6);
-#define SkelAnime_DrawOpa ((SkelAnime_DrawOpa_proc)0x35E240)
-
-typedef void (*EffectSsDeadDb_Spawn_proc)(GlobalContext* globalCtx, Vec3f* position, Vec3f* velocity,
-                                          Vec3f* acceleration, s16 scale, s16 scale_step, s16 prim_r, s16 prim_g,
-                                          s16 prim_b, s16 prim_a, s16 env_r, s16 env_g, s16 env_b, s16 unused,
-                                          s32 frame_duration, s16 play_sound);
-#define EffectSsDeadDb_Spawn_addr 0x3642F4
-#define EffectSsDeadDb_Spawn ((EffectSsDeadDb_Spawn_proc)EffectSsDeadDb_Spawn_addr)
+#define SkelAnime_DrawOpa ((SkelAnime_DrawOpa_proc)GAME_ADDR(0x35E240))
 
 void EnLinkPuppet_Draw(EnLinkPuppet* this, GlobalContext* globalCtx) {
     // Check how many Link puppets already exist before this one.

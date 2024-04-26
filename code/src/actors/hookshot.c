@@ -2,10 +2,9 @@
 #include "hookshot.h"
 #include "settings.h"
 
-#define ArmsHook_Init_addr 0x1EBF84
-#define ArmsHook_Init ((ActorFunc)ArmsHook_Init_addr)
+#define ArmsHook_Init ((ActorFunc)GAME_ADDR(0x1EBF84))
 
-#define HookshotRotation (f32*)0x4C257C
+#define HookshotRotation (f32*)GAME_ADDR(0x4C257C)
 
 void ArmsHook_rInit(Actor* thisx, GlobalContext* globalCtx) {
     ArmsHook_Init(thisx, globalCtx);

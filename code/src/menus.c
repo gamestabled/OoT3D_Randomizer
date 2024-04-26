@@ -6,26 +6,26 @@
 #include "dungeon_rewards.h"
 #include "item_override.h"
 
-#define gItemsMenuSpritesManager (*(MenuSpriteManager**)0x506734)
-#define gBowMenuSpritesManager (*(MenuSpriteManager**)0x506738)
-#define gItemsMenuGlowSpritesManager (*(MenuSpriteManager**)0x50673C)
-#define gMenuSpritesManager_506740 (*(MenuSpriteManager**)0x506740)
-#define gDungeonMapMenuSpritesManager (*(MenuSpriteManager**)0x506CD0)
-#define gGearMenuSpritesManager (*(MenuSpriteManager**)0x50447C)
+#define gItemsMenuSpritesManager (*(MenuSpriteManager**)GAME_ADDR(0x506734))
+#define gBowMenuSpritesManager (*(MenuSpriteManager**)GAME_ADDR(0x506738))
+#define gItemsMenuGlowSpritesManager (*(MenuSpriteManager**)GAME_ADDR(0x50673C))
+#define gMenuSpritesManager_506740 (*(MenuSpriteManager**)GAME_ADDR(0x506740))
+#define gDungeonMapMenuSpritesManager (*(MenuSpriteManager**)GAME_ADDR(0x506CD0))
+#define gGearMenuSpritesManager (*(MenuSpriteManager**)GAME_ADDR(0x50447C))
 
-#define gItemsMenuSelectedSlot (*(s32*)0x506748)
-#define gGearMenuSelectedSlot (*(s32*)0x50448C)
+#define gItemsMenuSelectedSlot (*(s32*)GAME_ADDR(0x506748))
+#define gGearMenuSelectedSlot (*(s32*)GAME_ADDR(0x50448C))
 
 typedef void (*MenuSpritesManager_RegisterItemSprite_proc)(MenuSpriteManager* menuMan, s32 spriteId, s32 itemId);
-#define MenuSpritesManager_RegisterItemSprite ((MenuSpritesManager_RegisterItemSprite_proc)0x2F8D74)
+#define MenuSpritesManager_RegisterItemSprite ((MenuSpritesManager_RegisterItemSprite_proc)GAME_ADDR(0x2F8D74))
 
 typedef void (*MenuSpritesManager_SetSpriteAt_proc)(MenuSpriteManager* menuMan, s32 spriteId, s32 x, s32 y, s32 width,
                                                     s32 height);
-#define MenuSpritesManager_SetSpriteAt ((MenuSpritesManager_SetSpriteAt_proc)0x2F8D40)
+#define MenuSpritesManager_SetSpriteAt ((MenuSpritesManager_SetSpriteAt_proc)GAME_ADDR(0x2F8D40))
 
 typedef void (*MenuSpritesManager_OffsetSpriteAt_proc)(MenuSpriteManager* menuMan, s32 spriteId, s32 x, s32 y,
                                                        s32 width, s32 height, s32 xOffset, s32 yOffset);
-#define MenuSpritesManager_OffsetSpriteAt ((MenuSpritesManager_OffsetSpriteAt_proc)0x2EB3D8)
+#define MenuSpritesManager_OffsetSpriteAt ((MenuSpritesManager_OffsetSpriteAt_proc)GAME_ADDR(0x2EB3D8))
 
 void ItemsMenu_Draw(void) {
     s32 selectedItemSlot;

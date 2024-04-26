@@ -12,12 +12,10 @@ volatile const u32 numCustomMessageEntries;
 volatile const MessageEntry* ptrCustomMessageEntries;
 
 typedef const MessageEntry* (*Message_GetEntry_proc)(void* param_1, u32 textId);
-#define Message_GetEntry_addr 0x2DF4C4
-#define Message_GetEntry ((Message_GetEntry_proc)Message_GetEntry_addr)
+#define Message_GetEntry ((Message_GetEntry_proc)GAME_ADDR(0x2DF4C4))
 
 typedef const char* (*Message_GetText_proc)(void* param_1, u32 offset);
-#define Message_GetText_addr 0x2DF4B0
-#define Message_GetText ((Message_GetText_proc)Message_GetText_addr)
+#define Message_GetText ((Message_GetText_proc)GAME_ADDR(0x2DF4B0))
 
 const MessageEntry* Message_GetCustomEntry(void* param_1, u32 textId) {
     s32 start;

@@ -1,7 +1,6 @@
 #include "malon.h"
 
-#define EnMa1_Init_addr 0x18C334
-#define EnMa1_Init ((ActorFunc)EnMa1_Init_addr)
+#define EnMa1_Init ((ActorFunc)GAME_ADDR(0x18C334))
 
 void EnMa1_rInit(Actor* thisx, GlobalContext* globalCtx) {
     if (gSaveContext.eventChkInf[0x1] & 0x0010) { // If Talon has fled the castle...

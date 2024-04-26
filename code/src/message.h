@@ -105,12 +105,12 @@ typedef struct UnkTextControlData {
 } UnkTextControlData;
 
 typedef void (*Message_UnkControlCodeHandler_proc)(void* textObj, UnkTextControlData** data);
-#define Message_UnkControlCodeHandler ((Message_UnkControlCodeHandler_proc)0x306318)
+#define Message_UnkControlCodeHandler ((Message_UnkControlCodeHandler_proc)GAME_ADDR(0x306318))
 
 typedef char* (*Message_CheckForControlCodes_proc)(void* data, char* nextChars);
-#define Message_CheckForControlCodes ((Message_CheckForControlCodes_proc)0x4C08C0)
+#define Message_CheckForControlCodes ((Message_CheckForControlCodes_proc)GAME_ADDR(0x4C08C0))
 
 typedef void (*Message_SetInstantText_proc)(void* textObj);
-#define Message_SetInstantText ((Message_SetInstantText_proc)0x40B608)
+#define Message_SetInstantText ((Message_SetInstantText_proc)GAME_ADDR(0x40B608))
 
 #endif //_MESSAGE_H_

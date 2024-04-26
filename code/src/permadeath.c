@@ -8,12 +8,7 @@ u8 Permadeath_GetOption(void) {
 }
 
 typedef void (*SaveFile_Delete_proc)(u8 fileNum);
-#ifdef Version_EUR
-    #define SaveFile_Delete_addr 0x446FE4
-#else
-    #define SaveFile_Delete_addr 0x446FC4
-#endif
-#define SaveFile_Delete ((SaveFile_Delete_proc)SaveFile_Delete_addr)
+#define SaveFile_Delete ((SaveFile_Delete_proc)GAME_ADDR(0x446FC4))
 
 void Permadeath_DeleteSave(void) {
     if (!Permadeath_GetOption()) {
