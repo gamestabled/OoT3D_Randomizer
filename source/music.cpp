@@ -368,6 +368,17 @@ void CreateMusicDirectories(FS_Archive sdmcArchive) {
     musicDirsCreated = true;
 }
 
+void DeleteOldArchive() {
+    FS_Archive sdmcArchive;
+    if (!R_SUCCEEDED(FSUSER_OpenArchive(&sdmcArchive, ARCHIVE_SDMC, fsMakePath(PATH_EMPTY, "")))) {
+        return;
+    }
+
+    static const std::string soundPath = "/luma/titles/" + Settings::TitleId() + "/romfs/sound";
+    FSUSER_DeleteDirectoryRecursively(sdmcArchive, fsMakePath(PATH_ASCII, soundPath.c_str()));
+    FSUSER_CloseArchive(sdmcArchive);
+}
+
 int ShuffleMusic_Archive() {
     if (!musicDirsCreated) {
         return SARSHUFFLE_NO_DIRS;
@@ -378,20 +389,11 @@ int ShuffleMusic_Archive() {
         return SARSHUFFLE_SDMC_ARCHIVE_FAIL;
     }
 
-    // Title ID
-    std::string titleId;
-    if (Settings::Region == REGION_EUR) {
-        titleId = "0004000000033600";
-    } else { // REGION_NA
-        titleId = "0004000000033500";
-    }
+    std::string titleId = Settings::TitleId();
 
     // Archive Paths
     static const std::string bcsarPath    = CustomMusicRootPath + "QueenSound.bcsar";
     static const std::string newBcsarPath = "/luma/titles/" + titleId + "/romfs/sound/QueenSound.bcsar";
-
-    // Delete previous
-    FSUSER_DeleteFile(sdmcArchive, fsMakePath(PATH_ASCII, newBcsarPath.c_str()));
 
     // Create new archive
     SoundArchive sar(sdmcArchive, bcsarPath);

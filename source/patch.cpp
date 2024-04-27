@@ -124,13 +124,11 @@ bool WriteAllPatches() {
     u32 bytesWritten = 0;
     u32 totalRW      = 0;
     char buf[512];
-    std::string titleId;
+    std::string titleId = Settings::TitleId();
     PatchSymbols patchSymbols;
     if (Settings::Region == REGION_EUR) {
-        titleId      = "0004000000033600";
         patchSymbols = EurSymbols;
     } else { // REGION_NA
-        titleId      = "0004000000033500";
         patchSymbols = UsaSymbols;
     }
 

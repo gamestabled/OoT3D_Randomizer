@@ -3305,4 +3305,12 @@ bool ValidateSettings() {
     return valid;
 }
 
+std::string TitleId() {
+    if (Region == REGION_EUR) {
+        return "0004000000033600";
+    } else { // REGION_NA
+        return "0004000000033500";
+    }
+}
+
 } // namespace Settings

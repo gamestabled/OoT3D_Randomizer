@@ -47,6 +47,7 @@ typedef enum {
 extern bool archiveFound;
 extern bool musicDirsCreated;
 void CreateMusicDirectories(FS_Archive sdmcArchive);
+void DeleteOldArchive();
 int ShuffleMusic_Archive();
 
 } // namespace Music
