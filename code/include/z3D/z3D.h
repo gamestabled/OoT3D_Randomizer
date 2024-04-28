@@ -11,16 +11,10 @@
 // #include "hid.h"
 
 #ifdef Version_EUR
-    #define GAME_ADDR(addr)                                    \
-        ({                                                     \
-            int finalAddr = (addr);                            \
-            if (addr >= 0x41A144 && addr <= 0x43668B) {        \
-                finalAddr += 0x24;                             \
-            } else if (addr >= 0x436690 && addr <= 0x4A5ADF) { \
-                finalAddr += 0x20;                             \
-            }                                                  \
-            finalAddr;                                         \
-        })
+    #define GAME_ADDR(addr)                                       \
+        ((addr >= 0x41A144 && addr <= 0x43668B)   ? (addr + 0x24) \
+         : (addr >= 0x436690 && addr <= 0x4A5ADF) ? (addr + 0x20) \
+                                                  : addr)
 #else
     #define GAME_ADDR(addr) (addr)
 #endif
