@@ -55,7 +55,9 @@ CFLAGS	+=	$(INCLUDE) -DARM11 -D_3DS $(VERFLAGS)
 
 CXXFLAGS	:= $(CFLAGS) -fno-rtti -fno-exceptions -std=gnu++11
 
-LDFLAGS	=	-g $(ARCH) -Wl,-Map,$(notdir $*.map) -T $(TOPDIR)/oot.ld $(VERFLAGS) -lgcc
+LINK_SCRIPT	:= oot.ld
+
+LDFLAGS	=	-g $(ARCH) -Wl,-Map,$(notdir $*.map) -T $(TOPDIR)/$(LINK_SCRIPT) $(VERFLAGS) -lgcc
 
 ifeq ($(USA), $(REGION))
   ASFLAGS += -D _USA_=1 -D _EUR_=0 -D _JP_=0
