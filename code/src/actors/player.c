@@ -174,7 +174,8 @@ void PlayerActor_rDraw(Actor* thisx, GlobalContext* globalCtx) {
 f32 Player_GetSpeedMultiplier(void) {
     f32 speedMultiplier = 1;
 
-    if (gSettingsContext.fastBunnyHood && PLAYER->currentMask == 4 && PLAYER->stateFuncPtr == (void*)0x4BA378) {
+    if (gSettingsContext.fastBunnyHood && PLAYER->currentMask == 4 &&
+        PLAYER->stateFuncPtr == (void*)GAME_ADDR(0x4BA378)) {
         speedMultiplier *= 1.5;
     }
 

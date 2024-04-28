@@ -46,8 +46,8 @@ typedef u32 (*EnSi_Draw_GetData_proc)(void);
 void EnSi_rDraw(Actor* thisx, GlobalContext* globalCtx) {
     EnSi* token = THIS;
 
-    if (token->actionFunc != (EnSiActionFunc)0x3D0544) {
-        token->unk_20C[3] = ((EnSi_Draw_GetData_proc)0x3695F8)() ? 0.0f : 2.0f;
+    if (token->actionFunc != (EnSiActionFunc)GAME_ADDR(0x3D0544)) {
+        token->unk_20C[3] = ((EnSi_Draw_GetData_proc)GAME_ADDR(0x3695F8))() ? 0.0f : 2.0f;
         if (!Model_DrawByActor(&token->actor)) {
             EnSi_Draw(&token->actor, globalCtx);
         }

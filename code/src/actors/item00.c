@@ -13,7 +13,7 @@
 
 #define THIS ((EnItem00*)thisx)
 
-#define FUN_002B175C (void*)0x2B175C
+#define FUN_002B175C (void*)GAME_ADDR(0x2B175C)
 
 typedef enum {
     /* 0x00 */ ITEM00_RUPEE_GREEN,

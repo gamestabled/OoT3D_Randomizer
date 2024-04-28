@@ -88,7 +88,7 @@ void EnLinkPuppet_Init(EnLinkPuppet* this, GlobalContext* globalCtx) {
 
     // Shadow
     f32 feetShadowScale = (this->ghostPtr->ghostData.age == 0) ? 90.0f : 60.0f;
-    ActorShape_Init(&this->base.shape, 0.0f, (void*)0x1D04F4, feetShadowScale);
+    ActorShape_Init(&this->base.shape, 0.0f, (void*)GAME_ADDR(0x1D04F4), feetShadowScale);
 }
 
 typedef void (*SkelAnime_Free2_proc)(SkelAnime* anime);
