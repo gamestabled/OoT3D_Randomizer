@@ -3,7 +3,7 @@
 
 #include "grog.h"
 
-#define EnHs_ActionAfterTradeCojiro ((EnHs_ActionFunc)0x3B02C0)
+#define EnHs_ActionAfterTradeCojiro ((EnHs_ActionFunc)GAME_ADDR(0x3B02C0))
 
 void EnHs_CheckForShouldDespawn(EnHs* self) {
     if ((gSettingsContext.shuffleAdultTradeQuest == SHUFFLEADULTTRADEQUEST_ON) &&

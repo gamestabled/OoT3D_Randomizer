@@ -4,26 +4,19 @@
 #include "icetrap.h"
 #include "savefile.h"
 
-#define OceffWipe_Update_addr 0x256158
-#define OceffWipe_Update ((ActorFunc)OceffWipe_Update_addr)
+#define OceffWipe_Update ((ActorFunc)GAME_ADDR(0x256158))
 
-#define OceffWipe2_Update_addr 0x2714B8
-#define OceffWipe2_Update ((ActorFunc)OceffWipe2_Update_addr)
+#define OceffWipe2_Update ((ActorFunc)GAME_ADDR(0x2714B8))
 
-#define OceffWipe3_Update_addr 0x27181C
-#define OceffWipe3_Update ((ActorFunc)OceffWipe3_Update_addr)
+#define OceffWipe3_Update ((ActorFunc)GAME_ADDR(0x27181C))
 
-#define OceffWipe4_Update_addr 0x271C10
-#define OceffWipe4_Update ((ActorFunc)OceffWipe4_Update_addr)
+#define OceffWipe4_Update ((ActorFunc)GAME_ADDR(0x271C10))
 
-#define OceffSpot_Update_addr 0x255BDC
-#define OceffSpot_Update ((ActorFunc)OceffSpot_Update_addr)
+#define OceffSpot_Update ((ActorFunc)GAME_ADDR(0x255BDC))
 
-#define OceffSpot_End_addr 0x10FBD0
-#define OceffSpot_End ((ActorFunc)OceffSpot_End_addr)
+#define OceffSpot_End ((ActorFunc)GAME_ADDR(0x10FBD0))
 
-#define OceffStorm_Update_addr 0x27112C
-#define OceffStorm_Update ((ActorFunc)OceffStorm_Update_addr)
+#define OceffStorm_Update ((ActorFunc)GAME_ADDR(0x27112C))
 
 // Zelda's Lullaby, Song of Time
 void OceffWipe_rUpdate(Actor* thisx, GlobalContext* globalCtx) {

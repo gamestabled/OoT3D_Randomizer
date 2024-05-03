@@ -3,15 +3,13 @@
 #include "savefile.h"
 #include "settings.h"
 
-#define EnWonderTalk_Update_addr 0x3731F4
-#define EnWonderTalk_Update ((ActorFunc)EnWonderTalk_Update_addr)
+#define EnWonderTalk_Update ((ActorFunc)GAME_ADDR(0x3731F4))
 
-#define EnWonderTalk2_Update_addr 0x3794EC
-#define EnWonderTalk2_Update ((ActorFunc)EnWonderTalk2_Update_addr)
+#define EnWonderTalk2_Update ((ActorFunc)GAME_ADDR(0x3794EC))
 
 void EnWonderTalk_rUpdate(Actor* thisx, GlobalContext* globalCtx) {
     EnWonderTalk* this = (EnWonderTalk*)thisx;
-    if (this->actionFunc == (ActorFunc)0x2065E0 && thisx->params == 0x0FFF) { // reading ToT altar
+    if (this->actionFunc == (ActorFunc)GAME_ADDR(0x2065E0) && thisx->params == 0x0FFF) { // reading ToT altar
         gExtSaveData.extInf[EXTINF_TOTALTAR_FLAGS] |= (1 << gSaveContext.linkAge);
     }
     EnWonderTalk_Update(thisx, globalCtx);

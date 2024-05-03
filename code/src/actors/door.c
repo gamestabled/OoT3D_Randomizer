@@ -18,11 +18,10 @@ void Door_CheckToDeleteCustomModels(Actor* door) {
 
 // EnDoor
 
-#define EnDoor_Update_addr 0x1F53C8
-#define EnDoor_Update ((ActorFunc)EnDoor_Update_addr)
+#define EnDoor_Update ((ActorFunc)GAME_ADDR(0x1F53C8))
 
-#define EnDoor_Idle (void*)0x3F1B28
-#define EnDoor_Open (void*)0x3EC04C
+#define EnDoor_Idle (void*)GAME_ADDR(0x3F1B28)
+#define EnDoor_Open (void*)GAME_ADDR(0x3EC04C)
 void EnDoor_Unlocking(EnDoor* thisx, GlobalContext* globalCtx);
 
 void EnDoor_rUpdate(EnDoor* thisx, GlobalContext* globalCtx) {
@@ -41,8 +40,8 @@ void EnDoor_Unlock(EnDoor* thisx) {
         return;
     }
     thisx->action_fn = &EnDoor_Unlocking;
-    PlaySFX(0x10001D3, &thisx->base.world.pos, 4, (f32*)0x54AC20, (f32*)0x54AC20,
-            (s8*)0x54AC24); // NA_SE_EV_CHAIN_KEY_UNLOCK
+    PlaySFX(0x10001D3, &thisx->base.world.pos, 4, (f32*)GAME_ADDR(0x54AC20), (f32*)GAME_ADDR(0x54AC20),
+            (s8*)GAME_ADDR(0x54AC24)); // NA_SE_EV_CHAIN_KEY_UNLOCK
 }
 
 void EnDoor_Unlocking(EnDoor* thisx, GlobalContext* globalCtx) {
@@ -55,8 +54,7 @@ void EnDoor_Unlocking(EnDoor* thisx, GlobalContext* globalCtx) {
 
 // DoorShutter
 
-#define DoorShutter_Init_addr 0x2453E0
-#define DoorShutter_Init ((ActorFunc)DoorShutter_Init_addr)
+#define DoorShutter_Init ((ActorFunc)GAME_ADDR(0x2453E0))
 
 void DoorShutter_rInit(Actor* thisx, GlobalContext* globalCtx) {
     // In Treasure Chest Shop when its chests are shuffled,
@@ -67,11 +65,11 @@ void DoorShutter_rInit(Actor* thisx, GlobalContext* globalCtx) {
     DoorShutter_Init(thisx, globalCtx);
 }
 
-#define DoorShutter_Update_addr 0x27E6E0
-#define DoorShutter_Update ((ActorFunc)DoorShutter_Update_addr)
+#define DoorShutter_Update_addr
+#define DoorShutter_Update ((ActorFunc)GAME_ADDR(0x27E6E0))
 
-#define DoorShutter_SlidingDoor_Idle (void*)0x3F4A3C
-#define DoorShutter_SlidingDoor_Open (void*)0x3EEE7C
+#define DoorShutter_SlidingDoor_Idle (void*)GAME_ADDR(0x3F4A3C)
+#define DoorShutter_SlidingDoor_Open (void*)GAME_ADDR(0x3EEE7C)
 void DoorShutter_Unlocking(DoorShutter* thisx, GlobalContext* globalCtx);
 
 void DoorShutter_rUpdate(DoorShutter* thisx, GlobalContext* globalCtx) {
@@ -100,7 +98,8 @@ void DoorShutter_Unlock(DoorShutter* thisx) {
     thisx->action_fn = &DoorShutter_Unlocking;
     //                         NA_SE_EV_CHAIN_KEY_UNLOCK : NA_SE_EV_CHAIN_KEY_UNLOCK_B
     u32 sfx_id = thisx->door_type_maybe != 5 ? 0x10001D3 : 0x1000200;
-    PlaySFX(sfx_id, &thisx->base.world.pos, 4, (f32*)0x54AC20, (f32*)0x54AC20, (s8*)0x54AC24);
+    PlaySFX(sfx_id, &thisx->base.world.pos, 4, (f32*)GAME_ADDR(0x54AC20), (f32*)GAME_ADDR(0x54AC20),
+            (s8*)GAME_ADDR(0x54AC24));
 }
 
 void DoorShutter_Unlocking(DoorShutter* thisx, GlobalContext* globalCtx) {
@@ -113,11 +112,10 @@ void DoorShutter_Unlocking(DoorShutter* thisx, GlobalContext* globalCtx) {
 
 // DoorGerudo
 
-#define DoorGerudo_Update_addr 0x263118
-#define DoorGerudo_Update ((ActorFunc)DoorGerudo_Update_addr)
+#define DoorGerudo_Update ((ActorFunc)GAME_ADDR(0x263118))
 
-#define DoorGerudo_Idle (void*)0x3F3FA0
-#define DoorGerudo_Unlocking (void*)0x3EEE38
+#define DoorGerudo_Idle (void*)GAME_ADDR(0x3F3FA0)
+#define DoorGerudo_Unlocking (void*)GAME_ADDR(0x3EEE38)
 
 void DoorGerudo_rUpdate(DoorGerudo* thisx, GlobalContext* globalCtx) {
     void* prev_action_fn = thisx->action_fn;
@@ -135,6 +133,6 @@ void DoorGerudo_Unlock(DoorGerudo* thisx) {
         return;
     }
     thisx->action_fn = DoorGerudo_Unlocking;
-    PlaySFX(0x10001D3, &thisx->base.world.pos, 4, (f32*)0x54AC20, (f32*)0x54AC20,
-            (s8*)0x54AC24); // NA_SE_EV_CHAIN_KEY_UNLOCK
+    PlaySFX(0x10001D3, &thisx->base.world.pos, 4, (f32*)GAME_ADDR(0x54AC20), (f32*)GAME_ADDR(0x54AC20),
+            (s8*)GAME_ADDR(0x54AC24)); // NA_SE_EV_CHAIN_KEY_UNLOCK
 }

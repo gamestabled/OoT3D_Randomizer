@@ -634,8 +634,7 @@ void SaveFile_BorrowMask(s16 SI_ItemId) {
 }
 
 typedef s32 (*Inventory_ReplaceItem_proc)(GlobalContext* globalCtx, u16 oldItem, u16 newItem);
-#define Inventory_ReplaceItem_addr 0x316CEC
-#define Inventory_ReplaceItem ((Inventory_ReplaceItem_proc)Inventory_ReplaceItem_addr)
+#define Inventory_ReplaceItem ((Inventory_ReplaceItem_proc)GAME_ADDR(0x316CEC))
 
 u32 SaveFile_CheckForWeirdEggHatch(void) {
     // Force the egg into the child trade slot so that it can hatch

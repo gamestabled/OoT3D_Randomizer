@@ -4,11 +4,11 @@
 #include "settings.h"
 
 typedef s32 (*NockArrowFunc)(Player* player, GlobalContext* globalCtx);
-#define NockArrow ((NockArrowFunc)0x33603C)
+#define NockArrow ((NockArrowFunc)GAME_ADDR(0x33603C))
 typedef void (*PlayAnimFunc)(void* p1, void* p2, s32 anim); // I'm not quite sure what these params are
-#define LinkAnimation_PlayOnce ((PlayAnimFunc)0x3604F0)
+#define LinkAnimation_PlayOnce ((PlayAnimFunc)GAME_ADDR(0x3604F0))
 typedef void (*MagicResetFunc)(GlobalContext* globalCtx);
-#define Magic_Reset ((MagicResetFunc)0x34708C)
+#define Magic_Reset ((MagicResetFunc)GAME_ADDR(0x34708C))
 
 static const u8 arrowsSlots[]       = { SLOT_BOW, SLOT_ARROW_FIRE, SLOT_ARROW_ICE, SLOT_ARROW_LIGHT };
 static const u8 arrowsItems[]       = { ITEM_BOW, ITEM_ARROW_FIRE, ITEM_ARROW_ICE, ITEM_ARROW_LIGHT };

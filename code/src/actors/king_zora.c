@@ -3,8 +3,7 @@
 #include "king_zora.h"
 #include "common.h"
 
-#define EnKz_Update_addr 0x1B66F8
-#define EnKz_Update ((ActorFunc)EnKz_Update_addr)
+#define EnKz_Update ((ActorFunc)GAME_ADDR(0x1B66F8))
 
 u32 EnKz_CheckMovedFlag(void) {
     if ((gSaveContext.eventChkInf[3] & 0x8) ||

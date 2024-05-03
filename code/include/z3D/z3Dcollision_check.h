@@ -99,21 +99,21 @@ typedef struct {
 _Static_assert(sizeof(ColliderCylinderInit) == 0x38, "ColliderCylinderInit size");
 
 typedef void (*Collider_InitCylinder_proc)(struct GlobalContext* globalCtx, ColliderCylinder* collider);
-#define Collider_InitCylinder ((Collider_InitCylinder_proc)0x353DD0)
+#define Collider_InitCylinder ((Collider_InitCylinder_proc)GAME_ADDR(0x353DD0))
 
 typedef void (*Collider_SetCylinder_proc)(struct GlobalContext* globalCtx, ColliderCylinder* collider,
                                           struct Actor* actor, void* cylinderInitData);
-#define Collider_SetCylinder ((Collider_SetCylinder_proc)0x353D24)
+#define Collider_SetCylinder ((Collider_SetCylinder_proc)GAME_ADDR(0x353D24))
 
 typedef void (*Collider_UpdateCylinder_proc)(struct Actor* actor, ColliderCylinder* collider);
-#define Collider_UpdateCylinder ((Collider_UpdateCylinder_proc)0x37632C)
+#define Collider_UpdateCylinder ((Collider_UpdateCylinder_proc)GAME_ADDR(0x37632C))
 
 typedef void (*CollisionCheck_SetOC_proc)(struct GlobalContext* globalCtx, struct CollisionCheckContext* colChkCtx,
                                           void* collider);
-#define CollisionCheck_SetOC ((CollisionCheck_SetOC_proc)0x3762A4)
+#define CollisionCheck_SetOC ((CollisionCheck_SetOC_proc)GAME_ADDR(0x3762A4))
 
 typedef void (*CollisionCheck_SetAC_proc)(struct GlobalContext* globalCtx, struct CollisionCheckContext* colChkCtx,
                                           void* collider);
-#define CollisionCheck_SetAC ((CollisionCheck_SetAC_proc)0x376168)
+#define CollisionCheck_SetAC ((CollisionCheck_SetAC_proc)GAME_ADDR(0x376168))
 
 #endif //_Z3DCOLLISION_CHECK_H_

@@ -6,11 +6,11 @@
 
 #define SCENE_YDAN_BOSS 17
 
-#define Player_GetMaskFunc_addr 0x36EF98
-u8 (*Player_GetMask)(GlobalContext*) = (void*)Player_GetMaskFunc_addr;
+typedef u8 (*Player_GetMask_proc)(GlobalContext* globalCtx);
+#define Player_GetMask ((Player_GetMask_proc)GAME_ADDR(0x36EF98))
 
-#define ElfMessage_GetSariaText_addr 0x31C698
-u16 (*ElfMessage_GetSariaText)(GlobalContext*) = (void*)ElfMessage_GetSariaText_addr;
+typedef u16 (*ElfMessage_GetSariaText_proc)(GlobalContext* globalCtx);
+#define ElfMessage_GetSariaText ((ElfMessage_GetSariaText_proc)GAME_ADDR(0x31C698))
 
 u16 sSariasSongHintTextIds[MAX_SARIAS_SONG_HINTS] = { 0x0A00 };
 s32 sNumSariasSongHints                           = 1;

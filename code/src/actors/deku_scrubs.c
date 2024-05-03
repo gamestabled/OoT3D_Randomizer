@@ -1,11 +1,10 @@
 #include "deku_scrubs.h"
 
-#define EnDntNomal_Update_addr 0x280510
-#define EnDntNomal_Update ((ActorFunc)EnDntNomal_Update_addr)
+#define EnDntNomal_Update ((ActorFunc)GAME_ADDR(0x280510))
 
-#define EnDntNomal_SetupTargetWalk ((ActorFunc)0x21CED4)
-#define EnDntNomal_SetupTargetGivePrize ((ActorFunc)0x2394CC)
-#define EnDntNomal_SetupTargetUnburrow ((ActorFunc)0x21CCFC)
+#define EnDntNomal_SetupTargetWalk ((ActorFunc)GAME_ADDR(0x21CED4))
+#define EnDntNomal_SetupTargetGivePrize ((ActorFunc)GAME_ADDR(0x2394CC))
+#define EnDntNomal_SetupTargetUnburrow ((ActorFunc)GAME_ADDR(0x21CCFC))
 
 void EnDntNomal_rUpdate(Actor* thisx, GlobalContext* globalCtx) {
     EnDntNomal* this = (EnDntNomal*)thisx;

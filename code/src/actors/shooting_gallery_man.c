@@ -2,11 +2,9 @@
 #include "entrance.h"
 #include "settings.h"
 
-#define EnSyatekiMan_Init_addr 0x283F94
-#define EnSyatekiMan_Init ((ActorFunc)EnSyatekiMan_Init_addr)
+#define EnSyatekiMan_Init ((ActorFunc)GAME_ADDR(0x283F94))
 
-#define EnSyatekiMan_Update_addr 0x2A60BC
-#define EnSyatekiMan_Update ((ActorFunc)EnSyatekiMan_Update_addr)
+#define EnSyatekiMan_Update ((ActorFunc)GAME_ADDR(0x2A60BC))
 
 void EnSyatekiMan_rInit(Actor* thisx, GlobalContext* globalCtx) {
     // If child is in the adult shooting gallery or adult in the child shooting gallery, then despawn the shooting

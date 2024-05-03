@@ -1,8 +1,7 @@
 #include "z3D/z3D.h"
 #include "nabooru.h"
 
-#define EnNb_Draw_addr 0x1B7FBC
-#define EnNb_Draw ((ActorFunc)EnNb_Draw_addr)
+#define EnNb_Draw ((ActorFunc)GAME_ADDR(0x1B7FBC))
 
 void EnNb_rDraw(Actor* thisx, GlobalContext* globalCtx) {
 

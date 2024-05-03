@@ -1,8 +1,7 @@
 #include "z3D/z3D.h"
 #include "settings.h"
 
-#define EnExRuppy_Update_addr 0x2689B8
-#define EnExRuppy_Update ((ActorFunc)EnExRuppy_Update_addr)
+#define EnExRuppy_Update ((ActorFunc)GAME_ADDR(0x2689B8))
 
 void EnExRuppy_rUpdate(Actor* thisx, GlobalContext* globalCtx) {
     if (thisx->params == 0x2 && thisx->xzDistToPlayer < 30.0f) {

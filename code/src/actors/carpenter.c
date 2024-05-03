@@ -5,12 +5,11 @@ void EnToryo_SetTradedSawFlag(void) {
     gSaveContext.itemGetInf[3] |= 0x4;
 }
 
-#define EnDaiku_Update_addr 0x20F1A8
-#define EnDaiku_Update ((ActorFunc)EnDaiku_Update_addr)
+#define EnDaiku_Update ((ActorFunc)GAME_ADDR(0x20F1A8))
 
-#define EnDaiku_WaitFreedom (void*)0x182FF0
-#define EnDaiku_InitEscape (void*)0x25A8E4
-#define EnDaiku_EscapeRotate (void*)0x2754E4
+#define EnDaiku_WaitFreedom (void*)GAME_ADDR(0x182FF0)
+#define EnDaiku_InitEscape (void*)GAME_ADDR(0x25A8E4)
+#define EnDaiku_EscapeRotate (void*)GAME_ADDR(0x2754E4)
 
 void EnDaiku_rUpdate(EnDaiku* thisx, GlobalContext* globalCtx) {
     void* prev_action_fn = thisx->action_fn;

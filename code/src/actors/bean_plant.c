@@ -1,15 +1,13 @@
 #include "bean_plant.h"
 #include "multiplayer.h"
 
-#define ObjBean_Init_addr 0x1E12B0
-#define ObjBean_Init ((ActorFunc)ObjBean_Init_addr)
+#define ObjBean_Init ((ActorFunc)GAME_ADDR(0x1E12B0))
 
-#define ObjBean_Update_addr 0x214BEC
-#define ObjBean_Update ((ActorFunc)ObjBean_Update_addr)
+#define ObjBean_Update ((ActorFunc)GAME_ADDR(0x214BEC))
 
-#define ObjBean_UnplantedWait (void*)0x15E154
-#define ObjBean_StallGrowth (void*)0x143684
-#define ObjBean_GrowSprout (void*)0x1436C4
+#define ObjBean_UnplantedWait (void*)GAME_ADDR(0x15E154)
+#define ObjBean_StallGrowth (void*)GAME_ADDR(0x143684)
+#define ObjBean_GrowSprout (void*)GAME_ADDR(0x1436C4)
 
 PosRot lastBeanPlant_Home;
 s16 lastBeanPlant_Params;

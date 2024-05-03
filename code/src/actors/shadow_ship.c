@@ -9,7 +9,7 @@ typedef struct {
     ActorFunc action_fn;
 } EnTest;
 
-#define EnTest_Wait (ActorFunc)0x39D8CC
+#define EnTest_Wait ((ActorFunc)GAME_ADDR(0x39D8CC))
 
 u8 ShadowShip_HasActiveStalfos(void) {
     for (Actor* actor = gGlobalContext->actorCtx.actorList[ACTORTYPE_ENEMY].first; actor != 0; actor = actor->next) {

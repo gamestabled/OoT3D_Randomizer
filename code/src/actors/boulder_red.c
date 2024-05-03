@@ -1,8 +1,7 @@
 #include "boulder_red.h"
 #include "multiplayer.h"
 
-#define ObjHamishi_Update_addr 0x26FD24
-#define ObjHamishi_Update ((ActorFunc)ObjHamishi_Update_addr)
+#define ObjHamishi_Update ((ActorFunc)GAME_ADDR(0x26FD24))
 
 void ObjHamishi_rUpdate(ObjHamishi* thisx, GlobalContext* globalCtx) {
     s16 prevHitCount = thisx->hit_count;

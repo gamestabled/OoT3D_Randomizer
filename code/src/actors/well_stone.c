@@ -4,8 +4,7 @@
 // This actor is the stone blocking bottom of the well as adult Link. This is
 // different from the stone blocking child Link from getting into the well
 // early during the day before the well water has been drained.
-#define BgSpot01Idosoko_Init_addr 0x2AC7C8
-#define BgSpot01Idosoko_Init ((ActorFunc)BgSpot01Idosoko_Init_addr)
+#define BgSpot01Idosoko_Init ((ActorFunc)GAME_ADDR(0x2AC7C8))
 
 void BgSpot01Idosoko_rInit(Actor* thisx, GlobalContext* globalCtx) {
 

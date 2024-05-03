@@ -140,7 +140,7 @@ typedef struct {
     /* 0x24 */ Vec3f modelPositionOffsets;
 } ShopItemEntry; // size 0x30
 
-#define EnGirlA_ShopItemEntries ((ShopItemEntry*)0x524F50)
+#define EnGirlA_ShopItemEntries ((ShopItemEntry*)GAME_ADDR(0x524F50))
 
 void ShopsanityItem_Init(Actor* itemx, GlobalContext* globalCtx);
 void ShopsanityItem_SellOut(Actor* itemx, u16 index); // Used for multiplayer

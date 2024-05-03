@@ -55,21 +55,23 @@ CFLAGS	+=	$(INCLUDE) -DARM11 -D_3DS $(VERFLAGS)
 
 CXXFLAGS	:= $(CFLAGS) -fno-rtti -fno-exceptions -std=gnu++11
 
+LINK_SCRIPT	:= oot.ld
+
+LDFLAGS	=	-g $(ARCH) -Wl,-Map,$(notdir $*.map) -T $(TOPDIR)/$(LINK_SCRIPT) $(VERFLAGS) -lgcc
+
 ifeq ($(USA), $(REGION))
-  LINK_SCRIPT 	:= oot.ld
   ASFLAGS += -D _USA_=1 -D _EUR_=0 -D _JP_=0
   CFLAGS += -g -DVersion_USA
   BUILD  := build_usa
   TARGET := code_usa
 else
 ifeq ($(EUR), $(REGION))
-  LINK_SCRIPT 	:= oot_e.ld
+  LDFLAGS += -Wl,--defsym,_EUR_=1
   ASFLAGS += -D _USA_=0 -D _EUR_=1 -D _JP_=0
   CFLAGS += -g -DVersion_EUR
   BUILD  := build_eur
   TARGET := code_eur
 ifeq ($(JP), $(REGION))
-  LINK_SCRIPT 	:= oot_j.ld
   ASFLAGS += -D _USA_=0 -D _EUR_=0 -D _JP_=1
   CFLAGS += -g -DVersion_JP
   BUILD  := build_jp
@@ -79,7 +81,6 @@ endif
 endif
 
 ASFLAGS	+=	-g $(ARCH) $(VERFLAGS)
-LDFLAGS	=	-g $(ARCH) -Wl,-Map,$(notdir $*.map) -T $(TOPDIR)/$(LINK_SCRIPT) $(VERFLAGS) -lgcc
 
 LIBS	:=	-lgcc
 

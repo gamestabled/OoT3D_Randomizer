@@ -3,8 +3,7 @@
 
 #define CsTimer (gGlobalContext->csCtx.frames)
 
-#define EnFu_Update_addr 0x1B1328
-#define EnFu_Update ((ActorFunc)EnFu_Update_addr)
+#define EnFu_Update ((ActorFunc)GAME_ADDR(0x1B1328))
 
 void EnFu_rUpdate(Actor* thisx, GlobalContext* globalCtx) {
     EnFu_Update(thisx, globalCtx);

@@ -6,9 +6,9 @@
 struct EnBubble;
 typedef void (*EnBubbleActionFunc)(struct EnBubble*, GlobalContext*);
 
-#define EnBubble_Update ((ActorFunc)0x228F24)
-#define EnBubble_Draw ((ActorFunc)0X228CB4)
-#define EnBubble_Disappear ((EnBubbleActionFunc)0x3B5190)
+#define EnBubble_Update ((ActorFunc)GAME_ADDR(0x228F24))
+#define EnBubble_Draw ((ActorFunc)GAME_ADDR(0x228CB4))
+#define EnBubble_Disappear ((EnBubbleActionFunc)GAME_ADDR(0x3B5190))
 
 // void EnBubble_rUpdate(Actor* thisx, GlobalContext* globalCtx);
 

@@ -333,26 +333,25 @@ typedef struct ActorHeapNode {
 } ActorHeapNode;
 
 void Actor_Kill(Actor* actor);
-#define gActorOverlayTable ((ActorOverlay*)0x50CD84)
+#define gActorOverlayTable ((ActorOverlay*)GAME_ADDR(0x50CD84))
 
 typedef u32 (*Actor_HasParent_proc)(Actor* actor, struct GlobalContext* globalCtx);
-#define Actor_HasParent_addr 0x371E40
-#define Actor_HasParent ((Actor_HasParent_proc)Actor_HasParent_addr)
+#define Actor_HasParent ((Actor_HasParent_proc)GAME_ADDR(0x371E40))
 
 typedef f32 (*Actor_WorldDistXYZToActor_proc)(Actor* a, Actor* b) __attribute__((pcs("aapcs-vfp")));
-#define Actor_WorldDistXYZToActor ((Actor_WorldDistXYZToActor_proc)0x3306C4)
+#define Actor_WorldDistXYZToActor ((Actor_WorldDistXYZToActor_proc)GAME_ADDR(0x3306C4))
 
 typedef void (*ActorShape_Init_proc)(ActorShape* shape, f32 yOffset, void* shadowDrawFunc, f32 shadowScale)
     __attribute__((pcs("aapcs-vfp")));
-#define ActorShape_Init ((ActorShape_Init_proc)0x372D4C)
+#define ActorShape_Init ((ActorShape_Init_proc)GAME_ADDR(0x372D4C))
 
 typedef void (*Actor_SetFeetPos_proc)(Actor* actor, nn_math_MTX34* mtx, int param_3, int param_4, Vec3f* param_5,
                                       int param_6, Vec3f* param_7);
-#define Actor_SetFeetPos ((Actor_SetFeetPos_proc)0x34CBB4)
+#define Actor_SetFeetPos ((Actor_SetFeetPos_proc)GAME_ADDR(0x34CBB4))
 
 typedef void (*Actor_UpdateBgCheckInfo_proc)(struct GlobalContext* globalCtx, Actor* actor, f32 wallCheckHeight,
                                              f32 wallCheckRadius, f32 ceilingCheckHeight, s32 flags)
     __attribute__((pcs("aapcs-vfp")));
-#define Actor_UpdateBgCheckInfo ((Actor_UpdateBgCheckInfo_proc)0x376340)
+#define Actor_UpdateBgCheckInfo ((Actor_UpdateBgCheckInfo_proc)GAME_ADDR(0x376340))
 
 #endif

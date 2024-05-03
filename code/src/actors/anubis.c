@@ -2,7 +2,7 @@
 #include "anubis.h"
 #include "enemy_souls.h"
 
-#define EnAnubice_Update ((ActorFunc)0x246E58)
+#define EnAnubice_Update ((ActorFunc)GAME_ADDR(0x246E58))
 
 void EnAnubice_rUpdate(Actor* thisx, GlobalContext* globalCtx) {
     EnAnubice* this = (EnAnubice*)thisx;

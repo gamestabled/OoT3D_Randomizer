@@ -12,22 +12,18 @@
 #include "colors.h"
 #include "common.h"
 
-#define PlayerActor_Init_addr 0x191844
-#define PlayerActor_Init ((ActorFunc)PlayerActor_Init_addr)
+#define PlayerActor_Init ((ActorFunc)GAME_ADDR(0x191844))
 
-#define PlayerActor_Update_addr 0x1E1B54
-#define PlayerActor_Update ((ActorFunc)PlayerActor_Update_addr)
+#define PlayerActor_Update ((ActorFunc)GAME_ADDR(0x1E1B54))
 
-#define PlayerActor_Destroy_addr 0x19262C
-#define PlayerActor_Destroy ((ActorFunc)PlayerActor_Destroy_addr)
+#define PlayerActor_Destroy ((ActorFunc)GAME_ADDR(0x19262C))
 
-#define PlayerActor_Draw_addr 0x4BF618
-#define PlayerActor_Draw ((ActorFunc)PlayerActor_Draw_addr)
+#define PlayerActor_Draw ((ActorFunc)GAME_ADDR(0x4BF618))
 
-#define Hookshot_ActorInit ((ActorInit*)0x5108E8)
+#define Hookshot_ActorInit ((ActorInit*)GAME_ADDR(0x5108E8))
 
-#define PlayerDListGroup_EmptySheathAdult ((void*)0x53C4D8)
-#define PlayerDListGroup_EmptySheathChildWithHylianShield ((void*)0x53C4DC)
+#define PlayerDListGroup_EmptySheathAdult ((void*)GAME_ADDR(0x53C4D8))
+#define PlayerDListGroup_EmptySheathChildWithHylianShield ((void*)GAME_ADDR(0x53C4DC))
 
 #define OBJECT_LINK_OPENING 0x19F
 
@@ -178,7 +174,8 @@ void PlayerActor_rDraw(Actor* thisx, GlobalContext* globalCtx) {
 f32 Player_GetSpeedMultiplier(void) {
     f32 speedMultiplier = 1;
 
-    if (gSettingsContext.fastBunnyHood && PLAYER->currentMask == 4 && PLAYER->stateFuncPtr == (void*)0x4BA378) {
+    if (gSettingsContext.fastBunnyHood && PLAYER->currentMask == 4 &&
+        PLAYER->stateFuncPtr == (void*)GAME_ADDR(0x4BA378)) {
         speedMultiplier *= 1.5;
     }
 

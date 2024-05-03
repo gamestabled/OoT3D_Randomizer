@@ -2,13 +2,11 @@
 #include "settings.h"
 #include "multiplayer.h"
 
-#define EnIshi_Init_addr 0x1B5460
-#define EnIshi_Init ((ActorFunc)EnIshi_Init_addr)
+#define EnIshi_Init ((ActorFunc)GAME_ADDR(0x1B5460))
 
-#define EnIshi_Update_addr 0x1F69AC
-#define EnIshi_Update ((ActorFunc)EnIshi_Update_addr)
+#define EnIshi_Update ((ActorFunc)GAME_ADDR(0x1F69AC))
 
-#define EnIshi_LiftedUp (void*)0x3CBAC4
+#define EnIshi_LiftedUp (void*)GAME_ADDR(0x3CBAC4)
 
 void EnIshi_rInit(Actor* thisx, GlobalContext* globalCtx) {
 

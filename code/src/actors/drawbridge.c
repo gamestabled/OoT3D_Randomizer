@@ -1,8 +1,7 @@
 #include "z3D/z3D.h"
 #include "drawbridge.h"
 
-#define BgSpot00Hanebasi_Update_addr 0x38B390
-#define BgSpot00Hanebasi_Update ((ActorFunc)BgSpot00Hanebasi_Update_addr)
+#define BgSpot00Hanebasi_Update ((ActorFunc)GAME_ADDR(0x38B390))
 
 void BgSpot00Hanebasi_rUpdate(Actor* thisx, GlobalContext* globalCtx) {
 

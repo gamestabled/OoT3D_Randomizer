@@ -1,14 +1,13 @@
 #include "web.h"
 #include "multiplayer.h"
 
-#define BgYdanSp_Update_addr 0x241EF8
-#define BgYdanSp_Update ((ActorFunc)BgYdanSp_Update_addr)
+#define BgYdanSp_Update ((ActorFunc)GAME_ADDR(0x241EF8))
 
-#define BgYdanSp_FloorWebIdle (void*)0x19A8EC
-#define BgYdanSp_WallWebIdle (void*)0x181C88
-#define BgYdanSp_BurnFloorWeb (void*)0x19A52C
-#define BgYdanSp_BurnWallWeb (void*)0x181878
-#define BgYdanSp_FloorWebBreaking (void*)0x1E8438
+#define BgYdanSp_FloorWebIdle (void*)GAME_ADDR(0x19A8EC)
+#define BgYdanSp_WallWebIdle (void*)GAME_ADDR(0x181C88)
+#define BgYdanSp_BurnFloorWeb (void*)GAME_ADDR(0x19A52C)
+#define BgYdanSp_BurnWallWeb (void*)GAME_ADDR(0x181878)
+#define BgYdanSp_FloorWebBreaking (void*)GAME_ADDR(0x1E8438)
 
 void BgYdanSp_rUpdate(BgYdanSp* thisx, GlobalContext* globalCtx) {
     void* prev_action_fn = thisx->action_fn;
