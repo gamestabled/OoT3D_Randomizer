@@ -19,7 +19,7 @@ void Multiplayer_Ghosts_Tick(void) {
     }
 }
 
-void Multiplayer_Ghosts_UpdateGhostData(u16 networkID, GhostData* ghostData) {
+void Multiplayer_Ghosts_UpdateGhostData(u16 networkID, GhostData* ghostData, u8 isInGame) {
     LinkGhost* ghostX = NULL;
     // Find existing ghost
     for (size_t i = 0; i < ARRAY_SIZE(ghosts); i++) {
@@ -47,6 +47,7 @@ void Multiplayer_Ghosts_UpdateGhostData(u16 networkID, GhostData* ghostData) {
     }
     // Set vars
     ghostX->lastTick = svcGetSystemTick();
+    ghostX->isInGame = isInGame;
     if (ghostData != NULL) {
         memcpy(&ghostX->ghostData, ghostData, sizeof(GhostData) - sizeof(ghostData->jointTable));
     }
@@ -90,7 +91,9 @@ void Multiplayer_Ghosts_SpawnPuppets(void) {
     for (size_t i = 0; i < ARRAY_SIZE(ghosts); i++) {
         LinkGhost* ghost = &ghosts[i];
 
-        if (ghost->inUse && ghost->ghostData.currentScene == gGlobalContext->sceneNum && !IsPuppetSpawned(ghost)) {
+        if (ghost->inUse && ghost->isInGame && ghost->ghostData.currentScene == gGlobalContext->sceneNum &&
+            !IsPuppetSpawned(ghost)) {
+
             EnLinkPuppet_InitVars.objectId = (gSaveContext.linkAge == 0) ? 20 : 21;
             EnLinkPuppet* puppet           = (EnLinkPuppet*)Actor_Spawn(
                           &gGlobalContext->actorCtx, gGlobalContext, EnLinkPuppet_InitVars.id,                   //

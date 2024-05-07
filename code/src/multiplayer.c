@@ -895,11 +895,13 @@ void Multiplayer_Send_GhostPing(void) {
     memset(mBuffer, 0, mBufSize);
     u8 memSpacer         = 0;
     mBuffer[memSpacer++] = PACKET_GHOSTPING; // 0: Identifier
+    mBuffer[memSpacer++] = IsInGameOrBossChallenge();
     Multiplayer_SendPacket(memSpacer, UDS_BROADCAST_NETWORKNODEID);
 }
 
 void Multiplayer_Receive_GhostPing(u16 senderID) {
-    Multiplayer_Ghosts_UpdateGhostData(senderID, NULL);
+    u8 isInGame = mBuffer[1];
+    Multiplayer_Ghosts_UpdateGhostData(senderID, NULL, isInGame);
 }
 
 void Multiplayer_Send_GhostData(void) {
@@ -957,7 +959,7 @@ void Multiplayer_Receive_GhostData(u16 senderID) {
     u32 packetSize = sizeof(GhostData) - sizeof(ghostData.jointTable);
     memcpy(&ghostData, &mBuffer[1], packetSize);
 
-    Multiplayer_Ghosts_UpdateGhostData(senderID, &ghostData);
+    Multiplayer_Ghosts_UpdateGhostData(senderID, &ghostData, TRUE);
 }
 
 void Multiplayer_Send_GhostData_JointTable(void) {

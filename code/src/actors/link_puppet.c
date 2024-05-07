@@ -99,13 +99,16 @@ void EnLinkPuppet_Destroy(EnLinkPuppet* this, GlobalContext* globalCtx) {
 }
 
 void EnLinkPuppet_Update(EnLinkPuppet* this, GlobalContext* globalCtx) {
-    if (!this->ghostPtr->inUse || this->ghostPtr->ghostData.currentScene != gGlobalContext->sceneNum) {
+    if (!this->ghostPtr->inUse || !this->ghostPtr->isInGame ||
+        this->ghostPtr->ghostData.currentScene != gGlobalContext->sceneNum) {
         Actor_Kill(&this->base);
         return;
     }
 
     this->base.world.pos = this->ghostPtr->ghostData.position;
     this->base.shape.rot = this->ghostPtr->ghostData.rotation;
+    // Overwrite prevPos so model doesn't get stuck to terrain because of Actor_UpdateBgCheckInfo
+    this->base.prevPos = this->base.world.pos;
 
     // Mesh Groups
     for (size_t index = 0; index < BIT_COUNT(this->ghostPtr->ghostData.meshGroups1); index++) {
