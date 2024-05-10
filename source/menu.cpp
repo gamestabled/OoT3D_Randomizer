@@ -746,6 +746,7 @@ void GenerateRandomizer() {
         }
     }
 
+    Music::DeleteOldArchive();
     if (Settings::ShuffleMusic) {
         printf("\x1b[12;10HShuffling Music...");
         auto musicRes = Music::ShuffleMusic_Archive();

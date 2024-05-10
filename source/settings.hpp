@@ -360,6 +360,8 @@ bool GlitchEnabled(Option& glitchOption);
 /// @brief Checks if incompatible settings are selected and prints error message.
 /// @return True if settings are valid.
 bool ValidateSettings();
+/// Returns the full title id of the selected region.
+std::string TitleId();
 
 extern std::string seed;
 extern std::string version;
