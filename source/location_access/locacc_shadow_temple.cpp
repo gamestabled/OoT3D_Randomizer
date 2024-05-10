@@ -87,8 +87,9 @@ void AreaTable_Init_ShadowTemple() {
                  },
                  {
                      // Exits
-                     Entrance(SHADOW_TEMPLE_HUGE_PIT,
-                              { [] { return HasExplosives && IsAdult && SmallKeys(SHADOW_TEMPLE, 1, 2); } }),
+                     Entrance(SHADOW_TEMPLE_HUGE_PIT, { [] {
+                                  return SoulSkulltula && HasExplosives && IsAdult && SmallKeys(SHADOW_TEMPLE, 1, 2);
+                              } }),
                      Entrance(SHADOW_TEMPLE_BEYOND_BOAT, { [] { return false; },
                                                            /*Glitched*/
                                                            [] {
