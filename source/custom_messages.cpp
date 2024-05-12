@@ -843,6 +843,7 @@ void CreateAlwaysIncludedMessages() {
     for (u32 shopitems = 0; shopitems < NonShopItems.size(); shopitems++) {
         Text name         = NonShopItems[shopitems].Name;
         std::string price = std::to_string(NonShopItems[shopitems].Price);
+        name.Replace("Link", PLAYER_NAME()); // for "Dark Link Soul" item
         // Prevent names from being too long and overflowing textbox
         Text priceSeparator = Text{
             name.NAenglish.length() <= 30 ? ": " : NEWLINE() + "                                        ",
