@@ -1145,7 +1145,14 @@ static std::map<std::string, int> pixelWidthTable = {
 // Calculates the maximum number of characters that could satisfy
 // next line in the string from the last calculated newline.
 static size_t NextLineLength(std::string* textStr, size_t lastNewline) {
-    constexpr size_t maxLinePixelWidth = 287;
+    size_t maxLinePixelWidth = 287;
+    size_t lastCaret         = textStr->rfind('^', lastNewline);
+    size_t lastItemIcon      = textStr->rfind("\x7F\x0F", lastNewline);
+
+    // For text boxes with an item icon, decrease max line pixel width to leave space for the icon
+    if (lastItemIcon != std::string::npos && (lastCaret == std::string::npos || lastItemIcon > lastCaret)) {
+        maxLinePixelWidth = 252;
+    }
 
     size_t totalPixelWidth = 0;
     size_t currentPos      = lastNewline;

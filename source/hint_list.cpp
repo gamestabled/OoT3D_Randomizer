@@ -1795,8 +1795,8 @@ void HintTable_Init() {
     hintTable[BRIDGE_OPEN_HINT] = HintText::Bridge({
                      // obscure text
                      Text{"The awakened ones will have #already&created a bridge# to the castle where&the evil dwells.",
-                /*french*/"Les êtres de sagesse ont#déjà créé&un pont# vers le repaire du mal.",
-               /*spanish*/"Los sabios #ya habrán creado un puente#&al castillo, de donde emana el mal.",
+                /*french*/"Les êtres de sagesse ont #déjà créé&un pont# vers le repaire du mal.",
+               /*spanish*/"Los sabios #ya habrán creado un&puente #al castillo, de donde emana el mal.",
                /*italian*/"I Saggi avranno #già creato un ponte#&verso il castello dove risiede il male.",
                 /*german*/"Die Weisen haben #bereits&eine Brücke zum Portal von&Ganons Schloss gelegt#..."},
     });
@@ -1804,7 +1804,7 @@ void HintTable_Init() {
     hintTable[BRIDGE_VANILLA_HINT] = HintText::Bridge({
                      // obscure text
                      Text{"The awakened ones will await for the&Hero to collect the #Shadow and Spirit&Medallions# as well as the #Light Arrows#.",
-                /*french*/"Les êtres de sagesse attendront le&héros muni des #médaillons de l'ombre et&l'esprit# et des #flèches de lumière#.",
+                /*french*/"Les êtres de sagesse attendront le&héros muni des #médaillons de l'ombre&et l'esprit# et des #flèches de lumière#.",
                /*spanish*/"Los sabios aguardarán a que el héroe&obtenga tanto el #Medallón de las&Sombras y el del Espíritu# junto a la #flecha de luz#.",
                /*italian*/"I Saggi aspetteranno che l'Eroe&ottenga sia i #medaglioni dell'Ombra&e dello Spirito# che la #freccia di luce#.",
                 /*german*/"Die Weisen werden darauf warten,&dass der Held das #Amulett des&Schattens, Amulett der Geister#&und die #Licht-Pfeile# sammelt."},
@@ -1841,7 +1841,7 @@ void HintTable_Init() {
                      // obscure text                                                  singular plural
                      Text{"The awakened ones will await for the&Hero to conquer #%d |Dungeon|Dungeons|#.",
                 /*french*/"Les êtres de sagesse attendront la&conquête de #%d |donjon|donjons|#.",
-               /*spanish*/"Los sabios aguardarán a que el héroe& complete #%d |mazmorra|mazmorras|#.",
+               /*spanish*/"Los sabios aguardarán a que el héroe&complete #%d |mazmorra|mazmorras|#.",
                /*italian*/"I Saggi aspetteranno che l'Eroe&completi #%d dungeon#.",
                 /*german*/"Die Weisen werden darauf&warten, dass der Held #%d&|Labyrinth|Labyrinthe|# abschließt."},
     });
@@ -2062,8 +2062,8 @@ void HintTable_Init() {
     hintTable[CHILD_ALTAR_TEXT_END_DOTCLOSED] = HintText::Altar({
                      // obscure text
                      Text{"Ye who may become a Hero...&Stand with the Ocarina and&play the Song of Time.",
-                /*french*/"À celui qui a quête de devenir héros...&Portez l'Ocarina et&jouez le chant du temps.",
-               /*spanish*/"Para aquel que se convierta en el héroe...&Tome la ocarina y&entone la Canción del Tiempo.",
+                /*french*/"À celui qui a quête de devenir héros...&Portez l'Ocarina et jouez&le chant du temps.",
+               /*spanish*/"Para aquel que se convierta en el héroe...&Tome la ocarina y entone&la Canción del Tiempo.",
                /*italian*/"O tu che diventerai un Eroe...&Prendi l'ocarina e suona&la Canzone del Tempo.",
                 /*german*/"Jener auf dem Weg des Helden...&Nehme er seine Okarina zur Hand und&spiele hier die Hymne der Zeit."},
     });
@@ -2073,7 +2073,7 @@ void HintTable_Init() {
                      Text{"Ye who may become a Hero...&Offer the spiritual stones and&play the Song of Time.",
                 /*french*/"À celui qui a quête de devenir héros...&Présentez les pierres spirituelles et&jouez le chant du temps.",
                /*spanish*/"Para aquel que se convierta en el héroe...&Tome las piedras espirituales y&entone la Canción del Tiempo.",
-               /*italian*/"O tu che diventerai un Eroe...&Offri le tre pietre spirituali&e suona la Canzone del Tempo.",
+               /*italian*/"O tu che diventerai un Eroe...&Offri le tre pietre spirituali e&suona la Canzone del Tempo.",
                 /*german*/"Jener mit den drei Heiligen Steinen&nehme seine Okarina zur Hand und&spiele hier die Hymne der Zeit."},
     });
 
