@@ -785,6 +785,12 @@ void SaveFile_SaveExtSaveData(u32 saveNumber) {
     extDataUnmount(fsa);
 }
 
+void SaveFile_BeforeCopy(s32 srcFileNum) {
+    // When the game writes the copied savefile, it calls SaveFile_SaveExtSaveData,
+    // so in order to properly copy the ExtData they first need to be loaded from the source savefile.
+    SaveFile_LoadExtSaveData(srcFileNum);
+}
+
 void SaveFile_EnforceHealthLimit(void) {
     u16 healthLimit = (gSaveContext.healthCapacity == 0) ? 2 : gSaveContext.healthCapacity;
     if (gSaveContext.health > healthLimit) {
