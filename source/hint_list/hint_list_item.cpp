@@ -2292,7 +2292,7 @@ void HintTable_Init_Item() {
 
     hintTable[SOUL_ITEM_GERUDO] = HintText::Item({
                        // obscure text
-                       Text{"the Gerudo Soul", /*french*/"l'Essence de Voleuse Gerudo", /*spanish*/"el alma de Gerudo", /*italian*/"l'anima di Gerudo", /*german*/"die Seele von Gerudos"},
+                       Text{"the Gerudo and Iron Knuckle Soul", /*french*/"l'Essence de Voleuse Gerudo et de Hache-Viande", /*spanish*/"el alma de Gerudo y Nudillo de hierro", /*italian*/"l'anima di Gerudo e Guerriero d'acciaio", /*german*/"die Seele von Gerudos und Eisenprinzen"},
                      }, {
                        // ambiguous text
                        Text{"a Soul", /*french*/"une Essence", /*spanish*/"un alma", /*italian*/"un'anima", /*german*/"eine Seele"},
