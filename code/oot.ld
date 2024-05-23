@@ -744,6 +744,10 @@ SECTIONS
 		*(.patch_ChildCanOpenBowSubMenu)
 	}
 
+	.patch_FileSelect_CopyFile 0x2EDA04 : {
+		*(.patch_FileSelect_CopyFile)
+	}
+
 	.patch_CorrectCompassChests 0x2F161C : {
 		*(.patch_CorrectCompassChests)
 	}

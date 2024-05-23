@@ -1051,6 +1051,14 @@ hook_AfterLoadGame:
     pop {r0-r12, lr}
     pop {r4-r6, pc}
 
+.global hook_FileSelect_CopyFile
+hook_FileSelect_CopyFile:
+    push {r0-r12, lr}
+    bl SaveFile_BeforeCopy
+    pop {r0-r12, lr}
+    sub sp,sp,#0x240
+    bx lr
+
 .global hook_SaveGame
 hook_SaveGame:
     cmp r5, #0
