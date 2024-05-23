@@ -143,18 +143,19 @@ void AreaTable_Init_DodongosCavern() {
             {
                 // Exits
                 Entrance(DODONGOS_CAVERN_LOBBY, { [] { return true; } }),
-                Entrance(DODONGOS_CAVERN_SE_ROOM, { [] {
-                                                       return Here(DODONGOS_CAVERN_SE_CORRIDOR, [] {
-                                                           return CanBlastOrSmash ||
-                                                                  (SoulDodongo && (CanAdultAttack || CanChildAttack ||
-                                                                                   (CanTakeDamage && CanShield)));
-                                                       });
-                                                   },
-                                                    /*Glitched*/
-                                                    [] {
-                                                        return Here(DODONGOS_CAVERN_SE_CORRIDOR,
-                                                                    [] { return (GlitchBlueFireWall && BlueFire); });
-                                                    } }),
+                Entrance(DODONGOS_CAVERN_SE_ROOM,
+                         { [] {
+                              return Here(DODONGOS_CAVERN_SE_CORRIDOR, [] {
+                                  return CanBlastOrSmash ||
+                                         ((SoulDodongo || ShuffleEnemySouls.IsNot(SHUFFLEENEMYSOULS_ALL)) &&
+                                          (CanAdultAttack || CanChildAttack || (CanTakeDamage && CanShield)));
+                              });
+                          },
+                           /*Glitched*/
+                           [] {
+                               return Here(DODONGOS_CAVERN_SE_CORRIDOR,
+                                           [] { return (GlitchBlueFireWall && BlueFire); });
+                           } }),
                 Entrance(DODONGOS_CAVERN_NEAR_LOWER_LIZALFOS, { [] { return true; } }),
             });
 

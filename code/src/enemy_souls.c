@@ -3,6 +3,7 @@
 #include "savefile.h"
 #include "settings.h"
 #include "armos.h"
+#include "actor.h"
 
 // clang-format off
 static EnemySoulId EnemySouls_GetSoulId(s16 actorId) {
@@ -96,7 +97,8 @@ void EnemySouls_SetSoulFlag(EnemySoulId soulId) {
 }
 
 u8 EnemySouls_CheckSoulForActor(Actor* actor) {
-    if ((gSettingsContext.shuffleEnemySouls == OFF) ||
+    if ((gSettingsContext.shuffleEnemySouls == SHUFFLEENEMYSOULS_OFF) ||
+        (gSettingsContext.shuffleEnemySouls == SHUFFLEENEMYSOULS_BOSSES && !Actor_IsBoss(actor)) ||
         (actor->id == 0x054 && ((EnAm*)actor)->textureBlend == 0 /* Armos, statue or asleep */)) {
         return TRUE;
     }

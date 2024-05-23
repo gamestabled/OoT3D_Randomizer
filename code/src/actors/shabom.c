@@ -5,7 +5,7 @@
 #include "enemy_souls.h"
 
 u16 Shabom_CheckEnemySoul(void) {
-    return gSettingsContext.shuffleEnemySouls == OFF || EnemySouls_GetSoulFlag(SOUL_SHABOM);
+    return gSettingsContext.shuffleEnemySouls != SHUFFLEENEMYSOULS_ALL || EnemySouls_GetSoulFlag(SOUL_SHABOM);
 }
 
 // This is currently useless because soulless enemies are invisible
