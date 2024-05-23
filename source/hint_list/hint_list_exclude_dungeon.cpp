@@ -842,7 +842,7 @@ void HintTable_Init_Exclude_Dungeon() {
                        Text{"a #dark reflection# of yourself guards", /*french*/"son #propre reflet# cache",    /*spanish*/"el #oscuro reflejo de ti mismo# guarda", /*italian*/"la #tua ombra# difende",         /*german*/"nahe eines #dunklen Spiegelbilds#, |wäre|wären|"},
                      }, {},
                        // clear text
-                       Text{"#Dark Link# guards", /*french*/"l'#Ombre de @# protège", /*spanish*/"#@ Oscuro# guarda", /*italian*/"#@ oscuro# protegge", /*german*/"nahe #dem schwarzen @#, |wäre|wären|"}
+                       Text{"#Dark @# guards", /*french*/"l'#Ombre de @# protège", /*spanish*/"#@ Oscuro# guarda", /*italian*/"#@ oscuro# protegge", /*german*/"nahe #dem schwarzen @#, |wäre|wären|"}
     );
 
 
