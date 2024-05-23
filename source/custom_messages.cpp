@@ -1083,6 +1083,16 @@ void CreateAlwaysIncludedMessages() {
         };
         CreateMessageFromTextObject(0x9003, 0, 2, 3, AddColorsAndFormat(triforceMsg, { QM_RED, QM_RED }));
     }
+
+    if (Settings::FishingHints) {
+        Text aquariumText =
+            Text{ /*english*/ "You can have this if you catch a fish to put in the aquarium.",
+                  /*french */ "Tu peux avoir ce qu'il y a dans cet aquarium si tu pêches un poisson pour le remplacer.",
+                  /*spanish*/ "Puedes tener esto si pescas un pez para ponerlo en el acuario.",
+                  /*italian*/ "Puoi avere questo se catturi un pesce da mettere nell'acquario.",
+                  /*german */ "Das kannst du haben, wenn du einen Fisch für das Aquarium fängst." };
+        CreateMessageFromTextObject(0x40AE, 0, 2, 3, AddColorsAndFormat(aquariumText, {}));
+    }
 }
 
 std::vector<Text> CreateBaseCompassTexts() {
