@@ -814,6 +814,7 @@ extern std::string finalChuTrailOuterColor;
 extern Option ColoredKeys;
 extern Option ColoredBossKeys;
 extern Option MirrorWorld;
+extern Option BetaSoldOut;
 
 extern Option ShuffleMusic;
 extern Option ShuffleBGM;

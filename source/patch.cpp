@@ -644,6 +644,21 @@ bool WriteAllPatches() {
         return false;
     }
 
+    /*---------------------------------
+    |   Sold Out Cosmetic Shop Model  |
+    ---------------------------------*/
+
+    const u32 SHOPITEMENTRY_SOLDOUT_CMBINDEX_ADDR = 0x525672;
+    char soldOutCMBIndex                          = 0;
+
+    patchOffset = V_TO_P(SHOPITEMENTRY_SOLDOUT_CMBINDEX_ADDR);
+    patchSize   = 1;
+
+    if (Settings::BetaSoldOut &&
+        !WritePatch(patchOffset, patchSize, &soldOutCMBIndex, code, bytesWritten, totalRW, buf)) {
+        return false;
+    }
+
     /*-------------------------
     |           EOF           |
     --------------------------*/
