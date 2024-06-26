@@ -58,6 +58,7 @@ typedef enum EnemySoulId {
 typedef struct SoulMenuInfo {
     EnemySoulId soulId;
     const char* name;
+    const char* altName;
 } SoulMenuInfo;
 
 extern SoulMenuInfo SoulMenuNames[SOUL_MAX];
@@ -107,8 +108,8 @@ SoulMenuInfo SoulMenuNames[SOUL_MAX] = {
     { SOUL_WALLMASTER, "Wallmaster, Floormaster" },
     { SOUL_WOLFOS, "Wolfos (all)" },
     // Bosses
-    { SOUL_GOHMA, "Gohma, Gohma Larva" },
-    { SOUL_DODONGO, "Dodongo (all)" },
+    { SOUL_GOHMA, "Gohma, Gohma Larva", "Queen Gohma" },
+    { SOUL_DODONGO, "Dodongo (all)", "King Dodongo" },
     { SOUL_BARINADE, "Barinade" },
     { SOUL_PHANTOM_GANON, "Phantom Ganon" },
     { SOUL_VOLVAGIA, "Volvagia" },

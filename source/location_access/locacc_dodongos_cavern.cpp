@@ -124,39 +124,40 @@ void AreaTable_Init_DodongosCavern() {
                      Entrance(DODONGOS_CAVERN_DODONGO_ROOM, { [] { return true; } }),
                  });
 
-        areaTable[DODONGOS_CAVERN_SE_CORRIDOR] = Area(
-            "Dodongos Cavern SE Corridor", "Dodongos Cavern", DODONGOS_CAVERN, NO_DAY_NIGHT_CYCLE, {},
-            {
-                // Locations
-                LocationAccess(DODONGOS_CAVERN_GS_SCARECROW,
-                               { [] {
-                                    return CanUse(SCARECROW) || (IsAdult && CanUse(LONGSHOT)) ||
-                                           (LogicDCScarecrowGS && (CanAdultAttack || CanChildAttack));
-                                },
-                                 /*Glitched*/
-                                 [] {
-                                     return CanDoGlitch(GlitchType::BombHover, GlitchDifficulty::INTERMEDIATE) ||
-                                            (CanUse(LONGSHOT) &&
-                                             CanDoGlitch(GlitchType::ISG, GlitchDifficulty::INTERMEDIATE));
-                                 } }),
-            },
-            {
-                // Exits
-                Entrance(DODONGOS_CAVERN_LOBBY, { [] { return true; } }),
-                Entrance(DODONGOS_CAVERN_SE_ROOM, { [] {
-                                                       return Here(DODONGOS_CAVERN_SE_CORRIDOR, [] {
-                                                           return CanBlastOrSmash ||
-                                                                  (SoulDodongo && (CanAdultAttack || CanChildAttack ||
-                                                                                   (CanTakeDamage && CanShield)));
-                                                       });
-                                                   },
-                                                    /*Glitched*/
-                                                    [] {
-                                                        return Here(DODONGOS_CAVERN_SE_CORRIDOR,
-                                                                    [] { return (GlitchBlueFireWall && BlueFire); });
-                                                    } }),
-                Entrance(DODONGOS_CAVERN_NEAR_LOWER_LIZALFOS, { [] { return true; } }),
-            });
+        areaTable[DODONGOS_CAVERN_SE_CORRIDOR] =
+            Area("Dodongos Cavern SE Corridor", "Dodongos Cavern", DODONGOS_CAVERN, NO_DAY_NIGHT_CYCLE, {},
+                 {
+                     // Locations
+                     LocationAccess(DODONGOS_CAVERN_GS_SCARECROW,
+                                    { [] {
+                                         return CanUse(SCARECROW) || (IsAdult && CanUse(LONGSHOT)) ||
+                                                (LogicDCScarecrowGS && (CanAdultAttack || CanChildAttack));
+                                     },
+                                      /*Glitched*/
+                                      [] {
+                                          return CanDoGlitch(GlitchType::BombHover, GlitchDifficulty::INTERMEDIATE) ||
+                                                 (CanUse(LONGSHOT) &&
+                                                  CanDoGlitch(GlitchType::ISG, GlitchDifficulty::INTERMEDIATE));
+                                      } }),
+                 },
+                 {
+                     // Exits
+                     Entrance(DODONGOS_CAVERN_LOBBY, { [] { return true; } }),
+                     Entrance(DODONGOS_CAVERN_SE_ROOM,
+                              { [] {
+                                   return Here(DODONGOS_CAVERN_SE_CORRIDOR, [] {
+                                       return CanBlastOrSmash ||
+                                              ((SoulDodongo || ShuffleEnemySouls.IsNot(SHUFFLEENEMYSOULS_ALL)) &&
+                                               (CanAdultAttack || CanChildAttack || (CanTakeDamage && CanShield)));
+                                   });
+                               },
+                                /*Glitched*/
+                                [] {
+                                    return Here(DODONGOS_CAVERN_SE_CORRIDOR,
+                                                [] { return (GlitchBlueFireWall && BlueFire); });
+                                } }),
+                     Entrance(DODONGOS_CAVERN_NEAR_LOWER_LIZALFOS, { [] { return true; } }),
+                 });
 
         areaTable[DODONGOS_CAVERN_SE_ROOM] =
             Area("Dodongos Cavern SE Room", "Dodongos Cavern", DODONGOS_CAVERN, NO_DAY_NIGHT_CYCLE, {},

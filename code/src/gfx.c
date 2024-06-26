@@ -293,7 +293,7 @@ static void Gfx_DrawButtonPrompts(void) {
         Draw_DrawIcon(offsetX, promptY, COLOR_BUTTON_A, ICON_BUTTON_A);
         offsetX += buttonSpacing;
         Draw_DrawString(offsetX, textY, COLOR_TITLE, "Toggle Legend");
-    } else if (curMenuIdx == PAGE_ENEMYSOULS) {
+    } else if (curMenuIdx == PAGE_ENEMYSOULS && gSettingsContext.shuffleEnemySouls == SHUFFLEENEMYSOULS_ALL) {
         Draw_DrawIcon(offsetX, promptY, COLOR_WHITE, ICON_BUTTON_DPAD);
         offsetX += buttonSpacing;
         nextStr = "Scroll";
@@ -536,17 +536,29 @@ static void Gfx_DrawDungeonItems(void) {
 static void Gfx_DrawEnemySouls(void) {
     Draw_DrawString(10, 16, COLOR_TITLE, "Enemy Souls Obtained");
 
-    u8 startIndex = soulsScroll <= 0 ? 0 : 32;
-    u8 endIndex   = soulsScroll <= 0 ? 32 : ARRAY_SIZE(SoulMenuNames);
+    const s32 bossesOnly = gSettingsContext.shuffleEnemySouls == SHUFFLEENEMYSOULS_BOSSES;
+    u8 startIndex, endIndex;
+
+    if (bossesOnly) {
+        startIndex = ARRAY_SIZE(SoulMenuNames) - 9;
+        endIndex   = ARRAY_SIZE(SoulMenuNames);
+    } else if (soulsScroll == 0) {
+        startIndex = 0;
+        endIndex   = 32;
+    } else {
+        startIndex = 32;
+        endIndex   = ARRAY_SIZE(SoulMenuNames);
+    }
 
     for (u8 i = startIndex; i < endIndex; i++) {
         u16 posX          = 10 + (((i % 32) / 16) * (SPACING_X * 25));
-        u16 posY          = 30 + (SPACING_Y * (i % 16));
+        u16 posY          = 30 + (SPACING_Y * ((i - (bossesOnly ? startIndex : 0)) % 16));
         SoulMenuInfo info = SoulMenuNames[i];
+        const char* name  = (bossesOnly && info.altName != NULL) ? info.altName : info.name;
 
         Draw_DrawRect(posX, posY, 9, 9, COLOR_WHITE);
         Draw_DrawRect(posX + 1, posY + 1, 7, 7, EnemySouls_GetSoulFlag(info.soulId) ? COLOR_GREEN : COLOR_BLACK);
-        Draw_DrawString(posX + SPACING_X * 2, posY, COLOR_WHITE, info.name);
+        Draw_DrawString(posX + SPACING_X * 2, posY, COLOR_WHITE, name);
     }
 }
 

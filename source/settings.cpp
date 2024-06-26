@@ -208,7 +208,7 @@ Option ShuffleMerchants       = Option::U8  ("Shuffle Merchants",      {"Off", "
 Option ShuffleAdultTradeQuest = Option::Bool("Shuffle Adult Trade",    {"Off", "On"},                                                     {adultTradeDesc});
 Option ShuffleChestMinigame   = Option::U8  ("Shuffle Chest Minigame", {"Off", "On (Separate)", "On (Pack)"},                             {chestMinigameDesc});
 Option ShuffleFrogSongRupees  = Option::Bool("Shuffle Frog Rupees",    {"Off", "On"},                                                     {frogSongRupeesDesc});
-Option ShuffleEnemySouls      = Option::U8  ("Shuffle Enemy Souls",    {"Off", "On"},                                                     {enemySoulDesc});
+Option ShuffleEnemySouls      = Option::U8  ("Shuffle Enemy Souls",    {"Off", "All enemies", "Bosses only"},                             {enemySoulDesc});
 Option ShuffleOcarinaButtons  = Option::Bool("Shuffle Ocarina Buttons",{"Off", "On"},                                                     {ocarinaButtonsDesc});
 std::vector<Option *> shuffleOptions = {
     &RandomizeShuffle,
@@ -3288,7 +3288,8 @@ bool ValidateSettings() {
     }
 
     // Check that there are no MQ dungeons with Enemy Souls
-    if (ShuffleEnemySouls && Logic.IsNot(LOGIC_NONE) && Logic.IsNot(LOGIC_VANILLA) && MQDungeonCount.IsNot(0)) {
+    if (ShuffleEnemySouls.Is(SHUFFLEENEMYSOULS_ALL) && Logic.IsNot(LOGIC_NONE) && Logic.IsNot(LOGIC_VANILLA) &&
+        MQDungeonCount.IsNot(0)) {
         if (ShuffleEnemySouls.IsHidden()) {
             ShuffleEnemySouls.SetSelectedIndex(OFF);
         } else {
