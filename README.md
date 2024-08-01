@@ -15,9 +15,7 @@ This is an item randomizer for _The Legend of Zelda: Ocarina of Time 3D_ for the
 
 You can download the latest stable version of the randomizer [here](https://github.com/gamestabled/OoT3D_Randomizer/releases/latest). You can use either the ```OoT3D_Randomizer.3dsx``` or ```OoT3D_Randomizer.cia``` files provided to generate randomizer patches.
 
-> **Warning**
-> 
-> Please ensure that you are playing on the _USA version_ of Ocarina of Time 3D, as it is the only version supported by the randomizer. You can use either the cartridge version or the installed digital version. In all instructions below, if a directory doesn't exist, just create it.
+You can use either the cartridge version or the installed digital version. In all instructions below, if a directory doesn't exist, just create it.
 
 ### On 3DS Console with Luma3DS
 On your SD card, copy ```OoT3D_Randomizer.3dsx``` to ```SD:/3ds/``` or copy ```OoT3D_Randomizer.cia``` to ```SD:/cias/```. When using the ```.3dsx``` file, you will need to launch the randomzier app through the homebrew menu every time you wish to launch it. When using the ```.cia``` file, you will need to install the file using the FBI app, so that the randomizer app appears directly on the 3DS home menu. Alternatively, if your 3DS is connected to the internet, you can use FBI to scan the QR code for either the ```.3dsx``` file or the ```.cia``` file, and the randomizer will be downloaded and installed automatically.
