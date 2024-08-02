@@ -1,4 +1,4 @@
 #pragma once
 
-#define RANDOMIZER_VERSION "v3.1"
+#define RANDOMIZER_VERSION "v4.0"
 #define COMMIT_NUMBER "develop"
