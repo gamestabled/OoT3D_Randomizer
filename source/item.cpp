@@ -9,13 +9,13 @@
 #include "../code/src/item_override.h"
 
 Item::Item(ItemType type_, int getItemId_, ItemClass class_, bool* logicVar_, HintKey hintKey_, u16 price_, Text name_)
-    : type(type_), getItemId(getItemId_), itemClass(class_), logicVar(logicVar_), hintKey(hintKey_),
-      price(price_), name(std::move(name_)) {
+    : type(type_), getItemId(getItemId_), itemClass(class_), logicVar(logicVar_), hintKey(hintKey_), price(price_),
+      name(std::move(name_)) {
 }
 
 Item::Item(ItemType type_, int getItemId_, ItemClass class_, u8* logicVar_, HintKey hintKey_, u16 price_, Text name_)
-    : type(type_), getItemId(getItemId_), itemClass(class_), logicVar(logicVar_), hintKey(hintKey_),
-      price(price_), name(std::move(name_)) {
+    : type(type_), getItemId(getItemId_), itemClass(class_), logicVar(logicVar_), hintKey(hintKey_), price(price_),
+      name(std::move(name_)) {
 }
 
 Item::Item(ItemType type_, int getItemId_, ItemClass class_, bool* logicVar_, HintKey hintKey_, Text name_)
