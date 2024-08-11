@@ -1102,7 +1102,11 @@ int Fill() {
         std::vector<ItemKey> remainingAdvancementItems =
             FilterAndEraseFromPool(ItemPool, [](const ItemKey i) { return ItemTable(i).IsAdvancement(); });
         AssumedFill(remainingAdvancementItems, allLocations, true);
-
+        // Then place any remaining non-junk items
+        // Fast fill as these don't affect logic
+        std::vector<ItemKey> remainingNonJunkItems =
+            FilterAndEraseFromPool(ItemPool, [](const ItemKey i) { return !ItemTable(i).IsJunk(); });
+        FastFill(remainingNonJunkItems, GetAllEmptyLocations(), true);
         // Fast fill for the rest of the pool
         std::vector<ItemKey> remainingPool = FilterAndEraseFromPool(ItemPool, [](const ItemKey i) { return true; });
         FastFill(remainingPool, GetAllEmptyLocations(), false);
