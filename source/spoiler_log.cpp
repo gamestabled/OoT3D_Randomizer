@@ -617,7 +617,7 @@ static void WritePlaythrough(tinyxml2::XMLDocument& spoilerLog, const bool colla
             WriteLocation(sphereNode, key, true);
         }
     }
-    
+
     if (collapsible) {
         spoilerLog.RootElement()->InsertEndChild(CreateCollapseCheckbox(spoilerLog));
     }
