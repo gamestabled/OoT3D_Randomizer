@@ -385,7 +385,7 @@ static void WriteShuffledEntrance(tinyxml2::XMLElement* parentNode, Entrance* en
 }
 
 // Create a checkbox that collapses the next section when checked
-static tinyxml2::XMLElement *CreateCollapseCheckbox(tinyxml2::XMLDocument& spoilerLog,
+static tinyxml2::XMLElement* CreateCollapseCheckbox(tinyxml2::XMLDocument& spoilerLog,
                                                     const bool startCollapsed = true) {
     auto collapseCheckbox = spoilerLog.NewElement("h:input");
     collapseCheckbox->SetAttribute("type", "checkbox");
