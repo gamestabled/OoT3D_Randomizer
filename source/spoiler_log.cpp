@@ -385,7 +385,8 @@ static void WriteShuffledEntrance(tinyxml2::XMLElement* parentNode, Entrance* en
 }
 
 // Create a checkbox that collapses the next section when checked
-static tinyxml2::XMLElement *CreateCollapseCheckbox(tinyxml2::XMLDocument& spoilerLog, const bool startCollapsed = true) {
+static tinyxml2::XMLElement *CreateCollapseCheckbox(tinyxml2::XMLDocument& spoilerLog,
+                                                    const bool startCollapsed = true) {
     auto collapseCheckbox = spoilerLog.NewElement("h:input");
     collapseCheckbox->SetAttribute("type", "checkbox");
     collapseCheckbox->SetAttribute("class", "collapse");
@@ -714,14 +715,13 @@ bool SpoilerLog_Write() {
     rootNode->SetAttribute("version", Settings::version.c_str());
     rootNode->SetAttribute("seed", Settings::seed.c_str());
     rootNode->SetAttribute("hash", GetRandomizerHashAsString().c_str());
-    rootNode->SetAttribute("xmlns:h" ,"http://www.w3.org/1999/xhtml");
+    rootNode->SetAttribute("xmlns:h", "http://www.w3.org/1999/xhtml");
 
     auto hideSpoilersCheckbox = spoilerLog.NewElement("h:input");
     hideSpoilersCheckbox->SetAttribute("type", "checkbox");
     hideSpoilersCheckbox->SetAttribute("checked", "");
     hideSpoilersCheckbox->SetAttribute("id", "hide-spoilers");
     rootNode->InsertEndChild(hideSpoilersCheckbox);
-
 
     WriteSettings(spoilerLog);
     WriteExcludedLocations(spoilerLog);
