@@ -1,5 +1,10 @@
 .arm
 
+.section .patch_loader
+.global loader_patch
+loader_patch:
+    b hook_into_loader
+
 .section .patch_before_GlobalContext_Update
 .global before_GlobalContext_Update_patch
 before_GlobalContext_Update_patch:
@@ -2246,11 +2251,3 @@ HandleTextControlCode_patch:
 .global CheckForTextControlCode_patch
 CheckForTextControlCode_patch:
     bl hook_CheckForTextControlCode
-
-@ ----------------------------------
-@ ----------------------------------
-
-.section .patch_loader
-.global loader_patch
-loader_patch:
-    b hook_into_loader
