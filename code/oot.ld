@@ -148,6 +148,14 @@ SECTIONS
 		*(.patch_ScrubNutUpgradeOne)
 	}
 
+	.patch_GrogCheckForShouldDespawn 0x16485C : {
+		*(.patch_GrogCheckForShouldDespawn)
+	}
+
+	.patch_CheckFadoCanSpawnInLostWoods 0x1657EC : {
+		*(.patch_CheckFadoCanSpawnInLostWoods)
+	}
+
 	.patch_EnKoInitCheckForest_165834 0x165834 : {
 		*(.patch_EnKoInitCheckForest_165834)
 	}
@@ -180,14 +188,6 @@ SECTIONS
 		*(.patch_SariasSongCheckFlag)
 	}
 
-	.patch_GrogCheckForShouldDespawn 0x16485C : {
-		*(.patch_GrogCheckForShouldDespawn)
-	}
-
-	.patch_CheckFadoCanSpawnInLostWoods 0x1657EC : {
-		*(.patch_CheckFadoCanSpawnInLostWoods)
-	}
-
 	.patch_RandomGsLoc_BlockSpawn_Tree 0x16C43C : {
 		*(.patch_RandomGsLoc_BlockSpawn_Tree)
 	}
@@ -201,7 +201,7 @@ SECTIONS
 	}
 
 	.patch_MaskSalesmanBorrowMask 0x16D148 : {
-	    *(patch_MaskSalesmanBorrowMask)
+	    *(.patch_MaskSalesmanBorrowMask)
 	}
 
 	.patch_KingZoraIgnoreSapphire 0x1736B8 : {
@@ -929,7 +929,7 @@ SECTIONS
 	}
 
 	.patch_MaskSalesmanCheckNoMaskOne 0x372B64 : {
-	    *(.patch_MaskSalesmanCheckNoMask)
+	    *(.patch_MaskSalesmanCheckNoMaskOne)
 	}
 
 	.patch_MaskSalesmanCheckNoMaskTwo 0x372B70 : {
@@ -1104,6 +1104,18 @@ SECTIONS
 		*(.patch_MalonNextAction)
 	}
 
+	.patch_BombPurchaseableCheck 0x3CE800 : {
+		*(.patch_BombPurchaseableCheck)
+	}
+
+	.patch_ScrubStickUpgradeTwo 0x3CE990 : {
+		*(.patch_ScrubStickUpgradeTwo)
+	}
+
+	.patch_ScrubNutUpgradeTwo 0x3CE9DC : {
+		*(.patch_ScrubNutUpgradeTwo)
+	}
+
 	.patch_GrannySetRewardFlag 0x3D0E34 : {
 		*(.patch_GrannySetRewardFlag)
 	}
@@ -1118,18 +1130,6 @@ SECTIONS
 
 	.patch_ShadowShip_Speed 0x3DFB30 : {
 		*(.patch_ShadowShip_Speed)
-	}
-
-	.patch_BombPurchaseableCheck 0x3CE800 : {
-		*(.patch_BombPurchaseableCheck)
-	}
-
-	.patch_ScrubStickUpgradeTwo 0x3CE990 : {
-		*(.patch_ScrubStickUpgradeTwo)
-	}
-
-	.patch_ScrubNutUpgradeTwo 0x3CE9DC : {
-		*(.patch_ScrubNutUpgradeTwo)
 	}
 
 	.patch_FireBlockSpeed 0x3E0BB4 : {
@@ -1282,10 +1282,6 @@ SECTIONS
 		*(.patch_BeforeLoadGame)
 	}
 
-	.patch_AfterLoadGame 0x449F00 + region_offset : {
-		*(.patch_AfterLoadGame)
-	}
-
 	.patch_DontSetMotionSetting 0x447410 + region_offset : {
 		*(.patch_DontSetMotionSetting)
 	}
@@ -1324,6 +1320,10 @@ SECTIONS
 
 	.patch_Multiplayer_OnLoadFile 0x449EFC + region_offset : {
 		*(.patch_Multiplayer_OnLoadFile)
+	}
+
+	.patch_AfterLoadGame 0x449F00 + region_offset : {
+		*(.patch_AfterLoadGame)
 	}
 
 	.patch_GetCustomMessageEntryTwo 0x44D564 + region_offset : {
@@ -1550,12 +1550,12 @@ SECTIONS
 		*(.patch_SwapFaroresWind)
 	}
 
-	.patch_SkipTimeTravelCutsceneTwo 0x4918C8 + region_offset : {
-		*(.patch_SkipTimeTravelCutsceneTwo)
-	}
-
 	.patch_SwapAgeIgnoreSceneSetup 0x4918B0 + region_offset : {
 		*(.patch_SwapAgeIgnoreSceneSetup)
+	}
+
+	.patch_SkipTimeTravelCutsceneTwo 0x4918C8 + region_offset : {
+		*(.patch_SkipTimeTravelCutsceneTwo)
 	}
 
 	.patch_DMTOwlEntranceOverride 0x492064 + region_offset : {
@@ -1643,14 +1643,6 @@ SECTIONS
 		*(.patch_PhantomGanonLightningID)
 	}
 
-	.patch_GohmaLarvaID 0x525F24 : {
-		*(.patch_GohmaLarvaID)
-	}
-
-	.patch_VolvagiaRockID 0x52FDB4 : {
-		*(.patch_VolvagiaRockID)
-	}
-
 	.patch_BombchuCheapestPriceOne 0x525348 : {
 		*(.patch_BombchuCheapestPriceOne)
 	}
@@ -1667,8 +1659,16 @@ SECTIONS
 		*(.patch_BombchuCheapestPriceFour)
 	}
 
+	.patch_GohmaLarvaID 0x525F24 : {
+		*(.patch_GohmaLarvaID)
+	}
+
 	.patch_OcarinaMinigameRewardsOrder 0x52ED10 : {
 		*(.patch_OcarinaMinigameRewardsOrder)
+	}
+
+	.patch_VolvagiaRockID 0x52FDB4 : {
+		*(.patch_VolvagiaRockID)
 	}
 
 	.patch_TycoonWalletSize 0x53CC08 : {
@@ -1678,11 +1678,15 @@ SECTIONS
 	. = 0x005C7000;
 	.text : {
 		__text_start = . ;
-		*(.text)
-		*(.text.*)
-		*(.rodata)
-		*(.data)
-		*(.bss)
+		*(.text*)
+		*(.rodata*)
+		*(.data*)
+		*(.bss*)
+		*(.init*)
+		*(.fini*)
+		*(.eh_frame*)
+		*(.init_array*)
+		*(.fini_array*)
 		*(COMMON)
 		rCustomMessages = . ;
 		__text_end  = . ;
