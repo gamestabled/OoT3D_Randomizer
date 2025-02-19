@@ -147,16 +147,13 @@ void WriteIngameSpoilerLog() {
         if (loc->IsExcluded()) {
             continue;
         }
-        // Master Sword
-        else if (!Settings::ShuffleMasterSword && key == TOT_MASTER_SWORD) {
-            continue;
-        }
         // Cows
         else if (!Settings::ShuffleCows && loc->IsCategory(Category::cCow)) {
             continue;
         }
         // Merchants
-        else if (Settings::ShuffleMerchants.Is(SHUFFLEMERCHANTS_OFF) && loc->IsCategory(Category::cMerchant)) {
+        else if (Settings::ShuffleMerchants.Is(SHUFFLEMERCHANTS_OFF) && loc->IsCategory(Category::cMerchant) &&
+                 key != WASTELAND_BOMBCHU_SALESMAN) { // The bombchu salesman is handled below
             continue;
         }
         // Adult Trade
@@ -233,6 +230,9 @@ void WriteIngameSpoilerLog() {
             splrDatLoc->ItemLocations[spoilerItemIndex].RevealType  = REVEALTYPE_ALWAYS;
         } else if (key == ZR_MAGIC_BEAN_SALESMAN && !Settings::ShuffleMagicBeans) {
             splrDatLoc->ItemLocations[spoilerItemIndex].RevealType = REVEALTYPE_ALWAYS;
+        } else if (key == WASTELAND_BOMBCHU_SALESMAN && Settings::ShuffleMerchants.Is(SHUFFLEMERCHANTS_OFF)) {
+            splrDatLoc->ItemLocations[spoilerItemIndex].CollectType = COLLECTTYPE_REPEATABLE;
+            splrDatLoc->ItemLocations[spoilerItemIndex].RevealType  = REVEALTYPE_ALWAYS;
         }
         // Shops
         else if (loc->IsShop()) {
