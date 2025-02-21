@@ -101,7 +101,7 @@ SECTIONS
 	}
 
 	.patch_JabuSwitchRutoCheck 0x143AC8 : {
-	  *(.patch_JabuSwitchRutoCheck)
+		*(.patch_JabuSwitchRutoCheck)
 	}
 
 	.patch_OwlMagicCheck 0x144B44 : {
@@ -201,7 +201,7 @@ SECTIONS
 	}
 
 	.patch_MaskSalesmanBorrowMask 0x16D148 : {
-	    *(.patch_MaskSalesmanBorrowMask)
+		*(.patch_MaskSalesmanBorrowMask)
 	}
 
 	.patch_KingZoraIgnoreSapphire 0x1736B8 : {
@@ -513,11 +513,11 @@ SECTIONS
 	}
 
 	.patch_DungeonCheckJabuMQBox 0x21590C : {
-	  *(.patch_DungeonCheckJabuMQBox)
+		*(.patch_DungeonCheckJabuMQBox)
 	}
 
 	.patch_JabuBoxCheckRuto 0x215934 : {
-	  *(.patch_JabuBoxCheckRuto)
+		*(.patch_JabuBoxCheckRuto)
 	}
 
 	.patch_DekuTheaterMaskOfTruth 0x21CA30 : {
@@ -617,7 +617,7 @@ SECTIONS
 	}
 
 	.patch_MaskSalesmanGiveMaskOfTruth 0x271D48 : {
-	    *(.patch_MaskSalesmanGiveMaskOfTruth)
+		*(.patch_MaskSalesmanGiveMaskOfTruth)
 	}
 
 	.patch_SongOfTimeJingle 0x274B1C : {
@@ -721,19 +721,19 @@ SECTIONS
 	}
 
 	.patch_CamUpdate 0x2D84C8 : {
-	    * (.patch_CamUpdate)
+		*(.patch_CamUpdate)
 	}
 
 	.patch_CamRoll 0x2D88E4 : {
-	    *(.patch_CamRoll)
+		*(.patch_CamRoll)
 	}
 
 	.patch_CheckForTextControlCode 0x2E0490 : {
-	    * (.patch_CheckForTextControlCode)
+		*(.patch_CheckForTextControlCode)
 	}
 
 	.patch_HandleTextControlCode 0x2E057C : {
-	    * (.patch_HandleTextControlCode)
+		*(.patch_HandleTextControlCode)
 	}
 
 	.patch_SceneInitAfterCopyScenes 0x2EAFDC : {
@@ -761,7 +761,7 @@ SECTIONS
 	}
 
 	.patch_OcarinaNoteButtonsDraw 0x2F9430 : {
-	    * (.patch_OcarinaNoteButtonsDraw)
+		*(.patch_OcarinaNoteButtonsDraw)
 	}
 
 	.patch_SaveGame 0x2FBFA8 : {
@@ -781,15 +781,15 @@ SECTIONS
 	}
 
 	.patch_OoBBombchuOne 0x315120 : {
-        *(.patch_OoBBombchuOne)
+		*(.patch_OoBBombchuOne)
 	}
 
 	.patch_OoBBombchuTwo 0x31513C : {
-        *(.patch_OoBBombchuTwo)
+		*(.patch_OoBBombchuTwo)
 	}
 
 	.patch_OoBBombchuThree 0x315150 : {
-        *(.patch_OoBBombchuThree)
+		*(.patch_OoBBombchuThree)
 	}
 
 	.patch_CollisionATvsAC 0x3191B0 : {
@@ -929,11 +929,11 @@ SECTIONS
 	}
 
 	.patch_MaskSalesmanCheckNoMaskOne 0x372B64 : {
-	    *(.patch_MaskSalesmanCheckNoMaskOne)
+		*(.patch_MaskSalesmanCheckNoMaskOne)
 	}
 
 	.patch_MaskSalesmanCheckNoMaskTwo 0x372B70 : {
-	    *(.patch_MaskSalesmanCheckNoMaskTwo)
+		*(.patch_MaskSalesmanCheckNoMaskTwo)
 	}
 
 	.patch_ConvertBombDropTwo 0x3747A4 : {
@@ -1248,7 +1248,7 @@ SECTIONS
 	region_offset = DEFINED(_EUR_) ? 0x24 : 0;
 
 	.patch_OcarinaNoteButtonsPress 0x41AAAC + region_offset : {
-	    * (.patch_OcarinaNoteButtonsPress)
+		*(.patch_OcarinaNoteButtonsPress)
 	}
 
 	.patch_CurseTrapDizzyStick 0x41AB24 + region_offset : {
@@ -1291,7 +1291,7 @@ SECTIONS
 	}
 
 	.patch_CheckForWeirdEggHatchGameplayInit 0x448A64 + region_offset : {
-	    *(.patch_CheckForWeirdEggHatchGameplayInit)
+		*(.patch_CheckForWeirdEggHatchGameplayInit)
 	}
 
 	.patch_CheckForPocketCuccoHatchGameplayInit 0x448A80 + region_offset : {
@@ -1491,7 +1491,7 @@ SECTIONS
 	}
 
 	.patch_CheckForWeirdEggHatchKankyo 0x470D00 + region_offset : {
-	    *(.patch_CheckForWeirdEggHatchKankyo)
+		*(.patch_CheckForWeirdEggHatchKankyo)
 	}
 
 	.patch_CheckForPocketCuccoHatchKankyo 0x470D1C + region_offset : {
@@ -1689,6 +1689,6 @@ SECTIONS
 		*(.fini_array*)
 		*(COMMON)
 		rCustomMessages = . ;
-		__text_end  = . ;
+		__text_end = . ;
 	}
 }
