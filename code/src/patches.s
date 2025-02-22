@@ -2251,3 +2251,13 @@ HandleTextControlCode_patch:
 .global CheckForTextControlCode_patch
 CheckForTextControlCode_patch:
     bl hook_CheckForTextControlCode
+
+.section .patch_PlayInit
+.global PlayInit_patch
+PlayInit_patch:
+    bl hook_PlayInit
+
+.section .patch_TitleLinkObject
+.global TitleLinkObject_patch
+TitleLinkObject_patch:
+    .word 0xFFFF0014

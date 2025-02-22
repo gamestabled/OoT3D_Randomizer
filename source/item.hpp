@@ -27,13 +27,19 @@ enum ItemType {
     ITEMTYPE_ENEMY_SOUL,
 };
 
+enum ItemClass {
+    ITEMCLASS_JUNK,
+    ITEMCLASS_ADVANCEMENT,
+    ITEMCLASS_NONE,
+};
+
 class Item {
   public:
     Item() = default;
-    Item(ItemType type_, int getItemId_, bool advancement_, bool* logicVar_, HintKey hintKey_, u16 price_, Text name_);
-    Item(ItemType type_, int getItemId_, bool advancement_, u8* logicVar_, HintKey hintKey_, u16 price_, Text name_);
-    Item(ItemType type_, int getItemId_, bool advancement_, bool* logicVar_, HintKey hintKey_, Text name_);
-    Item(ItemType type_, int getItemId_, bool advancement_, u8* logicVar_, HintKey hintKey_, Text name_);
+    Item(ItemType type_, int getItemId_, ItemClass class_, bool* logicVar_, HintKey hintKey_, u16 price_, Text name_);
+    Item(ItemType type_, int getItemId_, ItemClass class_, u8* logicVar_, HintKey hintKey_, u16 price_, Text name_);
+    Item(ItemType type_, int getItemId_, ItemClass class_, bool* logicVar_, HintKey hintKey_, Text name_);
+    Item(ItemType type_, int getItemId_, ItemClass class_, u8* logicVar_, HintKey hintKey_, Text name_);
     ~Item();
 
     void ApplyEffect();
@@ -46,7 +52,11 @@ class Item {
     }
 
     bool IsAdvancement() const {
-        return advancement;
+        return itemClass == ITEMCLASS_ADVANCEMENT;
+    }
+
+    bool IsJunk() const {
+        return itemClass == ITEMCLASS_JUNK;
     }
 
     int GetItemID() const {
@@ -142,7 +152,7 @@ class Item {
   private:
     ItemType type;
     int getItemId;
-    bool advancement;
+    ItemClass itemClass;
     std::variant<bool*, u8*> logicVar;
     HintKey hintKey;
     u16 price;

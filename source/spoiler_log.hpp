@@ -9,7 +9,7 @@
 
 using RandomizerHash = std::array<std::string, 5>;
 
-void CreateLogDirectories(FS_Archive sdmcArchive);
+void InitLogDirectories(FS_Archive sdmcArchive);
 
 void GenerateHash();
 const RandomizerHash& GetRandomizerHash();

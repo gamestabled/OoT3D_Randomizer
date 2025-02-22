@@ -1271,6 +1271,10 @@ SECTIONS
 		*(.patch_ItemsMenuDraw)
 	}
 
+	.patch_PlayInit 0x4352F4 + region_offset : {
+		*(.patch_PlayInit)
+	}
+
 	/* Variation of regional differences: 0x436690 */
 	region_offset = DEFINED(_EUR_) ? 0x20 : 0;
 
@@ -1673,6 +1677,10 @@ SECTIONS
 
 	.patch_TycoonWalletSize 0x53CC08 : {
 		*(.patch_TycoonWalletSize)
+	}
+
+	.patch_TitleLinkObject 0x53CCF0 : {
+		*(.patch_TitleLinkObject)
 	}
 
 	. = 0x005C7000;

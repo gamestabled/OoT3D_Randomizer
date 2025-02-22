@@ -1,0 +1,191 @@
+:root {
+    padding: 1.5rem 3rem;
+    font-size: 16px;
+    font-family: monospace;
+}
+
+spoiler-log::before {
+    display: block;
+    content: "Version: " attr(version) "\ASeed: " attr(seed) "\AHash: " attr(hash);
+    white-space: pre;
+    margin-bottom: 1em;;
+}
+
+/* Collapsible content */
+.collapse {
+    display: block;
+    float: left;
+    appearance: none;
+    --checkbox-size: 2.5rem;
+}
+
+:is(playthrough, entrance-playthrough) .collapse {
+    --checkbox-size: 1.3rem !important;
+    margin-left: 3rem;
+}
+
+.collapse::before {
+    display: block;
+    content: "🞃";
+    height: var(--checkbox-size);
+    width: var(--checkbox-size);
+    font-size: var(--checkbox-size);
+    line-height: var(--checkbox-size);
+    position: relative;
+    font-weight: bolder;
+}
+
+.collapse:checked::before {
+    content: "🞂";
+}
+
+.collapse:checked + * > * {
+    display: none;
+}
+
+/* Hidden sections */
+settings *, /* Making the `settings` itself tag be displayable but hiding its sub-elements so we can use `settings::before` to display the "Hide spoilers" text */
+excluded-locations,
+enabled-tricks,
+enabled-glitches,
+required-trials,
+hints {
+    display: none;
+}
+
+/* Headers */
+starting-inventory,
+gold-skulltulas,
+playthrough,
+way-of-the-hero-locations,
+entrance-playthrough,
+all-locations,
+master-quest-dungeons {
+    display: block;
+    border-collapse: collapse;
+}
+
+:is(starting-inventory,
+gold-skulltulas,
+playthrough,
+way-of-the-hero-locations,
+entrance-playthrough,
+all-locations,
+master-quest-dungeons)::before {
+    display: block;
+    font-size: 2.5rem;
+}
+
+starting-inventory::before { content: "Starting inventory:"; }
+gold-skulltulas::before { content: "Gold Skulltulas:"; }
+playthrough::before { content: "Playthrough:"; }
+way-of-the-hero-locations::before { content: "Way of the Hero locations:"; }
+entrance-playthrough::before { content: "Entrance playthrough:"; }
+all-locations::before { content: "All locations:"; }
+master-quest-dungeons::before { content: "Master Quest dungeons:"; }
+
+sphere {
+    display: block;
+    margin-left: 3rem;
+}
+
+sphere::before {
+    display: block;
+    font-size: 1.5rem;
+    content: "Sphere " attr(level) ":";
+}
+
+/* Items */
+item, gs, location, dungeon, entrance {
+    display: table-row;
+    border-bottom: 1px solid black;
+}
+
+:is(item, gs, location, dungeon, entrance):last-child {
+    border-bottom: none;
+}
+
+:is(item, gs, location, dungeon, entrance)::before {
+    display: table-cell;
+    content: attr(name);
+    padding-right: 2rem;
+    padding-left: 3rem;
+    padding-top: 0.4rem;
+    padding-bottom: 0.4rem;
+    user-select: text;
+}
+
+:is(item, gs, location, dungeon, entrance)::after {
+    display: table-cell;
+    content: "";
+}
+
+[price]::after {
+    display: table-cell;
+    content: " (" attr(price) " rupees)";
+    margin-left: 1rem;
+}
+
+/* Hide spoilers button */
+#hide-spoilers + *::before {
+    display: block;
+    font-size: 2.3rem;
+    content: "Hide spoilers";
+    margin-bottom: 1rem;
+}
+
+#hide-spoilers {
+    appearance: none;
+    display: block;
+    position: relative;
+    float: left;
+    margin-right: 1rem;
+    top: 0.2rem;
+}
+
+#hide-spoilers::after {
+    display: inline-block;
+    content: "";
+    width: 1.5rem;
+    height: 1.5rem;
+    background-color: #fff;
+    border-radius: 0.75rem;
+    position: absolute;
+    top: 0.25rem;
+    left: 0.25rem;
+    transition-property: left;
+    transition-duration: 0.3s;
+}
+
+#hide-spoilers:checked::after {
+    left: 2.25rem;;
+}
+
+#hide-spoilers::before {
+    display: inline-block;
+    content: "";
+    width: 4rem;
+    height: 2rem;
+    background-color: #888;
+    border-radius: 1rem;
+    transition-property: background-color;
+    transition-duration: 0.3s;
+}
+
+#hide-spoilers:checked::before {
+    background-color: #5252e4;
+}
+
+/* Hidden spoilers */
+#hide-spoilers:checked ~ * :is(gs, location, dungeon, entrance) {
+    background-color: #000;
+}
+
+/* Don't need to hide the location names for these */
+gs::before, all-locations location::before, entrance::before {
+    background-color: #fff;
+}
+
+#hide-spoilers:checked ~ * :is(gs, location, dungeon, entrance):hover {
+    background-color: #fff;
+}

@@ -169,7 +169,7 @@ static std::vector<LocationKey> GetAccessibleGossipStones(const LocationKey hint
 
 static void AddHint(Text hint, const LocationKey gossipStone, const std::vector<u8>& colors = {}) {
     // save hints as dummy items for writing to the spoiler log
-    NewItem(gossipStone, Item{ ITEMTYPE_EVENT, GI_RUPEE_BLUE_LOSE, false, &noVariable, NONE, hint });
+    NewItem(gossipStone, Item{ ITEMTYPE_EVENT, GI_RUPEE_BLUE_LOSE, ITEMCLASS_NONE, &noVariable, NONE, hint });
     Location(gossipStone)->SetPlacedItem(gossipStone);
 
     // create the in game message
