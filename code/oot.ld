@@ -101,7 +101,7 @@ SECTIONS
 	}
 
 	.patch_JabuSwitchRutoCheck 0x143AC8 : {
-	  *(.patch_JabuSwitchRutoCheck)
+		*(.patch_JabuSwitchRutoCheck)
 	}
 
 	.patch_OwlMagicCheck 0x144B44 : {
@@ -148,6 +148,14 @@ SECTIONS
 		*(.patch_ScrubNutUpgradeOne)
 	}
 
+	.patch_GrogCheckForShouldDespawn 0x16485C : {
+		*(.patch_GrogCheckForShouldDespawn)
+	}
+
+	.patch_CheckFadoCanSpawnInLostWoods 0x1657EC : {
+		*(.patch_CheckFadoCanSpawnInLostWoods)
+	}
+
 	.patch_EnKoInitCheckForest_165834 0x165834 : {
 		*(.patch_EnKoInitCheckForest_165834)
 	}
@@ -180,14 +188,6 @@ SECTIONS
 		*(.patch_SariasSongCheckFlag)
 	}
 
-	.patch_GrogCheckForShouldDespawn 0x16485C : {
-		*(.patch_GrogCheckForShouldDespawn)
-	}
-
-	.patch_CheckFadoCanSpawnInLostWoods 0x1657EC : {
-		*(.patch_CheckFadoCanSpawnInLostWoods)
-	}
-
 	.patch_RandomGsLoc_BlockSpawn_Tree 0x16C43C : {
 		*(.patch_RandomGsLoc_BlockSpawn_Tree)
 	}
@@ -201,7 +201,7 @@ SECTIONS
 	}
 
 	.patch_MaskSalesmanBorrowMask 0x16D148 : {
-	    *(patch_MaskSalesmanBorrowMask)
+		*(.patch_MaskSalesmanBorrowMask)
 	}
 
 	.patch_KingZoraIgnoreSapphire 0x1736B8 : {
@@ -513,11 +513,11 @@ SECTIONS
 	}
 
 	.patch_DungeonCheckJabuMQBox 0x21590C : {
-	  *(.patch_DungeonCheckJabuMQBox)
+		*(.patch_DungeonCheckJabuMQBox)
 	}
 
 	.patch_JabuBoxCheckRuto 0x215934 : {
-	  *(.patch_JabuBoxCheckRuto)
+		*(.patch_JabuBoxCheckRuto)
 	}
 
 	.patch_DekuTheaterMaskOfTruth 0x21CA30 : {
@@ -617,7 +617,7 @@ SECTIONS
 	}
 
 	.patch_MaskSalesmanGiveMaskOfTruth 0x271D48 : {
-	    *(.patch_MaskSalesmanGiveMaskOfTruth)
+		*(.patch_MaskSalesmanGiveMaskOfTruth)
 	}
 
 	.patch_SongOfTimeJingle 0x274B1C : {
@@ -721,19 +721,19 @@ SECTIONS
 	}
 
 	.patch_CamUpdate 0x2D84C8 : {
-	    * (.patch_CamUpdate)
+		*(.patch_CamUpdate)
 	}
 
 	.patch_CamRoll 0x2D88E4 : {
-	    *(.patch_CamRoll)
+		*(.patch_CamRoll)
 	}
 
 	.patch_CheckForTextControlCode 0x2E0490 : {
-	    * (.patch_CheckForTextControlCode)
+		*(.patch_CheckForTextControlCode)
 	}
 
 	.patch_HandleTextControlCode 0x2E057C : {
-	    * (.patch_HandleTextControlCode)
+		*(.patch_HandleTextControlCode)
 	}
 
 	.patch_SceneInitAfterCopyScenes 0x2EAFDC : {
@@ -761,7 +761,7 @@ SECTIONS
 	}
 
 	.patch_OcarinaNoteButtonsDraw 0x2F9430 : {
-	    * (.patch_OcarinaNoteButtonsDraw)
+		*(.patch_OcarinaNoteButtonsDraw)
 	}
 
 	.patch_SaveGame 0x2FBFA8 : {
@@ -781,15 +781,15 @@ SECTIONS
 	}
 
 	.patch_OoBBombchuOne 0x315120 : {
-        *(.patch_OoBBombchuOne)
+		*(.patch_OoBBombchuOne)
 	}
 
 	.patch_OoBBombchuTwo 0x31513C : {
-        *(.patch_OoBBombchuTwo)
+		*(.patch_OoBBombchuTwo)
 	}
 
 	.patch_OoBBombchuThree 0x315150 : {
-        *(.patch_OoBBombchuThree)
+		*(.patch_OoBBombchuThree)
 	}
 
 	.patch_CollisionATvsAC 0x3191B0 : {
@@ -929,11 +929,11 @@ SECTIONS
 	}
 
 	.patch_MaskSalesmanCheckNoMaskOne 0x372B64 : {
-	    *(.patch_MaskSalesmanCheckNoMask)
+		*(.patch_MaskSalesmanCheckNoMaskOne)
 	}
 
 	.patch_MaskSalesmanCheckNoMaskTwo 0x372B70 : {
-	    *(.patch_MaskSalesmanCheckNoMaskTwo)
+		*(.patch_MaskSalesmanCheckNoMaskTwo)
 	}
 
 	.patch_ConvertBombDropTwo 0x3747A4 : {
@@ -1104,6 +1104,18 @@ SECTIONS
 		*(.patch_MalonNextAction)
 	}
 
+	.patch_BombPurchaseableCheck 0x3CE800 : {
+		*(.patch_BombPurchaseableCheck)
+	}
+
+	.patch_ScrubStickUpgradeTwo 0x3CE990 : {
+		*(.patch_ScrubStickUpgradeTwo)
+	}
+
+	.patch_ScrubNutUpgradeTwo 0x3CE9DC : {
+		*(.patch_ScrubNutUpgradeTwo)
+	}
+
 	.patch_GrannySetRewardFlag 0x3D0E34 : {
 		*(.patch_GrannySetRewardFlag)
 	}
@@ -1118,18 +1130,6 @@ SECTIONS
 
 	.patch_ShadowShip_Speed 0x3DFB30 : {
 		*(.patch_ShadowShip_Speed)
-	}
-
-	.patch_BombPurchaseableCheck 0x3CE800 : {
-		*(.patch_BombPurchaseableCheck)
-	}
-
-	.patch_ScrubStickUpgradeTwo 0x3CE990 : {
-		*(.patch_ScrubStickUpgradeTwo)
-	}
-
-	.patch_ScrubNutUpgradeTwo 0x3CE9DC : {
-		*(.patch_ScrubNutUpgradeTwo)
 	}
 
 	.patch_FireBlockSpeed 0x3E0BB4 : {
@@ -1248,7 +1248,7 @@ SECTIONS
 	region_offset = DEFINED(_EUR_) ? 0x24 : 0;
 
 	.patch_OcarinaNoteButtonsPress 0x41AAAC + region_offset : {
-	    * (.patch_OcarinaNoteButtonsPress)
+		*(.patch_OcarinaNoteButtonsPress)
 	}
 
 	.patch_CurseTrapDizzyStick 0x41AB24 + region_offset : {
@@ -1286,10 +1286,6 @@ SECTIONS
 		*(.patch_BeforeLoadGame)
 	}
 
-	.patch_AfterLoadGame 0x449F00 + region_offset : {
-		*(.patch_AfterLoadGame)
-	}
-
 	.patch_DontSetMotionSetting 0x447410 + region_offset : {
 		*(.patch_DontSetMotionSetting)
 	}
@@ -1299,7 +1295,7 @@ SECTIONS
 	}
 
 	.patch_CheckForWeirdEggHatchGameplayInit 0x448A64 + region_offset : {
-	    *(.patch_CheckForWeirdEggHatchGameplayInit)
+		*(.patch_CheckForWeirdEggHatchGameplayInit)
 	}
 
 	.patch_CheckForPocketCuccoHatchGameplayInit 0x448A80 + region_offset : {
@@ -1328,6 +1324,10 @@ SECTIONS
 
 	.patch_Multiplayer_OnLoadFile 0x449EFC + region_offset : {
 		*(.patch_Multiplayer_OnLoadFile)
+	}
+
+	.patch_AfterLoadGame 0x449F00 + region_offset : {
+		*(.patch_AfterLoadGame)
 	}
 
 	.patch_GetCustomMessageEntryTwo 0x44D564 + region_offset : {
@@ -1495,7 +1495,7 @@ SECTIONS
 	}
 
 	.patch_CheckForWeirdEggHatchKankyo 0x470D00 + region_offset : {
-	    *(.patch_CheckForWeirdEggHatchKankyo)
+		*(.patch_CheckForWeirdEggHatchKankyo)
 	}
 
 	.patch_CheckForPocketCuccoHatchKankyo 0x470D1C + region_offset : {
@@ -1554,12 +1554,12 @@ SECTIONS
 		*(.patch_SwapFaroresWind)
 	}
 
-	.patch_SkipTimeTravelCutsceneTwo 0x4918C8 + region_offset : {
-		*(.patch_SkipTimeTravelCutsceneTwo)
-	}
-
 	.patch_SwapAgeIgnoreSceneSetup 0x4918B0 + region_offset : {
 		*(.patch_SwapAgeIgnoreSceneSetup)
+	}
+
+	.patch_SkipTimeTravelCutsceneTwo 0x4918C8 + region_offset : {
+		*(.patch_SkipTimeTravelCutsceneTwo)
 	}
 
 	.patch_DMTOwlEntranceOverride 0x492064 + region_offset : {
@@ -1647,14 +1647,6 @@ SECTIONS
 		*(.patch_PhantomGanonLightningID)
 	}
 
-	.patch_GohmaLarvaID 0x525F24 : {
-		*(.patch_GohmaLarvaID)
-	}
-
-	.patch_VolvagiaRockID 0x52FDB4 : {
-		*(.patch_VolvagiaRockID)
-	}
-
 	.patch_BombchuCheapestPriceOne 0x525348 : {
 		*(.patch_BombchuCheapestPriceOne)
 	}
@@ -1671,8 +1663,16 @@ SECTIONS
 		*(.patch_BombchuCheapestPriceFour)
 	}
 
+	.patch_GohmaLarvaID 0x525F24 : {
+		*(.patch_GohmaLarvaID)
+	}
+
 	.patch_OcarinaMinigameRewardsOrder 0x52ED10 : {
 		*(.patch_OcarinaMinigameRewardsOrder)
+	}
+
+	.patch_VolvagiaRockID 0x52FDB4 : {
+		*(.patch_VolvagiaRockID)
 	}
 
 	.patch_TycoonWalletSize 0x53CC08 : {
@@ -1686,13 +1686,17 @@ SECTIONS
 	. = 0x005C7000;
 	.text : {
 		__text_start = . ;
-		*(.text)
-		*(.text.*)
-		*(.rodata)
-		*(.data)
-		*(.bss)
+		*(.text*)
+		*(.rodata*)
+		*(.data*)
+		*(.bss*)
+		*(.init*)
+		*(.fini*)
+		*(.eh_frame*)
+		*(.init_array*)
+		*(.fini_array*)
 		*(COMMON)
 		rCustomMessages = . ;
-		__text_end  = . ;
+		__text_end = . ;
 	}
 }
