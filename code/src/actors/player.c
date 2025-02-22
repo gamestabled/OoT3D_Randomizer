@@ -34,12 +34,6 @@ void** Player_EditAndRetrieveCMB(ZARInfo* zarInfo, u32 objModelIdx) {
     void** cmbMan = ZAR_GetCMBByIndex(zarInfo, objModelIdx);
     void* cmb     = *cmbMan;
 
-    if (gActorOverlayTable[0].initInfo->objectId == OBJECT_LINK_OPENING) {
-        // Title Screen Link uses a different object, so don't apply the custom tunic patches
-        // to avoid displaying a broken tunic.
-        return cmbMan;
-    }
-
     if (gSettingsContext.customTunicColors == ON) {
         if (gSaveContext.linkAge == AGE_ADULT) {
             CustomModel_EditLinkToCustomTunic(cmb);
