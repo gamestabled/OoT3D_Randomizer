@@ -1601,8 +1601,12 @@ SECTIONS
 	/* End of regional differences: 0x4A5AE0 */
 	region_offset = 0;
 
-	.patch_OverrideGiDrawIdPlusOne 0x4BC610 : {
-		*(.patch_OverrideGiDrawIdPlusOne)
+	.patch_OverrideGiDrawIdPlusOne_Ground 0x4BC610 : {
+		*(.patch_OverrideGiDrawIdPlusOne_Ground)
+	}
+
+	.patch_OverrideGiDrawIdPlusOne_Water 0x4BD5DC : {
+		*(.patch_OverrideGiDrawIdPlusOne_Water)
 	}
 
 	.patch_EditDrawGetItemBeforeModelSpawn 0x4C0FD0 : {
