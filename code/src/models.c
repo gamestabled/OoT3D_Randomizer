@@ -25,14 +25,12 @@ typedef void (*Actor_SetModelMatrix_proc)(f32 x, f32 y, f32 z, nn_math_MTX34* mt
 Model ModelContext[LOADEDMODELS_MAX] = { 0 };
 
 void Model_SetAnim(SkeletonAnimationModel* model, s16 objectId, u32 objectAnimIdx) {
-    void* cmabMan = ExtendedObject_GetCMABByIndex(objectId, objectAnimIdx);
+    void* cmabMan = Object_GetCMABByIndex(objectId, objectAnimIdx);
     TexAnim_Spawn(model->unk_0C, cmabMan);
 }
 
 void Model_Init(Model* model, GlobalContext* globalCtx) {
-    // Should probably parse the ZAR to find the CMBs correctly,
-    // but this is fine for now
-    void* ZARBuf = rExtendedObjectCtx.status[model->objectBankIdx - OBJECT_EXCHANGE_BANK_MAX].zarInfo.buf;
+    void* ZARBuf = Object_GetEntry(model->objectSlot)->zarInfo.buf;
 
     // edit the cmbs for custom models
     CustomModels_EditItemCMB(ZARBuf, model->itemRow->objectId, model->itemRow->special);
@@ -83,8 +81,6 @@ void Model_Destroy(Model* model) {
 void Model_UpdateAll(GlobalContext* globalCtx) {
     Model* model;
 
-    Object_UpdateBank((ObjectContext*)&rExtendedObjectCtx);
-
     for (s32 i = 0; i < LOADEDMODELS_MAX; ++i) {
         model = &ModelContext[i];
 
@@ -101,7 +97,7 @@ void Model_UpdateAll(GlobalContext* globalCtx) {
 
         // Actor is alive, model has not been loaded yet
         if ((model->actor != NULL) && (!model->loaded)) {
-            if (ExtendedObject_IsLoaded(&globalCtx->objectCtx, model->objectBankIdx)) {
+            if (Object_IsLoaded(&globalCtx->objectCtx, model->objectSlot)) {
                 Model_Init(model, globalCtx);
             }
         }
@@ -174,21 +170,13 @@ void Model_LookupByOverride(Model* model, ItemOverride override) {
     }
 }
 
-void Model_GetObjectBankIndex(Model* model, Actor* actor, GlobalContext* globalCtx) {
-    s32 objectBankIdx = ExtendedObject_GetIndex(&globalCtx->objectCtx, model->itemRow->objectId);
-    if (objectBankIdx < 0) {
-        objectBankIdx = ExtendedObject_Spawn(&globalCtx->objectCtx, model->itemRow->objectId);
-    }
-    model->objectBankIdx = objectBankIdx;
-}
-
 void Model_InfoLookup(Model* model, Actor* actor, GlobalContext* globalCtx, u16 baseItemId) {
     ItemOverride override;
 
     // Special case for bombchu drops
     if ((actor->id == 0x15) && (actor->params == 5)) {
         model->itemRow = ItemTable_GetItemRow(GI_BOMBCHUS_5);
-        Model_GetObjectBankIndex(model, actor, globalCtx);
+        model->objectSlot = Object_FindSlotOrSpawn(model->itemRow->objectId);
         return;
     }
 
@@ -209,7 +197,7 @@ void Model_InfoLookup(Model* model, Actor* actor, GlobalContext* globalCtx, u16 
 
     if (override.key.all != 0) {
         Model_LookupByOverride(model, override);
-        Model_GetObjectBankIndex(model, actor, globalCtx);
+        model->objectSlot = Object_FindSlotOrSpawn(model->itemRow->objectId);
     }
 }
 
@@ -226,7 +214,7 @@ void Model_Create(Model* model, GlobalContext* globalCtx) {
     if (newModel != NULL) {
         newModel->actor         = model->actor;
         newModel->itemRow       = model->itemRow;
-        newModel->objectBankIdx = model->objectBankIdx;
+        newModel->objectSlot    = model->objectSlot;
         newModel->loaded        = 0;
         newModel->saModel       = NULL;
         newModel->saModel2      = NULL;

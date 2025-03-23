@@ -11,42 +11,23 @@
 #define EnSw_GoldSkulltulaDeath (void*)GAME_ADDR(0x3B91BC)
 
 const GsLocOverride rGsLocOverrides[100] = { 0 };
-const GsLocOverride* gsSpawnQueue[10]    = { 0 };
 
-void GsQueue_Clear(void) {
-    for (size_t i = 0; i < ARRAY_SIZE(gsSpawnQueue); i++) {
-        gsSpawnQueue[i] = NULL;
+void Gs_SpawnAltLocs(void) {
+    if (!IsInGame() || !gSettingsContext.randomGsLocations) {
+        return;
     }
-}
 
-void GsQueue_Add(const GsLocOverride* gsLocOverride) {
-    for (size_t i = 0; i < ARRAY_SIZE(gsSpawnQueue); i++) {
-        if (gsSpawnQueue[i] == NULL) {
-            gsSpawnQueue[i] = gsLocOverride;
+    Object_FindEntryOrSpawn(0x24);
+
+    for (u32 i = 0; i < ARRAY_SIZE(rGsLocOverrides); i++) {
+        const GsLocOverride* gs = &rGsLocOverrides[i];
+        if (gs->bitFlag == 0) {
+            // End of list.
             return;
         }
-    }
-}
 
-void GsQueue_Update(void) {
-    if (!IsInGame()) {
-        return;
-    }
-    // Loading the skulltula object in the Market Day Child scene causes a crash
-    if (gGlobalContext->sceneNum == 0x20) {
-        return;
-    }
-    if (Object_GetIndex(&gGlobalContext->objectCtx, 0x24) < 0) {
-        Object_Spawn(&gGlobalContext->objectCtx, 0x24);
-        return;
-    }
-    if (!Object_IsLoaded(&gGlobalContext->objectCtx, Object_GetIndex(&gGlobalContext->objectCtx, 0x24))) {
-        return;
-    }
-
-    for (size_t i = 0; i < ARRAY_SIZE(gsSpawnQueue); i++) {
-        if (gsSpawnQueue[i] != NULL) {
-            const GsLocOverride* gs = gsSpawnQueue[i];
+        if (gs->scene == gGlobalContext->sceneNum && gs->room == gGlobalContext->roomNum &&
+            (gs->ageCondition == GS_AGE_BOTH || gs->ageCondition == gSaveContext.linkAge)) {
 
             s16 params = 0;
             if (gs->timeCondition == GS_TIME_ALWAYS) {
@@ -61,13 +42,15 @@ void GsQueue_Update(void) {
             Actor_Spawn(&gGlobalContext->actorCtx, gGlobalContext, 0x95,      //
                         gs->posRot.pos.x, gs->posRot.pos.y, gs->posRot.pos.z, //
                         gs->posRot.rot.x, gs->posRot.rot.y, gs->posRot.rot.z, params, FALSE);
-
-            gsSpawnQueue[i] = NULL;
         }
     }
 }
 
 u8 Gs_HasAltLoc(void* ptr, GsParamPointerType ppt, u8 adjustArrayIndex) {
+    if (!gSettingsContext.randomGsLocations) {
+        return FALSE;
+    }
+
     u8 arrayIndex = 0;
     u8 bitFlag    = 0;
 
@@ -110,26 +93,6 @@ u8 Gs_HasAltLoc(void* ptr, GsParamPointerType ppt, u8 adjustArrayIndex) {
         }
     }
     return FALSE;
-}
-
-void Gs_QueueAlternateLocated(void) {
-    if (gGlobalContext == NULL) {
-        return;
-    }
-    GsQueue_Clear();
-    for (u32 i = 0; i < ARRAY_SIZE(rGsLocOverrides); i++) {
-        const GsLocOverride* gs = &rGsLocOverrides[i];
-        if (gs->bitFlag == 0) {
-            // End of list.
-            return;
-        }
-
-        if (gs->scene == gGlobalContext->sceneNum && gs->room == gGlobalContext->roomNum &&
-            (gs->ageCondition == GS_AGE_BOTH || gs->ageCondition == gSaveContext.linkAge)) {
-
-            GsQueue_Add(gs);
-        }
-    }
 }
 
 u8 Gs_CustomTangibilityCheck(Actor* thisx) {
@@ -206,7 +169,7 @@ Vec3f* Gs_GetCustomTokenSpawnPos(Actor* thisx) {
 void EnSw_rInit(Actor* thisx, GlobalContext* globalCtx) {
     EnSw_Init(thisx, globalCtx);
 
-    if (thisx->params & 0xE000) {
+    if (gSettingsContext.randomGsLocations && thisx->params & 0xE000) {
         // Post-init rotation fix
         for (u32 i = 0; i < ARRAY_SIZE(rGsLocOverrides); i++) {
             if (rGsLocOverrides[i].arrayIndex == 0 && rGsLocOverrides[i].bitFlag == 0) {

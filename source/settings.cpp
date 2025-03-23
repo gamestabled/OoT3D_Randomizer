@@ -1549,6 +1549,7 @@ SettingsContext FillContext() {
     ctx.hyperMiddleBosses   = (HyperMiddleBosses) ? 1 : 0;
     ctx.hyperEnemies        = (HyperEnemies) ? 1 : 0;
     ctx.freeCamera          = (FreeCamera) ? 1 : 0;
+    ctx.randomGsLocations   = (RandomGsLocations) ? 1 : 0;
 
     ctx.faroresWindAnywhere  = (FaroresWindAnywhere) ? 1 : 0;
     ctx.stickAsAdult         = (StickAsAdult) ? 1 : 0;

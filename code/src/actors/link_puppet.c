@@ -60,11 +60,8 @@ void EnLinkPuppet_Init(EnLinkPuppet* this, GlobalContext* globalCtx) {
     // Tunic
     void* cmabMan = NULL;
     if (gSettingsContext.customTunicColors == ON) {
-        s16 exObjectBankIdx = Object_GetIndex(&rExtendedObjectCtx, OBJECT_CUSTOM_GENERAL_ASSETS);
-        if (exObjectBankIdx >= 0) {
-            cmabMan = ZAR_GetCMABByIndex(&rExtendedObjectCtx.status[exObjectBankIdx].zarInfo,
-                                         (gSaveContext.linkAge == 0) ? TEXANIM_LINK_BODY : TEXANIM_CHILD_LINK_BODY);
-        }
+        cmabMan = Object_GetCMABByIndex(OBJECT_CUSTOM_GENERAL_ASSETS,
+                                        (gSaveContext.linkAge == 0) ? TEXANIM_LINK_BODY : TEXANIM_CHILD_LINK_BODY);
     } else if (gSaveContext.linkAge == 0) {
         cmabMan = ZAR_GetCMABByIndex(PLAYER->zarInfo, 2);
     }

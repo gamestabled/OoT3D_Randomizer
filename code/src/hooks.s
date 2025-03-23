@@ -190,22 +190,6 @@ hook_GetToken:
     pop {r0-r12, lr}
     bx lr
 
-.global hook_ModelSpawnGetObjectStatus
-hook_ModelSpawnGetObjectStatus:
-    push {r1-r12, lr}
-    cpy r0,r1
-    bl ExtendedObject_GetStatus
-    pop {r1-r12, lr}
-    bx lr
-
-.global hook_ChestGetIceTrapObjectStatus
-hook_ChestGetIceTrapObjectStatus:
-    push {r1-r12, lr}
-    mov r0,#0x3
-    bl ExtendedObject_GetStatus
-    pop {r1-r12, lr}
-    bx lr
-
 .global hook_PoeCollectorCheckPoints
 hook_PoeCollectorCheckPoints:
     push {r0-r12, lr}
@@ -1888,7 +1872,7 @@ hook_OnActorSetup_SceneChange:
     cpy r4,r5
     push {r0-r12, lr}
     cpy r0,r5
-    bl ActorSetup_ShouldSkipEntry
+    bl ActorSetup_OverrideEntry
     cmp r0,#0x1
     pop {r0-r12, lr}
     # Continue like normal
@@ -1905,7 +1889,7 @@ hook_OnActorSetup_SceneChange:
 hook_AfterActorSetup_SceneChange:
     strb r0,[r7,#0xC03]
     push {r0-r12, lr}
-    bl ActorSetup_After
+    bl ActorSetup_Extra
     pop {r0-r12, lr}
 .if _EUR_==1
     b 0x4522DC
@@ -1918,7 +1902,7 @@ hook_OnActorSetup_RoomChange:
     cpy r4,r6
     push {r0-r12, lr}
     cpy r0,r6
-    bl ActorSetup_ShouldSkipEntry
+    bl ActorSetup_OverrideEntry
     cmp r0,#0x1
     pop {r0-r12, lr}
     # Continue like normal
@@ -1935,7 +1919,7 @@ hook_OnActorSetup_RoomChange:
 hook_AfterActorSetup_RoomChange:
     strb r10,[r8,#0xC03]
     push {r0-r12, lr}
-    bl ActorSetup_After
+    bl ActorSetup_Extra
     pop {r0-r12, lr}
 .if _EUR_==1
     b 0x461458
@@ -2147,4 +2131,45 @@ hook_PlayInit:
     bl before_Play_Init
     pop {r0-r12, lr}
     cpy r5,r0
+    bx lr
+
+.global hook_GetObjectEntry_Generic
+hook_GetObjectEntry_Generic:
+    push {r1-r12, lr}
+    @ r0 = slot
+    bl Object_GetEntry
+    pop {r1-r12, lr}
+    bx lr
+
+.global hook_GetObjectEntry_33AB24
+hook_GetObjectEntry_33AB24:
+    push {r1-r12, lr}
+    ldr r0,[r4,#0x4]
+    ldr r0,[r0,r5,lsl #0x3] @ objectId
+    bl Object_FindEntryOrSpawn
+    pop {r1-r12, lr}
+    bx lr
+
+.global hook_ExtendObjectGetSlot
+hook_ExtendObjectGetSlot:
+    push {r1-r12, lr}
+    cpy r0,r1 @ objectId
+    bl ExtendedObject_GetSlot
+    pop {r1-r12, lr}
+    bx lr
+
+.global hook_OverrideObjectIsLoaded
+hook_OverrideObjectIsLoaded:
+    push {r1-r12, lr}
+    @ r0,r1 = ObjectContext,slot
+    bl Object_IsLoaded
+    pop {r1-r12, lr}
+    bx lr
+
+.global hook_AfterObjectListCommand
+hook_AfterObjectListCommand:
+    push {r0-r12, lr}
+    bl ExtendedObject_AfterObjectListCommand
+    pop {r0-r12, lr}
+    mov r0,#0x1
     bx lr

@@ -55,27 +55,15 @@ void* Player_GetCustomTunicCMAB(ZARInfo* originalZarInfo, u32 originalIndex) {
     if (gSettingsContext.customTunicColors == OFF || gActorOverlayTable[0].initInfo->objectId == OBJECT_LINK_OPENING) {
         return ZAR_GetCMABByIndex(originalZarInfo, originalIndex);
     }
-    s16 exObjectBankIdx = Object_GetIndex(&rExtendedObjectCtx, OBJECT_CUSTOM_GENERAL_ASSETS);
-    if (exObjectBankIdx < 0) {
-        exObjectBankIdx = Object_Spawn(&rExtendedObjectCtx, OBJECT_CUSTOM_GENERAL_ASSETS);
-    }
-    if (gSaveContext.linkAge == 0) {
-        return ZAR_GetCMABByIndex(&rExtendedObjectCtx.status[exObjectBankIdx].zarInfo, TEXANIM_LINK_BODY);
-    } else {
-        return ZAR_GetCMABByIndex(&rExtendedObjectCtx.status[exObjectBankIdx].zarInfo, TEXANIM_CHILD_LINK_BODY);
-    }
+    return Object_GetCMABByIndex(OBJECT_CUSTOM_GENERAL_ASSETS,
+                                 (gSaveContext.linkAge == 0) ? TEXANIM_LINK_BODY : TEXANIM_CHILD_LINK_BODY);
 }
 
 void Player_SetChildCustomTunicCMAB(void) {
     if (gSettingsContext.customTunicColors == OFF) {
         return;
     }
-    s16 exObjectBankIdx = Object_GetIndex(&rExtendedObjectCtx, OBJECT_CUSTOM_GENERAL_ASSETS);
-    void* cmabMan;
-    if (exObjectBankIdx < 0) {
-        exObjectBankIdx = Object_Spawn(&rExtendedObjectCtx, OBJECT_CUSTOM_GENERAL_ASSETS);
-    }
-    cmabMan = ZAR_GetCMABByIndex(&rExtendedObjectCtx.status[exObjectBankIdx].zarInfo, TEXANIM_CHILD_LINK_BODY);
+    void* cmabMan = Object_GetCMABByIndex(OBJECT_CUSTOM_GENERAL_ASSETS, TEXANIM_CHILD_LINK_BODY);
     TexAnim_Spawn(PLAYER->skelAnime.unk_28->unk_0C, cmabMan);
 }
 
@@ -210,8 +198,7 @@ s32 Player_CanPickUpThisActor(Actor* interactedActor) {
 
 #define TUNIC_CYCLE_FRAMES 30
 void Player_UpdateRainbowTunic(void) {
-    u8 currentTunic     = (gSaveContext.equips.equipment >> 8) & 3;
-    s16 exObjectBankIdx = Object_GetIndex(&rExtendedObjectCtx, OBJECT_CUSTOM_GENERAL_ASSETS);
+    u8 currentTunic = (gSaveContext.equips.equipment >> 8) & 3;
     void* cmabManager;
     char* cmabChunk;
     u8 redOffset, greenOffset, blueOffset;
@@ -220,7 +207,7 @@ void Player_UpdateRainbowTunic(void) {
         if (gSettingsContext.rainbowChildTunic == OFF) {
             return;
         }
-        cmabManager = ZAR_GetCMABByIndex(&rExtendedObjectCtx.status[exObjectBankIdx].zarInfo, TEXANIM_CHILD_LINK_BODY);
+        cmabManager = Object_GetCMABByIndex(OBJECT_CUSTOM_GENERAL_ASSETS, TEXANIM_CHILD_LINK_BODY);
         redOffset   = 0x70;
         greenOffset = 0x88;
         blueOffset  = 0xA0;
@@ -230,7 +217,7 @@ void Player_UpdateRainbowTunic(void) {
             (currentTunic == 3 && gSettingsContext.rainbowZoraTunic == OFF)) {
             return;
         }
-        cmabManager = ZAR_GetCMABByIndex(&rExtendedObjectCtx.status[exObjectBankIdx].zarInfo, TEXANIM_LINK_BODY);
+        cmabManager = Object_GetCMABByIndex(OBJECT_CUSTOM_GENERAL_ASSETS, TEXANIM_LINK_BODY);
         redOffset   = 0x70 + 8 * (currentTunic - 1);
         greenOffset = 0x98 + 8 * (currentTunic - 1);
         blueOffset  = 0xC0 + 8 * (currentTunic - 1);

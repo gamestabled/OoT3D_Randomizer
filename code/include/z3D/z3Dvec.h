@@ -35,4 +35,9 @@ typedef struct {
     f32 data[4][4];
 } nn_math_MTX44;
 
+typedef struct Sphere16 {
+    Vec3s center;
+    s16 radius;
+} Sphere16; // size = 0x08
+
 #endif

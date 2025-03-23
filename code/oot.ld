@@ -188,6 +188,10 @@ SECTIONS
 		*(.patch_SariasSongCheckFlag)
 	}
 
+	.patch_GetObjectEntry_EnSiInit 0x168B20 : {
+		*(.patch_GetObjectEntry_EnSiInit)
+	}
+
 	.patch_RandomGsLoc_BlockSpawn_Tree 0x16C43C : {
 		*(.patch_RandomGsLoc_BlockSpawn_Tree)
 	}
@@ -274,6 +278,10 @@ SECTIONS
 
 	.patch_EponasSongCheckFlag 0x18C56C : {
 		*(.patch_EponasSongCheckFlag)
+	}
+
+	.patch_GetObjectEntry_EnXcInit 0x18D7AC : {
+		*(.patch_GetObjectEntry_EnXcInit)
 	}
 
 	.patch_PreludeLocation 0x18D9FC : {
@@ -518,6 +526,10 @@ SECTIONS
 
 	.patch_JabuBoxCheckRuto 0x215934 : {
 		*(.patch_JabuBoxCheckRuto)
+	}
+
+	.patch_GetObjectEntry_ObjSwitchInit 0x215A60 : {
+		*(.patch_GetObjectEntry_ObjSwitchInit)
 	}
 
 	.patch_DekuTheaterMaskOfTruth 0x21CA30 : {
@@ -828,9 +840,9 @@ SECTIONS
 		*(.patch_LostWoodsBridgeMusic)
 	}
 
-	.patch_ChestGetIceTrapObjectStatus 0x33AB24 : {
-		*(.patch_ChestGetIceTrapObjectStatus)
-	}
+	.patch_GetObjectEntry_33AB24 0x33AB24 : {
+		*(.patch_GetObjectEntry_33AB24)
+	} /* Used for: chest ice trap smoke effect */
 
 	.patch_BiggoronDayCheck 0x33DCC0 : {
 		*(.patch_BiggoronDayCheck)
@@ -872,6 +884,10 @@ SECTIONS
 		*(.patch_ApplyDamageMultiplier)
 	}
 
+	.patch_GetObjectEntry_353CE4 0x353CE4 : {
+		*(.patch_GetObjectEntry_353CE4)
+	}
+
 	.patch_FastChests 0x354CD4 : {
 		*(.patch_FastChests)
 	}
@@ -904,9 +920,13 @@ SECTIONS
 		*(.patch_ForceTrailEffectUpdate)
 	} /*EffectBlure_AddVertex*/
 
-	.patch_ModelSpawnGetObjectStatus 0x36A96C : {
-		*(.patch_ModelSpawnGetObjectStatus)
+	.patch_ExtendObjectGetSlot 0x363CB4 : {
+		*(.patch_ExtendObjectGetSlot)
 	}
+
+	.patch_GetObjectEntry_36A96C 0x36A96C : {
+		*(.patch_GetObjectEntry_36A96C)
+	} /* Used for: freestanding item models */
 
 	.patch_IgnoreMaskReaction 0x36BBC4 : {
 		*(.patch_IgnoreMaskReaction)
@@ -934,6 +954,14 @@ SECTIONS
 
 	.patch_MaskSalesmanCheckNoMaskTwo 0x372B70 : {
 		*(.patch_MaskSalesmanCheckNoMaskTwo)
+	}
+
+	.patch_GetObjectEntry_372F7C 0x372F7C : {
+	    *(.patch_GetObjectEntry_372F7C)
+	}
+
+	.patch_OverrideObjectIsLoaded 0x373074 : {
+	    *(.patch_OverrideObjectIsLoaded)
 	}
 
 	.patch_ConvertBombDropTwo 0x3747A4 : {
@@ -1006,6 +1034,10 @@ SECTIONS
 
 	.patch_OverrideDrawItemThree 0x3A0EA8 : {
 		*(.patch_OverrideDrawItemThree)
+	}
+
+	.patch_AfterObjectListCommand 0x3A7708 : {
+		*(.patch_AfterObjectListCommand)
 	}
 
 	.patch_KokiriCheckOpenForest 0x3ACCFC : {
@@ -1342,8 +1374,8 @@ SECTIONS
 		*(.patch_GameplayDestroy)
 	}
 
-	.patch_ExtendedObjectClear 0x44E754 + region_offset : {
-		*(.patch_ExtendedObjectClear)
+	.patch_ExtendedObjectClear 0x44E758 + region_offset : {
+			*(.patch_ExtendedObjectClear)
 	}
 
 	.patch_Multiplayer_UpdatePrevActorFlags 0x44E878 + region_offset : {
@@ -1536,6 +1568,10 @@ SECTIONS
 
 	.patch_SetBGMDayNight 0x483C88 + region_offset : {
 		*(.patch_SetBGMDayNight)
+	}
+
+	.patch_Cutscene_CheckObjectLoaded 0x4849D8 + region_offset : {
+		*(.patch_Cutscene_CheckObjectLoaded)
 	}
 
 	.patch_TurboTextClose 0x488214 + region_offset : {
