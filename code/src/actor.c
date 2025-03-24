@@ -5,6 +5,7 @@
 #include "savefile.h"
 #include "models.h"
 #include "enemy_souls.h"
+#include "enemizer.h"
 #include "owl.h"
 #include "item00.h"
 #include "heart_container.h"
@@ -65,6 +66,18 @@
 #include "anubis.h"
 #include "link_puppet.h"
 #include "fishing.h"
+#include "moblin.h"
+#include "iron_knuckle.h"
+#include "guay.h"
+#include "dead_hand_hand.h"
+#include "flare_dancer.h"
+#include "poe.h"
+#include "dark_link.h"
+#include "enemy_spawner.h"
+#include "peahat.h"
+#include "stinger.h"
+#include "flying_traps.h"
+#include "dodongos.h"
 
 #define OBJECT_GI_KEY 170
 #define OBJECT_GI_BOSSKEY 185
@@ -79,6 +92,16 @@ typedef void (*TitleCard_Update_proc)(GlobalContext* globalCtx, TitleCardContext
 #define TitleCard_Update ((TitleCard_Update_proc)GAME_ADDR(0x47953C))
 
 void Actor_Init() {
+    // Some actors have the wrong ID saved in their "initInfo".
+    // We fix them all here to allow determining the actor type correctly from
+    // any actor instance (for features like Hyper Actors and Enemy Randomizer).
+    for (s32 actorId = 0; actorId < ACTOR_MAX; actorId++) {
+        ActorInit* initInfo = gActorOverlayTable[actorId].initInfo;
+        if (initInfo != NULL && initInfo->id != actorId) {
+            initInfo->id = actorId;
+        }
+    }
+
     gActorOverlayTable[0x0].initInfo->init    = PlayerActor_rInit;
     gActorOverlayTable[0x0].initInfo->update  = PlayerActor_rUpdate;
     gActorOverlayTable[0x0].initInfo->destroy = PlayerActor_rDestroy;
@@ -94,6 +117,9 @@ void Actor_Init() {
     gActorOverlayTable[0xA].initInfo->init   = EnBox_rInit;
     gActorOverlayTable[0xA].initInfo->update = EnBox_rUpdate;
 
+    gActorOverlayTable[0xD].initInfo->init   = EnPoh_rInit;
+    gActorOverlayTable[0xD].initInfo->update = EnPoh_rUpdate;
+
     gActorOverlayTable[0xF].initInfo->update = (ActorFunc)BgYdanSp_rUpdate;
 
     gActorOverlayTable[0x15].initInfo->init    = EnItem00_rInit;
@@ -101,16 +127,28 @@ void Actor_Init() {
     gActorOverlayTable[0x15].initInfo->update  = EnItem00_rUpdate;
     gActorOverlayTable[0x15].initInfo->draw    = EnItem00_rDraw;
 
+    gActorOverlayTable[0x1D].initInfo->update = EnPeehat_rUpdate;
+
     // gActorOverlayTable[0x2D].initInfo->update = EnBubble_rUpdate;
 
     gActorOverlayTable[0x2E].initInfo->init   = DoorShutter_rInit;
     gActorOverlayTable[0x2E].initInfo->update = (ActorFunc)DoorShutter_rUpdate;
+
+    gActorOverlayTable[0x2F].initInfo->init = EnDodojr_rInit;
+
+    gActorOverlayTable[0x33].initInfo->type   = ACTORTYPE_ENEMY;
+    gActorOverlayTable[0x33].initInfo->update = EnTorch2_rUpdate;
+
+    gActorOverlayTable[0x3A].initInfo->update = EnEiyer_rUpdate;
 
     gActorOverlayTable[0x3D].initInfo->destroy = EnOssan_rDestroy;
 
     gActorOverlayTable[0x3E].initInfo->init = BgTreemouth_rInit;
 
     gActorOverlayTable[0x4A].initInfo->update = BgSpot00Hanebasi_rUpdate;
+
+    gActorOverlayTable[0x4B].initInfo->init   = EnMb_rInit;
+    gActorOverlayTable[0x4B].initInfo->update = EnMb_rUpdate;
 
     gActorOverlayTable[0x57].initInfo->init = EnMThunder_rInit;
 
@@ -120,6 +158,8 @@ void Actor_Init() {
     gActorOverlayTable[0x5F].initInfo->draw    = ItemBHeart_rDraw;
 
     gActorOverlayTable[0x66].initInfo->init = ArmsHook_rInit;
+
+    gActorOverlayTable[0x6B].initInfo->update = EnYukabyun_rUpdate;
 
     gActorOverlayTable[0x85].initInfo->update = EnTk_rUpdate;
 
@@ -132,7 +172,15 @@ void Actor_Init() {
     gActorOverlayTable[0x95].initInfo->init   = EnSw_rInit;
     gActorOverlayTable[0x95].initInfo->update = EnSw_rUpdate;
 
+    gActorOverlayTable[0x99].initInfo->update = EnFd_rUpdate;
+
     gActorOverlayTable[0x9C].initInfo->update = BgSpot02Objects_rUpdate;
+
+    gActorOverlayTable[0xA5].initInfo->update = EnDha_rUpdate;
+
+    gActorOverlayTable[0xA7].initInfo->init         = EnEncount1_rInit;
+    gActorOverlayTable[0xA7].initInfo->update       = EnEncount1_rUpdate;
+    gActorOverlayTable[0xA7].initInfo->instanceSize = sizeof(EnEncount1);
 
     gActorOverlayTable[0xC1].initInfo->init   = EnSyatekiMan_rInit;
     gActorOverlayTable[0xC1].initInfo->update = EnSyatekiMan_rUpdate;
@@ -171,9 +219,13 @@ void Actor_Init() {
     gActorOverlayTable[0x10F].initInfo->destroy = ItemEtcetera_rDestroy;
     gActorOverlayTable[0x10F].initInfo->update  = ItemEtcetera_rUpdate;
 
+    gActorOverlayTable[0x113].initInfo->init = EnIk_rInit;
+
     gActorOverlayTable[0x11A].initInfo->update = EnDns_rUpdate;
 
     gActorOverlayTable[0x11B].initInfo->update = NULL;
+
+    gActorOverlayTable[0x11D].initInfo->type = ACTORTYPE_ENEMY; // Flying Pot
 
     gActorOverlayTable[0x126].initInfo->init   = (ActorFunc)ObjBean_rInit;
     gActorOverlayTable[0x126].initInfo->update = (ActorFunc)ObjBean_rUpdate;
@@ -242,6 +294,8 @@ void Actor_Init() {
 
     gActorOverlayTable[0x1B9].initInfo->init = EnGs_rInit;
 
+    gActorOverlayTable[0x1C0].initInfo->update = EnCrow_rUpdate;
+
     gActorOverlayTable[0x1CB].initInfo->update = OceffWipe4_rUpdate;
 
     gActorOverlayTable[0x1C6].initInfo->init    = EnCow_rInit;
@@ -294,11 +348,13 @@ void TitleCard_rUpdate(GlobalContext* globalCtx, TitleCardContext* titleCtx) {
 }
 
 // Return true to skip spawning this actor entry
-u8 ActorSetup_OverrideEntry(ActorEntry* actorEntry) {
+u8 ActorSetup_OverrideEntry(ActorEntry* actorEntry, s32 actorEntryIndex) {
     // Alternate Gold Skulltula Locations
     if (actorEntry->id == 0x95 && (actorEntry->params & 0xE000) && Gs_HasAltLoc(actorEntry, GS_PPT_ACTORENTRY, TRUE)) {
         return TRUE;
     }
+
+    Enemizer_OverrideActorEntry(actorEntry, actorEntryIndex);
 
     return FALSE;
 }
@@ -307,6 +363,7 @@ u8 ActorSetup_OverrideEntry(ActorEntry* actorEntry) {
 void ActorSetup_Extra(void) {
     Sheik_Spawn();
     Gs_SpawnAltLocs();
+    Enemizer_AfterActorSetup();
 }
 
 static s32 hyperActors_ExtraUpdate = 0;

@@ -1,13 +1,16 @@
 #ifndef _Z3D_H_
 #define _Z3D_H_
 
+#include <sys/cdefs.h>
 #include "z3Dactor.h"
 #include "z3Dvec.h"
 // #include "z3Dequipment.h"
 #include "z3Dcutscene.h"
 #include "z3Ditem.h"
 #include "z3Dmath.h"
-#include "z3DbgCheck.h"
+#include "z3Dbgcheck.h"
+#include "z3Dscene.h"
+#include "z3Dactor_id.h"
 
 // #include "hid.h"
 
@@ -172,7 +175,7 @@ typedef struct {
     /* 0x14DC */ s32 fileNum;           // "file_no"
     /* 0x14E0 */ char unk_14E0[0x0004];
     /* 0x14E4 */ s32 gameMode;
-    /* 0x14E8 */ s32 sceneSetupIndex;
+    /* 0x14E8 */ s32 sceneLayer;
     /* 0x14EC */ s32 respawnFlag;        // "restart_flag"
     /* 0x14F0 */ RespawnData respawn[3]; // "restart_data"
     /* 0x1544 */ char unk_1544[0x000E];
@@ -670,6 +673,7 @@ extern const char DungeonNames[][25];
 #define PLAYER ((Player*)gGlobalContext->actorCtx.actorList[ACTORTYPE_PLAYER].first)
 #define gMainClass ((MainClass*)GAME_ADDR(0x5BE5B8))
 #define gIsBottomScreenDimmed (*(s32*)GAME_ADDR(0x5043EC))
+#define sPrevMainBgmSeqId (*(s32*)GAME_ADDR(0x54ACB8))
 
 #define GearSlot(X) (X - ITEM_SWORD_KOKIRI)
 
@@ -740,6 +744,16 @@ typedef void (*PlaySound_proc)(u32);
 // This function plays sound effects and music tracks, overlaid on top of the current BGM
 #define PlaySound ((PlaySound_proc)GAME_ADDR(0x35C528))
 
+typedef u32 (*Audio_GetActiveSeqId_proc)(u8 seqPlayerIndex);
+#define Audio_GetActiveSeqId ((Audio_GetActiveSeqId_proc)GAME_ADDR(0x366684))
+
+typedef void (*Audio_RestoreBGM_proc)(void);
+// Restores the original sequence to the main BGM player after a mini-boss battle or a minigame.
+#define Audio_RestoreBGM ((Audio_RestoreBGM_proc)GAME_ADDR(0x34EC14))
+
+// Unknown function. Passing these arguments stops the BGM.
+#define Audio_StopBGM() (((void (*)(u32, u32))0x3655D0)(0, 0))
+
 typedef Actor* (*Actor_Spawn_proc)(ActorContext* actorCtx, GlobalContext* globalCtx, s16 actorId, float posX,
                                    float posY, float posZ, s16 rotX, s16 rotY, s16 rotZ, s16 params,
                                    s32 initImmediately) __attribute__((pcs("aapcs-vfp")));
@@ -779,11 +793,17 @@ typedef void (*PlaySFX_proc)(u32 sfxId, Vec3f* pos, u32 token, f32* freqScale, f
 typedef void (*Flags_SetSwitch_proc)(GlobalContext* globalCtx, u32 flag);
 #define Flags_SetSwitch ((Flags_SetSwitch_proc)GAME_ADDR(0x375C10))
 
+typedef void (*Flags_UnsetSwitch_proc)(GlobalContext* globalCtx, u32 flag);
+#define Flags_UnsetSwitch ((Flags_UnsetSwitch_proc)GAME_ADDR(0x36BEAC))
+
 typedef u32 (*Flags_GetSwitch_proc)(GlobalContext* globalCtx, u32 flag);
 #define Flags_GetSwitch ((Flags_GetSwitch_proc)GAME_ADDR(0x36E864))
 
 typedef u32 (*Flags_GetCollectible_proc)(GlobalContext* globalCtx, u32 flag);
 #define Flags_GetCollectible ((Flags_GetCollectible_proc)GAME_ADDR(0x36405C))
+
+typedef u32 (*Flags_GetClear_proc)(GlobalContext* globalCtx, u32 flag);
+#define Flags_GetClear ((Flags_GetClear_proc)GAME_ADDR(0x36CF6C))
 
 typedef void (*Player_SetEquipmentData_proc)(GlobalContext* globalCtx, Player* player);
 #define Player_SetEquipmentData ((Player_SetEquipmentData_proc)GAME_ADDR(0x34913C))

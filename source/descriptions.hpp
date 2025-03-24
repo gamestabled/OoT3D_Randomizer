@@ -116,6 +116,8 @@ extern string_view triforceHuntDesc;
 extern string_view triforcePiecesTotalDesc;
 extern string_view triforcePiecesRequiredDesc;
 
+extern string_view enemizerDesc;
+
 extern string_view shuffleRewardsEndOfDungeon;
 extern string_view shuffleRewardsAnyDungeon;
 extern string_view shuffleRewardsOverworld;

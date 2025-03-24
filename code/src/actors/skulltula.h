@@ -13,20 +13,34 @@
 #define GS_BIT_FLAG(params) (params & 0xFF)
 
 typedef struct {
-    Actor base;
-    SkelAnime anime;
-    char unk_228[1144];
-    void* action_fn;
-    char collider[32];
-    char jnt_sph_element[80];
-    char unk_714[46];
-    s16 unk_word1;
-    char unk_744[6];
-    s16 unk_word2;
-    s16 deathTimer_maybe;
-    char unk_74E[106];
-    f32 unk_float1;
+    /* 0x000 */ Actor base;
+    /* 0x1A4 */ SkelAnime anime;
+    /* 0x228 */ char unk_228[0x478];
+    /* 0x6A0 */ void* action_fn;
+    /* 0x6A4 */ char collider[0x20];
+    /* 0x6C4 */ char jnt_sph_element[0x50];
+    /* 0x714 */ char unk_714[0x2E];
+    /* 0x742 */ s16 unk_word1;
+    /* 0x744 */ char unk_744[0x6];
+    /* 0x74A */ s16 unk_word2;
+    /* 0x74C */ s16 deathTimer_maybe;
+    /* 0x74E */ char unk_74E[0x6A];
+    /* 0x7B8 */ f32 unk_float1;
+    /* 0x7BC */ char unk_7BC[0xC];
+    /* 0x7C8 */ Vec3f unk_7C8;
+    /* 0x7D4 */ s16 unk_7D4;
+    /* 0x7D6 */ s16 timer_7D6;
+    /* 0x7D8 */ s16 targetRot;
+    /* 0x7DA */ s16 unk_7DA;
+    /* 0x7DC */ Vec3f targetPos;
+    /* 0x7E8 */ Vec3f unk_7E8;
+    /* 0x7F4 */ Vec3f unk_7F4;
+    /* 0x800 */ Vec3f unk_800;
+    /* 0x80C */ Vec3f unk_80C;
+    /* 0x818 */ Vec3f unk_818;
+    /* 0x824 */ char unk_824[0xC];
 } EnSw;
+_Static_assert(sizeof(EnSw) == 0x830, "EnSw size");
 
 void EnSw_rInit(Actor* thisx, GlobalContext* globalCtx);
 void EnSw_rUpdate(Actor* thisx, GlobalContext* globalCtx);

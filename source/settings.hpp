@@ -408,6 +408,7 @@ extern Option SetDungeonTypes;
 extern Option TriforceHunt;
 extern Option TriforcePiecesTotal;
 extern Option TriforcePiecesRequired;
+extern Option Enemizer;
 
 extern Option ShuffleRewards;
 extern Option LinksPocketItem;

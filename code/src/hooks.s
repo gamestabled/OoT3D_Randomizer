@@ -1872,6 +1872,7 @@ hook_OnActorSetup_SceneChange:
     cpy r4,r5
     push {r0-r12, lr}
     cpy r0,r5
+    cpy r1,r6
     bl ActorSetup_OverrideEntry
     cmp r0,#0x1
     pop {r0-r12, lr}
@@ -1902,6 +1903,7 @@ hook_OnActorSetup_RoomChange:
     cpy r4,r6
     push {r0-r12, lr}
     cpy r0,r6
+    cpy r1,r7
     bl ActorSetup_OverrideEntry
     cmp r0,#0x1
     pop {r0-r12, lr}
@@ -2172,4 +2174,184 @@ hook_AfterObjectListCommand:
     bl ExtendedObject_AfterObjectListCommand
     pop {r0-r12, lr}
     mov r0,#0x1
+    bx lr
+
+.global hook_GetObjectEntry_34F270
+hook_GetObjectEntry_34F270:
+    push {r1-r12, lr}
+    @ r0 = slot
+    bl Object_GetEntry
+    pop {r1-r12, lr}
+    b 0x34F274
+
+.global hook_AltHeadersCommand
+hook_AltHeadersCommand:
+    add r2,r7,r1
+    push {r0-r12, lr}
+    cpy r0,r2 @ alt headers pointers list
+    bl Scene_GetLoadedLayer
+    pop {r0-r12, lr}
+    bx lr
+
+.global hook_GohmaLarvaDeath
+hook_GohmaLarvaDeath:
+    ldr r1,[r4,#0x124]
+    @ if parent pointer is null, skip
+    @ setting childrenGohmaState
+    cmp r1,#0x0
+    addeq lr,lr,#0x10
+    bx lr
+
+.global hook_StalchildDespawn_13DB68
+hook_StalchildDespawn_13DB68:
+    push {r0-r12, lr}
+    cpy r0,r4 @ actor
+    bl Stalchild_CanDespawn
+    cmp r0,#0x1
+    pop {r0-r12, lr}
+    addne lr,lr,#0x10 @ skip other checks, don't despawn
+    bxne lr
+    cmp r0,r1 @ base game code
+    bx lr
+
+.global hook_StalchildDespawn_366338
+hook_StalchildDespawn_366338:
+    cmp r0,#0x0
+    bxne lr @ doesn't despawn
+    push {r0-r12, lr}
+    cpy r0,r4 @ actor
+    bl Stalchild_CanDespawn
+    cmp r0,#0x1
+    pop {r0-r12, lr}
+    bx lr
+
+.global hook_SkullwalltulaAttack_35F834
+hook_SkullwalltulaAttack_35F834:
+    cpy r5,r0
+    b SkullwalltulaAttack
+
+.global hook_SkullwalltulaAttack_35F328
+hook_SkullwalltulaAttack_35F328:
+    cpy r4,r0
+SkullwalltulaAttack:
+    push {r0-r12, lr}
+    @ r0 = actor
+    bl Skullwalltula_ShouldAttack
+    cmp r0,#0x0
+    pop {r0-r12, lr}
+    bxlt lr @ proceed with vanilla checks
+    movne r0,#0x1 @ attack
+    moveq r0,#0x0 @ don't attack
+    pop {r4-r7,pc} @ return and skip vanilla checks
+
+.global hook_SkullwalltulaTargetRotation
+hook_SkullwalltulaTargetRotation:
+    sxth r0,r0
+    push {r1-r12, lr}
+    cpy r1,r4 @ actor
+    bl Skullwalltula_GetTargetRotation
+    pop {r1-r12, lr}
+    bx lr
+
+.global hook_SkullKidPoacherSawCheck
+hook_SkullKidPoacherSawCheck:
+    cmp r1,#0x32
+    bxge lr @ higher than poacher's saw, resume vanilla code
+    push {r0-r12, lr}
+    @ less than poacher's saw, only kill actor if enemizer is off
+    bl Enemizer_IsActive
+    cmp r0,#0x1
+    pop {r0-r12, lr}
+    bx lr
+
+.global hook_LeeverSandCheck
+hook_LeeverSandCheck:
+    cmpne r0,#0x7
+    bxeq lr
+    push {r0-r12, lr}
+    cpy r0,r4 @ actor
+    bl Leever_ShouldSurviveOutsideSand
+    cmp r0,#0x1
+    pop {r0-r12, lr}
+    bx lr
+
+.global hook_LeeverAfterSink
+hook_LeeverAfterSink:
+    push {r0-r12, lr}
+    @ r0 = actor
+    bl Leever_AfterSink
+    pop {r0-r12, lr}
+    bx lr
+
+.global hook_LeeverAfterDie
+hook_LeeverAfterDie:
+    push {r0-r12, lr}
+    cpy r0,r4 @ actor
+    bl Leever_AfterDie
+    pop {r0-r12, lr}
+    cmp r0,#0x0
+    bx lr
+
+.global hook_PlayerCheckVoidOut
+hook_PlayerCheckVoidOut:
+    ldrb r0,[r4,#0x2]  @ actor->type
+    cmp r0,#0x2        @ ACTORTYPE_PLAYER
+    addne lr,lr,#0x17C @ Dark Link, skip void out (USA: 0x132CE4)
+    cmpeq r8,#0x0      @ Normal Player, continue as normal
+    bx lr
+
+.global hook_EnBlkobj_SpawnDarkLink
+hook_EnBlkobj_SpawnDarkLink:
+    add r0,r0,#0x8C
+    push {r0-r12, lr}
+    add r0,sp,#0x8  @ actorId (r2)
+    add r1,sp,#0x40 @ params (Stack[0x8])
+    vpush {s2}
+    cpy r2,sp @ posZ
+    bl DarkLink_OverrideSpawnedActor
+    vpop {s2}
+    pop {r0-r12, lr}
+    bx lr
+
+.global hook_EnBlkobj_FindDarkLink
+hook_EnBlkobj_FindDarkLink:
+    add r0,r0,#0x8C
+    push {r0-r12, lr}
+    add r0,sp,#0x4 @ actorId (r1)
+    mov r1,#0x0 @ no params
+    mov r2,#0x0 @ no posZ
+    bl DarkLink_OverrideSpawnedActor
+    pop {r0-r12, lr}
+    mov r2,#0x5 @ ACTORTYPE_ENEMY
+    bx lr
+
+.global hook_EnEncount1_SpawnStalchildWolfos
+hook_EnEncount1_SpawnStalchildWolfos:
+    cpy r1,r9
+    push {r0-r12, lr}
+    cpy r0,r9       @ this EnEncount1
+    add r1,sp,#0xC  @ actorId (r3)
+    add r2,sp,#0x44 @ params (Stack[0xc])
+    bl EnemySpawner_OverrideSpawnedActor
+    pop {r0-r12, lr}
+    bx lr
+
+.global hook_EnEncount1_SpawnLeever
+hook_EnEncount1_SpawnLeever:
+    push {r0-r12, lr}
+    cpy r0,r5       @ this EnEncount1
+    add r1,sp,#0xC  @ actorId (r3)
+    add r2,sp,#0x20 @ params (r8)
+    bl EnemySpawner_OverrideSpawnedActor
+    pop {r0-r12, lr}
+    str r8,[sp,#0xC]
+    bx lr
+
+.global hook_EnEncount1_SetLeeverAimType
+hook_EnEncount1_SetLeeverAimType:
+    push {r0}
+    ldrh r0,[r7] @ actor->id
+    cmp r0,#0x1C @ Leever actor id
+    pop {r0}
+    strheq r0,[r1,r7] @ Set aimType only if actor is Leever
     bx lr

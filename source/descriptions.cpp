@@ -359,6 +359,10 @@ string_view triforcePiecesRequiredDesc= "Set the number of pieces required to be
                                         "game.\n\n"                                        //
                                         "Hold A to scroll faster.";                        //
 /*------------------------------                                                           //
+|       ENEMY RANDOMIZER       |                                                           //
+------------------------------*/                                                           //
+string_view enemizerDesc              = "Randomize most enemies in the game.";             //
+/*------------------------------                                                           //
 |   SHUFFLE DUNGEON REWARDS    |                                                           //
 ------------------------------*/                                                           //
 string_view shuffleRewardsEndOfDungeon= "Medallions and Spiritual Stones will be given as\n"

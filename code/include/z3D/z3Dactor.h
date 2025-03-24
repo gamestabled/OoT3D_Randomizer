@@ -4,12 +4,35 @@
 #include "z3Dvec.h"
 #include "z3Dcollision_check.h"
 #include "z3Dbgcheck.h"
+#include "z3Dactor_id.h"
 
 struct Actor;
 struct GlobalContext;
 
 struct LightMapper;
 struct ZARInfo;
+
+#define BGCHECKFLAG_GROUND (1 << 0)               // Standing on the ground
+#define BGCHECKFLAG_GROUND_TOUCH (1 << 1)         // Has touched the ground (only active for 1 frame)
+#define BGCHECKFLAG_GROUND_LEAVE (1 << 2)         // Has left the ground (only active for 1 frame)
+#define BGCHECKFLAG_WALL (1 << 3)                 // Touching a wall
+#define BGCHECKFLAG_CEILING (1 << 4)              // Touching a ceiling
+#define BGCHECKFLAG_WATER (1 << 5)                // In water
+#define BGCHECKFLAG_WATER_TOUCH (1 << 6)          // Has touched water (reset when leaving water)
+#define BGCHECKFLAG_GROUND_STRICT (1 << 7)        // Strictly on ground (BGCHECKFLAG_GROUND has some leeway)
+#define BGCHECKFLAG_CRUSHED (1 << 8)              // Crushed between a floor and ceiling (triggers a void for player)
+#define BGCHECKFLAG_PLAYER_WALL_INTERACT (1 << 9) // Only set/used by player, related to interacting with walls
+
+#define UPDBGCHECKINFO_WALL (1 << 0)        // check wall
+#define UPDBGCHECKINFO_CEILING (1 << 1)     // check ceiling
+#define UPDBGCHECKINFO_FLOOR_WATER (1 << 2) // check floor and water
+#define UPDBGCHECKINFO_FLAG_3 (1 << 3)
+#define UPDBGCHECKINFO_FLAG_4 (1 << 4)
+#define UPDBGCHECKINFO_FLAG_5 (1 << 5) // unused
+#define UPDBGCHECKINFO_FLAG_6 (1 << 6) // disable water ripples
+#define UPDBGCHECKINFO_FLAG_7 (1 << 7) // alternate wall check?
+
+#define ACTOR_FLAG_INSIDE_CULLING_VOLUME (1 << 6)
 
 typedef struct {
     Vec3f pos;
@@ -232,7 +255,7 @@ typedef struct DynaPolyActor {
     /* 0x1BA */ s16 unk_1BA;
 } DynaPolyActor; // size = 0x1BC
 
-typedef struct {
+typedef struct Player {
     /* 0x0000 */ Actor actor;
     /* 0x01A4 */ s8 currentTunic;
     /* 0x01A5 */ s8 currentSword;
@@ -292,7 +315,10 @@ typedef struct {
     /* 0x2248 */ s16 fishingState; // 1: casting line, 2: can reel, 3: holding catch
     /* 0x224A */ char unk_224A[0x0004];
     /* 0x224E */ s16 giDrawIdPlusOne; // used to change mesh for rupee models
-    /* 0x2250 */ char unk_2250[0x0238];
+    /* 0x2250 */ char unk_2250[0x0030];
+    /* 0x2280 */ s16 fallStartHeight;
+    /* 0x2282 */ s16 fallDistance;
+    /* 0x2284 */ char unk_2284[0x0204];
     /* 0x2488 */ s8 invincibilityTimer; // prevents damage when nonzero
                                         // (positive = visible, counts towards zero each frame)
     /* 0x2489 */ char unk_2489[0x0053];
@@ -303,6 +329,8 @@ typedef struct {
     /* 0x2708 */ char unk_2708[0x344];
 } Player; // total size (from init vars): 2A4C
 _Static_assert(sizeof(Player) == 0x2A4C, "Player size");
+
+#define sFloorType (*(s32*)GAME_ADDR(0x53A0A4))
 
 typedef enum {
     /* 0x00 */ ACTORTYPE_SWITCH,
@@ -348,5 +376,8 @@ typedef void (*Actor_UpdateBgCheckInfo_proc)(struct GlobalContext* globalCtx, Ac
                                              f32 wallCheckRadius, f32 ceilingCheckHeight, s32 flags)
     __attribute__((pcs("aapcs-vfp")));
 #define Actor_UpdateBgCheckInfo ((Actor_UpdateBgCheckInfo_proc)GAME_ADDR(0x376340))
+
+typedef s32 (*Player_InCsMode_proc)(struct GlobalContext* globalCtx);
+#define Player_InCsMode ((Player_InCsMode_proc)GAME_ADDR(0x36A7A0))
 
 #endif

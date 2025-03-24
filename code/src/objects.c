@@ -4,6 +4,8 @@
 #include "models.h"
 #include "custom_models.h"
 #include "oot_malloc.h"
+#include "enemizer.h"
+
 #include <stddef.h>
 
 static ExtendedObjectContext rExtendedObjectCtx = { 0 };

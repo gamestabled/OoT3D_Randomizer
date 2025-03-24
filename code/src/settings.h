@@ -500,6 +500,7 @@ typedef struct {
     u8 triforceHunt;
     u8 triforcePiecesTotal;
     u8 triforcePiecesRequired;
+    u8 enemizer;
 
     u8 shuffleRewards;
     u8 linksPocketItem;
