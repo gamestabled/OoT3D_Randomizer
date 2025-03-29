@@ -14,7 +14,12 @@ void EnMb_rInit(Actor* thisx, GlobalContext* globalCtx) {
 
     if (gSettingsContext.enemizer == ON) {
         if (thisx->params == 0x0000) { // Club Moblin
+            // Reset position in case it changed on init (the vanilla SFM Moblin teleports
+            // on the other side if you come from Forest Temple).
             thisx->world.pos = thisx->home.pos;
+            // Skip drawing the shadow because it's only half-implemented in the vanilla game,
+            // and always appears at (0,0,0).
+            thisx->shape.shadowDrawFunc = NULL;
         }
 
         if (thisx->params == (s16)0xFFFF) { // Spear guard

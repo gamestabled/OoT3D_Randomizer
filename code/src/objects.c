@@ -8,18 +8,25 @@
 
 #include <stddef.h>
 
+#define EXTENDED_OBJECT_SLOT_MAX 30
+
+// Copy of ObjectContext with more object slots.
+typedef struct ExtendedObjectContext {
+    /* 0x000 */ u8 numEntries;           // total amount of used entries
+    /* 0x001 */ u8 numPersistentEntries; // amount of entries that won't be reused when loading a new room
+    /* 0x002 */ u8 unused_02;
+    /* 0x003 */ u8 unused_03;
+    /* 0x004 */ ObjectEntry slots[EXTENDED_OBJECT_SLOT_MAX];
+} ExtendedObjectContext;
+
 static ExtendedObjectContext rExtendedObjectCtx = { 0 };
 
-static s32 ExtendedObject_Spawn(s16 objectId) {
-    return Object_Spawn(&rExtendedObjectCtx, objectId) + OBJECT_SLOT_MAX;
-}
-
 void ExtendedObject_UpdateEntries(void) {
-    Object_UpdateEntries(&rExtendedObjectCtx);
+    Object_UpdateEntries((ObjectContext*)&rExtendedObjectCtx);
 }
 
 void ExtendedObject_Clear(void) {
-    Object_Clear(gGlobalContext, &rExtendedObjectCtx);
+    Object_Clear(gGlobalContext, (ObjectContext*)&rExtendedObjectCtx);
 }
 
 // Copy of Object_Clear but only for non-persistent objects.
@@ -44,7 +51,9 @@ void ExtendedObject_ClearNonPersistent(void) {
 void ExtendedObject_AfterObjectListCommand(void) {
     if (gGlobalContext->state.running == 1) { // Loading scene
         // Spawn objects that will not unload on room transitions.
-        ExtendedObject_Spawn(OBJECT_CUSTOM_GENERAL_ASSETS);
+        // Note: Player_Init has already run by this point, so whatever objects it
+        // spawned in the extended context will also be marked as persistent here.
+        Object_FindSlotOrSpawn(OBJECT_CUSTOM_GENERAL_ASSETS);
         Object_FindSlotOrSpawn(3); // zelda_dangeon_keep (main dungeon object)
         rExtendedObjectCtx.numPersistentEntries = rExtendedObjectCtx.numEntries;
     } else { // (state.running == 2) Loading room
@@ -85,7 +94,7 @@ ObjectEntry* Object_FindEntryOrSpawn(s16 objectId) {
         }
         return obj;
     } else {
-        slot = Object_Spawn(&rExtendedObjectCtx, objectId);
+        slot = Object_Spawn((ObjectContext*)&rExtendedObjectCtx, objectId);
         return &rExtendedObjectCtx.slots[slot];
     }
 }
@@ -93,7 +102,7 @@ ObjectEntry* Object_FindEntryOrSpawn(s16 objectId) {
 s32 Object_FindSlotOrSpawn(s16 objectId) {
     s32 objectSlot = Object_GetSlot(&gGlobalContext->objectCtx, objectId);
     if (objectSlot < 0) {
-        objectSlot = ExtendedObject_Spawn(objectId);
+        objectSlot = Object_Spawn((ObjectContext*)&rExtendedObjectCtx, objectId) + OBJECT_SLOT_MAX;
     }
     return objectSlot;
 }

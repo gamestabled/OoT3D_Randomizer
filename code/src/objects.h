@@ -26,8 +26,6 @@ typedef void (*ZAR_Destroy_proc)(ZARInfo*);
 typedef void (*TexAnim_Spawn_proc)(void*, void*);
 #define TexAnim_Spawn ((TexAnim_Spawn_proc)GAME_ADDR(0x372D94))
 
-typedef ObjectContext ExtendedObjectContext;
-
 // Get an object entry given the slot.
 ObjectEntry* Object_GetEntry(s16 slot);
 // Find an object entry for the specified objectId, or spawn it if it's not found.

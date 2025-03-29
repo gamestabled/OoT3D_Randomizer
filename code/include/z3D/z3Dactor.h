@@ -195,7 +195,7 @@ typedef struct Actor {
     /* 0x081 */ u8 floorBgId;             // Bg ID of the floor polygon directly below the actor
     /* 0x082 */ s16 wallYaw;              // Y rotation of the wall polygon the actor is touching
     /* 0x084 */ f32 floorHeight;          // Y position of the floor polygon directly below the actor
-    /* 0x088 */ f32 yDistToWater; // Distance to the surface of active waterbox. Negative value means above water
+    /* 0x088 */ f32 depthInWater; // Distance to the surface of active waterbox. Negative value means above water
     /* 0x08C */ f32 waterBoxYSurface;
     /* 0x090 */ u16 bgCheckFlags;
     /* 0x092 */ s16 yawTowardsPlayer;          // Y rotation difference between the actor and the player
@@ -313,7 +313,9 @@ typedef struct Player {
     /* 0x2227 */ s8 meleeWeaponState;
     /* 0x2228 */ char unk_2228[0x0020];
     /* 0x2248 */ s16 fishingState; // 1: casting line, 2: can reel, 3: holding catch
-    /* 0x224A */ char unk_224A[0x0004];
+    /* 0x224A */ char unk_224A[0x0002];
+    /* 0x224C */ u8 darkLinkAdjustedSpawnPos;
+    /* 0x224D */ char unk_224D[0x0001];
     /* 0x224E */ s16 giDrawIdPlusOne; // used to change mesh for rupee models
     /* 0x2250 */ char unk_2250[0x0030];
     /* 0x2280 */ s16 fallStartHeight;

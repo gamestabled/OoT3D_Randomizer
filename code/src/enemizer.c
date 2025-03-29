@@ -78,6 +78,16 @@ static EnemyObjectDependency sEnemyObjectDeps[] = {
         .objectId = 0x003,
     },
     {
+        // Like Like -> Deku Shield object
+        .key      = { .actorId = ACTOR_LIKE_LIKE, .anyParams = TRUE },
+        .objectId = 0x0CB,
+    },
+    {
+        // Like Like -> Hylian Shield object
+        .key      = { .actorId = ACTOR_LIKE_LIKE, .anyParams = TRUE },
+        .objectId = 0x0DC,
+    },
+    {
         // Anubis Spawner -> Anubis object (actor profile only points to object 1)
         .key      = { .actorId = ACTOR_ANUBIS_SPAWNER, .anyParams = TRUE },
         .objectId = 0x0D6,
