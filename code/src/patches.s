@@ -2367,10 +2367,15 @@ GetObjectEntry_EnNutsballInit_patch:
 AltHeadersCommand_patch:
     bl hook_AltHeadersCommand
 
-.section .patch_GohmaLarvaDeath
-.global GohmaLarvaDeath_patch
-GohmaLarvaDeath_patch:
-    bl hook_GohmaLarvaDeath
+.section .patch_GohmaLarvaDeathSignalParent
+.global GohmaLarvaDeathSignalParent_patch
+GohmaLarvaDeathSignalParent_patch:
+    bl hook_GohmaLarvaDeathSignalParent
+
+.section .patch_GohmaEggDeathSignalParent
+.global GohmaEggDeathSignalParent_patch
+GohmaEggDeathSignalParent_patch:
+    bl hook_GohmaEggDeathSignalParent
 
 .section .patch_StalchildDespawn_13DB68
 .global StalchildDespawn_13DB68_patch

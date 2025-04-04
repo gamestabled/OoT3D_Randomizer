@@ -380,8 +380,8 @@ SECTIONS
 		*(.patch_EponasSongCheckFlagTwo)
 	}
 
-	.patch_GohmaLarvaDeath 0x1968DC : {
-		*(.patch_GohmaLarvaDeath)
+	.patch_GohmaLarvaDeathSignalParent 0x1968DC : {
+		*(.patch_GohmaLarvaDeathSignalParent)
 	}
 
 	.patch_AmyBlockCooldownTimer 0x196ECC : {
@@ -531,6 +531,10 @@ SECTIONS
 	.patch_BoomerangTrailEffect 0x1F4220 : {
 		*(.patch_BoomerangTrailEffect)
 	} /*EnBoom_Draw*/
+
+	.patch_GohmaEggDeathSignalParent 0x1F5F48 : {
+		*(.patch_GohmaEggDeathSignalParent)
+	}
 
 	.patch_ItemGiveBombchuDropOne 0x1F6F70 : {
 		*(.patch_ItemGiveBombchuDropOne)

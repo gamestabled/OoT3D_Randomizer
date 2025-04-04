@@ -2193,12 +2193,21 @@ hook_AltHeadersCommand:
     pop {r0-r12, lr}
     bx lr
 
-.global hook_GohmaLarvaDeath
-hook_GohmaLarvaDeath:
+.global hook_GohmaLarvaDeathSignalParent
+hook_GohmaLarvaDeathSignalParent:
     ldr r1,[r4,#0x124]
     @ if parent pointer is null, skip
     @ setting childrenGohmaState
     cmp r1,#0x0
+    addeq lr,lr,#0x10
+    bx lr
+
+.global hook_GohmaEggDeathSignalParent
+hook_GohmaEggDeathSignalParent:
+    ldr r0,[r4,#0x124]
+    @ if parent pointer is null, skip
+    @ setting childrenGohmaState
+    cmp r0,#0x0
     addeq lr,lr,#0x10
     bx lr
 

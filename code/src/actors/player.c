@@ -207,7 +207,7 @@ void Player_UpdateRainbowTunic(void) {
         if (gSettingsContext.rainbowChildTunic == OFF) {
             return;
         }
-        cmabManager = Object_GetCMABByIndex(OBJECT_CUSTOM_GENERAL_ASSETS, TEXANIM_CHILD_LINK_BODY);
+        cmabManager = PLAYER->skelAnime.unk_28->unk_0C->cmabManager;
         redOffset   = 0x70;
         greenOffset = 0x88;
         blueOffset  = 0xA0;
@@ -217,7 +217,7 @@ void Player_UpdateRainbowTunic(void) {
             (currentTunic == 3 && gSettingsContext.rainbowZoraTunic == OFF)) {
             return;
         }
-        cmabManager = Object_GetCMABByIndex(OBJECT_CUSTOM_GENERAL_ASSETS, TEXANIM_LINK_BODY);
+        cmabManager = PLAYER->tunicTexAnim.cmabManager;
         redOffset   = 0x70 + 8 * (currentTunic - 1);
         greenOffset = 0x98 + 8 * (currentTunic - 1);
         blueOffset  = 0xC0 + 8 * (currentTunic - 1);

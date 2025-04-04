@@ -109,10 +109,10 @@ s32 Object_FindSlotOrSpawn(s16 objectId) {
 
 s32 Object_IsLoaded(ObjectContext* objectCtx, s16 slot) {
     if (slot < OBJECT_SLOT_MAX) {
-        return (objectCtx->slots[slot].id > 0);
+        return (objectCtx->slots[slot].id >= 0);
     }
 
-    return (rExtendedObjectCtx.slots[slot - OBJECT_SLOT_MAX].id > 0);
+    return (rExtendedObjectCtx.slots[slot - OBJECT_SLOT_MAX].id >= 0);
 }
 
 void* Object_GetCMABByIndex(s16 objectId, u32 objectAnimIdx) {

@@ -327,8 +327,10 @@ typedef struct Player {
     /* 0x24DC */ void* cmbMan;
     /* 0x24E0 */ void* zarInfo;
     /* 0x24E4 */ char unk_24E4[0x0220];
-    /* 0x2704 */ struct SkeletonAnimationModel_unk_0C* bodyTexAnim;
-    /* 0x2708 */ char unk_2708[0x344];
+    /* 0x2704 */ SkeletonAnimationModel_unk_0C tunicTexAnim;
+    /* 0x279C */ SkeletonAnimationModel_unk_0C fireMirroShieldTexAnim;
+    /* 0x2834 */ SkeletonAnimationModel_unk_0C iceMirroShieldTexAnim;
+    /* 0x28CC */ char unk_28CC[0x180];
 } Player; // total size (from init vars): 2A4C
 _Static_assert(sizeof(Player) == 0x2A4C, "Player size");
 
