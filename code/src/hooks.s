@@ -2168,6 +2168,14 @@ hook_OverrideObjectIsLoaded:
     pop {r1-r12, lr}
     bx lr
 
+.global hook_OverrideObjectIsLoadedForCutscenes
+hook_OverrideObjectIsLoadedForCutscenes:
+    push {r1-r12, lr}
+    @ r0,r1 = ObjectContext,slot
+    bl Object_IsLoaded_ForCutscenes
+    pop {r1-r12, lr}
+    bx lr
+
 .global hook_AfterObjectListCommand
 hook_AfterObjectListCommand:
     push {r0-r12, lr}

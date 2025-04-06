@@ -107,12 +107,22 @@ s32 Object_FindSlotOrSpawn(s16 objectId) {
     return objectSlot;
 }
 
-s32 Object_IsLoaded(ObjectContext* objectCtx, s16 slot) {
+static s16 Object_GetIdFromSlot(ObjectContext* objectCtx, s16 slot) {
     if (slot < OBJECT_SLOT_MAX) {
-        return (objectCtx->slots[slot].id >= 0);
+        return objectCtx->slots[slot].id;
     }
 
-    return (rExtendedObjectCtx.slots[slot - OBJECT_SLOT_MAX].id >= 0);
+    return rExtendedObjectCtx.slots[slot - OBJECT_SLOT_MAX].id;
+}
+
+s32 Object_IsLoaded(ObjectContext* objectCtx, s16 slot) {
+    return Object_GetIdFromSlot(objectCtx, slot) > 0;
+}
+
+// Overrides a function used only at the beginning of Cutscene_SetupScripted.
+// It's a copy of Object_IsLoaded that returns true even if id == 0.
+s32 Object_IsLoaded_ForCutscenes(ObjectContext* objectCtx, s16 slot) {
+    return Object_GetIdFromSlot(objectCtx, slot) >= 0;
 }
 
 void* Object_GetCMABByIndex(s16 objectId, u32 objectAnimIdx) {

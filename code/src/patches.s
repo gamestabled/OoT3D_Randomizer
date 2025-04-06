@@ -2250,7 +2250,7 @@ OverrideObjectIsLoaded_patch:
 .section .patch_Cutscene_CheckObjectLoaded
 .global Cutscene_CheckObjectLoaded_patch
 Cutscene_CheckObjectLoaded_patch:
-    bl hook_OverrideObjectIsLoaded
+    bl hook_OverrideObjectIsLoadedForCutscenes
 
 .section .patch_AfterObjectListCommand
 .global AfterObjectListCommand_patch
