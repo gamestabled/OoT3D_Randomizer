@@ -175,7 +175,7 @@ void Model_InfoLookup(Model* model, Actor* actor, GlobalContext* globalCtx, u16 
 
     // Special case for bombchu drops
     if ((actor->id == 0x15) && (actor->params == 5)) {
-        model->itemRow = ItemTable_GetItemRow(GI_BOMBCHUS_5);
+        model->itemRow    = ItemTable_GetItemRow(GI_BOMBCHUS_5);
         model->objectSlot = Object_FindSlotOrSpawn(model->itemRow->objectId);
         return;
     }
@@ -212,12 +212,12 @@ void Model_Create(Model* model, GlobalContext* globalCtx) {
     }
 
     if (newModel != NULL) {
-        newModel->actor         = model->actor;
-        newModel->itemRow       = model->itemRow;
-        newModel->objectSlot    = model->objectSlot;
-        newModel->loaded        = 0;
-        newModel->saModel       = NULL;
-        newModel->saModel2      = NULL;
+        newModel->actor      = model->actor;
+        newModel->itemRow    = model->itemRow;
+        newModel->objectSlot = model->objectSlot;
+        newModel->loaded     = 0;
+        newModel->saModel    = NULL;
+        newModel->saModel2   = NULL;
         switch (newModel->itemRow->objectId) {
             case 0x00BA: // Medallions
             case 0x019C: // Kokiri Emerald

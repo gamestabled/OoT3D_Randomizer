@@ -298,7 +298,7 @@ void ShopsanityItem_Init(Actor* itemx, GlobalContext* globalCtx) {
               id == GI_ARROWS_MEDIUM || id == GI_ARROWS_LARGE || id == GI_SEEDS_5 || id == GI_SEEDS_30)) {
             id = ItemTable_ResolveUpgrades(id);
         }
-        item->itemRow = ItemTable_GetItemRow(id);
+        item->itemRow     = ItemTable_GetItemRow(id);
         item->rObjectSlot = Object_FindSlotOrSpawn(item->itemRow->objectId);
     }
 }

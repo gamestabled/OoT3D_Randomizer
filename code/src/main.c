@@ -46,7 +46,7 @@ void before_Play_Init(GlobalContext* globalCtx) {
         rRandomizerInit = 1;
     }
     gGlobalContext = globalCtx;
-    rSceneLayer = 0;
+    rSceneLayer    = 0;
 }
 
 void before_GlobalContext_Update(GlobalContext* globalCtx) {
