@@ -159,6 +159,18 @@ static void Enemizer_MoveSpecificLocations(ActorEntry* actorEntry, s32 actorEntr
             // Move the wallmaster in spirit child side out of the wall
             actorEntry->pos.z = -1400;
             break;
+        case LOC(6, 0, 3, 0, DUNGEONMODE_VANILLA):
+            // Move a green bubble in spirit child side out of the pit
+            actorEntry->pos.y = 80;
+            break;
+        case LOC(6, 0, 4, 0, DUNGEONMODE_VANILLA):
+            // Move a skullwalltula in spirit child side out of the wall
+            actorEntry->pos.x = -1150;
+            break;
+        case LOC(6, 0, 4, 1, DUNGEONMODE_VANILLA):
+            // Move a skullwalltula in spirit child side out of the wall
+            actorEntry->pos.x = -1150;
+            break;
         case LOC(6, 0, 3, 3, DUNGEONMODE_MQ):
             // Move a keese in spirit child side out of the wall
             actorEntry->pos.x = -1720;
@@ -278,6 +290,16 @@ static void Enemizer_MoveSpecificEnemies(ActorEntry* actorEntry) {
     yUpperGroundIntersect = BgCheck_RaycastDown1(&gGlobalContext->colCtx, &floorPoly, &upperPos);
     // Potential mid-air position to spawn the actor off the ground if needed.
     yMidAirPos = ABS(yUpperGroundIntersect - yGroundIntersect) < 50 ? upperPos.y : yUpperGroundIntersect - 50;
+
+    // Ignore ground checks where the ground is an actor that the raycast fails to detect:
+    // - Forest Temple twisted hallways
+    // - Fire Temple staircase
+    if ((gGlobalContext->sceneNum == SCENE_FOREST_TEMPLE &&
+         (gGlobalContext->roomNum == 19 || gGlobalContext->roomNum == 20)) ||
+        ((gGlobalContext->sceneNum == SCENE_FIRE_TEMPLE && gGlobalContext->roomNum == 14 &&
+          yGroundIntersect < 4150.0))) {
+        isInvalidGround = TRUE;
+    }
 
     // If there is a water box, set yWaterSurface.
     waterBoxFound = WaterBox_GetSurfaceImpl(gGlobalContext, &gGlobalContext->colCtx, actorPos.x, actorPos.z,
