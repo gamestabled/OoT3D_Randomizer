@@ -14,7 +14,9 @@ typedef struct EnPeehat {
     /* 0x063C */ s32 state;
     /* 0x0640 */ char unk_640[0x004];
     /* 0x0644 */ EnPeehatActionFunc actionFunc;
-    /* 0x0648 */ char unk_648[0x18C];
+    /* 0x0648 */ char unk_648[0x10C];
+    /* 0x0754 */ Collider colliderQuadBase;
+    /* 0x076C */ char unk_76C[0x068];
 } EnPeehat;
 _Static_assert(sizeof(EnPeehat) == 0x7D4, "EnPeehat size");
 

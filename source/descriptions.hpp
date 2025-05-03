@@ -384,6 +384,9 @@ extern string_view mirrorWorldRandomDesc;
 
 extern string_view betaSoldOutDesc;
 
+extern string_view soullessPurpleFlameDesc;
+extern string_view soullessFlashingDesc;
+
 extern string_view musicRandoDesc;
 extern string_view shuffleBGMDesc;
 extern string_view shuffleMelodiesDesc;

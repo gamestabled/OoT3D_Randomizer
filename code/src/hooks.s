@@ -2065,6 +2065,7 @@ hook_ShabomAfterDamagePlayer:
     pop {r0-r12, lr}
     beq 0x3B511C @ Skip popping
     strh r10,[r5,#0x80]
+    bx lr
 
 .global hook_DodongoAfterSwallowBomb
 hook_DodongoAfterSwallowBomb:
@@ -2381,4 +2382,28 @@ hook_DarkLinkPlayerRecoil:
     bl DarkLink_ShouldOverridePlayerRecoilSpeed
     cmp r0,#0x1
     pop {r0-r12, lr}
+    bx lr
+
+.global hook_BabyDodongoWallCheck
+hook_BabyDodongoWallCheck:
+    tst r0,#0x8
+    bxeq lr @ no wall detected, return
+    push {r0-r12, lr}
+    @ Prevent burrowing for soulless baby dodongos.
+    cpy r0,r4
+    bl EnemySouls_CheckSoulForActor
+    cmp r0,#0x0
+    pop {r0-r12, lr}
+    bx lr
+
+.global hook_PeahatLarvaGroundCheck
+hook_PeahatLarvaGroundCheck:
+    tsteq r1,#0x1
+    bxeq lr @ did not hit ground
+    push {r0-r12, lr}
+    cpy r0,r4 @ actor
+    bl EnemySouls_CheckSoulForActor
+    cmp r0,#0x0
+    pop {r0-r12, lr}
+    @ Prevent death when hitting ground without soul.
     bx lr

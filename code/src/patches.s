@@ -2486,3 +2486,13 @@ EnEncount1_SetLeeverAimType_patch:
 .global DarkLinkPlayerRecoil_patch
 DarkLinkPlayerRecoil_patch:
     bl hook_DarkLinkPlayerRecoil
+
+.section .patch_BabyDodongoWallCheck
+.global BabyDodongoWallCheck_patch
+BabyDodongoWallCheck_patch:
+    bl hook_BabyDodongoWallCheck
+
+.section .patch_PeahatLarvaGroundCheck
+.global PeahatLarvaGroundCheck_patch
+PeahatLarvaGroundCheck_patch:
+    bl hook_PeahatLarvaGroundCheck

@@ -197,6 +197,11 @@ typedef enum {
 } ShuffleEnemySoulsSetting;
 
 typedef enum {
+    SOULLESSLOOK_PURPLE_FLAME,
+    SOULLESSLOOK_FLASHING,
+} SoullessEnemiesLookSetting;
+
+typedef enum {
     MAPSANDCOMPASSES_START_WITH,
     MAPSANDCOMPASSES_VANILLA,
     MAPSANDCOMPASSES_OWN_DUNGEON,
@@ -662,6 +667,7 @@ typedef struct {
     u8 coloredKeys;
     u8 coloredBossKeys;
     u8 mirrorWorld;
+    u8 soullessEnemiesLook;
 
     u8 shuffleSFX;
     u8 shuffleSFXFootsteps;

@@ -554,8 +554,8 @@ string_view chestMinigameDesc         = "The 5 key chests in the Treasure Chest 
 /*------------------------------                                                           //
 |     SHUFFLE ENEMY SOULS      |                                                           //
 ------------------------------*/                                                           //
-string_view enemySoulDesc             = "Enemies will be invincible and appear as a purple\n"
-                                        "flame until you find their \"soul\".\n"           //
+string_view enemySoulDesc             = "Enemies will be invincible until you find their\n"//
+                                        "\"soul\".\n"                                      //
                                         "Each enemy type will have a soul added into the\n"//
                                         "item pool.\n\n"                                   //
                                         "You can exclude some enemies by adding their\n"   //
@@ -1237,6 +1237,13 @@ string_view betaSoldOutDesc           = "The game contains an unused model for s
                                         "items in shops. It's a remade version of the N64\n"
                                         "model, spelling \"Sold Out\" in English.\n\n"     //
                                         "This setting enables its use in shops.";          //
+/*------------------------------                                                           //
+|    SOULLESS ENEMIES LOOK     |                                                           //
+------------------------------*/                                                           //
+string_view soullessPurpleFlameDesc   = "Soulless enemies will appear as a purple flame,\n"//
+                                        "and their body will be invisible.";               //
+string_view soullessFlashingDesc      = "Soulless enemies will flash between visible and\n"
+                                        "invisible on every frame.";                       //
 /*------------------------------                                                           //
 |        SHUFFLE MUSIC         |                                                           //
 ------------------------------*/                                                           //

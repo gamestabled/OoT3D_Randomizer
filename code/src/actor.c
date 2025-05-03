@@ -62,7 +62,6 @@
 #include "sheik.h"
 #include "skulltula_people.h"
 #include "red_ice.h"
-#include "shabom.h"
 #include "anubis.h"
 #include "link_puppet.h"
 #include "fishing.h"
@@ -78,6 +77,8 @@
 #include "stinger.h"
 #include "flying_traps.h"
 #include "dodongos.h"
+#include "stalchild.h"
+#include "skull_kid.h"
 
 #define OBJECT_GI_KEY 170
 #define OBJECT_GI_BOSSKEY 185
@@ -128,8 +129,6 @@ void Actor_Init() {
     gActorOverlayTable[0x15].initInfo->draw    = EnItem00_rDraw;
 
     gActorOverlayTable[0x1D].initInfo->update = EnPeehat_rUpdate;
-
-    // gActorOverlayTable[0x2D].initInfo->update = EnBubble_rUpdate;
 
     gActorOverlayTable[0x2E].initInfo->init   = DoorShutter_rInit;
     gActorOverlayTable[0x2E].initInfo->update = (ActorFunc)DoorShutter_rUpdate;
@@ -221,6 +220,8 @@ void Actor_Init() {
 
     gActorOverlayTable[0x113].initInfo->init = EnIk_rInit;
 
+    gActorOverlayTable[0x115].initInfo->update = EnSkj_rUpdate;
+
     gActorOverlayTable[0x11A].initInfo->update = EnDns_rUpdate;
 
     gActorOverlayTable[0x11B].initInfo->update = NULL;
@@ -291,6 +292,8 @@ void Actor_Init() {
     gActorOverlayTable[0x19C].initInfo->draw    = EnSi_rDraw;
 
     gActorOverlayTable[0x1A3].initInfo->update = EnDntNomal_rUpdate;
+
+    gActorOverlayTable[0x1B0].initInfo->update = EnSkb_rUpdate;
 
     gActorOverlayTable[0x1B9].initInfo->init = EnGs_rInit;
 
@@ -511,7 +514,8 @@ void Actor_rDraw(Actor* actor, GlobalContext* globalCtx) {
     s32 shouldDrawSoulless = !EnemySouls_CheckSoulForActor(actor) &&   // soul not owned;
                              actor->scale.x != 0 &&                    // if scale is 0, enemy is invisible;
                              actor->id != 0x11D && actor->id != 0x06B; // flying traps will appear normal.
-    if (shouldDrawSoulless && (PauseContext_GetState() == 0)) {
+    if (shouldDrawSoulless && (PauseContext_GetState() == 0) &&
+        gSettingsContext.soullessEnemiesLook == SOULLESSLOOK_PURPLE_FLAME) {
         s32 velFrameIdx = (rGameplayFrames % 16);
         s32 accFrameIdx = (rGameplayFrames % 4);
         s32 bossMult    = (actor->type == ACTORTYPE_BOSS ? 4 : 1);
@@ -528,7 +532,8 @@ void Actor_rDraw(Actor* actor, GlobalContext* globalCtx) {
 
     actor->draw(actor, globalCtx);
 
-    if (shouldDrawSoulless) {
+    if (shouldDrawSoulless &&
+        (gSettingsContext.soullessEnemiesLook != SOULLESSLOOK_FLASHING || rGameplayFrames % 2 == 0)) {
         // make enemy invisible
         gMainClass->sub180.saModelsCount1 = origSaModelsCount1; // 3D models
         gMainClass->sub180.saModelsCount2 = origSaModelsCount2; // 2D billboards

@@ -817,6 +817,7 @@ extern Option ColoredKeys;
 extern Option ColoredBossKeys;
 extern Option MirrorWorld;
 extern Option BetaSoldOut;
+extern Option SoullessEnemiesLook;
 
 extern Option ShuffleMusic;
 extern Option ShuffleBGM;

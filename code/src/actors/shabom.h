@@ -11,8 +11,6 @@ typedef void (*EnBubbleActionFunc)(struct EnBubble*, GlobalContext*);
 #define EnBubble_Disappear ((EnBubbleActionFunc)GAME_ADDR(0x3B5190))
 #define EnBubble_Pop ((EnBubbleActionFunc)GAME_ADDR(0x1321A8))
 
-// void EnBubble_rUpdate(Actor* thisx, GlobalContext* globalCtx);
-
 typedef struct EnBubble {
     /* 0x0000 */ Actor base;
     /* 0x01A4 */ EnBubbleActionFunc actionFunc;
