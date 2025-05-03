@@ -295,7 +295,12 @@ typedef struct Player {
     /* 0x12AD */ char unk_12AD[0x0001];
     /* 0x12AE */ u16 getItemDirection;
     /* 0x12B0 */ Actor* interactRangeActor;
-    /* 0x12B4 */ char unk_12B4[0x0454];
+    /* 0x12B4 */ char unk_12B4[0x5C];
+    /* 0x1310 */ ColliderCylinder cylinder;
+    /* 0x1368 */ ColliderQuad meleeWeaponQuads[4];
+    /* 0x1568 */ ColliderQuad shieldQuad;
+    /* 0x15E8 */ Collider unkMeleeWeaponCollider;
+    /* 0x1600 */ char unk_1600[0x108];
     /* 0x1708 */ void* stateFuncPtr;
     /* 0x170C */ char unk_170C[0x0004];
     /* 0x1710 */ u32 stateFlags1;

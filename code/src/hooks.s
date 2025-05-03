@@ -2372,3 +2372,13 @@ hook_EnEncount1_SetLeeverAimType:
     pop {r0}
     strheq r0,[r1,r7] @ Set aimType only if actor is Leever
     bx lr
+
+.global hook_DarkLinkPlayerRecoil
+hook_DarkLinkPlayerRecoil:
+    cmp r1,r6
+    bxne lr @ not recoiling
+    push {r0-r12, lr}
+    bl DarkLink_ShouldOverridePlayerRecoilSpeed
+    cmp r0,#0x1
+    pop {r0-r12, lr}
+    bx lr

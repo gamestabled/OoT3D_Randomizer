@@ -4,13 +4,24 @@
 
 #define EnTorch2_Update ((ActorFunc)GAME_ADDR(0x22F0C8))
 
+u8 sPlayerWeaponClanked = FALSE;
+
 void EnTorch2_rUpdate(Actor* thisx, GlobalContext* globalCtx) {
     EnTorch2* this = (EnTorch2*)thisx;
 
     s32 prevFloorType = sFloorType;
 
-    if (gSettingsContext.enemizer == ON) {
-        // Skip adjusting position after spawning.
+    // Check the 4 meleeWeaponQuads plus the shieldQuad for bounce collisions
+    // to detect if the player's weapon clanked against them.
+    ColliderQuad* swordShieldQuads = this->darkPlayer.meleeWeaponQuads;
+    for (u32 i = 0; i < 5; i++) {
+        if (swordShieldQuads[i].base.acFlags & AC_BOUNCED) {
+            sPlayerWeaponClanked = TRUE;
+        }
+    }
+
+    // For enemy randomizer, skip adjusting position after spawning outside of vanilla location.
+    if (globalCtx->sceneNum != SCENE_WATER_TEMPLE || globalCtx->roomNum != 13) {
         this->darkPlayer.darkLinkAdjustedSpawnPos = 1;
     }
 
@@ -61,6 +72,8 @@ void EnTorch2_rUpdate(Actor* thisx, GlobalContext* globalCtx) {
                 break;
         }
     }
+
+    sPlayerWeaponClanked = FALSE;
 }
 
 void DarkLink_OverrideSpawnedActor(s16* actorId, s16* params, f32* posZ) {
@@ -83,4 +96,10 @@ void DarkLink_OverrideSpawnedActor(s16* actorId, s16* params, f32* posZ) {
     if (posZ != NULL) {
         *posZ -= 75.0; // Move enemy outside of the tree.
     }
+}
+
+// Vanilla code removes hammer recoil for both Links.
+// Avoid this when not hitting Dark Link so that Hammer Slides can still work.
+u8 DarkLink_ShouldOverridePlayerRecoilSpeed(void) {
+    return sPlayerWeaponClanked;
 }

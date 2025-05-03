@@ -644,6 +644,10 @@ SECTIONS
 		*(.patch_BusinessScrubCheckFlags)
 	}
 
+	.patch_DarkLinkPlayerRecoil 0x22F838 : {
+		*(.patch_DarkLinkPlayerRecoil)
+	}
+
 	.patch_GanonCSEquipMS 0x2359A4 : {
 		*(.patch_GanonCSEquipMS)
 	}

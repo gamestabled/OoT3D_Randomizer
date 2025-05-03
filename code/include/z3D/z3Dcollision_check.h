@@ -20,6 +20,8 @@ typedef struct {
 } Collider;                         // size = 0x18
 _Static_assert(sizeof(Collider) == 0x18, "Collider size");
 
+#define AC_BOUNCED (1 << 7) // Caused an AT collider to bounce off it
+
 typedef struct {
     /* 0x00 */ u32 damageFlags;
     /* 0x04 */ u8 effect;
@@ -63,6 +65,12 @@ typedef struct {
     /* 0x40 */ Cylinderf dim;
 } ColliderCylinder; // size = 0x58
 _Static_assert(sizeof(ColliderCylinder) == 0x58, "ColliderCylinder size");
+
+typedef struct ColliderQuad {
+    /* 0x00 */ Collider base;
+    /* 0x18 */ char unk_18[0x68];
+} ColliderQuad;
+_Static_assert(sizeof(ColliderQuad) == 0x80, "ColliderQuad size");
 
 typedef struct {
     /* 0x00 */ u8 type;
