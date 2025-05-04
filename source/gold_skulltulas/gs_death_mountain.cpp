@@ -1,4 +1,5 @@
 #include "gold_skulltulas.hpp"
+#include "enemizer_logic.hpp"
 
 using namespace GoldSkulltulas;
 using namespace Logic;
@@ -66,7 +67,10 @@ void GsTable_Init_DeathMountain() {
             DEATH_MOUNTAIN_TRAIL,
             GsScene{ 0x60 },
             Room{ 0 },
-            { [] { return CanBlastOrSmash; },
+            { [] {
+                 return CanBlastOrSmash || (IsChild && CanDetonateAnyEnemy(96, 0, 0, { 10, 11 })) ||
+                        (IsAdult && CanDetonateEnemy(96, 2, 0, 6));
+             },
               /*Glitched*/
               [] { return (CanUse(STICKS) && CanDoGlitch(GlitchType::QPA, GlitchDifficulty::ADVANCED)); } },
         },

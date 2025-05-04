@@ -2,6 +2,7 @@
 #include "logic.hpp"
 #include "entrance.hpp"
 #include "dungeon.hpp"
+#include "enemizer_logic.hpp"
 
 using namespace Logic;
 using namespace Settings;
@@ -23,19 +24,19 @@ void AreaTable_Init_DekuTree() {
     |     VANILLA DUNGEON      |
     ---------------------------*/
     if (Dungeon::DekuTree.IsVanilla()) {
+
+        static constexpr auto ForEachEnemy_Lobby = [](auto& enemyCheckFn) {
+            return enemyCheckFn(0, 0, 0, { 0, 1, 2, 11, 12, 13 }) ||
+                   (CanPassEnemies(0, 0, 0, { 0, 1, 2 }, SpaceAroundEnemy::NARROW) &&
+                    enemyCheckFn(0, 0, 0, { 3, 4, 5 }));
+        };
         areaTable[DEKU_TREE_LOBBY] = Area(
             "Deku Tree Lobby", "Deku Tree", DEKU_TREE, NO_DAY_NIGHT_CYCLE,
             {
                 // Events
-                EventAccess(&DekuBabaSticks, { [] {
-                    return DekuBabaSticks || (SoulDekuBaba && (CanUse(KOKIRI_SWORD) || CanUse(MASTER_SWORD) ||
-                                                               CanUse(BIGGORON_SWORD) || CanUse(BOOMERANG)));
-                } }),
-                EventAccess(&DekuBabaNuts, { [] {
-                    return DekuBabaNuts ||
-                           (SoulDekuBaba && (CanJumpslash || CanUse(SLINGSHOT) || CanUse(BOW) ||
-                                             CanUse(MEGATON_HAMMER) || HasExplosives || CanUse(DINS_FIRE)));
-                } }),
+                EventAccess(&DekuBabaSticks,
+                            { [] { return DekuBabaSticks || ForEachEnemy_Lobby(CanGetDekuBabaSticks); } }),
+                EventAccess(&DekuBabaNuts, { [] { return DekuBabaNuts || ForEachEnemy_Lobby(CanGetDekuBabaNuts); } }),
             },
             {
                 // Locations
@@ -44,12 +45,17 @@ void AreaTable_Init_DekuTree() {
             {
                 // Exits
                 Entrance(DEKU_TREE_ENTRYWAY, { [] { return true; } }),
-                Entrance(DEKU_TREE_2F_MIDDLE_ROOM, { [] { return true; } }),
-                Entrance(DEKU_TREE_COMPASS_ROOM, { [] { return true; } }),
+                Entrance(DEKU_TREE_2F_MIDDLE_ROOM, { [] {
+                             return CanPassEnemies(0, 0, 0, { 0, 1, 2 }, SpaceAroundEnemy::NARROW);
+                         } }),
+                Entrance(DEKU_TREE_COMPASS_ROOM, { [] {
+                             return CanPassEnemies(0, 0, 0, { 0, 1, 2 }, SpaceAroundEnemy::NARROW);
+                         } }),
                 Entrance(DEKU_TREE_BASEMENT_LOWER, { [] {
                              return Here(DEKU_TREE_LOBBY, [] {
                                  return HasFireSourceWithTorch ||
-                                        (SoulSkulltula && (CanAdultAttack || CanChildAttack || Nuts));
+                                        (CanPassEnemies(0, 0, 0, { 0, 1, 2 }, SpaceAroundEnemy::NARROW) &&
+                                         CanPassAnyEnemy(0, 0, 0, { 3, 4, 5 }));
                              });
                          } }),
                 Entrance(DEKU_TREE_OUTSIDE_BOSS_ROOM,
@@ -101,15 +107,8 @@ void AreaTable_Init_DekuTree() {
             "Deku Tree Compass Room", "Deku Tree", DEKU_TREE, NO_DAY_NIGHT_CYCLE,
             {
                 // Events
-                EventAccess(&DekuBabaSticks, { [] {
-                    return DekuBabaSticks || (SoulDekuBaba && (CanUse(KOKIRI_SWORD) || CanUse(MASTER_SWORD) ||
-                                                               CanUse(BIGGORON_SWORD) || CanUse(BOOMERANG)));
-                } }),
-                EventAccess(&DekuBabaNuts, { [] {
-                    return DekuBabaNuts ||
-                           (SoulDekuBaba && (CanJumpslash || CanUse(SLINGSHOT) || CanUse(BOW) ||
-                                             CanUse(MEGATON_HAMMER) || HasExplosives || CanUse(DINS_FIRE)));
-                } }),
+                EventAccess(&DekuBabaSticks, { [] { return DekuBabaSticks || CanGetDekuBabaSticks(0, 0, 10); } }),
+                EventAccess(&DekuBabaNuts, { [] { return DekuBabaNuts || CanGetDekuBabaNuts(0, 0, 10); } }),
             },
             {
                 // Locations
@@ -129,15 +128,8 @@ void AreaTable_Init_DekuTree() {
             "Deku Tree Basement Lower", "Deku Tree", DEKU_TREE, NO_DAY_NIGHT_CYCLE,
             {
                 // Events
-                EventAccess(&DekuBabaSticks, { [] {
-                    return DekuBabaSticks || (SoulDekuBaba && (CanUse(KOKIRI_SWORD) || CanUse(MASTER_SWORD) ||
-                                                               CanUse(BIGGORON_SWORD) || CanUse(BOOMERANG)));
-                } }),
-                EventAccess(&DekuBabaNuts, { [] {
-                    return DekuBabaNuts ||
-                           (SoulDekuBaba && (CanJumpslash || CanUse(SLINGSHOT) || CanUse(BOW) ||
-                                             CanUse(MEGATON_HAMMER) || HasExplosives || CanUse(DINS_FIRE)));
-                } }),
+                EventAccess(&DekuBabaSticks, { [] { return DekuBabaSticks || CanGetDekuBabaSticks(0, 0, 3, { 4 }); } }),
+                EventAccess(&DekuBabaNuts, { [] { return DekuBabaNuts || CanGetDekuBabaNuts(0, 0, 3, { 4 }); } }),
             },
             {
                 // Locations
@@ -151,7 +143,10 @@ void AreaTable_Init_DekuTree() {
                                          [] { return HasFireSourceWithTorch || CanUse(BOW); });
                          } }),
                 Entrance(DEKU_TREE_BASEMENT_UPPER,
-                         { [] { return IsAdult || LogicDekuB1Skip || HasAccessTo(DEKU_TREE_BASEMENT_UPPER); },
+                         { [] {
+                              return IsAdult || LogicDekuB1Skip || CanUse(HOOKSHOT) ||
+                                     HasAccessTo(DEKU_TREE_BASEMENT_UPPER);
+                          },
                            /*Glitched*/ [] { return CanDoGlitch(GlitchType::BombHover, GlitchDifficulty::NOVICE); } }),
                 Entrance(
                     DEKU_TREE_OUTSIDE_BOSS_ROOM,
@@ -175,51 +170,40 @@ void AreaTable_Init_DekuTree() {
                  {
                      // Exits
                      Entrance(DEKU_TREE_BASEMENT_SCRUB_ROOM, { [] { return true; } }),
-                     Entrance(DEKU_TREE_BASEMENT_TORCH_ROOM, { [] { return true; } }),
+                     Entrance(DEKU_TREE_BASEMENT_TORCH_ROOM,
+                              { [] { return !Settings::Enemizer || CanPassEnemy(0, 0, 5, 0); } }),
                  });
 
         areaTable[DEKU_TREE_BASEMENT_TORCH_ROOM] =
             Area("Deku Tree Basement Torch Room", "Deku Tree", DEKU_TREE, NO_DAY_NIGHT_CYCLE,
                  {
                      // Events
-                     EventAccess(&DekuBabaSticks, { [] {
-                         return DekuBabaSticks || (SoulDekuBaba && (CanUse(KOKIRI_SWORD) || CanUse(MASTER_SWORD) ||
-                                                                    CanUse(BIGGORON_SWORD) || CanUse(BOOMERANG)));
-                     } }),
-                     EventAccess(&DekuBabaNuts, { [] {
-                         return DekuBabaNuts ||
-                                (SoulDekuBaba && (CanJumpslash || CanUse(SLINGSHOT) || CanUse(BOW) ||
-                                                  CanUse(MEGATON_HAMMER) || HasExplosives || CanUse(DINS_FIRE)));
-                     } }),
+                     EventAccess(&DekuBabaSticks, { [] { return DekuBabaSticks || CanGetDekuBabaSticks(0, 0, 6); } }),
+                     EventAccess(&DekuBabaNuts, { [] { return DekuBabaNuts || CanGetDekuBabaNuts(0, 0, 6); } }),
                  },
                  {},
                  {
                      // Exits
                      Entrance(DEKU_TREE_BASEMENT_WATER_ROOM, { [] { return true; } }),
                      Entrance(DEKU_TREE_BASEMENT_BACK_LOBBY, { [] {
-                                  return Here(DEKU_TREE_BASEMENT_TORCH_ROOM,
-                                              [] { return HasFireSourceWithTorch || CanUse(BOW); });
+                                  return Here(DEKU_TREE_BASEMENT_TORCH_ROOM, [] {
+                                      return ((HasFireSourceWithTorch || CanUse(BOW)) && CanPassEnemy(0, 0, 7, 1));
+                                  });
                               } }),
                  });
 
+        static constexpr auto ForEachEnemy_BackLobby = [](auto& enemyCheckFn) {
+            return enemyCheckFn(0, 0, 7, { 0, 1, 5, 6, 7 }) ||
+                   ((HasFireSourceWithTorch || CanUse(BOW)) && enemyCheckFn(0, 0, 7, { 4 }));
+        };
         areaTable[DEKU_TREE_BASEMENT_BACK_LOBBY] =
             Area("Deku Tree Basement Back Lobby", "Deku Tree", DEKU_TREE, NO_DAY_NIGHT_CYCLE,
                  {
                      // Events
-                     EventAccess(&DekuBabaSticks, { [] {
-                         return DekuBabaSticks ||
-                                (SoulDekuBaba && (Here(DEKU_TREE_BASEMENT_BACK_LOBBY,
-                                                       [] { return HasFireSourceWithTorch || CanUse(BOW); }) &&
-                                                  (CanUse(KOKIRI_SWORD) || CanUse(MASTER_SWORD) ||
-                                                   CanUse(BIGGORON_SWORD) || CanUse(BOOMERANG))));
-                     } }),
-                     EventAccess(&DekuBabaNuts, { [] {
-                         return DekuBabaNuts ||
-                                (SoulDekuBaba && (Here(DEKU_TREE_BASEMENT_BACK_LOBBY,
-                                                       [] { return HasFireSourceWithTorch || CanUse(BOW); }) &&
-                                                  (CanJumpslash || CanUse(SLINGSHOT) || CanUse(BOW) ||
-                                                   CanUse(MEGATON_HAMMER) || HasExplosives || CanUse(DINS_FIRE))));
-                     } }),
+                     EventAccess(&DekuBabaSticks,
+                                 { [] { return DekuBabaSticks || ForEachEnemy_BackLobby(CanGetDekuBabaSticks); } }),
+                     EventAccess(&DekuBabaNuts,
+                                 { [] { return DekuBabaNuts || ForEachEnemy_BackLobby(CanGetDekuBabaNuts); } }),
                  },
                  {},
                  {
@@ -227,13 +211,16 @@ void AreaTable_Init_DekuTree() {
                      Entrance(DEKU_TREE_BASEMENT_TORCH_ROOM, { [] { return true; } }),
                      Entrance(DEKU_TREE_BASEMENT_BACK_ROOM,
                               { [] {
-                                   return Here(DEKU_TREE_BASEMENT_BACK_LOBBY,
+                                   return CanPassEnemy(0, 0, 7, 4) &&
+                                          Here(DEKU_TREE_BASEMENT_BACK_LOBBY,
                                                [] { return HasFireSourceWithTorch || CanUse(Bow); }) &&
-                                          Here(DEKU_TREE_BASEMENT_BACK_LOBBY, [] { return CanBlastOrSmash; });
+                                          Here(DEKU_TREE_BASEMENT_BACK_LOBBY,
+                                               [] { return CanBlastOrSmash || CanDetonateEnemy(0, 0, 7, 4); });
                                },
                                 /*Glitched*/
                                 [] {
-                                    return Here(DEKU_TREE_BASEMENT_BACK_LOBBY,
+                                    return CanPassEnemy(0, 0, 7, 4) &&
+                                           Here(DEKU_TREE_BASEMENT_BACK_LOBBY,
                                                 [] { return HasFireSourceWithTorch || CanUse(Bow); }) &&
                                            Here(DEKU_TREE_BASEMENT_BACK_LOBBY, [] {
                                                return (GlitchBlueFireWall && BlueFire) ||
@@ -260,13 +247,10 @@ void AreaTable_Init_DekuTree() {
             {
                 // Events
                 EventAccess(&DekuBabaSticks, { [] {
-                    return DekuBabaSticks || (SoulDekuBaba && (CanUse(KOKIRI_SWORD) || CanUse(MASTER_SWORD) ||
-                                                               CanUse(BIGGORON_SWORD) || CanUse(BOOMERANG)));
+                    return DekuBabaSticks || CanGetDekuBabaSticks(0, 0, 3, { 0, 3, 5 });
                 } }),
                 EventAccess(&DekuBabaNuts, { [] {
-                    return DekuBabaNuts ||
-                           (SoulDekuBaba && (CanJumpslash || CanUse(SLINGSHOT) || CanUse(BOW) ||
-                                             CanUse(MEGATON_HAMMER) || HasExplosives || CanUse(DINS_FIRE)));
+                    return DekuBabaNuts || CanGetDekuBabaNuts(0, 0, 3, { 0, 3, 5 });
                 } }),
             },
             {},

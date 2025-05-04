@@ -2758,6 +2758,7 @@ std::vector<std::pair<Option*, u8>> racingOverrides = {
 // Options that should be overridden and then restored after generating when vanilla logic is enabled
 std::vector<std::pair<Option*, u8>> vanillaLogicOverrides = {
     { &TriforceHunt, OFF },
+    { &Enemizer, OFF },
     { &LinksPocketItem, LINKSPOCKETITEM_DUNGEON_REWARD },
     { &ShuffleRewards, REWARDSHUFFLE_END_OF_DUNGEON },
     { &ShuffleSongs, SONGSHUFFLE_SONG_LOCATIONS },
@@ -3299,24 +3300,27 @@ bool ValidateSettings() {
         posY += 7;
     }
 
-    // Check that there are no MQ dungeons with Enemy Souls
-    if (ShuffleEnemySouls.Is(SHUFFLEENEMYSOULS_ALL) && Logic.IsNot(LOGIC_NONE) && Logic.IsNot(LOGIC_VANILLA) &&
-        MQDungeonCount.IsNot(0)) {
-        if (ShuffleEnemySouls.IsHidden()) {
-            ShuffleEnemySouls.SetSelectedIndex(OFF);
+    // Check that there are no MQ dungeons with Enemy Souls or Enemy Randomizer.
+    if ((ShuffleEnemySouls.Is(SHUFFLEENEMYSOULS_ALL) || Enemizer) && MQDungeonCount.IsNot(0) &&
+        Logic.IsNot(LOGIC_NONE) && Logic.IsNot(LOGIC_VANILLA)) {
+        if (ShuffleEnemySouls.IsHidden() && Enemizer.IsHidden()) {
+            ShuffleEnemySouls.SetSelectedIndex(SHUFFLEENEMYSOULS_OFF);
+            Enemizer.SetSelectedIndex(OFF);
         } else {
             printf("\x1b[%d;0H"
                    "----------------------------------------"
-                   "Enemy Soul Shuffle currently does not\n"
-                   "have logic for Master Quest dungeons.\n\n"
+                   "Enemy Soul Shuffle and Enemy Randomizer\n"
+                   "currently do not have logic for Master\n"
+                   "Quest dungeons.\n"
+                   "\n"
                    "Please disable one of the following:\n"
                    " - MQ Dungeons (setting Count to 0)\n"
                    " - Logic\n"
-                   " - Enemy Soul Shuffle\n"
+                   " - Enemy Soul Shuffle / Enemy Randomizer\n"
                    "----------------------------------------",
                    posY);
             valid = false;
-            posY += 10;
+            posY += 11;
         }
     }
 

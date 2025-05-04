@@ -3,6 +3,7 @@
 #include "entrance.hpp"
 #include "dungeon.hpp"
 #include "trial.hpp"
+#include "enemizer_logic.hpp"
 
 using namespace Logic;
 using namespace Settings;
@@ -77,8 +78,7 @@ void AreaTable_Init_GanonsCastle() {
             },
             {
                 // Locations
-                LocationAccess(GANONS_CASTLE_FOREST_TRIAL_CHEST,
-                               { [] { return SoulWolfos && (CanAdultDamage || CanChildDamage); } }),
+                LocationAccess(GANONS_CASTLE_FOREST_TRIAL_CHEST, { [] { return CanDefeatEnemy(13, 0, 5, 0); } }),
             },
             {});
 
@@ -86,6 +86,9 @@ void AreaTable_Init_GanonsCastle() {
             "Ganon's Castle Fire Trial", "Ganon's Castle", GANONS_CASTLE, NO_DAY_NIGHT_CYCLE,
             {
                 // Events
+                EventAccess(&DekuBabaSticks,
+                            { [] { return DekuBabaSticks || CanGetDekuBabaSticks(13, 0, 14, { 3 }); } }),
+                EventAccess(&DekuBabaNuts, { [] { return DekuBabaNuts || CanGetDekuBabaNuts(13, 0, 14, { 3 }); } }),
                 EventAccess(&FireTrialClear, { [] {
                     return CanUse(GORON_TUNIC) && CanUse(GOLDEN_GAUNTLETS) && CanUse(LIGHT_ARROWS) && CanUse(LONGSHOT);
                 } }),
@@ -99,7 +102,8 @@ void AreaTable_Init_GanonsCastle() {
                      EventAccess(&BlueFireAccess, { [] { return BlueFireAccess || HasBottle; } }),
                      EventAccess(&FairyPot, { [] { return FairyPot || BlueFire; } }),
                      EventAccess(&WaterTrialClear, { [] {
-                         return SoulFreezard && BlueFire && IsAdult && CanUse(MEGATON_HAMMER) && CanUse(LIGHT_ARROWS);
+                         return CanDefeatEnemies(13, 0, 2) && BlueFire && IsAdult && CanUse(MEGATON_HAMMER) &&
+                                CanUse(LIGHT_ARROWS);
                      } }),
                  },
                  {
@@ -109,50 +113,71 @@ void AreaTable_Init_GanonsCastle() {
                  },
                  {});
 
-        areaTable[GANONS_CASTLE_SHADOW_TRIAL] =
-            Area("Ganon's Castle Shadow Trial", "Ganon's Castle", GANONS_CASTLE, NO_DAY_NIGHT_CYCLE,
-                 {
-                     // Events
-                     EventAccess(&ShadowTrialClear, { [] {
-                         return CanUse(LIGHT_ARROWS) && CanUse(MEGATON_HAMMER) &&
-                                ((FireArrows && (LogicLensCastle || CanUse(LENS_OF_TRUTH))) ||
-                                 (CanUse(LONGSHOT) && ((SoulLikeLike && CanUse(HOVER_BOOTS)) ||
-                                                       (DinsFire && (LogicLensCastle || CanUse(LENS_OF_TRUTH))))));
-                     } }),
-                 },
-                 {
-                     // Locations
-                     LocationAccess(GANONS_CASTLE_SHADOW_TRIAL_FRONT_CHEST, { [] {
-                                        return CanUse(FIRE_ARROWS) || CanUse(HOOKSHOT) || CanUse(HOVER_BOOTS) ||
-                                               CanPlay(SongOfTime) || IsChild;
-                                    } }),
-                     LocationAccess(GANONS_CASTLE_SHADOW_TRIAL_GOLDEN_GAUNTLETS_CHEST, { [] {
-                                        return CanUse(FIRE_ARROWS) ||
-                                               (CanUse(LONGSHOT) &&
-                                                ((SoulLikeLike && CanUse(HOVER_BOOTS)) || CanUse(DINS_FIRE)));
-                                    } }),
-                 },
-                 {});
+        static constexpr auto ForEachEnemy_ShadowTrial = [](auto& enemyCheckFn) {
+            return enemyCheckFn(13, 0, 12, { 3 }) && (CanUse(FIRE_ARROWS) || (CanUse(LONGSHOT) && CanUse(DINS_FIRE)));
+        };
+        areaTable[GANONS_CASTLE_SHADOW_TRIAL] = Area(
+            "Ganon's Castle Shadow Trial", "Ganon's Castle", GANONS_CASTLE, NO_DAY_NIGHT_CYCLE,
+            {
+                // Events
+                EventAccess(&DekuBabaSticks,
+                            { [] { return DekuBabaSticks || ForEachEnemy_ShadowTrial(CanGetDekuBabaSticks); } }),
+                EventAccess(&DekuBabaNuts,
+                            { [] { return DekuBabaNuts || ForEachEnemy_ShadowTrial(CanGetDekuBabaNuts); } }),
+                EventAccess(&ShadowTrialClear, { [] {
+                    return CanUse(LIGHT_ARROWS) && CanUse(MEGATON_HAMMER) &&
+                           ((FireArrows && (LogicLensCastle || CanUse(LENS_OF_TRUTH))) ||
+                            (CanUse(LONGSHOT) && ((CanHookEnemy(13, 0, 12, 3, ENEMY_ON_LEDGE) && CanUse(HOVER_BOOTS)) ||
+                                                  (DinsFire && (LogicLensCastle || CanUse(LENS_OF_TRUTH))))));
+                } }),
+            },
+            {
+                // Locations
+                LocationAccess(GANONS_CASTLE_SHADOW_TRIAL_FRONT_CHEST, { [] {
+                                   return CanUse(FIRE_ARROWS) || CanUse(HOOKSHOT) || CanUse(HOVER_BOOTS) ||
+                                          CanPlay(SongOfTime) || IsChild;
+                               } }),
+                LocationAccess(GANONS_CASTLE_SHADOW_TRIAL_GOLDEN_GAUNTLETS_CHEST, { [] {
+                                   return CanUse(FIRE_ARROWS) ||
+                                          (CanUse(LONGSHOT) &&
+                                           ((CanHookEnemy(13, 0, 12, 3, ENEMY_ON_LEDGE) && CanUse(HOVER_BOOTS)) ||
+                                            CanUse(DINS_FIRE)));
+                               } }),
+            },
+            {});
 
+        static constexpr auto SpiritTrial_CanPassFirstRoom = [] {
+            return (LogicSpiritTrialHookshot || CanUse(HOOKSHOT)) &&
+                   CanPassEnemy(13, 0, 17, 10, SpaceAroundEnemy::NARROW);
+        };
+        static constexpr auto ForEachEnemy_SpiritTrial = [](auto& enemyCheckFn) {
+            return enemyCheckFn(13, 0, 17, {}) ||
+                   (SpiritTrial_CanPassFirstRoom() &&
+                    (enemyCheckFn(13, 0, 18, { 6, 7 }) || (HasBombchus && enemyCheckFn(13, 0, 18, { 18, 20, 22 }))));
+        };
         areaTable[GANONS_CASTLE_SPIRIT_TRIAL] =
             Area("Ganon's Castle Spirit Trial", "Ganon's Castle", GANONS_CASTLE, NO_DAY_NIGHT_CYCLE,
                  {
                      // Events
+                     EventAccess(&DekuBabaSticks,
+                                 { [] { return DekuBabaSticks || ForEachEnemy_SpiritTrial(CanGetDekuBabaSticks); } }),
+                     EventAccess(&DekuBabaNuts,
+                                 { [] { return DekuBabaNuts || ForEachEnemy_SpiritTrial(CanGetDekuBabaNuts); } }),
                      EventAccess(&NutPot, { [] {
-                         return NutPot || ((LogicSpiritTrialHookshot || CanUse(HOOKSHOT)) && HasBombchus && Bow &&
+                         return NutPot || (SpiritTrial_CanPassFirstRoom() && HasBombchus && Bow &&
                                            (MirrorShield || (ExtraArrowEffects && CanUse(LIGHT_ARROWS))) && IsAdult);
                      } }),
                      EventAccess(&SpiritTrialClear, { [] {
                          return CanUse(LIGHT_ARROWS) && IsAdult && (CanUse(MIRROR_SHIELD) || ExtraArrowEffects) &&
-                                HasBombchus && (LogicSpiritTrialHookshot || CanUse(HOOKSHOT));
+                                HasBombchus && SpiritTrial_CanPassFirstRoom();
                      } }),
                  },
                  {
                      // Locations
                      LocationAccess(GANONS_CASTLE_SPIRIT_TRIAL_CRYSTAL_SWITCH_CHEST,
-                                    { [] { return LogicSpiritTrialHookshot || CanUse(HOOKSHOT); } }),
+                                    { [] { return SpiritTrial_CanPassFirstRoom(); } }),
                      LocationAccess(GANONS_CASTLE_SPIRIT_TRIAL_INVISIBLE_CHEST, { [] {
-                                        return (LogicSpiritTrialHookshot || CanUse(HOOKSHOT)) && HasBombchus &&
+                                        return SpiritTrial_CanPassFirstRoom() && HasBombchus &&
                                                (LogicLensCastle || CanUse(LENS_OF_TRUTH));
                                     } }),
                  },
@@ -169,14 +194,17 @@ void AreaTable_Init_GanonsCastle() {
                  },
                  {
                      // Locations
-                     LocationAccess(GANONS_CASTLE_LIGHT_TRIAL_FIRST_LEFT_CHEST, { [] { return true; } }),
+                     LocationAccess(GANONS_CASTLE_LIGHT_TRIAL_FIRST_LEFT_CHEST,
+                                    { [] { return CanPassEnemy(13, 0, 9, 8, SpaceAroundEnemy::NONE); } }),
                      LocationAccess(GANONS_CASTLE_LIGHT_TRIAL_SECOND_LEFT_CHEST, { [] { return true; } }),
-                     LocationAccess(GANONS_CASTLE_LIGHT_TRIAL_THIRD_LEFT_CHEST, { [] { return true; } }),
+                     LocationAccess(GANONS_CASTLE_LIGHT_TRIAL_THIRD_LEFT_CHEST,
+                                    { [] { return CanPassEnemy(13, 0, 9, 7, SpaceAroundEnemy::NONE); } }),
                      LocationAccess(GANONS_CASTLE_LIGHT_TRIAL_FIRST_RIGHT_CHEST, { [] { return true; } }),
-                     LocationAccess(GANONS_CASTLE_LIGHT_TRIAL_SECOND_RIGHT_CHEST, { [] { return true; } }),
+                     LocationAccess(GANONS_CASTLE_LIGHT_TRIAL_SECOND_RIGHT_CHEST,
+                                    { [] { return CanPassEnemy(13, 0, 9, 6, SpaceAroundEnemy::NONE); } }),
                      LocationAccess(GANONS_CASTLE_LIGHT_TRIAL_THIRD_RIGHT_CHEST, { [] { return true; } }),
                      LocationAccess(GANONS_CASTLE_LIGHT_TRIAL_INVISIBLE_ENEMIES_CHEST, { [] {
-                                        return SoulSkulltula && SoulKeese && (LogicLensCastle || CanUse(LENS_OF_TRUTH));
+                                        return CanDefeatEnemies(13, 0, 9) && (LogicLensCastle || CanUse(LENS_OF_TRUTH));
                                     } }),
                      LocationAccess(GANONS_CASTLE_LIGHT_TRIAL_LULLABY_CHEST,
                                     { [] { return CanPlay(ZeldasLullaby) && SmallKeys(GANONS_CASTLE, 1); } }),
@@ -184,25 +212,31 @@ void AreaTable_Init_GanonsCastle() {
                  {});
     }
 
-    areaTable[GANONS_CASTLE_TOWER] =
-        Area("Ganon's Castle Tower", "Ganons Castle", GANONS_CASTLE, NO_DAY_NIGHT_CYCLE, {},
-             {
-                 // Locations
-                 LocationAccess(GANONS_TOWER_BOSS_KEY_CHEST, { [] {
-                                    return SoulLizalfosDinolfos && SoulStalfos &&
-                                           (CanUse(KOKIRI_SWORD) || CanUse(MASTER_SWORD) || CanUse(BIGGORON_SWORD));
-                                } }),
-                 LocationAccess(GANONDORF_HINT, { [] {
-                                    return SoulLizalfosDinolfos && SoulStalfos && SoulGerudo && BossKeyGanonsCastle &&
-                                           (CanUse(KOKIRI_SWORD) || CanUse(MASTER_SWORD) || CanUse(BIGGORON_SWORD));
-                                } }),
-                 LocationAccess(GANON, { [] {
-                                    return SoulLizalfosDinolfos && SoulStalfos && SoulGerudo && SoulGanon &&
-                                           BossKeyGanonsCastle && CanUse(LIGHT_ARROWS) && CanUse(MASTER_SWORD) &&
-                                           Hearts > 0;
-                                } }),
-             },
-             {});
+    areaTable[GANONS_CASTLE_TOWER] = Area(
+        "Ganon's Castle Tower", "Ganons Castle", GANONS_CASTLE, NO_DAY_NIGHT_CYCLE,
+        {
+            // Events
+            EventAccess(&DekuBabaSticks, { [] { return DekuBabaSticks || CanGetDekuBabaSticks(10, 0, 7); } }),
+            EventAccess(&DekuBabaNuts, { [] { return DekuBabaNuts || CanGetDekuBabaNuts(10, 0, 7); } }),
+        },
+        {
+            // Locations
+            LocationAccess(GANONS_TOWER_BOSS_KEY_CHEST, { [] {
+                               return CanPassEnemy(10, 0, 7, 5) && CanDefeatEnemies(10, 0, 0) &&
+                                      CanDefeatEnemies(10, 0, 2);
+                           } }),
+            LocationAccess(GANONDORF_HINT, { [] {
+                               return CanPassEnemy(10, 0, 7, 5) && CanDefeatEnemies(10, 0, 0) &&
+                                      CanDefeatEnemies(10, 0, 2) && CanDefeatEnemies(10, 0, 4) && BossKeyGanonsCastle &&
+                                      (CanUse(KOKIRI_SWORD) || CanUse(MASTER_SWORD) || CanUse(BIGGORON_SWORD));
+                           } }),
+            LocationAccess(GANON, { [] {
+                               return CanPassEnemy(10, 0, 7, 5) && CanDefeatEnemies(10, 0, 0) &&
+                                      CanDefeatEnemies(10, 0, 2) && CanDefeatEnemies(10, 0, 4) && SoulGanon &&
+                                      BossKeyGanonsCastle && CanUse(LIGHT_ARROWS) && CanUse(MASTER_SWORD) && Hearts > 0;
+                           } }),
+        },
+        {});
 
     /*---------------------------
     |   MASTER QUEST DUNGEON    |

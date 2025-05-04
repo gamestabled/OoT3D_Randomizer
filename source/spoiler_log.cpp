@@ -767,7 +767,7 @@ static void WriteRandomizedEnemies(tinyxml2::XMLDocument& spoilerLog) {
                         enemyNode->SetAttribute("_", padding.c_str());
                     }
 
-                    enemyNode->SetText(entry.second.randomizedEnemy.name.c_str());
+                    enemyNode->SetText(enemyTypes[entry.second.randomizedEnemyId].name.c_str());
                 }
             }
         }
