@@ -72,6 +72,27 @@ typedef struct ColliderQuad {
 } ColliderQuad;
 _Static_assert(sizeof(ColliderQuad) == 0x80, "ColliderQuad size");
 
+typedef struct ColliderJntSphElementDim {
+    /* 0x00 */ Spheref modelSphere; // model space sphere
+    /* 0x10 */ Spheref worldSphere; // world space sphere
+    /* 0x20 */ f32 scale;           // world space sphere = model * scale * 0.01
+    /* 0x24 */ u8 limb;             // attached limb
+} ColliderJntSphElementDim;
+_Static_assert(sizeof(ColliderJntSphElementDim) == 0x28, "ColliderJntSphElementDim size");
+
+typedef struct ColliderJntSphElement {
+    /* 0x00 */ ColliderInfo base;
+    /* 0x28 */ ColliderJntSphElementDim dim;
+} ColliderJntSphElement;
+_Static_assert(sizeof(ColliderJntSphElement) == 0x50, "ColliderJntSphElement size");
+
+typedef struct ColliderJntSph {
+    /* 0x00 */ Collider base;
+    /* 0x18 */ s32 count;
+    /* 0x1C */ ColliderJntSphElement* elements;
+} ColliderJntSph;
+_Static_assert(sizeof(ColliderJntSph) == 0x20, "ColliderJntSph size");
+
 typedef struct {
     /* 0x00 */ u8 type;
     /* 0x01 */ u8 atFlags;
