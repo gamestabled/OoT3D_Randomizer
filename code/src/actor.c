@@ -79,6 +79,7 @@
 #include "dodongos.h"
 #include "stalchild.h"
 #include "skull_kid.h"
+#include "lizalfos.h"
 
 #define OBJECT_GI_KEY 170
 #define OBJECT_GI_BOSSKEY 185
@@ -129,6 +130,8 @@ void Actor_Init() {
     gActorOverlayTable[0x15].initInfo->draw    = EnItem00_rDraw;
 
     gActorOverlayTable[0x1D].initInfo->update = EnPeehat_rUpdate;
+
+    gActorOverlayTable[0x25].initInfo->update = EnZf_rUpdate;
 
     gActorOverlayTable[0x2E].initInfo->init   = DoorShutter_rInit;
     gActorOverlayTable[0x2E].initInfo->update = (ActorFunc)DoorShutter_rUpdate;
