@@ -2407,3 +2407,31 @@ hook_PeahatLarvaGroundCheck:
     pop {r0-r12, lr}
     @ Prevent death when hitting ground without soul.
     bx lr
+
+.global hook_RedeadCanFreezePlayer
+hook_RedeadCanFreezePlayer:
+    cmp r1,r0
+    bxgt lr @ far away, resume vanilla checks
+    ldr r0,const_RedeadMaxYDist
+    vldr s0,[r4,#0x9C] @ actor->yDistToPlayer
+    vabs.f32 s0,s0
+    vmov r1,s0
+    cmp r1,r0 @ add check on Y distance
+    bx lr
+const_RedeadMaxYDist:
+    .float 200.0
+
+.global hook_DeadHandHandCanGrabPlayer
+hook_DeadHandHandCanGrabPlayer:
+    cmp r0,r1
+    bxgt lr @ far away, resume vanilla checks
+    vpush {s0}
+    ldr r0,const_DeadHandHandMaxYDist
+    vldr s0,[r4,#0x9C] @ actor->yDistToPlayer
+    vabs.f32 s0,s0
+    vmov r1,s0
+    cmp r1,r0 @ add check on Y distance
+    vpop {s0}
+    bx lr
+const_DeadHandHandMaxYDist:
+    .float 100.0

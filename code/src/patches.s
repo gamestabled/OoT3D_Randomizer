@@ -2496,3 +2496,13 @@ BabyDodongoWallCheck_patch:
 .global PeahatLarvaGroundCheck_patch
 PeahatLarvaGroundCheck_patch:
     bl hook_PeahatLarvaGroundCheck
+
+.section .patch_RedeadCanFreezePlayer
+.global RedeadCanFreezePlayer_patch
+RedeadCanFreezePlayer_patch:
+    bl hook_RedeadCanFreezePlayer
+
+.section .patch_DeadHandHandCanGrabPlayer
+.global DeadHandHandCanGrabPlayer_patch
+DeadHandHandCanGrabPlayer_patch:
+    bl hook_DeadHandHandCanGrabPlayer
