@@ -483,8 +483,7 @@ static void Enemizer_HandleClearConditions(void) {
     }
 }
 
-// Some randomized enemies like Flare Dancers start the Mini Boss battle theme and
-// don't stop it when leaving the room.
+// Some randomized enemies start the Mini Boss battle theme and don't stop it when leaving the room.
 // This function will stop the battle theme if there are no more mini bosses loaded.
 static void Enemizer_HandleMiniBossBattleTheme(void) {
     // Always check if music should stop when loading another room, otherwise only check if player is not
@@ -499,7 +498,7 @@ static void Enemizer_HandleMiniBossBattleTheme(void) {
             }
             switch (enemy->id) {
                 case ACTOR_POE_SISTER:
-                case ACTOR_FLARE_DANCER:
+                // case ACTOR_FLARE_DANCER: music is silenced from EnFd_rUpdate
                 case ACTOR_DEAD_HAND:
                 case ACTOR_BIG_OCTO:
                 case ACTOR_GERUDO_FIGHTER:

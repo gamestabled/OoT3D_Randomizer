@@ -1,5 +1,6 @@
 #include "flare_dancer.h"
 #include "settings.h"
+#include "bgm.h"
 
 #define EnFd_Update ((ActorFunc)GAME_ADDR(0x1B004C))
 
@@ -12,6 +13,7 @@ void EnFd_rUpdate(Actor* thisx, GlobalContext* globalCtx) {
     EnFd* this = (EnFd*)thisx;
 
     Actor* prevEnemiesHead = globalCtx->actorCtx.actorList[ACTORTYPE_ENEMY].first;
+    u32 prevBgm            = Audio_GetActiveSeqId(0);
 
     EnFd_Update(thisx, globalCtx);
 
@@ -49,6 +51,15 @@ void EnFd_rUpdate(Actor* thisx, GlobalContext* globalCtx) {
         if (isInvalidGround && thisx->world.pos.y < thisx->home.pos.y - 200.0) {
             // If Flare Dancer falls out of bounds, make it respawn at its home.
             this->actionFunc = EnFd_Reappear;
+        }
+
+        // If Flare Dancer started the Mini-Boss battle theme, disable it immediately
+        if (prevBgm != BGM_MINI_BOSS && Audio_GetActiveSeqId(0) == BGM_MINI_BOSS) {
+            if (sPrevMainBgmSeqId != -1) {
+                Audio_RestoreBGM();
+            } else {
+                Audio_StopBGM();
+            }
         }
     }
 }
