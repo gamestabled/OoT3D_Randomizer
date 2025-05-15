@@ -30,6 +30,19 @@ void EnFd_rUpdate(Actor* thisx, GlobalContext* globalCtx) {
             }
         }
 
+        // Draw at most 10 fire dot effects to reduce lag.
+        EnFdEffect* eff    = this->effects;
+        s16 dotEffectCount = 0;
+        for (s32 i = 0; i < EN_FD_EFFECT_COUNT; i++, eff++) {
+            if (eff->type == FD_EFFECT_DOT) {
+                if (dotEffectCount >= 10) {
+                    eff->type = FD_EFFECT_NONE;
+                } else {
+                    dotEffectCount++;
+                }
+            }
+        }
+
         Actor_UpdateBgCheckInfo(globalCtx, thisx, 26.0f, 6.0f, 0.0f, UPDBGCHECKINFO_WALL);
 
         if (this->actionFunc == EnFd_JumpToGround && thisx->bgCheckFlags & BGCHECKFLAG_WALL) {
