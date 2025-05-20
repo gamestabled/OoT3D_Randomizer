@@ -400,11 +400,11 @@ SECTIONS
 		*(.patch_PierreSoftlockFixOne)
 	}
 
-	.patch_EnBlkobj_FindDarkLink 0x1A0BC4 : {
+	.patch_EnBlkobj_FindDarkLink 0x1A0BC8 : {
 		*(.patch_EnBlkobj_FindDarkLink)
 	}
 
-	.patch_EnBlkobj_SpawnDarkLink 0x1A1378 : {
+	.patch_EnBlkobj_SpawnDarkLink 0x1A137C : {
 		*(.patch_EnBlkobj_SpawnDarkLink)
 	}
 

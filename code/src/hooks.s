@@ -2320,27 +2320,17 @@ hook_PlayerCheckVoidOut:
 
 .global hook_EnBlkobj_SpawnDarkLink
 hook_EnBlkobj_SpawnDarkLink:
-    add r0,r0,#0x8C
-    push {r0-r12, lr}
-    add r0,sp,#0x8  @ actorId (r2)
-    add r1,sp,#0x40 @ params (Stack[0x8])
-    vpush {s2}
-    cpy r2,sp @ posZ
-    bl DarkLink_OverrideSpawnedActor
-    vpop {s2}
-    pop {r0-r12, lr}
+    push {r1-r12, lr}
+    cpy r0,r4 @ EnBlkobj actor
+    bl DarkLink_Spawn
+    pop {r1-r12, lr}
     bx lr
 
 .global hook_EnBlkobj_FindDarkLink
 hook_EnBlkobj_FindDarkLink:
-    add r0,r0,#0x8C
-    push {r0-r12, lr}
-    add r0,sp,#0x4 @ actorId (r1)
-    mov r1,#0x0 @ no params
-    mov r2,#0x0 @ no posZ
-    bl DarkLink_OverrideSpawnedActor
-    pop {r0-r12, lr}
-    mov r2,#0x5 @ ACTORTYPE_ENEMY
+    push {r1-r12, lr}
+    bl DarkLink_Find
+    pop {r1-r12, lr}
     bx lr
 
 .global hook_EnEncount1_SpawnStalchildWolfos
