@@ -68,11 +68,11 @@ u32 Message_HandleTextControlCode(TextControlCode ctrl, void* textObj, UnkTextCo
                 break;
         }
         u16* utf16Str = sDynamicStringArray[sDynamicStringIdx++];
-        utf8_to_utf16(utf16Str, (u8*)str, strlen(str));
+        u32 utf16Len  = utf8_to_utf16(utf16Str, (u8*)str, MAX_DYNAMIC_STRING_SIZE);
         Message_UnkControlCodeHandler(textObj, &data);
         data->unk_05         = 0;
         data->stringToInsert = utf16Str;
-        data->stringLength   = strlen(str);
+        data->stringLength   = utf16Len;
         return 1;
     }
 
