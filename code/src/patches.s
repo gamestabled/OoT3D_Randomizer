@@ -2556,3 +2556,13 @@ Item00GiveAutomaticItemDrop_patch:
 .global Item00GiveCollectedItemDrop_patch
 Item00GiveCollectedItemDrop_patch:
     bl hook_Item00GiveCollectedItemDrop
+
+.section .patch_GanonFinalBlow
+.global GanonFinalBlow_patch
+GanonFinalBlow_patch:
+    bl hook_GanonFinalBlow
+
+.section .patch_PlayerBonk
+.global PlayerBonk_patch
+PlayerBonk_patch:
+    bl hook_PlayerBonk

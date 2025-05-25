@@ -2509,3 +2509,19 @@ hook_Item00GiveCollectedItemDrop:
     pop {r0-r12, lr}
     addne lr,lr,#0x8 @ Item overridden, skip Item_Give
     bx lr
+
+.global hook_GanonFinalBlow
+hook_GanonFinalBlow:
+    push {r0-r12, lr}
+    bl Ganon_OnFinalBlow
+    pop {r0-r12, lr}
+    mov r1,#0x1
+    bx lr
+
+.global hook_PlayerBonk
+hook_PlayerBonk:
+    strh r8,[r7,#0x38]
+    push {r0-r12, lr}
+    bl Player_OnBonk
+    pop {r0-r12, lr}
+    bx lr

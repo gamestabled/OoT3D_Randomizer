@@ -93,6 +93,13 @@ typedef enum TextControlCode {
     // The following values are custom control codes added by the randomizer
 
     /* 0x30 */ TEXT_CTRL_TRIFORCE_PIECE_COUNT,
+    /* 0x31 */ TEXT_CTRL_FINAL_TIME,
+    /* 0x32 */ TEXT_CTRL_CHECK_PERCENTAGE,
+    /* 0x33 */ TEXT_CTRL_SAVE_COUNT,
+    /* 0x34 */ TEXT_CTRL_DEATH_COUNT,
+    /* 0x35 */ TEXT_CTRL_HIT_COUNT,
+    /* 0x36 */ TEXT_CTRL_DAMAGE_RECEIVED,
+    /* 0x37 */ TEXT_CTRL_BONK_COUNT,
 } TextControlCode;
 
 typedef struct UnkTextControlData {

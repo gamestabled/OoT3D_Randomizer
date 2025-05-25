@@ -2,6 +2,7 @@
 #include "message.h"
 #include "savefile.h"
 #include "settings.h"
+#include "spoiler_data.h"
 #include "3ds/util/utf.h"
 #include "lib/printf.h"
 #include <stddef.h>
@@ -12,6 +13,7 @@
 #define MAX_DYNAMIC_STRING_COUNT 5 // Max count of custom strings in a single text box
 static s16 sDynamicStringIdx = 0;
 static u16 sDynamicStringArray[MAX_DYNAMIC_STRING_COUNT][MAX_DYNAMIC_STRING_SIZE];
+u32 gFinalPlaytimeSeconds;
 
 // These consts are filled in by the app
 volatile const u32 numCustomMessageEntries;
@@ -63,6 +65,47 @@ u32 Message_HandleTextControlCode(TextControlCode ctrl, void* textObj, UnkTextCo
         switch (ctrl) {
             case TEXT_CTRL_TRIFORCE_PIECE_COUNT:
                 snprintf(str, MAX_DYNAMIC_STRING_SIZE, "%d", gExtSaveData.triforcePieces);
+                break;
+            case TEXT_CTRL_FINAL_TIME:
+                u32 hours   = gFinalPlaytimeSeconds / 3600;
+                u32 minutes = (gFinalPlaytimeSeconds / 60) % 60;
+                u32 seconds = gFinalPlaytimeSeconds % 60;
+                snprintf(str, MAX_DYNAMIC_STRING_SIZE, "%02u:%02u:%02u", hours, minutes, seconds);
+                break;
+            case TEXT_CTRL_CHECK_PERCENTAGE:
+                // Calculate percentage of revealed items in the tracker (instead of collected items, as that percentage
+                // already appears in the tracker menu).
+                u16 revealedItems = 0;
+                for (u32 locIndex = 0; locIndex < gSpoilerData.ItemLocationsCount; locIndex++) {
+                    if (SpoilerData_GetIsItemLocationCollected(locIndex) ||
+                        SpoilerData_GetIsItemLocationRevealed(locIndex)) {
+                        revealedItems++;
+                    }
+                }
+                f32 revealedPercentage = ((f32)revealedItems / (f32)gSpoilerData.ItemLocationsCount) * 100.0f;
+                snprintf(str, MAX_DYNAMIC_STRING_SIZE, "%5.1f%%", revealedPercentage);
+                break;
+            case TEXT_CTRL_SAVE_COUNT:
+                snprintf(str, MAX_DYNAMIC_STRING_SIZE, "%d", gSaveContext.saveCount);
+                break;
+            case TEXT_CTRL_DEATH_COUNT:
+                snprintf(str, MAX_DYNAMIC_STRING_SIZE, "%d", gExtSaveData.deathCount);
+                break;
+            case TEXT_CTRL_HIT_COUNT:
+                snprintf(str, MAX_DYNAMIC_STRING_SIZE, "%d", gExtSaveData.hitCount);
+                break;
+            case TEXT_CTRL_DAMAGE_RECEIVED:
+                s32 fullHearts    = gExtSaveData.damageReceived / 0x10;
+                s32 quarterHearts = (gExtSaveData.damageReceived % 0x10) / 4;
+                if (quarterHearts == 0) {
+                    snprintf(str, MAX_DYNAMIC_STRING_SIZE, "%d", fullHearts);
+                } else {
+                    // \xC2\xBC is UTF8 for "Fraction One Quarter"
+                    snprintf(str, MAX_DYNAMIC_STRING_SIZE, "%d \xC2%c", fullHearts, '\xBC' + quarterHearts - 1);
+                }
+                break;
+            case TEXT_CTRL_BONK_COUNT:
+                snprintf(str, MAX_DYNAMIC_STRING_SIZE, "%d", gExtSaveData.bonkCount);
                 break;
             default:
                 break;

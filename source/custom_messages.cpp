@@ -1093,6 +1093,64 @@ void CreateAlwaysIncludedMessages() {
                   /*german */ "Das kannst du haben, wenn du einen Fisch für das Aquarium fängst." };
         CreateMessageFromTextObject(0x40AE, 0, 2, 3, AddColorsAndFormat(aquariumText, {}));
     }
+
+    // Zelda final dialog
+    {
+        Text happyMsg = Text{
+            // english
+            "Thank you, @...&I've been keeping watch over you all this time...^"
+            "...specifically, you took #11111111#&to bring down Ganondorf.^"
+            "You have discovered #222222# of all items scattered throughout Hyrule.^"
+            "You saved your progress #333# times.",
+            // french
+            "TO DO",
+            // spanish
+            "TO DO",
+            // italian
+            "Grazie, @...&Ti ho osservato tutto questo tempo...^"
+            "...per essere precisi, ci hai messo #11111111#&per sconfiggere Ganondorf.^"
+            "Hai scoperto il #222222# di tutti gli oggetti sparpagliati per Hyrule.^"
+            "Hai salvato i tuoi progressi #333# volte.",
+            // german
+            "TO DO",
+        };
+        happyMsg = AddColorsAndFormat(happyMsg, { QM_RED, QM_RED, QM_RED });
+        happyMsg.Replace("11111111", FINAL_TIME());
+        happyMsg.Replace("222222", CHECK_PERCENTAGE());
+        happyMsg.Replace("333", SAVE_COUNT());
+        CreateMessageFromTextObject(0x706F, 0, 2, 3, happyMsg);
+
+        Text sadMsg = Text{
+            // english
+            "You've also received #111# hits, for a total of #2222# hearts of damage, "
+            "and you've been knocked out #333# times.",
+            // french
+            "TO DO",
+            // spanish
+            "TO DO",
+            // italian
+            "Hai anche subito #111# colpi, per un totale di #2222# cuori di danno, "
+            "e sei stato messo al tappeto #333# volte.",
+            // german
+            "TO DO",
+        };
+        sadMsg = AddColorsAndFormat(sadMsg, { QM_RED, QM_RED, QM_RED });
+        sadMsg.Replace("111", HIT_COUNT());
+        sadMsg.Replace("2222", DAMAGE_RECEIVED());
+        sadMsg.Replace("333", DEATH_COUNT());
+        CreateMessageFromTextObject(0x7091, 0, 2, 3, sadMsg);
+
+        Text linkMsg = Text{
+            /*english*/ "...oh, and you've bonked #111# times.",
+            /*french */ "TO DO",
+            /*spanish*/ "TO DO",
+            /*italian*/ "...oh, e sei andato a sbattere #111# volte.",
+            /*german */ "TO DO",
+        };
+        linkMsg = AddColorsAndFormat(linkMsg, { QM_RED });
+        linkMsg.Replace("111", BONK_COUNT());
+        CreateMessageFromTextObject(0x7092, 0, 2, 3, linkMsg);
+    }
 }
 
 std::vector<Text> CreateBaseCompassTexts() {
@@ -1407,7 +1465,30 @@ std::string MQ_ELSE() {
 std::string MQ_END() {
     return "\x7F\x2B"s;
 }
+
+// Custom control codes
 std::string TRIFORCE_PIECE_COUNT() {
-    return "\x7F\x30"s;
+    return { '\x7F', static_cast<char>(TEXT_CTRL_TRIFORCE_PIECE_COUNT) };
+}
+std::string FINAL_TIME() {
+    return { '\x7F', static_cast<char>(TEXT_CTRL_FINAL_TIME) };
+}
+std::string CHECK_PERCENTAGE() {
+    return { '\x7F', static_cast<char>(TEXT_CTRL_CHECK_PERCENTAGE) };
+}
+std::string SAVE_COUNT() {
+    return { '\x7F', static_cast<char>(TEXT_CTRL_SAVE_COUNT) };
+}
+std::string DEATH_COUNT() {
+    return { '\x7F', static_cast<char>(TEXT_CTRL_DEATH_COUNT) };
+}
+std::string HIT_COUNT() {
+    return { '\x7F', static_cast<char>(TEXT_CTRL_HIT_COUNT) };
+}
+std::string DAMAGE_RECEIVED() {
+    return { '\x7F', static_cast<char>(TEXT_CTRL_DAMAGE_RECEIVED) };
+}
+std::string BONK_COUNT() {
+    return { '\x7F', static_cast<char>(TEXT_CTRL_BONK_COUNT) };
 }
 } // namespace CustomMessages
