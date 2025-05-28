@@ -1,6 +1,7 @@
 #include "dark_link.h"
 #include "settings.h"
 #include "enemizer.h"
+#include "common.h"
 
 #define EnTorch2_Update ((ActorFunc)GAME_ADDR(0x22F0C8))
 
@@ -23,6 +24,13 @@ void EnTorch2_rUpdate(Actor* thisx, GlobalContext* globalCtx) {
     // For enemy randomizer, skip adjusting position after spawning outside of vanilla location.
     if (globalCtx->sceneNum != SCENE_WATER_TEMPLE || globalCtx->roomNum != 13) {
         this->darkPlayer.darkLinkAdjustedSpawnPos = 1;
+    }
+
+    // To decide when the battle should start, vanilla code checks distance to player only on the horizontal plane.
+    // If the vertical distance is too high, hack the horizontal one to a high value to make the check fail on
+    // this frame.
+    if (this->actionState == ENTORCH2_WAIT && ABS(thisx->yDistToPlayer) > 200.0f) {
+        thisx->xzDistToPlayer = 1000.0f;
     }
 
     EnTorch2_Update(thisx, globalCtx);
