@@ -485,5 +485,11 @@ s32 Actor_CollisionATvsAC(Collider* at, Collider* ac) {
         return 0; // ignore this collision
     }
 
+    // Detect collider hits (damageless and shielded) only if the relevant Gloom Mode is enabled.
+    if (gSettingsContext.gloomMode == GLOOMMODE_COLLISION && ac->actor == &PLAYER->actor &&
+        !Player_InBlockingCsMode(gGlobalContext, PLAYER)) {
+        Player_OnHit();
+    }
+
     return 1; // continue as normal
 }

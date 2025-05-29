@@ -1282,6 +1282,10 @@ SECTIONS
 		*(.patch_GearMenuEmptySlot)
 	}
 
+	.patch_DrawHeartIcon 0x444368 + region_offset : {
+		*(.patch_DrawHeartIcon)
+	}
+
 	.patch_BeforeLoadGame 0x447380 + region_offset : {
 		*(.patch_BeforeLoadGame)
 	}

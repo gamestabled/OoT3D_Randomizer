@@ -11,6 +11,7 @@
 #include "item_override.h"
 #include "colors.h"
 #include "common.h"
+#include "gloom.h"
 
 #define PlayerActor_Init ((ActorFunc)GAME_ADDR(0x191844))
 
@@ -257,7 +258,7 @@ void Player_UpdateRainbowTunic(void) {
 
 void Player_OnHit(void) {
     if (rGameplayFrames - sLastHitFrame > 5) {
-        // Do stuff
+        Gloom_OnHit();
     }
 
     sLastHitFrame = rGameplayFrames;

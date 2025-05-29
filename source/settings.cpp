@@ -438,6 +438,7 @@ Option FastBunnyHood       = Option::Bool("Fast Bunny Hood",        {"Off", "On"
 Option KeepFWWarpPoint     = Option::Bool("Keep FW Warp Point",     {"Off", "On"},                                                          {keepFWWarpPointDesc});
 Option DamageMultiplier    = Option::U8  ("Damage Multiplier",      {"x1/2", "x1", "x2", "x4", "x8", "x16", "OHKO"},                        {damageMultiDesc},                                                                                                OptionCategory::Setting,    DAMAGEMULTIPLIER_DEFAULT);
 Option Permadeath          = Option::Bool("Permadeath",             {"Off", "On"},                                                          {permadeathDesc});
+Option GloomMode           = Option::U8  ("Gloom Mode",             {"Off", "Death", "Damage", "Collision", "Empty"},                       {gloomModeOffDesc, gloomModeDeathDesc, gloomModeDamageDesc, gloomModeCollisionDesc, gloomModeEmptyDesc});
 Option RandomTrapDmg       = Option::U8  ("Random Trap Damage",     {"Off", "Basic", "Advanced"},                                           {randomTrapDmgDesc, basicTrapDmgDesc, advancedTrapDmgDesc},                                                       OptionCategory::Setting,    RANDOMTRAPS_BASIC);
 Option FireTrap            = Option::Bool(2, "Fire Trap",           {"Off", "On"},                                                          {fireTrapDesc},                                                                                                   OptionCategory::Setting,    ON);
 Option AntiFairyTrap       = Option::Bool(2, "Anti-Fairy Trap",     {"Off", "On"},                                                          {antiFairyTrapDesc},                                                                                              OptionCategory::Setting,    ON);
@@ -456,6 +457,7 @@ std::vector<Option*> gameplayOptions = {
     &KeepFWWarpPoint,
     &DamageMultiplier,
     &Permadeath,
+    &GloomMode,
     &RandomTrapDmg,
     &FireTrap,
     &AntiFairyTrap,
@@ -1531,6 +1533,7 @@ SettingsContext FillContext() {
     ctx.mapsShowDungeonMode = MapsShowDungeonMode.Value<u8>();
     ctx.damageMultiplier    = DamageMultiplier.Value<u8>();
     ctx.permadeath          = (Permadeath) ? 1 : 0;
+    ctx.gloomMode           = GloomMode.Value<u8>();
     ctx.startingTime        = StartingTime.Value<u8>();
     ctx.chestAnimations     = (ChestAnimations) ? 1 : 0;
     ctx.chestAppearance     = ChestAppearance.Value<u8>();

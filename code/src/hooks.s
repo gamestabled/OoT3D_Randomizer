@@ -2148,3 +2148,12 @@ hook_PlayInit:
     pop {r0-r12, lr}
     cpy r5,r0
     bx lr
+
+.global hook_DrawHeartIcon
+hook_DrawHeartIcon:
+    push {r0-r12, lr}
+    cpy r0,r1 @ heart icon index
+    bl Gloom_ShouldDrawHeartBorder
+    cmp r0,#0x0
+    pop {r0-r12, lr}
+    bx lr

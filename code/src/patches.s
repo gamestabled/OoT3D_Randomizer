@@ -2261,3 +2261,8 @@ PlayInit_patch:
 .global TitleLinkObject_patch
 TitleLinkObject_patch:
     .word 0xFFFF0014
+
+.section .patch_DrawHeartIcon
+.global DrawHeartIcon_patch
+DrawHeartIcon_patch:
+    bl hook_DrawHeartIcon

@@ -9,6 +9,7 @@
 #include "multiplayer.h"
 #include "item_override.h"
 #include "permadeath.h"
+#include "gloom.h"
 
 #define DECLARE_EXTSAVEDATA
 #include "savefile.h"
@@ -857,7 +858,6 @@ void SaveFile_AfterLoadGame(void) {
 }
 
 void SaveFile_OnGameOver(void) {
-    // Handle hit stuff
-
+    Gloom_OnDeath();
     Permadeath_DeleteSave();
 }

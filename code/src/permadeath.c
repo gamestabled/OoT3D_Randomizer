@@ -4,7 +4,9 @@
 
 u8 Permadeath_GetOption(void) {
     // For safety, verify that the seed and save file was created with permadeath enabled
-    return gSettingsContext.permadeath && gExtSaveData.permadeath;
+    // If Gloom is enabled and set to Death mode, only apply Permadeath when all hearts are gone.
+    return gSettingsContext.permadeath && gExtSaveData.permadeath &&
+           (gSettingsContext.gloomMode != GLOOMMODE_DEATH || gSaveContext.healthCapacity == 0);
 }
 
 typedef void (*SaveFile_Delete_proc)(u8 fileNum);

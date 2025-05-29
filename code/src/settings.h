@@ -326,6 +326,14 @@ typedef enum {
 } DamageMultiplierSetting;
 
 typedef enum {
+    GLOOMMODE_OFF,
+    GLOOMMODE_DEATH,
+    GLOOMMODE_DAMAGE,
+    GLOOMMODE_COLLISION,
+    GLOOMMODE_EMPTY,
+} GloomModeSetting;
+
+typedef enum {
     STARTINGTIME_DAY,
     STARTINGTIME_NIGHT,
 } StartingTimeSetting;
@@ -563,6 +571,7 @@ typedef struct {
 
     u8 damageMultiplier;
     u8 permadeath;
+    u8 gloomMode;
     u8 startingTime;
     u8 gossipStoneHints;
     u8 totAltarHints;

@@ -13,6 +13,7 @@
 #include "grotto.h"
 #include "item_effect.h"
 #include "triforce.h"
+#include "gloom.h"
 
 #include "z3D/z3D.h"
 #include "3ds/extdata.h"
@@ -50,14 +51,11 @@ void before_GlobalContext_Update(GlobalContext* globalCtx) {
     ActorSetup_Extra();
     Model_UpdateAll(globalCtx);
     Input_Update();
+    Gloom_Update();
     SaveFile_EnforceHealthLimit();
-
     Settings_SkipSongReplays();
-
     Multiplayer_Run();
-
     ItemEffect_RupeeAmmo(&gSaveContext);
-
     Triforce_HandleCreditsWarp();
 }
 

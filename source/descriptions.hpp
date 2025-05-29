@@ -285,6 +285,13 @@ extern string_view damageMultiDesc;
 
 extern string_view permadeathDesc;
 
+extern string_view gloomModeOffDesc;
+extern string_view gloomModeDeathDesc;
+extern string_view gloomModeDamageDesc;
+extern string_view gloomModeHitDesc;
+extern string_view gloomModeCollisionDesc;
+extern string_view gloomModeEmptyDesc;
+
 extern string_view startingTimeDesc;
 
 extern string_view locationsReachableDesc;
