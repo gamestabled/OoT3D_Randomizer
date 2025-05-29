@@ -53,9 +53,11 @@ void EnMb_rUpdate(Actor* thisx, GlobalContext* globalCtx) {
 
         u8 isClose = Math_Vec3f_DistXZ(&this->actor.home.pos, &PLAYER->actor.world.pos) < this->playerDetectionRange;
 
-        // Rotate towards player when alive and close to Link, and either facing away from Link or raising the club to
-        // attack. Do not rotate the rest of the time to make it easier to approach the Moblin and dodge the shockwaves.
-        if (thisx->colChkInfo.health != 0 && isClose && (!isFacingPlayer || isRaisingClub)) {
+        // Rotate towards player when alive, close to Link, not stunned/damaged, and either facing away from Link or
+        // raising the club to attack. Do not rotate the rest of the time to make it easier to approach the Moblin and
+        // dodge the shockwaves.
+        if (thisx->colChkInfo.health != 0 && isClose && thisx->colorFilterTimer == 0 &&
+            (!isFacingPlayer || isRaisingClub)) {
             s16 step = isRaisingClub ? 0x1000 : 0x300; // Rotate quickly when attacking
             Math_SmoothStepToS(&thisx->world.rot.y, thisx->yawTowardsPlayer, 3, step, 0);
             thisx->shape.rot.y = thisx->world.rot.y;
