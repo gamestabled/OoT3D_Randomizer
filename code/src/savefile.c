@@ -8,6 +8,7 @@
 #include "entrance.h"
 #include "multiplayer.h"
 #include "item_override.h"
+#include "permadeath.h"
 
 #define DECLARE_EXTSAVEDATA
 #include "savefile.h"
@@ -853,4 +854,10 @@ void SaveFile_AfterLoadGame(void) {
 
         ItemOverride_PushHardcodedItem(GI_GANON_BOSS_KEY);
     }
+}
+
+void SaveFile_OnGameOver(void) {
+    // Handle hit stuff
+
+    Permadeath_DeleteSave();
 }

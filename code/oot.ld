@@ -568,8 +568,8 @@ SECTIONS
 		*(.patch_MultiplyPlayerSpeed)
 	}
 
-	.patch_PermadeathDeleteSave 0x252424 : {
-		*(.patch_PermadeathDeleteSave)
+	.patch_GameOverStart 0x252424 : {
+		*(.patch_GameOverStart)
 	}
 
 	.patch_SkipDaruniaDanceThree 0x257F00 : {

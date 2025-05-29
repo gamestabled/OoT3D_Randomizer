@@ -4,6 +4,7 @@
 #include "settings.h"
 #include "common.h"
 #include "input.h"
+#include "player.h"
 
 #define TimerFrameCounter *(s16*)GAME_ADDR(0x539D8A) // Used to decrease the timer every 30 frames
 #define ControlStick_X *(float*)GAME_ADDR(0x5655C0)
@@ -150,6 +151,9 @@ void IceTrap_Give(void) {
             // the Fire Trap
             LinkDamage(gGlobalContext, PLAYER, trapType, 0.0f, 0.0f, 0, 20);
         }
+
+        Player_OnHit();
+
         cooldown = 30;
     }
 }

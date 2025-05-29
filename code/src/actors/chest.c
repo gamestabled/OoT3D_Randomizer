@@ -261,6 +261,8 @@ u8 Chest_OverrideIceSmoke(Actor* thisx) {
                 LinkDamage(gGlobalContext, PLAYER, 0, 0.0f, 0.0f, 0, 20);
                 break;
         }
+
+        Player_OnHit();
     }
 
     return 1;

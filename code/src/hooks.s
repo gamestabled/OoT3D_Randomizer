@@ -1096,10 +1096,10 @@ hook_SaveMenuIgnoreOpen:
 .endif
     bx lr
 
-.global hook_PermadeathDeleteSave
-hook_PermadeathDeleteSave:
+.global hook_GameOverStart
+hook_GameOverStart:
     push {r0-r12, lr}
-    bl Permadeath_DeleteSave
+    bl SaveFile_OnGameOver
     pop {r0-r12, lr}
     bx lr
 
