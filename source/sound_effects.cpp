@@ -1487,6 +1487,7 @@ void ShuffleSequences(bool shuffleCategorically) {
         }
 
         // ...and feed it back into the overrides arrays
+        sfxData.rSFXOverrides_TrimmedCount = seqs.size();
         for (size_t i = 0; i < seqs.size(); i++) {
             sfxData.rSFXOverrides_AllTrimmed[i] = seqs[i];
         }
