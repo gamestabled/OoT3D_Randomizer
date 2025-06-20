@@ -315,16 +315,6 @@ RainbowBridge_patch:
     beq 0x3E7D70
     b 0x3E7D34
 
-.section .patch_ModelSpawnGetObjectStatus
-.global ModelSpawnGetObjectStatus_patch
-ModelSpawnGetObjectStatus_patch:
-    bl hook_ModelSpawnGetObjectStatus
-
-.section .patch_ChestGetIceTrapObjectStatus
-.global ChestGetIceTrapObjectStatus_patch
-ChestGetIceTrapObjectStatus_patch:
-    bl hook_ChestGetIceTrapObjectStatus
-
 .section .patch_ExtendedObjectClear
 .global ExtendedObjectClear_patch
 ExtendedObjectClear_patch:
@@ -932,21 +922,6 @@ SwapFaroresWind_patch:
 .global BombchuShopAlwaysOpen_patch
 BombchuShopAlwaysOpen_patch:
     nop
-
-.section .patch_KingDodongoID
-    .short 0x27
-
-.section .patch_KingDodongoFireBreathID
-    .short 0x30
-
-.section .patch_PhantomGanonLightningID
-    .short 0x6D
-
-.section .patch_GohmaLarvaID
-    .short 0x2B
-
-.section .patch_VolvagiaRockID
-    .short 0xAD
 
 .section .patch_BombchuCheapestPriceOne
     .word 0x0063FFFF
@@ -2266,3 +2241,273 @@ PlayInit_patch:
 .global TitleLinkObject_patch
 TitleLinkObject_patch:
     .word 0xFFFF0014
+
+.section .patch_ExtendObjectGetSlot
+.global ExtendObjectGetSlot_patch
+ExtendObjectGetSlot_patch:
+    b hook_ExtendObjectGetSlot
+
+.section .patch_OverrideObjectIsLoaded
+.global OverrideObjectIsLoaded_patch
+OverrideObjectIsLoaded_patch:
+    b hook_OverrideObjectIsLoaded
+
+.section .patch_Cutscene_CheckObjectLoaded
+.global Cutscene_CheckObjectLoaded_patch
+Cutscene_CheckObjectLoaded_patch:
+    bl hook_OverrideObjectIsLoadedForCutscenes
+
+.section .patch_AfterObjectListCommand
+.global AfterObjectListCommand_patch
+AfterObjectListCommand_patch:
+    bl hook_AfterObjectListCommand
+
+.section .patch_GetObjectEntry_33AB24
+.global GetObjectEntry_33AB24_patch
+GetObjectEntry_33AB24_patch:
+    bl hook_GetObjectEntry_33AB24
+
+.section .patch_GetObjectEntry_353CE4
+.global GetObjectEntry_353CE4_patch
+GetObjectEntry_353CE4_patch:
+    bl hook_GetObjectEntry_Generic
+
+.section .patch_GetObjectEntry_36A96C
+.global GetObjectEntry_36A96C_patch
+GetObjectEntry_36A96C_patch:
+    bl hook_GetObjectEntry_Generic
+
+.section .patch_GetObjectEntry_372F7C
+.global GetObjectEntry_372F7C_patch
+GetObjectEntry_372F7C_patch:
+    bl hook_GetObjectEntry_Generic
+
+.section .patch_GetObjectEntry_EnSiInit
+.global GetObjectEntry_EnSiInit_patch
+GetObjectEntry_EnSiInit_patch:
+    bl hook_GetObjectEntry_Generic
+
+.section .patch_GetObjectEntry_EnXcInit
+.global GetObjectEntry_EnXcInit_patch
+GetObjectEntry_EnXcInit_patch:
+    bl hook_GetObjectEntry_Generic
+
+.section .patch_GetObjectEntry_ObjSwitchInit
+.global GetObjectEntry_ObjSwitchInit_patch
+GetObjectEntry_ObjSwitchInit_patch:
+    bl hook_GetObjectEntry_Generic
+
+.section .patch_GetObjectEntry_34FE68
+.global GetObjectEntry_34FE68_patch
+GetObjectEntry_34FE68_patch:
+    bl hook_GetObjectEntry_Generic
+
+.section .patch_GetObjectEntry_352F28
+.global GetObjectEntry_352F28_patch
+GetObjectEntry_352F28_patch:
+    bl hook_GetObjectEntry_Generic
+
+.section .patch_GetObjectEntry_33A950
+.global GetObjectEntry_33A950_patch
+GetObjectEntry_33A950_patch:
+    bl hook_GetObjectEntry_Generic
+
+.section .patch_GetObjectEntry_EnTiteInit
+.global GetObjectEntry_EnTiteInit_patch
+GetObjectEntry_EnTiteInit_patch:
+    bl hook_GetObjectEntry_Generic
+
+.section .patch_GetObjectEntry_339DFC
+.global GetObjectEntry_339DFC_patch
+GetObjectEntry_339DFC_patch:
+    bl hook_GetObjectEntry_Generic
+
+.section .patch_GetObjectEntry_EnGomaInit_One
+.global GetObjectEntry_EnGomaInit_One_patch
+GetObjectEntry_EnGomaInit_One_patch:
+    bl hook_GetObjectEntry_Generic
+
+.section .patch_GetObjectEntry_EnGomaInit_Two
+.global GetObjectEntry_EnGomaInit_Two_patch
+GetObjectEntry_EnGomaInit_Two_patch:
+    bl hook_GetObjectEntry_Generic
+
+.section .patch_GetObjectEntry_EnRdInit_One
+.global GetObjectEntry_EnRdInit_One_patch
+GetObjectEntry_EnRdInit_One_patch:
+    bl hook_GetObjectEntry_Generic
+
+.section .patch_GetObjectEntry_EnRdInit_Two
+.global GetObjectEntry_EnRdInit_Two_patch
+GetObjectEntry_EnRdInit_Two_patch:
+    bl hook_GetObjectEntry_Generic
+
+.section .patch_GetObjectEntry_34F270
+.global GetObjectEntry_34F270_patch
+GetObjectEntry_34F270_patch:
+    b hook_GetObjectEntry_34F270
+
+.section .patch_GetObjectEntry_1F85B0
+.global GetObjectEntry_1F85B0_patch
+GetObjectEntry_1F85B0_patch:
+    bl hook_GetObjectEntry_Generic
+
+.section .patch_GetObjectEntry_164BC8
+.global GetObjectEntry_164BC8_patch
+GetObjectEntry_164BC8_patch:
+    bl hook_GetObjectEntry_Generic
+
+.section .patch_GetObjectEntry_EnDekunutsInit
+.global GetObjectEntry_EnDekunutsInit_patch
+GetObjectEntry_EnDekunutsInit_patch:
+    bl hook_GetObjectEntry_Generic
+
+.section .patch_GetObjectEntry_EnNutsballInit
+.global GetObjectEntry_EnNutsballInit_patch
+GetObjectEntry_EnNutsballInit_patch:
+    bl hook_GetObjectEntry_Generic
+
+.section .patch_AltHeadersCommand
+.global AltHeadersCommand_patch
+AltHeadersCommand_patch:
+    bl hook_AltHeadersCommand
+
+.section .patch_GohmaLarvaDeathSignalParent
+.global GohmaLarvaDeathSignalParent_patch
+GohmaLarvaDeathSignalParent_patch:
+    bl hook_GohmaLarvaDeathSignalParent
+
+.section .patch_GohmaEggDeathSignalParent
+.global GohmaEggDeathSignalParent_patch
+GohmaEggDeathSignalParent_patch:
+    bl hook_GohmaEggDeathSignalParent
+
+.section .patch_StalchildDespawn_13DB68
+.global StalchildDespawn_13DB68_patch
+StalchildDespawn_13DB68_patch:
+    bl hook_StalchildDespawn_13DB68
+
+.section .patch_StalchildDespawn_366338
+.global StalchildDespawn_366338_patch
+StalchildDespawn_366338_patch:
+    bl hook_StalchildDespawn_366338
+
+.section .patch_SkullwalltulaAttack_35F834
+.global SkullwalltulaAttack_35F834_patch
+SkullwalltulaAttack_35F834_patch:
+    bl hook_SkullwalltulaAttack_35F834
+
+.section .patch_SkullwalltulaAttack_35F328
+.global SkullwalltulaAttack_35F328_patch
+SkullwalltulaAttack_35F328_patch:
+    bl hook_SkullwalltulaAttack_35F328
+
+.section .patch_SkullwalltulaTargetRotation
+.global SkullwalltulaTargetRotation_patch
+SkullwalltulaTargetRotation_patch:
+    bl hook_SkullwalltulaTargetRotation
+
+.section .patch_AnubisFlameCircleCheck
+.global AnubisFlameCircleCheck_patch
+AnubisFlameCircleCheck_patch:
+    @ check alpha instead of timer
+    ldrb r1,[r1,#0xAB]
+
+.section .patch_SkullKidPoacherSawCheck
+.global SkullKidPoacherSawCheck_patch
+SkullKidPoacherSawCheck_patch:
+    bl hook_SkullKidPoacherSawCheck
+
+.section .patch_LeeverSandCheck_Init
+.global LeeverSandCheck_Init_patch
+LeeverSandCheck_Init_patch:
+    bl hook_LeeverSandCheck
+
+.section .patch_LeeverSandCheck_Small
+.global LeeverSandCheck_Small_patch
+LeeverSandCheck_Small_patch:
+    bl hook_LeeverSandCheck
+
+.section .patch_LeeverSandCheck_Big
+.global LeeverSandCheck_Big_patch
+LeeverSandCheck_Big_patch:
+    bl hook_LeeverSandCheck
+
+.section .patch_LeeverAfterSink
+.global LeeverAfterSink_patch
+LeeverAfterSink_patch:
+    blt hook_LeeverAfterSink
+
+.section .patch_LeeverAfterDie
+.global LeeverAfterDie_patch
+LeeverAfterDie_patch:
+    bl hook_LeeverAfterDie
+
+.section .patch_LeeverDontChangeCategory
+.global LeeverDontChangeCategory_patch
+LeeverDontChangeCategory_patch:
+    @ Big Leevers change category from Misc to Enemy in OoT.
+    @ But in OoT3D they're already in the Enemy category
+    @ from the start, so changing it is useless and can
+    @ trigger room clears during Enemy Randomizer.
+    nop
+
+.section .patch_FlyingPotDontChangeCategory
+.global FlyingPotDontChangeCategory_patch
+FlyingPotDontChangeCategory_patch:
+    nop
+
+.section .patch_PlayerCheckVoidOut
+.global PlayerCheckVoidOut_patch
+PlayerCheckVoidOut_patch:
+    bl hook_PlayerCheckVoidOut
+
+.section .patch_EnBlkobj_SpawnDarkLink
+.global EnBlkobj_SpawnDarkLink_patch
+EnBlkobj_SpawnDarkLink_patch:
+    bl hook_EnBlkobj_SpawnDarkLink
+
+.section .patch_EnBlkobj_FindDarkLink
+.global EnBlkobj_FindDarkLink_patch
+EnBlkobj_FindDarkLink_patch:
+    bl hook_EnBlkobj_FindDarkLink
+
+.section .patch_EnEncount1_SpawnStalchildWolfos
+.global EnEncount1_SpawnStalchildWolfos_patch
+EnEncount1_SpawnStalchildWolfos_patch:
+    bl hook_EnEncount1_SpawnStalchildWolfos
+
+.section .patch_EnEncount1_SpawnLeever
+.global EnEncount1_SpawnLeever_patch
+EnEncount1_SpawnLeever_patch:
+    bl hook_EnEncount1_SpawnLeever
+
+.section .patch_EnEncount1_SetLeeverAimType
+.global EnEncount1_SetLeeverAimType_patch
+EnEncount1_SetLeeverAimType_patch:
+    bl hook_EnEncount1_SetLeeverAimType
+
+.section .patch_DarkLinkPlayerRecoil
+.global DarkLinkPlayerRecoil_patch
+DarkLinkPlayerRecoil_patch:
+    bl hook_DarkLinkPlayerRecoil
+
+.section .patch_BabyDodongoWallCheck
+.global BabyDodongoWallCheck_patch
+BabyDodongoWallCheck_patch:
+    bl hook_BabyDodongoWallCheck
+
+.section .patch_PeahatLarvaGroundCheck
+.global PeahatLarvaGroundCheck_patch
+PeahatLarvaGroundCheck_patch:
+    bl hook_PeahatLarvaGroundCheck
+
+.section .patch_RedeadCanFreezePlayer
+.global RedeadCanFreezePlayer_patch
+RedeadCanFreezePlayer_patch:
+    bl hook_RedeadCanFreezePlayer
+
+.section .patch_DeadHandHandCanGrabPlayer
+.global DeadHandHandCanGrabPlayer_patch
+DeadHandHandCanGrabPlayer_patch:
+    bl hook_DeadHandHandCanGrabPlayer

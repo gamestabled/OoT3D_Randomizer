@@ -23,3 +23,5 @@ const SpoilerDataLocs* GetSpoilerDataLocs(size_t index);
 void PlacementLog_Msg(std::string_view msg);
 void PlacementLog_Clear();
 bool PlacementLog_Write();
+
+extern const char* sceneNames[SCENE_MAX];

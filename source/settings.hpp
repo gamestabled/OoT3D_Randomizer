@@ -408,6 +408,7 @@ extern Option SetDungeonTypes;
 extern Option TriforceHunt;
 extern Option TriforcePiecesTotal;
 extern Option TriforcePiecesRequired;
+extern Option Enemizer;
 
 extern Option ShuffleRewards;
 extern Option LinksPocketItem;
@@ -816,6 +817,7 @@ extern Option ColoredKeys;
 extern Option ColoredBossKeys;
 extern Option MirrorWorld;
 extern Option BetaSoldOut;
+extern Option SoullessEnemiesLook;
 
 extern Option ShuffleMusic;
 extern Option ShuffleBGM;

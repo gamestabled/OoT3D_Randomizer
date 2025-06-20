@@ -1,6 +1,7 @@
 #include "location_access.hpp"
 #include "logic.hpp"
 #include "entrance.hpp"
+#include "enemizer_logic.hpp"
 
 using namespace Logic;
 using namespace Settings;
@@ -380,40 +381,47 @@ void AreaTable_Init_GerudoValley() {
                  Entrance(HAUNTED_WASTELAND, { [] { return LogicReverseWasteland || false; } }),
              });
 
-    areaTable[DESERT_COLOSSUS] =
-        Area("Desert Colossus", "Desert Colossus", DESERT_COLOSSUS, DAY_NIGHT_CYCLE,
-             {
-                 // Events
-                 EventAccess(&FairyPond,
-                             { [] { return FairyPond || CanPlay(SongOfStorms); },
-                               /*Glitched*/
-                               [] {
-                                   return (CanDoGlitch(GlitchType::OutdoorBombOI, GlitchDifficulty::INTERMEDIATE) ||
-                                           ((Bugs || Fish) && CanShield && Bombs && CanTakeDamage &&
-                                            CanDoGlitch(GlitchType::QPA, GlitchDifficulty::ADVANCED)) ||
-                                           ((Bugs || Fish) && CanShield && HasBombchus &&
-                                            CanDoGlitch(GlitchType::ActionSwap, GlitchDifficulty::ADVANCED))) &&
-                                          SongOfStorms;
-                               } }),
-                 EventAccess(&BugRock, { [] { return true; } }),
-             },
-             {
-                 // Locations
-                 LocationAccess(COLOSSUS_GOSSIP_STONE, { [] { return true; } }),
-             },
-             {
-                 // Exits
-                 Entrance(COLOSSUS_MEGALITH, { [] { return IsAdult && CanPlantBean(DESERT_COLOSSUS); },
-                                               /*Glitched*/
-                                               [] {
-                                                   return HoverBoots && CanDoGlitch(GlitchType::HookshotJump_Boots,
-                                                                                    GlitchDifficulty::ADVANCED);
-                                               } }),
-                 Entrance(COLOSSUS_GREAT_FAIRY_FOUNTAIN, { [] { return HasExplosives; } }),
-                 Entrance(SPIRIT_TEMPLE_ENTRYWAY, { [] { return true; } }),
-                 Entrance(WASTELAND_NEAR_COLOSSUS, { [] { return true; } }),
-                 Entrance(COLOSSUS_GROTTO, { [] { return CanUse(SILVER_GAUNTLETS); } }),
-             });
+    static constexpr auto ForEachEnemy_Colossus = [](auto& enemyCheckFn) {
+        return (IsChild && enemyCheckFn(92, 0, 0, {})) || (IsAdult && enemyCheckFn(92, 2, 0, {}));
+    };
+    areaTable[DESERT_COLOSSUS] = Area(
+        "Desert Colossus", "Desert Colossus", DESERT_COLOSSUS, DAY_NIGHT_CYCLE,
+        {
+            // Events
+            EventAccess(&DekuBabaSticks,
+                        { [] { return DekuBabaSticks || ForEachEnemy_Colossus(CanGetDekuBabaSticks); } }),
+            EventAccess(&DekuBabaNuts, { [] { return DekuBabaNuts || ForEachEnemy_Colossus(CanGetDekuBabaNuts); } }),
+
+            EventAccess(&FairyPond, { [] { return FairyPond || CanPlay(SongOfStorms); },
+                                      /*Glitched*/
+                                      [] {
+                                          return (CanDoGlitch(GlitchType::OutdoorBombOI,
+                                                              GlitchDifficulty::INTERMEDIATE) ||
+                                                  ((Bugs || Fish) && CanShield && Bombs && CanTakeDamage &&
+                                                   CanDoGlitch(GlitchType::QPA, GlitchDifficulty::ADVANCED)) ||
+                                                  ((Bugs || Fish) && CanShield && HasBombchus &&
+                                                   CanDoGlitch(GlitchType::ActionSwap, GlitchDifficulty::ADVANCED))) &&
+                                                 SongOfStorms;
+                                      } }),
+            EventAccess(&BugRock, { [] { return true; } }),
+        },
+        {
+            // Locations
+            LocationAccess(COLOSSUS_GOSSIP_STONE, { [] { return true; } }),
+        },
+        {
+            // Exits
+            Entrance(COLOSSUS_MEGALITH, { [] { return IsAdult && CanPlantBean(DESERT_COLOSSUS); },
+                                          /*Glitched*/
+                                          [] {
+                                              return HoverBoots && CanDoGlitch(GlitchType::HookshotJump_Boots,
+                                                                               GlitchDifficulty::ADVANCED);
+                                          } }),
+            Entrance(COLOSSUS_GREAT_FAIRY_FOUNTAIN, { [] { return HasExplosives; } }),
+            Entrance(SPIRIT_TEMPLE_ENTRYWAY, { [] { return true; } }),
+            Entrance(WASTELAND_NEAR_COLOSSUS, { [] { return true; } }),
+            Entrance(COLOSSUS_GROTTO, { [] { return CanUse(SILVER_GAUNTLETS); } }),
+        });
 
     areaTable[COLOSSUS_MEGALITH] = Area("Colossus Megalith", "Desert Colossus", DESERT_COLOSSUS, DAY_NIGHT_CYCLE, {},
                                         {

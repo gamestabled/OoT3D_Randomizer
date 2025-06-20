@@ -1,15 +1,23 @@
 #include "location_access.hpp"
 #include "logic.hpp"
 #include "entrance.hpp"
+#include "enemizer_logic.hpp"
 
 using namespace Logic;
 using namespace Settings;
 
 void AreaTable_Init_LostWoods() {
+    static constexpr auto ForEachEnemy_KokiriForest = [](auto& enemyCheckFn) {
+        return IsAdult && !ForestTempleClear && enemyCheckFn(85, 2, 0, {});
+    };
     areaTable[KOKIRI_FOREST] = Area(
         "Kokiri Forest", "Kokiri Forest", KOKIRI_FOREST, NO_DAY_NIGHT_CYCLE,
         {
             // Events
+            EventAccess(&DekuBabaSticks,
+                        { [] { return DekuBabaSticks || ForEachEnemy_KokiriForest(CanGetDekuBabaSticks); } }),
+            EventAccess(&DekuBabaNuts,
+                        { [] { return DekuBabaNuts || ForEachEnemy_KokiriForest(CanGetDekuBabaNuts); } }),
             EventAccess(&BeanPlantFairy,
                         { [] { return BeanPlantFairy || (CanPlantBean(KOKIRI_FOREST) && CanPlay(SongOfStorms)); } }),
             EventAccess(&GossipStoneFairy, { [] { return GossipStoneFairy || CanSummonGossipFairyWithoutSuns; } }),
@@ -31,8 +39,9 @@ void AreaTable_Init_LostWoods() {
             Entrance(KF_KOKIRI_SHOP, { [] { return true; } }),
             Entrance(KF_OUTSIDE_DEKU_TREE,
                      { [] {
-                          return (IsAdult && ((SoulSkulltula && CanAdultDamage) || ForestTempleClear)) ||
-                                 (IsChild && (OpenForest.Is(OPENFOREST_OPEN) || ShowedMidoSwordAndShield));
+                          return (IsAdult && (CanPassEnemy(85, 2, 0, 3) || ForestTempleClear)) ||
+                                 (IsChild && CanPassAnyEnemy(85, 0, 1, { 1, 2 }) &&
+                                  (OpenForest.Is(OPENFOREST_OPEN) || ShowedMidoSwordAndShield));
                       },
                        /*Glitched*/
                        [] {
@@ -64,52 +73,49 @@ void AreaTable_Init_LostWoods() {
                        } }),
         });
 
-    areaTable[KF_OUTSIDE_DEKU_TREE] = Area(
-        "KF Outside Deku Tree", "Kokiri Forest", KOKIRI_FOREST, NO_DAY_NIGHT_CYCLE,
-        {
-            // Events
-            EventAccess(&DekuBabaSticks, { [] {
-                return DekuBabaSticks || (SoulDekuBaba && ((IsAdult && (MasterSword || BiggoronSword) &&
-                                                            ShuffleDungeonEntrances.Is(SHUFFLEDUNGEONS_OFF)) ||
-                                                           KokiriSword || Boomerang));
-            } }),
-            EventAccess(&DekuBabaNuts, { [] {
-                return DekuBabaNuts ||
-                       (SoulDekuBaba && ((IsAdult && (MasterSword || BiggoronSword) &&
-                                          ShuffleDungeonEntrances.Is(SHUFFLEDUNGEONS_OFF)) ||
-                                         KokiriSword || Slingshot || Sticks || HasExplosives || CanUse(DINS_FIRE)));
-            } }),
-            EventAccess(&ShowedMidoSwordAndShield,
-                        { [] { return ShowedMidoSwordAndShield || (IsChild && KokiriSword && DekuShield); } }),
-        },
-        {
-            // Locations
-            LocationAccess(KF_DEKU_TREE_GOSSIP_STONE_LEFT, { [] { return true; } }),
-            LocationAccess(KF_DEKU_TREE_GOSSIP_STONE_RIGHT, { [] { return true; } }),
-        },
-        {
-            // Exits
-            Entrance(DEKU_TREE_ENTRYWAY,
-                     { [] {
-                          return IsChild || (ShuffleDungeonEntrances.IsNot(SHUFFLEDUNGEONS_OFF) &&
-                                             (OpenForest.Is(OPENFOREST_OPEN) || ShowedMidoSwordAndShield));
-                      },
-                       /*Glitched*/
-                       [] {
-                           return CanDoGlitch(GlitchType::HammerSlide, GlitchDifficulty::INTERMEDIATE) ||
-                                  CanDoGlitch(GlitchType::HoverBoost, GlitchDifficulty::INTERMEDIATE);
-                       } }),
-            Entrance(KOKIRI_FOREST, { [] {
-                                         return (IsAdult && ((SoulSkulltula && CanAdultDamage) || ForestTempleClear)) ||
-                                                (IsChild &&
-                                                 (OpenForest.Is(OPENFOREST_OPEN) || ShowedMidoSwordAndShield));
-                                     },
-                                      /*Glitched*/
-                                      [] {
-                                          return CanDoGlitch(GlitchType::ASlide, GlitchDifficulty::INTERMEDIATE) ||
-                                                 CanDoGlitch(GlitchType::BombHover, GlitchDifficulty::INTERMEDIATE);
-                                      } }),
-        });
+    static constexpr auto ForEachEnemy_OutsideDekuTree = [](auto& enemyCheckFn) {
+        return (IsChild && enemyCheckFn(85, 0, 1, {})) || (IsAdult && ShuffleDungeonEntrances.Is(SHUFFLEDUNGEONS_OFF) &&
+                                                           !ForestTempleClear && enemyCheckFn(85, 2, 1, {}));
+    };
+    areaTable[KF_OUTSIDE_DEKU_TREE] =
+        Area("KF Outside Deku Tree", "Kokiri Forest", KOKIRI_FOREST, NO_DAY_NIGHT_CYCLE,
+             {
+                 // Events
+                 EventAccess(&DekuBabaSticks,
+                             { [] { return DekuBabaSticks || ForEachEnemy_OutsideDekuTree(CanGetDekuBabaSticks); } }),
+                 EventAccess(&DekuBabaNuts,
+                             { [] { return DekuBabaNuts || ForEachEnemy_OutsideDekuTree(CanGetDekuBabaNuts); } }),
+                 EventAccess(&ShowedMidoSwordAndShield,
+                             { [] { return ShowedMidoSwordAndShield || (IsChild && KokiriSword && DekuShield); } }),
+             },
+             {
+                 // Locations
+                 LocationAccess(KF_DEKU_TREE_GOSSIP_STONE_LEFT, { [] { return true; } }),
+                 LocationAccess(KF_DEKU_TREE_GOSSIP_STONE_RIGHT, { [] { return true; } }),
+             },
+             {
+                 // Exits
+                 Entrance(DEKU_TREE_ENTRYWAY,
+                          { [] {
+                               return IsChild || (ShuffleDungeonEntrances.IsNot(SHUFFLEDUNGEONS_OFF) &&
+                                                  (OpenForest.Is(OPENFOREST_OPEN) || ShowedMidoSwordAndShield));
+                           },
+                            /*Glitched*/
+                            [] {
+                                return CanDoGlitch(GlitchType::HammerSlide, GlitchDifficulty::INTERMEDIATE) ||
+                                       CanDoGlitch(GlitchType::HoverBoost, GlitchDifficulty::INTERMEDIATE);
+                            } }),
+                 Entrance(KOKIRI_FOREST,
+                          { [] {
+                               return (IsAdult && (CanPassEnemy(85, 2, 0, 3) || ForestTempleClear)) ||
+                                      (IsChild && (OpenForest.Is(OPENFOREST_OPEN) || ShowedMidoSwordAndShield));
+                           },
+                            /*Glitched*/
+                            [] {
+                                return CanDoGlitch(GlitchType::ASlide, GlitchDifficulty::INTERMEDIATE) ||
+                                       CanDoGlitch(GlitchType::BombHover, GlitchDifficulty::INTERMEDIATE);
+                            } }),
+             });
 
     areaTable[KF_LINKS_HOUSE] =
         Area("KF Link's House", "KF Link's House", NONE, NO_DAY_NIGHT_CYCLE, {},
@@ -371,23 +377,35 @@ void AreaTable_Init_LostWoods() {
                                            Entrance(LW_BEYOND_MIDO, { [] { return true; } }),
                                        });
 
-    areaTable[SFM_ENTRYWAY] = Area(
-        "SFM Entryway", "Sacred Forest Meadow", SACRED_FOREST_MEADOW, NO_DAY_NIGHT_CYCLE, {}, {},
-        {
-            // Exits
-            Entrance(LW_BEYOND_MIDO, { [] { return true; } }),
-            Entrance(SACRED_FOREST_MEADOW, { [] {
-                         return ((IsChild && SoulWolfos) || (IsAdult && SoulMoblin)) &&
-                                (CanUse(SLINGSHOT) || CanUse(STICKS) || CanUse(KOKIRI_SWORD) || CanUse(DINS_FIRE) ||
-                                 CanUse(MEGATON_HAMMER) || CanUse(MASTER_SWORD) || CanUse(BIGGORON_SWORD));
-                     } }),
-            Entrance(SFM_WOLFOS_GROTTO, { [] { return CanOpenBombGrotto; } }),
-        });
+    areaTable[SFM_ENTRYWAY] =
+        Area("SFM Entryway", "Sacred Forest Meadow", SACRED_FOREST_MEADOW, NO_DAY_NIGHT_CYCLE, {}, {},
+             {
+                 // Exits
+                 Entrance(LW_BEYOND_MIDO, { [] { return true; } }),
+                 Entrance(SACRED_FOREST_MEADOW, { [] {
+                              return ((IsChild && CanDefeatEnemy(86, 0, 0, 1) &&
+                                       CanPassEnemies(86, 0, 0, { 5, 6, 7, 10 }, SpaceAroundEnemy::NARROW) &&
+                                       CanPassEnemies(86, 0, 0, { 8, 9 })) ||
+                                      (IsAdult && CanPassEnemy(86, 2, 0, 11) &&
+                                       (CanUse(SCARECROW) ||
+                                        (Settings::Enemizer
+                                             ? (CanPassEnemies(86, 2, 0, { 6, 7, 8, 9, 10 }, SpaceAroundEnemy::NARROW))
+                                             : CanDefeatEnemy(Enemizer::ENEMY_MOBLIN_SPEAR)))));
+                          } }),
+                 Entrance(SFM_WOLFOS_GROTTO, { [] { return CanOpenBombGrotto; } }),
+             });
 
+    static constexpr auto ForEachEnemy_SacredForestMeadow = [](auto& enemyCheckFn) {
+        return (IsChild && enemyCheckFn(86, 0, 0, { 5, 6, 7, 8, 9, 10 })) || (IsAdult && enemyCheckFn(86, 2, 0, {}));
+    };
     areaTable[SACRED_FOREST_MEADOW] = Area(
         "Sacred Forest Meadow", "Sacred Forest Meadow", SACRED_FOREST_MEADOW, NO_DAY_NIGHT_CYCLE,
         {
             // Events
+            EventAccess(&DekuBabaSticks,
+                        { [] { return DekuBabaSticks || ForEachEnemy_SacredForestMeadow(CanGetDekuBabaSticks); } }),
+            EventAccess(&DekuBabaNuts,
+                        { [] { return DekuBabaNuts || ForEachEnemy_SacredForestMeadow(CanGetDekuBabaNuts); } }),
             EventAccess(&GossipStoneFairy, { [] { return GossipStoneFairy || CanSummonGossipFairyWithoutSuns; } }),
         },
         {
@@ -400,12 +418,18 @@ void AreaTable_Init_LostWoods() {
         },
         {
             // Exits
-            Entrance(SFM_ENTRYWAY, { [] { return true; } }),
+            Entrance(
+                SFM_ENTRYWAY, { [] {
+                    return ((IsChild && CanPassEnemies(86, 0, 0, { 8, 9 })) || (IsAdult && CanPassEnemy(86, 2, 0, 11)));
+                } }),
             Entrance(
                 FOREST_TEMPLE_ENTRYWAY,
                 { [] { return CanUse(HOOKSHOT); },
                   /*Glitched*/ [] { return CanDoGlitch(GlitchType::BombHover, GlitchDifficulty::INTERMEDIATE); } }),
-            Entrance(SFM_FAIRY_GROTTO, { [] { return true; } }),
+            Entrance(
+                SFM_FAIRY_GROTTO, { [] {
+                    return ((IsChild && CanPassEnemies(86, 0, 0, { 8, 9 })) || (IsAdult && CanPassEnemy(86, 2, 0, 11)));
+                } }),
             Entrance(SFM_STORMS_GROTTO,
                      { [] { return CanOpenStormGrotto; },
                        /*Glitched*/
@@ -434,11 +458,7 @@ void AreaTable_Init_LostWoods() {
         Area("SFM Wolfos Grotto", "SFM Wolfos Grotto", NONE, NO_DAY_NIGHT_CYCLE, {},
              {
                  // Locations
-                 LocationAccess(SFM_WOLFOS_GROTTO_CHEST, { [] {
-                                    return SoulWolfos && (CanUse(SLINGSHOT) || CanUse(STICKS) || CanUse(KOKIRI_SWORD) ||
-                                                          CanUse(DINS_FIRE) || CanUse(MEGATON_HAMMER) ||
-                                                          CanUse(MASTER_SWORD) || CanUse(BIGGORON_SWORD));
-                                } }),
+                 LocationAccess(SFM_WOLFOS_GROTTO_CHEST, { [] { return CanDefeatEnemies(62, 0, 7); } }),
              },
              {
                  // Exits

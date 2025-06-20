@@ -1,5 +1,6 @@
 #include "gold_skulltulas.hpp"
 #include "dungeon.hpp"
+#include "enemizer_logic.hpp"
 
 using namespace GoldSkulltulas;
 using namespace Logic;
@@ -31,7 +32,9 @@ void GsTable_Init_DekuTree() {
                   { -2719, -730, -747 },
                   { 16383, 8191, 0 },
               },
-              { [] { return CanChildAttack || CanAdultAttack; } } },
+              { [] {
+                  return (CanChildAttack || CanAdultAttack) && CanPassEnemy(0, 0, 8, 0, SpaceAroundEnemy::NARROW);
+              } } },
             // https://noclip.website/#oot3d/ydan;ShareData=ATOl497c+=9boF*UkX*J=N$[)6NV/7UY+0AUWvBU=LhJf9z-)CT*J*!93FH;+d
             { DEKU_TREE_BASEMENT_BACK_LOBBY,
               "Center of back lobby, on floor below the baby gohma eggs.",

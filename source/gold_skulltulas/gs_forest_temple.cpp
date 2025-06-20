@@ -1,5 +1,6 @@
 #include "gold_skulltulas.hpp"
 #include "dungeon.hpp"
+#include "enemizer_logic.hpp"
 
 using namespace GoldSkulltulas;
 using namespace Logic;
@@ -138,7 +139,8 @@ void GsTable_Init_ForestTemple() {
             GsScene{ 0x3 },
             Room{ 8 },
             { [] {
-                return CanUse(LONGSHOT) || Here(FOREST_TEMPLE_NW_OUTDOORS_UPPER, [] { return HookshotOrBoomerang; });
+                return CanUse(LONGSHOT) || Here(FOREST_TEMPLE_NW_OUTDOORS_UPPER,
+                                                [] { return HookshotOrBoomerang && CanPassEnemy(3, 0, 8, 5); });
             } },
         },
         {
@@ -189,7 +191,7 @@ void GsTable_Init_ForestTemple() {
                   { -1720, 570, -2361 },
                   { 0, 0, -16384 },
               },
-              { [] { return CanAdultAttack || CanChildAttack; } } },
+              { [] { return (CanAdultAttack || CanChildAttack) && CanPassEnemy(3, 0, 8, 5); } } },
             // https://noclip.website/#oot3d/bmori1;ShareData=AW8}NTR;S19tt:c97cJT=CGp96eKwsUty|F9k8ITWL7I)UVKV+S@doIS5f!o=a
             { FOREST_TEMPLE_NW_OUTDOORS_LOWER,
               "At the very top of the wall, above door to hallway that leads to other courtyard.",

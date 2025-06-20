@@ -10,6 +10,8 @@ typedef int16_t s16;
 typedef uint16_t u16;
 typedef int32_t s32;
 typedef uint32_t u32;
+typedef int64_t s64;
+typedef uint64_t u64;
 
 typedef struct {
     f32 x, y;
@@ -34,5 +36,15 @@ typedef struct {
 typedef struct {
     f32 data[4][4];
 } nn_math_MTX44;
+
+typedef struct Sphere16 {
+    Vec3s center;
+    s16 radius;
+} Sphere16; // size = 0x08
+
+typedef struct Spheref {
+    Vec3f center;
+    f32 radius;
+} Spheref; // size = 0x10
 
 #endif

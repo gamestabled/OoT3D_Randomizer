@@ -134,6 +134,7 @@ Option MQCastle                  = Option::U8  (2, "Ganon's Castle",      {"Vani
 Option TriforceHunt              = Option::Bool("Triforce Hunt",          {"Off", "On"},                                                     {triforceHuntDesc});
 Option TriforcePiecesTotal       = Option::U8  (2, "Total pieces",        {NumOpts(1, 200)},                                                 {triforcePiecesTotalDesc},                                                                                       OptionCategory::Setting,    29);
 Option TriforcePiecesRequired    = Option::U8  (2, "Required pieces",     {NumOpts(1, 100)},                                                 {triforcePiecesRequiredDesc},                                                                                    OptionCategory::Setting,    19);
+Option Enemizer                  = Option::Bool("Enemy Randomizer",       {"Off", "On"},                                                     {enemizerDesc});
 std::vector<Option *> worldOptions = {
     &RandomizeWorld,
     &StartingAge,
@@ -172,6 +173,7 @@ std::vector<Option *> worldOptions = {
     &TriforceHunt,
     &TriforcePiecesTotal,
     &TriforcePiecesRequired,
+    &Enemizer,
 };
 std::vector<Option *> dungeonOptions = {
     &MQDeku,
@@ -1260,10 +1262,11 @@ u8 boomerangTrailColorMode = 0;
 std::string finalChuTrailInnerColor   = BombchuTrailInnerColor.GetSelectedOptionText();
 std::string finalChuTrailOuterColor   = BombchuTrailOuterColor.GetSelectedOptionText();
 
-Option ColoredKeys =     Option::Bool("Colored Small Keys", {"Off", "On"},                                {coloredKeysDesc},                                                                                                                                  OptionCategory::Cosmetic);
-Option ColoredBossKeys = Option::Bool("Colored Boss Keys",  {"Off", "On"},                                {coloredBossKeysDesc},                                                                                                                              OptionCategory::Cosmetic);
-Option MirrorWorld =     Option::U8  ("Mirror World",       {"Off", "On", "Scene", "Entrance", "Random"}, {mirrorWorldOffDesc, mirrorWorldOnDesc, mirrorWorldSceneDesc, mirrorWorldEntranceDesc, mirrorWorldRandomDesc},                                      OptionCategory::Cosmetic);
-Option BetaSoldOut =     Option::Bool("Beta Sold-Out Model",{"Off", "On"},                                {betaSoldOutDesc},                                                                                                                                  OptionCategory::Cosmetic);
+Option ColoredKeys         = Option::Bool("Colored Small Keys",     {"Off", "On"},                                {coloredKeysDesc},                                                                                                                                  OptionCategory::Cosmetic);
+Option ColoredBossKeys     = Option::Bool("Colored Boss Keys",      {"Off", "On"},                                {coloredBossKeysDesc},                                                                                                                              OptionCategory::Cosmetic);
+Option MirrorWorld         = Option::U8  ("Mirror World",           {"Off", "On", "Scene", "Entrance", "Random"}, {mirrorWorldOffDesc, mirrorWorldOnDesc, mirrorWorldSceneDesc, mirrorWorldEntranceDesc, mirrorWorldRandomDesc},                                      OptionCategory::Cosmetic);
+Option BetaSoldOut         = Option::Bool("Beta Sold-Out Model",    {"Off", "On"},                                {betaSoldOutDesc},                                                                                                                                  OptionCategory::Cosmetic);
+Option SoullessEnemiesLook = Option::U8  ("Soulless Enemies Look",  {"Purple Flame", "Flashing"},                 {soullessPurpleFlameDesc, soullessFlashingDesc},                                                                                                    OptionCategory::Cosmetic);
 
 std::vector<Option *> cosmeticOptions = {
     &CustomTunicColors,
@@ -1296,6 +1299,7 @@ std::vector<Option *> cosmeticOptions = {
     &ColoredBossKeys,
     &MirrorWorld,
     &BetaSoldOut,
+    &SoullessEnemiesLook,
 };
 
 static std::vector<std::string> musicOptions = {"Off", "On (Mixed)", "On (Grouped)", "On (Own)"};
@@ -1459,6 +1463,8 @@ SettingsContext FillContext() {
     ctx.triforcePiecesTotal    = TriforcePiecesTotal.Value<u8>() + 1;
     ctx.triforcePiecesRequired = TriforcePiecesRequired.Value<u8>() + 1;
 
+    ctx.enemizer = (Enemizer) ? 1 : 0;
+
     ctx.shuffleRewards         = ShuffleRewards.Value<u8>();
     ctx.linksPocketItem        = LinksPocketItem.Value<u8>();
     ctx.shuffleSongs           = ShuffleSongs.Value<u8>();
@@ -1549,6 +1555,7 @@ SettingsContext FillContext() {
     ctx.hyperMiddleBosses   = (HyperMiddleBosses) ? 1 : 0;
     ctx.hyperEnemies        = (HyperEnemies) ? 1 : 0;
     ctx.freeCamera          = (FreeCamera) ? 1 : 0;
+    ctx.randomGsLocations   = (RandomGsLocations) ? 1 : 0;
 
     ctx.faroresWindAnywhere  = (FaroresWindAnywhere) ? 1 : 0;
     ctx.stickAsAdult         = (StickAsAdult) ? 1 : 0;
@@ -1620,6 +1627,7 @@ SettingsContext FillContext() {
     ctx.mirrorWorld                 = MirrorWorld.Value<u8>();
     ctx.coloredKeys                 = (ColoredKeys) ? 1 : 0;
     ctx.coloredBossKeys             = (ColoredBossKeys) ? 1 : 0;
+    ctx.soullessEnemiesLook         = SoullessEnemiesLook.Value<u8>();
     ctx.shuffleSFX                  = ShuffleSFX.Value<u8>();
     ctx.shuffleSFXFootsteps         = (ShuffleSFXFootsteps) ? 1 : 0;
     ctx.shuffleSFXLinkVoice         = (ShuffleSFXLinkVoice) ? 1 : 0;
@@ -2293,9 +2301,11 @@ void ForceChange(u32 kDown, Option* currentSetting) {
 
     if (ShuffleEnemySouls || RandomizeShuffle) {
         startingEnemySouls.Unlock();
+        SoullessEnemiesLook.Unlock();
     } else {
         startingEnemySouls.Lock();
         startingInventory.ResetMenuIndex();
+        SoullessEnemiesLook.Lock();
     }
 
     if (ShuffleOcarinaButtons || RandomizeShuffle) {
@@ -2734,18 +2744,21 @@ bool IsMQOption(Option *option) {
            option == &MQGTG           ||
            option == &MQCastle;
 }
-// clang-format on
+
 // Options that should be overridden and then restored after generating when racing is enabled
 std::vector<std::pair<Option*, u8>> racingOverrides = {
     { &QuickText, QUICKTEXT_TURBO },
     { &SkipSongReplays, SONGREPLAYS_SKIP_NO_SFX },
     { &ColoredKeys, ON },
     { &ColoredBossKeys, ON },
+    { &SoullessEnemiesLook, SOULLESSLOOK_PURPLE_FLAME },
 };
+// clang-format on
 
 // Options that should be overridden and then restored after generating when vanilla logic is enabled
 std::vector<std::pair<Option*, u8>> vanillaLogicOverrides = {
     { &TriforceHunt, OFF },
+    { &Enemizer, OFF },
     { &LinksPocketItem, LINKSPOCKETITEM_DUNGEON_REWARD },
     { &ShuffleRewards, REWARDSHUFFLE_END_OF_DUNGEON },
     { &ShuffleSongs, SONGSHUFFLE_SONG_LOCATIONS },
@@ -3287,24 +3300,27 @@ bool ValidateSettings() {
         posY += 7;
     }
 
-    // Check that there are no MQ dungeons with Enemy Souls
-    if (ShuffleEnemySouls.Is(SHUFFLEENEMYSOULS_ALL) && Logic.IsNot(LOGIC_NONE) && Logic.IsNot(LOGIC_VANILLA) &&
-        MQDungeonCount.IsNot(0)) {
-        if (ShuffleEnemySouls.IsHidden()) {
-            ShuffleEnemySouls.SetSelectedIndex(OFF);
+    // Check that there are no MQ dungeons with Enemy Souls or Enemy Randomizer.
+    if ((ShuffleEnemySouls.Is(SHUFFLEENEMYSOULS_ALL) || Enemizer) && MQDungeonCount.IsNot(0) &&
+        Logic.IsNot(LOGIC_NONE) && Logic.IsNot(LOGIC_VANILLA)) {
+        if (ShuffleEnemySouls.IsHidden() && Enemizer.IsHidden()) {
+            ShuffleEnemySouls.SetSelectedIndex(SHUFFLEENEMYSOULS_OFF);
+            Enemizer.SetSelectedIndex(OFF);
         } else {
             printf("\x1b[%d;0H"
                    "----------------------------------------"
-                   "Enemy Soul Shuffle currently does not\n"
-                   "have logic for Master Quest dungeons.\n\n"
+                   "Enemy Soul Shuffle and Enemy Randomizer\n"
+                   "currently do not have logic for Master\n"
+                   "Quest dungeons.\n"
+                   "\n"
                    "Please disable one of the following:\n"
                    " - MQ Dungeons (setting Count to 0)\n"
                    " - Logic\n"
-                   " - Enemy Soul Shuffle\n"
+                   " - Enemy Soul Shuffle / Enemy Randomizer\n"
                    "----------------------------------------",
                    posY);
             valid = false;
-            posY += 10;
+            posY += 11;
         }
     }
 

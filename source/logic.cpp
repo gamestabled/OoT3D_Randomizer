@@ -10,6 +10,7 @@
 #include "settings.hpp"
 #include "dungeon.hpp"
 #include "descriptions.hpp"
+#include "enemizer.hpp"
 
 using namespace Settings;
 

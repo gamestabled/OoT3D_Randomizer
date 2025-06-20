@@ -2,6 +2,7 @@
 #include "logic.hpp"
 #include "entrance.hpp"
 #include "dungeon.hpp"
+#include "enemizer_logic.hpp"
 
 using namespace Logic;
 using namespace Settings;
@@ -23,43 +24,51 @@ void AreaTable_Init_IceCavern() {
     |     VANILLA DUNGEON      |
     ---------------------------*/
     if (Dungeon::IceCavern.IsVanilla()) {
+
+        static constexpr auto ForEachEnemy_Beginning = [](auto& enemyCheckFn) {
+            return enemyCheckFn(9, 0, 3, {}) || enemyCheckFn(9, 0, 5, {}) || enemyCheckFn(9, 0, 8, {}) ||
+                   enemyCheckFn(9, 0, 9, {}) || enemyCheckFn(9, 0, 11, {}) || enemyCheckFn(9, 0, 6, { 18 }) ||
+                   (CanPassEnemy(9, 0, 6, 18) && enemyCheckFn(9, 0, 6, { 17 }));
+        };
         areaTable[ICE_CAVERN_BEGINNING] =
-            Area("Ice Cavern Beginning", "Ice Cavern", ICE_CAVERN, NO_DAY_NIGHT_CYCLE, {}, {},
+            Area("Ice Cavern Beginning", "Ice Cavern", ICE_CAVERN, NO_DAY_NIGHT_CYCLE,
+                 {
+                     // Events
+                     EventAccess(&DekuBabaSticks,
+                                 { [] { return DekuBabaSticks || ForEachEnemy_Beginning(CanGetDekuBabaSticks); } }),
+                     EventAccess(&DekuBabaNuts,
+                                 { [] { return DekuBabaNuts || ForEachEnemy_Beginning(CanGetDekuBabaNuts); } }),
+                 },
+                 {},
                  {
                      // Exits
                      Entrance(ICE_CAVERN_ENTRYWAY, { [] { return true; } }),
-                     Entrance(ICE_CAVERN_MAIN, { [] {
-                                  return SoulFreezard && Here(ICE_CAVERN_BEGINNING, [] {
-                                             return CanUse(MASTER_SWORD) || CanUse(BIGGORON_SWORD) || HasExplosives ||
-                                                    CanUse(DINS_FIRE);
-                                         });
-                              } }),
+                     Entrance(ICE_CAVERN_MAIN,
+                              { [] { return Here(ICE_CAVERN_BEGINNING, [] { return CanDefeatEnemies(9, 0, 1); }); } }),
                  });
 
-        areaTable[ICE_CAVERN_MAIN] =
-            Area("Ice Cavern", "Ice Cavern", ICE_CAVERN, NO_DAY_NIGHT_CYCLE,
-                 {
-                     // Events
-                     EventAccess(&BlueFireAccess, { [] { return BlueFireAccess || (IsAdult && HasBottle); } }),
-                 },
-                 {
-                     // Locations
-                     LocationAccess(ICE_CAVERN_MAP_CHEST, { [] { return BlueFire && IsAdult; } }),
-                     LocationAccess(ICE_CAVERN_COMPASS_CHEST, { [] { return BlueFire; } }),
-                     LocationAccess(ICE_CAVERN_IRON_BOOTS_CHEST, { [] {
-                                        return BlueFire && SoulWolfos &&
-                                               (CanJumpslash || CanUse(SLINGSHOT) || CanUse(DINS_FIRE));
-                                    } }),
-                     LocationAccess(SHEIK_IN_ICE_CAVERN, { [] {
-                                        return BlueFire && SoulWolfos &&
-                                               (CanJumpslash || CanUse(SLINGSHOT) || CanUse(DINS_FIRE)) && IsAdult;
-                                    } }),
-                     LocationAccess(ICE_CAVERN_FREESTANDING_POH, { [] { return BlueFire; } }),
-                     LocationAccess(ICE_CAVERN_GS_SPINNING_SCYTHE_ROOM, { [] { return HookshotOrBoomerang; } }),
-                     LocationAccess(ICE_CAVERN_GS_HEART_PIECE_ROOM, { [] { return BlueFire && HookshotOrBoomerang; } }),
-                     LocationAccess(ICE_CAVERN_GS_PUSH_BLOCK_ROOM, { [] { return BlueFire && HookshotOrBoomerang; } }),
-                 },
-                 {});
+        areaTable[ICE_CAVERN_MAIN] = Area(
+            "Ice Cavern", "Ice Cavern", ICE_CAVERN, NO_DAY_NIGHT_CYCLE,
+            {
+                // Events
+                EventAccess(&BlueFireAccess, { [] { return BlueFireAccess || (IsAdult && HasBottle); } }),
+            },
+            {
+                // Locations
+                LocationAccess(ICE_CAVERN_MAP_CHEST, { [] { return BlueFire && IsAdult; } }),
+                LocationAccess(ICE_CAVERN_COMPASS_CHEST, { [] { return BlueFire; } }),
+                LocationAccess(ICE_CAVERN_IRON_BOOTS_CHEST,
+                               { [] { return BlueFire && CanPassEnemy(9, 0, 6, 18) && CanDefeatEnemy(9, 0, 7, 0); } }),
+                LocationAccess(SHEIK_IN_ICE_CAVERN, { [] {
+                                   return BlueFire && CanPassEnemy(9, 0, 6, 18) && CanDefeatEnemy(9, 0, 7, 0) &&
+                                          IsAdult;
+                               } }),
+                LocationAccess(ICE_CAVERN_FREESTANDING_POH, { [] { return BlueFire; } }),
+                LocationAccess(ICE_CAVERN_GS_SPINNING_SCYTHE_ROOM, { [] { return HookshotOrBoomerang; } }),
+                LocationAccess(ICE_CAVERN_GS_HEART_PIECE_ROOM, { [] { return BlueFire && HookshotOrBoomerang; } }),
+                LocationAccess(ICE_CAVERN_GS_PUSH_BLOCK_ROOM, { [] { return BlueFire && HookshotOrBoomerang; } }),
+            },
+            {});
     }
 
     /*---------------------------

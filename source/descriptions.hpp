@@ -116,6 +116,8 @@ extern string_view triforceHuntDesc;
 extern string_view triforcePiecesTotalDesc;
 extern string_view triforcePiecesRequiredDesc;
 
+extern string_view enemizerDesc;
+
 extern string_view shuffleRewardsEndOfDungeon;
 extern string_view shuffleRewardsAnyDungeon;
 extern string_view shuffleRewardsOverworld;
@@ -381,6 +383,9 @@ extern string_view mirrorWorldEntranceDesc;
 extern string_view mirrorWorldRandomDesc;
 
 extern string_view betaSoldOutDesc;
+
+extern string_view soullessPurpleFlameDesc;
+extern string_view soullessFlashingDesc;
 
 extern string_view musicRandoDesc;
 extern string_view shuffleBGMDesc;

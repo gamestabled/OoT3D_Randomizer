@@ -16,7 +16,7 @@ void BgSpot06Objects_rUpdate(Actor* thisx, GlobalContext* globalCtx) {
         return; // don't do anything for child Link
 
     if (actionCounter == 0) {
-        Object_Spawn(&globalCtx->objectCtx, 0x3); // object containing floor switch data (and ice block data)
+        Object_FindEntryOrSpawn(0x3); // object containing floor switch data (and ice block data)
 
         s16 switchParams;
         if (gSaveContext.eventChkInf[4] & 0x0400) { // Water Temple blue warp cleared

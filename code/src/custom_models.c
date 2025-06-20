@@ -269,9 +269,7 @@ static void CustomModel_EditTriforce(void* triforceCMB) {
 
 void CustomModel_Update(void) {
     // Make sure custom_assets is loaded
-    if (ExtendedObject_GetIndex(&gGlobalContext->objectCtx, OBJECT_CUSTOM_GENERAL_ASSETS) < 0) {
-        ExtendedObject_Spawn(&gGlobalContext->objectCtx, OBJECT_CUSTOM_GENERAL_ASSETS);
-    }
+    Object_FindEntryOrSpawn(OBJECT_CUSTOM_GENERAL_ASSETS);
 }
 
 void CustomModels_EditItemCMB(void* ZARBuf, u16 objectId, s8 special) {
@@ -326,32 +324,33 @@ void CustomModels_ApplyItemCMAB(SkeletonAnimationModel* model, u16 objectId, s8 
 
     switch (objectId) {
         case OBJECT_CUSTOM_CHILD_SONGS:
-            cmabMan = ExtendedObject_GetCMABByIndex(OBJECT_CUSTOM_GENERAL_ASSETS, TEXANIM_CHILD_SONG);
+            cmabMan = Object_GetCMABByIndex(OBJECT_CUSTOM_GENERAL_ASSETS, TEXANIM_CHILD_SONG);
             TexAnim_Spawn(model->unk_0C, cmabMan);
             model->unk_0C->animSpeed = 0.0f;
             model->unk_0C->animMode  = 0;
             model->unk_0C->curFrame  = special;
             break;
         case OBJECT_CUSTOM_ADULT_SONGS:
-            cmabMan = ExtendedObject_GetCMABByIndex(OBJECT_CUSTOM_GENERAL_ASSETS, TEXANIM_ADULT_SONG);
+            cmabMan = Object_GetCMABByIndex(OBJECT_CUSTOM_GENERAL_ASSETS, TEXANIM_ADULT_SONG);
             TexAnim_Spawn(model->unk_0C, cmabMan);
             model->unk_0C->animSpeed = 0.0f;
             model->unk_0C->animMode  = 0;
             model->unk_0C->curFrame  = special;
             break;
         case OBJECT_CUSTOM_BOSS_KEYS:
-            cmabMan = ExtendedObject_GetCMABByIndex(OBJECT_CUSTOM_GENERAL_ASSETS, TEXANIM_BOSS_KEY);
+            cmabMan = Object_GetCMABByIndex(OBJECT_CUSTOM_GENERAL_ASSETS, TEXANIM_BOSS_KEY);
             TexAnim_Spawn(model->unk_0C, cmabMan);
             model->unk_0C->animSpeed = 0.0f;
             model->unk_0C->animMode  = 0;
             model->unk_0C->curFrame  = special;
             break;
         case OBJECT_CUSTOM_OCARINA_BUTTON:
-            cmabMan = ExtendedObject_GetCMABByIndex(OBJECT_CUSTOM_GENERAL_ASSETS, TEXANIM_OCARINA_NOTE_BUTTON);
+            cmabMan = Object_GetCMABByIndex(OBJECT_CUSTOM_GENERAL_ASSETS, TEXANIM_OCARINA_NOTE_BUTTON);
             TexAnim_Spawn(model->unk_0C, cmabMan);
             model->unk_0C->animSpeed = 0.0f;
             model->unk_0C->animMode  = 0;
             model->unk_0C->curFrame  = special;
+            break;
     }
 }
 

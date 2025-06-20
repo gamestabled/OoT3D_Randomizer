@@ -7,7 +7,7 @@
 typedef struct {
     Actor* actor;
     ItemRow* itemRow;
-    s8 objectBankIdx;
+    s8 objectSlot;
     u8 loaded;
     SkeletonAnimationModel* saModel;
     SkeletonAnimationModel* saModel2;

@@ -1,4 +1,5 @@
 #include "gold_skulltulas.hpp"
+#include "enemizer_logic.hpp"
 
 using namespace GoldSkulltulas;
 using namespace Logic;
@@ -426,12 +427,12 @@ void GsTable_Init_LostWoods() {
             SACRED_FOREST_MEADOW,
             GsScene{ 0x56 },
             Room{ 0 },
-            { [] { return IsAdult && CanGetNightTimeGS && HookshotOrBoomerang; } },
+            { [] { return IsAdult && CanGetNightTimeGS && HookshotOrBoomerang && CanPassEnemy(86, 2, 0, 11); } },
         },
         {
             // https://noclip.website/#oot3d/spot05;ShareData=ALIP?9hH3t9KuQYUj2z;+!WX1RR,k1UiKczUr2}RVl5UU9iJ{3UR^a29r&?~V[
             { SFM_ENTRYWAY,
-              "Hidden in grass by entrace from Lost Woods.",
+              "Hidden in grass by entrance from Lost Woods.",
               GsTimeCondition{ GS_TIME_NIGHT },
               SettingRequirements{ nullptr },
               PosRot{
@@ -448,7 +449,7 @@ void GsTable_Init_LostWoods() {
                   { -70, 158, -190 },
                   { 0, 0, 0 },
               },
-              { [] { return IsAdult && CanGetNightTimeGS && CanAdultAttack; } } },
+              { [] { return IsAdult && CanGetNightTimeGS && CanAdultAttack && CanPassEnemy(86, 2, 0, 11); } } },
             // https://noclip.website/#oot3d/spot05;ShareData=AI--,UXTd7Uo^O19Vz]$Vw,9e6ZLF,T*3DCUbsLwV9HaQUccMp9xp4OUMwjxU!
             { SACRED_FOREST_MEADOW,
               "In the bottom center of deep pool of water before hallway towards warp platform.",
@@ -459,13 +460,14 @@ void GsTable_Init_LostWoods() {
                   { 0, 0, 0 },
               },
               { [] {
-                   return IsAdult && CanGetNightTimeGS &&
+                   return IsAdult && CanGetNightTimeGS && CanPassEnemy(86, 2, 0, 11) &&
                           (HookshotOrBoomerang ||
                            ((CanUse(BOW) && CanUse(SLINGSHOT) && (CanUse(IRON_BOOTS) || SilverScale))));
                },
                 /*Glitched*/
                 [] {
-                    return IsAdult && CanGetNightTimeGS && CanDoGlitch(GlitchType::ISG, GlitchDifficulty::NOVICE) &&
+                    return IsAdult && CanGetNightTimeGS && CanPassEnemy(86, 2, 0, 11) &&
+                           CanDoGlitch(GlitchType::ISG, GlitchDifficulty::NOVICE) &&
                            (CanUse(IRON_BOOTS) || SilverScale);
                 } } },
             // https://noclip.website/#oot3d/spot05;ShareData=AS6j7Uh55x9bCbQUFDAMV,ft86d]JwUYhu~URY~7V[$mF9ajIu9gy$nUZTbH=a

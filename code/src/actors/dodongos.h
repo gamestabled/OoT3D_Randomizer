@@ -9,6 +9,8 @@ struct EnDodojr;
 typedef void (*EnDodongoActionFunc)(struct EnDodongo*, GlobalContext*);
 typedef void (*EnDodojrActionFunc)(struct EnDodojr*, GlobalContext*);
 
+#define EnDodojr_DropItem ((EnDodojrActionFunc)GAME_ADDR(0x3B7C64))
+
 typedef struct EnDodongo {
     /* 0x0000 */ Actor base;
     /* 0x01A4 */ SkelAnime skelAnime;
@@ -31,5 +33,7 @@ typedef struct EnDodojr {
     /* 0x0512 */ char unk_512[0x00D];
 } EnDodojr; // size = 0x520
 _Static_assert(sizeof(EnDodojr) == 0x520, "EnDodojr size");
+
+void EnDodojr_rInit(Actor* thisx, GlobalContext* globalCtx);
 
 #endif //_DODONGOS_H_

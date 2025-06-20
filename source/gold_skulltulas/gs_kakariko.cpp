@@ -1,4 +1,5 @@
 #include "gold_skulltulas.hpp"
+#include "enemizer_logic.hpp"
 
 using namespace GoldSkulltulas;
 using namespace Logic;
@@ -476,7 +477,7 @@ void GsTable_Init_Kakariko() {
                   { 280, -20, 300 },
                   { 0, 0, 0 },
               },
-              { [] { return IsChild && CanTakeDamage && CanChildAttack; } } },
+              { [] { return IsChild && CanTakeDamage && CanChildAttack && CanDefeatEnemies(65, 0, 3); } } },
         });
 
     gsTable[GRAVEYARD_GS_BEAN_PATCH] = new GoldSkulltulaData( //

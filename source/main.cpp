@@ -6,6 +6,7 @@
 #include "item_location.hpp"
 #include "location_access.hpp"
 #include "music.hpp"
+#include "enemizer.hpp"
 
 #define TICKS_PER_SEC 268123480.0
 
@@ -14,6 +15,7 @@ int main() {
     HintTable_Init();
     ItemTable_Init();
     LocationTable_Init();
+    Enemizer::InitEnemyTypes();
     MenuInit();
 
     u64 initialHoldTime = svcGetSystemTick();

@@ -2,6 +2,7 @@
 #include "logic.hpp"
 #include "entrance.hpp"
 #include "gold_skulltulas.hpp"
+#include "enemizer_logic.hpp"
 
 using namespace Logic;
 using namespace Settings;
@@ -320,11 +321,7 @@ void AreaTable_Init_Kakariko() {
         Area("Kak Redead Grotto", "Kak Redead Grotto", NONE, NO_DAY_NIGHT_CYCLE, {},
              {
                  // Locations
-                 LocationAccess(KAK_REDEAD_GROTTO_CHEST, { [] {
-                                    return SoulRedeadGibdo &&
-                                           (CanUse(STICKS) || CanUse(KOKIRI_SWORD) || CanUse(DINS_FIRE) ||
-                                            CanUse(MEGATON_HAMMER) || CanUse(MASTER_SWORD) || CanUse(BIGGORON_SWORD));
-                                } }),
+                 LocationAccess(KAK_REDEAD_GROTTO_CHEST, { [] { return CanDefeatEnemies(62, 0, 2); } }),
              },
              {
                  // Exits
@@ -342,10 +339,16 @@ void AreaTable_Init_Kakariko() {
                                           Entrance(KAK_BACKYARD, { [] { return true; } }),
                                       });
 
+    static constexpr auto ForEachEnemy_Graveyard = [](auto& enemyCheckFn) {
+        return IsAdult && enemyCheckFn(83, 2, 1, {});
+    };
     areaTable[THE_GRAVEYARD] = Area(
         "The Graveyard", "The Graveyard", THE_GRAVEYARD, NO_DAY_NIGHT_CYCLE,
         {
             // Events
+            EventAccess(&DekuBabaSticks,
+                        { [] { return DekuBabaSticks || ForEachEnemy_Graveyard(CanGetDekuBabaSticks); } }),
+            EventAccess(&DekuBabaNuts, { [] { return DekuBabaNuts || ForEachEnemy_Graveyard(CanGetDekuBabaNuts); } }),
             EventAccess(&ButterflyFairy, { [] { return ButterflyFairy || (CanUse(STICKS) && AtDay); } }),
             EventAccess(&BeanPlantFairy,
                         { [] { return BeanPlantFairy || (CanPlantBean(THE_GRAVEYARD) && CanPlay(SongOfStorms)); } }),
@@ -412,30 +415,41 @@ void AreaTable_Init_Kakariko() {
                  Entrance(THE_GRAVEYARD, { [] { return true; } }),
              });
 
-    areaTable[GRAVEYARD_HEART_PIECE_GRAVE] =
-        Area("Graveyard Heart Piece Grave", "Graveyard Heart Piece Grave", NONE, NO_DAY_NIGHT_CYCLE, {},
-             {
-                 // Locations
-                 LocationAccess(GRAVEYARD_HEART_PIECE_GRAVE_CHEST,
-                                { [] { return CanPlay(SunsSong); },
-                                  /*Glitched*/
-                                  [] {
-                                      return (CanDoGlitch(GlitchType::OutdoorBombOI, GlitchDifficulty::NOVICE) ||
-                                              ((Bugs || Fish) && CanShield &&
-                                               (Bombs && (CanSurviveDamage || (Fairy && NumBottles >= 2))) &&
-                                               CanDoGlitch(GlitchType::QPA, GlitchDifficulty::ADVANCED)) ||
-                                              ((Bugs || Fish) && CanShield && HasBombchus &&
-                                               CanDoGlitch(GlitchType::ActionSwap, GlitchDifficulty::ADVANCED))) &&
-                                             SunsSong;
-                                  } }),
-             },
-             {
-                 // Exits
-                 Entrance(THE_GRAVEYARD, { [] { return true; } }),
-             });
+    areaTable[GRAVEYARD_HEART_PIECE_GRAVE] = Area(
+        "Graveyard Heart Piece Grave", "Graveyard Heart Piece Grave", NONE, NO_DAY_NIGHT_CYCLE, {},
+        {
+            // Locations
+            LocationAccess(GRAVEYARD_HEART_PIECE_GRAVE_CHEST,
+                           { [] { return CanPlay(SunsSong) && CanPassEnemy(63, 0, 0, 1, SpaceAroundEnemy::NARROW); },
+                             /*Glitched*/
+                             [] {
+                                 return (CanDoGlitch(GlitchType::OutdoorBombOI, GlitchDifficulty::NOVICE) ||
+                                         ((Bugs || Fish) && CanShield &&
+                                          (Bombs && (CanSurviveDamage || (Fairy && NumBottles >= 2))) &&
+                                          CanDoGlitch(GlitchType::QPA, GlitchDifficulty::ADVANCED)) ||
+                                         ((Bugs || Fish) && CanShield && HasBombchus &&
+                                          CanDoGlitch(GlitchType::ActionSwap, GlitchDifficulty::ADVANCED))) &&
+                                        SunsSong && CanPassEnemy(63, 0, 0, 1, SpaceAroundEnemy::NARROW);
+                             } }),
+        },
+        {
+            // Exits
+            Entrance(THE_GRAVEYARD, { [] { return true; } }),
+        });
 
+    static constexpr auto ForEachEnemy_ComposersGrave = [](auto& enemyCheckFn) {
+        return (Here(GRAVEYARD_COMPOSERS_GRAVE, [] { return CanDefeatEnemies(65, 0, 3); }) &&
+                enemyCheckFn(65, 0, 1, {}));
+    };
     areaTable[GRAVEYARD_COMPOSERS_GRAVE] =
-        Area("Graveyard Composers Grave", "Graveyard Composers Grave", NONE, NO_DAY_NIGHT_CYCLE, {},
+        Area("Graveyard Composers Grave", "Graveyard Composers Grave", NONE, NO_DAY_NIGHT_CYCLE,
+             {
+                 // Events
+                 EventAccess(&DekuBabaSticks,
+                             { [] { return DekuBabaSticks || ForEachEnemy_ComposersGrave(CanGetDekuBabaSticks); } }),
+                 EventAccess(&DekuBabaNuts,
+                             { [] { return DekuBabaNuts || ForEachEnemy_ComposersGrave(CanGetDekuBabaNuts); } }),
+             },
              {
                  // Locations
                  LocationAccess(
@@ -443,19 +457,23 @@ void AreaTable_Init_Kakariko() {
                      { [] { return HasFireSource; },
                        /*Glitched*/
                        [] { return CanUse(STICKS) && CanDoGlitch(GlitchType::QPA, GlitchDifficulty::INTERMEDIATE); } }),
-                 LocationAccess(SONG_FROM_COMPOSERS_GRAVE, { [] {
-                                    return SoulKeese && (CanUseProjectile || CanJumpslash || CanUse(MEGATON_HAMMER));
-                                } }),
+                 LocationAccess(SONG_FROM_COMPOSERS_GRAVE, { [] { return CanDefeatEnemies(65, 0, 3); } }),
              },
              {
                  // Exits
                  Entrance(THE_GRAVEYARD, { [] { return true; } }),
              });
 
+    static constexpr auto ForEachEnemy_DampesGrave = [](auto& enemyCheckFn) {
+        return enemyCheckFn(72, 0, 2, {}) || enemyCheckFn(72, 0, 3, {});
+    };
     areaTable[GRAVEYARD_DAMPES_GRAVE] = Area(
         "Graveyard Dampes Grave", "Windmill and Dampes Grave", NONE, NO_DAY_NIGHT_CYCLE,
         {
             // Events
+            EventAccess(&DekuBabaSticks,
+                        { [] { return DekuBabaSticks || ForEachEnemy_DampesGrave(CanGetDekuBabaSticks); } }),
+            EventAccess(&DekuBabaNuts, { [] { return DekuBabaNuts || ForEachEnemy_DampesGrave(CanGetDekuBabaNuts); } }),
             EventAccess(&NutPot, { [] { return true; } }),
             EventAccess(&DampesWindmillAccess,
                         { [] { return DampesWindmillAccess || (IsAdult && CanPlay(SongOfTime)); },
