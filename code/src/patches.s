@@ -61,9 +61,14 @@ OverrideDrawItemTwo_patch:
 OverrideDrawItemThree_patch:
     bl hook_OverrideDrawItemThree
 
-.section .patch_OverrideGiDrawIdPlusOne
-.global OverrideGiDrawIdPlusOne_patch
-OverrideGiDrawIdPlusOne_patch:
+.section .patch_OverrideGiDrawIdPlusOne_Ground
+.global OverrideGiDrawIdPlusOne_Ground_patch
+OverrideGiDrawIdPlusOne_Ground_patch:
+    bl hook_OverrideGiDrawIdPlusOne
+
+.section .patch_OverrideGiDrawIdPlusOne_Water
+.global OverrideGiDrawIdPlusOne_Water_patch
+OverrideGiDrawIdPlusOne_Water_patch:
     bl hook_OverrideGiDrawIdPlusOne
 
 .section .patch_EditDrawGetItemBeforeModelSpawn
