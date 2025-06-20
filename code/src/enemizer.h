@@ -3,7 +3,7 @@
 
 #include "../include/z3D/z3D.h"
 
-#define ENEMY_OVERRIDES_MAX 700
+#define ENEMY_OVERRIDES_MAX 800
 
 typedef struct EnemyActorData {
     s16 actorId;
