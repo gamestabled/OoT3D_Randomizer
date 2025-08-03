@@ -80,6 +80,7 @@
 #include "stalchild.h"
 #include "skull_kid.h"
 #include "lizalfos.h"
+#include "stalfos.h"
 
 #define OBJECT_GI_KEY 170
 #define OBJECT_GI_BOSSKEY 185
@@ -110,6 +111,8 @@ void Actor_Init() {
     gActorOverlayTable[0x0].initInfo->draw    = PlayerActor_rDraw;
 
     gActorOverlayTable[0x1].initInfo = &EnLinkPuppet_InitVars;
+
+    gActorOverlayTable[0x2].initInfo->update = EnTest_rUpdate;
 
     gActorOverlayTable[0x4].initInfo->init         = ShopsanityItem_Init;
     gActorOverlayTable[0x4].initInfo->instanceSize = sizeof(ShopsanityItem);
