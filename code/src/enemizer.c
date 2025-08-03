@@ -264,7 +264,7 @@ static void Enemizer_MoveSpecificLocations(ActorEntry* actorEntry, s32 actorEntr
 }
 #undef LOC
 
-static void Enemizer_MoveSpecificEnemies(ActorEntry* actorEntry) {
+void Enemizer_MoveSpecificEnemies(ActorEntry* actorEntry) {
     f32 yGroundIntersect;
     f32 yUpperGroundIntersect;
     f32 yMidAirPos;

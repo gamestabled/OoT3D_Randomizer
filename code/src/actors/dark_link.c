@@ -85,19 +85,34 @@ void EnTorch2_rUpdate(Actor* thisx, GlobalContext* globalCtx) {
 }
 
 Actor* DarkLink_Spawn(Actor* spawner) {
-    s16 actorId = ACTOR_DARK_LINK;
-    s16 params  = 0;
-    f32 posZ    = spawner->world.pos.z;
+    ActorEntry tempActorEntry = {
+        .id = ACTOR_DARK_LINK,
+        .pos = {
+            .x = spawner->world.pos.x,
+            .y = spawner->world.pos.y,
+            .z = spawner->world.pos.z,
+        },
+        .rot = {
+            .x = 0,
+            .y = spawner->yawTowardsPlayer,
+            .z = 0,
+        },
+        .params = 0,
+    };
 
     if (gSettingsContext.enemizer == ON) {
         EnemyOverride enemyOverride = Enemizer_GetSpawnerOverride();
-        actorId                     = enemyOverride.actorId;
-        params                      = enemyOverride.params;
-        posZ -= 75.0; // Move enemy outside of the tree.
+        tempActorEntry.id           = enemyOverride.actorId;
+        tempActorEntry.params       = enemyOverride.params;
+        tempActorEntry.pos.z -= 75; // Move enemy outside of the tree.
+
+        // Apply position updates depending on the specific enemy.
+        Enemizer_MoveSpecificEnemies(&tempActorEntry);
     }
 
-    return Actor_Spawn(&gGlobalContext->actorCtx, gGlobalContext, actorId, spawner->world.pos.x, spawner->world.pos.y,
-                       posZ, 0, spawner->yawTowardsPlayer, 0, params, 1);
+    return Actor_Spawn(&gGlobalContext->actorCtx, gGlobalContext, tempActorEntry.id, tempActorEntry.pos.x,
+                       tempActorEntry.pos.y, tempActorEntry.pos.z, tempActorEntry.rot.x, tempActorEntry.rot.y,
+                       tempActorEntry.rot.z, tempActorEntry.params, TRUE);
 }
 
 s32 DarkLink_IsAlive(void) {
