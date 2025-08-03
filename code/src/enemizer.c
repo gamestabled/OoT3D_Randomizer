@@ -9,12 +9,14 @@
 
 #include <stddef.h>
 
-// Check that actor doesn't have an enemy as parent (e.g. Mad Scrub flower).
-#define IS_NOT_ENEMY_CHILD(actor) (actor->parent == NULL || actor->parent->type != ACTORTYPE_ENEMY)
+#define SKIP_ACTOR_ENTRY TRUE
+#define KEEP_ACTOR_ENTRY FALSE
 
 static EnemyOverride rEnemyOverrides[ENEMY_OVERRIDES_MAX];
 static s32 rEnemyOverrides_Count = 0;
 static u8 sRoomLoadSignal        = FALSE;
+static Actor* sSFMWolfos         = NULL;
+static u8 sLizalfosDefeated      = FALSE;
 
 // Enemies that need to spawn at ground level to work properly.
 static EnemyActorData sGroundedEnemies[] = {
@@ -367,15 +369,35 @@ static void Enemizer_SpawnObjectsForActor(s16 actorId, s16 params) {
     }
 }
 
-void Enemizer_OverrideActorEntry(ActorEntry* actorEntry, s32 actorEntryIndex) {
+u8 Enemizer_OverrideActorEntry(ActorEntry* actorEntry, s32 actorEntryIndex) {
     if (gSettingsContext.enemizer == OFF) {
-        return;
+        return KEEP_ACTOR_ENTRY;
+    }
+
+    // Skip SFM Wolfos entry if the gate is open.
+    if (gGlobalContext->sceneNum == SCENE_SACRED_FOREST_MEADOW && actorEntry->pos.z > 1600 &&
+        Flags_GetSwitch(gGlobalContext, 0x1F)) {
+        return SKIP_ACTOR_ENTRY;
+    }
+
+    if (gGlobalContext->sceneNum == SCENE_DODONGOS_CAVERN && gGlobalContext->roomNum == 3) {
+        // Skip DC Lower Lizalfos entries if they have been defeated already.
+        if (actorEntry->pos.z < -1540.0 && Flags_GetSwitch(gGlobalContext, 5)) {
+            return SKIP_ACTOR_ENTRY;
+        }
+
+        // Skip DC Upper Lizalfos entries if they have been defeated already, or if the Lower Lizalfos haven't,
+        // or if the player is entering from the lower doors.
+        if (actorEntry->pos.z > -1540.0 && (Flags_GetSwitch(gGlobalContext, 6) || !Flags_GetSwitch(gGlobalContext, 5) ||
+                                            PLAYER->actor.world.pos.y < 200.0)) {
+            return SKIP_ACTOR_ENTRY;
+        }
     }
 
     // Jabu Jabu Shabom Room timer: set 2 minute time limit
     if (gGlobalContext->sceneNum == SCENE_JABU_JABU && gGlobalContext->roomNum == 12 && actorEntry->id == 0x187) {
         actorEntry->params = 0x7878;
-        return;
+        return KEEP_ACTOR_ENTRY;
     }
 
     EnemyOverride enemyOverride =
@@ -383,7 +405,7 @@ void Enemizer_OverrideActorEntry(ActorEntry* actorEntry, s32 actorEntryIndex) {
 
     // Do nothing if the override doesn't exist
     if (enemyOverride.actorId == 0) {
-        return;
+        return KEEP_ACTOR_ENTRY;
     }
 
     actorEntry->id     = enemyOverride.actorId;
@@ -398,6 +420,8 @@ void Enemizer_OverrideActorEntry(ActorEntry* actorEntry, s32 actorEntryIndex) {
 
     // Spawn necessary objects
     Enemizer_SpawnObjectsForActor(actorEntry->id, actorEntry->params);
+
+    return KEEP_ACTOR_ENTRY;
 }
 
 EnemyOverride Enemizer_GetSpawnerOverride(void) {
@@ -405,80 +429,43 @@ EnemyOverride Enemizer_GetSpawnerOverride(void) {
     return Enemizer_FindOverride(gGlobalContext->sceneNum, rSceneLayer, gGlobalContext->roomNum, 0xFF);
 }
 
-// Handle opening certain doors that are normally handled by the specific enemies in the area.
-// On the frame after a room or scene load (so all actors have been initialized), search for
-// the enemies that should be defeated.
-// Then, on every frame, check when their actors are killed to open the door.
+s32 Enemizer_IsRoomCleared(void) {
+    return gGlobalContext->actorCtx.flags.tempClear & (1 << gGlobalContext->roomNum);
+}
+
+// Handle opening certain doors that are normally handled by the specific enemies in the area,
+// by checking on every frame if the randomized enemies have been defeated.
 static void Enemizer_HandleClearConditions(void) {
-    static Actor *sSFMWolfos, *sLizalfos1, *sLizalfos2;
-    static u8 sDefeated1, sDefeated2;
-
-    if (sRoomLoadSignal) {
-        sSFMWolfos = sLizalfos1 = sLizalfos2 = NULL;
-        sDefeated1 = sDefeated2 = FALSE;
-    }
-
-    if (gGlobalContext->sceneNum == SCENE_SACRED_FOREST_MEADOW) {
-        // Open the gate when the enemy is defeated.
-        if (sRoomLoadSignal) {
+    if (gGlobalContext->sceneNum == SCENE_SACRED_FOREST_MEADOW && gSaveContext.linkAge == AGE_CHILD &&
+        !Flags_GetSwitch(gGlobalContext, 0x1F)) {
+        // Handle the entrance gate in the Child layer if it's not open already.
+        // Checking the clear flag doesn't work because there are other enemies in the same room, so
+        // search for the enemy actor manually. Run the search multiple times if necessary because
+        // Skullwalltulas change category to Enemy during their Init function, which might be called
+        // on a different update cycle after the actor is spawned.
+        if (sSFMWolfos == NULL) {
             Actor* enemy = gGlobalContext->actorCtx.actorList[ACTORTYPE_ENEMY].first;
             for (; enemy != NULL; enemy = enemy->next) {
-                if (enemy->world.pos.z > 1600.0 && IS_NOT_ENEMY_CHILD(enemy)) {
+                if (enemy->world.pos.z > 1600.0 &&
+                    // Ignore scrub's flower and bubble's flames
+                    ((enemy->id != ACTOR_MAD_SCRUB && enemy->id != ACTOR_BUBBLE) || enemy->parent == NULL)) {
                     sSFMWolfos = enemy;
                     break;
                 }
             }
-            if (Flags_GetSwitch(gGlobalContext, 0x1F) && sSFMWolfos != NULL) {
-                Actor_Kill(sSFMWolfos);
-                sSFMWolfos = NULL;
-            }
         }
-        if (sSFMWolfos != NULL && sSFMWolfos->update == NULL && sSFMWolfos->draw == NULL) {
+        // Then, on every frame, manually check if the enemy is defeated (actor was killed or changed category).
+        // Note: if the randomized enemy is a Bari, the 3 Biris it spawns will be ignored.
+        else if (((sSFMWolfos->update == NULL && sSFMWolfos->draw == NULL) || (sSFMWolfos->type != ACTORTYPE_ENEMY))) {
             Flags_SetSwitch(gGlobalContext, 0x1F);
             sSFMWolfos = NULL;
         }
     } else if (gGlobalContext->sceneNum == SCENE_DODONGOS_CAVERN && gGlobalContext->roomNum == 3) {
-        // Miniboss room: open the correct doors when the enemies are defeated.
-        if (sRoomLoadSignal) {
-            Actor* enemy = gGlobalContext->actorCtx.actorList[ACTORTYPE_ENEMY].first;
-            for (; enemy != NULL; enemy = enemy->next) {
-                if (enemy->room == 0x3 && IS_NOT_ENEMY_CHILD(enemy)) {
-                    if (enemy->world.pos.z < -1540.0) { // Lower lizalfos
-                        if (Flags_GetSwitch(gGlobalContext, 5)) {
-                            Actor_Kill(enemy);
-                        } else if (sLizalfos1 == NULL) {
-                            sLizalfos1 = enemy;
-                        } else {
-                            sLizalfos2 = enemy;
-                        }
-                    } else { // Upper lizalfos
-                        if (Flags_GetSwitch(gGlobalContext, 6) || !Flags_GetSwitch(gGlobalContext, 5) ||
-                            PLAYER->actor.world.pos.y < 200.0) {
-                            Actor_Kill(enemy);
-                        } else if (sLizalfos1 == NULL) {
-                            sLizalfos1 = enemy;
-                        } else {
-                            sLizalfos2 = enemy;
-                        }
-                    }
-                }
-            }
-        }
-
-        if (sLizalfos1 != NULL && sLizalfos1->update == NULL && sLizalfos1->draw == NULL) {
-            sDefeated1 = TRUE;
-            sLizalfos1 = NULL;
-        }
-
-        if (sLizalfos2 != NULL && sLizalfos2->update == NULL && sLizalfos2->draw == NULL) {
-            sDefeated2 = TRUE;
-            sLizalfos2 = NULL;
-        }
-
-        if (sDefeated1 && sDefeated2) {
+        // Miniboss room: open the correct doors when the room is cleared.
+        if (Enemizer_IsRoomCleared() && !sLizalfosDefeated) {
             u32 flag = Flags_GetSwitch(gGlobalContext, 5) ? 6 : 5;
             Flags_SetSwitch(gGlobalContext, flag);
-            sDefeated1 = sDefeated2 = FALSE;
+            sLizalfosDefeated = TRUE;
         }
     }
 }
@@ -534,7 +521,9 @@ void Enemizer_AfterActorSetup(void) {
         Enemizer_SpawnObjectsForActor(enemySpawnerOvr.actorId, enemySpawnerOvr.params);
     }
 
-    sRoomLoadSignal = TRUE;
+    sSFMWolfos        = NULL;
+    sLizalfosDefeated = FALSE;
+    sRoomLoadSignal   = TRUE;
 }
 
 // Run special checks on every frame

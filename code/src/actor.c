@@ -360,9 +360,7 @@ u8 ActorSetup_OverrideEntry(ActorEntry* actorEntry, s32 actorEntryIndex) {
         return TRUE;
     }
 
-    Enemizer_OverrideActorEntry(actorEntry, actorEntryIndex);
-
-    return FALSE;
+    return Enemizer_OverrideActorEntry(actorEntry, actorEntryIndex);
 }
 
 // Called after all actor entries have been handled

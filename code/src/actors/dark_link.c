@@ -100,22 +100,10 @@ Actor* DarkLink_Spawn(Actor* spawner) {
                        posZ, 0, spawner->yawTowardsPlayer, 0, params, 1);
 }
 
-Actor* DarkLink_Find(void) {
-    s16 actorId = ACTOR_DARK_LINK;
-
-    if (gSettingsContext.enemizer == ON) {
-        EnemyOverride enemyOverride = Enemizer_GetSpawnerOverride();
-        actorId                     = enemyOverride.actorId;
-    }
-
-    // Search all types as some enemies don't spawn as Enemy type (e.g. Anubis spawner is Switch)
-    for (s32 actorType = 0; actorType < ACTORTYPE_MAX; actorType++) {
-        Actor* found = Actor_Find(&gGlobalContext->actorCtx, actorId, actorType);
-        if (found != NULL) {
-            return found;
-        }
-    }
-    return NULL;
+s32 DarkLink_IsAlive(void) {
+    // The randomizer changes Dark Link's actor category to Enemy instead of Boss,
+    // so the temp clear flag will be set when he's defeated.
+    return !Enemizer_IsRoomCleared();
 }
 
 // Vanilla code removes hammer recoil for both Links.

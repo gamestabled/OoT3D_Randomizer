@@ -2329,7 +2329,7 @@ hook_EnBlkobj_SpawnDarkLink:
 .global hook_EnBlkobj_FindDarkLink
 hook_EnBlkobj_FindDarkLink:
     push {r1-r12, lr}
-    bl DarkLink_Find
+    bl DarkLink_IsAlive
     pop {r1-r12, lr}
     bx lr
 
