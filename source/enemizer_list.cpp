@@ -126,6 +126,8 @@ void InitEnemyTypes(void) {
         { LocType::ABOVE_GROUND, LocType::UNDERWATER, LocType::SHALLOW_WATER });
     enemyTypes[ENEMY_STINGER_WATER] = EnemyType("Stinger (Water)", &SoulStinger, ACTOR_STINGER_WATER, { 0x0000 },
         { LocType::UNDERWATER, LocType::SHALLOW_WATER });
+    enemyTypes[ENEMY_HINT_DEKU_SCRUB] = EnemyType("Deku Scrub", &SoulDekuScrub, ACTOR_HINT_DEKU_SCRUB, { 0x0000 },
+        { LocType::ABOVE_GROUND, LocType::UNDERWATER, LocType::SHALLOW_WATER });
     enemyTypes[ENEMY_GERUDO_FIGHTER] = EnemyType("Gerudo Fighter", &SoulGerudo, ACTOR_GERUDO_FIGHTER, { 0x0000 },
         { /* Unimplemented */ });
     enemyTypes[ENEMY_WOLFOS] = EnemyType("Wolfos", &SoulWolfos, ACTOR_WOLFOS, { 0xFF00, 0xFF01 }, // normal / white
@@ -347,10 +349,12 @@ void InitEnemyLocations(void) {
         enemyLocations[0][0][0][11]      = EnemyLocation(ENEMY_DEKU_BABA_SMALL,    LocType::ABOVE_GROUND);
         enemyLocations[0][0][0][12]      = EnemyLocation(ENEMY_DEKU_BABA_SMALL,    LocType::ABOVE_GROUND);
         enemyLocations[0][0][0][13]      = EnemyLocation(ENEMY_DEKU_BABA_SMALL,    LocType::ABOVE_GROUND);
+        enemyLocations[0][0][1][0]       = EnemyLocation(ENEMY_HINT_DEKU_SCRUB,    LocType::ABOVE_GROUND);
         enemyLocations[0][0][3][0]       = EnemyLocation(ENEMY_DEKU_BABA_WITHERED, LocType::ABOVE_GROUND);
         enemyLocations[0][0][3][3]       = EnemyLocation(ENEMY_DEKU_BABA_SMALL,    LocType::ABOVE_GROUND);
         enemyLocations[0][0][3][4]       = EnemyLocation(ENEMY_DEKU_BABA_SMALL,    LocType::ABOVE_GROUND);
         enemyLocations[0][0][3][5]       = EnemyLocation(ENEMY_DEKU_BABA_SMALL,    LocType::ABOVE_GROUND);
+        enemyLocations[0][0][4][4]       = EnemyLocation(ENEMY_HINT_DEKU_SCRUB,    LocType::ABOVE_GROUND);
         enemyLocations[0][0][5][0]       = EnemyLocation(ENEMY_SKULLTULA,          LocType::ABOVE_GROUND);
         enemyLocations[0][0][6][0]       = EnemyLocation(ENEMY_DEKU_BABA_WITHERED, LocType::ABOVE_GROUND);
         enemyLocations[0][0][6][1]       = EnemyLocation(ENEMY_DEKU_BABA_WITHERED, LocType::ABOVE_GROUND);
@@ -362,6 +366,9 @@ void InitEnemyLocations(void) {
         enemyLocations[0][0][7][6]       = EnemyLocation(ENEMY_GOHMA_LARVA,        LocType::ABOVE_GROUND);
         enemyLocations[0][0][7][7]       = EnemyLocation(ENEMY_GOHMA_LARVA,        LocType::ABOVE_GROUND);
         enemyLocations[0][0][8][0]       = EnemyLocation(ENEMY_SKULLTULA,          LocType::ABOVE_GROUND);
+        enemyLocations[0][0][9][3]       = EnemyLocation(ENEMY_HINT_DEKU_SCRUB,    LocType::ABOVE_GROUND);
+        enemyLocations[0][0][9][4]       = EnemyLocation(ENEMY_HINT_DEKU_SCRUB,    LocType::ABOVE_GROUND);
+        enemyLocations[0][0][9][5]       = EnemyLocation(ENEMY_HINT_DEKU_SCRUB,    LocType::ABOVE_GROUND);
         enemyLocations[0][0][10][0]      = EnemyLocation(ENEMY_DEKU_BABA_WITHERED, LocType::ABOVE_GROUND);
         enemyLocations[0][0][10][1]      = EnemyLocation(ENEMY_SKULLTULA,          LocType::ABOVE_GROUND);
         enemyLocations[0][0][10][4]      = EnemyLocation(ENEMY_DEKU_BABA_SMALL,    LocType::ABOVE_GROUND);
@@ -907,6 +914,9 @@ void InitEnemyLocations(void) {
         enemyLocations[0][0][8][8]       = EnemyLocation(ENEMY_GOHMA_LARVA,        LocType::ABOVE_GROUND);
         enemyLocations[0][0][8][9]       = EnemyLocation(ENEMY_GOHMA_LARVA,        LocType::ABOVE_GROUND);
         enemyLocations[0][0][8][10]      = EnemyLocation(ENEMY_GOHMA_LARVA,        LocType::ABOVE_GROUND);
+        enemyLocations[0][0][9][3]       = EnemyLocation(ENEMY_HINT_DEKU_SCRUB,    LocType::ABOVE_GROUND);
+        enemyLocations[0][0][9][4]       = EnemyLocation(ENEMY_HINT_DEKU_SCRUB,    LocType::ABOVE_GROUND);
+        enemyLocations[0][0][9][5]       = EnemyLocation(ENEMY_HINT_DEKU_SCRUB,    LocType::ABOVE_GROUND);
         enemyLocations[0][0][10][4]      = EnemyLocation(ENEMY_DEKU_BABA_SMALL,    LocType::ABOVE_GROUND);
         enemyLocations[0][0][10][6]      = EnemyLocation(ENEMY_GOHMA_LARVA,        LocType::ABOVE_GROUND);
         enemyLocations[0][0][10][7]      = EnemyLocation(ENEMY_GOHMA_LARVA,        LocType::ABOVE_GROUND);

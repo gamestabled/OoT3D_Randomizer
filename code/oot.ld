@@ -632,6 +632,10 @@ SECTIONS
 		*(.patch_GetObjectEntry_EnDekunutsInit)
 	}
 
+	.patch_GetObjectEntry_EnHintnutsInit 0x22AB70 : {
+		*(.patch_GetObjectEntry_EnHintnutsInit)
+	}
+
 	.patch_patch_ItemGiveBombchuDropTwo 0x22BAE4 : {
 		*(.patch_ItemGiveBombchuDropTwo)
 	}

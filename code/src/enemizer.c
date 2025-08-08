@@ -39,6 +39,7 @@ static EnemyActorData sGroundedEnemies[] = {
     { .actorId = ACTOR_WITHERED_DEKU_BABA, .anyParams = TRUE },
     { .actorId = ACTOR_ANUBIS_SPAWNER, .anyParams = TRUE },
     { .actorId = ACTOR_FLYING_POT, .anyParams = TRUE },
+    { .actorId = ACTOR_HINT_DEKU_SCRUB, .anyParams = TRUE },
     { .actorId = ACTOR_STALCHILD, .anyParams = TRUE },
 };
 

@@ -287,6 +287,8 @@ void Actor_Init() {
     gActorOverlayTable[0x191].initInfo->init   = BgSpot12Saku_rInit;
     gActorOverlayTable[0x191].initInfo->update = BgSpot12Saku_rUpdate;
 
+    gActorOverlayTable[0x192].initInfo->init = EnHintnuts_rInit;
+
     gActorOverlayTable[0x195].initInfo->init = EnShopnuts_rInit;
 
     gActorOverlayTable[0x198].initInfo->update = OceffWipe2_rUpdate;

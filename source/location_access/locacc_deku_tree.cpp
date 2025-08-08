@@ -77,11 +77,11 @@ void AreaTable_Init_DekuTree() {
                      // Exits
                      Entrance(DEKU_TREE_LOBBY, { [] {
                                   return Here(DEKU_TREE_2F_MIDDLE_ROOM,
-                                              [] { return SoulDekuScrub && (HasShield || CanUse(MEGATON_HAMMER)); });
+                                              [] { return CanDefeatEnemy(0, 0, 1, 0); });
                               } }),
                      Entrance(DEKU_TREE_SLINGSHOT_ROOM, { [] {
                                   return Here(DEKU_TREE_2F_MIDDLE_ROOM,
-                                              [] { return SoulDekuScrub && (HasShield || CanUse(MEGATON_HAMMER)); });
+                                              [] { return CanDefeatEnemy(0, 0, 1, 0); });
                               } }),
                  });
 
@@ -271,7 +271,7 @@ void AreaTable_Init_DekuTree() {
                      // Exits
                      Entrance(DEKU_TREE_BASEMENT_UPPER, { [] { return true; } }),
                      Entrance(DEKU_TREE_BOSS_ENTRYWAY, { [] {
-                                  return Here(DEKU_TREE_OUTSIDE_BOSS_ROOM, [] { return SoulDekuScrub && HasShield; });
+                                  return Here(DEKU_TREE_OUTSIDE_BOSS_ROOM, [] { return CanDefeatEnemies(0, 0, 9) && (Settings::Enemizer || HasShield); });
                               } }),
                  });
     }
