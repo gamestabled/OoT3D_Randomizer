@@ -561,3 +561,7 @@ s32 Actor_CollisionATvsAC(Collider* at, Collider* ac) {
 
     return 1; // continue as normal
 }
+
+s32 Actor_IsKilled(Actor* actor) {
+    return actor->update == NULL && actor->draw == NULL;
+}

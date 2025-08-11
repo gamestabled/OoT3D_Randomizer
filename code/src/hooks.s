@@ -2434,3 +2434,19 @@ hook_GerudoBattleMusic:
     pop {r0-r12, lr}
     beq 0x34F724 @ start battle music
     bx lr
+
+@ This fixes a base game bug where, after going through a room transition, actors under
+@ certain conditions will get killed on every frame and never deleted.
+@ Fig's explanation from OoT Discord: https://discord.com/channels/82938430371139584/82991320754294784/1002187734946947113
+@ With Enemy Randomizer, these "zombie" enemy actors can prevent a room from being cleared.
+.global hook_FixActorKillLoop
+hook_FixActorKillLoop:
+    bxne lr @ object is loaded, continue without killing actor
+    push {r0-r12, lr}
+    @ check if actor is already killed so that it doesn't get
+    @ killed again and it gets properly deleted instead
+    cpy r0,r4 @ actor
+    bl Actor_IsKilled
+    cmp r0,#0x0
+    pop {r0-r12, lr}
+    bx lr

@@ -2516,3 +2516,8 @@ DeadHandHandCanGrabPlayer_patch:
 .global GerudoBattleMusic_patch
 GerudoBattleMusic_patch:
     bl hook_GerudoBattleMusic
+
+.section .patch_FixActorKillLoop
+.global FixActorKillLoop_patch
+FixActorKillLoop_patch:
+    bl hook_FixActorKillLoop

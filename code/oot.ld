@@ -1690,6 +1690,10 @@ SECTIONS
 		*(.patch_AfterActorSetup_RoomChange)
 	}
 
+	.patch_FixActorKillLoop 0x4615E0 + region_offset : {
+		*(.patch_FixActorKillLoop)
+	}
+
 	.patch_ActorUpdate 0x461790 + region_offset : {
 		*(.patch_ActorUpdate)
 	}
