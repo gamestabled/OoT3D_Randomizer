@@ -48,14 +48,14 @@ void EnGe1_rUpdate(Actor* thisx, GlobalContext* globalCtx) {
 void EnGeldB_rUpdate(Actor* thisx, GlobalContext* globalCtx) {
     u32 prevSwitchFlags = gGlobalContext->actorCtx.flags.swch;
 
-    if (gSettingsContext.enemizer == ON) {
+    if (Enemizer_IsEnemyRandomized(ENEMY_GERUDO_FIGHTER)) {
         // Set flag 0 so the Gerudo always spawns.
         gGlobalContext->actorCtx.flags.swch = 1;
     }
 
     EnGeldB_Update(thisx, globalCtx);
 
-    if (gSettingsContext.enemizer == ON) {
+    if (Enemizer_IsEnemyRandomized(ENEMY_GERUDO_FIGHTER)) {
         gGlobalContext->actorCtx.flags.swch = prevSwitchFlags;
     }
 }
@@ -66,7 +66,12 @@ void EnGeldB_rDraw(Actor* thisx, GlobalContext* globalCtx) {
     EnGeldB_Draw(thisx, globalCtx);
 
     // If the player is caught by a randomized Gerudo, go back to the last entrance.
-    if (gSettingsContext.enemizer == ON && this->spinAttackState > 2 && globalCtx->nextEntranceIndex != -1) {
+    if (Enemizer_IsEnemyRandomized(ENEMY_GERUDO_FIGHTER) && this->spinAttackState > 2 &&
+        globalCtx->nextEntranceIndex != -1) {
         globalCtx->nextEntranceIndex = gSaveContext.entranceIndex;
     }
+}
+
+u8 GerudoFighter_IsRandomized(void) {
+    return Enemizer_IsEnemyRandomized(ENEMY_GERUDO_FIGHTER);
 }

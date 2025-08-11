@@ -6,8 +6,8 @@ using namespace Logic;
 
 namespace Enemizer {
 
-std::array<EnemyType, ENEMY_MAX> enemyTypes = {};
-EnemyLocationsMap enemyLocations            = {};
+EnemyType enemyTypes[ENEMY_MAX]  = {};
+EnemyLocationsMap enemyLocations = {};
 
 // clang-format off
 void InitEnemyTypes(void) {
@@ -20,13 +20,13 @@ void InitEnemyTypes(void) {
         { LocType::ABOVE_WATER, LocType::SHALLOW_WATER });
     enemyTypes[ENEMY_WALLMASTER] = EnemyType("Wallmaster", &SoulWallmaster, ACTOR_WALLMASTER, { 0x0000 },
         { LocType::ABOVE_GROUND, LocType::ABOVE_VOID, LocType::ABOVE_WATER, LocType::SHALLOW_WATER });
-    enemyTypes[ENEMY_DODONGO] = EnemyType("Dodongo", &SoulDodongo, ACTOR_DODONGO, { 0x0000 },
+    enemyTypes[ENEMY_DODONGO] = EnemyType("Dodongo (Normal)", &SoulDodongo, ACTOR_DODONGO, { 0x0000 },
         { LocType::ABOVE_GROUND, LocType::SHALLOW_WATER });
-    enemyTypes[ENEMY_KEESE_NORMAL] = EnemyType("Keese", &SoulKeese, ACTOR_KEESE, { 0x0002 },
+    enemyTypes[ENEMY_KEESE_NORMAL] = EnemyType("Keese (Normal)", &SoulKeese, ACTOR_KEESE, { 0x0002 },
         { LocType::ABOVE_GROUND, LocType::ABOVE_VOID, LocType::UNDERWATER, LocType::ABOVE_WATER, LocType::SHALLOW_WATER });
-    enemyTypes[ENEMY_KEESE_FIRE] = EnemyType("Fire Keese", &SoulKeese, ACTOR_KEESE, { 0x0001 },
+    enemyTypes[ENEMY_KEESE_FIRE] = EnemyType("Keese (Fire)", &SoulKeese, ACTOR_KEESE, { 0x0001 },
         { LocType::ABOVE_GROUND, LocType::ABOVE_VOID, LocType::ABOVE_WATER, LocType::SHALLOW_WATER });
-    enemyTypes[ENEMY_KEESE_ICE] = EnemyType("Ice Keese", &SoulKeese, ACTOR_KEESE, { 0x0004 },
+    enemyTypes[ENEMY_KEESE_ICE] = EnemyType("Keese (Ice)", &SoulKeese, ACTOR_KEESE, { 0x0004 },
         { LocType::ABOVE_GROUND, LocType::ABOVE_VOID, LocType::UNDERWATER, LocType::ABOVE_WATER, LocType::SHALLOW_WATER });
     enemyTypes[ENEMY_TEKTITE_RED] = EnemyType("Tektite (Red)", &SoulTektite, ACTOR_TEKTITE, { 0xFFFF },
         { LocType::ABOVE_GROUND, LocType::SHALLOW_WATER });
@@ -46,7 +46,7 @@ void InitEnemyTypes(void) {
         { LocType::ABOVE_GROUND, LocType::UNDERWATER, LocType::SHALLOW_WATER, LocType::SPAWNER });
     enemyTypes[ENEMY_SHABOM] = EnemyType("Shabom", &SoulShabom, ACTOR_SHABOM, { 0x0000 },
         { LocType::ABOVE_GROUND, LocType::ABOVE_WATER, LocType::SHALLOW_WATER, LocType::SPAWNER });
-    enemyTypes[ENEMY_DODONGO_BABY] = EnemyType("Baby Dodongo", &SoulDodongo, ACTOR_BABY_DODONGO, { 0x0000 },
+    enemyTypes[ENEMY_DODONGO_BABY] = EnemyType("Dodongo (Baby)", &SoulDodongo, ACTOR_BABY_DODONGO, { 0x0000 },
         { LocType::ABOVE_GROUND, LocType::SHALLOW_WATER, LocType::SPAWNER });
     enemyTypes[ENEMY_DARK_LINK] = EnemyType("Dark Link", &SoulDarkLink, ACTOR_DARK_LINK, { 0x0000 },
         { LocType::ABOVE_GROUND, LocType::SHALLOW_WATER });
@@ -66,21 +66,21 @@ void InitEnemyTypes(void) {
         { LocType::ABOVE_GROUND, LocType::SHALLOW_WATER });
     enemyTypes[ENEMY_ARMOS] = EnemyType("Armos", &SoulArmos, ACTOR_ARMOS, { 0xFFFF },
         { LocType::ABOVE_GROUND, LocType::SHALLOW_WATER });
-    enemyTypes[ENEMY_DEKU_BABA_SMALL] = EnemyType("Deku Baba", &SoulDekuBaba, ACTOR_DEKU_BABA, { 0x0000 },
+    enemyTypes[ENEMY_DEKU_BABA_SMALL] = EnemyType("Deku Baba (Small)", &SoulDekuBaba, ACTOR_DEKU_BABA, { 0x0000 },
         { LocType::ABOVE_GROUND, LocType::UNDERWATER, LocType::SHALLOW_WATER });
-    enemyTypes[ENEMY_DEKU_BABA_BIG] = EnemyType("Big Deku Baba", &SoulDekuBaba, ACTOR_DEKU_BABA, { 0x0001 },
+    enemyTypes[ENEMY_DEKU_BABA_BIG] = EnemyType("Deku Baba (Big)", &SoulDekuBaba, ACTOR_DEKU_BABA, { 0x0001 },
         { LocType::ABOVE_GROUND, LocType::SHALLOW_WATER });
     enemyTypes[ENEMY_MAD_SCRUB] = EnemyType("Mad Scrub", &SoulDekuScrub, ACTOR_MAD_SCRUB, { 0x0100, 0x0300, 0x0500 }, // shoots 1, 3 or 5 nuts in a row
         { LocType::ABOVE_GROUND, LocType::UNDERWATER, LocType::SHALLOW_WATER });
     enemyTypes[ENEMY_BARI] = EnemyType("Bari", &SoulBiriBari, ACTOR_BARI, { 0xFFFF },
         { LocType::ABOVE_GROUND, LocType::UNDERWATER, LocType::SHALLOW_WATER });
-    enemyTypes[ENEMY_BUBBLE_BLUE] = EnemyType("Blue Bubble", &SoulBubble, ACTOR_BUBBLE, { 0xFFFF },
+    enemyTypes[ENEMY_BUBBLE_BLUE] = EnemyType("Bubble (Blue)", &SoulBubble, ACTOR_BUBBLE, { 0xFFFF },
         { LocType::ABOVE_GROUND, LocType::SHALLOW_WATER });
-    enemyTypes[ENEMY_BUBBLE_FIRE] = EnemyType("Fire Bubble", &SoulBubble, ACTOR_BUBBLE, { 0xFFFE },
+    enemyTypes[ENEMY_BUBBLE_FIRE] = EnemyType("Bubble (Fire)", &SoulBubble, ACTOR_BUBBLE, { 0xFFFE },
         { LocType::ABOVE_GROUND });
-    enemyTypes[ENEMY_BUBBLE_GREEN] = EnemyType("Green Bubble", &SoulBubble, ACTOR_BUBBLE, { 0x02FC },
+    enemyTypes[ENEMY_BUBBLE_GREEN] = EnemyType("Bubble (Green)", &SoulBubble, ACTOR_BUBBLE, { 0x02FC },
         { LocType::ABOVE_GROUND, LocType::ABOVE_VOID, LocType::ABOVE_WATER, LocType::SHALLOW_WATER });
-    enemyTypes[ENEMY_BUBBLE_WHITE] = EnemyType("White Bubble", &SoulBubble, ACTOR_BUBBLE, { 0x000D },
+    enemyTypes[ENEMY_BUBBLE_WHITE] = EnemyType("Bubble (White)", &SoulBubble, ACTOR_BUBBLE, { 0x000D },
         { /* Unimplemented */ });
     enemyTypes[ENEMY_FLYING_FLOOR_TILE] = EnemyType("Flying Floor Tile", &SoulFlyingTrap, ACTOR_FLYING_FLOOR_TILE, { 0x0000 },
         { LocType::ABOVE_GROUND, LocType::UNDERWATER, LocType::SHALLOW_WATER });
@@ -106,7 +106,7 @@ void InitEnemyTypes(void) {
         { LocType::ABOVE_GROUND, LocType::UNDERWATER, LocType::SHALLOW_WATER });
     enemyTypes[ENEMY_BIG_OCTO] = EnemyType("Big Octo", &SoulOctorok, ACTOR_BIG_OCTO, { 0x0000 },
         { /* Unimplemented */ });
-    enemyTypes[ENEMY_DEKU_BABA_WITHERED] = EnemyType("Withered Deku Baba", &SoulDekuBaba, ACTOR_WITHERED_DEKU_BABA, { 0x0000 },
+    enemyTypes[ENEMY_DEKU_BABA_WITHERED] = EnemyType("Deku Baba (Withered)", &SoulDekuBaba, ACTOR_WITHERED_DEKU_BABA, { 0x0000 },
         { LocType::ABOVE_GROUND, LocType::SHALLOW_WATER });
     enemyTypes[ENEMY_LIKE_LIKE] = EnemyType("Like Like", &SoulLikeLike, ACTOR_LIKE_LIKE, { 0x0000 },
         { LocType::ABOVE_GROUND, LocType::SHALLOW_WATER });

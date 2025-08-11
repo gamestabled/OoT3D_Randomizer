@@ -759,7 +759,7 @@ static void WriteRandomizedEnemies(tinyxml2::XMLDocument& spoilerLog) {
 
                     enemyNode->SetAttribute("name", entryName.c_str());
 
-                    constexpr int16_t LONGEST_NAME = 18; // The longest name of an enemy.
+                    constexpr int16_t LONGEST_NAME = 20; // The longest name of an enemy.
                     // Insert a padding so we get a kind of table in the XML document.
                     int16_t requiredPadding = LONGEST_NAME - entryName.length();
                     if (requiredPadding >= 0) {
@@ -767,7 +767,14 @@ static void WriteRandomizedEnemies(tinyxml2::XMLDocument& spoilerLog) {
                         enemyNode->SetAttribute("_", padding.c_str());
                     }
 
-                    enemyNode->SetText(enemyTypes[entry.second.randomizedEnemyId].name.c_str());
+                    std::string valueString;
+                    if (entry.second.randomizedEnemyId == ENEMY_INVALID) {
+                        valueString = "Vanilla: " + enemyTypes[entry.second.vanillaEnemyId].name;
+                    } else {
+                        valueString = enemyTypes[entry.second.randomizedEnemyId].name;
+                    }
+
+                    enemyNode->SetText(valueString.c_str());
                 }
             }
         }

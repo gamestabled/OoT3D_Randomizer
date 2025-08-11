@@ -63,7 +63,7 @@ void DoorShutter_rInit(Actor* thisx, GlobalContext* globalCtx) {
         thisx->params &= ~0x0020;
     }
     // Door after Nabooru Knuckle: open on room clear instead of switch flag if the enemy is randomized
-    else if (gSettingsContext.enemizer == ON && globalCtx->sceneNum == SCENE_SPIRIT_TEMPLE_BOSS &&
+    else if (gEnemizerLocationFlags.nabooruKnuckle && globalCtx->sceneNum == SCENE_SPIRIT_TEMPLE_BOSS &&
              thisx->params == 0x0485) {
         thisx->params = 0x0440;
     }

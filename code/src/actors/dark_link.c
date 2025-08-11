@@ -35,7 +35,7 @@ void EnTorch2_rUpdate(Actor* thisx, GlobalContext* globalCtx) {
 
     EnTorch2_Update(thisx, globalCtx);
 
-    if (gSettingsContext.enemizer == ON) {
+    if (Enemizer_IsEnemyRandomized(ENEMY_DARK_LINK)) {
         // Restore sFloorType because Dark Link calls Player functions that can modify its value.
         // Without this, things like slippery floors could apply to Link depending on where Dark Link is standing.
         sFloorType = prevFloorType;
@@ -100,10 +100,10 @@ Actor* DarkLink_Spawn(Actor* spawner) {
         .params = 0,
     };
 
-    if (gSettingsContext.enemizer == ON) {
-        EnemyOverride enemyOverride = Enemizer_GetSpawnerOverride();
-        tempActorEntry.id           = enemyOverride.actorId;
-        tempActorEntry.params       = enemyOverride.params;
+    EnemyOverride enemyOverride = Enemizer_GetSpawnerOverride();
+    if (enemyOverride.actorId != 0) {
+        tempActorEntry.id     = enemyOverride.actorId;
+        tempActorEntry.params = enemyOverride.params;
         tempActorEntry.pos.z -= 75; // Move enemy outside of the tree.
 
         // Apply position updates depending on the specific enemy.

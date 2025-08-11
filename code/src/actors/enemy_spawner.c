@@ -43,7 +43,7 @@ void EnEncount1_rUpdate(Actor* thisx, GlobalContext* globalCtx) {
 
     EnEncount1_Update(thisx, globalCtx);
 
-    if (gSettingsContext.enemizer == ON) {
+    if (gSettingsContext.enemizer == ON && this->rSpawnedActorId != 0) {
         // Kill spawned enemies that are culled and far away from the player.
         for (s32 i = 0; i < ARRAY_SIZE(this->rSpawnedEnemies); i++) {
             Actor* spawnedEnemy = this->rSpawnedEnemies[i];

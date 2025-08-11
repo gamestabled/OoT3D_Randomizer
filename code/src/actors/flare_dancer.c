@@ -17,7 +17,7 @@ void EnFd_rUpdate(Actor* thisx, GlobalContext* globalCtx) {
 
     EnFd_Update(thisx, globalCtx);
 
-    if (gSettingsContext.enemizer == ON) {
+    if (Enemizer_IsEnemyRandomized(ENEMY_FLARE_DANCER)) {
         // After Flare Dancer spawns flames, quench the ones spawned previously to reduce lag and memory usage.
         Actor* enemy = globalCtx->actorCtx.actorList[ACTORTYPE_ENEMY].first;
         if (enemy != prevEnemiesHead) {

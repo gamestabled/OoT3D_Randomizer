@@ -27,7 +27,7 @@ void EnHintnuts_rInit(Actor* thisx, GlobalContext* globalCtx) {
 
     EnHintnuts_Init(thisx, globalCtx);
 
-    if (gSettingsContext.enemizer == ON) {
+    if (Enemizer_IsEnemyRandomized(ENEMY_HINT_DEKU_SCRUB)) {
         thisx->textId = this->textIdCopy = 0x3033; // "B-b-b-boooo hooooo!"
     }
 }

@@ -2277,7 +2277,7 @@ hook_SkullKidPoacherSawCheck:
     bxge lr @ higher than poacher's saw, resume vanilla code
     push {r0-r12, lr}
     @ less than poacher's saw, only kill actor if enemizer is off
-    bl Enemizer_IsActive
+    bl SkullKid_IsRandomized
     cmp r0,#0x1
     pop {r0-r12, lr}
     bx lr
@@ -2429,7 +2429,7 @@ const_DeadHandHandMaxYDist:
 .global hook_GerudoBattleMusic
 hook_GerudoBattleMusic:
     push {r0-r12, lr}
-    bl Enemizer_IsActive
+    bl GerudoFighter_IsRandomized
     cmp r0,#0x0
     pop {r0-r12, lr}
     beq 0x34F724 @ start battle music

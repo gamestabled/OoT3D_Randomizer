@@ -390,7 +390,7 @@ void AreaTable_Init_LostWoods() {
                                        (CanUse(SCARECROW) ||
                                         (Settings::Enemizer
                                              ? (CanPassEnemies(86, 2, 0, { 6, 7, 8, 9, 10 }, SpaceAroundEnemy::NARROW))
-                                             : CanDefeatEnemy(Enemizer::ENEMY_MOBLIN_SPEAR)))));
+                                             : CanDefeatEnemy(ENEMY_MOBLIN_SPEAR)))));
                           } }),
                  Entrance(SFM_WOLFOS_GROTTO, { [] { return CanOpenBombGrotto; } }),
              });

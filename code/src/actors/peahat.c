@@ -14,7 +14,7 @@ void EnPeehat_rUpdate(Actor* thisx, GlobalContext* globalCtx) {
 
     EnPeehat_Update(thisx, globalCtx);
 
-    if (gSettingsContext.enemizer == ON && thisx->params == (s16)0xFFFF) { // Grounded Peahat
+    if (Enemizer_IsEnemyRandomized(ENEMY_PEAHAT) && thisx->params == (s16)0xFFFF) { // Grounded Peahat
         f32 yWaterSurface;
         void* waterBox;
         s32 waterBoxFound = WaterBox_GetSurfaceImpl(gGlobalContext, &gGlobalContext->colCtx, thisx->world.pos.x,

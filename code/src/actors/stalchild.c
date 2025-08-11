@@ -5,7 +5,7 @@
 #define EnSkb_Update ((ActorFunc)GAME_ADDR(0x1DE320))
 
 s32 Stalchild_CanDespawn(Actor* stalchild) {
-    return gSettingsContext.enemizer == OFF ||
+    return !Enemizer_IsEnemyRandomized(ENEMY_STALCHILD) ||
            (stalchild->parent != NULL && (gGlobalContext->sceneNum == SCENE_HYRULE_FIELD ||
                                           Math_Vec3f_DistXZ(&stalchild->home.pos, &PLAYER->actor.world.pos) > 800.0f));
 }

@@ -12,22 +12,20 @@
 void EnMb_rInit(Actor* thisx, GlobalContext* globalCtx) {
     EnMb_Init(thisx, globalCtx);
 
-    if (gSettingsContext.enemizer == ON) {
-        if (thisx->params == 0x0000) { // Club Moblin
-            // Reset position in case it changed on init (the vanilla SFM Moblin teleports
-            // on the other side if you come from Forest Temple).
-            thisx->world.pos = thisx->home.pos;
-            // Skip drawing the shadow because it's only half-implemented in the vanilla game,
-            // and always appears at (0,0,0).
-            thisx->shape.shadowDrawFunc = NULL;
-        }
+    if (Enemizer_IsEnemyRandomized(ENEMY_MOBLIN_CLUB) && thisx->params == 0x0000) { // Club Moblin
+        // Reset position in case it changed on init (the vanilla SFM Moblin teleports
+        // on the other side if you come from Forest Temple).
+        thisx->world.pos = thisx->home.pos;
+        // Skip drawing the shadow because it's only half-implemented in the vanilla game,
+        // and always appears at (0,0,0).
+        thisx->shape.shadowDrawFunc = NULL;
+    }
 
-        if (thisx->params == (s16)0xFFFF) { // Spear guard
-            // Set the size to be like the "spear patrol" type.
-            thisx->scale.x = 0.014;
-            thisx->scale.y = 0.014;
-            thisx->scale.z = 0.014;
-        }
+    if (Enemizer_IsEnemyRandomized(ENEMY_MOBLIN_SPEAR) && thisx->params == (s16)0xFFFF) { // Spear guard
+        // Set the size to be like the "spear patrol" type.
+        thisx->scale.x = 0.014;
+        thisx->scale.y = 0.014;
+        thisx->scale.z = 0.014;
     }
 }
 
@@ -36,7 +34,7 @@ void EnMb_rUpdate(Actor* thisx, GlobalContext* globalCtx) {
 
     EnMb_Update(thisx, globalCtx);
 
-    if (gSettingsContext.enemizer == ON && thisx->params == 0x0000) { // Club Moblin
+    if (Enemizer_IsEnemyRandomized(ENEMY_MOBLIN_CLUB) && thisx->params == 0x0000) { // Club Moblin
         if (this->actionFunc == EnMb_ClubAttack) {
             // The rotation is handled below, so always use the central attack.
             this->attack = ENMB_ATTACK_CLUB_MIDDLE;

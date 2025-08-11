@@ -12,7 +12,7 @@ void EnCrow_rUpdate(Actor* thisx, GlobalContext* globalCtx) {
 
     EnCrow_Update(thisx, globalCtx);
 
-    if (gSettingsContext.enemizer == ON) {
+    if (Enemizer_IsEnemyRandomized(ENEMY_GUAY)) {
         if (thisx->params == 0x001) { // Mega Guay, change size
             this->collider.elements[0].dim.worldSphere.radius = sDefaultColliderRadius * 3.0;
             Math_SmoothStepToF(&this->actor.scale.x, 0.03f, 3, 0.003f, 0.0);

@@ -11,7 +11,7 @@ void EnEiyer_rUpdate(Actor* thisx, GlobalContext* globalCtx) {
 
     EnEiyer_Update(thisx, globalCtx);
 
-    if (gSettingsContext.enemizer == ON && this->actionFunc == EnEiyer_WanderUnderground) {
+    if (Enemizer_IsEnemyRandomized(ENEMY_STINGER_FLOOR) && this->actionFunc == EnEiyer_WanderUnderground) {
         // Make Stinger detect collision when wandering underground.
         Actor_UpdateBgCheckInfo(globalCtx, thisx, 5.0f, 27.0f, 30.0f,
                                 UPDBGCHECKINFO_WALL | UPDBGCHECKINFO_CEILING | UPDBGCHECKINFO_FLOOR_WATER);

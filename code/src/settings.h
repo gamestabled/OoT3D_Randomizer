@@ -3,6 +3,7 @@
 
 #include "../include/z3D/z3D.h"
 #include "colors.h"
+#include "enemizer.h"
 
 typedef enum {
     OFF,
@@ -81,6 +82,12 @@ typedef enum {
     LACSCONDITION_TOKENS,
     LACSCONDITION_HEARTS,
 } LACSConditionSetting;
+
+typedef enum EnemyModeSetting {
+    ENEMYMODE_RANDOMIZED,
+    ENEMYMODE_VANILLA,
+    ENEMYMODE_REMOVED,
+} EnemyModeSetting;
 
 typedef enum {
     AGE_ADULT,
@@ -506,6 +513,7 @@ typedef struct {
     u8 triforcePiecesTotal;
     u8 triforcePiecesRequired;
     u8 enemizer;
+    u8 enemizerList[ENEMY_MAX];
 
     u8 shuffleRewards;
     u8 linksPocketItem;

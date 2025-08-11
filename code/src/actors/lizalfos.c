@@ -8,7 +8,7 @@ void EnZf_rUpdate(Actor* thisx, GlobalContext* globalCtx) {
 
     EnZf_Update(thisx, globalCtx);
 
-    if (gSettingsContext.enemizer == ON && this->action == ENZF_ACTION_DROP_IN && this->alpha == 0) {
+    if (Enemizer_IsEnemyRandomized(ENEMY_LIZALFOS) && this->action == ENZF_ACTION_DROP_IN && this->alpha == 0) {
         // While waiting to ambush player, the Lizalfos can end up past a ceiling into a room above (e.g. in Ganon's
         // Tower). To avoid this, set Y position to 150 units above the floor below the spawn point.
         Vec3f floorCheckPos = thisx->home.pos;

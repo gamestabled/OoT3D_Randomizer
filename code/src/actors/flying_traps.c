@@ -32,7 +32,7 @@ s32 FlyingTraps_Pot_OnImpact(EnTuboTrap* this) {
 void EnYukabyun_rUpdate(Actor* thisx, GlobalContext* globalCtx) {
     EnYukabyun* this = (EnYukabyun*)thisx;
 
-    if (gSettingsContext.enemizer == ON) {
+    if (Enemizer_IsEnemyRandomized(ENEMY_FLYING_FLOOR_TILE)) {
         Vec3f targetPos = (Vec3f){
             .x = PLAYER->actor.world.pos.x,
             .y = PLAYER->actor.world.pos.y + 20,

@@ -14,6 +14,7 @@
 #include "trial.hpp"
 #include "keys.hpp"
 #include "gold_skulltulas.hpp"
+#include "enemizer.hpp"
 
 #define CREATE_SOULMENUNAMES
 #include "../code/src/enemy_souls.h"
@@ -52,6 +53,19 @@ std::vector<std::string> MultiVecOpts(std::vector<std::vector<std::string>> opti
         }
     }
     return options;
+}
+
+template <typename T, size_t N, typename Func>
+static std::vector<Option*> mapArrayToOptions(const T (&array)[N], Func mapper) {
+    static std::vector<Option> optionObjects;
+    optionObjects.reserve(N);
+    std::vector<Option*> optionPointers = {};
+    for (T elem : array) {
+        Option opt = mapper(elem);
+        optionObjects.push_back(std::move(opt));
+        optionPointers.push_back(&optionObjects.back());
+    }
+    return optionPointers;
 }
 
 // clang-format off
@@ -135,6 +149,10 @@ Option TriforceHunt              = Option::Bool("Triforce Hunt",          {"Off"
 Option TriforcePiecesTotal       = Option::U8  (2, "Total pieces",        {NumOpts(1, 200)},                                                 {triforcePiecesTotalDesc},                                                                                       OptionCategory::Setting,    29);
 Option TriforcePiecesRequired    = Option::U8  (2, "Required pieces",     {NumOpts(1, 100)},                                                 {triforcePiecesRequiredDesc},                                                                                    OptionCategory::Setting,    19);
 Option Enemizer                  = Option::Bool("Enemy Randomizer",       {"Off", "On"},                                                     {enemizerDesc});
+Option EnemizerListToggle        = Option::Bool(2, "Enemy List",          {" >", ""},                                                        {enemizerListDesc},                                                                                              OptionCategory::Toggle);
+// These are initialized in InitSettings because they depend on Enemizer::enemyTypes, which is not statically initialized
+std::vector<Option*> enemizerListOptions;
+static Menu enemizerListMenu;
 std::vector<Option *> worldOptions = {
     &RandomizeWorld,
     &StartingAge,
@@ -174,6 +192,7 @@ std::vector<Option *> worldOptions = {
     &TriforcePiecesTotal,
     &TriforcePiecesRequired,
     &Enemizer,
+    &EnemizerListToggle,
 };
 std::vector<Option *> dungeonOptions = {
     &MQDeku,
@@ -677,17 +696,9 @@ std::vector<Option *> startingStonesMedallionsOptions = {
 };
 
 // Initialize startingEnemySoulsOptions with one Option for each element in SoulMenuNames
-std::vector<Option> startEnSoOptObjects;
-std::vector<Option *> startingEnemySoulsOptions = [](){
-    startEnSoOptObjects.reserve(SOUL_MAX);
-    std::vector<Option *> options = {};
-    for (SoulMenuInfo info : SoulMenuNames) {
-        Option opt = Option::U8 (info.name, {"Off", "On"}, {""});
-        startEnSoOptObjects.push_back(std::move(opt));
-        options.push_back(&startEnSoOptObjects.back());
-    }
-    return options;
-}();
+std::vector<Option *> startingEnemySoulsOptions = mapArrayToOptions(SoulMenuNames, [](SoulMenuInfo info){
+    return Option::U8 (info.name, {"Off", "On"}, {""});
+});
 
 Option StartingOcarinaButtonL = Option::U8  ("Ocarina Button L", {"Off", "On"}, {""});
 Option StartingOcarinaButtonR = Option::U8  ("Ocarina Button R", {"Off", "On"}, {""});
@@ -1464,6 +1475,9 @@ SettingsContext FillContext() {
     ctx.triforcePiecesRequired = TriforcePiecesRequired.Value<u8>() + 1;
 
     ctx.enemizer = (Enemizer) ? 1 : 0;
+    for (u8 i = 0; i < ENEMY_MAX; i++) {
+        ctx.enemizerList[i] = enemizerListOptions[i]->Value<u8>();
+    }
 
     ctx.shuffleRewards         = ShuffleRewards.Value<u8>();
     ctx.linksPocketItem        = LinksPocketItem.Value<u8>();
@@ -1760,6 +1774,18 @@ SettingsContext FillContext() {
 
 // One-time initialization
 void InitSettings() {
+    enemizerListOptions = mapArrayToOptions(Enemizer::enemyTypes, [](Enemizer::EnemyType enemy) {
+        bool hidden = enemy.actorId == 0 || enemy.validLocTypes.empty();
+        return Option::U8(enemy.name, { "Randomized", "Vanilla", "Removed" },
+                          {
+                              enemyRandomizedDesc,
+                              enemyVanillaDesc,
+                              enemyRemovedDesc,
+                          },
+                          OptionCategory::Setting, 0, hidden);
+    });
+    enemizerListMenu    = Menu::SubMenu("Enemy List", &enemizerListOptions, "", false);
+
     // Create Location Exclude settings
     AddExcludedOptions();
 
@@ -2233,6 +2259,18 @@ void ForceChange(u32 kDown, Option* currentSetting) {
             TriforcePiecesTotal.Hide();
             TriforcePiecesRequired.Hide();
         }
+
+        if (Enemizer) {
+            EnemizerListToggle.Unhide();
+        } else {
+            EnemizerListToggle.Hide();
+        }
+    }
+
+    if (EnemizerListToggle) {
+        // Open Enemy List and reset the toggle option.
+        GoToMenu(&enemizerListMenu);
+        EnemizerListToggle.SetToDefault();
     }
 
     // If Triforce Hunt is enabled, lock Ganon BK setting to the "Triforce" option.
@@ -3208,6 +3246,7 @@ const std::vector<Menu*> GetAllOptionMenus() {
         std::vector<Menu*> foundMenus = GetMenusRecursive(menu);
         allMenus.insert(allMenus.end(), foundMenus.begin(), foundMenus.end());
     }
+    allMenus.push_back(&enemizerListMenu); // this menu is detached from the others
     return allMenus;
 }
 

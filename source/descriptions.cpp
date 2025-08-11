@@ -361,7 +361,18 @@ string_view triforcePiecesRequiredDesc= "Set the number of pieces required to be
 /*------------------------------                                                           //
 |       ENEMY RANDOMIZER       |                                                           //
 ------------------------------*/                                                           //
-string_view enemizerDesc              = "Randomize most enemies in the game.";             //
+string_view enemizerDesc              = "Randomize most enemies in the game.\n\n"          //
+                                        "WARNING: Incompatible with Master Quest Logic.";  //
+string_view enemizerListDesc          = "Scroll to open the Enemy List.";                  //
+string_view enemyRandomizedDesc       = "This enemy will be included in the pool of\n"     //
+                                        "random enemies.";                                 //
+string_view enemyVanillaDesc          = "This enemy will be excluded from the random pool,\n"
+                                        "but it will appear at its vanilla locations.";    //
+string_view enemyRemovedDesc          = "This enemy will be excluded from the random pool,\n"
+                                        "and it won't appear at randomized locations.\n\n" //
+                                        "Exception: if all possible options for a location\n"
+                                        "are removed, that location will revert to using\n"//
+                                        "its vanilla enemy.";                              //
 /*------------------------------                                                           //
 |   SHUFFLE DUNGEON REWARDS    |                                                           //
 ------------------------------*/                                                           //

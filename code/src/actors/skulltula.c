@@ -190,7 +190,7 @@ void EnSw_rInit(Actor* thisx, GlobalContext* globalCtx) {
         }
     }
 
-    if (gSettingsContext.enemizer == ON && thisx->params == 0) {
+    if (Enemizer_IsEnemyRandomized(ENEMY_SKULLWALLTULA) && thisx->params == 0) {
         // Randomized Skullwalltulas will appear flat on the ground.
         thisx->shape.rot.x = 0xC000;
         // Force despawn if room is already cleared (in the base game they ignore the flag for some reason)
@@ -219,7 +219,7 @@ void EnSw_rUpdate(Actor* thisx, GlobalContext* globalCtx) {
         thisx->world.rot.z = 0;
     }
 
-    if (gSettingsContext.enemizer == ON && thisx->params == 0) {
+    if (Enemizer_IsEnemyRandomized(ENEMY_SKULLWALLTULA) && thisx->params == 0) {
         // Randomized Skullwalltulas: fix facing direction when detecting and attacking the player.
         thisx->shape.rot.y = 0;
         // Always rotate towards player when idle
@@ -255,7 +255,7 @@ void EnSw_Kill(EnSw* thisx, GlobalContext* globalCtx) {
 
 // Return -1 to use vanilla check
 s32 Skullwalltula_ShouldAttack(EnSw* walltula) {
-    if (gSettingsContext.enemizer == OFF) {
+    if (!Enemizer_IsEnemyRandomized(ENEMY_SKULLWALLTULA)) {
         return -1;
     }
 
@@ -270,7 +270,7 @@ s32 Skullwalltula_ShouldAttack(EnSw* walltula) {
 }
 
 s16 Skullwalltula_GetTargetRotation(s16 orig, EnSw* walltula) {
-    if (gSettingsContext.enemizer == OFF) {
+    if (!Enemizer_IsEnemyRandomized(ENEMY_SKULLWALLTULA)) {
         return orig;
     }
     if (walltula->action_fn == EnSw_SetupGoingHome) {

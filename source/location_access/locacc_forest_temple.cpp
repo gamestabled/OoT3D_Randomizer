@@ -417,7 +417,7 @@ void AreaTable_Init_ForestTemple() {
             {
                 // Locations
                 LocationAccess(FOREST_TEMPLE_BOW_CHEST, { [] {
-                                   return CanDefeatEnemy(Enemizer::ENEMY_STALFOS) &&
+                                   return CanDefeatEnemy(ENEMY_STALFOS) &&
                                           Here(FOREST_TEMPLE_LOWER_STALFOS, [] {
                                               return CanDefeatEnemies(3, 0, 6, { 0, 1 });
                                           });
@@ -426,13 +426,13 @@ void AreaTable_Init_ForestTemple() {
             {
                 // Exits
                 Entrance(FOREST_TEMPLE_RED_POE_ROOM, { [] {
-                             return CanDefeatEnemy(Enemizer::ENEMY_STALFOS) && Here(FOREST_TEMPLE_LOWER_STALFOS, [] {
+                             return CanDefeatEnemy(ENEMY_STALFOS) && Here(FOREST_TEMPLE_LOWER_STALFOS, [] {
                                         return CanDefeatEnemies(3, 0, 6, { 0, 1 });
                                     });
                              ;
                          } }),
                 Entrance(FOREST_TEMPLE_BLUE_POE_ROOM, { [] {
-                             return CanDefeatEnemy(Enemizer::ENEMY_STALFOS) && Here(FOREST_TEMPLE_LOWER_STALFOS, [] {
+                             return CanDefeatEnemy(ENEMY_STALFOS) && Here(FOREST_TEMPLE_LOWER_STALFOS, [] {
                                         return CanDefeatEnemies(3, 0, 6, { 0, 1 });
                                     });
                              ;

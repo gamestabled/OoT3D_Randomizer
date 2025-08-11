@@ -5,9 +5,10 @@
 
 void EnIk_rInit(Actor* thisx, GlobalContext* globalCtx) {
     EnIk* this = (EnIk*)thisx;
+
     EnIk_Init(thisx, globalCtx);
 
-    if (gSettingsContext.enemizer == ON) {
+    if (Enemizer_IsEnemyRandomized(ENEMY_IRON_KNUCKLE)) {
         // Wake up immediately
         this->skelAnime.playSpeed = 1.0f;
     }
