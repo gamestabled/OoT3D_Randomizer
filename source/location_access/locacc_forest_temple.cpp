@@ -412,32 +412,31 @@ void AreaTable_Init_ForestTemple() {
                 Entrance(FOREST_TEMPLE_UPPER_STALFOS, { [] { return true; } }),
             });
 
-        areaTable[FOREST_TEMPLE_UPPER_STALFOS] = Area(
-            "Forest Temple Upper Stalfos", "Forest Temple", FOREST_TEMPLE, NO_DAY_NIGHT_CYCLE, {},
-            {
-                // Locations
-                LocationAccess(FOREST_TEMPLE_BOW_CHEST, { [] {
-                                   return CanDefeatEnemy(ENEMY_STALFOS) &&
-                                          Here(FOREST_TEMPLE_LOWER_STALFOS, [] {
-                                              return CanDefeatEnemies(3, 0, 6, { 0, 1 });
-                                          });
-                               } }),
-            },
-            {
-                // Exits
-                Entrance(FOREST_TEMPLE_RED_POE_ROOM, { [] {
-                             return CanDefeatEnemy(ENEMY_STALFOS) && Here(FOREST_TEMPLE_LOWER_STALFOS, [] {
-                                        return CanDefeatEnemies(3, 0, 6, { 0, 1 });
-                                    });
-                             ;
-                         } }),
-                Entrance(FOREST_TEMPLE_BLUE_POE_ROOM, { [] {
-                             return CanDefeatEnemy(ENEMY_STALFOS) && Here(FOREST_TEMPLE_LOWER_STALFOS, [] {
-                                        return CanDefeatEnemies(3, 0, 6, { 0, 1 });
-                                    });
-                             ;
-                         } }),
-            });
+        areaTable[FOREST_TEMPLE_UPPER_STALFOS] =
+            Area("Forest Temple Upper Stalfos", "Forest Temple", FOREST_TEMPLE, NO_DAY_NIGHT_CYCLE, {},
+                 {
+                     // Locations
+                     LocationAccess(FOREST_TEMPLE_BOW_CHEST, { [] {
+                                        return CanDefeatEnemy(ENEMY_STALFOS) && Here(FOREST_TEMPLE_LOWER_STALFOS, [] {
+                                                   return CanDefeatEnemies(3, 0, 6, { 0, 1 });
+                                               });
+                                    } }),
+                 },
+                 {
+                     // Exits
+                     Entrance(FOREST_TEMPLE_RED_POE_ROOM, { [] {
+                                  return CanDefeatEnemy(ENEMY_STALFOS) && Here(FOREST_TEMPLE_LOWER_STALFOS, [] {
+                                             return CanDefeatEnemies(3, 0, 6, { 0, 1 });
+                                         });
+                                  ;
+                              } }),
+                     Entrance(FOREST_TEMPLE_BLUE_POE_ROOM, { [] {
+                                  return CanDefeatEnemy(ENEMY_STALFOS) && Here(FOREST_TEMPLE_LOWER_STALFOS, [] {
+                                             return CanDefeatEnemies(3, 0, 6, { 0, 1 });
+                                         });
+                                  ;
+                              } }),
+                 });
 
         areaTable[FOREST_TEMPLE_BLUE_POE_ROOM] =
             Area("Forest Temple Blue Poe Room", "Forest Temple", FOREST_TEMPLE, NO_DAY_NIGHT_CYCLE,

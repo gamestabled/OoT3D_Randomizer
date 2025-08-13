@@ -71,19 +71,15 @@ void AreaTable_Init_DekuTree() {
                                                     } }),
             });
 
-        areaTable[DEKU_TREE_2F_MIDDLE_ROOM] =
-            Area("Deku Tree 2F Middle Room", "Deku Tree", DEKU_TREE, NO_DAY_NIGHT_CYCLE, {}, {},
-                 {
-                     // Exits
-                     Entrance(DEKU_TREE_LOBBY, { [] {
-                                  return Here(DEKU_TREE_2F_MIDDLE_ROOM,
-                                              [] { return CanDefeatEnemy(0, 0, 1, 0); });
-                              } }),
-                     Entrance(DEKU_TREE_SLINGSHOT_ROOM, { [] {
-                                  return Here(DEKU_TREE_2F_MIDDLE_ROOM,
-                                              [] { return CanDefeatEnemy(0, 0, 1, 0); });
-                              } }),
-                 });
+        areaTable[DEKU_TREE_2F_MIDDLE_ROOM] = Area(
+            "Deku Tree 2F Middle Room", "Deku Tree", DEKU_TREE, NO_DAY_NIGHT_CYCLE, {}, {},
+            {
+                // Exits
+                Entrance(DEKU_TREE_LOBBY,
+                         { [] { return Here(DEKU_TREE_2F_MIDDLE_ROOM, [] { return CanDefeatEnemy(0, 0, 1, 0); }); } }),
+                Entrance(DEKU_TREE_SLINGSHOT_ROOM,
+                         { [] { return Here(DEKU_TREE_2F_MIDDLE_ROOM, [] { return CanDefeatEnemy(0, 0, 1, 0); }); } }),
+            });
 
         areaTable[DEKU_TREE_SLINGSHOT_ROOM] =
             Area("Deku Tree Slingshot Room", "Deku Tree", DEKU_TREE, NO_DAY_NIGHT_CYCLE, {},
@@ -271,7 +267,9 @@ void AreaTable_Init_DekuTree() {
                      // Exits
                      Entrance(DEKU_TREE_BASEMENT_UPPER, { [] { return true; } }),
                      Entrance(DEKU_TREE_BOSS_ENTRYWAY, { [] {
-                                  return Here(DEKU_TREE_OUTSIDE_BOSS_ROOM, [] { return CanDefeatEnemies(0, 0, 9) && (Settings::Enemizer || HasShield); });
+                                  return Here(DEKU_TREE_OUTSIDE_BOSS_ROOM, [] {
+                                      return CanDefeatEnemies(0, 0, 9) && (Settings::Enemizer || HasShield);
+                                  });
                               } }),
                  });
     }

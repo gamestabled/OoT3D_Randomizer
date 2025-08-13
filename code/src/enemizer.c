@@ -490,7 +490,7 @@ static void Enemizer_HandleClearConditions(void) {
             sSFMWolfos = NULL;
         }
     } else if (gGlobalContext->sceneNum == SCENE_DODONGOS_CAVERN && gGlobalContext->roomNum == 3 &&
-        gEnemizerLocationFlags.dcLizalfos) {
+               gEnemizerLocationFlags.dcLizalfos) {
         // Miniboss room: open the correct doors when the room is cleared.
         if (Enemizer_IsRoomCleared() && !sLastRoomCleared) {
             u32 flag = Flags_GetSwitch(gGlobalContext, 5) ? 6 : 5;
