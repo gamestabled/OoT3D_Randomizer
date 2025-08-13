@@ -476,6 +476,10 @@ SECTIONS
 		*(.patch_KingZoraSetTradedPrescriptionFlag)
 	}
 
+	.patch_GerudoBattleMusic 0x1C6FD8 : {
+		*(.patch_GerudoBattleMusic)
+	}
+
 	.patch_EnEncount1_SpawnLeever 0x1CC94C : {
 		*(.patch_EnEncount1_SpawnLeever)
 	}

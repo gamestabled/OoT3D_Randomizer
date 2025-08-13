@@ -11,6 +11,7 @@
 #include "dungeon.hpp"
 #include "descriptions.hpp"
 #include "enemizer.hpp"
+#include "enemizer_logic.hpp"
 
 using namespace Settings;
 
@@ -865,13 +866,11 @@ void UpdateHelpers() {
 
     // Gerudo Fortress
     CanFinishGerudoFortress =
-        SoulGerudo &&
-        ((GerudoFortress.Is(GERUDOFORTRESS_NORMAL) && GerudoFortressKeys >= 4 &&
-          (CanUse(KOKIRI_SWORD) || CanUse(MASTER_SWORD) || CanUse(BIGGORON_SWORD)) &&
-          (GerudoToken || CanUse(BOW) || CanUse(HOOKSHOT) || CanUse(HOVER_BOOTS) || LogicGerudoKitchen)) ||
-         (GerudoFortress.Is(GERUDOFORTRESS_FAST) && GerudoFortressKeys >= 1 &&
-          (CanUse(KOKIRI_SWORD) || CanUse(MASTER_SWORD) || CanUse(BIGGORON_SWORD))) ||
-         (GerudoFortress.IsNot(GERUDOFORTRESS_NORMAL) && GerudoFortress.IsNot(GERUDOFORTRESS_FAST)));
+        (GerudoFortress.Is(GERUDOFORTRESS_NORMAL) && GerudoFortressKeys >= 4 && CanDefeatEnemy(12, 0, 1, 1) &&
+         CanDefeatEnemy(12, 0, 2, 1) && CanDefeatEnemy(12, 0, 4, 1) && CanDefeatEnemy(12, 0, 5, 1) &&
+         (GerudoToken || CanUse(BOW) || CanUse(HOOKSHOT) || CanUse(HOVER_BOOTS) || LogicGerudoKitchen)) ||
+        (GerudoFortress.Is(GERUDOFORTRESS_FAST) && GerudoFortressKeys >= 1 && CanDefeatEnemy(12, 0, 2, 1)) ||
+        (GerudoFortress.IsNot(GERUDOFORTRESS_NORMAL) && GerudoFortress.IsNot(GERUDOFORTRESS_FAST));
 
     HasShield    = CanUse(HYLIAN_SHIELD) || CanUse(DEKU_SHIELD); // Mirror shield can't reflect attacks
     CanShield    = CanUse(MIRROR_SHIELD) || HasShield;

@@ -2511,3 +2511,8 @@ RedeadCanFreezePlayer_patch:
 .global DeadHandHandCanGrabPlayer_patch
 DeadHandHandCanGrabPlayer_patch:
     bl hook_DeadHandHandCanGrabPlayer
+
+.section .patch_GerudoBattleMusic
+.global GerudoBattleMusic_patch
+GerudoBattleMusic_patch:
+    bl hook_GerudoBattleMusic

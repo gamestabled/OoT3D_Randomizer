@@ -199,32 +199,36 @@ void AreaTable_Init_GerudoValley() {
                                                   (GerudoToken || CanUse(BOW) || CanUse(HOOKSHOT) ||
                                                    CanUse(HOVER_BOOTS) || LogicGerudoKitchen);
                                        } }),
-            LocationAccess(
-                GF_NORTH_F1_CARPENTER,
-                { [] { return SoulGerudo && (CanUse(KOKIRI_SWORD) || CanUse(MASTER_SWORD) || CanUse(BIGGORON_SWORD)); },
-                  /*Glitched*/ [] { return SoulGerudo && CanDoGlitch(GlitchType::ISG, GlitchDifficulty::NOVICE); } }),
+            LocationAccess(GF_NORTH_F1_CARPENTER, { [] { return CanDefeatEnemy(12, 0, 2, 1); },
+                                                    /*Glitched*/
+                                                    [] {
+                                                        return !Settings::Enemizer && SoulGerudo &&
+                                                               CanDoGlitch(GlitchType::ISG, GlitchDifficulty::NOVICE);
+                                                    } }),
             LocationAccess(GF_NORTH_F2_CARPENTER, { [] {
-                                                       return SoulGerudo &&
-                                                              (CanUse(KOKIRI_SWORD) || CanUse(MASTER_SWORD) ||
-                                                               CanUse(BIGGORON_SWORD)) &&
+                                                       return CanDefeatEnemy(12, 0, 1, 1) &&
                                                               (GerudoToken || CanUse(BOW) || CanUse(HOOKSHOT) ||
                                                                CanUse(HOVER_BOOTS) || LogicGerudoKitchen);
                                                    },
                                                     /*Glitched*/
                                                     [] {
-                                                        return SoulGerudo &&
+                                                        return !Settings::Enemizer && SoulGerudo &&
                                                                CanDoGlitch(GlitchType::ISG, GlitchDifficulty::NOVICE) &&
                                                                (GerudoToken || CanUse(BOW) || CanUse(HOOKSHOT) ||
                                                                 CanUse(HOVER_BOOTS) || LogicGerudoKitchen);
                                                     } }),
-            LocationAccess(
-                GF_SOUTH_F1_CARPENTER,
-                { [] { return SoulGerudo && (CanUse(KOKIRI_SWORD) || CanUse(MASTER_SWORD) || CanUse(BIGGORON_SWORD)); },
-                  /*Glitched*/ [] { return SoulGerudo && CanDoGlitch(GlitchType::ISG, GlitchDifficulty::NOVICE); } }),
-            LocationAccess(
-                GF_SOUTH_F2_CARPENTER,
-                { [] { return SoulGerudo && (CanUse(KOKIRI_SWORD) || CanUse(MASTER_SWORD) || CanUse(BIGGORON_SWORD)); },
-                  /*Glitched*/ [] { return SoulGerudo && CanDoGlitch(GlitchType::ISG, GlitchDifficulty::NOVICE); } }),
+            LocationAccess(GF_SOUTH_F1_CARPENTER, { [] { return CanDefeatEnemy(12, 0, 4, 1); },
+                                                    /*Glitched*/
+                                                    [] {
+                                                        return !Settings::Enemizer && SoulGerudo &&
+                                                               CanDoGlitch(GlitchType::ISG, GlitchDifficulty::NOVICE);
+                                                    } }),
+            LocationAccess(GF_SOUTH_F2_CARPENTER, { [] { return CanDefeatEnemy(12, 0, 5, 1); },
+                                                    /*Glitched*/
+                                                    [] {
+                                                        return !Settings::Enemizer && SoulGerudo &&
+                                                               CanDoGlitch(GlitchType::ISG, GlitchDifficulty::NOVICE);
+                                                    } }),
             LocationAccess(GF_GERUDO_TOKEN, { [] { return CanFinishGerudoFortress; } }),
         },
         {

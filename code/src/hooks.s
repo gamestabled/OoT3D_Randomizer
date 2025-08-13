@@ -2425,3 +2425,12 @@ hook_DeadHandHandCanGrabPlayer:
     bx lr
 const_DeadHandHandMaxYDist:
     .float 100.0
+
+.global hook_GerudoBattleMusic
+hook_GerudoBattleMusic:
+    push {r0-r12, lr}
+    bl Enemizer_IsActive
+    cmp r0,#0x0
+    pop {r0-r12, lr}
+    beq 0x34F724 @ start battle music
+    bx lr

@@ -110,10 +110,12 @@ void SaveFile_Init(u32 fileBaseIndex) {
         gSaveContext.eventChkInf[0x9] |= 0x000E;                                // Free 3 carpenters
         gSaveContext.sceneFlags[DUNGEON_THIEVES_HIDEOUT].swch |= 0x000D01DC;    // heard yells/unlocked doors
         gSaveContext.sceneFlags[DUNGEON_THIEVES_HIDEOUT].collect |= 0x0000C400; // picked up keys
+        gSaveContext.sceneFlags[DUNGEON_THIEVES_HIDEOUT].clear |= 0x00000032;   // cleared rooms (for Enemy Randomizer)
     } else if (gSettingsContext.gerudoFortress == GERUDOFORTRESS_OPEN) {
         gSaveContext.eventChkInf[0x9] |= 0x000F;                                // Free all carpenters
         gSaveContext.sceneFlags[DUNGEON_THIEVES_HIDEOUT].swch |= 0x000F01FE;    // heard yells/unlocked doors
         gSaveContext.sceneFlags[DUNGEON_THIEVES_HIDEOUT].collect |= 0x0000D400; // picked up keys
+        gSaveContext.sceneFlags[DUNGEON_THIEVES_HIDEOUT].clear |= 0x00000036;   // cleared rooms (for Enemy Randomizer)
     }
 
     if (gSettingsContext.zorasFountain == ZORASFOUNTAIN_OPEN) {

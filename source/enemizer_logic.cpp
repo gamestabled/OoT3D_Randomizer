@@ -204,8 +204,8 @@ bool CanDefeatEnemy(u16 enemyId) {
                    CanUse(HOOKSHOT) || CanUse(DINS_FIRE) || HasExplosives;
         case ENEMY_HINT_DEKU_SCRUB:
             return CanUse(DEKU_SHIELD) || CanUse(HYLIAN_SHIELD) || CanUse(MEGATON_HAMMER);
-        // case ENEMY_GERUDO_FIGHTER: // Unimplemented
-        //     return false;
+        case ENEMY_GERUDO_FIGHTER:
+            return CanUse(KOKIRI_SWORD) || CanUse(MASTER_SWORD) || CanUse(BIGGORON_SWORD) || CanUse(MEGATON_HAMMER);
         case ENEMY_WOLFOS:
             return CanUse(KOKIRI_SWORD) || CanUse(MASTER_SWORD) || CanUse(BIGGORON_SWORD) || CanUse(STICKS) ||
                    CanUse(MEGATON_HAMMER) || CanUse(BOW) || CanUse(SLINGSHOT) || CanUse(DINS_FIRE) || HasExplosives;

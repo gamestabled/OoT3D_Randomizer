@@ -805,6 +805,9 @@ typedef u32 (*Flags_GetCollectible_proc)(GlobalContext* globalCtx, u32 flag);
 typedef u32 (*Flags_GetClear_proc)(GlobalContext* globalCtx, u32 flag);
 #define Flags_GetClear ((Flags_GetClear_proc)GAME_ADDR(0x36CF6C))
 
+typedef u32 (*Flags_SetClear_proc)(GlobalContext* globalCtx, u32 flag);
+#define Flags_SetClear ((Flags_SetClear_proc)GAME_ADDR(0x36EC14))
+
 typedef void (*Player_SetEquipmentData_proc)(GlobalContext* globalCtx, Player* player);
 #define Player_SetEquipmentData ((Player_SetEquipmentData_proc)GAME_ADDR(0x34913C))
 

@@ -129,7 +129,7 @@ void InitEnemyTypes(void) {
     enemyTypes[ENEMY_HINT_DEKU_SCRUB] = EnemyType("Deku Scrub", &SoulDekuScrub, ACTOR_HINT_DEKU_SCRUB, { 0x0000 },
         { LocType::ABOVE_GROUND, LocType::UNDERWATER, LocType::SHALLOW_WATER });
     enemyTypes[ENEMY_GERUDO_FIGHTER] = EnemyType("Gerudo Fighter", &SoulGerudo, ACTOR_GERUDO_FIGHTER, { 0x0000 },
-        { /* Unimplemented */ });
+        { LocType::ABOVE_GROUND, LocType::SHALLOW_WATER });
     enemyTypes[ENEMY_WOLFOS] = EnemyType("Wolfos", &SoulWolfos, ACTOR_WOLFOS, { 0xFF00, 0xFF01 }, // normal / white
         { LocType::ABOVE_GROUND, LocType::SHALLOW_WATER, LocType::SPAWNER });
     enemyTypes[ENEMY_STALCHILD] = EnemyType("Stalchild", &SoulStalchild, ACTOR_STALCHILD, { 0x0000, 0x0005 }, // normal / big (20 kills)
@@ -154,6 +154,10 @@ void InitEnemyLocations(void) {
     enemyLocations[10][0][7][4]      = EnemyLocation(ENEMY_KEESE_FIRE,         LocType::ABOVE_GROUND);
     enemyLocations[10][0][7][5]      = EnemyLocation(ENEMY_KEESE_FIRE,         LocType::ABOVE_GROUND);
     enemyLocations[10][0][7][6]      = EnemyLocation(ENEMY_KEESE_FIRE,         LocType::ABOVE_GROUND);
+    enemyLocations[12][0][1][1]      = EnemyLocation(ENEMY_GERUDO_FIGHTER,     LocType::ABOVE_GROUND);
+    enemyLocations[12][0][2][1]      = EnemyLocation(ENEMY_GERUDO_FIGHTER,     LocType::ABOVE_GROUND);
+    enemyLocations[12][0][4][1]      = EnemyLocation(ENEMY_GERUDO_FIGHTER,     LocType::ABOVE_GROUND);
+    enemyLocations[12][0][5][1]      = EnemyLocation(ENEMY_GERUDO_FIGHTER,     LocType::ABOVE_GROUND);
     enemyLocations[10][0][7][7]      = EnemyLocation(ENEMY_KEESE_FIRE,         LocType::ABOVE_GROUND);
     enemyLocations[15][0][0][4]      = EnemyLocation(ENEMY_REDEAD,             LocType::ABOVE_GROUND);
     enemyLocations[23][0][1][0]      = EnemyLocation(ENEMY_IRON_KNUCKLE,       LocType::ABOVE_GROUND);

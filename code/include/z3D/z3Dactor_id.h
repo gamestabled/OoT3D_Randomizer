@@ -8,6 +8,7 @@ enum ActorId {
     ACTOR_WALLMASTER         = 0x011,
     ACTOR_DODONGO            = 0x012,
     ACTOR_KEESE              = 0x013,
+    ACTOR_EN_ITEM00          = 0x015,
     ACTOR_TEKTITE            = 0x01B,
     ACTOR_LEEVER             = 0x01C,
     ACTOR_PEAHAT             = 0x01D,
