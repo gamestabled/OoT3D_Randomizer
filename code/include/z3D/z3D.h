@@ -490,6 +490,12 @@ typedef struct {
     /* 0x01 */ u8 room;
 } EntranceEntry;
 
+typedef struct Path {
+    /* 0x00 */ u8 count;
+    /* 0x04 */ Vec3s* points;
+} Path;
+_Static_assert(sizeof(Path) == 0x8, "Path size");
+
 typedef struct GameState {
     /* 0x00 */ GraphicsContext* gfxCtx;
     /* 0x04 */ void (*main)(struct GameState*);
@@ -560,7 +566,8 @@ typedef struct GlobalContext {
     /* 0x5C11 */ char unk_5C11[0x0004];
     /* 0x5C19 */ EntranceEntry* setupEntranceList;
     /* 0x5C1C */ s16* setupExitList;
-    /* 0x5C20 */ char unk_5C20[0x000D];
+    /* 0x5C20 */ Path* pathList;
+    /* 0x5C24 */ char unk_5C24[0x0009];
     /* 0x5C2D */ s8 sceneLoadFlag; // "fade_direction"
     /* 0x5C2E */ char unk_5C2E[0x0004];
     /* 0x5C32 */ s16 nextEntranceIndex;

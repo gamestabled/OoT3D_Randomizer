@@ -81,6 +81,7 @@
 #include "skull_kid.h"
 #include "lizalfos.h"
 #include "stalfos.h"
+#include "bubble.h"
 
 #define OBJECT_GI_KEY 170
 #define OBJECT_GI_BOSSKEY 185
@@ -163,6 +164,9 @@ void Actor_Init() {
     gActorOverlayTable[0x5F].initInfo->draw    = ItemBHeart_rDraw;
 
     gActorOverlayTable[0x66].initInfo->init = ArmsHook_rInit;
+
+    gActorOverlayTable[0x69].initInfo->init   = EnBb_rInit;
+    gActorOverlayTable[0x69].initInfo->update = EnBb_rUpdate;
 
     gActorOverlayTable[0x6B].initInfo->update = EnYukabyun_rUpdate;
 

@@ -8,6 +8,8 @@
 #define ARRAY_SIZE(x) (sizeof(x) / sizeof(x[0]))
 #define BIT_COUNT(x) (sizeof(x) * 8)
 #define ABS(x) ((x) >= 0 ? (x) : -(x))
+#define MIN(x, y) (x < y ? x : y)
+#define MAX(x, y) (x > y ? x : y)
 
 #define TICKS_PER_SEC 268123480
 #define SEQ_AUDIO_BLANK 0x1000142

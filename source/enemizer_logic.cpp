@@ -145,8 +145,9 @@ bool CanDefeatEnemy(u16 enemyId) {
                       CanUse(SLINGSHOT))));
         case ENEMY_BUBBLE_FIRE:
             return CanUse(MASTER_SWORD) || CanUse(BIGGORON_SWORD) || CanUse(BOW);
-        // case ENEMY_BUBBLE_WHITE: // Unimplemented
-        //     return false;
+        case ENEMY_BUBBLE_WHITE:
+            return CanUse(KOKIRI_SWORD) || CanUse(MASTER_SWORD) || CanUse(BIGGORON_SWORD) || CanUse(STICKS) ||
+                   CanUse(MEGATON_HAMMER) || CanUse(BOW) || CanUse(SLINGSHOT) || CanUse(DINS_FIRE) || HasExplosives;
         case ENEMY_BUBBLE_GREEN:
             return CanUse(KOKIRI_SWORD) || CanUse(MASTER_SWORD) || CanUse(BIGGORON_SWORD) || CanUse(STICKS) ||
                    CanUse(MEGATON_HAMMER) || CanUse(BOW) || CanUse(SLINGSHOT) || HasExplosives;

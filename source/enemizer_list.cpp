@@ -78,10 +78,10 @@ void InitEnemyTypes(void) {
         { LocType::ABOVE_GROUND, LocType::SHALLOW_WATER });
     enemyTypes[ENEMY_BUBBLE_FIRE] = EnemyType("Bubble (Fire)", &SoulBubble, ACTOR_BUBBLE, { 0xFFFE },
         { LocType::ABOVE_GROUND });
-    enemyTypes[ENEMY_BUBBLE_GREEN] = EnemyType("Bubble (Green)", &SoulBubble, ACTOR_BUBBLE, { 0x02FC },
+    enemyTypes[ENEMY_BUBBLE_GREEN] = EnemyType("Bubble (Green)", &SoulBubble, ACTOR_BUBBLE, { 0x02FC, 0x00FB }, // small / big
         { LocType::ABOVE_GROUND, LocType::ABOVE_VOID, LocType::ABOVE_WATER, LocType::SHALLOW_WATER });
-    enemyTypes[ENEMY_BUBBLE_WHITE] = EnemyType("Bubble (White)", &SoulBubble, ACTOR_BUBBLE, { 0x000D },
-        { /* Unimplemented */ });
+    enemyTypes[ENEMY_BUBBLE_WHITE] = EnemyType("Bubble (White)", &SoulBubble, ACTOR_BUBBLE, { 0x00FD },
+        { LocType::ABOVE_GROUND, LocType::ABOVE_VOID, LocType::ABOVE_WATER, LocType::SHALLOW_WATER });
     enemyTypes[ENEMY_FLYING_FLOOR_TILE] = EnemyType("Flying Floor Tile", &SoulFlyingTrap, ACTOR_FLYING_FLOOR_TILE, { 0x0000 },
         { LocType::ABOVE_GROUND, LocType::UNDERWATER, LocType::SHALLOW_WATER });
     enemyTypes[ENEMY_BEAMOS] = EnemyType("Beamos", &SoulBeamos, ACTOR_BEAMOS, { 0x0500, 0x0501 }, // big / small
