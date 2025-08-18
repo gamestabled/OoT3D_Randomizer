@@ -403,6 +403,20 @@ u8 Enemizer_OverrideActorEntry(ActorEntry* actorEntry, s32 actorEntryIndex) {
         return KEEP_ACTOR_ENTRY;
     }
 
+    // Jabu Jabu Shabom Room timer: set 2 minute time limit
+    if (gGlobalContext->sceneNum == SCENE_JABU_JABU && gGlobalContext->roomNum == 12 && actorEntry->id == 0x187) {
+        actorEntry->params = 0x7878;
+        return KEEP_ACTOR_ENTRY;
+    }
+
+    EnemyOverride enemyOverride =
+        Enemizer_FindOverride(gGlobalContext->sceneNum, rSceneLayer, gGlobalContext->roomNum, actorEntryIndex);
+
+    // Do nothing if the override doesn't exist
+    if (enemyOverride.actorId == 0) {
+        return KEEP_ACTOR_ENTRY;
+    }
+
     // Skip SFM Wolfos entry if the gate is open.
     if (gGlobalContext->sceneNum == SCENE_SACRED_FOREST_MEADOW && actorEntry->pos.z > 1600 &&
         Flags_GetSwitch(gGlobalContext, 0x1F)) {
@@ -421,20 +435,6 @@ u8 Enemizer_OverrideActorEntry(ActorEntry* actorEntry, s32 actorEntryIndex) {
                                             PLAYER->actor.world.pos.y < 200.0)) {
             return SKIP_ACTOR_ENTRY;
         }
-    }
-
-    // Jabu Jabu Shabom Room timer: set 2 minute time limit
-    if (gGlobalContext->sceneNum == SCENE_JABU_JABU && gGlobalContext->roomNum == 12 && actorEntry->id == 0x187) {
-        actorEntry->params = 0x7878;
-        return KEEP_ACTOR_ENTRY;
-    }
-
-    EnemyOverride enemyOverride =
-        Enemizer_FindOverride(gGlobalContext->sceneNum, rSceneLayer, gGlobalContext->roomNum, actorEntryIndex);
-
-    // Do nothing if the override doesn't exist
-    if (enemyOverride.actorId == 0) {
-        return KEEP_ACTOR_ENTRY;
     }
 
     actorEntry->id     = enemyOverride.actorId;
