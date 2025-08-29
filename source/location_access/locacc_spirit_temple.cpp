@@ -2,6 +2,7 @@
 #include "logic.hpp"
 #include "entrance.hpp"
 #include "dungeon.hpp"
+#include "enemizer_logic.hpp"
 
 using namespace Logic;
 using namespace Settings;
@@ -24,7 +25,17 @@ void AreaTable_Init_SpiritTemple() {
     ---------------------------*/
     if (Dungeon::SpiritTemple.IsVanilla()) {
         areaTable[SPIRIT_TEMPLE_LOBBY] =
-            Area("Spirit Temple Lobby", "Spirit Temple", SPIRIT_TEMPLE, NO_DAY_NIGHT_CYCLE, {}, {},
+            Area("Spirit Temple Lobby", "Spirit Temple", SPIRIT_TEMPLE, NO_DAY_NIGHT_CYCLE,
+                 {
+                     // Events
+                     EventAccess(&DekuBabaSticks, { [] {
+                         return DekuBabaSticks || CanGetDekuBabaSticks(6, 0, 0, { 0, 1, 12, 13 });
+                     } }),
+                     EventAccess(&DekuBabaNuts, { [] {
+                         return DekuBabaNuts || CanGetDekuBabaNuts(6, 0, 0, { 0, 1, 12, 13 });
+                     } }),
+                 },
+                 {},
                  {
                      // Exits
                      Entrance(SPIRIT_TEMPLE_ENTRYWAY, { [] { return true; } }),
@@ -32,40 +43,59 @@ void AreaTable_Init_SpiritTemple() {
                      Entrance(SPIRIT_TEMPLE_EARLY_ADULT, { [] { return CanUse(SILVER_GAUNTLETS); } }),
                  });
 
+        static constexpr auto ForEachEnemy_ChildSide = [](auto& enemyCheckFn) {
+            return CanDefeatEnemies(6, 0, 1) &&
+                   (enemyCheckFn(6, 0, 3, { 3 }) ||
+                    ((Boomerang || Slingshot || (HasExplosives && LogicSpiritChildBombchu)) &&
+                     (enemyCheckFn(6, 0, 3, { 0 }) ||
+                      (CanPassEnemy(6, 0, 3, 0) &&
+                       (enemyCheckFn(6, 0, 3, { 4, 5 }) ||
+                        (CanDefeatEnemy(6, 0, 27, 0) && enemyCheckFn(6, 0, 2, { 5, 6 })))))));
+        };
         areaTable[SPIRIT_TEMPLE_CHILD] =
             Area("Child Spirit Temple", "Spirit Temple", SPIRIT_TEMPLE, NO_DAY_NIGHT_CYCLE,
                  {
                      // Events
+                     EventAccess(&DekuBabaSticks,
+                                 { [] { return DekuBabaSticks || ForEachEnemy_ChildSide(CanGetDekuBabaSticks); } }),
+                     EventAccess(&DekuBabaNuts,
+                                 { [] { return DekuBabaNuts || ForEachEnemy_ChildSide(CanGetDekuBabaNuts); } }),
                      EventAccess(&NutCrate, { [] { return true; } }),
                  },
                  {
                      // Locations
                      LocationAccess(SPIRIT_TEMPLE_CHILD_BRIDGE_CHEST, { [] {
-                                        return SoulKeese && SoulArmos &&
-                                               (Boomerang || Slingshot || (HasExplosives && LogicSpiritChildBombchu)) &&
-                                               (HasExplosives ||
-                                                ((Nuts || Boomerang) && (Sticks || KokiriSword || Slingshot)));
+                                        return CanDefeatEnemies(6, 0, 1) && CanPassEnemy(6, 0, 3, 0) &&
+                                               (Boomerang || Slingshot || (HasExplosives && LogicSpiritChildBombchu));
                                     } }),
                      LocationAccess(SPIRIT_TEMPLE_CHILD_EARLY_TORCHES_CHEST, { [] {
-                                        return SoulAnubis && SoulKeese && SoulArmos &&
+                                        return CanDefeatEnemies(6, 0, 1) && CanPassEnemy(6, 0, 3, 0) &&
                                                (Boomerang || Slingshot || (HasExplosives && LogicSpiritChildBombchu)) &&
-                                               (HasExplosives ||
-                                                ((Nuts || Boomerang) && (Sticks || KokiriSword || Slingshot))) &&
-                                               (Sticks || CanUse(DINS_FIRE));
+                                               CanDefeatEnemy(6, 0, 27, 0) && (Sticks || CanUse(DINS_FIRE));
                                     } }),
                      LocationAccess(SPIRIT_TEMPLE_GS_METAL_FENCE, { [] {
-                                        return SoulAnubis && SoulKeese && SoulArmos &&
+                                        return CanDefeatEnemies(6, 0, 1) && CanPassEnemy(6, 0, 3, 0) &&
                                                (Boomerang || Slingshot || (HasExplosives && LogicSpiritChildBombchu)) &&
-                                               (HasExplosives ||
-                                                ((Nuts || Boomerang) && (Sticks || KokiriSword || Slingshot)));
+                                               CanDefeatEnemy(6, 0, 27, 0);
                                     } }),
                  },
                  {
                      // Exits
-                     Entrance(SPIRIT_TEMPLE_CHILD_CLIMB, { [] { return SmallKeys(SPIRIT_TEMPLE, 1); } }),
+                     Entrance(SPIRIT_TEMPLE_CHILD_CLIMB, { [] {
+                                  return SmallKeys(SPIRIT_TEMPLE, 1) &&
+                                         CanPassEnemies(6, 0, 1, { 1, 2 }, SpaceAroundEnemy::NARROW) &&
+                                         CanCrawlNearEnemies(6, 0, 1, { 1, 2 }) &&
+                                         CanPassEnemies(6, 0, 4, { 2, 3 }, SpaceAroundEnemy::NARROW);
+                              } }),
                  });
+
         areaTable[SPIRIT_TEMPLE_CHILD_CLIMB] = Area(
-            "Child Spirit Temple Climb", "Spirit Temple", SPIRIT_TEMPLE, NO_DAY_NIGHT_CYCLE, {},
+            "Child Spirit Temple Climb", "Spirit Temple", SPIRIT_TEMPLE, NO_DAY_NIGHT_CYCLE,
+            {
+                // Events
+                EventAccess(&DekuBabaSticks, { [] { return DekuBabaSticks || CanGetDekuBabaSticks(6, 0, 4); } }),
+                EventAccess(&DekuBabaNuts, { [] { return DekuBabaNuts || CanGetDekuBabaNuts(6, 0, 4); } }),
+            },
             {
                 // Locations
                 LocationAccess(
@@ -101,37 +131,71 @@ void AreaTable_Init_SpiritTemple() {
                          { [] { return HasExplosives || (ExtraArrowEffects && CanUse(LIGHT_ARROWS)); } }),
             });
 
+        static constexpr auto ForEachEnemy_EarlyAdult = [](auto& enemyCheckFn) {
+            return enemyCheckFn(6, 0, 0, { 2 }) ||
+                   ((CanUse(BOW) || CanUse(HOOKSHOT) || CanUse(SLINGSHOT) || CanUse(BOOMERANG) || HasBombchus ||
+                     (Bombs && LogicSpiritLowerAdultSwitch)) &&
+                    (HoverBoots || CanJumpslash) && enemyCheckFn(6, 0, 14, {})) ||
+                   (SmallKeys(SPIRIT_TEMPLE, 3) &&
+                    (enemyCheckFn(6, 0, 15, { 2, 11, 12 }) ||
+                     (CanPassAnyEnemy(6, 0, 15, { 2, 12 }) && enemyCheckFn(6, 0, 15, { 0, 1 }))));
+        };
         areaTable[SPIRIT_TEMPLE_EARLY_ADULT] = Area(
-            "Early Adult Spirit Temple", "Spirit Temple", SPIRIT_TEMPLE, NO_DAY_NIGHT_CYCLE, {},
+            "Early Adult Spirit Temple", "Spirit Temple", SPIRIT_TEMPLE, NO_DAY_NIGHT_CYCLE,
+            {
+                // Events
+                EventAccess(&DekuBabaSticks,
+                            { [] { return DekuBabaSticks || ForEachEnemy_EarlyAdult(CanGetDekuBabaSticks); } }),
+                EventAccess(&DekuBabaNuts,
+                            { [] { return DekuBabaNuts || ForEachEnemy_EarlyAdult(CanGetDekuBabaNuts); } }),
+            },
             {
                 // Locations
                 LocationAccess(SPIRIT_TEMPLE_COMPASS_CHEST,
                                { [] { return CanUse(HOOKSHOT) && CanPlay(ZeldasLullaby); } }),
                 LocationAccess(SPIRIT_TEMPLE_EARLY_ADULT_RIGHT_CHEST, { [] {
-                                   return (Bow || Hookshot || HasBombchus || (Bombs && LogicSpiritLowerAdultSwitch)) &&
+                                   return (CanUse(BOW) || CanUse(HOOKSHOT) || CanUse(SLINGSHOT) || CanUse(BOOMERANG) ||
+                                           HasBombchus || (Bombs && LogicSpiritLowerAdultSwitch)) &&
                                           (HoverBoots || CanJumpslash);
                                } }),
-                LocationAccess(SPIRIT_TEMPLE_FIRST_MIRROR_LEFT_CHEST, { [] { return SmallKeys(SPIRIT_TEMPLE, 3); } }),
-                LocationAccess(SPIRIT_TEMPLE_FIRST_MIRROR_RIGHT_CHEST, { [] { return SmallKeys(SPIRIT_TEMPLE, 3); } }),
+                LocationAccess(SPIRIT_TEMPLE_FIRST_MIRROR_LEFT_CHEST, { [] {
+                                   return SmallKeys(SPIRIT_TEMPLE, 3) && CanPassAnyEnemy(6, 0, 15, { 2, 12 });
+                               } }),
+                LocationAccess(SPIRIT_TEMPLE_FIRST_MIRROR_RIGHT_CHEST, { [] {
+                                   return SmallKeys(SPIRIT_TEMPLE, 3) && CanPassAnyEnemy(6, 0, 15, { 2, 12 });
+                               } }),
                 LocationAccess(SPIRIT_TEMPLE_GS_BOULDER_ROOM, { [] {
                                    return CanPlay(SongOfTime) &&
-                                          (Bow || Hookshot || HasBombchus || (Bombs && LogicSpiritLowerAdultSwitch));
+                                          (CanUse(BOW) || CanUse(HOOKSHOT) || CanUse(SLINGSHOT) || CanUse(BOOMERANG) ||
+                                           HasBombchus || (Bombs && LogicSpiritLowerAdultSwitch));
                                } }),
             },
             {
                 // Exits
-                Entrance(SPIRIT_TEMPLE_CENTRAL_CHAMBER, { [] { return SmallKeys(SPIRIT_TEMPLE, 1); } }),
+                Entrance(SPIRIT_TEMPLE_CENTRAL_CHAMBER, { [] {
+                             return SmallKeys(SPIRIT_TEMPLE, 1) && CanPassAnyEnemy(6, 0, 15, { 2, 12 });
+                         } }),
             });
 
+        static constexpr auto ForEachEnemy_CentralChamber = [](auto& enemyCheckFn) {
+            return enemyCheckFn(6, 0, 5, { 19, 20 }) || (CanUse(HOOKSHOT) && enemyCheckFn(6, 0, 5, { 1 })) ||
+                   enemyCheckFn(6, 0, 8, {});
+        };
         areaTable[SPIRIT_TEMPLE_CENTRAL_CHAMBER] = Area(
-            "Spirit Temple Central Chamber", "Spirit Temple", SPIRIT_TEMPLE, NO_DAY_NIGHT_CYCLE, {},
+            "Spirit Temple Central Chamber", "Spirit Temple", SPIRIT_TEMPLE, NO_DAY_NIGHT_CYCLE,
+            {
+                // Events
+                EventAccess(&DekuBabaSticks,
+                            { [] { return DekuBabaSticks || ForEachEnemy_CentralChamber(CanGetDekuBabaSticks); } }),
+                EventAccess(&DekuBabaNuts,
+                            { [] { return DekuBabaNuts || ForEachEnemy_CentralChamber(CanGetDekuBabaNuts); } }),
+            },
             {
                 // Locations
                 LocationAccess(SPIRIT_TEMPLE_MAP_CHEST, { [] {
                                    return ((HasExplosives || SmallKeys(SPIRIT_TEMPLE, 3) ||
                                             (SmallKeys(SPIRIT_TEMPLE, 2) && BombchusInLogic &&
                                              ShuffleDungeonEntrances.Is(SHUFFLEDUNGEONS_OFF))) &&
-
                                            (CanUse(DINS_FIRE) ||
                                             (((MagicMeter && FireArrows) || LogicSpiritMapChest) && Bow && Sticks))) ||
                                           (SmallKeys(SPIRIT_TEMPLE, 5) && HasExplosives && CanUse(STICKS)) ||
@@ -140,15 +204,16 @@ void AreaTable_Init_SpiritTemple() {
                                            CanUse(SILVER_GAUNTLETS));
                                } }),
                 LocationAccess(SPIRIT_TEMPLE_SUN_BLOCK_ROOM_CHEST, { [] {
-                                   return ((HasExplosives || SmallKeys(SPIRIT_TEMPLE, 3) ||
-                                            (SmallKeys(SPIRIT_TEMPLE, 2) && BombchusInLogic &&
-                                             ShuffleDungeonEntrances.Is(SHUFFLEDUNGEONS_OFF))) &&
-                                           (CanUse(DINS_FIRE) ||
-                                            (((MagicMeter && FireArrows) || LogicSpiritSunChest) && Bow && Sticks))) ||
-                                          (SmallKeys(SPIRIT_TEMPLE, 5) && HasExplosives && CanUse(STICKS)) ||
-                                          (SmallKeys(SPIRIT_TEMPLE, 3) &&
-                                           (CanUse(FIRE_ARROWS) || (LogicSpiritSunChest && Bow)) &&
-                                           CanUse(SILVER_GAUNTLETS));
+                                   return CanPassEnemy(6, 0, 8, 6, SpaceAroundEnemy::NONE) &&
+                                          (((HasExplosives || SmallKeys(SPIRIT_TEMPLE, 3) ||
+                                             (SmallKeys(SPIRIT_TEMPLE, 2) && BombchusInLogic &&
+                                              ShuffleDungeonEntrances.Is(SHUFFLEDUNGEONS_OFF))) &&
+                                            (CanUse(DINS_FIRE) ||
+                                             (((MagicMeter && FireArrows) || LogicSpiritSunChest) && Bow && Sticks))) ||
+                                           (SmallKeys(SPIRIT_TEMPLE, 5) && HasExplosives && CanUse(STICKS)) ||
+                                           (SmallKeys(SPIRIT_TEMPLE, 3) &&
+                                            (CanUse(FIRE_ARROWS) || (LogicSpiritSunChest && Bow)) &&
+                                            CanUse(SILVER_GAUNTLETS)));
                                } }),
                 LocationAccess(SPIRIT_TEMPLE_STATUE_ROOM_HAND_CHEST, { [] {
                                    return SmallKeys(SPIRIT_TEMPLE, 3) && CanUse(SILVER_GAUNTLETS) &&
@@ -179,7 +244,8 @@ void AreaTable_Init_SpiritTemple() {
             },
             {
                 // Exits
-                Entrance(SPIRIT_TEMPLE_OUTDOOR_HANDS, { [] { return SoulGerudo && (CanJumpslash || HasExplosives); } }),
+                Entrance(SPIRIT_TEMPLE_OUTDOOR_HANDS,
+                         { [] { return CanDefeatEnemy(6, 0, 10, 0) && CanDefeatEnemy(6, 0, 20, 0); } }),
                 Entrance(SPIRIT_TEMPLE_BEYOND_CENTRAL_LOCKED_DOOR,
                          { [] { return SmallKeys(SPIRIT_TEMPLE, 4) && CanUse(SILVER_GAUNTLETS); } }),
                 Entrance(SPIRIT_TEMPLE_CHILD_CLIMB, { [] { return true; } }),
@@ -190,13 +256,12 @@ void AreaTable_Init_SpiritTemple() {
             {
                 // Locations
                 LocationAccess(SPIRIT_TEMPLE_SILVER_GAUNTLETS_CHEST, { [] {
-                                   return (SmallKeys(SPIRIT_TEMPLE, 3) && SoulAnubis && SoulBeamos && Longshot &&
-                                           HasExplosives) ||
+                                   return (SmallKeys(SPIRIT_TEMPLE, 3) && CanDefeatEnemies(6, 0, 17) && Longshot) ||
                                           SmallKeys(SPIRIT_TEMPLE, 5);
                                } }),
                 LocationAccess(SPIRIT_TEMPLE_MIRROR_SHIELD_CHEST, { [] {
-                                   return SmallKeys(SPIRIT_TEMPLE, 4) && SoulAnubis && SoulBeamos &&
-                                          CanUse(SILVER_GAUNTLETS) && HasExplosives;
+                                   return SmallKeys(SPIRIT_TEMPLE, 4) && CanDefeatEnemies(6, 0, 17) &&
+                                          CanUse(SILVER_GAUNTLETS);
                                } }),
             },
             {
@@ -218,21 +283,31 @@ void AreaTable_Init_SpiritTemple() {
                            } }),
             });
 
+        static constexpr auto ForEachEnemy_BeyondCentralLockedDoor = [](auto& enemyCheckFn) {
+            return enemyCheckFn(6, 0, 16, {}) || enemyCheckFn(6, 0, 18, {});
+        };
         areaTable[SPIRIT_TEMPLE_BEYOND_CENTRAL_LOCKED_DOOR] =
-            Area("Spirit Temple Beyond Central Locked Door", "Spirit Temple", SPIRIT_TEMPLE, NO_DAY_NIGHT_CYCLE, {},
+            Area("Spirit Temple Beyond Central Locked Door", "Spirit Temple", SPIRIT_TEMPLE, NO_DAY_NIGHT_CYCLE,
+                 {
+                     // Events
+                     EventAccess(&DekuBabaSticks, { [] {
+                         return DekuBabaSticks || ForEachEnemy_BeyondCentralLockedDoor(CanGetDekuBabaSticks);
+                     } }),
+                     EventAccess(&DekuBabaNuts, { [] {
+                         return DekuBabaNuts || ForEachEnemy_BeyondCentralLockedDoor(CanGetDekuBabaNuts);
+                     } }),
+                 },
                  {
                      // Locations
                      LocationAccess(SPIRIT_TEMPLE_NEAR_FOUR_ARMOS_CHEST, { [] {
                                         return (MirrorShield || (ExtraArrowEffects && CanUse(LIGHT_ARROWS))) &&
-                                               SoulAnubis && SoulBeamos && HasExplosives;
+                                               CanDefeatEnemies(6, 0, 17);
                                     } }),
                      LocationAccess(SPIRIT_TEMPLE_HALLWAY_LEFT_INVISIBLE_CHEST, { [] {
-                                        return SoulAnubis && SoulBeamos && (LogicLensSpirit || CanUse(LENS_OF_TRUTH)) &&
-                                               HasExplosives;
+                                        return CanDefeatEnemies(6, 0, 17) && (LogicLensSpirit || CanUse(LENS_OF_TRUTH));
                                     } }),
                      LocationAccess(SPIRIT_TEMPLE_HALLWAY_RIGHT_INVISIBLE_CHEST, { [] {
-                                        return SoulAnubis && SoulBeamos && (LogicLensSpirit || CanUse(LENS_OF_TRUTH)) &&
-                                               HasExplosives;
+                                        return CanDefeatEnemies(6, 0, 17) && (LogicLensSpirit || CanUse(LENS_OF_TRUTH));
                                     } }),
                  },
                  {
@@ -240,29 +315,44 @@ void AreaTable_Init_SpiritTemple() {
                      Entrance(SPIRIT_TEMPLE_BEYOND_FINAL_LOCKED_DOOR, { [] {
                                   return SmallKeys(SPIRIT_TEMPLE, 5) &&
                                          (LogicSpiritWall || CanUse(LONGSHOT) ||
-                                          ((SoulBeamos && (HasBombchus || Bombs || Nuts || CanUse(DINS_FIRE))) &&
-                                           (SoulSkulltula && (HasBombchus || Bow || CanUse(HOOKSHOT) || Hammer))));
+                                          (CanPassEnemies(6, 0, 23, {}, SpaceAroundEnemy::NARROW) &&
+                                           (!Settings::Enemizer && SoulSkulltula &&
+                                            (HasBombchus || Bow || CanUse(HOOKSHOT) || Hammer))));
                               } }),
                  });
 
-        areaTable[SPIRIT_TEMPLE_BEYOND_FINAL_LOCKED_DOOR] =
-            Area("Spirit Temple Beyond Final Locked Door", "Spirit Temple", SPIRIT_TEMPLE, NO_DAY_NIGHT_CYCLE, {},
-                 {
-                     // Locations
-                     LocationAccess(SPIRIT_TEMPLE_BOSS_KEY_CHEST, { [] {
-                                        return CanPlay(ZeldasLullaby) && ((CanTakeDamage && LogicFlamingChests) ||
-                                                                          (SoulDoorMimic && Bow && Hookshot));
-                                    } }),
-                     LocationAccess(SPIRIT_TEMPLE_TOPMOST_CHEST, { [] {
-                                        return (MirrorShield || (ExtraArrowEffects && CanUse(LIGHT_ARROWS))) &&
-                                               CanAdultAttack;
-                                    } }),
-                 },
-                 {
-                     // Exits
-                     Entrance(SPIRIT_TEMPLE_INSIDE_STATUE_HEAD,
-                              { [] { return MirrorShield && HasExplosives && Hookshot; } }),
-                 });
+        static constexpr auto ForEachEnemy_BeyondFinalLockedDoor = [](auto& enemyCheckFn) {
+            return enemyCheckFn(6, 0, 22, {}) || enemyCheckFn(6, 0, 25, {}) || enemyCheckFn(6, 0, 26, { 0, 1, 2, 3 }) ||
+                   ((HasExplosives || CanDetonateAnyEnemy(6, 0, 26, { 0, 1, 2 })) && enemyCheckFn(6, 0, 26, { 4 }));
+        };
+        areaTable[SPIRIT_TEMPLE_BEYOND_FINAL_LOCKED_DOOR] = Area(
+            "Spirit Temple Beyond Final Locked Door", "Spirit Temple", SPIRIT_TEMPLE, NO_DAY_NIGHT_CYCLE,
+            {
+                // Events
+                EventAccess(&DekuBabaSticks, { [] {
+                    return DekuBabaSticks || ForEachEnemy_BeyondFinalLockedDoor(CanGetDekuBabaSticks);
+                } }),
+                EventAccess(&DekuBabaNuts,
+                            { [] { return DekuBabaNuts || ForEachEnemy_BeyondFinalLockedDoor(CanGetDekuBabaNuts); } }),
+            },
+            {
+                // Locations
+                LocationAccess(SPIRIT_TEMPLE_BOSS_KEY_CHEST, { [] {
+                                   return CanPlay(ZeldasLullaby) &&
+                                          ((CanTakeDamage && LogicFlamingChests) || (SoulDoorMimic && Bow && Hookshot));
+                               } }),
+                LocationAccess(SPIRIT_TEMPLE_TOPMOST_CHEST, { [] {
+                                   return (MirrorShield || (ExtraArrowEffects && CanUse(LIGHT_ARROWS))) &&
+                                          CanAdultAttack;
+                               } }),
+            },
+            {
+                // Exits
+                Entrance(SPIRIT_TEMPLE_INSIDE_STATUE_HEAD, { [] {
+                             return (HasExplosives || CanDetonateAnyEnemy(6, 0, 26, { 0, 1, 2 })) && MirrorShield &&
+                                    Hookshot;
+                         } }),
+            });
 
         areaTable[SPIRIT_TEMPLE_INSIDE_STATUE_HEAD] =
             Area("Spirit Temple Inside Statue Head", "Spirit Temple", SPIRIT_TEMPLE, NO_DAY_NIGHT_CYCLE, {}, {},
@@ -487,7 +577,7 @@ void AreaTable_Init_SpiritTemple() {
         {
             // Events
             EventAccess(&SpiritTempleClear, { [] {
-                return SpiritTempleClear || (SoulTwinrova && SoulGerudo && CanUse(MIRROR_SHIELD) &&
+                return SpiritTempleClear || (CanDefeatEnemy(23, 0, 1, 0) && SoulTwinrova && CanUse(MIRROR_SHIELD) &&
                                              (CanUse(KOKIRI_SWORD) || CanUse(MASTER_SWORD) || CanUse(BIGGORON_SWORD)));
             } }),
         },

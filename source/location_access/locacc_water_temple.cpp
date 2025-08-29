@@ -2,6 +2,7 @@
 #include "logic.hpp"
 #include "entrance.hpp"
 #include "dungeon.hpp"
+#include "enemizer_logic.hpp"
 
 using namespace Logic;
 using namespace Settings;
@@ -26,7 +27,13 @@ void AreaTable_Init_WaterTemple() {
         // Water Temple logic currently assumes that the locked door leading to the upper water raising location is
         // unlocked from the start
         areaTable[WATER_TEMPLE_LOBBY] = Area(
-            "Water Temple Lobby", "Water Temple", WATER_TEMPLE, NO_DAY_NIGHT_CYCLE, {}, {},
+            "Water Temple Lobby", "Water Temple", WATER_TEMPLE, NO_DAY_NIGHT_CYCLE,
+            {
+                // Events
+                EventAccess(&DekuBabaSticks, { [] { return DekuBabaSticks || CanGetDekuBabaSticks(5, 0, 0); } }),
+                EventAccess(&DekuBabaNuts, { [] { return DekuBabaNuts || CanGetDekuBabaNuts(5, 0, 0); } }),
+            },
+            {},
             {
                 // Exits
                 Entrance(WATER_TEMPLE_ENTRYWAY, { [] { return true; } }),
@@ -52,7 +59,8 @@ void AreaTable_Init_WaterTemple() {
                          } }),
                 Entrance(WATER_TEMPLE_SOUTH_LOWER,
                          { [] {
-                              return WaterTempleLow && HasExplosives && (CanDive || CanUse(IRON_BOOTS)) &&
+                              return WaterTempleLow && HasExplosives && CanPassEnemy(5, 0, 3, 0) &&
+                                     (CanDive || CanUse(IRON_BOOTS)) &&
                                      (LogicFewerTunicRequirements || CanUse(ZORA_TUNIC));
                           },
                            /*Glitched*/
@@ -73,7 +81,7 @@ void AreaTable_Init_WaterTemple() {
                          } }),
                 Entrance(WATER_TEMPLE_EAST_MIDDLE, { [] {
                              return (WaterTempleLow || WaterTempleMiddle || (CanUse(IRON_BOOTS) && WaterTimer >= 16)) &&
-                                    CanUse(HOOKSHOT);
+                                    CanUse(HOOKSHOT) && CanPassEnemies(5, 0, 4, {}, SpaceAroundEnemy::NARROW);
                          } }),
                 Entrance(WATER_TEMPLE_WEST_MIDDLE,
                          { [] { return WaterTempleMiddle; },
@@ -176,22 +184,16 @@ void AreaTable_Init_WaterTemple() {
                               { [] { return WaterTempleLow && (HasFireSourceWithTorch || CanUse(BOW)); } }),
                  });
 
-        areaTable[WATER_TEMPLE_MAP_ROOM] = Area(
-            "Water Temple Map Room", "Water Temple", WATER_TEMPLE, NO_DAY_NIGHT_CYCLE, {},
-            {
-                // Locations
-                LocationAccess(WATER_TEMPLE_MAP_CHEST, { [] {
-                                   return SoulSpike && ((MagicMeter && CanUse(KOKIRI_SWORD)) || CanUse(MASTER_SWORD) ||
-                                                        CanUse(BIGGORON_SWORD) || CanUse(HOOKSHOT));
-                               } }),
-            },
-            {
-                // Exits
-                Entrance(WATER_TEMPLE_EAST_LOWER, { [] {
-                             return SoulSpike && ((MagicMeter && CanUse(KOKIRI_SWORD)) || CanUse(MASTER_SWORD) ||
-                                                  CanUse(BIGGORON_SWORD) || CanUse(HOOKSHOT));
-                         } }),
-            });
+        areaTable[WATER_TEMPLE_MAP_ROOM] =
+            Area("Water Temple Map Room", "Water Temple", WATER_TEMPLE, NO_DAY_NIGHT_CYCLE, {},
+                 {
+                     // Locations
+                     LocationAccess(WATER_TEMPLE_MAP_CHEST, { [] { return CanDefeatEnemies(5, 0, 19); } }),
+                 },
+                 {
+                     // Exits
+                     Entrance(WATER_TEMPLE_EAST_LOWER, { [] { return CanDefeatEnemies(5, 0, 19); } }),
+                 });
 
         areaTable[WATER_TEMPLE_CRACKED_WALL] = Area(
             "Water Temple Cracked Wall", "Water Temple", WATER_TEMPLE, NO_DAY_NIGHT_CYCLE, {},
@@ -207,23 +209,16 @@ void AreaTable_Init_WaterTemple() {
                 Entrance(WATER_TEMPLE_EAST_LOWER, { [] { return true; } }),
             });
 
-        areaTable[WATER_TEMPLE_TORCH_ROOM] = Area(
-            "Water Temple Torch Room", "Water Temple", WATER_TEMPLE, NO_DAY_NIGHT_CYCLE, {},
-            {
-                // Locations
-                LocationAccess(WATER_TEMPLE_TORCHES_CHEST, { [] {
-                                   return SoulShellBlade &&
-                                          ((MagicMeter && CanUse(KOKIRI_SWORD)) || CanUse(MASTER_SWORD) ||
-                                           CanUse(BIGGORON_SWORD) || CanUse(HOOKSHOT));
-                               } }),
-            },
-            {
-                // Exits
-                Entrance(WATER_TEMPLE_EAST_LOWER, { [] {
-                             return SoulShellBlade && ((MagicMeter && CanUse(KOKIRI_SWORD)) || CanUse(MASTER_SWORD) ||
-                                                       CanUse(BIGGORON_SWORD) || CanUse(HOOKSHOT));
-                         } }),
-            });
+        areaTable[WATER_TEMPLE_TORCH_ROOM] =
+            Area("Water Temple Torch Room", "Water Temple", WATER_TEMPLE, NO_DAY_NIGHT_CYCLE, {},
+                 {
+                     // Locations
+                     LocationAccess(WATER_TEMPLE_TORCHES_CHEST, { [] { return CanDefeatEnemies(5, 0, 18); } }),
+                 },
+                 {
+                     // Exits
+                     Entrance(WATER_TEMPLE_EAST_LOWER, { [] { return CanDefeatEnemies(5, 0, 18); } }),
+                 });
 
         areaTable[WATER_TEMPLE_NORTH_LOWER] =
             Area("Water Temple North Lower", "Water Temple", WATER_TEMPLE, NO_DAY_NIGHT_CYCLE, {}, {},
@@ -246,7 +241,16 @@ void AreaTable_Init_WaterTemple() {
                  });
 
         areaTable[WATER_TEMPLE_BOULDERS_LOWER] =
-            Area("Water Temple Boulders Lower", "Water Temple", WATER_TEMPLE, NO_DAY_NIGHT_CYCLE, {},
+            Area("Water Temple Boulders Lower", "Water Temple", WATER_TEMPLE, NO_DAY_NIGHT_CYCLE,
+                 {
+                     // Events
+                     EventAccess(&DekuBabaSticks, { [] {
+                         return DekuBabaSticks || CanGetDekuBabaSticks(5, 0, 12, { 4, 6 });
+                     } }),
+                     EventAccess(&DekuBabaNuts, { [] {
+                         return DekuBabaNuts || CanGetDekuBabaNuts(5, 0, 12, { 4, 6 });
+                     } }),
+                 },
                  {
                      // Locations
                      LocationAccess(WATER_TEMPLE_GS_NEAR_BOSS_KEY_CHEST, { [] {
@@ -267,7 +271,13 @@ void AreaTable_Init_WaterTemple() {
                  });
 
         areaTable[WATER_TEMPLE_BLOCK_ROOM] = Area(
-            "Water Temple Block Room", "Water Temple", WATER_TEMPLE, NO_DAY_NIGHT_CYCLE, {}, {},
+            "Water Temple Block Room", "Water Temple", WATER_TEMPLE, NO_DAY_NIGHT_CYCLE,
+            {
+                // Events
+                EventAccess(&DekuBabaSticks, { [] { return DekuBabaSticks || CanGetDekuBabaSticks(5, 0, 14); } }),
+                EventAccess(&DekuBabaNuts, { [] { return DekuBabaNuts || CanGetDekuBabaNuts(5, 0, 14); } }),
+            },
+            {},
             {
                 // Exits
                 Entrance(WATER_TEMPLE_BOULDERS_LOWER,
@@ -282,7 +292,13 @@ void AreaTable_Init_WaterTemple() {
             });
 
         areaTable[WATER_TEMPLE_JETS_ROOM] =
-            Area("Water Temple Jets Room", "Water Temple", WATER_TEMPLE, NO_DAY_NIGHT_CYCLE, {}, {},
+            Area("Water Temple Jets Room", "Water Temple", WATER_TEMPLE, NO_DAY_NIGHT_CYCLE,
+                 {
+                     // Events
+                     EventAccess(&DekuBabaSticks, { [] { return DekuBabaSticks || CanGetDekuBabaSticks(5, 0, 15); } }),
+                     EventAccess(&DekuBabaNuts, { [] { return DekuBabaNuts || CanGetDekuBabaNuts(5, 0, 15); } }),
+                 },
+                 {},
                  {
                      // Exits
                      Entrance(WATER_TEMPLE_BLOCK_ROOM, { [] { return CanUse(HOOKSHOT); } }),
@@ -290,7 +306,14 @@ void AreaTable_Init_WaterTemple() {
                  });
 
         areaTable[WATER_TEMPLE_BOULDERS_UPPER] =
-            Area("Water Temple Boulders Upper", "Water Temple", WATER_TEMPLE, NO_DAY_NIGHT_CYCLE, {}, {},
+            Area("Water Temple Boulders Upper", "Water Temple", WATER_TEMPLE, NO_DAY_NIGHT_CYCLE,
+                 {
+                     // Events
+                     EventAccess(&DekuBabaSticks,
+                                 { [] { return DekuBabaSticks || CanGetDekuBabaSticks(5, 0, 12, { 0 }); } }),
+                     EventAccess(&DekuBabaNuts, { [] { return DekuBabaNuts || CanGetDekuBabaNuts(5, 0, 12, { 0 }); } }),
+                 },
+                 {},
                  {
                      // Exits
                      Entrance(WATER_TEMPLE_BOULDERS_LOWER, { [] { return true; } }),
@@ -319,8 +342,19 @@ void AreaTable_Init_WaterTemple() {
                          } }),
             });
 
+        static constexpr auto ForEachEnemy_SouthLower = [](auto& enemyCheckFn) {
+            return enemyCheckFn(5, 0, 3, { 0 }) ||
+                   ((CanUse(HOOKSHOT) || (IsAdult && CanUse(HOVER_BOOTS))) && enemyCheckFn(5, 0, 3, { 2, 3 }));
+        };
         areaTable[WATER_TEMPLE_SOUTH_LOWER] =
-            Area("Water Temple South Lower", "Water Temple", WATER_TEMPLE, NO_DAY_NIGHT_CYCLE, {},
+            Area("Water Temple South Lower", "Water Temple", WATER_TEMPLE, NO_DAY_NIGHT_CYCLE,
+                 {
+                     // Events
+                     EventAccess(&DekuBabaSticks,
+                                 { [] { return DekuBabaSticks || ForEachEnemy_SouthLower(CanGetDekuBabaSticks); } }),
+                     EventAccess(&DekuBabaNuts,
+                                 { [] { return DekuBabaNuts || ForEachEnemy_SouthLower(CanGetDekuBabaNuts); } }),
+                 },
                  {
                      // Locations
                      LocationAccess(WATER_TEMPLE_GS_BEHIND_GATE,
@@ -343,7 +377,13 @@ void AreaTable_Init_WaterTemple() {
                  });
 
         areaTable[WATER_TEMPLE_WEST_LOWER] =
-            Area("Water Temple West Lower", "Water Temple", WATER_TEMPLE, NO_DAY_NIGHT_CYCLE, {}, {},
+            Area("Water Temple West Lower", "Water Temple", WATER_TEMPLE, NO_DAY_NIGHT_CYCLE,
+                 {
+                     // Events
+                     EventAccess(&DekuBabaSticks, { [] { return DekuBabaSticks || CanGetDekuBabaSticks(5, 0, 9); } }),
+                     EventAccess(&DekuBabaNuts, { [] { return DekuBabaNuts || CanGetDekuBabaNuts(5, 0, 9); } }),
+                 },
+                 {},
                  {
                      // Exits
                      Entrance(WATER_TEMPLE_LOBBY,
@@ -357,23 +397,29 @@ void AreaTable_Init_WaterTemple() {
                  });
 
         areaTable[WATER_TEMPLE_DRAGON_ROOM] = Area(
-            "Water Temple Dragon Room", "Water Temple", WATER_TEMPLE, NO_DAY_NIGHT_CYCLE, {},
+            "Water Temple Dragon Room", "Water Temple", WATER_TEMPLE, NO_DAY_NIGHT_CYCLE,
+            {
+                // Events
+                EventAccess(&DekuBabaSticks, { [] { return DekuBabaSticks || CanGetDekuBabaSticks(5, 0, 8); } }),
+                EventAccess(&DekuBabaNuts, { [] { return DekuBabaNuts || CanGetDekuBabaNuts(5, 0, 8); } }),
+            },
             {
                 // Locations
                 LocationAccess(
                     WATER_TEMPLE_DRAGON_CHEST,
                     { [] {
-                         return (CanUse(HOOKSHOT) && CanUse(IRON_BOOTS)) ||
-                                (IsAdult && LogicWaterDragonAdult && HasBombchus && (CanDive || CanUse(IRON_BOOTS))) ||
-                                Here(WATER_TEMPLE_RIVER, [] {
-                                    return IsAdult && CanUse(BOW) &&
-                                           ((LogicWaterDragonAdult && (CanDive || CanUse(IRON_BOOTS))) ||
-                                            LogicWaterDragonJumpDive);
-                                });
+                         return CanPassEnemies(5, 0, 8) &&
+                                ((CanUse(HOOKSHOT) && CanUse(IRON_BOOTS)) ||
+                                 (IsAdult && LogicWaterDragonAdult && HasBombchus && (CanDive || CanUse(IRON_BOOTS))) ||
+                                 Here(WATER_TEMPLE_RIVER, [] {
+                                     return IsAdult && CanUse(BOW) &&
+                                            ((LogicWaterDragonAdult && (CanDive || CanUse(IRON_BOOTS))) ||
+                                             LogicWaterDragonJumpDive);
+                                 }));
                      },
                       /*Glitched*/
                       [] {
-                          return Bombs &&
+                          return CanPassEnemies(5, 0, 8) && Bombs &&
                                  ((IsAdult && CanDoGlitch(GlitchType::ISG, GlitchDifficulty::ADVANCED)) ||
                                   (CanUse(IRON_BOOTS) && CanDoGlitch(GlitchType::ISG, GlitchDifficulty::INTERMEDIATE)));
                       } }),
@@ -431,10 +477,8 @@ void AreaTable_Init_WaterTemple() {
             "Water Temple Central Pillar Basement", "Water Temple", WATER_TEMPLE, NO_DAY_NIGHT_CYCLE, {},
             {
                 // Locations
-                LocationAccess(WATER_TEMPLE_CENTRAL_PILLAR_CHEST, { [] {
-                                   return SoulSpike && SoulShellBlade && CanUse(HOOKSHOT) && CanUse(IRON_BOOTS) &&
-                                          WaterTimer >= 40;
-                               } }),
+                LocationAccess(WATER_TEMPLE_CENTRAL_PILLAR_CHEST,
+                               { [] { return CanDefeatEnemies(5, 0, 2) && WaterTimer >= 40; } }),
             },
             {
                 // Exits
@@ -442,7 +486,12 @@ void AreaTable_Init_WaterTemple() {
             });
 
         areaTable[WATER_TEMPLE_EAST_MIDDLE] =
-            Area("Water Temple East Middle", "Water Temple", WATER_TEMPLE, NO_DAY_NIGHT_CYCLE, {},
+            Area("Water Temple East Middle", "Water Temple", WATER_TEMPLE, NO_DAY_NIGHT_CYCLE,
+                 {
+                     // Events
+                     EventAccess(&DekuBabaSticks, { [] { return DekuBabaSticks || CanGetDekuBabaSticks(5, 0, 4); } }),
+                     EventAccess(&DekuBabaNuts, { [] { return DekuBabaNuts || CanGetDekuBabaNuts(5, 0, 4); } }),
+                 },
                  {
                      // Locations
                      LocationAccess(WATER_TEMPLE_COMPASS_CHEST, { [] { return CanUseProjectile; } }),
@@ -453,7 +502,13 @@ void AreaTable_Init_WaterTemple() {
                  });
 
         areaTable[WATER_TEMPLE_WEST_MIDDLE] =
-            Area("Water Temple West Middle", "Water Temple", WATER_TEMPLE, NO_DAY_NIGHT_CYCLE, {}, {},
+            Area("Water Temple West Middle", "Water Temple", WATER_TEMPLE, NO_DAY_NIGHT_CYCLE,
+                 {
+                     // Events
+                     EventAccess(&DekuBabaSticks, { [] { return DekuBabaSticks || CanGetDekuBabaSticks(5, 0, 10); } }),
+                     EventAccess(&DekuBabaNuts, { [] { return DekuBabaNuts || CanGetDekuBabaNuts(5, 0, 10); } }),
+                 },
+                 {},
                  {
                      // Exits
                      Entrance(WATER_TEMPLE_LOBBY, { [] { return true; } }),
@@ -500,23 +555,37 @@ void AreaTable_Init_WaterTemple() {
             });
 
         areaTable[WATER_TEMPLE_FALLING_PLATFORM_ROOM] =
-            Area("Water Temple Falling Platform Room", "Water Temple", WATER_TEMPLE, NO_DAY_NIGHT_CYCLE, {},
+            Area("Water Temple Falling Platform Room", "Water Temple", WATER_TEMPLE, NO_DAY_NIGHT_CYCLE,
+                 {
+                     // Events
+                     EventAccess(&DekuBabaSticks, { [] { return DekuBabaSticks || CanGetDekuBabaSticks(5, 0, 5); } }),
+                     EventAccess(&DekuBabaNuts, { [] { return DekuBabaNuts || CanGetDekuBabaNuts(5, 0, 5); } }),
+                 },
                  {
                      // Locations
                      LocationAccess(WATER_TEMPLE_GS_FALLING_PLATFORM_ROOM, { [] {
-                                        return CanUse(LONGSHOT) ||
-                                               (LogicWaterFallingPlatformGS && IsAdult && HookshotOrBoomerang);
+                                        return CanPassAnyEnemy(5, 0, 5, {}, SpaceAroundEnemy::NARROW) &&
+                                               (CanUse(LONGSHOT) ||
+                                                (LogicWaterFallingPlatformGS && IsAdult && HookshotOrBoomerang));
                                     } }),
                  },
                  {
                      // Exits
                      Entrance(WATER_TEMPLE_LOBBY, { [] { return CanUse(HOOKSHOT) && SmallKeys(WATER_TEMPLE, 4); } }),
-                     Entrance(WATER_TEMPLE_DRAGON_PILLARS_ROOM,
-                              { [] { return CanUse(HOOKSHOT) && SmallKeys(WATER_TEMPLE, 5); } }),
+                     Entrance(WATER_TEMPLE_DRAGON_PILLARS_ROOM, { [] {
+                                  return CanPassAnyEnemy(5, 0, 5, {}, SpaceAroundEnemy::NARROW) && CanUse(HOOKSHOT) &&
+                                         SmallKeys(WATER_TEMPLE, 5);
+                              } }),
                  });
 
         areaTable[WATER_TEMPLE_DRAGON_PILLARS_ROOM] =
-            Area("Water Temple Dragon Pillars Room", "Water Temple", WATER_TEMPLE, NO_DAY_NIGHT_CYCLE, {}, {},
+            Area("Water Temple Dragon Pillars Room", "Water Temple", WATER_TEMPLE, NO_DAY_NIGHT_CYCLE,
+                 {
+                     // Events
+                     EventAccess(&DekuBabaSticks, { [] { return DekuBabaSticks || CanGetDekuBabaSticks(5, 0, 6); } }),
+                     EventAccess(&DekuBabaNuts, { [] { return DekuBabaNuts || CanGetDekuBabaNuts(5, 0, 6); } }),
+                 },
+                 {},
                  {
                      // Exits
                      Entrance(WATER_TEMPLE_FALLING_PLATFORM_ROOM, { [] { return CanUseProjectile; } }),
@@ -527,16 +596,8 @@ void AreaTable_Init_WaterTemple() {
             Area("Water Temple Dark Link Room", "Water Temple", WATER_TEMPLE, NO_DAY_NIGHT_CYCLE, {}, {},
                  {
                      // Exits
-                     Entrance(WATER_TEMPLE_DRAGON_PILLARS_ROOM, { [] {
-                                  return SoulDarkLink &&
-                                         (CanUse(KOKIRI_SWORD) || CanUse(MASTER_SWORD) || CanUse(BIGGORON_SWORD)) &&
-                                         Hearts > 0;
-                              } }),
-                     Entrance(WATER_TEMPLE_LONGSHOT_ROOM, { [] {
-                                  return SoulDarkLink &&
-                                         (CanUse(KOKIRI_SWORD) || CanUse(MASTER_SWORD) || CanUse(BIGGORON_SWORD)) &&
-                                         Hearts > 0;
-                              } }),
+                     Entrance(WATER_TEMPLE_DRAGON_PILLARS_ROOM, { [] { return CanDefeatEnemy(5, 0, 13, 0xFF); } }),
+                     Entrance(WATER_TEMPLE_LONGSHOT_ROOM, { [] { return CanDefeatEnemy(5, 0, 13, 0xFF); } }),
                  });
 
         areaTable[WATER_TEMPLE_LONGSHOT_ROOM] =

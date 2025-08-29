@@ -424,6 +424,14 @@ void UpdateGenerateMenu(u32 kDown) {
     }
 }
 
+void GoToMenu(Menu* newMenu) {
+    if (currentMenu != newMenu) {
+        menuList.push_back(newMenu);
+        currentMenu = menuList.back();
+        ModeChangeInit();
+    }
+}
+
 void PrintMainMenu() {
     printf("\x1b[0;%dHMain Settings", 1 + (BOTTOM_WIDTH - 13) / 2);
 

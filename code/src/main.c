@@ -13,6 +13,9 @@
 #include "grotto.h"
 #include "item_effect.h"
 #include "triforce.h"
+#include "objects.h"
+#include "enemizer.h"
+#include "scene.h"
 
 #include "z3D/z3D.h"
 #include "3ds/extdata.h"
@@ -28,6 +31,7 @@ void Randomizer_Init() {
     Actor_Init();
     Entrance_Init();
     ItemOverride_Init();
+    Enemizer_Init();
     extDataInit();
     irrstInit();
 
@@ -42,23 +46,21 @@ void before_Play_Init(GlobalContext* globalCtx) {
         rRandomizerInit = 1;
     }
     gGlobalContext = globalCtx;
+    rSceneLayer    = 0;
 }
 
 void before_GlobalContext_Update(GlobalContext* globalCtx) {
     rGameplayFrames++;
     ItemOverride_Update();
-    ActorSetup_Extra();
+    ExtendedObject_UpdateEntries();
     Model_UpdateAll(globalCtx);
     Input_Update();
     SaveFile_EnforceHealthLimit();
-
     Settings_SkipSongReplays();
-
     Multiplayer_Run();
-
     ItemEffect_RupeeAmmo(&gSaveContext);
-
     Triforce_HandleCreditsWarp();
+    Enemizer_Update();
 }
 
 void after_GlobalContext_Update() {

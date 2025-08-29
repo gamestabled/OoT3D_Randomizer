@@ -12,5 +12,15 @@ void EnAnubice_rUpdate(Actor* thisx, GlobalContext* globalCtx) {
             this->flameCircles[i] = 0;
         }
     }
+
+    // Fix Anubis falling out of bounds when trying to go back to home position
+    if (this->isPlayerOutOfRange) {
+        if (thisx->world.pos.y < thisx->home.pos.y) {
+            thisx->gravity    = 0.0f;
+            thisx->velocity.y = 0.0f;
+        }
+        Math_SmoothStepToF(&thisx->world.pos.y, thisx->home.pos.y, 3, 10.0, 0.0);
+    }
+
     EnAnubice_Update(thisx, globalCtx);
 }

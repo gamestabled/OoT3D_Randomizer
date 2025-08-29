@@ -2,6 +2,7 @@
 #include "logic.hpp"
 #include "entrance.hpp"
 #include "dungeon.hpp"
+#include "enemizer_logic.hpp"
 
 using namespace Logic;
 using namespace Settings;
@@ -23,36 +24,57 @@ void AreaTable_Init_JabuJabusBelly() {
     |     VANILLA DUNGEON      |
     ---------------------------*/
     if (Dungeon::JabuJabusBelly.IsVanilla()) {
+        static constexpr auto ForEachEnemy_Beginning = [](auto& enemyCheckFn) {
+            return enemyCheckFn(2, 0, 0, { 0, 1, 4 }) || (CanPassEnemy(2, 0, 0, 4) && enemyCheckFn(2, 0, 0, { 3 }));
+        };
         areaTable[JABU_JABUS_BELLY_BEGINNING] =
-            Area("Jabu Jabus Belly Beginning", "Jabu Jabus Belly", JABU_JABUS_BELLY, NO_DAY_NIGHT_CYCLE, {}, {},
+            Area("Jabu Jabus Belly Beginning", "Jabu Jabus Belly", JABU_JABUS_BELLY, NO_DAY_NIGHT_CYCLE,
+                 {
+                     // Events
+                     EventAccess(&DekuBabaSticks,
+                                 { [] { return DekuBabaSticks || ForEachEnemy_Beginning(CanGetDekuBabaSticks); } }),
+                     EventAccess(&DekuBabaNuts,
+                                 { [] { return DekuBabaNuts || ForEachEnemy_Beginning(CanGetDekuBabaNuts); } }),
+                 },
+                 {},
                  {
                      // Exits
                      Entrance(JABU_JABUS_BELLY_ENTRYWAY, { [] { return true; } }),
                      Entrance(JABU_JABUS_BELLY_LIFT_MIDDLE,
-                              { [] { return CanUseProjectile; },
+                              { [] {
+                                   return CanUseProjectile && CanPassEnemies(2, 0, 0, { 3, 4 });
+                               },
                                 /*Glitched*/
                                 [] {
-                                    return (CanUse(STICKS) && CanTakeDamage &&
+                                    return (CanPassEnemies(2, 0, 0, { 3, 4 }) && CanUse(STICKS) && CanTakeDamage &&
                                             CanDoGlitch(GlitchType::QPA, GlitchDifficulty::EXPERT)) ||
                                            CanDoGlitch(GlitchType::SuperStab, GlitchDifficulty::NOVICE);
                                 } }),
                  });
 
         areaTable[JABU_JABUS_BELLY_LIFT_MIDDLE] =
-            Area("Jabu Jabus Belly Lift Middle", "Jabu Jabus Belly", JABU_JABUS_BELLY, NO_DAY_NIGHT_CYCLE, {}, {},
+            Area("Jabu Jabus Belly Lift Middle", "Jabu Jabus Belly", JABU_JABUS_BELLY, NO_DAY_NIGHT_CYCLE,
+                 {
+                     // Events
+                     EventAccess(&DekuBabaSticks, { [] { return DekuBabaSticks || CanGetDekuBabaSticks(2, 0, 1); } }),
+                     EventAccess(&DekuBabaNuts, { [] { return DekuBabaNuts || CanGetDekuBabaNuts(2, 0, 1); } }),
+                 },
+                 {},
                  {
                      // Exits
                      Entrance(JABU_JABUS_BELLY_BEGINNING, { [] { return true; } }),
-                     Entrance(JABU_JABUS_BELLY_MAIN_UPPER, { [] { return true; } }),
-                     Entrance(JABU_JABUS_BELLY_LIFT_LOWER, { [] { return true; } }),
+                     Entrance(JABU_JABUS_BELLY_MAIN_UPPER, { [] { return CanPassEnemy(2, 0, 1, 1); } }),
+                     Entrance(JABU_JABUS_BELLY_LIFT_LOWER, { [] { return CanPassEnemy(2, 0, 1, 1); } }),
                      Entrance(JABU_JABUS_BELLY_NEAR_BOSS_ROOM,
                               { [] {
                                    return HasAccessTo(JABU_JABUS_BELLY_LIFT_UPPER) ||
-                                          (LogicJabuBossGSAdult && IsAdult && CanUse(HOVER_BOOTS));
+                                          (CanPassEnemy(2, 0, 1, 1) && LogicJabuBossGSAdult && IsAdult &&
+                                           CanUse(HOVER_BOOTS));
                                },
                                 /*Glitched*/
                                 [] {
-                                    return (CanDoGlitch(GlitchType::BombHover, GlitchDifficulty::NOVICE) ||
+                                    return CanPassEnemy(2, 0, 1, 1) &&
+                                           (CanDoGlitch(GlitchType::BombHover, GlitchDifficulty::NOVICE) ||
                                             CanDoGlitch(GlitchType::Megaflip, GlitchDifficulty::INTERMEDIATE)) &&
                                            GlitchJabuSwitch &&
                                            (Fish || Bugs || CanUse(FARORES_WIND) || (IsAdult && ClaimCheck));
@@ -60,23 +82,34 @@ void AreaTable_Init_JabuJabusBelly() {
                  });
 
         areaTable[JABU_JABUS_BELLY_MAIN_UPPER] =
-            Area("Jabu Jabus Belly Main Upper", "Jabu Jabus Belly", JABU_JABUS_BELLY, NO_DAY_NIGHT_CYCLE, {}, {},
+            Area("Jabu Jabus Belly Main Upper", "Jabu Jabus Belly", JABU_JABUS_BELLY, NO_DAY_NIGHT_CYCLE,
+                 {
+                     // Events
+                     EventAccess(&DekuBabaSticks, { [] { return DekuBabaSticks || CanGetDekuBabaSticks(2, 0, 2); } }),
+                     EventAccess(&DekuBabaNuts, { [] { return DekuBabaNuts || CanGetDekuBabaNuts(2, 0, 2); } }),
+                 },
+                 {},
                  {
                      // Exits
                      Entrance(JABU_JABUS_BELLY_LIFT_MIDDLE, { [] { return true; } }),
                      Entrance(JABU_JABUS_BELLY_MAIN_LOWER, { [] { return true; } }),
-                     Entrance(JABU_JABUS_BELLY_FORKED_CORRIDOR, { [] { return true; } }),
+                     Entrance(JABU_JABUS_BELLY_FORKED_CORRIDOR, { [] { return CanPassEnemy(2, 0, 2, 2); } }),
                      Entrance(JABU_JABUS_BELLY_BIGOCTO_ROOM, { [] {
                                   return Here(JABU_JABUS_BELLY_GREEN_TENTACLE, [] {
-                                      // Biri Soul is not really required but it can be difficult to target the tentacle
-                                      // with the Biri around it.
-                                      return SoulParasiticTentacle && SoulBiriBari && CanUse(BOOMERANG);
+                                      // Defeating Biri is not really required but it can be difficult to target the
+                                      // tentacle with the Biri around it.
+                                      return CanDefeatEnemies(2, 0, 8) && SoulParasiticTentacle && CanUse(BOOMERANG);
                                   });
                               } }),
                  });
 
         areaTable[JABU_JABUS_BELLY_MAIN_LOWER] =
-            Area("Jabu Jabus Belly Main Lower", "Jabu Jabus Belly", JABU_JABUS_BELLY, NO_DAY_NIGHT_CYCLE, {},
+            Area("Jabu Jabus Belly Main Lower", "Jabu Jabus Belly", JABU_JABUS_BELLY, NO_DAY_NIGHT_CYCLE,
+                 {
+                     // Events
+                     EventAccess(&DekuBabaSticks, { [] { return DekuBabaSticks || CanGetDekuBabaSticks(2, 0, 3); } }),
+                     EventAccess(&DekuBabaNuts, { [] { return DekuBabaNuts || CanGetDekuBabaNuts(2, 0, 3); } }),
+                 },
                  {
                      // Locations
                      LocationAccess(JABU_JABUS_BELLY_GS_LOBBY_BASEMENT_LOWER,
@@ -99,31 +132,44 @@ void AreaTable_Init_JabuJabusBelly() {
                  {
                      // Exits
                      Entrance(JABU_JABUS_BELLY_MAIN_UPPER, { [] { return true; } }),
-                     Entrance(JABU_JABUS_BELLY_SHABOMB_CORRIDOR, { [] { return true; } }),
+                     Entrance(JABU_JABUS_BELLY_SHABOMB_CORRIDOR, { [] {
+                                  return CanPassEnemies(2, 0, 14, { 10, 11, 14, 15 });
+                              } }),
                      Entrance(JABU_JABUS_BELLY_LOWER_SIDE_ROOM, { [] { return true; } }),
                  });
 
-        areaTable[JABU_JABUS_BELLY_SHABOMB_CORRIDOR] =
-            Area("Jabu Jabus Belly Shabomb Corridor", "Jabu Jabus Belly", JABU_JABUS_BELLY, NO_DAY_NIGHT_CYCLE,
-                 {
-                     // Events
-                     EventAccess(&FairyPot, { [] { return true; } }),
-                 },
-                 {
-                     // Locations
-                     LocationAccess(JABU_JABUS_BELLY_GS_WATER_SWITCH_ROOM, { [] { return true; } }),
-                 },
-                 {
-                     // Exits
-                     Entrance(JABU_JABUS_BELLY_MAIN_LOWER, { [] { return true; } }),
-                     Entrance(JABU_JABUS_BELLY_LIFT_LOWER, { [] { return CanUseProjectile; },
-                                                             /*Glitched*/
-                                                             [] {
-                                                                 return CanUse(STICKS) && CanTakeDamage &&
-                                                                        CanDoGlitch(GlitchType::QPA,
-                                                                                    GlitchDifficulty::EXPERT);
-                                                             } }),
-                 });
+        static constexpr auto ForEachEnemy_ShabomCorridor = [](auto& enemyCheckFn) {
+            return CanPassEnemies(2, 0, 14, { 11, 12, 13, 14, 15 }) && enemyCheckFn(2, 0, 14, {});
+        };
+        areaTable[JABU_JABUS_BELLY_SHABOMB_CORRIDOR] = Area(
+            "Jabu Jabus Belly Shabomb Corridor", "Jabu Jabus Belly", JABU_JABUS_BELLY, NO_DAY_NIGHT_CYCLE,
+            {
+                // Events
+                EventAccess(&DekuBabaSticks,
+                            { [] { return DekuBabaSticks || ForEachEnemy_ShabomCorridor(CanGetDekuBabaSticks); } }),
+                EventAccess(&DekuBabaNuts,
+                            { [] { return DekuBabaNuts || ForEachEnemy_ShabomCorridor(CanGetDekuBabaNuts); } }),
+                EventAccess(&FairyPot, { [] { return true; } }),
+            },
+            {
+                // Locations
+                LocationAccess(JABU_JABUS_BELLY_GS_WATER_SWITCH_ROOM, { [] { return true; } }),
+            },
+            {
+                // Exits
+                Entrance(JABU_JABUS_BELLY_MAIN_LOWER, { [] {
+                             return CanPassEnemies(2, 0, 14, { 10, 11, 14, 15 });
+                         } }),
+                Entrance(JABU_JABUS_BELLY_LIFT_LOWER,
+                         { [] {
+                              return CanPassEnemies(2, 0, 14, { 12, 13, 16 }) && CanUseProjectile;
+                          },
+                           /*Glitched*/
+                           [] {
+                               return CanPassEnemies(2, 0, 14, { 12, 13, 16 }) && CanUse(STICKS) && CanTakeDamage &&
+                                      CanDoGlitch(GlitchType::QPA, GlitchDifficulty::EXPERT);
+                           } }),
+            });
 
         areaTable[JABU_JABUS_BELLY_LOWER_SIDE_ROOM] =
             Area("Jabu Jabus Belly Lower Side Room", "Jabu Jabus Belly", JABU_JABUS_BELLY, NO_DAY_NIGHT_CYCLE,
@@ -154,36 +200,56 @@ void AreaTable_Init_JabuJabusBelly() {
                  },
                  {
                      // Exits
-                     Entrance(JABU_JABUS_BELLY_SHABOMB_CORRIDOR, { [] { return true; } }),
+                     Entrance(JABU_JABUS_BELLY_SHABOMB_CORRIDOR, { [] {
+                                  return CanPassEnemies(2, 0, 14, { 12, 13, 16 });
+                              } }),
                      Entrance(JABU_JABUS_BELLY_LIFT_MIDDLE, { [] { return true; } }),
                  });
 
-        areaTable[JABU_JABUS_BELLY_FORKED_CORRIDOR] =
-            Area("Jabu Jabus Belly Forked Corridor", "Jabu Jabus Belly", JABU_JABUS_BELLY, NO_DAY_NIGHT_CYCLE, {}, {},
-                 {
-                     // Exits
-                     Entrance(JABU_JABUS_BELLY_MAIN_UPPER, { [] { return true; } }),
-                     Entrance(JABU_JABUS_BELLY_BOOMERANG_ROOM, { [] { return true; } }),
-                     Entrance(JABU_JABUS_BELLY_MAP_ROOM, { [] { return true; } }),
-                     Entrance(JABU_JABUS_BELLY_COMPASS_ROOM, { [] {
-                                  return Here(JABU_JABUS_BELLY_MAP_ROOM,
-                                              [] { return SoulParasiticTentacle && CanUse(BOOMERANG); });
-                              } }),
-                     Entrance(JABU_JABUS_BELLY_BLUE_TENTACLE, { [] {
-                                  return Here(JABU_JABUS_BELLY_MAP_ROOM,
-                                              [] { return SoulParasiticTentacle && CanUse(BOOMERANG); });
-                              } }),
-                     Entrance(JABU_JABUS_BELLY_GREEN_TENTACLE, { [] {
-                                  return Here(JABU_JABUS_BELLY_BLUE_TENTACLE,
-                                              [] { return SoulParasiticTentacle && CanUse(BOOMERANG); });
-                              } }),
-                 });
+        static constexpr auto ForEachEnemy_ForkedCorridor = [](auto& enemyCheckFn) {
+            return CanPassEnemies(2, 0, 7, { 0, 1 }) && enemyCheckFn(2, 0, 7, {});
+        };
+        areaTable[JABU_JABUS_BELLY_FORKED_CORRIDOR] = Area(
+            "Jabu Jabus Belly Forked Corridor", "Jabu Jabus Belly", JABU_JABUS_BELLY, NO_DAY_NIGHT_CYCLE,
+            {
+                // Events
+                EventAccess(&DekuBabaSticks,
+                            { [] { return DekuBabaSticks || ForEachEnemy_ForkedCorridor(CanGetDekuBabaSticks); } }),
+                EventAccess(&DekuBabaNuts,
+                            { [] { return DekuBabaNuts || ForEachEnemy_ForkedCorridor(CanGetDekuBabaNuts); } }),
+            },
+            {},
+            {
+                // Exits
+                Entrance(JABU_JABUS_BELLY_MAIN_UPPER, { [] { return true; } }),
+                Entrance(JABU_JABUS_BELLY_BOOMERANG_ROOM, { [] {
+                             return CanPassEnemies(2, 0, 7, { 1, 4 });
+                         } }),
+                Entrance(JABU_JABUS_BELLY_MAP_ROOM, { [] {
+                             return CanPassEnemies(2, 0, 7, { 0, 3 });
+                         } }),
+                Entrance(JABU_JABUS_BELLY_COMPASS_ROOM, { [] {
+                             return CanPassEnemies(2, 0, 7, { 0, 3 }) && Here(JABU_JABUS_BELLY_MAP_ROOM, [] {
+                                        return SoulParasiticTentacle && CanUse(BOOMERANG);
+                                    });
+                         } }),
+                Entrance(JABU_JABUS_BELLY_BLUE_TENTACLE, { [] {
+                             return CanPassEnemies(2, 0, 7, { 1, 4 }) && Here(JABU_JABUS_BELLY_MAP_ROOM, [] {
+                                        return SoulParasiticTentacle && CanUse(BOOMERANG);
+                                    });
+                         } }),
+                Entrance(JABU_JABUS_BELLY_GREEN_TENTACLE, { [] {
+                             return CanPassEnemies(2, 0, 7, { 2 }) && Here(JABU_JABUS_BELLY_BLUE_TENTACLE, [] {
+                                        return SoulParasiticTentacle && CanUse(BOOMERANG);
+                                    });
+                         } }),
+            });
 
         areaTable[JABU_JABUS_BELLY_BOOMERANG_ROOM] =
             Area("Jabu Jabus Belly Boomerang Room", "Jabu Jabus Belly", JABU_JABUS_BELLY, NO_DAY_NIGHT_CYCLE, {},
                  {
                      // Locations
-                     LocationAccess(JABU_JABUS_BELLY_BOOMERANG_CHEST, { [] { return SoulStinger; } }),
+                     LocationAccess(JABU_JABUS_BELLY_BOOMERANG_CHEST, { [] { return CanDefeatEnemies(2, 0, 9); } }),
                  },
                  {
                      // Exits
@@ -206,8 +272,7 @@ void AreaTable_Init_JabuJabusBelly() {
             Area("Jabu Jabus Belly Compass Room", "Jabu Jabus Belly", JABU_JABUS_BELLY, NO_DAY_NIGHT_CYCLE, {},
                  {
                      // Locations
-                     LocationAccess(JABU_JABUS_BELLY_COMPASS_CHEST,
-                                    { [] { return SoulShabom && (CanAdultAttack || CanChildAttack); } }),
+                     LocationAccess(JABU_JABUS_BELLY_COMPASS_CHEST, { [] { return CanDefeatEnemies(2, 0, 12); } }),
                  },
                  {
                      // Exits
@@ -230,7 +295,7 @@ void AreaTable_Init_JabuJabusBelly() {
                      // Exits
                      Entrance(JABU_JABUS_BELLY_FORKED_CORRIDOR, { [] {
                                   return Here(JABU_JABUS_BELLY_GREEN_TENTACLE, [] {
-                                      return SoulParasiticTentacle && SoulBiriBari && CanUse(BOOMERANG);
+                                      return CanDefeatEnemies(2, 0, 8) && SoulParasiticTentacle && CanUse(BOOMERANG);
                                   });
                               } }),
                  });
@@ -247,10 +312,18 @@ void AreaTable_Init_JabuJabusBelly() {
                          } }),
             });
 
+        static constexpr auto ForEachEnemy_AboveBigOcto = [](auto& enemyCheckFn) {
+            return (CanPassEnemies(2, 0, 6, { 0 }) && enemyCheckFn(2, 0, 6, {})) ||
+                   (CanPassEnemies(2, 0, 6) && enemyCheckFn(2, 0, 4, {}));
+        };
         areaTable[JABU_JABUS_BELLY_ABOVE_BIGOCTO] =
             Area("Jabu Jabus Belly Above Bigocto", "Jabu Jabus Belly", JABU_JABUS_BELLY, NO_DAY_NIGHT_CYCLE,
                  {
                      // Events
+                     EventAccess(&DekuBabaSticks,
+                                 { [] { return DekuBabaSticks || ForEachEnemy_AboveBigOcto(CanGetDekuBabaSticks); } }),
+                     EventAccess(&DekuBabaNuts,
+                                 { [] { return DekuBabaNuts || ForEachEnemy_AboveBigOcto(CanGetDekuBabaNuts); } }),
                      EventAccess(&FairyPot, { [] { return true; } }),
                      EventAccess(&NutPot, { [] { return true; } }),
                  },
@@ -258,10 +331,10 @@ void AreaTable_Init_JabuJabusBelly() {
                  {
                      // Exits
                      Entrance(JABU_JABUS_BELLY_LIFT_UPPER,
-                              { [] { return CanUse(BOOMERANG); },
+                              { [] { return CanPassEnemies(2, 0, 6) && CanUse(BOOMERANG); },
                                 /*Glitched*/
                                 [] {
-                                    return HasBombchus && CanShield && IsAdult &&
+                                    return CanPassEnemies(2, 0, 6) && HasBombchus && CanShield && IsAdult &&
                                            (CanUse(HOOKSHOT) || CanUse(BOW) || CanUse(SLINGSHOT)) &&
                                            CanDoGlitch(GlitchType::ActionSwap, GlitchDifficulty::ADVANCED);
                                 } }),
@@ -276,7 +349,12 @@ void AreaTable_Init_JabuJabusBelly() {
                  });
 
         areaTable[JABU_JABUS_BELLY_NEAR_BOSS_ROOM] =
-            Area("Jabu Jabus Belly Near Boss Room", "Jabu Jabus Belly", JABU_JABUS_BELLY, NO_DAY_NIGHT_CYCLE, {},
+            Area("Jabu Jabus Belly Near Boss Room", "Jabu Jabus Belly", JABU_JABUS_BELLY, NO_DAY_NIGHT_CYCLE,
+                 {
+                     // Events
+                     EventAccess(&DekuBabaSticks, { [] { return DekuBabaSticks || CanGetDekuBabaSticks(2, 0, 5); } }),
+                     EventAccess(&DekuBabaNuts, { [] { return DekuBabaNuts || CanGetDekuBabaNuts(2, 0, 5); } }),
+                 },
                  {
                      // Locations
                      LocationAccess(JABU_JABUS_BELLY_GS_NEAR_BOSS, { [] { return CanAdultAttack || CanChildAttack; } }),

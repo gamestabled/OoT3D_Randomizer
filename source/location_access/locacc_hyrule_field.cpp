@@ -1,15 +1,23 @@
 #include "location_access.hpp"
 #include "logic.hpp"
 #include "entrance.hpp"
+#include "enemizer_logic.hpp"
 
 using namespace Logic;
 using namespace Settings;
 
 void AreaTable_Init_HyruleField() {
+
+    static constexpr auto ForEachEnemy_HyruleField = [](auto& enemyCheckFn) {
+        return IsChild && enemyCheckFn(81, 0, 0, {});
+    };
     areaTable[HYRULE_FIELD] = Area(
         "Hyrule Field", "Hyrule Field", HYRULE_FIELD, DAY_NIGHT_CYCLE,
         {
             // Events
+            EventAccess(&DekuBabaSticks,
+                        { [] { return DekuBabaSticks || ForEachEnemy_HyruleField(CanGetDekuBabaSticks); } }),
+            EventAccess(&DekuBabaNuts, { [] { return DekuBabaNuts || ForEachEnemy_HyruleField(CanGetDekuBabaNuts); } }),
             EventAccess(&BigPoeKill, { [] { return SoulPoe && CanUse(BOW) && CanRideEpona && HasBottle; } }),
         },
         {
@@ -112,8 +120,18 @@ void AreaTable_Init_HyruleField() {
                  Entrance(HYRULE_FIELD, { [] { return true; } }),
              });
 
+    static constexpr auto ForEachEnemy_CowGrotto = [](auto& enemyCheckFn) {
+        return (HasFireSource && enemyCheckFn(62, 0, 4, {}));
+    };
+    std::vector<EventAccess> cowGrottoEvents = {
+        EventAccess(&DekuBabaSticks, { [] { return DekuBabaSticks || ForEachEnemy_CowGrotto(CanGetDekuBabaSticks); } }),
+        EventAccess(&DekuBabaNuts, { [] { return DekuBabaNuts || ForEachEnemy_CowGrotto(CanGetDekuBabaNuts); } }),
+    };
+    cowGrottoEvents.insert(cowGrottoEvents.end(), grottoEvents.begin(), grottoEvents.end());
     areaTable[HF_COW_GROTTO] =
-        Area("HF Cow Grotto", "HF Cow Grotto", NONE, NO_DAY_NIGHT_CYCLE, grottoEvents,
+        Area("HF Cow Grotto", "HF Cow Grotto", NONE, NO_DAY_NIGHT_CYCLE,
+             // Events
+             cowGrottoEvents,
              {
                  // Locations
                  LocationAccess(HF_COW_GROTTO_COW,
@@ -168,11 +186,18 @@ void AreaTable_Init_HyruleField() {
                                           Entrance(HYRULE_FIELD, { [] { return true; } }),
                                       });
 
-    areaTable[HF_NEAR_KAK_GROTTO] = Area("HF Near Kak Grotto", "HF Near Kak Grotto", NONE, NO_DAY_NIGHT_CYCLE, {}, {},
-                                         {
-                                             // Exits
-                                             Entrance(HYRULE_FIELD, { [] { return true; } }),
-                                         });
+    areaTable[HF_NEAR_KAK_GROTTO] =
+        Area("HF Near Kak Grotto", "HF Near Kak Grotto", NONE, NO_DAY_NIGHT_CYCLE,
+             {
+                 // Events
+                 EventAccess(&DekuBabaSticks, { [] { return DekuBabaSticks || CanGetDekuBabaSticks(62, 0, 13); } }),
+                 EventAccess(&DekuBabaNuts, { [] { return DekuBabaNuts || CanGetDekuBabaNuts(62, 0, 13); } }),
+             },
+             {},
+             {
+                 // Exits
+                 Entrance(HYRULE_FIELD, { [] { return true; } }),
+             });
 
     areaTable[HF_TEKTITE_GROTTO] =
         Area("HF Tektite Grotto", "HF Tektite Grotto", NONE, NO_DAY_NIGHT_CYCLE, {},
@@ -186,40 +211,45 @@ void AreaTable_Init_HyruleField() {
                  Entrance(HYRULE_FIELD, { [] { return true; } }),
              });
 
+    static constexpr auto ForEachEnemy_LakeHylia = [](auto& enemyCheckFn) {
+        return (IsChild && enemyCheckFn(87, 0, 0, {})) ||
+               (IsAdult && (enemyCheckFn(87, 2, 0, { 15, 17, 18, 22, 23, 24, 25, 26, 27, 28, 29 }) ||
+                            ((CanUse(SCARECROW) || CanPlantBean(LAKE_HYLIA)) && enemyCheckFn(87, 2, 0, { 16 }))));
+    };
     areaTable[LAKE_HYLIA] = Area(
         "Lake Hylia", "Lake Hylia", LAKE_HYLIA, DAY_NIGHT_CYCLE,
-        {
-            // Events
-            EventAccess(&GossipStoneFairy, { [] { return GossipStoneFairy || CanSummonGossipFairy; } }),
-            EventAccess(&BeanPlantFairy,
-                        { [] { return BeanPlantFairy || (CanPlantBean(LAKE_HYLIA) && CanPlay(SongOfStorms)); } }),
-            EventAccess(&ButterflyFairy, { [] { return ButterflyFairy || CanUse(STICKS); } }),
-            EventAccess(&BugShrub, { [] { return BugShrub || (IsChild && CanCutShrubs); } }),
-            EventAccess(&ChildScarecrow,
-                        { [] { return ChildScarecrow || (IsChild && Ocarina && (OcarinaButtonsCount >= 2)); },
-                          /*Glitched*/
-                          [] {
-                              return (CanDoGlitch(GlitchType::OutdoorBombOI, GlitchDifficulty::INTERMEDIATE) ||
-                                      ((Bugs || Fish) && CanShield &&
-                                       CanDoGlitch(GlitchType::QPA, GlitchDifficulty::ADVANCED)) ||
-                                      ((Bugs || Fish) &&
-                                       (KokiriSword || Sticks || Bombs || HasBombchus || Boomerang || Slingshot ||
-                                        CanUse(MEGATON_HAMMER)) &&
-                                       CanDoGlitch(GlitchType::ActionSwap, GlitchDifficulty::NOVICE))) &&
-                                     IsChild;
-                          } }),
-            EventAccess(&AdultScarecrow,
-                        { [] { return AdultScarecrow || (IsAdult && Ocarina && (OcarinaButtonsCount >= 2)); },
-                          /*Glitched*/
-                          [] {
-                              return (CanDoGlitch(GlitchType::OutdoorBombOI, GlitchDifficulty::INTERMEDIATE) ||
-                                      ((Bugs || Fish) && CanShield &&
-                                       CanDoGlitch(GlitchType::QPA, GlitchDifficulty::ADVANCED)) ||
-                                      ((Bugs || Fish) &&
-                                       CanDoGlitch(GlitchType::ActionSwap, GlitchDifficulty::NOVICE))) &&
-                                     IsAdult;
-                          } }),
-        },
+        { // Events
+          EventAccess(&DekuBabaSticks,
+                      { [] { return DekuBabaSticks || ForEachEnemy_LakeHylia(CanGetDekuBabaSticks); } }),
+          EventAccess(&DekuBabaNuts, { [] { return DekuBabaNuts || ForEachEnemy_LakeHylia(CanGetDekuBabaNuts); } }),
+          EventAccess(&GossipStoneFairy, { [] { return GossipStoneFairy || CanSummonGossipFairy; } }),
+          EventAccess(&BeanPlantFairy,
+                      { [] { return BeanPlantFairy || (CanPlantBean(LAKE_HYLIA) && CanPlay(SongOfStorms)); } }),
+          EventAccess(&ButterflyFairy, { [] { return ButterflyFairy || CanUse(STICKS); } }),
+          EventAccess(&BugShrub, { [] { return BugShrub || (IsChild && CanCutShrubs); } }),
+          EventAccess(&ChildScarecrow,
+                      { [] { return ChildScarecrow || (IsChild && Ocarina && (OcarinaButtonsCount >= 2)); },
+                        /*Glitched*/
+                        [] {
+                            return (CanDoGlitch(GlitchType::OutdoorBombOI, GlitchDifficulty::INTERMEDIATE) ||
+                                    ((Bugs || Fish) && CanShield &&
+                                     CanDoGlitch(GlitchType::QPA, GlitchDifficulty::ADVANCED)) ||
+                                    ((Bugs || Fish) &&
+                                     (KokiriSword || Sticks || Bombs || HasBombchus || Boomerang || Slingshot ||
+                                      CanUse(MEGATON_HAMMER)) &&
+                                     CanDoGlitch(GlitchType::ActionSwap, GlitchDifficulty::NOVICE))) &&
+                                   IsChild;
+                        } }),
+          EventAccess(
+              &AdultScarecrow,
+              { [] { return AdultScarecrow || (IsAdult && Ocarina && (OcarinaButtonsCount >= 2)); },
+                /*Glitched*/
+                [] {
+                    return (CanDoGlitch(GlitchType::OutdoorBombOI, GlitchDifficulty::INTERMEDIATE) ||
+                            ((Bugs || Fish) && CanShield && CanDoGlitch(GlitchType::QPA, GlitchDifficulty::ADVANCED)) ||
+                            ((Bugs || Fish) && CanDoGlitch(GlitchType::ActionSwap, GlitchDifficulty::NOVICE))) &&
+                           IsAdult;
+                } }) },
         {
             // Locations
             LocationAccess(LH_UNDERWATER_ITEM, { [] { return IsChild && CanDive; } }),
@@ -351,36 +381,42 @@ void AreaTable_Init_HyruleField() {
                                     Entrance(LAKE_HYLIA, { [] { return true; } }),
                                 });
 
-    areaTable[LON_LON_RANCH] =
-        Area("Lon Lon Ranch", "Lon Lon Ranch", LON_LON_RANCH, NO_DAY_NIGHT_CYCLE,
-             {
-                 // Events
-                 EventAccess(&Epona, { [] { return Epona || (CanPlay(EponasSong) && IsAdult && AtDay); } }),
-                 EventAccess(&LinksCow, { [] { return LinksCow || (CanPlay(EponasSong) && IsAdult && AtDay); } }),
-             },
-             {
-                 // Locations
-                 LocationAccess(
-                     SONG_FROM_MALON,
-                     { [] { return IsChild && WeirdEgg && ChildCanAccess(HYRULE_CASTLE_GROUNDS) && Ocarina && AtDay; },
-                       /*Glitched*/
-                       [] {
-                           return (CanDoGlitch(GlitchType::OutdoorBombOI, GlitchDifficulty::INTERMEDIATE) ||
-                                   ((Bugs || Fish) && CanShield && (CanSurviveDamage || (Fairy && NumBottles >= 2)) &&
-                                    CanDoGlitch(GlitchType::QPA, GlitchDifficulty::ADVANCED)) ||
-                                   ((Bugs || Fish) && CanShield && HasBombchus &&
-                                    CanDoGlitch(GlitchType::ActionSwap, GlitchDifficulty::ADVANCED))) &&
-                                  IsChild && WeirdEgg && ChildCanAccess(HYRULE_CASTLE_GROUNDS) && AtDay;
-                       } }),
-             },
-             {
-                 // Exits
-                 Entrance(HYRULE_FIELD, { [] { return true; } }),
-                 Entrance(LLR_TALONS_HOUSE, { [] { return true; } }),
-                 Entrance(LLR_STABLES, { [] { return true; } }),
-                 Entrance(LLR_TOWER, { [] { return true; } }),
-                 Entrance(LLR_GROTTO, { [] { return IsChild; } }),
-             });
+    static constexpr auto ForEachEnemy_LonLonRanch = [](auto& enemyCheckFn) {
+        return (IsChild && AtNight && enemyCheckFn(99, 1, 0, {}));
+    };
+    areaTable[LON_LON_RANCH] = Area(
+        "Lon Lon Ranch", "Lon Lon Ranch", LON_LON_RANCH, NO_DAY_NIGHT_CYCLE,
+        {
+            // Events
+            EventAccess(&DekuBabaSticks,
+                        { [] { return DekuBabaSticks || ForEachEnemy_LonLonRanch(CanGetDekuBabaSticks); } }),
+            EventAccess(&DekuBabaNuts, { [] { return DekuBabaNuts || ForEachEnemy_LonLonRanch(CanGetDekuBabaNuts); } }),
+            EventAccess(&Epona, { [] { return Epona || (CanPlay(EponasSong) && IsAdult && AtDay); } }),
+            EventAccess(&LinksCow, { [] { return LinksCow || (CanPlay(EponasSong) && IsAdult && AtDay); } }),
+        },
+        {
+            // Locations
+            LocationAccess(
+                SONG_FROM_MALON,
+                { [] { return IsChild && WeirdEgg && ChildCanAccess(HYRULE_CASTLE_GROUNDS) && Ocarina && AtDay; },
+                  /*Glitched*/
+                  [] {
+                      return (CanDoGlitch(GlitchType::OutdoorBombOI, GlitchDifficulty::INTERMEDIATE) ||
+                              ((Bugs || Fish) && CanShield && (CanSurviveDamage || (Fairy && NumBottles >= 2)) &&
+                               CanDoGlitch(GlitchType::QPA, GlitchDifficulty::ADVANCED)) ||
+                              ((Bugs || Fish) && CanShield && HasBombchus &&
+                               CanDoGlitch(GlitchType::ActionSwap, GlitchDifficulty::ADVANCED))) &&
+                             IsChild && WeirdEgg && ChildCanAccess(HYRULE_CASTLE_GROUNDS) && AtDay;
+                  } }),
+        },
+        {
+            // Exits
+            Entrance(HYRULE_FIELD, { [] { return true; } }),
+            Entrance(LLR_TALONS_HOUSE, { [] { return true; } }),
+            Entrance(LLR_STABLES, { [] { return true; } }),
+            Entrance(LLR_TOWER, { [] { return true; } }),
+            Entrance(LLR_GROTTO, { [] { return IsChild; } }),
+        });
 
     areaTable[LLR_TALONS_HOUSE] = Area(
         "LLR Talons House", "LLR Talons House", NONE, NO_DAY_NIGHT_CYCLE, {},

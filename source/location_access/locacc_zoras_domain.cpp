@@ -1,6 +1,7 @@
 #include "location_access.hpp"
 #include "logic.hpp"
 #include "entrance.hpp"
+#include "enemizer_logic.hpp"
 
 using namespace Logic;
 using namespace Settings;
@@ -17,10 +18,16 @@ void AreaTable_Init_ZorasDomain() {
             Entrance(HYRULE_FIELD, { [] { return true; } }),
         });
 
+    static constexpr auto ForEachEnemy_ZorasRiver = [](auto& enemyCheckFn) {
+        return IsChild && enemyCheckFn(84, 0, 0, {});
+    };
     areaTable[ZORAS_RIVER] = Area(
         "Zora River", "Zora River", ZORAS_RIVER, DAY_NIGHT_CYCLE,
         {
             // Events
+            EventAccess(&DekuBabaSticks,
+                        { [] { return DekuBabaSticks || ForEachEnemy_ZorasRiver(CanGetDekuBabaSticks); } }),
+            EventAccess(&DekuBabaNuts, { [] { return DekuBabaNuts || ForEachEnemy_ZorasRiver(CanGetDekuBabaNuts); } }),
             EventAccess(&GossipStoneFairy, { [] { return GossipStoneFairy || CanSummonGossipFairy; } }),
             EventAccess(&BeanPlantFairy,
                         { [] { return BeanPlantFairy || (CanPlantBean(ZORAS_RIVER) && CanPlay(SongOfStorms)); } }),
@@ -327,10 +334,18 @@ void AreaTable_Init_ZorasDomain() {
                                            Entrance(ZORAS_DOMAIN, { [] { return true; } }),
                                        });
 
+    static constexpr auto ForEachEnemy_ZorasFountain = [](auto& enemyCheckFn) {
+        return IsAdult && (enemyCheckFn(89, 2, 0, { 50 }) || (CanUse(SILVER_GAUNTLETS) && CanBlastOrSmash &&
+                                                              enemyCheckFn(89, 2, 0, { 24, 25, 26, 27, 28 })));
+    };
     areaTable[ZORAS_FOUNTAIN] = Area(
         "Zoras Fountain", "Zoras Fountain", ZORAS_FOUNTAIN, NO_DAY_NIGHT_CYCLE,
         {
             // Events
+            EventAccess(&DekuBabaSticks,
+                        { [] { return DekuBabaSticks || ForEachEnemy_ZorasFountain(CanGetDekuBabaSticks); } }),
+            EventAccess(&DekuBabaNuts,
+                        { [] { return DekuBabaNuts || ForEachEnemy_ZorasFountain(CanGetDekuBabaNuts); } }),
             EventAccess(&GossipStoneFairy, { [] { return GossipStoneFairy || CanSummonGossipFairyWithoutSuns; } }),
             EventAccess(&ButterflyFairy, { [] { return ButterflyFairy || (CanUse(STICKS) && AtDay); } }),
         },

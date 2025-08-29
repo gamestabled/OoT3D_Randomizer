@@ -32,12 +32,15 @@
 #define CYAN "\x1b[36m"
 #define WHITE "\x1b[37m"
 
+class Menu;
+
 void ModeChangeInit();
 void UpdateOptionSubMenu(u32 kDown, u32 kHeld);
 void UpdatePremadePresetsMenu(u32 kDown);
 void UpdateCustomPresetsMenu(u32 kDown);
 void UpdateResetToDefaultsMenu(u32 kdown);
 void UpdateGenerateMenu(u32 kDown);
+void GoToMenu(Menu* newMenu);
 void PrintMainMenu();
 void PrintOptionSubMenu();
 void PrintSubMenu();

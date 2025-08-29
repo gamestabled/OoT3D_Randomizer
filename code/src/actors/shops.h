@@ -79,7 +79,7 @@ typedef void (*EnGirlAActionFunc)(struct EnGirlA*, GlobalContext*);
 typedef struct EnGirlA {
     /* 0x000 */ Actor actor;
     /* 0x1A4 */ EnGirlAActionFunc actionFunc;
-    /* 0x1A8 */ s8 objBankIndex;
+    /* 0x1A8 */ s8 objectSlot;
     /* 0x1A9 */ char unk_1A9[0x3];
     /* 0x1AC */ EnGirlAActionFunc actionFunc2;
     /* 0x1B0 */ s32 unk_1B0;
@@ -120,7 +120,7 @@ typedef struct {
     s32 shopItemPosition;
     s32 getItemId; // or shop item ID for regular shop items
     ItemRow* itemRow;
-    s16 rObjBankIndex;
+    s16 rObjectSlot;
 } ShopsanityItem;
 
 typedef struct {
