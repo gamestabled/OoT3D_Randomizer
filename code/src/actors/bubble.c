@@ -4,6 +4,7 @@
 
 #define EnBb_Init ((ActorFunc)GAME_ADDR(0x162328))
 #define EnBb_Update ((ActorFunc)GAME_ADDR(0x1005ec))
+#define EnBb_Destroy ((ActorFunc)GAME_ADDR(0x162C28))
 
 #define Bubble_GetType(actor) ((s16)(thisx->params | 0xFF00))
 
@@ -78,4 +79,16 @@ void EnBb_rInit(Actor* thisx, GlobalContext* globalCtx) {
 
 void EnBb_rUpdate(Actor* thisx, GlobalContext* globalCtx) {
     Bubble_CallActorFunc(EnBb_Update, thisx, globalCtx);
+}
+
+void EnBb_rDestroy(Actor* thisx, GlobalContext* globalCtx) {
+    EnBb* this = (EnBb*)thisx;
+
+    EnBb_Destroy(thisx, globalCtx);
+
+    if (thisx->params == ENBB_WHITE) {
+        // Fix vanilla bug: White Bubbles never delete their own "blure" effect, causing
+        // a memory leak which can lead to a crash if the space for blures is filled up.
+        Effect_Delete(globalCtx, this->blureIdx);
+    }
 }

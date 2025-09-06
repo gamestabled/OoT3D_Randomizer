@@ -21,11 +21,14 @@ typedef struct EnBb {
     /* 0x564 */ Vec3f waypointPos;
     /* 0x570 */ u8 path;
     /* 0x571 */ u8 waypoint;
-    /* 0x572 */ char unk_572[0x96];
+    /* 0x572 */ char unk_572[0x06];
+    /* 0x578 */ s32 blureIdx;
+    /* 0x57C */ char unk_57C[0x8C];
 } EnBb;
 _Static_assert(sizeof(EnBb) == 0x608, "EnBb size");
 
 void EnBb_rInit(Actor* thisx, GlobalContext* globalCtx);
 void EnBb_rUpdate(Actor* thisx, GlobalContext* globalCtx);
+void EnBb_rDestroy(Actor* thisx, GlobalContext* globalCtx);
 
 #endif //_BUBBLE_H_
