@@ -283,6 +283,10 @@ static void Enemizer_MoveSpecificLocations(ActorEntry* actorEntry, s32 actorEntr
             // Move Gerudo Fighter down inside the room
             actorEntry->pos.y = -120;
             break;
+        case LOC(85, 2, 1, 6):
+            // Move a Deku Baba in Kokiri Forest above the floor
+            actorEntry->pos.y = -150;
+            break;
         case LOC(86, 0, 0, 1):
             // Move the SFM wolfos more towards the center, some enemies might jump over the fence
             actorEntry->pos.x = -195;
