@@ -4,6 +4,8 @@
 #include <string>
 #include <vector>
 
+#include "../code/include/z3D/z3Dcolor.h"
+
 namespace Cosmetics {
 constexpr std::string_view RANDOM_CHOICE_STR   = "Random Choice";
 constexpr std::string_view RANDOM_COLOR_STR    = "Random Color";
@@ -19,20 +21,6 @@ enum CosmeticSettings {
     RANDOM_COLOR,
     CUSTOM_COLOR,
     NON_COLOR_COUNT,
-};
-
-struct Color_RGBAf {
-    float r;
-    float g;
-    float b;
-    float a;
-};
-
-struct Color_RGBA8 {
-    uint8_t r;
-    uint8_t g;
-    uint8_t b;
-    uint8_t a;
 };
 
 extern const std::array<std::string_view, 13> gauntletColors;

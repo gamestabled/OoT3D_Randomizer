@@ -812,7 +812,7 @@ extern std::string finalEnemyNaviOuterColor;
 extern std::string finalPropNaviOuterColor;
 extern std::string finalSwordTrailInnerColor;
 extern std::string finalSwordTrailOuterColor;
-extern Cosmetics::Color_RGBA8 finalBoomerangColor;
+extern Color_RGBA8 finalBoomerangColor;
 extern u8 boomerangTrailColorMode;
 extern std::string finalChuTrailInnerColor;
 extern std::string finalChuTrailOuterColor;

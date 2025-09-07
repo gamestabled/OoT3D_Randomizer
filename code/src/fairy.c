@@ -3,6 +3,7 @@
 #include "settings.h"
 #include "objects.h"
 #include "common.h"
+#include "colors.h"
 
 #define NAVI_COLORS_ARRAY ((Color_RGBA8*)GAME_ADDR(0x50C998))
 

@@ -1192,6 +1192,10 @@ SECTIONS
 		*(.patch_OverrideDrawItemThree)
 	}
 
+	.patch_AfterInvalidatingRoomObjects 0x3A7698 : {
+		*(.patch_AfterInvalidatingRoomObjects)
+	}
+
 	.patch_AfterObjectListCommand 0x3A7708 : {
 		*(.patch_AfterObjectListCommand)
 	}

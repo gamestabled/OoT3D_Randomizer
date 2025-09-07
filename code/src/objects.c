@@ -5,6 +5,7 @@
 #include "custom_models.h"
 #include "oot_malloc.h"
 #include "enemizer.h"
+#include "effects.h"
 
 #include <stddef.h>
 
@@ -56,9 +57,16 @@ void ExtendedObject_AfterObjectListCommand(void) {
         Object_FindSlotOrSpawn(OBJECT_CUSTOM_GENERAL_ASSETS);
         Object_FindSlotOrSpawn(3); // zelda_dangeon_keep (main dungeon object)
         rExtendedObjectCtx.numPersistentEntries = rExtendedObjectCtx.numEntries;
-    } else { // (state.running == 2) Loading room
+    }
+}
+
+// Called from Scene_CommandObjectList, after the object slots from the vanilla ObjectContext
+// have been invalidated and before new ones get loaded.
+void ExtendedObject_InvalidateRoomObjects(void) {
+    if (gGlobalContext->state.running == 2) { // Loading room
         ExtendedObject_ClearNonPersistent();
         Actor_KillAllWithMissingObject(gGlobalContext, &gGlobalContext->actorCtx);
+        EffectSs_ClearAllWithMissingObject();
         Model_DestroyAll();
     }
 }
