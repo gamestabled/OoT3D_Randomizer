@@ -1,6 +1,7 @@
 #include "z3D/z3D.h"
 #include "settings.h"
 #include "colors.h"
+#include "objects.h"
 
 // This function is called when a new effect element tries to spawn but there's no space left.
 // The vanilla game simply fails to spawn the new element, but with the randomizer extended duration setting,
@@ -150,4 +151,30 @@ u32 updateChuTrailColors(EffectBlure* effect, Vec3f* p1, Vec3f* p2) {
     }
 
     return handleLongTrails(gSettingsContext.bombchuTrailDuration, effect, p1, p2);
+}
+
+void EffectSs_ClearAllWithMissingObject(void) {
+    for (u32 i = 0; i < gEffectSsInfo.tableSize; i++) {
+        EffectSs* effectSs = &gEffectSsInfo.table[i];
+        s16 objRegIdx      = -1;
+
+        switch (effectSs->type) {
+            case EFFECT_SS_D_FIRE:
+                objRegIdx = 10;
+                break;
+            case EFFECT_SS_HAHEN:
+                objRegIdx = 5;
+                break;
+            case EFFECT_SS_KAKERA:
+                objRegIdx = 11;
+                break;
+            case EFFECT_SS_ICE_SMOKE:
+                objRegIdx = 0;
+                break;
+        }
+
+        if (objRegIdx >= 0 && !Object_IsLoaded(&gGlobalContext->objectCtx, effectSs->regs[objRegIdx])) {
+            EffectSs_Delete(effectSs);
+        }
+    }
 }

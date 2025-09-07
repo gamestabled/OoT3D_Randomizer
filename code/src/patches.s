@@ -2526,3 +2526,8 @@ GerudoBattleMusic_patch:
 .global FixActorKillLoop_patch
 FixActorKillLoop_patch:
     bl hook_FixActorKillLoop
+
+.section .patch_AfterInvalidatingRoomObjects
+.global AfterInvalidatingRoomObjects_patch
+AfterInvalidatingRoomObjects_patch:
+    bl hook_AfterInvalidatingRoomObjects
