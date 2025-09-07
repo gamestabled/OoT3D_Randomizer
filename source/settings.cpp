@@ -1268,7 +1268,7 @@ std::string finalEnemyNaviOuterColor  = EnemyNaviOuterColor.GetSelectedOptionTex
 std::string finalPropNaviOuterColor   = PropNaviOuterColor.GetSelectedOptionText();
 std::string finalSwordTrailOuterColor = SwordTrailOuterColor.GetSelectedOptionText();
 std::string finalSwordTrailInnerColor = SwordTrailInnerColor.GetSelectedOptionText();
-Cosmetics::Color_RGBA8 finalBoomerangColor = {0};
+Color_RGBA8 finalBoomerangColor = {0};
 u8 boomerangTrailColorMode = 0;
 std::string finalChuTrailInnerColor   = BombchuTrailInnerColor.GetSelectedOptionText();
 std::string finalChuTrailOuterColor   = BombchuTrailOuterColor.GetSelectedOptionText();
@@ -2996,7 +2996,7 @@ static void UpdateCosmetics() {
     }
     // Boomerang Trail
     std::string tempString;
-    Cosmetics::Color_RGBA8 tempColor;
+    Color_RGBA8 tempColor;
     ChooseFinalColor(BoomerangTrailColor, tempString, weaponTrailColors);
     tempColor             = Cosmetics::HexStrToColorRGBA8(tempString);
     finalBoomerangColor.r = tempColor.r;

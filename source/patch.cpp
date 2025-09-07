@@ -490,10 +490,10 @@ bool WriteAllPatches() {
     ---------------------------------*/
 
     const u32 SWORDTRAILCOLORSARRAY_ADDR = 0x0053C136;
-    Cosmetics::Color_RGBA8 p1StartColor  = Cosmetics::HexStrToColorRGBA8(Settings::finalSwordTrailOuterColor);
-    Cosmetics::Color_RGBA8 p2StartColor  = Cosmetics::HexStrToColorRGBA8(Settings::finalSwordTrailInnerColor);
-    Cosmetics::Color_RGBA8 p1EndColor    = Cosmetics::HexStrToColorRGBA8(Settings::finalSwordTrailOuterColor);
-    Cosmetics::Color_RGBA8 p2EndColor    = Cosmetics::HexStrToColorRGBA8(Settings::finalSwordTrailInnerColor);
+    Color_RGBA8 p1StartColor             = Cosmetics::HexStrToColorRGBA8(Settings::finalSwordTrailOuterColor);
+    Color_RGBA8 p2StartColor             = Cosmetics::HexStrToColorRGBA8(Settings::finalSwordTrailInnerColor);
+    Color_RGBA8 p1EndColor               = Cosmetics::HexStrToColorRGBA8(Settings::finalSwordTrailOuterColor);
+    Color_RGBA8 p2EndColor               = Cosmetics::HexStrToColorRGBA8(Settings::finalSwordTrailInnerColor);
     bool shouldDrawSimple                = Settings::ChosenSimpleMode ||
                             (p1StartColor.r != 0xFF && p1StartColor.g != 0xFF && p1StartColor.b != 0xFF) ||
                             (p2StartColor.r != 0xFF && p2StartColor.g != 0xFF && p2StartColor.b != 0xFF);
@@ -690,10 +690,10 @@ bool WriteAllPatches() {
     |       custom assets      |
     --------------------------*/
 
-    Cosmetics::Color_RGBAf childTunicColor  = Cosmetics::HexStrToColorRGBAf(Settings::finalChildTunicColor);
-    Cosmetics::Color_RGBAf kokiriTunicColor = Cosmetics::HexStrToColorRGBAf(Settings::finalKokiriTunicColor);
-    Cosmetics::Color_RGBAf goronTunicColor  = Cosmetics::HexStrToColorRGBAf(Settings::finalGoronTunicColor);
-    Cosmetics::Color_RGBAf zoraTunicColor   = Cosmetics::HexStrToColorRGBAf(Settings::finalZoraTunicColor);
+    Color_RGBAf childTunicColor  = Cosmetics::HexStrToColorRGBAf(Settings::finalChildTunicColor);
+    Color_RGBAf kokiriTunicColor = Cosmetics::HexStrToColorRGBAf(Settings::finalKokiriTunicColor);
+    Color_RGBAf goronTunicColor  = Cosmetics::HexStrToColorRGBAf(Settings::finalGoronTunicColor);
+    Color_RGBAf zoraTunicColor   = Cosmetics::HexStrToColorRGBAf(Settings::finalZoraTunicColor);
 
     // Delete assets if it exists
     Handle assetsOut;

@@ -2,7 +2,6 @@
 #define _SETTINGS_H_
 
 #include "../include/z3D/z3D.h"
-#include "colors.h"
 #include "enemizer.h"
 
 typedef enum {

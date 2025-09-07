@@ -2,37 +2,6 @@
 #include "settings.h"
 #include "colors.h"
 
-typedef struct {
-    /* 0x00 */ s32 state;
-    /* 0x04 */ s32 timer;
-    /* 0x08 */ Vec3f p1;
-    /* 0x14 */ Vec3f p2;
-    /* 0x20 */ u32 flags;
-} EffectBlureElement; // size = 0x24
-
-typedef struct {
-    /* 0x000 */ EffectBlureElement elements[16];
-    /* 0x240 */ char unk_240[0x08];
-    /* 0x248 */ u16 flags;
-    /* 0x24A */ char unk_24A[0x04];
-    /* 0x24E */ Color_RGBA8 p1StartColor;
-    /* 0x252 */ Color_RGBA8 p2StartColor;
-    /* 0x256 */ Color_RGBA8 p1EndColor;
-    /* 0x25A */ Color_RGBA8 p2EndColor;
-    /* 0x25E */ u8 numElements;
-    /* 0x25F */ u8 elemDuration;
-    /* 0x260 */ u8 unkFlag;
-    /* 0x261 */ u8 drawMode;
-    /* 0x262 */ char unk_262[0x0A];
-    /* 0x26C */ u32 unk_pointer_26C;
-    /* 0x270 */ u32 unk_pointer_270;
-    /* 0x274 */ char unk_274[0x0E];
-    /* 0x282 */ u8 unkDrawMode1;
-    /* 0x283 */ u8 unkDrawMode2;
-} EffectBlure; // size = ??
-
-#define EffectBlure_Update ((void (*)(EffectBlure*))GAME_ADDR(0x227000))
-
 // This function is called when a new effect element tries to spawn but there's no space left.
 // The vanilla game simply fails to spawn the new element, but with the randomizer extended duration setting,
 // it is best to clear the oldest element to make space instead.

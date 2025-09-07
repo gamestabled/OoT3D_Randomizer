@@ -11,6 +11,8 @@
 #include "z3Dbgcheck.h"
 #include "z3Dscene.h"
 #include "z3Dactor_id.h"
+#include "z3Deffect.h"
+#include "z3Dcolor.h"
 
 // #include "hid.h"
 

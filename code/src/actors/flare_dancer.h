@@ -2,7 +2,6 @@
 #define _FLARE_DANCER_H_
 
 #include "z3D/z3D.h"
-#include "colors.h"
 
 struct EnFd;
 struct EnFdFire;

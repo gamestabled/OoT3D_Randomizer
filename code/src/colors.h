@@ -1,13 +1,7 @@
 #ifndef _COLORS_H_
 #define _COLORS_H_
 
-typedef struct {
-    u8 r, g, b, a;
-} Color_RGBA8;
-
-typedef struct {
-    f32 r, g, b, a;
-} Color_RGBAf;
+#include "z3D/z3D.h"
 
 Color_RGBA8 Colors_GetRainbowColor(u32 curFrame, u32 stepFrames);
 
