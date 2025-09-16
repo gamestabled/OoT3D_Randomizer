@@ -2177,6 +2177,13 @@ void ForceChange(u32 kDown, Option* currentSetting) {
         ExactZoraSpeed.Hide();
     }
 
+    // Only show Shopsanity prices setting if Shopsanity is enabled
+    if (!Shopsanity.Is(SHOPSANITY_OFF) && !Shopsanity.Is(SHOPSANITY_ZERO)) {
+        ShopsanityPrices.Unhide();
+    } else {
+        ShopsanityPrices.Hide();
+    }
+
     // Only go through options if all settings are not randomized
     if (!RandomizeWorld) {
         // Show Shuffle options when Shuffle Entrances is On
