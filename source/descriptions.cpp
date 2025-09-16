@@ -432,6 +432,8 @@ string_view shopsFour                 = "Vanilla shop items will be shuffled amo
 string_view shopsRandom               = "Vanilla shop items will be shuffled among\n"      //
                                         "different shops, and each shop will contain\n"    //
                                         "1-4 non-vanilla shop items.";                     //
+string_view shopPriceRandom           = "Prices of shuffled shop items are random";        //
+string_view shopPriceAffordable       = "Prices of shuffled shop items are 10 rupees";     //
 /*------------------------------                                                           //
 |         TOKENSANITY          |                                                           //
 ------------------------------*/                                                           //

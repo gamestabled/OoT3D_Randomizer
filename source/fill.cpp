@@ -1039,7 +1039,7 @@ int Fill() {
                     total_replaced += num_to_replace;
                     for (int j = 0; j < num_to_replace; j++) {
                         int itemindex       = indices[j];
-                        int shopsanityPrice = GetRandomShopPrice();
+                        int shopsanityPrice = GetShopPrice();
                         NonShopItems[TransformShopIndex(i * 8 + itemindex - 1)].Price =
                             shopsanityPrice; // Set price to be retrieved by the patch and textboxes
                         Location(ShopLocationLists[i][itemindex - 1])->SetShopsanityPrice(shopsanityPrice);
