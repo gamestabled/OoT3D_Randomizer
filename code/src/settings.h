@@ -163,6 +163,7 @@ typedef enum {
 typedef enum {
     SHOPSANITY_PRICE_RANDOM,
     SHOPSANITY_PRICE_AFFORDABLE,
+    SHOPSANITY_PRICE_EXPENSIVE,
 } ShopsanityPriceSetting;
 
 typedef enum {

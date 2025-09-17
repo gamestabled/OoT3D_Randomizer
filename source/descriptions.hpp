@@ -146,6 +146,7 @@ extern string_view shopsRandom;
 
 extern string_view shopPriceRandom;
 extern string_view shopPriceAffordable;
+extern string_view shopPriceExpensive;
 
 extern string_view tokensOff;
 extern string_view tokensDungeon;
