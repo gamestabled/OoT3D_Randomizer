@@ -1899,6 +1899,13 @@ void ResolveExcludedLocationConflicts() {
         IncludeAndHide(rewardsLocations);
     }
 
+    // Only show Shopsanity prices setting if Shopsanity is enabled
+    if (!Shopsanity.Is(SHOPSANITY_OFF) && !Shopsanity.Is(SHOPSANITY_ZERO)) {
+        ShopsanityPrices.Unhide();
+    } else {
+        ShopsanityPrices.Hide();
+    }
+
     // Force Include Vanilla Skulltula locations
     std::vector<LocationKey> skulltulaLocations = GetLocations(everyPossibleLocation, Category::cSkulltula);
     Unhide(skulltulaLocations);
@@ -2175,13 +2182,6 @@ void ForceChange(u32 kDown, Option* currentSetting) {
         ExactZoraSpeed.Unhide();
     } else {
         ExactZoraSpeed.Hide();
-    }
-
-    // Only show Shopsanity prices setting if Shopsanity is enabled
-    if (!Shopsanity.Is(SHOPSANITY_OFF) && !Shopsanity.Is(SHOPSANITY_ZERO)) {
-        ShopsanityPrices.Unhide();
-    } else {
-        ShopsanityPrices.Hide();
     }
 
     // Only go through options if all settings are not randomized
