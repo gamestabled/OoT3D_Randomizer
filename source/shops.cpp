@@ -78,18 +78,17 @@ static constexpr std::array<double, 60> ShopPriceProbability = {
     0.987344345, 0.991851853, 0.995389113, 0.997937921, 0.999481947, 1.000000000,
 };
 int GetShopPrice() {
-    if(Settings::ShopsanityPrices.Is(SHOPSANITY_PRICE_AFFORDABLE)){
+    if (Settings::ShopsanityPrices.Is(SHOPSANITY_PRICE_AFFORDABLE)) {
         return 10;
-    }
-    else if(Settings::ShopsanityPrices.Is(SHOPSANITY_PRICE_RANDOM)){
-      double random = RandomDouble(); // Randomly generated probability value
-      for (size_t i = 0; i < ShopPriceProbability.size(); i++) {
-        if (random < ShopPriceProbability[i]) {
-            // The randomly generated value has surpassed the total probability up to this point, so this is the
-            // generated price
-            return i * 5; // i in range [0, 59], output in range [0, 295] in increments of 5
+    } else if (Settings::ShopsanityPrices.Is(SHOPSANITY_PRICE_RANDOM)) {
+        double random = RandomDouble(); // Randomly generated probability value
+        for (size_t i = 0; i < ShopPriceProbability.size(); i++) {
+            if (random < ShopPriceProbability[i]) {
+                // The randomly generated value has surpassed the total probability up to this point, so this is the
+                // generated price
+                return i * 5; // i in range [0, 59], output in range [0, 295] in increments of 5
+            }
         }
-      }
     }
     return -1; // Shouldn't happen
 }
