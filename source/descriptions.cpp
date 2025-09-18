@@ -435,8 +435,14 @@ string_view shopsRandom               = "Vanilla shop items will be shuffled amo
 string_view shopPriceRandom           = "Prices of shuffled shop items are random\n"       //
                                         "varying between 0 and 295 rupees";                //
 string_view shopPriceAffordable       = "Prices of shuffled shop items are 10 rupees.";    //
-string_view shopPriceExpensive        = "Prices of shuffled shop items are random\n"       //
-                                        "varying between 0 and 590 rupees";                //
+string_view shopPriceChild            = "Prices of shuffled shop items are random\n"       // 
+                                        "maxing out at 99 rupees.";                        //
+string_view shopPriceAdult            = "Prices of shuffled shop items are random\n"       // 
+                                        "maxing out at 200 rupees.";                        //
+string_view shopPriceGiant            = "Prices of shuffled shop items are random\n"       // 
+                                        "maxing out at 500 rupees.";                        //
+string_view shopPriceTycoon           = "Prices of shuffled shop items are random\n"       // 
+                                        "maxing out at 999 rupees.";                        //
 /*------------------------------                                                           //
 |         TOKENSANITY          |                                                           //
 ------------------------------*/                                                           //

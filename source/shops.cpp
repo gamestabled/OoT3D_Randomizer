@@ -77,28 +77,61 @@ static constexpr std::array<double, 60> ShopPriceProbability = {
     0.906263928, 0.918639420, 0.930222611, 0.940985829, 0.950914731, 0.959992180, 0.968187000, 0.975495390, 0.981884488,
     0.987344345, 0.991851853, 0.995389113, 0.997937921, 0.999481947, 1.000000000,
 };
+
 int GetShopPrice() {
     if (Settings::ShopsanityPrices.Is(SHOPSANITY_PRICE_AFFORDABLE)) {
         return 10;
     }
-    
-    if (Settings::ShopsanityPrices.Is(SHOPSANITY_PRICE_EXPENSIVE)) {
-        return 590;
+
+    double stepSize = 5.0;
+    int clampPrice  = 295;
+
+    switch (Settings::ShopsanityPrices.Value<u8>()) {
+        case SHOPSANITY_PRICE_CHILD:
+            clampPrice = 99;
+            break;
+        case SHOPSANITY_PRICE_ADULT:
+            clampPrice = 200;
+            break;
+        case SHOPSANITY_PRICE_GIANT:
+            clampPrice = 500;
+            break;
+        case SHOPSANITY_PRICE_TYCOON:
+            clampPrice = 999;
+            break;
+        case SHOPSANITY_PRICE_RANDOM:
+            stepSize   = 5;
+            clampPrice = 295;
+            break;
     }
 
-    double random       = RandomDouble(); // Randomly generated probability value
-    int priceMultiplier = 5;
-
-    if (Settings::ShopsanityPrices.Is(SHOPSANITY_PRICE_EXPENSIVE)) {
-        priceMultiplier = 10;
+    if (!Settings::ShopsanityPrices.Is(SHOPSANITY_PRICE_RANDOM)) {
+        stepSize = clampPrice / (double)ShopPriceProbability.size();
     }
 
+    double random = RandomDouble(); // Randomly generated probability value
     for (size_t i = 0; i < ShopPriceProbability.size(); i++) {
         if (random < ShopPriceProbability[i]) {
-            // The randomly generated value has surpassed the total probability up to this point, so this is the
-            // generated price
-            return i * priceMultiplier; // i in range [0, 59], output in range [0, 295] in increments of 5 for Random
-                                        // and [0, 590] in increments of 10 for Expensive
+            // The randomly generated value has surpassed the total probability up to this point, so this determines the
+            // price First we calculate a raw price as a double
+            double rawPrice = i * stepSize;
+
+            // Then we round the rawPrice to the nearest 5 rupees
+            double roundedToFive = rawPrice + 2.5;
+            roundedToFive -= std::fmod(roundedToFive, 5.0);
+
+            // We then cast the double to an int. Since a double of 5 is generally stored as 4.99999.... we add 0.5 so
+            // when the flooring happens from the cast it gets set to the correct value
+            int resultPrice = (int)(roundedToFive + 0.5);
+
+            // if the result price exceeds the clamp price we then just return the clamp price so there are never items
+            // above that.
+            if (resultPrice > clampPrice) {
+                return clampPrice;
+            }
+
+            // We have a valid price so we return that
+            return resultPrice;
         }
     }
 
