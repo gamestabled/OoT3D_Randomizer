@@ -84,7 +84,7 @@ int GetShopPrice() {
 
     switch (Settings::ShopsanityPrices.Value<u8>()) {
         case SHOPSANITY_PRICE_AFFORDABLE:
-            //Affordable option sets all prices to 10 rupees so we just return 10 immediately here.
+            // Affordable option sets all prices to 10 rupees so we just return 10 immediately here.
             return 10;
         case SHOPSANITY_PRICE_CHILD:
             clampPrice = 99;
@@ -99,7 +99,8 @@ int GetShopPrice() {
             clampPrice = 999;
             break;
         case SHOPSANITY_PRICE_RANDOM:
-            //This is the default/original Shopsanity behaviour which has a step of 5 and a clampprice of 295 so we set both here instead of calculating them.
+            // This is the default/original Shopsanity behaviour which has a step of 5 and a clampprice of 295 so we set
+            // both here instead of calculating them.
             stepSize   = 5;
             clampPrice = 295;
             break;
