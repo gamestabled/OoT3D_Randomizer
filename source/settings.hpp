@@ -418,6 +418,7 @@ extern Option ShuffleRewards;
 extern Option LinksPocketItem;
 extern Option ShuffleSongs;
 extern Option Shopsanity;
+extern Option ShopsanityPrices;
 extern Option Tokensanity;
 extern Option Scrubsanity;
 extern Option ShuffleCows;

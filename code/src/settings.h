@@ -161,6 +161,11 @@ typedef enum {
 } ShopsanitySetting;
 
 typedef enum {
+    SHOPSANITY_PRICE_RANDOM,
+    SHOPSANITY_PRICE_AFFORDABLE,
+} ShopsanityPriceSetting;
+
+typedef enum {
     TOKENSANITY_OFF,
     TOKENSANITY_DUNGEONS,
     TOKENSANITY_OVERWORLD,
