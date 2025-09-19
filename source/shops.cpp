@@ -340,10 +340,10 @@ void InitTrickNames() {
                                       Text{ "Mushroom Poultice", "Mixture de champignon", "Medicina de champiñones",
                                             "Medicina di funghi", "Pilzumschlag" } };
     trickNameTable[GI_SAW]        = {
-        Text{ "Carpenter's Saw", "Scie du charpentier", "Sierra del carpintero", "Sega del carpentiere",
+               Text{ "Carpenter's Saw", "Scie du charpentier", "Sierra del carpintero", "Sega del carpentiere",
               "Zimmermannssäge" },
-        Text{ "Poacher's Sword", "Hache du chasseur", "Espada del capataz", "Spada del bracconiere", "Nervensäge" },
-        Text{ "Grog's Saw", "Scie de Grog", "Sierra del Cazador Furtivo", "Sega di Grog", "Grogs Säge" }
+               Text{ "Poacher's Sword", "Hache du chasseur", "Espada del capataz", "Spada del bracconiere", "Nervensäge" },
+               Text{ "Grog's Saw", "Scie de Grog", "Sierra del Cazador Furtivo", "Sega di Grog", "Grogs Säge" }
     };
     trickNameTable[GI_SWORD_BROKEN] = { Text{ "Broken Biggoron's Sword", "Épée brisée de Grogoron",
                                               "Espada de Biggoron rota", "Spada rotta di Grande Goron",
@@ -369,9 +369,9 @@ void InitTrickNames() {
                                         Text{ "Zora Perfume", "Parfum Zora", "Perfume Zora", "Profumo Zora",
                                           "Zora-Parfüm" } };
     trickNameTable[GI_CLAIM_CHECK]  = {
-        Text{ "Clay Check", "Certificat Grogoron", "Comprobante de Reclamación", "Buonissimo", "Berg-Urkunde" },
-        Text{ "Sheikah Slate", "Tablette Sheikah", "Piedra Sheikah", "Tavoletta Sheikah", "Shiekah-Stein" },
-        Text{ "Cyclone Slate", "Ardoise des tornades", "Pizarra de los Torbellinos", "Lavagna di Gorgo",
+         Text{ "Clay Check", "Certificat Grogoron", "Comprobante de Reclamación", "Buonissimo", "Berg-Urkunde" },
+         Text{ "Sheikah Slate", "Tablette Sheikah", "Piedra Sheikah", "Tavoletta Sheikah", "Shiekah-Stein" },
+         Text{ "Cyclone Slate", "Ardoise des tornades", "Pizarra de los Torbellinos", "Lavagna di Gorgo",
               "Froschkompass" }
     };
 
@@ -681,17 +681,17 @@ void InitTrickNames() {
         Text{ "Heart Container", "Réceptacle de cœur", "Contenedor de corazón", "Portacuori", "Herzcontainer" },
         Text{ "Piece of Heart", "Quart de cœur", "Pieza de corazón", "Frammento di cuore", "Herzteil" }
     };
-    trickNameTable[GI_RUPEE_GREEN]  = { Text{ "Green Rupy", "Rupee vert", "Rubia verde", "Bugia verde", "Grüner Ruby" },
-                                        Text{ "One Rupee", "Un rubis", "Guaraní hyliano", "Una rupia", "Ein Rubin" },
-                                        Text{ "Rupee (1)", "Rubis (1)", "Peso hyliano", "Rupia (1)", "Rubin (1)" } };
-    trickNameTable[GI_RUPEE_BLUE]   = { Text{ "Blue Rupy", "Rupee bleu", "Rubia azul", "Bugia blu", "Blauer Ruby" },
-                                        Text{ "Five Rupees", "Cinq rubis", "Bolívar hyliano", "Cinque rupie",
+    trickNameTable[GI_RUPEE_GREEN] = { Text{ "Green Rupy", "Rupee vert", "Rubia verde", "Bugia verde", "Grüner Ruby" },
+                                       Text{ "One Rupee", "Un rubis", "Guaraní hyliano", "Una rupia", "Ein Rubin" },
+                                       Text{ "Rupee (1)", "Rubis (1)", "Peso hyliano", "Rupia (1)", "Rubin (1)" } };
+    trickNameTable[GI_RUPEE_BLUE]  = { Text{ "Blue Rupy", "Rupee bleu", "Rubia azul", "Bugia blu", "Blauer Ruby" },
+                                       Text{ "Five Rupees", "Cinq rubis", "Bolívar hyliano", "Cinque rupie",
                                             "Fünf Rubine" },
-                                        Text{ "Rupee (5)", "Rubis (5)", "Peso hyliano", "Rupie (5)", "Rubin (5)" } };
-    trickNameTable[GI_RUPEE_RED]    = { Text{ "Red Rupy", "Rupee rouge", "Rubia roja", "Bugia rossa", "Roter Ruby" },
-                                        Text{ "Twenty Rupees", "Vingt rubis", "Colon hyliano", "Venti rupie",
+                                       Text{ "Rupee (5)", "Rubis (5)", "Peso hyliano", "Rupie (5)", "Rubin (5)" } };
+    trickNameTable[GI_RUPEE_RED]   = { Text{ "Red Rupy", "Rupee rouge", "Rubia roja", "Bugia rossa", "Roter Ruby" },
+                                       Text{ "Twenty Rupees", "Vingt rubis", "Colon hyliano", "Venti rupie",
                                            "Zwanzig Rubine" },
-                                        Text{ "Rupee (20)", "Rubis (20)", "Peso hyliano", "Rupie (20)", "Rubin (20)" } };
+                                       Text{ "Rupee (20)", "Rubis (20)", "Peso hyliano", "Rupie (20)", "Rubin (20)" } };
     trickNameTable[GI_RUPEE_PURPLE] = {
         Text{ "Purple Rupy", "Rupee pourpre", "Rubia morada", "Bugia viola", "Violetter Ruby" },
         Text{ "Fifty Rupees", "Cinquante rubis", "Balboa hyliano", "Cinquanta rupie", "Fünfzig Rubine" },
