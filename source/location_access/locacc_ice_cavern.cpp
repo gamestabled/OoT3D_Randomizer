@@ -24,22 +24,8 @@ void AreaTable_Init_IceCavern() {
     |     VANILLA DUNGEON      |
     ---------------------------*/
     if (Dungeon::IceCavern.IsVanilla()) {
-
-        static constexpr auto ForEachEnemy_Beginning = [](auto& enemyCheckFn) {
-            return enemyCheckFn(9, 0, 3, {}) || enemyCheckFn(9, 0, 5, {}) || enemyCheckFn(9, 0, 8, {}) ||
-                   enemyCheckFn(9, 0, 9, {}) || enemyCheckFn(9, 0, 11, {}) || enemyCheckFn(9, 0, 6, { 18 }) ||
-                   (CanPassEnemy(9, 0, 6, 18) && enemyCheckFn(9, 0, 6, { 17 }));
-        };
         areaTable[ICE_CAVERN_BEGINNING] =
-            Area("Ice Cavern Beginning", "Ice Cavern", ICE_CAVERN, NO_DAY_NIGHT_CYCLE,
-                 {
-                     // Events
-                     EventAccess(&DekuBabaSticks,
-                                 { [] { return DekuBabaSticks || ForEachEnemy_Beginning(CanGetDekuBabaSticks); } }),
-                     EventAccess(&DekuBabaNuts,
-                                 { [] { return DekuBabaNuts || ForEachEnemy_Beginning(CanGetDekuBabaNuts); } }),
-                 },
-                 {},
+            Area("Ice Cavern Beginning", "Ice Cavern", ICE_CAVERN, NO_DAY_NIGHT_CYCLE, {}, {},
                  {
                      // Exits
                      Entrance(ICE_CAVERN_ENTRYWAY, { [] { return true; } }),
@@ -47,11 +33,21 @@ void AreaTable_Init_IceCavern() {
                               { [] { return Here(ICE_CAVERN_BEGINNING, [] { return CanDefeatEnemies(9, 0, 1); }); } }),
                  });
 
+        static constexpr auto ForEachEnemy_Main = [](auto& enemyCheckFn) {
+            return enemyCheckFn(9, 0, 3, {}) || enemyCheckFn(9, 0, 5, {}) || enemyCheckFn(9, 0, 8, {}) ||
+                   enemyCheckFn(9, 0, 9, {}) || enemyCheckFn(9, 0, 11, {}) || enemyCheckFn(9, 0, 6, { 18 }) ||
+                   (CanPassEnemy(9, 0, 6, 18) && enemyCheckFn(9, 0, 6, { 17 }));
+        };
         areaTable[ICE_CAVERN_MAIN] = Area(
             "Ice Cavern", "Ice Cavern", ICE_CAVERN, NO_DAY_NIGHT_CYCLE,
             {
                 // Events
                 EventAccess(&BlueFireAccess, { [] { return BlueFireAccess || (IsAdult && HasBottle); } }),
+                // Events
+                EventAccess(&DekuBabaSticks,
+                            { [] { return DekuBabaSticks || ForEachEnemy_Main(CanGetDekuBabaSticks); } }),
+                EventAccess(&DekuBabaNuts, { [] { return DekuBabaNuts || ForEachEnemy_Main(CanGetDekuBabaNuts); } }),
+
             },
             {
                 // Locations
