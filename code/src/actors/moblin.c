@@ -62,7 +62,8 @@ void EnMb_rUpdate(Actor* thisx, GlobalContext* globalCtx) {
         }
 
         Actor* shockwave = thisx->child;
-        if (shockwave != NULL && shockwave->update == NULL && shockwave->draw == NULL) {
+        if (shockwave != NULL &&
+            ((shockwave->update == NULL && shockwave->draw == NULL) || shockwave->id != ACTOR_EN_PART)) {
             // When the shockwave despawns, clear the child pointer.
             thisx->child = shockwave = NULL;
         }
@@ -79,6 +80,7 @@ void EnMb_rUpdate(Actor* thisx, GlobalContext* globalCtx) {
                 shockwave->world.pos.y = yGroundIntersect;
             } else {
                 Actor_Kill(shockwave);
+                thisx->child = shockwave = NULL;
             }
         }
     }

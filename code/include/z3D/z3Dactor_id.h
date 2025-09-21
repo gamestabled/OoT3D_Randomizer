@@ -3,6 +3,7 @@
 
 enum ActorId {
     ACTOR_STALFOS            = 0x002,
+    ACTOR_EN_PART            = 0x007,
     ACTOR_POE                = 0x00D,
     ACTOR_OCTOROK            = 0x00E,
     ACTOR_WALLMASTER         = 0x011,
