@@ -78,61 +78,76 @@ static constexpr std::array<double, 60> ShopPriceProbability = {
     0.987344345, 0.991851853, 0.995389113, 0.997937921, 0.999481947, 1.000000000,
 };
 
+size_t GetNumberOfBins(int maxPrice, int stepSize) {
+    if (maxPrice <= 0) {
+        return 1;
+    }
+
+    double rawResult = floor((double)maxPrice / (double)stepSize) + 1.0;
+    return (size_t)rawResult;
+}
+
+double GetFractionForOneBin(size_t numberOfBins) {
+    return 1.0 / (double)numberOfBins;
+}
+
+double CalculateCumulativeDistributionFunction(double input) {
+    return 2.5 * (1 - 0.6 * input) * pow(input, 1.5);
+}
+
 int GetShopPrice() {
-    double stepSize = 5.0;
-    int clampPrice  = 295;
+    const int stepSize = 5;
+    if (Settings::ShopsanityPrices.Is(SHOPSANITY_PRICE_AFFORDABLE)) {
+        // Affordable option is like affordable scrubs. All items cost 10 rupees.
+        return 10;
+    } else if (Settings::ShopsanityPrices.Is(SHOPSANITY_PRICE_RANDOM)) {
+        // "Original" Shopsanity price behaviour. Using the precomputed probability values from the ShopPriceProbability
+        // array.
+        double random = RandomDouble(); // Randomly generated probability value
+        for (size_t i = 0; i < ShopPriceProbability.size(); i++) {
+            if (random < ShopPriceProbability[i]) {
+                // The randomly generated value has surpassed the total probability up to this point, so this is the
+                // generated price
+                return i * stepSize; // i in range [0, 59], output in range [0, 295] in increments of 5
+            }
+        }
+    }
+
+    // Shopsanity price behaviour with caps for each wallet size.
+    int maxPrice = 295;
 
     switch (Settings::ShopsanityPrices.Value<u8>()) {
-        case SHOPSANITY_PRICE_AFFORDABLE:
-            // Affordable option sets all prices to 10 rupees so we just return 10 immediately here.
-            return 10;
         case SHOPSANITY_PRICE_CHILD:
-            clampPrice = 99;
+            maxPrice = 99;
             break;
         case SHOPSANITY_PRICE_ADULT:
-            clampPrice = 200;
+            maxPrice = 200;
             break;
         case SHOPSANITY_PRICE_GIANT:
-            clampPrice = 500;
+            maxPrice = 500;
             break;
         case SHOPSANITY_PRICE_TYCOON:
-            clampPrice = 999;
-            break;
-        case SHOPSANITY_PRICE_RANDOM:
-            // This is the default/original Shopsanity behaviour which has a step of 5 and a clampprice of 295 so we set
-            // both here instead of calculating them.
-            stepSize   = 5;
-            clampPrice = 295;
+            maxPrice = 999;
             break;
     }
 
-    if (!Settings::ShopsanityPrices.Is(SHOPSANITY_PRICE_RANDOM)) {
-        stepSize = clampPrice / (double)ShopPriceProbability.size();
-    }
+    // Since there are a different amount of multiples of 5 rupees between the different settings we need to calculate
+    // the amount of "bins" aka how many options are available.
+    size_t numberOfBins = GetNumberOfBins(maxPrice, stepSize);
 
-    double random = RandomDouble(); // Randomly generated probability value
-    for (size_t i = 0; i < ShopPriceProbability.size(); i++) {
-        if (random < ShopPriceProbability[i]) {
-            // The randomly generated value has surpassed the total probability up to this point, so this determines the
-            // price First we calculate a raw price as a double
-            double rawPrice = i * stepSize;
+    // We then need to calculate what how those bins relate to a fraction between 0.0 and 1.0 so we can use that to run
+    // the distribution calculation.
+    double fractionForOneBin = GetFractionForOneBin(numberOfBins);
 
-            // Then we round the rawPrice to the nearest 5 rupees
-            double roundedToFive = rawPrice + 2.5;
-            roundedToFive -= std::fmod(roundedToFive, 5.0);
+    // The diceroll that gives us the randomness for choosing the price.
+    double random = RandomDouble();
 
-            // We then cast the double to an int. Since a double of 5 is generally stored as 4.99999.... we add 0.5 so
-            // when the flooring happens from the cast it gets set to the correct value
-            int resultPrice = (int)(roundedToFive + 0.5);
-
-            // if the result price exceeds the clamp price we then just return the clamp price so there are never items
-            // above that.
-            if (resultPrice > clampPrice) {
-                return clampPrice;
-            }
-
-            // We have a valid price so we return that
-            return resultPrice;
+    // We loop through the amount of bins to look for the bin that the random double fits in with the Cummulative
+    // Distribution Function
+    for (size_t i = 0; i < numberOfBins; i++) {
+        if (random < CalculateCumulativeDistributionFunction(fractionForOneBin * (i + 1))) {
+            return i * stepSize; // We've found which bin it is in so we can multiply by stepSize so we then get the
+                                 // resulting price.
         }
     }
 
