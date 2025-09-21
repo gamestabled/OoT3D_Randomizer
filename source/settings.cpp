@@ -3351,6 +3351,24 @@ bool ValidateSettings() {
         posY += 7;
     }
 
+    // Check that there are no Heart requirements with Gloom Mode.
+    if (GloomMode.IsNot(GLOOMMODE_OFF) &&
+        (Bridge.Is(RAINBOWBRIDGE_HEARTS) || GanonsBossKey.Is(GANONSBOSSKEY_LACS_HEARTS))) {
+        if (Bridge.IsHidden() && GanonsBossKey.IsHidden()) {
+            Bridge.SetSelectedIndex(RAINBOWBRIDGE_VANILLA);
+            GanonsBossKey.SetSelectedIndex(GANONSBOSSKEY_VANILLA);
+        } else {
+            printf("\x1b[%d;0H"
+                   "----------------------------------------"
+                   "Gloom Mode is incompatible with Heart\n"
+                   "requirements for LACS or Rainbow Bridge."
+                   "----------------------------------------",
+                   posY);
+            valid = false;
+            posY += 5;
+        }
+    }
+
     // Check that there are no MQ dungeons with Enemy Souls or Enemy Randomizer.
     if ((ShuffleEnemySouls.Is(SHUFFLEENEMYSOULS_ALL) || Enemizer) && MQDungeonCount.IsNot(0) &&
         Logic.IsNot(LOGIC_NONE) && Logic.IsNot(LOGIC_VANILLA)) {
@@ -3367,7 +3385,7 @@ bool ValidateSettings() {
                    "Please disable one of the following:\n"
                    " - MQ Dungeons (setting Count to 0)\n"
                    " - Logic\n"
-                   " - Enemy Soul Shuffle / Enemy Randomizer\n"
+                   " - Enemy Soul Shuffle / Enemy Randomizer"
                    "----------------------------------------",
                    posY);
             valid = false;

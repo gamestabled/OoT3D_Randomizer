@@ -840,7 +840,7 @@ void UpdateHelpers() {
     CanRideEpona                    = IsAdult && Epona && CanPlay(EponasSong);
     CanSummonGossipFairy            = Ocarina && (ZeldasLullaby || EponasSong || SongOfTime || SunsSong);
     CanSummonGossipFairyWithoutSuns = Ocarina && (ZeldasLullaby || EponasSong || SongOfTime);
-    Hearts                          = BaseHearts + HeartContainer + (PieceOfHeart >> 2);
+    Hearts = GloomMode.Is(GLOOMMODE_OFF) ? (BaseHearts + HeartContainer + (PieceOfHeart >> 2)) : 0;
     EffectiveHealth =
         ((Hearts << (2 + DoubleDefense)) >> Multiplier) + ((Hearts << (2 + DoubleDefense)) % (1 << Multiplier) >
                                                            0); // Number of half heart hits to die, ranges from 1 to 160

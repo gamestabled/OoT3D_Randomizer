@@ -910,21 +910,22 @@ string_view permadeathDesc            = "Dying deletes your save file and kicks 
 |          GLOOM MODE          |                                                           //
 ------------------------------*/                                                           //
 string_view gloomModeOffDesc          = "Enabling this setting will make your hearts\n"    //
-                                        "permanently disappear on various conditions.\n\n" //
-                                        "THE GAME MAY BECOME IMPOSSIBLE TO BEAT if you\n"  //
-                                        "lose too many hearts.";                           //
-string_view gloomModeDeathDesc        = "Delete 1 Heart when getting a Game Over.\n\n"     //
+                                        "permanently disappear on various conditions.";    //
+string_view gloomModeDeathDesc        = "Delete 1 heart when getting a Game Over.\n\n"     //
                                         "The Permadeath setting, if enabled, will be\n"    //
                                         "changed to take effect when you lose all hearts.";//
 string_view gloomModeDamageDesc       = "Delete 1 heart when losing health for any reason,\n"
                                         "except continuous elemental damage from being\n"  //
                                         "burned or frozen.\n\n"                            //
-                                        "Double Defense will require 2 hits per Heart.";   //
+                                        "Double Defense will require 2 hits per heart.";   //
 string_view gloomModeCollisionDesc    = "Delete 1 heart not only when losing health, but\n"//
                                         "also when any collision is detected: getting hit\n"
                                         "during invincibility frames or blocking an attack\n"
                                         "with your shield count as collisions.\n\n"        //
-                                        "Double Defense will require 2 hits per Heart.";   //
+                                        "Double Defense will require 2 hits per heart.\n\n"//
+                                        "WARNING: THE GAME MAY BE IMPOSSIBLE TO BEAT\n"    //
+                                        "because you can still be expected to use a shield\n"
+                                        "(for example to reflect Twinrova's attacks).";    //
 string_view gloomModeEmptyDesc        = "Hearts will be deleted when they become empty.";  //
 /*------------------------------                                                           //
 |        STARTING TIME         |                                                           //
