@@ -190,22 +190,6 @@ hook_GetToken:
     pop {r0-r12, lr}
     bx lr
 
-.global hook_ModelSpawnGetObjectStatus
-hook_ModelSpawnGetObjectStatus:
-    push {r1-r12, lr}
-    cpy r0,r1
-    bl ExtendedObject_GetStatus
-    pop {r1-r12, lr}
-    bx lr
-
-.global hook_ChestGetIceTrapObjectStatus
-hook_ChestGetIceTrapObjectStatus:
-    push {r1-r12, lr}
-    mov r0,#0x3
-    bl ExtendedObject_GetStatus
-    pop {r1-r12, lr}
-    bx lr
-
 .global hook_PoeCollectorCheckPoints
 hook_PoeCollectorCheckPoints:
     push {r0-r12, lr}
@@ -1888,7 +1872,8 @@ hook_OnActorSetup_SceneChange:
     cpy r4,r5
     push {r0-r12, lr}
     cpy r0,r5
-    bl ActorSetup_ShouldSkipEntry
+    cpy r1,r6
+    bl ActorSetup_OverrideEntry
     cmp r0,#0x1
     pop {r0-r12, lr}
     # Continue like normal
@@ -1905,7 +1890,7 @@ hook_OnActorSetup_SceneChange:
 hook_AfterActorSetup_SceneChange:
     strb r0,[r7,#0xC03]
     push {r0-r12, lr}
-    bl ActorSetup_After
+    bl ActorSetup_Extra
     pop {r0-r12, lr}
 .if _EUR_==1
     b 0x4522DC
@@ -1918,7 +1903,8 @@ hook_OnActorSetup_RoomChange:
     cpy r4,r6
     push {r0-r12, lr}
     cpy r0,r6
-    bl ActorSetup_ShouldSkipEntry
+    cpy r1,r7
+    bl ActorSetup_OverrideEntry
     cmp r0,#0x1
     pop {r0-r12, lr}
     # Continue like normal
@@ -1935,7 +1921,7 @@ hook_OnActorSetup_RoomChange:
 hook_AfterActorSetup_RoomChange:
     strb r10,[r8,#0xC03]
     push {r0-r12, lr}
-    bl ActorSetup_After
+    bl ActorSetup_Extra
     pop {r0-r12, lr}
 .if _EUR_==1
     b 0x461458
@@ -2079,6 +2065,7 @@ hook_ShabomAfterDamagePlayer:
     pop {r0-r12, lr}
     beq 0x3B511C @ Skip popping
     strh r10,[r5,#0x80]
+    bx lr
 
 .global hook_DodongoAfterSwallowBomb
 hook_DodongoAfterSwallowBomb:
@@ -2147,6 +2134,329 @@ hook_PlayInit:
     bl before_Play_Init
     pop {r0-r12, lr}
     cpy r5,r0
+    bx lr
+
+.global hook_GetObjectEntry_Generic
+hook_GetObjectEntry_Generic:
+    push {r1-r12, lr}
+    @ r0 = slot
+    bl Object_GetEntry
+    pop {r1-r12, lr}
+    bx lr
+
+.global hook_GetObjectEntry_33AB24
+hook_GetObjectEntry_33AB24:
+    push {r1-r12, lr}
+    ldr r0,[r4,#0x4]
+    ldr r0,[r0,r5,lsl #0x3] @ objectId
+    bl Object_FindEntryOrSpawn
+    pop {r1-r12, lr}
+    bx lr
+
+.global hook_ExtendObjectGetSlot
+hook_ExtendObjectGetSlot:
+    push {r1-r12, lr}
+    cpy r0,r1 @ objectId
+    bl ExtendedObject_GetSlot
+    pop {r1-r12, lr}
+    bx lr
+
+.global hook_OverrideObjectIsLoaded
+hook_OverrideObjectIsLoaded:
+    push {r1-r12, lr}
+    @ r0,r1 = ObjectContext,slot
+    bl Object_IsLoaded
+    pop {r1-r12, lr}
+    bx lr
+
+.global hook_OverrideObjectIsLoadedForCutscenes
+hook_OverrideObjectIsLoadedForCutscenes:
+    push {r1-r12, lr}
+    @ r0,r1 = ObjectContext,slot
+    bl Object_IsLoaded_ForCutscenes
+    pop {r1-r12, lr}
+    bx lr
+
+.global hook_AfterObjectListCommand
+hook_AfterObjectListCommand:
+    push {r0-r12, lr}
+    bl ExtendedObject_AfterObjectListCommand
+    pop {r0-r12, lr}
+    mov r0,#0x1
+    bx lr
+
+.global hook_GetObjectEntry_34F270
+hook_GetObjectEntry_34F270:
+    push {r1-r12, lr}
+    @ r0 = slot
+    bl Object_GetEntry
+    pop {r1-r12, lr}
+    b 0x34F274
+
+.global hook_AltHeadersCommand
+hook_AltHeadersCommand:
+    add r2,r7,r1
+    push {r0-r12, lr}
+    cpy r0,r2 @ alt headers pointers list
+    bl Scene_GetLoadedLayer
+    pop {r0-r12, lr}
+    bx lr
+
+.global hook_GohmaLarvaDeathSignalParent
+hook_GohmaLarvaDeathSignalParent:
+    ldr r1,[r4,#0x124]
+    @ if parent pointer is null, skip
+    @ setting childrenGohmaState
+    cmp r1,#0x0
+    addeq lr,lr,#0x10
+    bx lr
+
+.global hook_GohmaEggDeathSignalParent
+hook_GohmaEggDeathSignalParent:
+    ldr r0,[r4,#0x124]
+    @ if parent pointer is null, skip
+    @ setting childrenGohmaState
+    cmp r0,#0x0
+    addeq lr,lr,#0x10
+    bx lr
+
+.global hook_StalchildDespawn_13DB68
+hook_StalchildDespawn_13DB68:
+    push {r0-r12, lr}
+    cpy r0,r4 @ actor
+    bl Stalchild_CanDespawn
+    cmp r0,#0x1
+    pop {r0-r12, lr}
+    addne lr,lr,#0x10 @ skip other checks, don't despawn
+    bxne lr
+    cmp r0,r1 @ base game code
+    bx lr
+
+.global hook_StalchildDespawn_366338
+hook_StalchildDespawn_366338:
+    cmp r0,#0x0
+    bxne lr @ doesn't despawn
+    push {r0-r12, lr}
+    cpy r0,r4 @ actor
+    bl Stalchild_CanDespawn
+    cmp r0,#0x1
+    pop {r0-r12, lr}
+    bx lr
+
+.global hook_SkullwalltulaAttack_35F834
+hook_SkullwalltulaAttack_35F834:
+    cpy r5,r0
+    b SkullwalltulaAttack
+
+.global hook_SkullwalltulaAttack_35F328
+hook_SkullwalltulaAttack_35F328:
+    cpy r4,r0
+SkullwalltulaAttack:
+    push {r0-r12, lr}
+    @ r0 = actor
+    bl Skullwalltula_ShouldAttack
+    cmp r0,#0x0
+    pop {r0-r12, lr}
+    bxlt lr @ proceed with vanilla checks
+    movne r0,#0x1 @ attack
+    moveq r0,#0x0 @ don't attack
+    pop {r4-r7,pc} @ return and skip vanilla checks
+
+.global hook_SkullwalltulaTargetRotation
+hook_SkullwalltulaTargetRotation:
+    sxth r0,r0
+    push {r1-r12, lr}
+    cpy r1,r4 @ actor
+    bl Skullwalltula_GetTargetRotation
+    pop {r1-r12, lr}
+    bx lr
+
+.global hook_SkullKidPoacherSawCheck
+hook_SkullKidPoacherSawCheck:
+    cmp r1,#0x32
+    bxge lr @ higher than poacher's saw, resume vanilla code
+    push {r0-r12, lr}
+    @ less than poacher's saw, only kill actor if enemizer is off
+    bl SkullKid_IsRandomized
+    cmp r0,#0x1
+    pop {r0-r12, lr}
+    bx lr
+
+.global hook_LeeverSandCheck
+hook_LeeverSandCheck:
+    cmpne r0,#0x7
+    bxeq lr
+    push {r0-r12, lr}
+    cpy r0,r4 @ actor
+    bl Leever_ShouldSurviveOutsideSand
+    cmp r0,#0x1
+    pop {r0-r12, lr}
+    bx lr
+
+.global hook_LeeverAfterSink
+hook_LeeverAfterSink:
+    push {r0-r12, lr}
+    @ r0 = actor
+    bl Leever_AfterSink
+    pop {r0-r12, lr}
+    bx lr
+
+.global hook_LeeverAfterDie
+hook_LeeverAfterDie:
+    push {r0-r12, lr}
+    cpy r0,r4 @ actor
+    bl Leever_AfterDie
+    pop {r0-r12, lr}
+    cmp r0,#0x0
+    bx lr
+
+.global hook_PlayerCheckVoidOut
+hook_PlayerCheckVoidOut:
+    ldrb r0,[r4,#0x2]  @ actor->type
+    cmp r0,#0x2        @ ACTORTYPE_PLAYER
+    addne lr,lr,#0x17C @ Dark Link, skip void out (USA: 0x132CE4)
+    cmpeq r8,#0x0      @ Normal Player, continue as normal
+    bx lr
+
+.global hook_EnBlkobj_SpawnDarkLink
+hook_EnBlkobj_SpawnDarkLink:
+    push {r1-r12, lr}
+    cpy r0,r4 @ EnBlkobj actor
+    bl DarkLink_Spawn
+    pop {r1-r12, lr}
+    bx lr
+
+.global hook_EnBlkobj_FindDarkLink
+hook_EnBlkobj_FindDarkLink:
+    push {r1-r12, lr}
+    bl DarkLink_IsAlive
+    pop {r1-r12, lr}
+    bx lr
+
+.global hook_EnEncount1_SpawnStalchildWolfos
+hook_EnEncount1_SpawnStalchildWolfos:
+    cpy r1,r9
+    push {r0-r12, lr}
+    cpy r0,r9       @ this EnEncount1
+    add r1,sp,#0xC  @ actorId (r3)
+    add r2,sp,#0x44 @ params (Stack[0xc])
+    bl EnemySpawner_OverrideSpawnedActor
+    pop {r0-r12, lr}
+    bx lr
+
+.global hook_EnEncount1_SpawnLeever
+hook_EnEncount1_SpawnLeever:
+    push {r0-r12, lr}
+    cpy r0,r5       @ this EnEncount1
+    add r1,sp,#0xC  @ actorId (r3)
+    add r2,sp,#0x20 @ params (r8)
+    bl EnemySpawner_OverrideSpawnedActor
+    pop {r0-r12, lr}
+    str r8,[sp,#0xC]
+    bx lr
+
+.global hook_EnEncount1_SetLeeverAimType
+hook_EnEncount1_SetLeeverAimType:
+    push {r0}
+    ldrh r0,[r7] @ actor->id
+    cmp r0,#0x1C @ Leever actor id
+    pop {r0}
+    strheq r0,[r1,r7] @ Set aimType only if actor is Leever
+    bx lr
+
+.global hook_DarkLinkPlayerRecoil
+hook_DarkLinkPlayerRecoil:
+    cmp r1,r6
+    bxne lr @ not recoiling
+    push {r0-r12, lr}
+    bl DarkLink_ShouldOverridePlayerRecoilSpeed
+    cmp r0,#0x1
+    pop {r0-r12, lr}
+    bx lr
+
+.global hook_BabyDodongoWallCheck
+hook_BabyDodongoWallCheck:
+    tst r0,#0x8
+    bxeq lr @ no wall detected, return
+    push {r0-r12, lr}
+    @ Prevent burrowing for soulless baby dodongos.
+    cpy r0,r4
+    bl EnemySouls_CheckSoulForActor
+    cmp r0,#0x0
+    pop {r0-r12, lr}
+    bx lr
+
+.global hook_PeahatLarvaGroundCheck
+hook_PeahatLarvaGroundCheck:
+    tsteq r1,#0x1
+    bxeq lr @ did not hit ground
+    push {r0-r12, lr}
+    cpy r0,r4 @ actor
+    bl EnemySouls_CheckSoulForActor
+    cmp r0,#0x0
+    pop {r0-r12, lr}
+    @ Prevent death when hitting ground without soul.
+    bx lr
+
+.global hook_RedeadCanFreezePlayer
+hook_RedeadCanFreezePlayer:
+    cmp r1,r0
+    bxgt lr @ far away, resume vanilla checks
+    ldr r0,const_RedeadMaxYDist
+    vldr s0,[r4,#0x9C] @ actor->yDistToPlayer
+    vabs.f32 s0,s0
+    vmov r1,s0
+    cmp r1,r0 @ add check on Y distance
+    bx lr
+const_RedeadMaxYDist:
+    .float 200.0
+
+.global hook_DeadHandHandCanGrabPlayer
+hook_DeadHandHandCanGrabPlayer:
+    cmp r0,r1
+    bxgt lr @ far away, resume vanilla checks
+    vpush {s0}
+    ldr r0,const_DeadHandHandMaxYDist
+    vldr s0,[r4,#0x9C] @ actor->yDistToPlayer
+    vabs.f32 s0,s0
+    vmov r1,s0
+    cmp r1,r0 @ add check on Y distance
+    vpop {s0}
+    bx lr
+const_DeadHandHandMaxYDist:
+    .float 100.0
+
+.global hook_GerudoBattleMusic
+hook_GerudoBattleMusic:
+    push {r0-r12, lr}
+    bl GerudoFighter_IsRandomized
+    cmp r0,#0x0
+    pop {r0-r12, lr}
+    beq 0x34F724 @ start battle music
+    bx lr
+
+@ This fixes a base game bug where, after going through a room transition, actors under
+@ certain conditions will get killed on every frame and never deleted.
+@ Fig's explanation from OoT Discord: https://discord.com/channels/82938430371139584/82991320754294784/1002187734946947113
+@ With Enemy Randomizer, these "zombie" enemy actors can prevent a room from being cleared.
+.global hook_FixActorKillLoop
+hook_FixActorKillLoop:
+    bxne lr @ object is loaded, continue without killing actor
+    push {r0-r12, lr}
+    @ check if actor is already killed so that it doesn't get
+    @ killed again and it gets properly deleted instead
+    cpy r0,r4 @ actor
+    bl Actor_IsKilled
+    cmp r0,#0x0
+    pop {r0-r12, lr}
+    bx lr
+
+.global hook_AfterInvalidatingRoomObjects
+hook_AfterInvalidatingRoomObjects:
+    push {r0-r12, lr}
+    bl ExtendedObject_InvalidateRoomObjects
+    pop {r0-r12, lr}
+    ldr r0,[sp,#0x18]
     bx lr
 
 .global hook_DrawHeartIcon

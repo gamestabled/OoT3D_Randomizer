@@ -112,10 +112,12 @@ void SaveFile_Init(u32 fileBaseIndex) {
         gSaveContext.eventChkInf[0x9] |= 0x000E;                                // Free 3 carpenters
         gSaveContext.sceneFlags[DUNGEON_THIEVES_HIDEOUT].swch |= 0x000D01DC;    // heard yells/unlocked doors
         gSaveContext.sceneFlags[DUNGEON_THIEVES_HIDEOUT].collect |= 0x0000C400; // picked up keys
+        gSaveContext.sceneFlags[DUNGEON_THIEVES_HIDEOUT].clear |= 0x00000032;   // cleared rooms (for Enemy Randomizer)
     } else if (gSettingsContext.gerudoFortress == GERUDOFORTRESS_OPEN) {
         gSaveContext.eventChkInf[0x9] |= 0x000F;                                // Free all carpenters
         gSaveContext.sceneFlags[DUNGEON_THIEVES_HIDEOUT].swch |= 0x000F01FE;    // heard yells/unlocked doors
         gSaveContext.sceneFlags[DUNGEON_THIEVES_HIDEOUT].collect |= 0x0000D400; // picked up keys
+        gSaveContext.sceneFlags[DUNGEON_THIEVES_HIDEOUT].clear |= 0x00000036;   // cleared rooms (for Enemy Randomizer)
     }
 
     if (gSettingsContext.zorasFountain == ZORASFOUNTAIN_OPEN) {
@@ -712,14 +714,12 @@ s8 SaveFile_GetIgnoreMaskReactionOption(u32 reactionSet) {
 }
 
 void SaveFile_InitExtSaveData(u32 saveNumber, u8 fromSaveCreation) {
+    // Reset entire struct to 0 before setting specific fields.
+    memset(&gExtSaveData, 0, sizeof(gExtSaveData));
+
     gExtSaveData.version = EXTSAVEDATA_VERSION; // Do not change this line
-    memset(&gExtSaveData.extInf, 0, sizeof(gExtSaveData.extInf));
     gExtSaveData.extInf[EXTINF_MASTERSWORDFLAGS] =
         (gSettingsContext.shuffleMasterSword && !(gSettingsContext.startingEquipment & 0x2)) ? 0 : 1;
-    memset(&gExtSaveData.fwStored, 0, sizeof(gExtSaveData.fwStored));
-    gExtSaveData.playtimeSeconds = 0;
-    memset(&gExtSaveData.scenesDiscovered, 0, sizeof(gExtSaveData.scenesDiscovered));
-    memset(&gExtSaveData.entrancesDiscovered, 0, sizeof(gExtSaveData.entrancesDiscovered));
     gExtSaveData.permadeath = fromSaveCreation ? gSettingsContext.permadeath : 0;
     // Ingame Options
     gExtSaveData.option_EnableBGM          = gSettingsContext.playMusic;

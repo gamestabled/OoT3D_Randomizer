@@ -16,9 +16,23 @@ typedef enum {
 typedef struct EnGe1 {
     /* 0x0000 */ Actor actor;
     /* 0x01A4 */ char unk_1A4[0x8E4];
-} EnGe1; // size = 0xA88
+} EnGe1;
+_Static_assert(sizeof(EnGe1) == 0xA88, "EnGe1 size");
+
+typedef struct EnGeldB {
+    /* 0x000 */ Actor actor;
+    /* 0x1A4 */ char unk_1A4[0xA6A];
+    /* 0xC0E */ s16 spinAttackState;
+    /* 0xC10 */ char unk_C10[0x004];
+    /* 0xC14 */ s16 invisible;
+    /* 0xC16 */ char unk_C16[0x1D6];
+} EnGeldB;
+_Static_assert(sizeof(EnGeldB) == 0xDEC, "EnGeldB size");
 
 void EnGe1_rInit(Actor* thisx, GlobalContext* globalCtx);
 void EnGe1_rUpdate(Actor* thisx, GlobalContext* globalCtx);
+
+void EnGeldB_rUpdate(Actor* thisx, GlobalContext* globalCtx);
+void EnGeldB_rDraw(Actor* thisx, GlobalContext* globalCtx);
 
 #endif //_GERUDO_ARCHERY_MANAGER_H_

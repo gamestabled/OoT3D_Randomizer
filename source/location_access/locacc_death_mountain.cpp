@@ -1,20 +1,25 @@
 #include "location_access.hpp"
 #include "logic.hpp"
 #include "entrance.hpp"
+#include "enemizer_logic.hpp"
 
 using namespace Logic;
 using namespace Settings;
 
 void AreaTable_Init_DeathMountain() {
+    static constexpr auto ForEachEnemy_Trail = [](auto& enemyCheckFn) {
+        return (IsChild && enemyCheckFn(96, 0, 0, { 9, 10, 11, 12 })) || (IsAdult && enemyCheckFn(96, 0, 0, { 6, 7 }));
+    };
     areaTable[DEATH_MOUNTAIN_TRAIL] = Area(
         "Death Mountain", "Death Mountain", DEATH_MOUNTAIN_TRAIL, DAY_NIGHT_CYCLE,
-        {
-            // Events
-            EventAccess(&BeanPlantFairy, { [] {
-                return BeanPlantFairy || (CanPlantBean(DEATH_MOUNTAIN_TRAIL) && CanPlay(SongOfStorms) &&
-                                          (HasExplosives || GoronBracelet));
-            } }),
-        },
+        { // Events
+          EventAccess(&DekuBabaSticks, { [] { return DekuBabaSticks || ForEachEnemy_Trail(CanGetDekuBabaSticks); } }),
+          EventAccess(&DekuBabaNuts, { [] { return DekuBabaNuts || ForEachEnemy_Trail(CanGetDekuBabaNuts); } }),
+
+          EventAccess(&BeanPlantFairy, { [] {
+              return BeanPlantFairy ||
+                     (CanPlantBean(DEATH_MOUNTAIN_TRAIL) && CanPlay(SongOfStorms) && (HasExplosives || GoronBracelet));
+          } }) },
         {
             // Locations
             LocationAccess(
@@ -34,9 +39,11 @@ void AreaTable_Init_DeathMountain() {
             Entrance(GORON_CITY, { [] { return true; } }),
             Entrance(DEATH_MOUNTAIN_SUMMIT,
                      { [] {
-                          return Here(DEATH_MOUNTAIN_TRAIL, [] { return CanBlastOrSmash; }) ||
-                                 (IsAdult && ((CanPlantBean(DEATH_MOUNTAIN_TRAIL) && GoronBracelet) ||
-                                              (HoverBoots && LogicDMTSummitHover)));
+                          return (Here(DEATH_MOUNTAIN_TRAIL, [] { return CanBlastOrSmash; }) ||
+                                  (IsAdult && ((CanPlantBean(DEATH_MOUNTAIN_TRAIL) && GoronBracelet) ||
+                                               (HoverBoots && LogicDMTSummitHover)))) &&
+                                 ((IsChild && CanPassEnemies(96, 0, 0, { 6, 7, 8 }, SpaceAroundEnemy::NARROW)) ||
+                                  (IsAdult && CanPassEnemies(96, 2, 0, { 2, 3, 4, 8 }, SpaceAroundEnemy::NARROW)));
                       },
                        /*Glitched*/
                        [] {
@@ -58,10 +65,17 @@ void AreaTable_Init_DeathMountain() {
                        } }),
         });
 
+    static constexpr auto ForEachEnemy_Summit = [](auto& enemyCheckFn) {
+        return (IsChild && enemyCheckFn(96, 0, 0, { 6, 7, 8 })) || (IsAdult && enemyCheckFn(96, 2, 0, { 2, 3, 4, 8 }));
+    };
     areaTable[DEATH_MOUNTAIN_SUMMIT] = Area(
         "Death Mountain Summit", "Death Mountain", DEATH_MOUNTAIN_TRAIL, DAY_NIGHT_CYCLE,
         {
             // Events
+            EventAccess(&DekuBabaSticks,
+                        { [] { return DekuBabaSticks || ForEachEnemy_Summit(CanGetDekuBabaSticks); } }),
+            EventAccess(&DekuBabaNuts, { [] { return DekuBabaNuts || ForEachEnemy_Summit(CanGetDekuBabaNuts); } }),
+
             EventAccess(&PrescriptionAccess,
                         { [] { return PrescriptionAccess || (IsAdult && (BrokenSwordAccess || BrokenSword)); } }),
             EventAccess(&GossipStoneFairy, { [] { return GossipStoneFairy || CanSummonGossipFairy; } }),

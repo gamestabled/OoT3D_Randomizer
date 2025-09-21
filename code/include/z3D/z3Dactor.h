@@ -3,6 +3,8 @@
 
 #include "z3Dvec.h"
 #include "z3Dcollision_check.h"
+#include "z3Dbgcheck.h"
+#include "z3Dactor_id.h"
 
 struct Actor;
 struct GlobalContext;
@@ -10,16 +12,32 @@ struct GlobalContext;
 struct LightMapper;
 struct ZARInfo;
 
+#define BGCHECKFLAG_GROUND (1 << 0)               // Standing on the ground
+#define BGCHECKFLAG_GROUND_TOUCH (1 << 1)         // Has touched the ground (only active for 1 frame)
+#define BGCHECKFLAG_GROUND_LEAVE (1 << 2)         // Has left the ground (only active for 1 frame)
+#define BGCHECKFLAG_WALL (1 << 3)                 // Touching a wall
+#define BGCHECKFLAG_CEILING (1 << 4)              // Touching a ceiling
+#define BGCHECKFLAG_WATER (1 << 5)                // In water
+#define BGCHECKFLAG_WATER_TOUCH (1 << 6)          // Has touched water (reset when leaving water)
+#define BGCHECKFLAG_GROUND_STRICT (1 << 7)        // Strictly on ground (BGCHECKFLAG_GROUND has some leeway)
+#define BGCHECKFLAG_CRUSHED (1 << 8)              // Crushed between a floor and ceiling (triggers a void for player)
+#define BGCHECKFLAG_PLAYER_WALL_INTERACT (1 << 9) // Only set/used by player, related to interacting with walls
+
+#define UPDBGCHECKINFO_WALL (1 << 0)        // check wall
+#define UPDBGCHECKINFO_CEILING (1 << 1)     // check ceiling
+#define UPDBGCHECKINFO_FLOOR_WATER (1 << 2) // check floor and water
+#define UPDBGCHECKINFO_FLAG_3 (1 << 3)
+#define UPDBGCHECKINFO_FLAG_4 (1 << 4)
+#define UPDBGCHECKINFO_FLAG_5 (1 << 5) // unused
+#define UPDBGCHECKINFO_FLAG_6 (1 << 6) // disable water ripples
+#define UPDBGCHECKINFO_FLAG_7 (1 << 7) // alternate wall check?
+
+#define ACTOR_FLAG_INSIDE_CULLING_VOLUME (1 << 6)
+
 typedef struct {
     Vec3f pos;
     Vec3s rot;
 } PosRot; // size = 0x14
-
-typedef struct {
-    /* 0x00 */ char unk_00[0x8];
-    /* 0x08 */ Vec3s norm; // Normal vector
-    /* 0x0E */ s16 dist;   // Plane distance from origin
-} CollisionPoly;           // size = 0x10
 
 struct SkeletonAnimationModel;
 typedef void (*SkeletonAnimationModelFunc)(struct SkeletonAnimationModel*);
@@ -152,14 +170,14 @@ typedef struct {
 _Static_assert(sizeof(ActorShape) == 0x30, "ActorShape size");
 
 typedef struct Actor {
-    /* 0x000 */ s16 id;      // Actor Id
-    /* 0x002 */ u8 type;     // Actor Type. Refer to the corresponding enum for values
-    /* 0x003 */ s8 room;     // Room number the actor is in. -1 denotes that the actor won't despawn on a room change
-    /* 0x004 */ u32 flags;   // Flags used for various purposes
-    /* 0x008 */ PosRot home; // Initial position/rotation when spawned. Can be used for other purposes
-    /* 0x01C */ s16 params;  // Configurable variable set by the actor's spawn data; original name: "args_data"
-    /* 0x01E */ s8 objBankIndex; // Object bank index of the actor's object dependency; original name: "bank"
-    /* 0x01F */ s8 targetMode;   // Controls how far the actor can be targeted from and how far it can stay locked on
+    /* 0x000 */ s16 id;        // Actor Id
+    /* 0x002 */ u8 type;       // Actor Type. Refer to the corresponding enum for values
+    /* 0x003 */ s8 room;       // Room number the actor is in. -1 denotes that the actor won't despawn on a room change
+    /* 0x004 */ u32 flags;     // Flags used for various purposes
+    /* 0x008 */ PosRot home;   // Initial position/rotation when spawned. Can be used for other purposes
+    /* 0x01C */ s16 params;    // Configurable variable set by the actor's spawn data; original name: "args_data"
+    /* 0x01E */ s8 objectSlot; // Object slot corresponding to the actor's object; original name: "bank"
+    /* 0x01F */ s8 targetMode; // Controls how far the actor can be targeted from and how far it can stay locked on
     /* 0x020 */ u8 unk_20;
     /* 0x021 */ char unk_21[0x3];
     /* 0x024 */ u32 sfx; // SFX ID to play. Sound plays when value is set, then is cleared the following update cycle
@@ -177,7 +195,7 @@ typedef struct Actor {
     /* 0x081 */ u8 floorBgId;             // Bg ID of the floor polygon directly below the actor
     /* 0x082 */ s16 wallYaw;              // Y rotation of the wall polygon the actor is touching
     /* 0x084 */ f32 floorHeight;          // Y position of the floor polygon directly below the actor
-    /* 0x088 */ f32 yDistToWater; // Distance to the surface of active waterbox. Negative value means above water
+    /* 0x088 */ f32 depthInWater; // Distance to the surface of active waterbox. Negative value means above water
     /* 0x08C */ f32 waterBoxYSurface;
     /* 0x090 */ u16 bgCheckFlags;
     /* 0x092 */ s16 yawTowardsPlayer;          // Y rotation difference between the actor and the player
@@ -237,7 +255,7 @@ typedef struct DynaPolyActor {
     /* 0x1BA */ s16 unk_1BA;
 } DynaPolyActor; // size = 0x1BC
 
-typedef struct {
+typedef struct Player {
     /* 0x0000 */ Actor actor;
     /* 0x01A4 */ s8 currentTunic;
     /* 0x01A5 */ s8 currentSword;
@@ -277,7 +295,12 @@ typedef struct {
     /* 0x12AD */ char unk_12AD[0x0001];
     /* 0x12AE */ u16 getItemDirection;
     /* 0x12B0 */ Actor* interactRangeActor;
-    /* 0x12B4 */ char unk_12B4[0x0454];
+    /* 0x12B4 */ char unk_12B4[0x5C];
+    /* 0x1310 */ ColliderCylinder cylinder;
+    /* 0x1368 */ ColliderQuad meleeWeaponQuads[4];
+    /* 0x1568 */ ColliderQuad shieldQuad;
+    /* 0x15E8 */ Collider unkMeleeWeaponCollider;
+    /* 0x1600 */ char unk_1600[0x108];
     /* 0x1708 */ void* stateFuncPtr;
     /* 0x170C */ char unk_170C[0x0004];
     /* 0x1710 */ u32 stateFlags1;
@@ -295,19 +318,28 @@ typedef struct {
     /* 0x2227 */ s8 meleeWeaponState;
     /* 0x2228 */ char unk_2228[0x0020];
     /* 0x2248 */ s16 fishingState; // 1: casting line, 2: can reel, 3: holding catch
-    /* 0x224A */ char unk_224A[0x0004];
+    /* 0x224A */ char unk_224A[0x0002];
+    /* 0x224C */ u8 darkLinkAdjustedSpawnPos;
+    /* 0x224D */ char unk_224D[0x0001];
     /* 0x224E */ s16 giDrawIdPlusOne; // used to change mesh for rupee models
-    /* 0x2250 */ char unk_2250[0x0238];
+    /* 0x2250 */ char unk_2250[0x0030];
+    /* 0x2280 */ s16 fallStartHeight;
+    /* 0x2282 */ s16 fallDistance;
+    /* 0x2284 */ char unk_2284[0x0204];
     /* 0x2488 */ s8 invincibilityTimer; // prevents damage when nonzero
                                         // (positive = visible, counts towards zero each frame)
     /* 0x2489 */ char unk_2489[0x0053];
     /* 0x24DC */ void* cmbMan;
     /* 0x24E0 */ void* zarInfo;
     /* 0x24E4 */ char unk_24E4[0x0220];
-    /* 0x2704 */ struct SkeletonAnimationModel_unk_0C* bodyTexAnim;
-    /* 0x2708 */ char unk_2708[0x344];
+    /* 0x2704 */ SkeletonAnimationModel_unk_0C tunicTexAnim;
+    /* 0x279C */ SkeletonAnimationModel_unk_0C fireMirroShieldTexAnim;
+    /* 0x2834 */ SkeletonAnimationModel_unk_0C iceMirroShieldTexAnim;
+    /* 0x28CC */ char unk_28CC[0x180];
 } Player; // total size (from init vars): 2A4C
 _Static_assert(sizeof(Player) == 0x2A4C, "Player size");
+
+#define sFloorType (*(s32*)GAME_ADDR(0x53A0A4))
 
 typedef enum {
     /* 0x00 */ ACTORTYPE_SWITCH,
@@ -321,7 +353,8 @@ typedef enum {
     /* 0x08 */ ACTORTYPE_MISC,
     /* 0x09 */ ACTORTYPE_BOSS,
     /* 0x0A */ ACTORTYPE_DOOR,
-    /* 0x0B */ ACTORTYPE_CHEST
+    /* 0x0B */ ACTORTYPE_CHEST,
+    /* 0x0C */ ACTORTYPE_MAX,
 } ActorType;
 
 typedef struct ActorHeapNode {
@@ -353,5 +386,8 @@ typedef void (*Actor_UpdateBgCheckInfo_proc)(struct GlobalContext* globalCtx, Ac
                                              f32 wallCheckRadius, f32 ceilingCheckHeight, s32 flags)
     __attribute__((pcs("aapcs-vfp")));
 #define Actor_UpdateBgCheckInfo ((Actor_UpdateBgCheckInfo_proc)GAME_ADDR(0x376340))
+
+typedef s32 (*Player_InCsMode_proc)(struct GlobalContext* globalCtx);
+#define Player_InCsMode ((Player_InCsMode_proc)GAME_ADDR(0x36A7A0))
 
 #endif

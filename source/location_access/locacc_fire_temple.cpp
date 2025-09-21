@@ -2,6 +2,7 @@
 #include "logic.hpp"
 #include "entrance.hpp"
 #include "dungeon.hpp"
+#include "enemizer_logic.hpp"
 
 using namespace Logic;
 using namespace Settings;
@@ -24,7 +25,13 @@ void AreaTable_Init_FireTemple() {
     ---------------------------*/
     if (Dungeon::FireTemple.IsVanilla()) {
         areaTable[FIRE_TEMPLE_FIRST_ROOM] = Area(
-            "Fire Temple First Room", "Fire Temple", FIRE_TEMPLE, NO_DAY_NIGHT_CYCLE, {}, {},
+            "Fire Temple First Room", "Fire Temple", FIRE_TEMPLE, NO_DAY_NIGHT_CYCLE,
+            {
+                // Events
+                EventAccess(&DekuBabaSticks, { [] { return DekuBabaSticks || CanGetDekuBabaSticks(4, 0, 0); } }),
+                EventAccess(&DekuBabaNuts, { [] { return DekuBabaNuts || CanGetDekuBabaNuts(4, 0, 0); } }),
+            },
+            {},
             {
                 // Exits
                 Entrance(FIRE_TEMPLE_ENTRYWAY, { [] { return true; } }),
@@ -77,21 +84,22 @@ void AreaTable_Init_FireTemple() {
                                 } }),
                  });
 
-        areaTable[FIRE_TEMPLE_LOOP_ENEMIES] =
-            Area("Fire Temple Loop Enemies", "Fire Temple", FIRE_TEMPLE, NO_DAY_NIGHT_CYCLE, {}, {},
-                 {
-                     // Exits
-                     Entrance(FIRE_TEMPLE_FIRST_ROOM, { [] { return SmallKeys(FIRE_TEMPLE, 8) || !IsKeysanity; } }),
-                     Entrance(FIRE_TEMPLE_LOOP_TILES, { [] {
-                                  return SoulKeese && SoulTorchSlug && Here(FIRE_TEMPLE_LOOP_ENEMIES, [] {
-                                             return CanUse(KOKIRI_SWORD) || CanUse(MASTER_SWORD) ||
-                                                    CanUse(BIGGORON_SWORD) || CanUse(MEGATON_HAMMER);
-                                         });
-                              } }),
-                 });
+        areaTable[FIRE_TEMPLE_LOOP_ENEMIES] = Area(
+            "Fire Temple Loop Enemies", "Fire Temple", FIRE_TEMPLE, NO_DAY_NIGHT_CYCLE, {}, {},
+            {
+                // Exits
+                Entrance(FIRE_TEMPLE_FIRST_ROOM, { [] { return SmallKeys(FIRE_TEMPLE, 8) || !IsKeysanity; } }),
+                Entrance(FIRE_TEMPLE_LOOP_TILES,
+                         { [] { return Here(FIRE_TEMPLE_LOOP_ENEMIES, [] { return CanDefeatEnemies(4, 0, 15); }); } }),
+            });
 
         areaTable[FIRE_TEMPLE_LOOP_TILES] =
-            Area("Fire Temple Loop Tiles", "Fire Temple", FIRE_TEMPLE, NO_DAY_NIGHT_CYCLE, {},
+            Area("Fire Temple Loop Tiles", "Fire Temple", FIRE_TEMPLE, NO_DAY_NIGHT_CYCLE,
+                 {
+                     // Events
+                     EventAccess(&DekuBabaSticks, { [] { return DekuBabaSticks || CanGetDekuBabaSticks(4, 0, 18); } }),
+                     EventAccess(&DekuBabaNuts, { [] { return DekuBabaNuts || CanGetDekuBabaNuts(4, 0, 18); } }),
+                 },
                  {
                      // Locations
                      LocationAccess(FIRE_TEMPLE_GS_BOSS_KEY_LOOP, { [] { return CanAdultAttack || CanChildAttack; } }),
@@ -102,34 +110,27 @@ void AreaTable_Init_FireTemple() {
                      Entrance(FIRE_TEMPLE_LOOP_FLARE_DANCER, { [] { return true; } }),
                  });
 
-        areaTable[FIRE_TEMPLE_LOOP_FLARE_DANCER] = Area(
-            "Fire Temple Loop Flare Dancer", "Fire Temple", FIRE_TEMPLE, NO_DAY_NIGHT_CYCLE, {},
-            {
-                // Locations
-                LocationAccess(FIRE_TEMPLE_FLARE_DANCER_CHEST,
-                               { [] { return SoulFlareDancer && (HasExplosives || CanUse(MEGATON_HAMMER)) && IsAdult; },
-                                 /*Glitched*/
-                                 [] {
-                                     return SoulFlareDancer &&
-                                            ((CanDoGlitch(GlitchType::BombHover, GlitchDifficulty::INTERMEDIATE) &&
-                                              CanDoGlitch(GlitchType::ISG, GlitchDifficulty::INTERMEDIATE)) ||
-                                             (CanDoGlitch(GlitchType::ActionSwap, GlitchDifficulty::ADVANCED) &&
-                                              HasBombchus && CanShield &&
-                                              (Slingshot || CanUse(BOW) || CanUse(HOOKSHOT))));
-                                 } }),
-            },
-            {
-                // Exits
-                Entrance(FIRE_TEMPLE_LOOP_TILES, { [] { return true; } }),
-                Entrance(FIRE_TEMPLE_LOOP_HAMMER_SWITCH, { [] {
-                             return Here(FIRE_TEMPLE_LOOP_FLARE_DANCER, [] {
-                                 return SoulFlareDancer &&
-                                        (HasExplosives || CanUse(MEGATON_HAMMER) || CanUse(HOOKSHOT)) &&
-                                        (CanUse(KOKIRI_SWORD) || CanUse(MASTER_SWORD) || CanUse(BIGGORON_SWORD) ||
-                                         CanUse(SLINGSHOT) || CanUse(BOOMERANG));
-                             });
-                         } }),
-            });
+        areaTable[FIRE_TEMPLE_LOOP_FLARE_DANCER] =
+            Area("Fire Temple Loop Flare Dancer", "Fire Temple", FIRE_TEMPLE, NO_DAY_NIGHT_CYCLE, {},
+                 {
+                     // Locations
+                     LocationAccess(FIRE_TEMPLE_FLARE_DANCER_CHEST,
+                                    { [] { return CanDefeatEnemy(4, 0, 3, 0) && (IsAdult || CanUse(HOOKSHOT)); },
+                                      /*Glitched*/
+                                      [] {
+                                          return CanDefeatEnemy(4, 0, 3, 0) &&
+                                                 ((CanDoGlitch(GlitchType::BombHover, GlitchDifficulty::INTERMEDIATE) &&
+                                                   CanDoGlitch(GlitchType::ISG, GlitchDifficulty::INTERMEDIATE)) ||
+                                                  (CanDoGlitch(GlitchType::ActionSwap, GlitchDifficulty::ADVANCED)));
+                                      } }),
+                 },
+                 {
+                     // Exits
+                     Entrance(FIRE_TEMPLE_LOOP_TILES, { [] { return true; } }),
+                     Entrance(FIRE_TEMPLE_LOOP_HAMMER_SWITCH, { [] {
+                                  return Here(FIRE_TEMPLE_LOOP_FLARE_DANCER, [] { return CanDefeatEnemy(4, 0, 3, 0); });
+                              } }),
+                 });
 
         areaTable[FIRE_TEMPLE_LOOP_HAMMER_SWITCH] =
             Area("Fire Temple Loop Hammer Switch", "Fire Temple", FIRE_TEMPLE, NO_DAY_NIGHT_CYCLE,
@@ -176,7 +177,13 @@ void AreaTable_Init_FireTemple() {
                  });
 
         areaTable[FIRE_TEMPLE_BIG_LAVA_ROOM] =
-            Area("Fire Temple Big Lava Room", "Fire Temple", FIRE_TEMPLE, NO_DAY_NIGHT_CYCLE, {}, {},
+            Area("Fire Temple Big Lava Room", "Fire Temple", FIRE_TEMPLE, NO_DAY_NIGHT_CYCLE,
+                 {
+                     // Events
+                     EventAccess(&DekuBabaSticks, { [] { return DekuBabaSticks || CanGetDekuBabaSticks(4, 0, 1); } }),
+                     EventAccess(&DekuBabaNuts, { [] { return DekuBabaNuts || CanGetDekuBabaNuts(4, 0, 1); } }),
+                 },
+                 {},
                  {
                      // Exits
                      Entrance(FIRE_TEMPLE_FIRST_ROOM, { [] { return SmallKeys(FIRE_TEMPLE, 2); } }),
@@ -217,7 +224,12 @@ void AreaTable_Init_FireTemple() {
                  });
 
         areaTable[FIRE_TEMPLE_BIG_LAVA_ROOM_NORTH_TILES] =
-            Area("Fire Temple Big Lava Room North Tiles", "Fire Temple", FIRE_TEMPLE, NO_DAY_NIGHT_CYCLE, {},
+            Area("Fire Temple Big Lava Room North Tiles", "Fire Temple", FIRE_TEMPLE, NO_DAY_NIGHT_CYCLE,
+                 {
+                     // Events
+                     EventAccess(&DekuBabaSticks, { [] { return DekuBabaSticks || CanGetDekuBabaSticks(4, 0, 19); } }),
+                     EventAccess(&DekuBabaNuts, { [] { return DekuBabaNuts || CanGetDekuBabaNuts(4, 0, 19); } }),
+                 },
                  {
                      // Locations
                      LocationAccess(FIRE_TEMPLE_GS_SONG_OF_TIME_ROOM,
@@ -240,7 +252,13 @@ void AreaTable_Init_FireTemple() {
                  });
 
         areaTable[FIRE_TEMPLE_FIRE_PILLAR_ROOM] = Area(
-            "Fire Temple Fire Pillar Room", "Fire Temple", FIRE_TEMPLE, NO_DAY_NIGHT_CYCLE, {}, {},
+            "Fire Temple Fire Pillar Room", "Fire Temple", FIRE_TEMPLE, NO_DAY_NIGHT_CYCLE,
+            {
+                // Events
+                EventAccess(&DekuBabaSticks, { [] { return DekuBabaSticks || CanGetDekuBabaSticks(4, 0, 21); } }),
+                EventAccess(&DekuBabaNuts, { [] { return DekuBabaNuts || CanGetDekuBabaNuts(4, 0, 21); } }),
+            },
+            {},
             {
                 // Exits
                 Entrance(FIRE_TEMPLE_BIG_LAVA_ROOM, { [] { return SmallKeys(FIRE_TEMPLE, 3); } }),
@@ -248,7 +266,12 @@ void AreaTable_Init_FireTemple() {
             });
 
         areaTable[FIRE_TEMPLE_SHORTCUT_ROOM] = Area(
-            "Fire Temple Shortcut Room", "Fire Temple", FIRE_TEMPLE, NO_DAY_NIGHT_CYCLE, {},
+            "Fire Temple Shortcut Room", "Fire Temple", FIRE_TEMPLE, NO_DAY_NIGHT_CYCLE,
+            {
+                // Events
+                EventAccess(&DekuBabaSticks, { [] { return DekuBabaSticks || CanGetDekuBabaSticks(4, 0, 4); } }),
+                EventAccess(&DekuBabaNuts, { [] { return DekuBabaNuts || CanGetDekuBabaNuts(4, 0, 4); } }),
+            },
             {
                 // Locations
                 LocationAccess(
@@ -343,7 +366,13 @@ void AreaTable_Init_FireTemple() {
                  });
 
         areaTable[FIRE_TEMPLE_FIRE_WALL_CHASE] =
-            Area("Fire Temple Fire Wall Chase", "Fire Temple", FIRE_TEMPLE, NO_DAY_NIGHT_CYCLE, {}, {},
+            Area("Fire Temple Fire Wall Chase", "Fire Temple", FIRE_TEMPLE, NO_DAY_NIGHT_CYCLE,
+                 {
+                     // Events
+                     EventAccess(&DekuBabaSticks, { [] { return DekuBabaSticks || CanGetDekuBabaSticks(4, 0, 16); } }),
+                     EventAccess(&DekuBabaNuts, { [] { return DekuBabaNuts || CanGetDekuBabaNuts(4, 0, 16); } }),
+                 },
+                 {},
                  {
                      // Exits
                      Entrance(FIRE_TEMPLE_EAST_CENTRAL_ROOM,
@@ -379,7 +408,12 @@ void AreaTable_Init_FireTemple() {
                  });
 
         areaTable[FIRE_TEMPLE_BOULDER_MAZE_UPPER] = Area(
-            "Fire Temple Boulder Maze Upper", "Fire Temple", FIRE_TEMPLE, NO_DAY_NIGHT_CYCLE, {},
+            "Fire Temple Boulder Maze Upper", "Fire Temple", FIRE_TEMPLE, NO_DAY_NIGHT_CYCLE,
+            {
+                // Events
+                EventAccess(&DekuBabaSticks, { [] { return DekuBabaSticks || CanGetDekuBabaSticks(4, 0, 5); } }),
+                EventAccess(&DekuBabaNuts, { [] { return DekuBabaNuts || CanGetDekuBabaNuts(4, 0, 5); } }),
+            },
             {
                 // Locations
                 LocationAccess(FIRE_TEMPLE_BOULDER_MAZE_UPPER_CHEST, { [] { return true; } }),
@@ -427,7 +461,17 @@ void AreaTable_Init_FireTemple() {
                  });
 
         areaTable[FIRE_TEMPLE_FIRE_MAZE_ROOM] =
-            Area("Fire Temple Fire Maze Room", "Fire Temple", FIRE_TEMPLE, NO_DAY_NIGHT_CYCLE, {}, {},
+            Area("Fire Temple Fire Maze Room", "Fire Temple", FIRE_TEMPLE, NO_DAY_NIGHT_CYCLE,
+                 {
+                     // Events
+                     EventAccess(&DekuBabaSticks, { [] {
+                         return DekuBabaSticks || CanGetDekuBabaSticks(4, 0, 10, { 25, 44 });
+                     } }),
+                     EventAccess(&DekuBabaNuts, { [] {
+                         return DekuBabaNuts || CanGetDekuBabaNuts(4, 0, 10, { 25, 44 });
+                     } }),
+                 },
+                 {},
                  {
                      // Exits
                      Entrance(FIRE_TEMPLE_CORRIDOR, { [] { return true; } }),
@@ -441,7 +485,7 @@ void AreaTable_Init_FireTemple() {
                      Entrance(FIRE_TEMPLE_FIRE_MAZE_SIDE_ROOM, { [] { return true; } }),
                      Entrance(FIRE_TEMPLE_WEST_CENTRAL_LOWER, { [] { return SmallKeys(FIRE_TEMPLE, 8); } }),
                      Entrance(FIRE_TEMPLE_LATE_FIRE_MAZE,
-                              { [] { return LogicFireFlameMaze || false; },
+                              { [] { return LogicFireFlameMaze || (CanUse(LONGSHOT) && CanHookEnemy(4, 0, 10, 14)); },
                                 /*Glitched*/
                                 [] {
                                     return CanDoGlitch(GlitchType::Megaflip, GlitchDifficulty::INTERMEDIATE) ||
@@ -532,41 +576,40 @@ void AreaTable_Init_FireTemple() {
                 Entrance(FIRE_TEMPLE_WEST_CENTRAL_LOWER, { [] { return true; } }),
             });
 
-        areaTable[FIRE_TEMPLE_LATE_FIRE_MAZE] =
-            Area("Fire Temple Late Fire Maze", "Fire Temple", FIRE_TEMPLE, NO_DAY_NIGHT_CYCLE, {}, {},
-                 {
-                     // Exits
-                     Entrance(FIRE_TEMPLE_FIRE_MAZE_ROOM,
-                              { [] { return false; },
-                                /*Glitched*/
-                                [] {
-                                    return CanDoGlitch(GlitchType::Megaflip, GlitchDifficulty::NOVICE) ||
-                                           (Bombs && CanShield &&
-                                            CanDoGlitch(GlitchType::SuperSlide, GlitchDifficulty::ADVANCED));
-                                } }),
-                     Entrance(FIRE_TEMPLE_WEST_CENTRAL_LOWER, { [] { return true; } }),
-                     Entrance(FIRE_TEMPLE_UPPER_FLARE_DANCER, { [] { return HasExplosives; } }),
-                 });
+        areaTable[FIRE_TEMPLE_LATE_FIRE_MAZE] = Area(
+            "Fire Temple Late Fire Maze", "Fire Temple", FIRE_TEMPLE, NO_DAY_NIGHT_CYCLE,
+            {
+                // Events
+                EventAccess(&DekuBabaSticks,
+                            { [] { return DekuBabaSticks || CanGetDekuBabaSticks(4, 0, 10, { 14 }); } }),
+                EventAccess(&DekuBabaNuts, { [] { return DekuBabaNuts || CanGetDekuBabaNuts(4, 0, 10, { 14 }); } }),
+            },
+            {},
+            {
+                // Exits
+                Entrance(FIRE_TEMPLE_FIRE_MAZE_ROOM,
+                         { [] { return false; },
+                           /*Glitched*/
+                           [] {
+                               return CanDoGlitch(GlitchType::Megaflip, GlitchDifficulty::NOVICE) ||
+                                      (Bombs && CanShield &&
+                                       CanDoGlitch(GlitchType::SuperSlide, GlitchDifficulty::ADVANCED));
+                           } }),
+                Entrance(FIRE_TEMPLE_WEST_CENTRAL_LOWER, { [] { return true; } }),
+                Entrance(FIRE_TEMPLE_UPPER_FLARE_DANCER, { [] { return HasExplosives; } }),
+            });
 
-        areaTable[FIRE_TEMPLE_UPPER_FLARE_DANCER] =
-            Area("Fire Temple Upper Flare Dancer", "Fire Temple", FIRE_TEMPLE, NO_DAY_NIGHT_CYCLE, {}, {},
-                 {
-                     // Exits
-                     Entrance(FIRE_TEMPLE_LATE_FIRE_MAZE, { [] {
-                                  return SoulFlareDancer && Here(FIRE_TEMPLE_UPPER_FLARE_DANCER, [] {
-                                             return (HasExplosives || CanUse(MEGATON_HAMMER) || CanUse(HOOKSHOT)) &&
-                                                    (CanUse(KOKIRI_SWORD) || CanUse(MASTER_SWORD) ||
-                                                     CanUse(BIGGORON_SWORD) || CanUse(SLINGSHOT) || CanUse(BOOMERANG));
-                                         });
-                              } }),
-                     Entrance(FIRE_TEMPLE_WEST_CLIMB, { [] {
-                                  return SoulFlareDancer && Here(FIRE_TEMPLE_UPPER_FLARE_DANCER, [] {
-                                             return (HasExplosives || CanUse(MEGATON_HAMMER) || CanUse(HOOKSHOT)) &&
-                                                    (CanUse(KOKIRI_SWORD) || CanUse(MASTER_SWORD) ||
-                                                     CanUse(BIGGORON_SWORD) || CanUse(SLINGSHOT) || CanUse(BOOMERANG));
-                                         });
-                              } }),
-                 });
+        areaTable[FIRE_TEMPLE_UPPER_FLARE_DANCER] = Area(
+            "Fire Temple Upper Flare Dancer", "Fire Temple", FIRE_TEMPLE, NO_DAY_NIGHT_CYCLE, {}, {},
+            {
+                // Exits
+                Entrance(FIRE_TEMPLE_LATE_FIRE_MAZE, { [] {
+                             return Here(FIRE_TEMPLE_UPPER_FLARE_DANCER, [] { return CanDefeatEnemy(4, 0, 24, 0); });
+                         } }),
+                Entrance(FIRE_TEMPLE_WEST_CLIMB, { [] {
+                             return Here(FIRE_TEMPLE_UPPER_FLARE_DANCER, [] { return CanDefeatEnemy(4, 0, 24, 0); });
+                         } }),
+            });
 
         areaTable[FIRE_TEMPLE_WEST_CLIMB] = Area(
             "Fire Temple West Climb", "Fire Temple", FIRE_TEMPLE, NO_DAY_NIGHT_CYCLE, {}, {},
@@ -579,7 +622,12 @@ void AreaTable_Init_FireTemple() {
             });
 
         areaTable[FIRE_TEMPLE_WEST_PEAK] =
-            Area("Fire Temple West Peak", "Fire Temple", FIRE_TEMPLE, NO_DAY_NIGHT_CYCLE, {},
+            Area("Fire Temple West Peak", "Fire Temple", FIRE_TEMPLE, NO_DAY_NIGHT_CYCLE,
+                 {
+                     // Events
+                     EventAccess(&DekuBabaSticks, { [] { return DekuBabaSticks || CanGetDekuBabaSticks(4, 0, 13); } }),
+                     EventAccess(&DekuBabaNuts, { [] { return DekuBabaNuts || CanGetDekuBabaNuts(4, 0, 13); } }),
+                 },
                  {
                      // Locations
                      LocationAccess(FIRE_TEMPLE_MEGATON_HAMMER_CHEST, { [] { return true; } }),
@@ -592,7 +640,13 @@ void AreaTable_Init_FireTemple() {
                  });
 
         areaTable[FIRE_TEMPLE_HAMMER_RETURN_PATH] =
-            Area("Fire Temple Hammer Return Path", "Fire Temple", FIRE_TEMPLE, NO_DAY_NIGHT_CYCLE, {}, {},
+            Area("Fire Temple Hammer Return Path", "Fire Temple", FIRE_TEMPLE, NO_DAY_NIGHT_CYCLE,
+                 {
+                     // Events
+                     EventAccess(&DekuBabaSticks, { [] { return DekuBabaSticks || CanGetDekuBabaSticks(4, 0, 14); } }),
+                     EventAccess(&DekuBabaNuts, { [] { return DekuBabaNuts || CanGetDekuBabaNuts(4, 0, 14); } }),
+                 },
+                 {},
                  {
                      // Exits
                      Entrance(FIRE_TEMPLE_ABOVE_FIRE_MAZE, { [] { return CanUse(MEGATON_HAMMER); } }),

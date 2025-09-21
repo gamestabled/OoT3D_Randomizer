@@ -1,12 +1,18 @@
 #ifndef _Z3D_H_
 #define _Z3D_H_
 
+#include <sys/cdefs.h>
 #include "z3Dactor.h"
 #include "z3Dvec.h"
 // #include "z3Dequipment.h"
 #include "z3Dcutscene.h"
 #include "z3Ditem.h"
 #include "z3Dmath.h"
+#include "z3Dbgcheck.h"
+#include "z3Dscene.h"
+#include "z3Dactor_id.h"
+#include "z3Deffect.h"
+#include "z3Dcolor.h"
 
 // #include "hid.h"
 
@@ -171,7 +177,7 @@ typedef struct {
     /* 0x14DC */ s32 fileNum;           // "file_no"
     /* 0x14E0 */ char unk_14E0[0x0004];
     /* 0x14E4 */ s32 gameMode;
-    /* 0x14E8 */ s32 sceneSetupIndex;
+    /* 0x14E8 */ s32 sceneLayer;
     /* 0x14EC */ s32 respawnFlag;        // "restart_flag"
     /* 0x14F0 */ RespawnData respawn[3]; // "restart_data"
     /* 0x1544 */ char unk_1544[0x000E];
@@ -325,12 +331,6 @@ typedef struct {
 } Camera; // size = 0x1BC
 
 typedef struct {
-    /* 0x0 */ u16 setting;
-    /* 0x2 */ s16 count;
-    /* 0x4 */ Vec3s* camFuncData;
-} CamData; // size = 0x8
-
-typedef struct {
     /* 0x00 */ Vec3f atOffset;
     /* 0x0C */ Vec3f eyeOffset;
     /* 0x18 */ s16 upPitchOffset;
@@ -338,50 +338,6 @@ typedef struct {
     /* 0x1C */ s16 fovOffset;
     /* 0x20 */ f32 maxOffset;
 } ShakeInfo; // size = 0x24
-
-typedef struct {
-    /* 0x00 */ char unk_00[0x04];
-    /* 0x04 */ Vec3s minBounds;
-    /* 0x0A */ Vec3s maxBounds;
-    /* 0x10 */ u16 numVertices;
-    /* 0x12 */ u16 numPolygons;
-    /* 0x14 */ u16 numWaterboxes;
-    /* 0x18 */ Vec3s* vtxList;
-    /* 0x1C */ CollisionPoly* polyList;
-    /* 0x20 */ void* surfaceTypeList;
-    /* 0x24 */ CamData* camDataList;
-    /* 0x28 */ void* waterboxes;
-} CollisionHeader; // size = 0x2C
-
-typedef struct {
-    /* 0x00 */ CollisionHeader* colHeader;
-    /* 0x04 */ char unk_04[0x4C];
-} StaticCollisionContext; // size = 0x50
-
-typedef struct {
-    /* 0x00 */ Actor* actor;
-    /* 0x04 */ CollisionHeader* colHeader;
-    /* 0x08 */ char unk_04[0x0C];
-    /* 0x14 */ Vec3f scale1;
-    /* 0x20 */ Vec3s rot1;
-    /* 0x28 */ Vec3f pos1;
-    /* 0x34 */ Vec3f scale2;
-    /* 0x40 */ Vec3s rot2;
-    /* 0x48 */ Vec3f pos2;
-    /* 0x54 */ char unk_54[0x18];
-} ActorMesh; // size = 0x6C
-
-typedef struct {
-    /* 0x0000 */ char unk_00[0x04];
-    /* 0x0004 */ ActorMesh actorMeshArr[50];
-    /* 0x151C */ u16 flags[50];
-    /* 0x1580 */ char unk_13F0[0x24];
-} DynaCollisionContext; // size = 0x15A4
-
-typedef struct {
-    /* 0x0000 */ StaticCollisionContext stat;
-    /* 0x0050 */ DynaCollisionContext dyna;
-} CollisionContext; // size = 0x15F4
 
 typedef struct {
     /* 0x00 */ u8* texture;
@@ -488,7 +444,7 @@ typedef struct {
     /* 0x24 */ s32 bgId;
 } CamColChk; // size = 0x28
 
-#define OBJECT_EXCHANGE_BANK_MAX 19
+#define OBJECT_SLOT_MAX 19
 #define OBJECT_ID_MAX 417
 
 typedef struct ZARInfo {
@@ -502,16 +458,21 @@ typedef struct ZARInfo {
     /* 0x5C */ char unk_5C[0x14];
 } ZARInfo; // size = 0x70
 
-typedef struct {
+typedef struct ObjectEntry {
     /* 0x00 */ s16 id;
-    /* 0x02 */ char unk_02[0x0E];
+    /* 0x02 */ char unk_02[0x02];
+    /* 0x04 */ void* buf;
+    /* 0x08 */ u32 size;
+    /* 0x0C */ void* unk_0C;
     /* 0x10 */ ZARInfo zarInfo;
-} ObjectStatus; // size = 0x80
+} ObjectEntry; // size = 0x80
 
-typedef struct {
-    /* 0x000 */ u8 num;
-    /* 0x001 */ char unk_01[0x3];
-    /* 0x004 */ ObjectStatus status[OBJECT_EXCHANGE_BANK_MAX];
+typedef struct ObjectContext {
+    /* 0x000 */ u8 numEntries;           // total amount of used entries
+    /* 0x001 */ u8 numPersistentEntries; // amount of entries that won't be reused when loading a new room
+    /* 0x002 */ u8 mainKeepSlot;         // "gameplay_keep" slot
+    /* 0x003 */ u8 subKeepSlot;          // "gameplay_field_keep" or "gameplay_dangeon_keep" slot
+    /* 0x004 */ ObjectEntry slots[OBJECT_SLOT_MAX];
 } ObjectContext; // size = 0x984
 
 typedef struct {
@@ -530,6 +491,12 @@ typedef struct {
     /* 0x00 */ u8 spawn;
     /* 0x01 */ u8 room;
 } EntranceEntry;
+
+typedef struct Path {
+    /* 0x00 */ u8 count;
+    /* 0x04 */ Vec3s* points;
+} Path;
+_Static_assert(sizeof(Path) == 0x8, "Path size");
 
 typedef struct GameState {
     /* 0x00 */ GraphicsContext* gfxCtx;
@@ -594,12 +561,15 @@ typedef struct GlobalContext {
     /* 0x5C00 */ u8 linkAgeOnLoad;
     /* 0x5C01 */ u8 unk_5C01;
     /* 0x5C02 */ u8 curSpawn;
-    /* 0x5C03 */ char unk_5C03[0x0006];
+    /* 0x5C03 */ u8 numActorEntries;
+    /* 0x5C04 */ char unk_5C04[0x0005];
     /* 0x5C09 */ ActorEntry* linkActorEntry;
-    /* 0x5C0D */ char unk_5C0D[0x0008];
+    /* 0x5C0D */ ActorEntry* actorEntryList;
+    /* 0x5C11 */ char unk_5C11[0x0004];
     /* 0x5C19 */ EntranceEntry* setupEntranceList;
     /* 0x5C1C */ s16* setupExitList;
-    /* 0x5C20 */ char unk_5C20[0x000D];
+    /* 0x5C20 */ Path* pathList;
+    /* 0x5C24 */ char unk_5C24[0x0009];
     /* 0x5C2D */ s8 sceneLoadFlag; // "fade_direction"
     /* 0x5C2E */ char unk_5C2E[0x0004];
     /* 0x5C32 */ s16 nextEntranceIndex;
@@ -712,6 +682,7 @@ extern const char DungeonNames[][25];
 #define PLAYER ((Player*)gGlobalContext->actorCtx.actorList[ACTORTYPE_PLAYER].first)
 #define gMainClass ((MainClass*)GAME_ADDR(0x5BE5B8))
 #define gIsBottomScreenDimmed (*(s32*)GAME_ADDR(0x5043EC))
+#define sPrevMainBgmSeqId (*(s32*)GAME_ADDR(0x54ACB8))
 
 #define GearSlot(X) (X - ITEM_SWORD_KOKIRI)
 
@@ -782,6 +753,16 @@ typedef void (*PlaySound_proc)(u32);
 // This function plays sound effects and music tracks, overlaid on top of the current BGM
 #define PlaySound ((PlaySound_proc)GAME_ADDR(0x35C528))
 
+typedef u32 (*Audio_GetActiveSeqId_proc)(u8 seqPlayerIndex);
+#define Audio_GetActiveSeqId ((Audio_GetActiveSeqId_proc)GAME_ADDR(0x366684))
+
+typedef void (*Audio_RestoreBGM_proc)(void);
+// Restores the original sequence to the main BGM player after a mini-boss battle or a minigame.
+#define Audio_RestoreBGM ((Audio_RestoreBGM_proc)GAME_ADDR(0x34EC14))
+
+// Unknown function. Passing these arguments stops the BGM.
+#define Audio_StopBGM() (((void (*)(u32, u32))0x3655D0)(0, 0))
+
 typedef Actor* (*Actor_Spawn_proc)(ActorContext* actorCtx, GlobalContext* globalCtx, s16 actorId, float posX,
                                    float posY, float posZ, s16 rotX, s16 rotY, s16 rotZ, s16 params,
                                    s32 initImmediately) __attribute__((pcs("aapcs-vfp")));
@@ -792,6 +773,9 @@ typedef Actor* (*Actor_Find_proc)(ActorContext* actorCtx, s16 actorId, u8 actorT
 
 typedef void (*Actor_GetScreenPos_proc)(GlobalContext* globalCtx, Actor* actor, s16* outX, s16* outY);
 #define Actor_GetScreenPos ((Actor_GetScreenPos_proc)GAME_ADDR(0x363A20))
+
+typedef void (*Actor_KillAllWithMissingObject_proc)(GlobalContext* globalCtx, ActorContext* actorCtx);
+#define Actor_KillAllWithMissingObject ((Actor_KillAllWithMissingObject_proc)GAME_ADDR(0x379C3C))
 
 typedef void (*FireDamage_proc)(Actor* player, GlobalContext* globalCtx, int flamesColor);
 #define FireDamage ((FireDamage_proc)GAME_ADDR(0x35D8D8))
@@ -818,11 +802,20 @@ typedef void (*PlaySFX_proc)(u32 sfxId, Vec3f* pos, u32 token, f32* freqScale, f
 typedef void (*Flags_SetSwitch_proc)(GlobalContext* globalCtx, u32 flag);
 #define Flags_SetSwitch ((Flags_SetSwitch_proc)GAME_ADDR(0x375C10))
 
+typedef void (*Flags_UnsetSwitch_proc)(GlobalContext* globalCtx, u32 flag);
+#define Flags_UnsetSwitch ((Flags_UnsetSwitch_proc)GAME_ADDR(0x36BEAC))
+
 typedef u32 (*Flags_GetSwitch_proc)(GlobalContext* globalCtx, u32 flag);
 #define Flags_GetSwitch ((Flags_GetSwitch_proc)GAME_ADDR(0x36E864))
 
 typedef u32 (*Flags_GetCollectible_proc)(GlobalContext* globalCtx, u32 flag);
 #define Flags_GetCollectible ((Flags_GetCollectible_proc)GAME_ADDR(0x36405C))
+
+typedef u32 (*Flags_GetClear_proc)(GlobalContext* globalCtx, u32 flag);
+#define Flags_GetClear ((Flags_GetClear_proc)GAME_ADDR(0x36CF6C))
+
+typedef u32 (*Flags_SetClear_proc)(GlobalContext* globalCtx, u32 flag);
+#define Flags_SetClear ((Flags_SetClear_proc)GAME_ADDR(0x36EC14))
 
 typedef void (*Player_SetEquipmentData_proc)(GlobalContext* globalCtx, Player* player);
 #define Player_SetEquipmentData ((Player_SetEquipmentData_proc)GAME_ADDR(0x34913C))

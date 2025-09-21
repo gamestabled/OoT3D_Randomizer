@@ -59,9 +59,15 @@ void EnDoor_Unlocking(EnDoor* thisx, GlobalContext* globalCtx) {
 void DoorShutter_rInit(Actor* thisx, GlobalContext* globalCtx) {
     // In Treasure Chest Shop when its chests are shuffled,
     // make doors use permanent flags instead of temp ones
-    if (globalCtx->sceneNum == 16 && gSettingsContext.shuffleChestMinigame) {
+    if (gSettingsContext.shuffleChestMinigame && globalCtx->sceneNum == SCENE_TREASURE_BOX_SHOP) {
         thisx->params &= ~0x0020;
     }
+    // Door after Nabooru Knuckle: open on room clear instead of switch flag if the enemy is randomized
+    else if (gEnemizerLocationFlags.nabooruKnuckle && globalCtx->sceneNum == SCENE_SPIRIT_TEMPLE_BOSS &&
+             thisx->params == 0x0485) {
+        thisx->params = 0x0440;
+    }
+
     DoorShutter_Init(thisx, globalCtx);
 }
 

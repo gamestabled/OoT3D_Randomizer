@@ -284,6 +284,8 @@ class Menu {
         return Menu{ std::move(name_), MenuType::Action, std::move(mode_), std::move(description_) };
     }
 
+    Menu() = default;
+
     Menu(std::string name_, MenuType type_, std::vector<Option*>* settingsList_, u8 mode_,
          std::string_view description_ = "", bool printInSpoiler_ = true)
         : name(std::move(name_)), type(type_), settingsList(std::move(settingsList_)), mode(mode_),
@@ -408,11 +410,15 @@ extern Option SetDungeonTypes;
 extern Option TriforceHunt;
 extern Option TriforcePiecesTotal;
 extern Option TriforcePiecesRequired;
+extern Option Enemizer;
+extern Option EnemizerListToggle;
+extern std::vector<Option*> enemizerListOptions;
 
 extern Option ShuffleRewards;
 extern Option LinksPocketItem;
 extern Option ShuffleSongs;
 extern Option Shopsanity;
+extern Option ShopsanityPrices;
 extern Option Tokensanity;
 extern Option Scrubsanity;
 extern Option ShuffleCows;
@@ -808,7 +814,7 @@ extern std::string finalEnemyNaviOuterColor;
 extern std::string finalPropNaviOuterColor;
 extern std::string finalSwordTrailInnerColor;
 extern std::string finalSwordTrailOuterColor;
-extern Cosmetics::Color_RGBA8 finalBoomerangColor;
+extern Color_RGBA8 finalBoomerangColor;
 extern u8 boomerangTrailColorMode;
 extern std::string finalChuTrailInnerColor;
 extern std::string finalChuTrailOuterColor;
@@ -817,6 +823,7 @@ extern Option ColoredKeys;
 extern Option ColoredBossKeys;
 extern Option MirrorWorld;
 extern Option BetaSoldOut;
+extern Option SoullessEnemiesLook;
 
 extern Option ShuffleMusic;
 extern Option ShuffleBGM;

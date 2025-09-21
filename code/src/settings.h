@@ -2,7 +2,7 @@
 #define _SETTINGS_H_
 
 #include "../include/z3D/z3D.h"
-#include "colors.h"
+#include "enemizer.h"
 
 typedef enum {
     OFF,
@@ -82,6 +82,12 @@ typedef enum {
     LACSCONDITION_HEARTS,
 } LACSConditionSetting;
 
+typedef enum EnemyModeSetting {
+    ENEMYMODE_RANDOMIZED,
+    ENEMYMODE_VANILLA,
+    ENEMYMODE_REMOVED,
+} EnemyModeSetting;
+
 typedef enum {
     AGE_ADULT,
     AGE_CHILD,
@@ -155,6 +161,11 @@ typedef enum {
 } ShopsanitySetting;
 
 typedef enum {
+    SHOPSANITY_PRICE_RANDOM,
+    SHOPSANITY_PRICE_AFFORDABLE,
+} ShopsanityPriceSetting;
+
+typedef enum {
     TOKENSANITY_OFF,
     TOKENSANITY_DUNGEONS,
     TOKENSANITY_OVERWORLD,
@@ -195,6 +206,11 @@ typedef enum {
     SHUFFLEENEMYSOULS_ALL,
     SHUFFLEENEMYSOULS_BOSSES,
 } ShuffleEnemySoulsSetting;
+
+typedef enum {
+    SOULLESSLOOK_PURPLE_FLAME,
+    SOULLESSLOOK_FLASHING,
+} SoullessEnemiesLookSetting;
 
 typedef enum {
     MAPSANDCOMPASSES_START_WITH,
@@ -508,6 +524,8 @@ typedef struct {
     u8 triforceHunt;
     u8 triforcePiecesTotal;
     u8 triforcePiecesRequired;
+    u8 enemizer;
+    u8 enemizerList[ENEMY_MAX];
 
     u8 shuffleRewards;
     u8 linksPocketItem;
@@ -600,6 +618,7 @@ typedef struct {
     u8 hyperMiddleBosses;
     u8 hyperEnemies;
     u8 freeCamera;
+    u8 randomGsLocations;
 
     u8 faroresWindAnywhere;
     u8 stickAsAdult;
@@ -669,6 +688,7 @@ typedef struct {
     u8 coloredKeys;
     u8 coloredBossKeys;
     u8 mirrorWorld;
+    u8 soullessEnemiesLook;
 
     u8 shuffleSFX;
     u8 shuffleSFXFootsteps;

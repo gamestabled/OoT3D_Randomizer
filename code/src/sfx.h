@@ -3,7 +3,6 @@
 
 #define SFX_BASE 0x1000001
 #define SFX_COUNT 1388
-#define SFX_COUNT_TRIMMED (1388 - 233)
 
 typedef enum {
     // Movement
@@ -55,8 +54,11 @@ typedef struct {
     /// Contains all sound effects.
     u32 rSFXOverrides_All[SFX_COUNT];
 
-    /// Contains all sound effects excluding SEQ_NOSHUFFLE.
-    u32 rSFXOverrides_AllTrimmed[SFX_COUNT_TRIMMED];
+    /// Count of valid sound effects in the rSFXOverrides_AllTrimmed array
+    u16 rSFXOverrides_TrimmedCount;
+
+    /// Contains all sound effects excluding SEQ_NOSHUFFLE and conditionally skipped voice/footstep sounds.
+    u32 rSFXOverrides_AllTrimmed[SFX_COUNT];
 
     /// Contains all sound effects grouped into their SeqTypes.
     /// The size of the second dimension should be at least the amount in the largest group.

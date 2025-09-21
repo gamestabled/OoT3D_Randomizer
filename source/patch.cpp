@@ -10,6 +10,7 @@
 #include "hints.hpp"
 #include "gold_skulltulas.hpp"
 #include "utils.hpp"
+#include "enemizer.hpp"
 
 #include <array>
 #include <cstring>
@@ -19,23 +20,40 @@
 #include <vector>
 
 #include "../code/src/custom_models.h"
+#include "../code/src/enemizer.h"
 
-const PatchSymbols UsaSymbols = { GSETTINGSCONTEXT_USA_ADDR,        GSPOILERDATA_USA_ADDR,
-                                  GSPOILERDATALOCS_USA_ADDR,        NUMCUSTOMMESSAGEENTRIES_USA_ADDR,
-                                  PTRCUSTOMMESSAGEENTRIES_USA_ADDR, RBGMOVERRIDES_USA_ADDR,
-                                  RCUSTOMMESSAGES_USA_ADDR,         RDUNGEONINFODATA_USA_ADDR,
-                                  RDUNGEONREWARDOVERRIDES_USA_ADDR, RENTRANCEOVERRIDES_USA_ADDR,
-                                  RGSLOCOVERRIDES_USA_ADDR,         RITEMOVERRIDES_USA_ADDR,
-                                  RSCRUBRANDOMITEMPRICES_USA_ADDR,  RSFXDATA_USA_ADDR,
+const PatchSymbols UsaSymbols = { GSETTINGSCONTEXT_USA_ADDR,
+                                  GSPOILERDATA_USA_ADDR,
+                                  GSPOILERDATALOCS_USA_ADDR,
+                                  NUMCUSTOMMESSAGEENTRIES_USA_ADDR,
+                                  PTRCUSTOMMESSAGEENTRIES_USA_ADDR,
+                                  RBGMOVERRIDES_USA_ADDR,
+                                  RCUSTOMMESSAGES_USA_ADDR,
+                                  RDUNGEONINFODATA_USA_ADDR,
+                                  RDUNGEONREWARDOVERRIDES_USA_ADDR,
+                                  RENEMYOVERRIDES_USA_ADDR,
+                                  RENTRANCEOVERRIDES_USA_ADDR,
+                                  RGSLOCOVERRIDES_USA_ADDR,
+                                  RITEMOVERRIDES_USA_ADDR,
+                                  RSCRUBRANDOMITEMPRICES_USA_ADDR,
+                                  RSFXDATA_USA_ADDR,
                                   RSHOPSANITYPRICES_USA_ADDR };
 
-const PatchSymbols EurSymbols = { GSETTINGSCONTEXT_EUR_ADDR,        GSPOILERDATA_EUR_ADDR,
-                                  GSPOILERDATALOCS_EUR_ADDR,        NUMCUSTOMMESSAGEENTRIES_EUR_ADDR,
-                                  PTRCUSTOMMESSAGEENTRIES_EUR_ADDR, RBGMOVERRIDES_EUR_ADDR,
-                                  RCUSTOMMESSAGES_EUR_ADDR,         RDUNGEONINFODATA_EUR_ADDR,
-                                  RDUNGEONREWARDOVERRIDES_EUR_ADDR, RENTRANCEOVERRIDES_EUR_ADDR,
-                                  RGSLOCOVERRIDES_EUR_ADDR,         RITEMOVERRIDES_EUR_ADDR,
-                                  RSCRUBRANDOMITEMPRICES_EUR_ADDR,  RSFXDATA_EUR_ADDR,
+const PatchSymbols EurSymbols = { GSETTINGSCONTEXT_EUR_ADDR,
+                                  GSPOILERDATA_EUR_ADDR,
+                                  GSPOILERDATALOCS_EUR_ADDR,
+                                  NUMCUSTOMMESSAGEENTRIES_EUR_ADDR,
+                                  PTRCUSTOMMESSAGEENTRIES_EUR_ADDR,
+                                  RBGMOVERRIDES_EUR_ADDR,
+                                  RCUSTOMMESSAGES_EUR_ADDR,
+                                  RDUNGEONINFODATA_EUR_ADDR,
+                                  RDUNGEONREWARDOVERRIDES_EUR_ADDR,
+                                  RENEMYOVERRIDES_EUR_ADDR,
+                                  RENTRANCEOVERRIDES_EUR_ADDR,
+                                  RGSLOCOVERRIDES_EUR_ADDR,
+                                  RITEMOVERRIDES_EUR_ADDR,
+                                  RSCRUBRANDOMITEMPRICES_EUR_ADDR,
+                                  RSFXDATA_EUR_ADDR,
                                   RSHOPSANITYPRICES_EUR_ADDR };
 
 // For specification on the IPS file format, visit: https://zerosoft.zophar.net/ips.php
@@ -472,10 +490,10 @@ bool WriteAllPatches() {
     ---------------------------------*/
 
     const u32 SWORDTRAILCOLORSARRAY_ADDR = 0x0053C136;
-    Cosmetics::Color_RGBA8 p1StartColor  = Cosmetics::HexStrToColorRGBA8(Settings::finalSwordTrailOuterColor);
-    Cosmetics::Color_RGBA8 p2StartColor  = Cosmetics::HexStrToColorRGBA8(Settings::finalSwordTrailInnerColor);
-    Cosmetics::Color_RGBA8 p1EndColor    = Cosmetics::HexStrToColorRGBA8(Settings::finalSwordTrailOuterColor);
-    Cosmetics::Color_RGBA8 p2EndColor    = Cosmetics::HexStrToColorRGBA8(Settings::finalSwordTrailInnerColor);
+    Color_RGBA8 p1StartColor             = Cosmetics::HexStrToColorRGBA8(Settings::finalSwordTrailOuterColor);
+    Color_RGBA8 p2StartColor             = Cosmetics::HexStrToColorRGBA8(Settings::finalSwordTrailInnerColor);
+    Color_RGBA8 p1EndColor               = Cosmetics::HexStrToColorRGBA8(Settings::finalSwordTrailOuterColor);
+    Color_RGBA8 p2EndColor               = Cosmetics::HexStrToColorRGBA8(Settings::finalSwordTrailInnerColor);
     bool shouldDrawSimple                = Settings::ChosenSimpleMode ||
                             (p1StartColor.r != 0xFF && p1StartColor.g != 0xFF && p1StartColor.b != 0xFF) ||
                             (p2StartColor.r != 0xFF && p2StartColor.g != 0xFF && p2StartColor.b != 0xFF);
@@ -627,6 +645,22 @@ bool WriteAllPatches() {
         return false;
     }
 
+    /*---------------------------------
+    |         Enemy Overrides         |
+    ---------------------------------*/
+
+    if (Settings::Enemizer) {
+        std::vector<EnemyOverride> enemyOverrides;
+        Enemizer::FillPatchOverrides(enemyOverrides);
+
+        patchOffset = V_TO_P(patchSymbols.RENEMYOVERRIDES_ADDR);
+        patchSize   = sizeof(EnemyOverride) * enemyOverrides.size();
+
+        if (!WritePatch(patchOffset, patchSize, (char*)enemyOverrides.data(), code, bytesWritten, totalRW, buf)) {
+            return false;
+        }
+    }
+
     /*-------------------------
     |           EOF           |
     --------------------------*/
@@ -656,10 +690,10 @@ bool WriteAllPatches() {
     |       custom assets      |
     --------------------------*/
 
-    Cosmetics::Color_RGBAf childTunicColor  = Cosmetics::HexStrToColorRGBAf(Settings::finalChildTunicColor);
-    Cosmetics::Color_RGBAf kokiriTunicColor = Cosmetics::HexStrToColorRGBAf(Settings::finalKokiriTunicColor);
-    Cosmetics::Color_RGBAf goronTunicColor  = Cosmetics::HexStrToColorRGBAf(Settings::finalGoronTunicColor);
-    Cosmetics::Color_RGBAf zoraTunicColor   = Cosmetics::HexStrToColorRGBAf(Settings::finalZoraTunicColor);
+    Color_RGBAf childTunicColor  = Cosmetics::HexStrToColorRGBAf(Settings::finalChildTunicColor);
+    Color_RGBAf kokiriTunicColor = Cosmetics::HexStrToColorRGBAf(Settings::finalKokiriTunicColor);
+    Color_RGBAf goronTunicColor  = Cosmetics::HexStrToColorRGBAf(Settings::finalGoronTunicColor);
+    Color_RGBAf zoraTunicColor   = Cosmetics::HexStrToColorRGBAf(Settings::finalZoraTunicColor);
 
     // Delete assets if it exists
     Handle assetsOut;
