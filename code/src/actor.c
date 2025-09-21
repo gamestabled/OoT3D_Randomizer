@@ -82,6 +82,7 @@
 #include "lizalfos.h"
 #include "stalfos.h"
 #include "bubble.h"
+#include "ganondorf.h"
 
 #define OBJECT_GI_KEY 170
 #define OBJECT_GI_BOSSKEY 185
@@ -143,6 +144,7 @@ void Actor_Init() {
     gActorOverlayTable[0x2F].initInfo->init = EnDodojr_rInit;
 
     gActorOverlayTable[0x33].initInfo->type   = ACTORTYPE_ENEMY;
+    gActorOverlayTable[0x33].initInfo->init   = EnTorch2_rInit;
     gActorOverlayTable[0x33].initInfo->update = EnTorch2_rUpdate;
 
     gActorOverlayTable[0x3A].initInfo->update = EnEiyer_rUpdate;
@@ -210,6 +212,8 @@ void Actor_Init() {
     gActorOverlayTable[0xE6].initInfo->init = BgBdanSwitch_rInit;
 
     gActorOverlayTable[0xE7].initInfo->init = EnMa1_rInit;
+
+    gActorOverlayTable[0xE8].initInfo->update = BossGanon_rUpdate;
 
     gActorOverlayTable[0xF1].initInfo->init    = ItemOcarina_rInit;
     gActorOverlayTable[0xF1].initInfo->destroy = ItemOcarina_rDestroy;

@@ -233,7 +233,7 @@ void AreaTable_Init_GanonsCastle() {
             LocationAccess(GANON, { [] {
                                return CanPassEnemy(10, 0, 7, 5) && CanDefeatEnemies(10, 0, 0) &&
                                       CanDefeatEnemies(10, 0, 2) && CanDefeatEnemies(10, 0, 4) && SoulGanon &&
-                                      BossKeyGanonsCastle && CanUse(LIGHT_ARROWS) && CanUse(MASTER_SWORD) && Hearts > 0;
+                                      BossKeyGanonsCastle && CanUse(LIGHT_ARROWS) && CanUse(MASTER_SWORD);
                            } }),
         },
         {});
