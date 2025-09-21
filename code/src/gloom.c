@@ -38,7 +38,7 @@ void Gloom_OnHit(void) {
 
     if (gSaveContext.healthCapacity <= 0) {
         gSaveContext.healthCapacity = 0;
-        gSaveContext.health = 0;
+        gSaveContext.health         = 0;
     }
 }
 
