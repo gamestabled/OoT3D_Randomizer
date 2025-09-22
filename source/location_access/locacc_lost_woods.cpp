@@ -27,6 +27,7 @@ void AreaTable_Init_LostWoods() {
         {
             // Locations
             LocationAccess(KF_KOKIRI_SWORD_CHEST, { [] { return IsChild; } }),
+            LocationAccess(KF_END_OF_BRIDGE_BLUE_RUPEE, { [] { return IsChild; } }),
             LocationAccess(KF_GOSSIP_STONE, { [] { return true; } }),
         },
         {

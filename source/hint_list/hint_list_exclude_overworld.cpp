@@ -37,6 +37,10 @@ void HintTable_Init_Exclude_Overworld() {
                        //clear text
                        Text{"#inside Mido's house# is", /*french*/"#dans la maison de Mido# gît", /*spanish*/"en la #casa de Mido# yace", /*italian*/"nella #casa di Mido# puoi trovare", /*german*/"#in Midos Haus#, |wäre|wären|"}
     );
+    hintTable[KF_END_OF_BRIDGE_BLUE_RUPEE] = HintText::Exclude({
+                       // obscure text
+                       Text{"EN: KF_END_OF_BRIDGE_BLUE_RUPEE HINT", /*french*/"FR: KF_END_OF_BRIDGE_BLUE_RUPEE HINT", /*spanish*/"ES: KF_END_OF_BRIDGE_BLUE_RUPEE HINT", /*italian*/"IT: KF_END_OF_BRIDGE_BLUE_RUPEE HINT", /*german*/"DE: KF_END_OF_BRIDGE_BLUE_RUPEE HINT"},
+    });
 
     hintTable[GRAVEYARD_SHIELD_GRAVE_CHEST] = HintText::Exclude({
                        // obscure text
