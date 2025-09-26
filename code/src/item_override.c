@@ -128,11 +128,13 @@ static ItemOverride_Key ItemOverride_GetSearchKey(Actor* actor, u8 scene, u8 ite
             .flag  = actor->params & 0x1F,
         };
     } else if (actor->id == 0x15) { // Collectible
-        // Only override heart pieces and keys
+        // Only override heart pieces and keys blue rupees
         u32 collectibleType = actor->params & 0xFF;
         if (collectibleType != 0x06 && collectibleType != 0x11 && collectibleType != 0x01) {
             return (ItemOverride_Key){ .all = 0 };
         }
+
+        CitraPrint("ItemOverride_GetSearchKey actor->params: %X flag %X",actor->params, ((EnItem00*)actor)->collectibleFlag);
 
         return (ItemOverride_Key){
             .scene = scene,
