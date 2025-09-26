@@ -130,7 +130,7 @@ static ItemOverride_Key ItemOverride_GetSearchKey(Actor* actor, u8 scene, u8 ite
     } else if (actor->id == 0x15) { // Collectible
         // Only override heart pieces and keys
         u32 collectibleType = actor->params & 0xFF;
-        if (collectibleType != 0x06 && collectibleType != 0x11) {
+        if (collectibleType != 0x06 && collectibleType != 0x11 && collectibleType != 0x01) {
             return (ItemOverride_Key){ .all = 0 };
         }
 
