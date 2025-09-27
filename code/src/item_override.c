@@ -523,6 +523,47 @@ void ItemOverride_GetSkulltulaToken(Actor* tokenActor) {
     }
 }
 
+u8 ItemOverride_GetItemDrop(EnItem00* this) {
+    // Override items that always behave as drops and never trigger a Get Item event.
+    switch (this->actor.params) {
+        case ITEM00_RUPEE_GREEN:
+        case ITEM00_RUPEE_BLUE:
+        case ITEM00_RUPEE_RED:
+        case ITEM00_RUPEE_PURPLE:
+        case ITEM00_RUPEE_ORANGE:
+        case ITEM00_RECOVERY_HEART:
+        case ITEM00_FLEXIBLE:
+        case ITEM00_BOMBS_A:
+        case ITEM00_BOMBS_B:
+        case ITEM00_ARROWS_SINGLE:
+        case ITEM00_ARROWS_SMALL:
+        case ITEM00_ARROWS_MEDIUM:
+        case ITEM00_ARROWS_LARGE:
+            break;
+        default:
+            return FALSE; // Proceed normally with the Get Item event.
+    }
+
+    ItemOverride override = ItemOverride_Lookup(&this->actor, gGlobalContext->sceneNum, GI_INVALID);
+    if (override.key.all == 0) {
+        return FALSE; // No override, proceed with Item_Give.
+    }
+
+    u16 resolvedItemId = ItemTable_ResolveUpgrades(override.value.itemId);
+    ItemRow* itemRow   = ItemTable_GetItemRow(resolvedItemId);
+
+    if (FALSE) { // TODO: check if random item is major
+        // TODO: handle major item
+    } else {
+        // Minor item, behave as item drop.
+        this->actor.params = ITEM00_RECOVERY_HEART;
+        ItemTable_CallEffect(itemRow);
+        Item_Give(gGlobalContext, itemRow->actionId);
+    }
+
+    return TRUE; // Item overridden, skip Item_Give.
+}
+
 static s32 ItemOverride_IsDrawItemVanilla(void) {
     return rActiveItemRow == NULL ||          // No item override
            PLAYER->itemActionParam >= 0x2B || // Using trade item
