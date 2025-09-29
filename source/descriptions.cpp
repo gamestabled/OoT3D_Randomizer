@@ -582,6 +582,11 @@ string_view ocarinaButtonsDesc        = "Enabling this locks all Ocarina inputs,
                                         "Ocarina notes.\n\n"                               //
                                         "They can also be added to the Starting Inventory.";
 /*------------------------------                                                           //
+|  SHUFFLE FREESTANDING RUPEES |                                                           //
+------------------------------*/                                                           //
+string_view shuffleRupeesDesc         = "Shuffles freestanding rupees and adds them to the\n"//
+                                        "item pool. Currently work in progress.";          //
+/*------------------------------                                                           //
 |      MAPS AND COMPASSES      |                                                           //
 ------------------------------*/                                                           //
 string_view mapCompassStartWith       = "Maps and Compasses are given to you from the\n"   //

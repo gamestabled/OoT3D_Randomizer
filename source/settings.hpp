@@ -435,6 +435,7 @@ extern Option ShuffleAdultTradeQuest;
 extern Option ShuffleChestMinigame;
 extern Option ShuffleEnemySouls;
 extern Option ShuffleOcarinaButtons;
+extern Option ShuffleRupees;
 
 extern Option MapsAndCompasses;
 extern Option Keysanity;
