@@ -2,8 +2,6 @@
 #include "z3D/actors/z_en_item00.h"
 #include "models.h"
 #include "settings.h"
-#include "common.h"
-#include "item_override.h"
 
 #define EnItem00_Init ((ActorFunc)GAME_ADDR(0x1F69B4))
 
@@ -60,20 +58,9 @@ void EnItem00_rDestroy(Actor* thisx, GlobalContext* globalCtx) {
 void EnItem00_rUpdate(Actor* thisx, GlobalContext* globalCtx) {
     EnItem00* item = THIS;
 
-    int flagsCollectible = Flags_GetCollectible(globalCtx, item->collectibleFlag);
-    if (flagsCollectible) {
-        if (item->action_fn != FUN_002B175C) {
-            CitraPrint("actor->id: %X Flags_GetCollectible %d && item->action_fn != FUN_002B175C", thisx->id,
-                       flagsCollectible);
-            Actor_Kill(&item->actor);
-            return;
-        } else {
-            CitraPrint("actor->id: %X Flags_GetCollectible %d", thisx->id, flagsCollectible);
-            if (flagsCollectible == 131072) {
-                CitraPrint("Blue rupee collected?");
-                return;
-            }
-        }
+    if (Flags_GetCollectible(globalCtx, item->collectibleFlag) && item->action_fn != FUN_002B175C) {
+        Actor_Kill(&item->actor);
+        return;
     }
 
     EnItem00_Update(&item->actor, globalCtx);
