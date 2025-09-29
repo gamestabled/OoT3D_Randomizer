@@ -142,7 +142,7 @@ int GetShopPrice() {
     // The diceroll that gives us the randomness for choosing the price.
     double random = RandomDouble();
 
-    // We loop through the amount of bins to look for the bin that the random double fits in with the Cummulative
+    // We loop through the amount of bins to look for the bin that the random double fits in with the Cumulative
     // Distribution Function
     for (size_t i = 0; i < numberOfBins; i++) {
         if (random < CalculateCumulativeDistributionFunction(fractionForOneBin * (i + 1))) {
