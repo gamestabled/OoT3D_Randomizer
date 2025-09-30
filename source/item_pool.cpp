@@ -678,9 +678,9 @@ void GenerateItemPool() {
     } else {
         AddItemToMainPool(GOLD_SKULLTULA_TOKEN, 100);
     }
-    printf("Shuffle Rupees %s", ShuffleRupees ? "On" : "Off");
+
     if (ShuffleRupees) {
-        AddItemToMainPool(BLUE_RUPEE, 1); // Item count will increase with more added rupee locations
+        AddItemToMainPool(BLUE_RUPEE, 4); // Item count will increase with more added rupee locations
     } else {
         for (LocationKey loc : GetLocations(allLocations, Category::cFreestandingRupee)) {
             Location(loc)->PlaceVanillaItem();

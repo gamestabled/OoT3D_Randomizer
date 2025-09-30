@@ -42,6 +42,21 @@ void HintTable_Init_Exclude_Overworld() {
                        Text{"EN: KF_END_OF_BRIDGE_BLUE_RUPEE HINT", /*french*/"FR: KF_END_OF_BRIDGE_BLUE_RUPEE HINT", /*spanish*/"ES: KF_END_OF_BRIDGE_BLUE_RUPEE HINT", /*italian*/"IT: KF_END_OF_BRIDGE_BLUE_RUPEE HINT", /*german*/"DE: KF_END_OF_BRIDGE_BLUE_RUPEE HINT"},
     });
 
+    hintTable[KF_BEHIND_MIDOS_HOUSE_BLUE_RUPEE] = HintText::Exclude({
+                       // obscure text
+                       Text{"EN: KF_BEHIND_MIDOS_HOUSE_BLUE_RUPEE HINT", /*french*/"FR: KF_BEHIND_MIDOS_HOUSE_BLUE_RUPEE HINT", /*spanish*/"ES: KF_BEHIND_MIDOS_HOUSE_BLUE_RUPEE HINT", /*italian*/"IT: KF_BEHIND_MIDOS_HOUSE_BLUE_RUPEE HINT", /*german*/"DE: KF_BEHIND_MIDOS_HOUSE_BLUE_RUPEE HINT"},
+    });
+
+    hintTable[KF_BOULDER_MAZE_BLUE_RUPEE_1] = HintText::Exclude({
+                       // obscure text
+                       Text{"EN: KF_BOULDER_MAZE_BLUE_RUPEE_1 HINT", /*french*/"FR: KF_BOULDER_MAZE_BLUE_RUPEE_1 HINT", /*spanish*/"ES: KF_BOULDER_MAZE_BLUE_RUPEE_1 HINT", /*italian*/"IT: KF_BOULDER_MAZE_BLUE_RUPEE_1 HINT", /*german*/"DE: KF_BOULDER_MAZE_BLUE_RUPEE_1 HINT"},
+    });
+
+    hintTable[KF_BOULDER_MAZE_BLUE_RUPEE_2] = HintText::Exclude({
+                       // obscure text
+                       Text{"EN: KF_BOULDER_MAZE_BLUE_RUPEE_2 HINT", /*french*/"FR: KF_BOULDER_MAZE_BLUE_RUPEE_2 HINT", /*spanish*/"ES: KF_BOULDER_MAZE_BLUE_RUPEE_2 HINT", /*italian*/"IT: KF_BOULDER_MAZE_BLUE_RUPEE_2 HINT", /*german*/"DE: KF_BOULDER_MAZE_BLUE_RUPEE_2 HINT"},
+    });
+
     hintTable[GRAVEYARD_SHIELD_GRAVE_CHEST] = HintText::Exclude({
                        // obscure text
                        Text{"the #treasure of a fallen soldier# is", /*french*/"le #trésor du soldat mort# est", /*spanish*/"el #tesoro de un soldado caído# esconde", /*italian*/"il #tesoro di un soldato caduto# è", /*german*/"der #Schatz eines gefallenen Soldaten#, |wäre|wären|"},
