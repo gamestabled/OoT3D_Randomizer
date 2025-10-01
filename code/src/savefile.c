@@ -854,3 +854,13 @@ void SaveFile_AfterLoadGame(void) {
         ItemOverride_PushHardcodedItem(GI_GANON_BOSS_KEY);
     }
 }
+
+void SaveFile_SetCollectedRandomizedRespawningCollectibleFlag(s16 sceneNum, u16 collectibleFlag) {
+    gExtSaveData.collectedRandomizedRespawningRupeeFlags[gGlobalContext->sceneNum] |=
+        (1 << (collectibleFlag - 0x20));
+}
+
+bool SaveFile_GetCollectedRandomizedRespawningCollectibleFlag(s16 sceneNum, u16 collectibleFlag) {
+    return ((gExtSaveData.collectedRandomizedRespawningRupeeFlags[gGlobalContext->sceneNum] &
+             (1 << (collectibleFlag - 0x20))) > 0);
+}

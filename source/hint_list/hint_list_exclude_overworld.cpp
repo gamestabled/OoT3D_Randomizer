@@ -56,6 +56,10 @@ void HintTable_Init_Exclude_Overworld() {
                        // obscure text
                        Text{"EN: KF_BOULDER_MAZE_BLUE_RUPEE_2 HINT", /*french*/"FR: KF_BOULDER_MAZE_BLUE_RUPEE_2 HINT", /*spanish*/"ES: KF_BOULDER_MAZE_BLUE_RUPEE_2 HINT", /*italian*/"IT: KF_BOULDER_MAZE_BLUE_RUPEE_2 HINT", /*german*/"DE: KF_BOULDER_MAZE_BLUE_RUPEE_2 HINT"},
     });
+    hintTable[KF_NEAR_RAMP_GREEN_RUPEE_1] = HintText::Exclude({
+                       // obscure text
+                       Text{"EN: KF_NEAR_RAMP_GREEN_RUPEE_1 HINT", /*french*/"FR: KF_NEAR_RAMP_GREEN_RUPEE_1 HINT", /*spanish*/"ES: KF_NEAR_RAMP_GREEN_RUPEE_1 HINT", /*italian*/"IT: KF_NEAR_RAMP_GREEN_RUPEE_1 HINT", /*german*/"DE: KF_NEAR_RAMP_GREEN_RUPEE_1 HINT"},
+    });
 
     hintTable[GRAVEYARD_SHIELD_GRAVE_CHEST] = HintText::Exclude({
                        // obscure text

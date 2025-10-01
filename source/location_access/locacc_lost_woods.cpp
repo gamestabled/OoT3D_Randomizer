@@ -31,6 +31,7 @@ void AreaTable_Init_LostWoods() {
             LocationAccess(KF_BEHIND_MIDOS_HOUSE_BLUE_RUPEE, { [] { return IsChild; } }),
             LocationAccess(KF_BOULDER_MAZE_BLUE_RUPEE_1, { [] { return IsChild; } }),
             LocationAccess(KF_BOULDER_MAZE_BLUE_RUPEE_2, { [] { return IsChild; } }),
+            LocationAccess(KF_NEAR_RAMP_GREEN_RUPEE_1, { [] { return IsChild; } }),
             LocationAccess(KF_GOSSIP_STONE, { [] { return true; } }),
         },
         {

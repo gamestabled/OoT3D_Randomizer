@@ -24,6 +24,8 @@ void LocationTable_Init() {
     locationTable[KF_BEHIND_MIDOS_HOUSE_BLUE_RUPEE]      = ItemLocation::Collectable(0x55, 0x12, "KF Behind Mido's house Blue Rupee",    KF_BEHIND_MIDOS_HOUSE_BLUE_RUPEE,      BLUE_RUPEE,                {Category::cKokiriForest, Category::cForest,Category::cFreestandingRupee},                                                                                                     SpoilerCollectionCheckGroup::GROUP_KOKIRI_FOREST);
     locationTable[KF_BOULDER_MAZE_BLUE_RUPEE_1]          = ItemLocation::Collectable(0x55, 0x0F, "KF Boulder Maze Blue Rupee 1",         KF_BOULDER_MAZE_BLUE_RUPEE_1,          BLUE_RUPEE,                {Category::cKokiriForest, Category::cForest,Category::cFreestandingRupee},                                                                                                     SpoilerCollectionCheckGroup::GROUP_KOKIRI_FOREST);
     locationTable[KF_BOULDER_MAZE_BLUE_RUPEE_2]          = ItemLocation::Collectable(0x55, 0x0E, "KF Boulder Maze Blue Rupee 2",         KF_BOULDER_MAZE_BLUE_RUPEE_2,          BLUE_RUPEE,                {Category::cKokiriForest, Category::cForest,Category::cFreestandingRupee},                                                                                                     SpoilerCollectionCheckGroup::GROUP_KOKIRI_FOREST);
+    locationTable[KF_NEAR_RAMP_GREEN_RUPEE_1]            = ItemLocation::Collectable(0x55, 0x24, "KF Near Ramp Green Rupee 1",           KF_NEAR_RAMP_GREEN_RUPEE_1,            GREEN_RUPEE,                {Category::cKokiriForest, Category::cForest,Category::cFreestandingRupee},                                                                                                     SpoilerCollectionCheckGroup::GROUP_KOKIRI_FOREST);
+    
     // Lost Woods
     locationTable[LW_NEAR_SHORTCUTS_GROTTO_CHEST]        = ItemLocation::Chest      (0x3E, 0x14, "LW Near Shortcuts Grotto Chest",       LW_NEAR_SHORTCUTS_GROTTO_CHEST,        BLUE_RUPEE,                {Category::cLostWoods, Category::cForest, Category::cGrotto},                                                                                                                  SpoilerCollectionCheckGroup::GROUP_LOST_WOODS);
     locationTable[LW_SKULL_KID]                          = ItemLocation::Base       (0x5B, 0x3E, "LW Skull Kid",                         LW_SKULL_KID,                          PIECE_OF_HEART,            {Category::cLostWoods, Category::cForest,},                                                                           SpoilerCollectionCheck::ItemGetInf(30),                  SpoilerCollectionCheckGroup::GROUP_LOST_WOODS);
@@ -1084,6 +1086,7 @@ std::vector<LocationKey> overworldLocations = {
   KF_BEHIND_MIDOS_HOUSE_BLUE_RUPEE,
   KF_BOULDER_MAZE_BLUE_RUPEE_1,
   KF_BOULDER_MAZE_BLUE_RUPEE_2,
+  KF_NEAR_RAMP_GREEN_RUPEE_1,
 
   // Shop
   KF_SHOP_ITEM_1,
