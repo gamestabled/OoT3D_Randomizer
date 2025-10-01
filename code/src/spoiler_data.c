@@ -33,10 +33,14 @@ u8 SpoilerData_ChestCheck(SpoilerItemLocation* itemLoc) {
 }
 
 u8 SpoilerData_CollectableCheck(SpoilerItemLocation* itemLoc) {
-    if (gGlobalContext->sceneNum == itemLoc->LocationScene) {
-        return (gGlobalContext->actorCtx.flags.collect & (1 << itemLoc->LocationFlag)) != 0;
+    if (itemLoc->LocationFlag < 0x20) {
+        if (gGlobalContext->sceneNum == itemLoc->LocationScene) {
+            return (gGlobalContext->actorCtx.flags.collect & (1 << itemLoc->LocationFlag)) != 0;
+        } else {
+            return (gSaveContext.sceneFlags[itemLoc->LocationScene].collect & (1 << itemLoc->LocationFlag)) != 0;
+        }
     } else {
-        return (gSaveContext.sceneFlags[itemLoc->LocationScene].collect & (1 << itemLoc->LocationFlag)) != 0;
+        return SaveFile_GetCollectedRandomizedRespawningCollectibleFlag(itemLoc->LocationScene, itemLoc->LocationFlag);
     }
 }
 
