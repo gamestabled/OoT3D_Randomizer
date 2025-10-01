@@ -134,7 +134,8 @@ static ItemOverride_Key ItemOverride_GetSearchKey(Actor* actor, u8 scene, u8 ite
             return (ItemOverride_Key){ .all = 0 };
         }
 
-        CitraPrint("ItemOverride_GetSearchKey actor->params: %X flag %X",actor->params, ((EnItem00*)actor)->collectibleFlag);
+        CitraPrint("ItemOverride_GetSearchKey actor->params: %X flag %X", actor->params,
+                   ((EnItem00*)actor)->collectibleFlag);
 
         return (ItemOverride_Key){
             .scene = scene,
