@@ -133,40 +133,37 @@ static ItemOverride_Key ItemOverride_GetSearchKey(Actor* actor, u8 scene, u8 ite
         u16 collectibleFlag     = ((EnItem00*)actor)->collectibleFlag;
         s32 respawningCollected = collectibleFlag >= 0x20 && SaveFile_GetCollectedRandomizedRespawningCollectibleFlag(
                                                                  gGlobalContext->sceneNum, collectibleFlag);
-    }
 
-    if ((collectibleType != 0x06 && collectibleType != 0x11 && collectibleType != 0x01 && collectibleType != 0x00) ||
-        respawningCollected) {
-        return (ItemOverride_Key){ .all = 0 };
-    }
+        if ((collectibleType != 0x06 && collectibleType != 0x11 && collectibleType != 0x01 &&
+             collectibleType != 0x00) ||
+            respawningCollected) {
+            return (ItemOverride_Key){ .all = 0 };
+        }
 
-    return (ItemOverride_Key){
-        .scene = scene,
-        .type  = OVR_COLLECTABLE,
-        .flag  = ((EnItem00*)actor)->collectibleFlag,
-    };
-}
-else if (actor->id == 0x19C) { // Gold Skulltula Token
-    return (ItemOverride_Key){
-        .scene = (actor->params >> 8) & 0x1F,
-        .type  = OVR_SKULL,
-        .flag  = actor->params & 0xFF,
-    };
-}
-else if (scene == 0x3E && actor->id == 0x11A) { // Grotto Salesman
-    return (ItemOverride_Key){
-        .scene = gSaveContext.respawn[RESPAWN_MODE_RETURN].data,
-        .type  = OVR_GROTTO_SCRUB,
-        .flag  = itemId,
-    };
-}
-else {
-    return (ItemOverride_Key){
-        .scene = scene,
-        .type  = OVR_BASE_ITEM,
-        .flag  = itemId,
-    };
-}
+        return (ItemOverride_Key){
+            .scene = scene,
+            .type  = OVR_COLLECTABLE,
+            .flag  = ((EnItem00*)actor)->collectibleFlag,
+        };
+    } else if (actor->id == 0x19C) { // Gold Skulltula Token
+        return (ItemOverride_Key){
+            .scene = (actor->params >> 8) & 0x1F,
+            .type  = OVR_SKULL,
+            .flag  = actor->params & 0xFF,
+        };
+    } else if (scene == 0x3E && actor->id == 0x11A) { // Grotto Salesman
+        return (ItemOverride_Key){
+            .scene = gSaveContext.respawn[RESPAWN_MODE_RETURN].data,
+            .type  = OVR_GROTTO_SCRUB,
+            .flag  = itemId,
+        };
+    } else {
+        return (ItemOverride_Key){
+            .scene = scene,
+            .type  = OVR_BASE_ITEM,
+            .flag  = itemId,
+        };
+    }
 }
 
 ItemOverride ItemOverride_LookupByKey(ItemOverride_Key key) {
