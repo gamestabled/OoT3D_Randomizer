@@ -222,32 +222,39 @@ void AreaTable_Init_LostWoods() {
                                                 CanDoGlitch(GlitchType::QPA, GlitchDifficulty::ADVANCED);
                                      } }),
         },
-        {
-            // Locations
-            LocationAccess(LW_SKULL_KID, { [] { return IsChild && CanPlay(SariasSong); },
-                                           /*Glitched*/
-                                           [] {
-                                               return IsChild && (Fish || Bugs) && SariasSong && CanShield &&
-                                                      (CanDoGlitch(GlitchType::QPA, GlitchDifficulty::ADVANCED) ||
-                                                       (HasBombchus && CanDoGlitch(GlitchType::ActionSwap,
-                                                                                   GlitchDifficulty::ADVANCED)));
-                                           } }),
-            LocationAccess(LW_TRADE_COJIRO, { [] { return IsAdult && Cojiro; } }),
-            LocationAccess(LW_TRADE_ODD_POULTICE, { [] { return IsAdult && OddPoultice && Cojiro; } }),
-            LocationAccess(LW_OCARINA_MEMORY_GAME,
-                           { [] { return IsChild && Ocarina && (OcarinaButtonsCount >= 5); },
-                             /*Glitched*/
-                             [] {
-                                 return IsChild &&
-                                        (CanDoGlitch(GlitchType::OutdoorBombOI, GlitchDifficulty::INTERMEDIATE) ||
-                                         ((Fish || Bugs) && CanShield &&
-                                          CanDoGlitch(GlitchType::QPA, GlitchDifficulty::ADVANCED)) ||
-                                         ((Bugs || Fish) && HasBombchus && CanShield &&
-                                          CanDoGlitch(GlitchType::ActionSwap, GlitchDifficulty::ADVANCED)));
-                             } }),
-            LocationAccess(LW_TARGET_IN_WOODS, { [] { return IsChild && CanUse(SLINGSHOT); } }),
-            LocationAccess(LW_DEKU_SCRUB_NEAR_BRIDGE, { [] { return IsChild && CanStunDeku; } }),
-            LocationAccess(LW_GOSSIP_STONE, { [] { return true; } }),
+        { // Locations
+          LocationAccess(LW_SKULL_KID, { [] { return IsChild && CanPlay(SariasSong); },
+                                         /*Glitched*/
+                                         [] {
+                                             return IsChild && (Fish || Bugs) && SariasSong && CanShield &&
+                                                    (CanDoGlitch(GlitchType::QPA, GlitchDifficulty::ADVANCED) ||
+                                                     (HasBombchus &&
+                                                      CanDoGlitch(GlitchType::ActionSwap, GlitchDifficulty::ADVANCED)));
+                                         } }),
+          LocationAccess(LW_TRADE_COJIRO, { [] { return IsAdult && Cojiro; } }),
+          LocationAccess(LW_TRADE_ODD_POULTICE, { [] { return IsAdult && OddPoultice && Cojiro; } }),
+          LocationAccess(LW_OCARINA_MEMORY_GAME,
+                         { [] { return IsChild && Ocarina && (OcarinaButtonsCount >= 5); },
+                           /*Glitched*/
+                           [] {
+                               return IsChild &&
+                                      (CanDoGlitch(GlitchType::OutdoorBombOI, GlitchDifficulty::INTERMEDIATE) ||
+                                       ((Fish || Bugs) && CanShield &&
+                                        CanDoGlitch(GlitchType::QPA, GlitchDifficulty::ADVANCED)) ||
+                                       ((Bugs || Fish) && HasBombchus && CanShield &&
+                                        CanDoGlitch(GlitchType::ActionSwap, GlitchDifficulty::ADVANCED)));
+                           } }),
+          LocationAccess(LW_TARGET_IN_WOODS, { [] { return IsChild && CanUse(SLINGSHOT); } }),
+          LocationAccess(LW_DEKU_SCRUB_NEAR_BRIDGE, { [] { return IsChild && CanStunDeku; } }),
+          LocationAccess(LW_GOSSIP_STONE, { [] { return true; } }),
+          LocationAccess(LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_1, { [] { return IsChild && (CanDive || (CanUse(IRON_BOOTS) && WaterTimer >= 4) || CanUse(BOOMERANG));} }),
+          LocationAccess(LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_2, { [] { return IsChild && (CanDive || (CanUse(IRON_BOOTS) && WaterTimer >= 4) || CanUse(BOOMERANG));} }),
+          LocationAccess(LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_3, { [] { return IsChild && (CanDive || (CanUse(IRON_BOOTS) && WaterTimer >= 4) || CanUse(BOOMERANG));} }),
+          LocationAccess(LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_4, { [] { return IsChild && (CanDive || (CanUse(IRON_BOOTS) && WaterTimer >= 4) || CanUse(BOOMERANG));} }),
+          LocationAccess(LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_5, { [] { return IsChild && (CanDive || (CanUse(IRON_BOOTS) && WaterTimer >= 4) || CanUse(BOOMERANG));} }),
+          LocationAccess(LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_6, { [] { return IsChild && (CanDive || (CanUse(IRON_BOOTS) && WaterTimer >= 4) || CanUse(BOOMERANG));} }),
+          LocationAccess(LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_7, { [] { return IsChild && (CanDive || (CanUse(IRON_BOOTS) && WaterTimer >= 4) || CanUse(BOOMERANG));} }),
+          LocationAccess(LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_8, { [] { return IsChild && (CanDive || (CanUse(IRON_BOOTS) && WaterTimer >= 4) || CanUse(BOOMERANG));} })
         },
         {
             // Exits
@@ -320,6 +327,14 @@ void AreaTable_Init_LostWoods() {
                  // Locations
                  LocationAccess(LW_DEKU_SCRUB_NEAR_DEKU_THEATER_RIGHT, { [] { return IsChild && CanStunDeku; } }),
                  LocationAccess(LW_DEKU_SCRUB_NEAR_DEKU_THEATER_LEFT, { [] { return IsChild && CanStunDeku; } }),
+                 LocationAccess(LW_IN_BOULDER_BLUE_RUPEE,
+                                { [] { return Here(LW_BEYOND_MIDO, [] { return CanBlastOrSmash; }); },
+                                  [] {
+                                      return Here(LW_BEYOND_MIDO, [] {
+                                          return IsChild && CanUse(STICKS) &&
+                                                 CanDoGlitch(GlitchType::QPA, GlitchDifficulty::ADVANCED);
+                                      });
+                                  } }),
              },
              {
                  // Exits
@@ -426,18 +441,18 @@ void AreaTable_Init_LostWoods() {
         },
         {
             // Exits
-            Entrance(
-                SFM_ENTRYWAY, { [] {
-                    return ((IsChild && CanPassEnemies(86, 0, 0, { 8, 9 })) || (IsAdult && CanPassEnemy(86, 2, 0, 11)));
-                } }),
+            Entrance(SFM_ENTRYWAY, { [] {
+                         return ((IsChild && CanPassEnemies(86, 0, 0, { 8, 9 })) ||
+                                 (IsAdult && CanPassEnemy(86, 2, 0, 11)));
+                     } }),
             Entrance(
                 FOREST_TEMPLE_ENTRYWAY,
                 { [] { return CanUse(HOOKSHOT); },
                   /*Glitched*/ [] { return CanDoGlitch(GlitchType::BombHover, GlitchDifficulty::INTERMEDIATE); } }),
-            Entrance(
-                SFM_FAIRY_GROTTO, { [] {
-                    return ((IsChild && CanPassEnemies(86, 0, 0, { 8, 9 })) || (IsAdult && CanPassEnemy(86, 2, 0, 11)));
-                } }),
+            Entrance(SFM_FAIRY_GROTTO, { [] {
+                         return ((IsChild && CanPassEnemies(86, 0, 0, { 8, 9 })) ||
+                                 (IsAdult && CanPassEnemy(86, 2, 0, 11)));
+                     } }),
             Entrance(SFM_STORMS_GROTTO,
                      { [] { return CanOpenStormGrotto; },
                        /*Glitched*/
