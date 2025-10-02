@@ -680,6 +680,7 @@ void GenerateItemPool() {
     }
 
     if (ShuffleRupees) {
+        AddItemToMainPool(GREEN_RUPEE, 4); // Item count will increase with more added rupee locations
         AddItemToMainPool(BLUE_RUPEE, 4); // Item count will increase with more added rupee locations
     } else {
         for (LocationKey loc : GetLocations(allLocations, Category::cFreestandingRupee)) {
