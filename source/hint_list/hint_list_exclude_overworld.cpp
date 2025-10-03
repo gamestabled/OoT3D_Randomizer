@@ -419,6 +419,22 @@ void HintTable_Init_Exclude_Overworld() {
                        Text{"the #sunken treasure in a lake# is", /*french*/"le #trésor au fond du lac# est", /*spanish*/"el #tesoro hundido del lago# se trata de", /*italian*/"il #tesoro sommerso nel lago# è", /*german*/"der #versunkene Schatz eines Sees#, |wäre|wären|"},
     });
 
+        hintTable[LH_UNDER_WATER_GREEN_RUPEE_1] = HintText::Exclude({
+                       // obscure text
+                       Text{"EN: LH_UNDER_WATER_GREEN_RUPEE_1 HINT", /*french*/"FR: LH_UNDER_WATER_GREEN_RUPEE_1 HINT", /*spanish*/"ES: LH_UNDER_WATER_GREEN_RUPEE_1 HINT", /*italian*/"IT: LH_UNDER_WATER_GREEN_RUPEE_1 HINT", /*german*/"DE: LH_UNDER_WATER_GREEN_RUPEE_1 HINT"},
+    });
+
+        hintTable[LH_UNDER_WATER_GREEN_RUPEE_2] = HintText::Exclude({
+                       // obscure text
+                       Text{"EN: LH_UNDER_WATER_GREEN_RUPEE_2 HINT", /*french*/"FR: LH_UNDER_WATER_GREEN_RUPEE_2 HINT", /*spanish*/"ES: LH_UNDER_WATER_GREEN_RUPEE_2 HINT", /*italian*/"IT: LH_UNDER_WATER_GREEN_RUPEE_2 HINT", /*german*/"DE: LH_UNDER_WATER_GREEN_RUPEE_2 HINT"},
+    });
+
+        hintTable[LH_UNDER_WATER_GREEN_RUPEE_3] = HintText::Exclude({
+                       // obscure text
+                       Text{"EN: LH_UNDER_WATER_GREEN_RUPEE_3 HINT", /*french*/"FR: LH_UNDER_WATER_GREEN_RUPEE_3 HINT", /*spanish*/"ES: LH_UNDER_WATER_GREEN_RUPEE_3 HINT", /*italian*/"IT: LH_UNDER_WATER_GREEN_RUPEE_3 HINT", /*german*/"DE: LH_UNDER_WATER_GREEN_RUPEE_3 HINT"},
+    });
+
+
     hintTable[GF_GERUDO_TOKEN] = HintText::Exclude({
                        // obscure text
                        Text{"#rescuing captured carpenters# is rewarded with", /*french*/"#secourir les charpentiers capturés# assure", /*spanish*/"#rescatar los apresados carpinteros# se premia con", /*italian*/"chi salverà i #carpentieri prigionieri# riceverà", /*german*/"bei #geretteten Zimmerleuten#, |wäre|wären|"},
