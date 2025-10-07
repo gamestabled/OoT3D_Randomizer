@@ -680,7 +680,7 @@ void GenerateItemPool() {
     }
 
     if (ShuffleRupees) {
-        for(LocationKey loc : GetLocations(allLocations, Category::cFreestandingRupee)){
+        for (LocationKey loc : GetLocations(allLocations, Category::cFreestandingRupee)) {
             AddItemToMainPool(Location(loc)->GetVanillaItem());
         }
     } else {

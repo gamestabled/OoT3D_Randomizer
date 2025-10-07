@@ -247,15 +247,38 @@ void AreaTable_Init_LostWoods() {
           LocationAccess(LW_TARGET_IN_WOODS, { [] { return IsChild && CanUse(SLINGSHOT); } }),
           LocationAccess(LW_DEKU_SCRUB_NEAR_BRIDGE, { [] { return IsChild && CanStunDeku; } }),
           LocationAccess(LW_GOSSIP_STONE, { [] { return true; } }),
-          LocationAccess(LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_1, { [] { return IsChild && (CanDive || (CanUse(IRON_BOOTS) && WaterTimer >= 4) || CanUse(BOOMERANG));} }),
-          LocationAccess(LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_2, { [] { return IsChild && (CanDive || (CanUse(IRON_BOOTS) && WaterTimer >= 4) || CanUse(BOOMERANG));} }),
-          LocationAccess(LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_3, { [] { return IsChild && (CanDive || (CanUse(IRON_BOOTS) && WaterTimer >= 4) || CanUse(BOOMERANG));} }),
-          LocationAccess(LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_4, { [] { return IsChild && (CanDive || (CanUse(IRON_BOOTS) && WaterTimer >= 4) || CanUse(BOOMERANG));} }),
-          LocationAccess(LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_5, { [] { return IsChild && (CanDive || (CanUse(IRON_BOOTS) && WaterTimer >= 4) || CanUse(BOOMERANG));} }),
-          LocationAccess(LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_6, { [] { return IsChild && (CanDive || (CanUse(IRON_BOOTS) && WaterTimer >= 4) || CanUse(BOOMERANG));} }),
-          LocationAccess(LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_7, { [] { return IsChild && (CanDive || (CanUse(IRON_BOOTS) && WaterTimer >= 4) || CanUse(BOOMERANG));} }),
-          LocationAccess(LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_8, { [] { return IsChild && (CanDive || (CanUse(IRON_BOOTS) && WaterTimer >= 4) || CanUse(BOOMERANG));} })
-        },
+          LocationAccess(LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_1, { [] {
+                             return IsChild &&
+                                    (CanDive || (CanUse(IRON_BOOTS) && WaterTimer >= 4) || CanUse(BOOMERANG));
+                         } }),
+          LocationAccess(LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_2, { [] {
+                             return IsChild &&
+                                    (CanDive || (CanUse(IRON_BOOTS) && WaterTimer >= 4) || CanUse(BOOMERANG));
+                         } }),
+          LocationAccess(LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_3, { [] {
+                             return IsChild &&
+                                    (CanDive || (CanUse(IRON_BOOTS) && WaterTimer >= 4) || CanUse(BOOMERANG));
+                         } }),
+          LocationAccess(LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_4, { [] {
+                             return IsChild &&
+                                    (CanDive || (CanUse(IRON_BOOTS) && WaterTimer >= 4) || CanUse(BOOMERANG));
+                         } }),
+          LocationAccess(LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_5, { [] {
+                             return IsChild &&
+                                    (CanDive || (CanUse(IRON_BOOTS) && WaterTimer >= 4) || CanUse(BOOMERANG));
+                         } }),
+          LocationAccess(LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_6, { [] {
+                             return IsChild &&
+                                    (CanDive || (CanUse(IRON_BOOTS) && WaterTimer >= 4) || CanUse(BOOMERANG));
+                         } }),
+          LocationAccess(LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_7, { [] {
+                             return IsChild &&
+                                    (CanDive || (CanUse(IRON_BOOTS) && WaterTimer >= 4) || CanUse(BOOMERANG));
+                         } }),
+          LocationAccess(LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_8, { [] {
+                             return IsChild &&
+                                    (CanDive || (CanUse(IRON_BOOTS) && WaterTimer >= 4) || CanUse(BOOMERANG));
+                         } }) },
         {
             // Exits
             Entrance(LW_FOREST_EXIT, { [] { return true; } }),
@@ -441,18 +464,18 @@ void AreaTable_Init_LostWoods() {
         },
         {
             // Exits
-            Entrance(SFM_ENTRYWAY, { [] {
-                         return ((IsChild && CanPassEnemies(86, 0, 0, { 8, 9 })) ||
-                                 (IsAdult && CanPassEnemy(86, 2, 0, 11)));
-                     } }),
+            Entrance(
+                SFM_ENTRYWAY, { [] {
+                    return ((IsChild && CanPassEnemies(86, 0, 0, { 8, 9 })) || (IsAdult && CanPassEnemy(86, 2, 0, 11)));
+                } }),
             Entrance(
                 FOREST_TEMPLE_ENTRYWAY,
                 { [] { return CanUse(HOOKSHOT); },
                   /*Glitched*/ [] { return CanDoGlitch(GlitchType::BombHover, GlitchDifficulty::INTERMEDIATE); } }),
-            Entrance(SFM_FAIRY_GROTTO, { [] {
-                         return ((IsChild && CanPassEnemies(86, 0, 0, { 8, 9 })) ||
-                                 (IsAdult && CanPassEnemy(86, 2, 0, 11)));
-                     } }),
+            Entrance(
+                SFM_FAIRY_GROTTO, { [] {
+                    return ((IsChild && CanPassEnemies(86, 0, 0, { 8, 9 })) || (IsAdult && CanPassEnemy(86, 2, 0, 11)));
+                } }),
             Entrance(SFM_STORMS_GROTTO,
                      { [] { return CanOpenStormGrotto; },
                        /*Glitched*/
