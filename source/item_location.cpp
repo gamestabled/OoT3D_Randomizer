@@ -152,6 +152,14 @@ void LocationTable_Init() {
     locationTable[GRAVEYARD_DAMPE_RACE_FREESTANDING_POH] = ItemLocation::Collectable(0x48, 0x07, "GY Dampe Race Freestanding PoH",       GRAVEYARD_DAMPE_RACE_FREESTANDING_POH, PIECE_OF_HEART,            {Category::cGraveyard, Category::cKakariko, Category::cMinigame},                                                                                                              SpoilerCollectionCheckGroup::GROUP_GRAVEYARD);
     locationTable[GRAVEYARD_FREESTANDING_POH]            = ItemLocation::Collectable(0x53, 0x04, "GY Freestanding PoH",                  GRAVEYARD_FREESTANDING_POH,            PIECE_OF_HEART,            {Category::cGraveyard, Category::cKakariko,},                                                                                                                                  SpoilerCollectionCheckGroup::GROUP_GRAVEYARD);
     locationTable[GRAVEYARD_DAMPE_GRAVEDIGGING_TOUR]     = ItemLocation::Collectable(0x53, 0x08, "GY Dampe Gravedigging Tour",           GRAVEYARD_DAMPE_GRAVEDIGGING_TOUR,     PIECE_OF_HEART,            {Category::cGraveyard, Category::cKakariko,},                                                                         SpoilerCollectionCheck::ItemGetInf(20),                  SpoilerCollectionCheckGroup::GROUP_GRAVEYARD);
+    locationTable[GRAVEYARD_DAMPE_RACE_GREEN_RUPEE_1]    = ItemLocation::Collectable(0x48, 0x38, "GY Dampe Race Green Rupee 1",          GRAVEYARD_DAMPE_RACE_GREEN_RUPEE_1,    GREEN_RUPEE,               {Category::cGraveyard, Category::cKakariko, Category::cMinigame},                                                                                                              SpoilerCollectionCheckGroup::GROUP_GRAVEYARD);
+    locationTable[GRAVEYARD_DAMPE_RACE_GREEN_RUPEE_2]    = ItemLocation::Collectable(0x48, 0x39, "GY Dampe Race Green Rupee 2",          GRAVEYARD_DAMPE_RACE_GREEN_RUPEE_2,    GREEN_RUPEE,               {Category::cGraveyard, Category::cKakariko, Category::cMinigame},                                                                                                              SpoilerCollectionCheckGroup::GROUP_GRAVEYARD);
+    locationTable[GRAVEYARD_DAMPE_RACE_GREEN_RUPEE_3]    = ItemLocation::Collectable(0x48, 0x3A, "GY Dampe Race Green Rupee 3",          GRAVEYARD_DAMPE_RACE_GREEN_RUPEE_3,    GREEN_RUPEE,               {Category::cGraveyard, Category::cKakariko, Category::cMinigame},                                                                                                              SpoilerCollectionCheckGroup::GROUP_GRAVEYARD);
+    locationTable[GRAVEYARD_DAMPE_RACE_GREEN_RUPEE_4]    = ItemLocation::Collectable(0x48, 0x3B, "GY Dampe Race Green Rupee 4",          GRAVEYARD_DAMPE_RACE_GREEN_RUPEE_4,    GREEN_RUPEE,               {Category::cGraveyard, Category::cKakariko, Category::cMinigame},                                                                                                              SpoilerCollectionCheckGroup::GROUP_GRAVEYARD);
+    locationTable[GRAVEYARD_DAMPE_RACE_GREEN_RUPEE_5]    = ItemLocation::Collectable(0x48, 0x3C, "GY Dampe Race Green Rupee 5",          GRAVEYARD_DAMPE_RACE_GREEN_RUPEE_5,    GREEN_RUPEE,               {Category::cGraveyard, Category::cKakariko, Category::cMinigame},                                                                                                              SpoilerCollectionCheckGroup::GROUP_GRAVEYARD);
+    locationTable[GRAVEYARD_DAMPE_RACE_GREEN_RUPEE_6]    = ItemLocation::Collectable(0x48, 0x3D, "GY Dampe Race Green Rupee 6",          GRAVEYARD_DAMPE_RACE_GREEN_RUPEE_6,    GREEN_RUPEE,               {Category::cGraveyard, Category::cKakariko, Category::cMinigame},                                                                                                              SpoilerCollectionCheckGroup::GROUP_GRAVEYARD);
+    locationTable[GRAVEYARD_DAMPE_RACE_GREEN_RUPEE_7]    = ItemLocation::Collectable(0x48, 0x3E, "GY Dampe Race Green Rupee 7",          GRAVEYARD_DAMPE_RACE_GREEN_RUPEE_7,    GREEN_RUPEE,               {Category::cGraveyard, Category::cKakariko, Category::cMinigame},                                                                                                              SpoilerCollectionCheckGroup::GROUP_GRAVEYARD);
+    locationTable[GRAVEYARD_DAMPE_RACE_GREEN_RUPEE_8]    = ItemLocation::Collectable(0x48, 0x3F, "GY Dampe Race Green Rupee 8",          GRAVEYARD_DAMPE_RACE_GREEN_RUPEE_8,    GREEN_RUPEE,               {Category::cGraveyard, Category::cKakariko, Category::cMinigame},                                                                                                              SpoilerCollectionCheckGroup::GROUP_GRAVEYARD);
 
     // Death Mountain Trail
     locationTable[DMT_CHEST]                             = ItemLocation::Chest      (0x60, 0x01, "DMT Chest",                            DMT_CHEST,                             PURPLE_RUPEE,              {Category::cDeathMountainTrail, Category::cDeathMountain,},                                                                                                                    SpoilerCollectionCheckGroup::GROUP_DEATH_MOUNTAIN_TRAIL);
@@ -1304,6 +1312,14 @@ std::vector<LocationKey> overworldLocations = {
   GRAVEYARD_FREESTANDING_POH,
   GRAVEYARD_DAMPE_RACE_FREESTANDING_POH,
   GRAVEYARD_DAMPE_GRAVEDIGGING_TOUR,
+  GRAVEYARD_DAMPE_RACE_GREEN_RUPEE_1,
+  GRAVEYARD_DAMPE_RACE_GREEN_RUPEE_2,
+  GRAVEYARD_DAMPE_RACE_GREEN_RUPEE_3,
+  GRAVEYARD_DAMPE_RACE_GREEN_RUPEE_4,
+  GRAVEYARD_DAMPE_RACE_GREEN_RUPEE_5,
+  GRAVEYARD_DAMPE_RACE_GREEN_RUPEE_6,
+  GRAVEYARD_DAMPE_RACE_GREEN_RUPEE_7,
+  GRAVEYARD_DAMPE_RACE_GREEN_RUPEE_8,
 
   // Death Mountain Trail
   DMT_CHEST,
