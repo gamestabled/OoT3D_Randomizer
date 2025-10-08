@@ -357,6 +357,12 @@ void AreaTable_Init_HyruleField() {
                                 (HasBottle || (IsAdult && (HasBoots || ClaimCheck)) || (IsChild && WeirdEgg)))) &&
                               CanUse(NAYRUS_LOVE) && CanDoGlitch(GlitchType::CutsceneDive, GlitchDifficulty::NOVICE));
                   } }),
+            LocationAccess(LH_LAB_DIVE_RED_RUPEE_1,
+                           { [] { return ProgressiveScale >= 2 || (CanUse(IRON_BOOTS) && WaterTimer >= 8); } }),
+            LocationAccess(LH_LAB_DIVE_RED_RUPEE_2,
+                           { [] { return ProgressiveScale >= 2 || (CanUse(IRON_BOOTS) && WaterTimer >= 8); } }),
+            LocationAccess(LH_LAB_DIVE_RED_RUPEE_3,
+                           { [] { return ProgressiveScale >= 2 || (CanUse(IRON_BOOTS) && WaterTimer >= 8); } }),
             LocationAccess(LH_TRADE_FROG, { [] { return IsAdult && EyeballFrog; } }),
         },
         {

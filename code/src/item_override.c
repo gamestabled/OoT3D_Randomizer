@@ -129,14 +129,13 @@ static ItemOverride_Key ItemOverride_GetSearchKey(Actor* actor, u8 scene, u8 ite
         };
     } else if (actor->id == 0x15) { // Collectible
         // Only override heart pieces and keys blue rupees
-        u32 collectibleType     = actor->params & 0xFF;
-        u16 collectibleFlag     = ((EnItem00*)actor)->collectibleFlag;
+        u32 collectibleType = actor->params & 0xFF;
+        u16 collectibleFlag = ((EnItem00*)actor)->collectibleFlag;
+
         s32 respawningCollected = collectibleFlag >= 0x20 && SaveFile_GetCollectedRandomizedRespawningCollectibleFlag(
                                                                  gGlobalContext->sceneNum, collectibleFlag);
 
-        if ((collectibleType != 0x06 && collectibleType != 0x11 && collectibleType != 0x01 &&
-             collectibleType != 0x00) ||
-            respawningCollected) {
+        if ((collectibleType > 0x02 && collectibleType != 0x06 && collectibleType != 0x11) || respawningCollected) {
             return (ItemOverride_Key){ .all = 0 };
         }
 
