@@ -859,7 +859,7 @@ void SaveFile_SetCollectedRandomizedRespawningCollectibleFlag(s16 sceneNum, u16 
     gExtSaveData.collectedRandomizedRespawningRupeeFlags[gGlobalContext->sceneNum] |= (1 << (collectibleFlag - 0x20));
 }
 
-bool SaveFile_GetCollectedRandomizedRespawningCollectibleFlag(s16 sceneNum, u16 collectibleFlag) {
+u8 SaveFile_GetCollectedRandomizedRespawningCollectibleFlag(s16 sceneNum, u16 collectibleFlag) {
     return ((gExtSaveData.collectedRandomizedRespawningRupeeFlags[gGlobalContext->sceneNum] &
              (1 << (collectibleFlag - 0x20))) > 0);
 }
