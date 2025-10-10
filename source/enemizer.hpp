@@ -15,6 +15,7 @@ namespace Enemizer {
 // Conditions used for the logic to place enemies.
 enum class LocType {
     ABOVE_GROUND,  // Location is on or above walkable ground.
+    NARROW_GROUND, // Location is on ground near a pit which the enemy must not be able to fall into.
     ABOVE_VOID,    // Location is over a void plane. Enemy must be able to fly.
     UNDERWATER,    // Location is underwater. Enemy must be defeatable with hookshot and iron boots.
     ABOVE_WATER,   // Location is in the air above a water surface. Enemy must be able to float or fly.
