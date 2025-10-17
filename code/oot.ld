@@ -688,8 +688,8 @@ SECTIONS
 		*(.patch_MultiplyPlayerSpeed)
 	}
 
-	.patch_PermadeathDeleteSave 0x252424 : {
-		*(.patch_PermadeathDeleteSave)
+	.patch_GameOverStart 0x252424 : {
+		*(.patch_GameOverStart)
 	}
 
 	.patch_SkipDaruniaDanceThree 0x257F00 : {
@@ -1492,6 +1492,10 @@ SECTIONS
 
 	.patch_GearMenuEmptySlot 0x438C00 + region_offset : {
 		*(.patch_GearMenuEmptySlot)
+	}
+
+	.patch_DrawHeartIcon 0x444368 + region_offset : {
+		*(.patch_DrawHeartIcon)
 	}
 
 	.patch_BeforeLoadGame 0x447380 + region_offset : {

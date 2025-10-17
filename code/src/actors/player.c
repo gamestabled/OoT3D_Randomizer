@@ -11,6 +11,7 @@
 #include "item_override.h"
 #include "colors.h"
 #include "common.h"
+#include "gloom.h"
 
 #define PlayerActor_Init ((ActorFunc)GAME_ADDR(0x191844))
 
@@ -29,6 +30,9 @@
 
 u16 healthDecrement = 0;
 u8 storedMask       = 0;
+
+static u32 sLastHitFrame = 0;
+static s16 sPrevHealth   = INT16_MAX;
 
 void** Player_EditAndRetrieveCMB(ZARInfo* zarInfo, u32 objModelIdx) {
     void** cmbMan = ZAR_GetCMBByIndex(zarInfo, objModelIdx);
@@ -88,6 +92,8 @@ void PlayerActor_rInit(Actor* thisx, GlobalContext* globalCtx) {
     if (gSettingsContext.hookshotAsChild) {
         Hookshot_ActorInit->objectId = (gSaveContext.linkAge == 1 ? 0x1 : 0x14);
     }
+
+    sPrevHealth = gSaveContext.health;
 }
 
 void PlayerActor_rUpdate(Actor* thisx, GlobalContext* globalCtx) {
@@ -117,16 +123,21 @@ void PlayerActor_rUpdate(Actor* thisx, GlobalContext* globalCtx) {
         IceTrap_DispelCurses();
     }
 
-    if (healthDecrement <= 0) {
-        return;
+    if (healthDecrement > 0) {
+        if (gSaveContext.health > 4) {
+            gSaveContext.health--;
+            healthDecrement--;
+        } else {
+            healthDecrement = 0;
+        }
     }
 
-    if (gSaveContext.health > 4) {
-        gSaveContext.health--;
-        healthDecrement--;
-    } else {
-        healthDecrement = 0;
+    // Handle hit stuff
+    // Ignore single units of elemental damage
+    if (gSaveContext.health < sPrevHealth - 1) {
+        Player_OnHit();
     }
+    sPrevHealth = gSaveContext.health;
 }
 
 void PlayerActor_rDestroy(Actor* thisx, GlobalContext* globalCtx) {
@@ -230,4 +241,12 @@ void Player_UpdateRainbowTunic(void) {
     *(f32*)(cmabChunk + redOffset)   = color.r / 255.0f;
     *(f32*)(cmabChunk + greenOffset) = color.g / 255.0f;
     *(f32*)(cmabChunk + blueOffset)  = color.b / 255.0f;
+}
+
+void Player_OnHit(void) {
+    if (rGameplayFrames - sLastHitFrame > 5) {
+        Gloom_OnHit();
+    }
+
+    sLastHitFrame = rGameplayFrames;
 }

@@ -667,10 +667,8 @@ void AreaTable_Init_WaterTemple() {
                 // Exits
                 Entrance(WATER_TEMPLE_ENTRYWAY, { [] { return true; } }),
                 Entrance(WATER_TEMPLE_MQ_DIVE, { [] { return IsAdult && WaterTimer >= 24 && CanUse(IRON_BOOTS); } }),
-                Entrance(WATER_TEMPLE_MQ_DARK_LINK_REGION, { [] {
-                             return SmallKeys(WATER_TEMPLE, 1) && IsAdult && CanUse(LONGSHOT) && CanJumpslash &&
-                                    Hearts > 0;
-                         } }),
+                Entrance(WATER_TEMPLE_MQ_DARK_LINK_REGION,
+                         { [] { return SmallKeys(WATER_TEMPLE, 1) && IsAdult && CanUse(LONGSHOT) && CanJumpslash; } }),
                 Entrance(WATER_TEMPLE_BOSS_ENTRYWAY,
                          { [] { return BossKeyWaterTemple && IsAdult && CanJumpslash && CanUse(LONGSHOT); } }),
             });

@@ -96,7 +96,7 @@ bool CanDefeatEnemy(u16 enemyId) {
         case ENEMY_DODONGO_BABY:
             return true;
         case ENEMY_DARK_LINK:
-            return Hearts > 0 && (CanUse(KOKIRI_SWORD) || CanUse(MASTER_SWORD) || CanUse(BIGGORON_SWORD));
+            return CanUse(KOKIRI_SWORD) || CanUse(MASTER_SWORD) || CanUse(BIGGORON_SWORD);
         case ENEMY_BIRI:
         case ENEMY_BARI:
             return CanUse(STICKS) || CanUse(MEGATON_HAMMER) || CanUse(BOW) || CanUse(HOOKSHOT) || CanUse(BOOMERANG) ||

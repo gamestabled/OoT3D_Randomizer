@@ -492,6 +492,7 @@ extern Option CompassesShowWotH;
 extern Option MapsShowDungeonMode;
 extern Option DamageMultiplier;
 extern Option Permadeath;
+extern Option GloomMode;
 extern Option StartingTime;
 extern Option ChestAnimations;
 extern Option ChestAppearance;

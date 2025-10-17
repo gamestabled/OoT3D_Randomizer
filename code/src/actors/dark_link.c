@@ -3,9 +3,20 @@
 #include "enemizer.h"
 #include "common.h"
 
+#define EnTorch2_Init ((ActorFunc)GAME_ADDR(0x1F853C))
 #define EnTorch2_Update ((ActorFunc)GAME_ADDR(0x22F0C8))
 
 u8 sPlayerWeaponClanked = FALSE;
+
+void EnTorch2_rInit(Actor* thisx, GlobalContext* globalCtx) {
+    EnTorch2_Init(thisx, globalCtx);
+
+    if (thisx->colChkInfo.health == 0) {
+        // If health is 0 after init (because player has 0 hearts), set it to 1,
+        // otherwise Dark Link would become invulnerable.
+        thisx->colChkInfo.health = 1;
+    }
+}
 
 void EnTorch2_rUpdate(Actor* thisx, GlobalContext* globalCtx) {
     EnTorch2* this = (EnTorch2*)thisx;
