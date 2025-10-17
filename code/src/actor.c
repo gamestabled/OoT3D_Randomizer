@@ -298,6 +298,8 @@ void Actor_Init() {
 
     gActorOverlayTable[0x192].initInfo->init = EnHintnuts_rInit;
 
+    gActorOverlayTable[0x193].initInfo->update = EnNutsball_rUpdate;
+
     gActorOverlayTable[0x195].initInfo->init = EnShopnuts_rInit;
 
     gActorOverlayTable[0x197].initInfo->update = EnGeldB_rUpdate;
