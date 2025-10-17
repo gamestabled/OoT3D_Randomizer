@@ -531,9 +531,9 @@ void Actor_rDraw(Actor* actor, GlobalContext* globalCtx) {
 
     // As a temporary way to mark invulnerable enemies whose soul has not been collected yet,
     // the model will not be rendered and a flame will take its place.
-    s32 shouldDrawSoulless = !EnemySouls_CheckSoulForActor(actor) &&   // soul not owned;
-                             actor->scale.x != 0 &&                    // if scale is 0, enemy is invisible;
-                             actor->id != 0x11D && actor->id != 0x06B; // flying traps will appear normal.
+    s32 shouldDrawSoulless = !EnemySouls_CheckSoulForActor(actor) && // soul not owned;
+                             actor->scale.x != 0 &&                  // if scale is 0, enemy is invisible;
+                             !FlyingTraps_IsHiddenTrap(actor);       // hidden flying traps will appear normal.
     if (shouldDrawSoulless && (PauseContext_GetState() == 0) &&
         gSettingsContext.soullessEnemiesLook == SOULLESSLOOK_PURPLE_FLAME) {
         s32 velFrameIdx = (rGameplayFrames % 16);

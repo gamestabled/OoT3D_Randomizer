@@ -28,5 +28,6 @@ typedef struct EnTuboTrap {
 } EnTuboTrap;
 
 void EnYukabyun_rUpdate(Actor* thisx, GlobalContext* globalCtx);
+u8 FlyingTraps_IsHiddenTrap(Actor* actor);
 
 #endif //_FLYING_TRAPS_H_

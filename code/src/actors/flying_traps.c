@@ -14,6 +14,7 @@ s32 FlyingTraps_Tile_OnImpact(EnYukabyun* this) {
     if (!EnemySouls_CheckSoulForActor(&this->base)) {
         this->actionFunc  = EnYukabyun_Levitate;
         this->waitCounter = 0;
+        this->base.flags |= 0b101; // keep targetable and hostile flags
         return 0;
     }
     return 1;
@@ -24,9 +25,21 @@ s32 FlyingTraps_Pot_OnImpact(EnTuboTrap* this) {
         this->actionFunc   = EnTuboTrap_WaitForProximity;
         this->base.gravity = 0;
         this->base.speedXZ = 0;
+        this->base.flags &= ~1; // remove targetable flag
     }
 
     return EnemySouls_CheckSoulForActor(&this->base);
+}
+
+u8 FlyingTraps_IsHiddenTrap(Actor* actor) {
+    switch (actor->id) {
+        case ACTOR_FLYING_FLOOR_TILE:
+            return ((EnYukabyun*)actor)->actionFunc == EnYukabyun_Wait;
+        case ACTOR_FLYING_POT:
+            return ((EnTuboTrap*)actor)->actionFunc == EnTuboTrap_WaitForProximity;
+        default:
+            return FALSE;
+    }
 }
 
 void EnYukabyun_rUpdate(Actor* thisx, GlobalContext* globalCtx) {
