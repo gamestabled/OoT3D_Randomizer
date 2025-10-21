@@ -112,7 +112,7 @@ void AreaTable_Init_GerudoTrainingGrounds() {
             {
                 // Locations
                 LocationAccess(GERUDO_TRAINING_GROUNDS_UNDERWATER_SILVER_RUPEE_CHEST, { [] {
-                                   return CanUse(HOOKSHOT) && CanPlay(SongOfTime) && IronBoots && WaterTimer >= 24 &&
+                                   return CanUse(HOOKSHOT) && CanPlay(SongOfTime) && IronBoots && CanSurviveUnderwaterFor(24) &&
                                           CanPassEnemies(11, 0, 9, { 5, 7 });
                                } }),
             },
@@ -257,7 +257,7 @@ void AreaTable_Init_GerudoTrainingGrounds() {
                  {
                      // Locations
                      LocationAccess(GERUDO_TRAINING_GROUNDS_MQ_UNDERWATER_SILVER_RUPEE_CHEST, { [] {
-                                        return HasFireSource && IsAdult && CanUse(IRON_BOOTS) && WaterTimer >= 24 &&
+                                        return HasFireSource && IsAdult && CanUse(IRON_BOOTS) && CanSurviveUnderwaterFor(24) &&
                                                CanTakeDamage;
                                     } }),
                  },

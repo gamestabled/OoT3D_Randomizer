@@ -35,7 +35,7 @@ void AreaTable_Init_FireTemple() {
             {
                 // Exits
                 Entrance(FIRE_TEMPLE_ENTRYWAY, { [] { return true; } }),
-                Entrance(FIRE_TEMPLE_NEAR_BOSS_ROOM, { [] { return FireTimer >= 24; } }),
+                Entrance(FIRE_TEMPLE_NEAR_BOSS_ROOM, { [] { return CanSurviveHeatFor(24); } }),
                 Entrance(FIRE_TEMPLE_LOOP_ENEMIES, { [] {
                                                         return Here(FIRE_TEMPLE_FIRST_ROOM,
                                                                     [] { return CanUse(MEGATON_HAMMER); }) &&
@@ -50,7 +50,7 @@ void AreaTable_Init_FireTemple() {
                                                                 (SmallKeys(FIRE_TEMPLE, 8) || !IsKeysanity);
                                                      } }),
                 Entrance(FIRE_TEMPLE_LOOP_EXIT, { [] { return true; } }),
-                Entrance(FIRE_TEMPLE_BIG_LAVA_ROOM, { [] { return SmallKeys(FIRE_TEMPLE, 2) && FireTimer >= 24; } }),
+                Entrance(FIRE_TEMPLE_BIG_LAVA_ROOM, { [] { return SmallKeys(FIRE_TEMPLE, 2) && CanSurviveHeatFor(24); } }),
             });
 
         areaTable[FIRE_TEMPLE_NEAR_BOSS_ROOM] =
@@ -192,7 +192,7 @@ void AreaTable_Init_FireTemple() {
                               { [] { return IsAdult && (CanPlay(SongOfTime) || LogicFireSongOfTime); },
                                 /*Glitched*/
                                 [] {
-                                    return FireTimer >= 48 &&
+                                    return CanSurviveHeatFor(48) &&
                                            ((CanDoGlitch(GlitchType::BombHover, GlitchDifficulty::INTERMEDIATE) &&
                                              CanDoGlitch(GlitchType::ISG, GlitchDifficulty::INTERMEDIATE)) ||
                                             (IsAdult &&
@@ -205,7 +205,7 @@ void AreaTable_Init_FireTemple() {
                               { [] { return IsAdult && HasExplosives; },
                                 /*Glitched*/
                                 [] {
-                                    return FireTimer >= 48 &&
+                                    return CanSurviveHeatFor(48) &&
                                            CanDoGlitch(GlitchType::BombHover, GlitchDifficulty::INTERMEDIATE) &&
                                            CanDoGlitch(GlitchType::ISG, GlitchDifficulty::INTERMEDIATE);
                                 } }),
@@ -262,7 +262,7 @@ void AreaTable_Init_FireTemple() {
             {
                 // Exits
                 Entrance(FIRE_TEMPLE_BIG_LAVA_ROOM, { [] { return SmallKeys(FIRE_TEMPLE, 3); } }),
-                Entrance(FIRE_TEMPLE_SHORTCUT_ROOM, { [] { return FireTimer >= 56 && SmallKeys(FIRE_TEMPLE, 4); } }),
+                Entrance(FIRE_TEMPLE_SHORTCUT_ROOM, { [] { return CanSurviveHeatFor(56) && SmallKeys(FIRE_TEMPLE, 4); } }),
             });
 
         areaTable[FIRE_TEMPLE_SHORTCUT_ROOM] = Area(
@@ -376,21 +376,21 @@ void AreaTable_Init_FireTemple() {
                  {
                      // Exits
                      Entrance(FIRE_TEMPLE_EAST_CENTRAL_ROOM,
-                              { [] { return FireTimer >= 24 && SmallKeys(FIRE_TEMPLE, 6, 8); } }),
+                              { [] { return CanSurviveHeatFor(24) && SmallKeys(FIRE_TEMPLE, 6, 8); } }),
                      Entrance(FIRE_TEMPLE_MAP_AREA, { [] { return IsAdult; } }),
                      Entrance(FIRE_TEMPLE_BOULDER_MAZE_UPPER,
-                              { [] { return FireTimer >= 24 && IsAdult; },
+                              { [] { return CanSurviveHeatFor(24) && IsAdult; },
                                 /*Glitched*/
                                 [] {
-                                    return FireTimer >= 32 &&
+                                    return CanSurviveHeatFor(32) &&
                                            CanDoGlitch(GlitchType::BombHover, GlitchDifficulty::NOVICE) &&
                                            CanDoGlitch(GlitchType::ISG, GlitchDifficulty::INTERMEDIATE);
                                 } }),
                      Entrance(FIRE_TEMPLE_CORRIDOR,
-                              { [] { return FireTimer >= 24 && IsAdult && SmallKeys(FIRE_TEMPLE, 7); },
+                              { [] { return CanSurviveHeatFor(24) && IsAdult && SmallKeys(FIRE_TEMPLE, 7); },
                                 /*Glitched*/
                                 [] {
-                                    return FireTimer >= 32 && SmallKeys(FIRE_TEMPLE, 7) &&
+                                    return CanSurviveHeatFor(32) && SmallKeys(FIRE_TEMPLE, 7) &&
                                            CanDoGlitch(GlitchType::BombHover, GlitchDifficulty::NOVICE) && Bombs &&
                                            HasBombchus && CanDoGlitch(GlitchType::ISG, GlitchDifficulty::INTERMEDIATE);
                                 } }),
@@ -674,7 +674,7 @@ void AreaTable_Init_FireTemple() {
                                           CanUse(DINS_FIRE);
                                } }),
                 LocationAccess(FIRE_TEMPLE_MQ_NEAR_BOSS_CHEST, { [] {
-                                   return IsAdult && FireTimer >= 24 && (CanUse(HOVER_BOOTS) || CanUse(HOOKSHOT)) &&
+                                   return IsAdult && CanSurviveHeatFor(24) && (CanUse(HOVER_BOOTS) || CanUse(HOOKSHOT)) &&
                                           (CanUse(FIRE_ARROWS) ||
                                            (CanUse(DINS_FIRE) &&
                                             ((DamageMultiplier.IsNot(DAMAGEMULTIPLIER_OHKO) &&
@@ -704,7 +704,7 @@ void AreaTable_Init_FireTemple() {
                                     (CanUse(KOKIRI_SWORD) || CanUse(MASTER_SWORD) || CanUse(BIGGORON_SWORD));
                          } }),
                 Entrance(FIRE_TEMPLE_MQ_BIG_LAVA_ROOM,
-                         { [] { return IsAdult && FireTimer >= 24 && CanUse(MEGATON_HAMMER); } }),
+                         { [] { return IsAdult && CanSurviveHeatFor(24) && CanUse(MEGATON_HAMMER); } }),
             });
 
         areaTable[FIRE_TEMPLE_MQ_LOWER_LOCKED_DOOR] =
@@ -836,10 +836,10 @@ void AreaTable_Init_FireTemple() {
         {
             // Events
             EventAccess(&FireTempleClear,
-                        { [] { return FireTempleClear || (SoulVolvagia && FireTimer >= 64 && CanUse(MEGATON_HAMMER)); },
+                        { [] { return FireTempleClear || (SoulVolvagia && CanSurviveHeatFor(64) && CanUse(MEGATON_HAMMER)); },
                           /*Glitched*/
                           [] {
-                              return SoulVolvagia && FireTimer >= 48 &&
+                              return SoulVolvagia && CanSurviveHeatFor(48) &&
                                      ((CanUse(STICKS) && CanDoGlitch(GlitchType::QPA, GlitchDifficulty::NOVICE)) ||
                                       CanUse(MEGATON_HAMMER)) &&
                                      Bombs && CanDoGlitch(GlitchType::ISG, GlitchDifficulty::INTERMEDIATE);

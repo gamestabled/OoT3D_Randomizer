@@ -357,17 +357,17 @@ void AreaTable_Init_DeathMountain() {
     areaTable[DMC_UPPER_NEARBY] =
         Area("DMC Upper Nearby", "Death Mountain Crater", DEATH_MOUNTAIN_CRATER, NO_DAY_NIGHT_CYCLE, {}, {},
              { // Exits
-               Entrance(DMC_UPPER_LOCAL, { [] { return FireTimer >= 48; } }),
+               Entrance(DMC_UPPER_LOCAL, { [] { return CanSurviveHeatFor(48); } }),
                Entrance(DEATH_MOUNTAIN_SUMMIT, { [] { return true; } }),
                Entrance(DMC_UPPER_GROTTO, { [] {
                                                return Here(DMC_UPPER_NEARBY, [] {
-                                                   return CanBlastOrSmash && (FireTimer >= 8 || Hearts >= 3);
+                                                   return CanBlastOrSmash && CanSurviveHeatFor(8, 24);
                                                });
                                            },
                                             /*Glitched*/
                                             [] {
                                                 return Here(DMC_UPPER_NEARBY, [] {
-                                                    return CanUse(STICKS) && FireTimer >= 48 &&
+                                                    return CanUse(STICKS) && CanSurviveHeatFor(48) &&
                                                            CanDoGlitch(GlitchType::QPA, GlitchDifficulty::ADVANCED);
                                                 });
                                             } }) });
@@ -378,18 +378,18 @@ void AreaTable_Init_DeathMountain() {
             // Events
             EventAccess(&GossipStoneFairy, { [] {
                 return GossipStoneFairy ||
-                       (HasExplosives && CanSummonGossipFairyWithoutSuns && (FireTimer >= 16 || Hearts >= 3));
+                       (HasExplosives && CanSummonGossipFairyWithoutSuns && CanSurviveHeatFor(16, 24));
             } }),
         },
         {
             // Locations
-            LocationAccess(DMC_WALL_FREESTANDING_POH, { [] { return FireTimer >= 16 || Hearts >= 3; } }),
-            LocationAccess(DMC_GOSSIP_STONE, { [] { return HasExplosives && (FireTimer >= 16 || Hearts >= 3); } }),
+            LocationAccess(DMC_WALL_FREESTANDING_POH, { [] { return CanSurviveHeatFor(16, 24); } }),
+            LocationAccess(DMC_GOSSIP_STONE, { [] { return HasExplosives && CanSurviveHeatFor(16, 24); } }),
         },
         {
             // Exits
             Entrance(DMC_UPPER_NEARBY, { [] { return true; } }),
-            Entrance(DMC_LADDER_AREA_NEARBY, { [] { return FireTimer >= 16 || Hearts >= 3; } }),
+            Entrance(DMC_LADDER_AREA_NEARBY, { [] { return CanSurviveHeatFor(16, 24); } }),
             Entrance(DMC_CENTRAL_NEARBY, { [] {
                                               return IsAdult && CanUse(GORON_TUNIC) && CanUse(DISTANT_SCARECROW) &&
                                                      ((EffectiveHealth > 2) ||
@@ -398,13 +398,13 @@ void AreaTable_Init_DeathMountain() {
                                           },
                                            /*Glitched*/
                                            [] {
-                                               return FireTimer >= 24 && CanTakeDamage &&
+                                               return CanSurviveHeatFor(24) && CanTakeDamage &&
                                                       CanDoGlitch(GlitchType::Megaflip, GlitchDifficulty::NOVICE);
                                            } }),
             Entrance(DMC_LOWER_NEARBY,
                      { [] { return false; },
                        /*Glitched*/
-                       [] { return FireTimer >= 24 && CanDoGlitch(GlitchType::Megaflip, GlitchDifficulty::NOVICE); } }),
+                       [] { return CanSurviveHeatFor(24) && CanDoGlitch(GlitchType::Megaflip, GlitchDifficulty::NOVICE); } }),
         });
 
     areaTable[DMC_LADDER_AREA_NEARBY] =
@@ -415,9 +415,9 @@ void AreaTable_Init_DeathMountain() {
              },
              {
                  // Exits
-                 Entrance(DMC_UPPER_NEARBY, { [] { return Hearts >= 3; } }),
+                 Entrance(DMC_UPPER_NEARBY, { [] { return CanSurviveHeatFor(-1, 24); } }),
                  Entrance(DMC_LOWER_NEARBY, { [] {
-                              return Hearts >= 3 && (CanUse(HOVER_BOOTS) ||
+                              return CanSurviveHeatFor(-1, 24) && (CanUse(HOVER_BOOTS) ||
                                                      (LogicCraterUpperToLower && IsAdult && CanUse(MEGATON_HAMMER)));
                           } }),
              });
@@ -426,17 +426,17 @@ void AreaTable_Init_DeathMountain() {
         "DMC Lower Nearby", "Death Mountain Crater", DEATH_MOUNTAIN_CRATER, NO_DAY_NIGHT_CYCLE, {}, {},
         {
             // Exits
-            Entrance(DMC_LOWER_LOCAL, { [] { return FireTimer >= 48; } }),
+            Entrance(DMC_LOWER_LOCAL, { [] { return CanSurviveHeatFor(48); } }),
             Entrance(GC_DARUNIAS_CHAMBER, { [] { return true; } }),
             Entrance(DMC_GREAT_FAIRY_FOUNTAIN,
                      { [] { return CanUse(MEGATON_HAMMER); },
                        /*Glitched*/
                        [] {
                            return CanDoGlitch(GlitchType::ASlide, GlitchDifficulty::INTERMEDIATE) ||
-                                  (FireTimer >= 48 && CanUse(STICKS) &&
+                                  (CanSurviveHeatFor(48) && CanUse(STICKS) &&
                                    CanDoGlitch(GlitchType::QPA, GlitchDifficulty::NOVICE) &&
                                    (CanTakeDamageTwice || CanDoGlitch(GlitchType::QPA, GlitchDifficulty::ADVANCED))) ||
-                                  (Bombs && CanShield && FireTimer >= 48 &&
+                                  (Bombs && CanShield && CanSurviveHeatFor(48) &&
                                    CanDoGlitch(GlitchType::SuperSlide, GlitchDifficulty::EXPERT)) ||
                                   Here(DMC_UPPER_LOCAL,
                                        [] { return CanDoGlitch(GlitchType::Megaflip, GlitchDifficulty::ADVANCED); });
@@ -444,7 +444,7 @@ void AreaTable_Init_DeathMountain() {
             Entrance(DMC_HAMMER_GROTTO, { [] { return IsAdult && CanUse(MEGATON_HAMMER); },
                                           /*Glitched*/
                                           [] {
-                                              return IsAdult && FireTimer >= 48 && CanUse(STICKS) &&
+                                              return IsAdult && CanSurviveHeatFor(48) && CanUse(STICKS) &&
                                                      CanDoGlitch(GlitchType::QPA, GlitchDifficulty::NOVICE) &&
                                                      (CanTakeDamageTwice ||
                                                       CanDoGlitch(GlitchType::QPA, GlitchDifficulty::ADVANCED));
@@ -456,16 +456,16 @@ void AreaTable_Init_DeathMountain() {
              {
                  // Exits
                  Entrance(DMC_LOWER_NEARBY, { [] { return true; } }),
-                 Entrance(DMC_LADDER_AREA_NEARBY, { [] { return FireTimer >= 8 || Hearts >= 3; } }),
+                 Entrance(DMC_LADDER_AREA_NEARBY, { [] { return CanSurviveHeatFor(8, 24); } }),
                  Entrance(DMC_CENTRAL_NEARBY,
-                          { [] { return (CanUse(HOVER_BOOTS) || CanUse(HOOKSHOT)) && (FireTimer >= 8 || Hearts >= 3); },
+                          { [] { return (CanUse(HOVER_BOOTS) || CanUse(HOOKSHOT)) && CanSurviveHeatFor(8, 24); },
                             /*Glitched*/
                             [] {
                                 return CanDoGlitch(GlitchType::Megaflip, GlitchDifficulty::NOVICE) &&
-                                       (FireTimer >= 8 || Hearts >= 3);
+                                       CanSurviveHeatFor(8, 24);
                             } }),
                  Entrance(DMC_CENTRAL_LOCAL,
-                          { [] { return (CanUse(HOVER_BOOTS) || CanUse(HOOKSHOT)) && FireTimer >= 24; } }),
+                          { [] { return (CanUse(HOVER_BOOTS) || CanUse(HOOKSHOT)) && CanSurviveHeatFor(24); } }),
              });
 
     areaTable[DMC_CENTRAL_NEARBY] = Area(
@@ -473,7 +473,7 @@ void AreaTable_Init_DeathMountain() {
         {
             // Locations
             LocationAccess(DMC_VOLCANO_FREESTANDING_POH, { [] {
-                                                              return IsAdult && Hearts >= 3 &&
+                                                              return IsAdult && CanSurviveHeatFor(-1, 24) &&
                                                                      (CanPlantBean(DMC_CENTRAL_LOCAL) ||
                                                                       (LogicCraterBeanPoHWithHovers && HoverBoots));
                                                           },
@@ -482,14 +482,14 @@ void AreaTable_Init_DeathMountain() {
                                                                return Here(DMC_LOWER_LOCAL, [] {
                                                                    return CanDoGlitch(GlitchType::Megaflip,
                                                                                       GlitchDifficulty::NOVICE) &&
-                                                                          FireTimer >= 24;
+                                                                          CanSurviveHeatFor(24);
                                                                });
                                                            } }),
-            LocationAccess(SHEIK_IN_CRATER, { [] { return IsAdult && (FireTimer >= 8 || Hearts >= 3); } }),
+            LocationAccess(SHEIK_IN_CRATER, { [] { return IsAdult && CanSurviveHeatFor(8, 24); } }),
         },
         {
             // Exits
-            Entrance(DMC_CENTRAL_LOCAL, { [] { return FireTimer >= 48; } }),
+            Entrance(DMC_CENTRAL_LOCAL, { [] { return CanSurviveHeatFor(48); } }),
         });
 
     areaTable[DMC_CENTRAL_LOCAL] = Area(
@@ -510,18 +510,18 @@ void AreaTable_Init_DeathMountain() {
                                         },
                                          /*Glitched*/
                                          [] {
-                                             return IsChild && Hearts >= 3 && HasBombchus &&
+                                             return IsChild && CanSurviveHeatFor(-1, 24) && HasBombchus &&
                                                     CanDoGlitch(GlitchType::BombHover, GlitchDifficulty::NOVICE);
                                          } }),
             Entrance(DMC_UPPER_NEARBY, { [] { return IsAdult && CanPlantBean(DMC_CENTRAL_LOCAL); } }),
             Entrance(
                 FIRE_TEMPLE_ENTRYWAY,
                 { [] {
-                     return (IsChild && Hearts >= 3 && ShuffleDungeonEntrances.IsNot(SHUFFLEDUNGEONS_OFF)) ||
-                            (IsAdult && FireTimer >= 24);
+                     return (IsChild && CanSurviveHeatFor(-1, 24) && ShuffleDungeonEntrances.IsNot(SHUFFLEDUNGEONS_OFF)) ||
+                            (IsAdult && CanSurviveHeatFor(24));
                  },
                   /*Glitched*/
-                  [] { return CanDoGlitch(GlitchType::ASlide, GlitchDifficulty::INTERMEDIATE) && FireTimer >= 48; } }),
+                  [] { return CanDoGlitch(GlitchType::ASlide, GlitchDifficulty::INTERMEDIATE) && CanSurviveHeatFor(48); } }),
         });
 
     areaTable[DMC_GREAT_FAIRY_FOUNTAIN] =
