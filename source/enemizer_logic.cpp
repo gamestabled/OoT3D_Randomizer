@@ -11,8 +11,7 @@ using EnemyConditionFn = std::function<bool(Enemizer::EnemyLocation&)>;
 
 namespace Logic {
 
-static bool AllEnemiesSatisfy(EnemyConditionFn conditionFn, u8 scene, u8 layer, u8 room,
-                              std::vector<u8> actorEntries /*= {}*/) {
+static bool AllEnemiesSatisfy(EnemyConditionFn conditionFn, u8 scene, u8 layer, u8 room, std::vector<u8> actorEntries) {
     auto& roomMap = enemyLocations[scene][layer][room];
     if (actorEntries.empty()) {
         for (auto& entry : roomMap) {
@@ -30,14 +29,18 @@ static bool AllEnemiesSatisfy(EnemyConditionFn conditionFn, u8 scene, u8 layer, 
     return true;
 }
 
-static bool AnyEnemySatisfies(EnemyConditionFn conditionFn, u8 scene, u8 layer, u8 room,
-                              std::vector<u8> actorEntries /*= {}*/) {
+static bool AnyEnemySatisfies(EnemyConditionFn conditionFn, u8 scene, u8 layer, u8 room, std::vector<u8> actorEntries) {
     auto flippedConditionFn = [&conditionFn](EnemyLocation& loc) { return !conditionFn(loc); };
     return !AllEnemiesSatisfy(flippedConditionFn, scene, layer, room, actorEntries);
 }
 
 bool IsWallmaster(u8 scene, u8 layer, u8 room, u8 actorEntry) {
     return enemyLocations[scene][layer][room][actorEntry].GetEnemyId() == ENEMY_WALLMASTER;
+}
+
+bool CanDeadHandGrab(u8 scene, u8 layer, u8 room) {
+    return AnyEnemySatisfies([](EnemyLocation& loc) { return loc.GetEnemyId() == ENEMY_DEAD_HAND_HAND; }, scene, layer,
+                             room, {});
 }
 
 bool CanDefeatEnemy(u16 enemyId) {
