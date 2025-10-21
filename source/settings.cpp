@@ -3041,7 +3041,6 @@ void UpdateSettings() {
     // Override cosmetic options that can affect how fast a seed is beaten
     if (Racing) {
         for (auto overridePair : racingOverrides) {
-            overridePair.first->SetDelayedOption();
             overridePair.first->SetSelectedIndex(overridePair.second);
         }
     }
@@ -3049,7 +3048,6 @@ void UpdateSettings() {
     // If vanilla logic, we want to set all settings which unnecessarily modify vanilla behavior to off
     if (Logic.Is(LOGIC_VANILLA)) {
         for (auto overridePair : vanillaLogicOverrides) {
-            overridePair.first->SetDelayedOption();
             overridePair.first->SetSelectedIndex(overridePair.second);
         }
     }
