@@ -978,30 +978,6 @@ bool SmallKeys(Key dungeon, u8 requiredAmountGlitchless, u8 requiredAmountGlitch
     }
 }
 
-bool EventsUpdated() {
-
-    if (DekuTreeClearPast != DekuTreeClear || GoronRubyPast != GoronRuby || ZoraSapphirePast != ZoraSapphire ||
-        ForestTrialClearPast != ForestTrialClear || FireTrialClearPast != FireTrialClear ||
-        WaterTrialClearPast != WaterTrialClear || ShadowTrialClearPast != ShadowTrialClear ||
-        SpiritTrialClearPast != SpiritTrialClear || LightTrialClearPast != LightTrialClear ||
-        DrainWellPast != DrainWell || DampesWindmillAccessPast != DampesWindmillAccess ||
-        TimeTravelPast != TimeTravel) {
-        DekuTreeClearPast        = DekuTreeClear;
-        GoronRubyPast            = GoronRuby;
-        ZoraSapphirePast         = ZoraSapphire;
-        ForestTrialClearPast     = ForestTrialClear;
-        FireTrialClearPast       = FireTrialClear;
-        WaterTrialClearPast      = WaterTrialClear;
-        ShadowTrialClearPast     = ShadowTrialClear;
-        SpiritTrialClearPast     = SpiritTrialClear;
-        LightTrialClearPast      = LightTrialClear;
-        DrainWellPast            = DrainWell;
-        DampesWindmillAccessPast = DampesWindmillAccess;
-        return true;
-    }
-    return false;
-}
-
 // Reset All Logic to false
 void LogicReset() {
     // Settings-dependent variables
