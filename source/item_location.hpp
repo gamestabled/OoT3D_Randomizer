@@ -477,6 +477,10 @@ extern std::vector<LocationKey> overworldLocations;
 extern std::vector<LocationKey> allLocations;
 extern std::vector<LocationKey> everyPossibleLocation;
 
+// Item locations that only exist as child Link in hot areas.
+// When Gloom Mode is enabled these will be automatically excluded and excepted from reachability validation.
+extern std::vector<LocationKey> childOnlyHotLocations;
+
 // set of overrides to write to the patch
 extern std::set<ItemOverride, ItemOverride_Compare> overrides;
 

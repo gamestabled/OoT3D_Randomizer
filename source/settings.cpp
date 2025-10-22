@@ -3052,6 +3052,12 @@ void UpdateSettings() {
         }
     }
 
+    if (GloomMode.IsNot(GLOOMMODE_OFF) && Logic.IsNot(LOGIC_NONE) && !(GoronTunicAsChild && AgeItemsInLogic)) {
+        for (LocationKey loc : childOnlyHotLocations) {
+            Location(loc)->GetExcludedOption()->SetSelectedIndex(EXCLUDE);
+        }
+    }
+
     RandomizeAllSettings(true); // now select any random options instead of just hiding them
 
     // shuffle the dungeons and then set MQ for as many as necessary
