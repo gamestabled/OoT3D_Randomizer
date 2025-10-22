@@ -971,6 +971,7 @@ void VanillaFill() {
     CreateItemOverrides();
     CreateEntranceOverrides();
     CreateAlwaysIncludedMessages();
+    CreateMiscHints();
 }
 
 void ClearProgress() {
