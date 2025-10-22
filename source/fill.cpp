@@ -958,6 +958,7 @@ void VanillaFill() {
     for (LocationKey loc : allLocations) {
         Location(loc)->PlaceVanillaItem();
     }
+    Enemizer::RandomizeEnemies();
     // If necessary, handle ER stuff
     if (ShuffleEntrances) {
         printf("\x1b[7;10HShuffling Entrances...");
