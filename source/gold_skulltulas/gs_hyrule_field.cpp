@@ -518,7 +518,8 @@ void GsTable_Init_HyruleField() {
                   { 16384, 12000, 0 },
               },
               { [] {
-                  return IsAdult && CanGetNightTimeGS && CanUse(IRON_BOOTS) && CanSurviveUnderwaterFor(8) && CanUse(HOOKSHOT);
+                  return IsAdult && CanGetNightTimeGS && CanUse(IRON_BOOTS) && CanSurviveUnderwaterFor(8) &&
+                         CanUse(HOOKSHOT);
               } } },
             // https://noclip.website/#oot3d/spot06;ShareData=ACvGwUt!c*TR+=h8pA=J=HD];6u)Y3Udom^UAVJ5=WTr{Tn_y29agDYUq{pSWP
             { LAKE_HYLIA,

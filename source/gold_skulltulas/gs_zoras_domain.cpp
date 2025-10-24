@@ -471,7 +471,8 @@ void GsTable_Init_ZorasDomain() {
                   { -32768, 0, 0 },
               },
               { [] {
-                   return IsAdult && CanGetNightTimeGS && CanSurviveUnderwaterFor(16) && CanUse(IRON_BOOTS) && CanUse(LONGSHOT);
+                   return IsAdult && CanGetNightTimeGS && CanSurviveUnderwaterFor(16) && CanUse(IRON_BOOTS) &&
+                          CanUse(LONGSHOT);
                },
                 /*Glitched*/
                 [] {

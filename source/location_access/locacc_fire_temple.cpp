@@ -24,34 +24,35 @@ void AreaTable_Init_FireTemple() {
     |     VANILLA DUNGEON      |
     ---------------------------*/
     if (Dungeon::FireTemple.IsVanilla()) {
-        areaTable[FIRE_TEMPLE_FIRST_ROOM] = Area(
-            "Fire Temple First Room", "Fire Temple", FIRE_TEMPLE, NO_DAY_NIGHT_CYCLE,
-            {
-                // Events
-                EventAccess(&DekuBabaSticks, { [] { return DekuBabaSticks || CanGetDekuBabaSticks(4, 0, 0); } }),
-                EventAccess(&DekuBabaNuts, { [] { return DekuBabaNuts || CanGetDekuBabaNuts(4, 0, 0); } }),
-            },
-            {},
-            {
-                // Exits
-                Entrance(FIRE_TEMPLE_ENTRYWAY, { [] { return true; } }),
-                Entrance(FIRE_TEMPLE_NEAR_BOSS_ROOM, { [] { return CanSurviveHeatFor(24); } }),
-                Entrance(FIRE_TEMPLE_LOOP_ENEMIES, { [] {
-                                                        return Here(FIRE_TEMPLE_FIRST_ROOM,
-                                                                    [] { return CanUse(MEGATON_HAMMER); }) &&
-                                                               (SmallKeys(FIRE_TEMPLE, 8) || !IsKeysanity);
-                                                    },
-                                                     /*Glitched*/
-                                                     [] {
-                                                         return ((IsAdult && CanDoGlitch(GlitchType::TripleSlashClip,
-                                                                                         GlitchDifficulty::EXPERT)) ||
-                                                                 (GlitchFireGrunzClip && Bombs && IsAdult &&
-                                                                  CanUse(HOVER_BOOTS) && CanSurviveDamage)) &&
-                                                                (SmallKeys(FIRE_TEMPLE, 8) || !IsKeysanity);
-                                                     } }),
-                Entrance(FIRE_TEMPLE_LOOP_EXIT, { [] { return true; } }),
-                Entrance(FIRE_TEMPLE_BIG_LAVA_ROOM, { [] { return SmallKeys(FIRE_TEMPLE, 2) && CanSurviveHeatFor(24); } }),
-            });
+        areaTable[FIRE_TEMPLE_FIRST_ROOM] =
+            Area("Fire Temple First Room", "Fire Temple", FIRE_TEMPLE, NO_DAY_NIGHT_CYCLE,
+                 {
+                     // Events
+                     EventAccess(&DekuBabaSticks, { [] { return DekuBabaSticks || CanGetDekuBabaSticks(4, 0, 0); } }),
+                     EventAccess(&DekuBabaNuts, { [] { return DekuBabaNuts || CanGetDekuBabaNuts(4, 0, 0); } }),
+                 },
+                 {},
+                 {
+                     // Exits
+                     Entrance(FIRE_TEMPLE_ENTRYWAY, { [] { return true; } }),
+                     Entrance(FIRE_TEMPLE_NEAR_BOSS_ROOM, { [] { return CanSurviveHeatFor(24); } }),
+                     Entrance(FIRE_TEMPLE_LOOP_ENEMIES,
+                              { [] {
+                                   return Here(FIRE_TEMPLE_FIRST_ROOM, [] { return CanUse(MEGATON_HAMMER); }) &&
+                                          (SmallKeys(FIRE_TEMPLE, 8) || !IsKeysanity);
+                               },
+                                /*Glitched*/
+                                [] {
+                                    return ((IsAdult &&
+                                             CanDoGlitch(GlitchType::TripleSlashClip, GlitchDifficulty::EXPERT)) ||
+                                            (GlitchFireGrunzClip && Bombs && IsAdult && CanUse(HOVER_BOOTS) &&
+                                             CanSurviveDamage)) &&
+                                           (SmallKeys(FIRE_TEMPLE, 8) || !IsKeysanity);
+                                } }),
+                     Entrance(FIRE_TEMPLE_LOOP_EXIT, { [] { return true; } }),
+                     Entrance(FIRE_TEMPLE_BIG_LAVA_ROOM,
+                              { [] { return SmallKeys(FIRE_TEMPLE, 2) && CanSurviveHeatFor(24); } }),
+                 });
 
         areaTable[FIRE_TEMPLE_NEAR_BOSS_ROOM] =
             Area("Fire Temple Near Boss Room", "Fire Temple", FIRE_TEMPLE, NO_DAY_NIGHT_CYCLE,
@@ -251,19 +252,20 @@ void AreaTable_Init_FireTemple() {
                      Entrance(FIRE_TEMPLE_BIG_LAVA_ROOM, { [] { return true; } }),
                  });
 
-        areaTable[FIRE_TEMPLE_FIRE_PILLAR_ROOM] = Area(
-            "Fire Temple Fire Pillar Room", "Fire Temple", FIRE_TEMPLE, NO_DAY_NIGHT_CYCLE,
-            {
-                // Events
-                EventAccess(&DekuBabaSticks, { [] { return DekuBabaSticks || CanGetDekuBabaSticks(4, 0, 21); } }),
-                EventAccess(&DekuBabaNuts, { [] { return DekuBabaNuts || CanGetDekuBabaNuts(4, 0, 21); } }),
-            },
-            {},
-            {
-                // Exits
-                Entrance(FIRE_TEMPLE_BIG_LAVA_ROOM, { [] { return SmallKeys(FIRE_TEMPLE, 3); } }),
-                Entrance(FIRE_TEMPLE_SHORTCUT_ROOM, { [] { return CanSurviveHeatFor(56) && SmallKeys(FIRE_TEMPLE, 4); } }),
-            });
+        areaTable[FIRE_TEMPLE_FIRE_PILLAR_ROOM] =
+            Area("Fire Temple Fire Pillar Room", "Fire Temple", FIRE_TEMPLE, NO_DAY_NIGHT_CYCLE,
+                 {
+                     // Events
+                     EventAccess(&DekuBabaSticks, { [] { return DekuBabaSticks || CanGetDekuBabaSticks(4, 0, 21); } }),
+                     EventAccess(&DekuBabaNuts, { [] { return DekuBabaNuts || CanGetDekuBabaNuts(4, 0, 21); } }),
+                 },
+                 {},
+                 {
+                     // Exits
+                     Entrance(FIRE_TEMPLE_BIG_LAVA_ROOM, { [] { return SmallKeys(FIRE_TEMPLE, 3); } }),
+                     Entrance(FIRE_TEMPLE_SHORTCUT_ROOM,
+                              { [] { return CanSurviveHeatFor(56) && SmallKeys(FIRE_TEMPLE, 4); } }),
+                 });
 
         areaTable[FIRE_TEMPLE_SHORTCUT_ROOM] = Area(
             "Fire Temple Shortcut Room", "Fire Temple", FIRE_TEMPLE, NO_DAY_NIGHT_CYCLE,
@@ -674,7 +676,8 @@ void AreaTable_Init_FireTemple() {
                                           CanUse(DINS_FIRE);
                                } }),
                 LocationAccess(FIRE_TEMPLE_MQ_NEAR_BOSS_CHEST, { [] {
-                                   return IsAdult && CanSurviveHeatFor(24) && (CanUse(HOVER_BOOTS) || CanUse(HOOKSHOT)) &&
+                                   return IsAdult && CanSurviveHeatFor(24) &&
+                                          (CanUse(HOVER_BOOTS) || CanUse(HOOKSHOT)) &&
                                           (CanUse(FIRE_ARROWS) ||
                                            (CanUse(DINS_FIRE) &&
                                             ((DamageMultiplier.IsNot(DAMAGEMULTIPLIER_OHKO) &&
@@ -835,15 +838,16 @@ void AreaTable_Init_FireTemple() {
         "Fire Temple Boss Room", "Fire Temple", NONE, NO_DAY_NIGHT_CYCLE,
         {
             // Events
-            EventAccess(&FireTempleClear,
-                        { [] { return FireTempleClear || (SoulVolvagia && CanSurviveHeatFor(64) && CanUse(MEGATON_HAMMER)); },
-                          /*Glitched*/
-                          [] {
-                              return SoulVolvagia && CanSurviveHeatFor(48) &&
-                                     ((CanUse(STICKS) && CanDoGlitch(GlitchType::QPA, GlitchDifficulty::NOVICE)) ||
-                                      CanUse(MEGATON_HAMMER)) &&
-                                     Bombs && CanDoGlitch(GlitchType::ISG, GlitchDifficulty::INTERMEDIATE);
-                          } }),
+            EventAccess(
+                &FireTempleClear,
+                { [] { return FireTempleClear || (SoulVolvagia && CanSurviveHeatFor(64) && CanUse(MEGATON_HAMMER)); },
+                  /*Glitched*/
+                  [] {
+                      return SoulVolvagia && CanSurviveHeatFor(48) &&
+                             ((CanUse(STICKS) && CanDoGlitch(GlitchType::QPA, GlitchDifficulty::NOVICE)) ||
+                              CanUse(MEGATON_HAMMER)) &&
+                             Bombs && CanDoGlitch(GlitchType::ISG, GlitchDifficulty::INTERMEDIATE);
+                  } }),
         },
         {
             // Locations

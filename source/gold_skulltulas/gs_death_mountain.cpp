@@ -255,9 +255,7 @@ void GsTable_Init_DeathMountain() {
                   { 925, 490, -85 },
                   { 20000, 21000, 0 },
               },
-              { [] {
-                  return IsChild && CanGetNightTimeGS && CanSurviveHeatFor(-1, 24) && HookshotOrBoomerang;
-              } } },
+              { [] { return IsChild && CanGetNightTimeGS && CanSurviveHeatFor(-1, 24) && HookshotOrBoomerang; } } },
             // https://noclip.website/#oot3d/spot17;ShareData=AHX1u95iw:T^=RM9J9=GV$ak(RM+:+UiJa*UV-z1WEp7{T{IM~Ua1$k96]jt+d
             { DMC_UPPER_LOCAL,
               "On top of the east volcano.",
@@ -290,9 +288,7 @@ void GsTable_Init_DeathMountain() {
                   { -60, 600, -630 },
                   { 18000, 5000, 0 },
               },
-              { [] {
-                  return IsChild && CanGetNightTimeGS && CanSurviveHeatFor(16, 24) && HookshotOrBoomerang;
-              } } },
+              { [] { return IsChild && CanGetNightTimeGS && CanSurviveHeatFor(16, 24) && HookshotOrBoomerang; } } },
         });
 
     gsTable[DMC_GS_CRATE] = new GoldSkulltulaData( //
@@ -349,9 +345,7 @@ void GsTable_Init_DeathMountain() {
                   { 1300, 1600, 1710 },
                   { -16384, 0, 0 },
               },
-              { [] {
-                  return IsChild && CanSurviveHeatFor(-1, 24) && CanBlastOrSmash && HookshotOrBoomerang;
-              } } },
+              { [] { return IsChild && CanSurviveHeatFor(-1, 24) && CanBlastOrSmash && HookshotOrBoomerang; } } },
         });
 
     gsTable[GC_GS_CENTER_PLATFORM] = new GoldSkulltulaData( //
