@@ -54,7 +54,9 @@ void AreaTable_Init_ShadowTemple() {
                 // Locations
                 LocationAccess(SHADOW_TEMPLE_MAP_CHEST, { [] { return CanDefeatEnemies(7, 0, 1); } }),
                 LocationAccess(SHADOW_TEMPLE_HOVER_BOOTS_CHEST, { [] {
-                                   return CanDefeatEnemies(7, 0, 4) && SoulDeadHand &&
+                                   return CanDefeatEnemies(7, 0, 4) &&
+                                          (CanDeadHandGrab(7, 0, 4) || (CanUse(LENS_OF_TRUTH) && HasExplosives)) &&
+                                          SoulDeadHand &&
                                           (CanUse(KOKIRI_SWORD) || CanUse(MASTER_SWORD) || CanUse(BIGGORON_SWORD));
                                } }),
             },

@@ -84,8 +84,9 @@ void AreaTable_Init_BottomOfTheWell() {
                                { [] { return (LogicLensBotw || CanUse(LENS_OF_TRUTH)) && HasExplosives; } }),
                 LocationAccess(BOTTOM_OF_THE_WELL_FREESTANDING_KEY, { [] { return Sticks || CanUse(DINS_FIRE); } }),
                 LocationAccess(BOTTOM_OF_THE_WELL_LENS_OF_TRUTH_CHEST, { [] {
-                                   return SoulDeadHand && CanDefeatEnemies(8, 0, 4) && CanPlay(ZeldasLullaby) &&
-                                          (KokiriSword || (Sticks && LogicChildDeadhand));
+                                   return SoulDeadHand && CanDefeatEnemies(8, 0, 4) &&
+                                          (CanDeadHandGrab(8, 0, 4) || (CanUse(LENS_OF_TRUTH) && HasExplosives)) &&
+                                          CanPlay(ZeldasLullaby) && (KokiriSword || (Sticks && LogicChildDeadhand));
                                } }),
                 LocationAccess(BOTTOM_OF_THE_WELL_INVISIBLE_CHEST,
                                { [] { return CanPlay(ZeldasLullaby) && (LogicLensBotw || CanUse(LENS_OF_TRUTH)); } }),

@@ -958,6 +958,7 @@ void VanillaFill() {
     for (LocationKey loc : allLocations) {
         Location(loc)->PlaceVanillaItem();
     }
+    Enemizer::RandomizeEnemies();
     // If necessary, handle ER stuff
     if (ShuffleEntrances) {
         printf("\x1b[7;10HShuffling Entrances...");
@@ -996,11 +997,18 @@ int Fill() {
         GenerateStartingInventory();
         RemoveStartingItemsFromPool();
         FillExcludedLocations();
-        Enemizer::RandomizeEnemies();
 
         // Temporarily add shop items to the ItemPool so that entrance randomization
         // can validate the world using deku/hylian shields
         AddElementsToPool(ItemPool, GetMinVanillaShopItems(32)); // assume worst case shopsanity 4
+        Enemizer::RandomizeEnemies();
+        Logic::LogicReset();
+        GetAccessibleLocations({}, SearchMode::ValidateWorld, "", false, false);
+        if (!allLocationsReachable) {
+            retries++;
+            ClearProgress();
+            continue;
+        }
         if (ShuffleEntrances) {
             printf("\x1b[7;10HShuffling Entrances");
             if (ShuffleAllEntrances() == ENTRANCE_SHUFFLE_FAILURE) {

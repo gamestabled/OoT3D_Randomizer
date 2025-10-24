@@ -11,8 +11,7 @@ using EnemyConditionFn = std::function<bool(Enemizer::EnemyLocation&)>;
 
 namespace Logic {
 
-static bool AllEnemiesSatisfy(EnemyConditionFn conditionFn, u8 scene, u8 layer, u8 room,
-                              std::vector<u8> actorEntries /*= {}*/) {
+static bool AllEnemiesSatisfy(EnemyConditionFn conditionFn, u8 scene, u8 layer, u8 room, std::vector<u8> actorEntries) {
     auto& roomMap = enemyLocations[scene][layer][room];
     if (actorEntries.empty()) {
         for (auto& entry : roomMap) {
@@ -30,14 +29,18 @@ static bool AllEnemiesSatisfy(EnemyConditionFn conditionFn, u8 scene, u8 layer, 
     return true;
 }
 
-static bool AnyEnemySatisfies(EnemyConditionFn conditionFn, u8 scene, u8 layer, u8 room,
-                              std::vector<u8> actorEntries /*= {}*/) {
+static bool AnyEnemySatisfies(EnemyConditionFn conditionFn, u8 scene, u8 layer, u8 room, std::vector<u8> actorEntries) {
     auto flippedConditionFn = [&conditionFn](EnemyLocation& loc) { return !conditionFn(loc); };
     return !AllEnemiesSatisfy(flippedConditionFn, scene, layer, room, actorEntries);
 }
 
 bool IsWallmaster(u8 scene, u8 layer, u8 room, u8 actorEntry) {
     return enemyLocations[scene][layer][room][actorEntry].GetEnemyId() == ENEMY_WALLMASTER;
+}
+
+bool CanDeadHandGrab(u8 scene, u8 layer, u8 room) {
+    return AnyEnemySatisfies([](EnemyLocation& loc) { return loc.GetEnemyId() == ENEMY_DEAD_HAND_HAND; }, scene, layer,
+                             room, {});
 }
 
 bool CanDefeatEnemy(u16 enemyId) {
@@ -78,9 +81,10 @@ bool CanDefeatEnemy(u16 enemyId) {
             return CanUse(KOKIRI_SWORD) || CanUse(MASTER_SWORD) || CanUse(BIGGORON_SWORD) || CanUse(STICKS) ||
                    CanUse(MEGATON_HAMMER) || CanUse(BOW) || CanUse(HOOKSHOT) || CanUse(SLINGSHOT) || HasExplosives;
         case ENEMY_PEAHAT:
-            return AtDay && (CanUse(KOKIRI_SWORD) || CanUse(MASTER_SWORD) || CanUse(BIGGORON_SWORD) || CanUse(STICKS) ||
-                             CanUse(MEGATON_HAMMER) || CanUse(BOW) || CanUse(HOOKSHOT) || CanUse(SLINGSHOT) ||
-                             CanUse(DINS_FIRE) || HasExplosives);
+            return (AtDay && (CanUse(KOKIRI_SWORD) || CanUse(MASTER_SWORD) || CanUse(BIGGORON_SWORD) ||
+                              CanUse(STICKS) || CanUse(MEGATON_HAMMER) || CanUse(BOW) || CanUse(HOOKSHOT) ||
+                              CanUse(SLINGSHOT) || CanUse(DINS_FIRE))) ||
+                   HasExplosives;
         case ENEMY_PEAHAT_LARVA:
             return true;
         case ENEMY_LIZALFOS:
@@ -144,7 +148,8 @@ bool CanDefeatEnemy(u16 enemyId) {
                     ((CanUse(KOKIRI_SWORD) || CanUse(MASTER_SWORD) || CanUse(BIGGORON_SWORD) || CanUse(STICKS) ||
                       CanUse(SLINGSHOT))));
         case ENEMY_BUBBLE_FIRE:
-            return CanUse(MASTER_SWORD) || CanUse(BIGGORON_SWORD) || CanUse(BOW);
+            return CanUse(MASTER_SWORD) || CanUse(BIGGORON_SWORD) || CanUse(BOW) ||
+                   ((CanUse(HYLIAN_SHIELD) || CanUse(MIRROR_SHIELD)) && CanUse(KOKIRI_SWORD));
         case ENEMY_BUBBLE_WHITE:
             return CanUse(KOKIRI_SWORD) || CanUse(MASTER_SWORD) || CanUse(BIGGORON_SWORD) || CanUse(STICKS) ||
                    CanUse(MEGATON_HAMMER) || CanUse(BOW) || CanUse(SLINGSHOT) || CanUse(DINS_FIRE) || HasExplosives;

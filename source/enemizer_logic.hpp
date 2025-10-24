@@ -12,6 +12,7 @@ enum class SpaceAroundEnemy {
 #define ENEMY_ON_LEDGE true
 
 bool IsWallmaster(u8 scene, u8 layer, u8 room, u8 actorEntry);
+bool CanDeadHandGrab(u8 scene, u8 layer, u8 room);
 bool CanDefeatEnemy(u16 enemyId);
 bool CanDefeatEnemy(u8 scene, u8 layer, u8 room, u8 actorEntry);
 bool CanDefeatEnemies(u8 scene, u8 layer, u8 room, std::vector<u8> actorEntries = {});
