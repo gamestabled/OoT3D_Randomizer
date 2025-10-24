@@ -80,7 +80,8 @@ void AreaTable_Init_WaterTemple() {
                              return (WaterTempleLow || WaterTempleMiddle) && (HasFireSourceWithTorch || CanUse(BOW));
                          } }),
                 Entrance(WATER_TEMPLE_EAST_MIDDLE, { [] {
-                             return (WaterTempleLow || WaterTempleMiddle || (CanUse(IRON_BOOTS) && WaterTimer >= 16)) &&
+                             return (WaterTempleLow || WaterTempleMiddle ||
+                                     (CanUse(IRON_BOOTS) && CanSurviveUnderwaterFor(16))) &&
                                     CanUse(HOOKSHOT) && CanPassEnemies(5, 0, 4, {}, SpaceAroundEnemy::NARROW);
                          } }),
                 Entrance(WATER_TEMPLE_WEST_MIDDLE,
@@ -436,11 +437,11 @@ void AreaTable_Init_WaterTemple() {
                      Entrance(WATER_TEMPLE_LOBBY, { [] { return SmallKeys(WATER_TEMPLE, 5); } }),
                      Entrance(WATER_TEMPLE_CENTRAL_PILLAR_UPPER, { [] { return CanUse(HOOKSHOT); } }),
                      Entrance(WATER_TEMPLE_CENTRAL_PILLAR_BASEMENT,
-                              { [] { return WaterTempleMiddle && CanUse(IRON_BOOTS) && WaterTimer >= 40; },
+                              { [] { return WaterTempleMiddle && CanUse(IRON_BOOTS) && CanSurviveUnderwaterFor(40); },
                                 /*Glitched*/
                                 [] {
                                     return CanDoGlitch(GlitchType::LedgeClip, GlitchDifficulty::NOVICE) &&
-                                           CanUse(IRON_BOOTS) && WaterTimer >= 40;
+                                           CanUse(IRON_BOOTS) && CanSurviveUnderwaterFor(40);
                                 } }),
                  });
 
@@ -473,17 +474,18 @@ void AreaTable_Init_WaterTemple() {
                      Entrance(WATER_TEMPLE_CENTRAL_PILLAR_LOWER, { [] { return true; } }),
                  });
 
-        areaTable[WATER_TEMPLE_CENTRAL_PILLAR_BASEMENT] = Area(
-            "Water Temple Central Pillar Basement", "Water Temple", WATER_TEMPLE, NO_DAY_NIGHT_CYCLE, {},
-            {
-                // Locations
-                LocationAccess(WATER_TEMPLE_CENTRAL_PILLAR_CHEST,
-                               { [] { return CanDefeatEnemies(5, 0, 2) && WaterTimer >= 40; } }),
-            },
-            {
-                // Exits
-                Entrance(WATER_TEMPLE_CENTRAL_PILLAR_LOWER, { [] { return CanUse(IRON_BOOTS) && WaterTimer >= 16; } }),
-            });
+        areaTable[WATER_TEMPLE_CENTRAL_PILLAR_BASEMENT] =
+            Area("Water Temple Central Pillar Basement", "Water Temple", WATER_TEMPLE, NO_DAY_NIGHT_CYCLE, {},
+                 {
+                     // Locations
+                     LocationAccess(WATER_TEMPLE_CENTRAL_PILLAR_CHEST,
+                                    { [] { return CanDefeatEnemies(5, 0, 2) && CanSurviveUnderwaterFor(40); } }),
+                 },
+                 {
+                     // Exits
+                     Entrance(WATER_TEMPLE_CENTRAL_PILLAR_LOWER,
+                              { [] { return CanUse(IRON_BOOTS) && CanSurviveUnderwaterFor(16); } }),
+                 });
 
         areaTable[WATER_TEMPLE_EAST_MIDDLE] =
             Area("Water Temple East Middle", "Water Temple", WATER_TEMPLE, NO_DAY_NIGHT_CYCLE,
@@ -666,7 +668,8 @@ void AreaTable_Init_WaterTemple() {
             {
                 // Exits
                 Entrance(WATER_TEMPLE_ENTRYWAY, { [] { return true; } }),
-                Entrance(WATER_TEMPLE_MQ_DIVE, { [] { return IsAdult && WaterTimer >= 24 && CanUse(IRON_BOOTS); } }),
+                Entrance(WATER_TEMPLE_MQ_DIVE,
+                         { [] { return IsAdult && CanSurviveUnderwaterFor(24) && CanUse(IRON_BOOTS); } }),
                 Entrance(WATER_TEMPLE_MQ_DARK_LINK_REGION,
                          { [] { return SmallKeys(WATER_TEMPLE, 1) && IsAdult && CanUse(LONGSHOT) && CanJumpslash; } }),
                 Entrance(WATER_TEMPLE_BOSS_ENTRYWAY,
@@ -718,15 +721,16 @@ void AreaTable_Init_WaterTemple() {
             {
                 // Locations
                 LocationAccess(WATER_TEMPLE_MQ_BOSS_KEY_CHEST, { [] {
-                                   return IsAdult && WaterTimer >= 24 && CanUse(DINS_FIRE) &&
+                                   return IsAdult && CanSurviveUnderwaterFor(24) && CanUse(DINS_FIRE) &&
                                           (LogicWaterDragonJumpDive || CanDive || CanUse(IRON_BOOTS));
                                } }),
                 LocationAccess(WATER_TEMPLE_MQ_GS_RIVER, { [] { return true; } }),
             },
             {
                 // Exits
-                Entrance(WATER_TEMPLE_MQ_BASEMENT_GATED_AREAS,
-                         { [] { return IsAdult && WaterTimer >= 24 && CanUse(DINS_FIRE) && CanUse(IRON_BOOTS); } }),
+                Entrance(WATER_TEMPLE_MQ_BASEMENT_GATED_AREAS, { [] {
+                             return IsAdult && CanSurviveUnderwaterFor(24) && CanUse(DINS_FIRE) && CanUse(IRON_BOOTS);
+                         } }),
             });
 
         areaTable[WATER_TEMPLE_MQ_BASEMENT_GATED_AREAS] = Area(

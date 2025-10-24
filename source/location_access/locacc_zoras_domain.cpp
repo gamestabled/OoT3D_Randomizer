@@ -352,7 +352,8 @@ void AreaTable_Init_ZorasDomain() {
         {
             // Locations
             LocationAccess(ZF_ICEBERG_FREESTANDING_POH, { [] { return IsAdult; } }),
-            LocationAccess(ZF_BOTTOM_FREESTANDING_POH, { [] { return IsAdult && IronBoots && WaterTimer >= 24; } }),
+            LocationAccess(ZF_BOTTOM_FREESTANDING_POH,
+                           { [] { return IsAdult && IronBoots && CanSurviveUnderwaterFor(24); } }),
             LocationAccess(ZF_FAIRY_GOSSIP_STONE, { [] { return true; } }),
             LocationAccess(ZF_JABU_GOSSIP_STONE, { [] { return true; } }),
         },

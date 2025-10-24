@@ -1432,7 +1432,14 @@ std::vector<LocationKey> overworldLocations = {
   LLR_GS_HOUSE_WINDOW,
   LLR_GS_TREE,
 };
+
+std::vector<LocationKey> childOnlyHotLocations = {
+    DMC_DEKU_SCRUB,
+    DMC_GS_CRATE,
+    DMC_GS_BEAN_PATCH,
+};
 // clang-format on
+
 ItemLocation* Location(LocationKey locKey) {
     return &(locationTable[locKey]);
 }

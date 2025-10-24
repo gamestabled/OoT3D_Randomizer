@@ -227,7 +227,7 @@ void GsTable_Init_ZorasDomain() {
               { [] { return false; },
                 /*Glitched*/
                 [] {
-                    return IsAdult && WaterTimer >= 16 && CanUse(IRON_BOOTS) &&
+                    return IsAdult && CanSurviveUnderwaterFor(16) && CanUse(IRON_BOOTS) &&
                            (CanUse(HOOKSHOT) || CanDoGlitch(GlitchType::ISG, GlitchDifficulty::NOVICE) ||
                             CanDoGlitch(GlitchType::SuperStab, GlitchDifficulty::NOVICE));
                 } } },
@@ -242,7 +242,7 @@ void GsTable_Init_ZorasDomain() {
               },
               { [] { return false; },
                 /*Glitched*/
-                [] { return IsAdult && WaterTimer >= 8 && CanUse(IRON_BOOTS) && CanAdultAttack; } } },
+                [] { return IsAdult && CanSurviveUnderwaterFor(8) && CanUse(IRON_BOOTS) && CanAdultAttack; } } },
             // https://noclip.website/#oot3d/spot07;ShareData=AQI(B9x*+Q8rWf!8sn=[WC1&*Q9/KCUZE;s9Qf|dV|R@aTYn0)9WQQI9t|yV=a
             { ZD_BEHIND_KING_ZORA,
               "Behind the metal Zora emblem behind King Zora.",
@@ -332,12 +332,12 @@ void GsTable_Init_ZorasDomain() {
                   { 0, 0, 0 },
               },
               { [] {
-                   return IsChild && CanGetNightTimeGS && (WaterTimer >= 16 || Hearts >= 3) && CanUse(IRON_BOOTS) &&
+                   return IsChild && CanGetNightTimeGS && CanSurviveUnderwaterFor(16, 24) && CanUse(IRON_BOOTS) &&
                           CanUse(HOOKSHOT);
                },
                 /*Glitched*/
                 [] {
-                    return IsChild && CanGetNightTimeGS && (WaterTimer >= 16 || Hearts >= 3) && CanUse(IRON_BOOTS) &&
+                    return IsChild && CanGetNightTimeGS && CanSurviveUnderwaterFor(16, 24) && CanUse(IRON_BOOTS) &&
                            (CanDoGlitch(GlitchType::ISG, GlitchDifficulty::NOVICE) ||
                             CanDoGlitch(GlitchType::SuperStab, GlitchDifficulty::NOVICE));
                 } } },
@@ -471,11 +471,12 @@ void GsTable_Init_ZorasDomain() {
                   { -32768, 0, 0 },
               },
               { [] {
-                   return IsAdult && CanGetNightTimeGS && WaterTimer >= 16 && CanUse(IRON_BOOTS) && CanUse(LONGSHOT);
+                   return IsAdult && CanGetNightTimeGS && CanSurviveUnderwaterFor(16) && CanUse(IRON_BOOTS) &&
+                          CanUse(LONGSHOT);
                },
                 /*Glitched*/
                 [] {
-                    return IsAdult && CanGetNightTimeGS && WaterTimer >= 8 && CanUse(IRON_BOOTS) &&
+                    return IsAdult && CanGetNightTimeGS && CanSurviveUnderwaterFor(8) && CanUse(IRON_BOOTS) &&
                            (CanDoGlitch(GlitchType::ISG, GlitchDifficulty::NOVICE) ||
                             CanDoGlitch(GlitchType::SuperStab, GlitchDifficulty::NOVICE));
                 } } },

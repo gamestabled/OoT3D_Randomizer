@@ -337,8 +337,6 @@ extern u8 BaseHearts;
 extern u8 Hearts;
 extern u8 Multiplier;
 extern u8 EffectiveHealth;
-extern u8 FireTimer;
-extern u8 WaterTimer;
 
 extern bool GuaranteeTradePath;
 extern bool GuaranteeHint;
@@ -421,6 +419,7 @@ bool HasProjectile(HasProjectileAge age);
 bool SmallKeys(Key dungeon, u8 requiredAmount);
 bool SmallKeys(Key dungeon, u8 requiredAmountGlitchless, u8 requiredAmountGlitched);
 bool CanDoGlitch(GlitchType glitch, GlitchDifficulty difficulty);
-bool EventsUpdated();
 void LogicReset();
+bool CanSurviveHeatFor(s32 timeWithFTR, s32 timeWithoutFTR = -1);
+bool CanSurviveUnderwaterFor(s32 timeWithFTR, s32 timeWithoutFTR = -1);
 } // namespace Logic
