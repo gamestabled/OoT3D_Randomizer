@@ -139,7 +139,8 @@ void GsTable_Init_GerudoValley() {
                   { 16384, 0, 0 },
               },
               { [] {
-                   return IsAdult && ((CanUse(IRON_BOOTS) && WaterTimer >= 8 && CanUse(HOOKSHOT)) || CanUse(LONGSHOT));
+                   return IsAdult &&
+                          ((CanUse(IRON_BOOTS) && CanSurviveUnderwaterFor(8) && CanUse(HOOKSHOT)) || CanUse(LONGSHOT));
                },
                 /*Glitched*/
                 [] {
@@ -156,7 +157,8 @@ void GsTable_Init_GerudoValley() {
                   { 18000, 0, 0 },
               },
               { [] {
-                  return IsAdult && CanGetNightTimeGS && CanUse(IRON_BOOTS) && WaterTimer >= 8 && CanUse(HOOKSHOT);
+                  return IsAdult && CanGetNightTimeGS && CanUse(IRON_BOOTS) && CanSurviveUnderwaterFor(8) &&
+                         CanUse(HOOKSHOT);
               } } },
             // https://noclip.website/#oot3d/spot09;ShareData=AY2,KUg}!@9OlCDUiCkjWM@&E6HP$eUaP*^UcqK{+4l/G9nJ7C9MO7MUu4Z2VS
             { GERUDO_VALLEY,

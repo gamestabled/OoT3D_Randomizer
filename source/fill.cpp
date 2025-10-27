@@ -447,7 +447,9 @@ std::vector<LocationKey> GetAccessibleLocations(const std::vector<LocationKey>& 
     if (mode == SearchMode::AllLocationsReachable) {
         allLocationsReachable = true;
         for (const LocationKey loc : allLocations) {
-            if (!Location(loc)->IsAddedToPool()) {
+            bool excludedForGloom = GloomMode.IsNot(GLOOMMODE_OFF) && !(GoronTunicAsChild && AgeItemsInLogic) &&
+                                    ElementInContainer(loc, childOnlyHotLocations);
+            if (!Location(loc)->IsAddedToPool() && !excludedForGloom) {
                 allLocationsReachable = false;
                 auto message          = "Location " + Location(loc)->GetName() + " not reachable\n";
                 PlacementLog_Msg(message);

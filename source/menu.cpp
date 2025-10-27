@@ -698,19 +698,9 @@ void PrintDescription(std::string_view description) {
 }
 
 static void RestoreOverrides() {
-    if (Settings::Racing) {
-        for (auto overridePair : Settings::racingOverrides) {
-            overridePair.first->RestoreDelayedOption();
-        }
-    }
-
-    if (Settings::Logic.Is(LOGIC_VANILLA)) {
-        for (auto overridePair : Settings::vanillaLogicOverrides) {
-            overridePair.first->RestoreDelayedOption();
-        }
-    }
-
-    // Reload Cosmetic settings because Random Choice options might have been changed during generation
+    // Reload cached settings to restore options that might have been changed during generation
+    // (e.g. racing/vanilla overrides, cosmetic random choices, ...)
+    LoadCachedSettings();
     LoadCachedCosmetics();
 }
 
@@ -745,13 +735,11 @@ void GenerateRandomizer() {
                    "successful.");
             PlacementLog_Msg("\nRANDOMIZATION FAILED COMPLETELY. PLZ FIX\n");
             PlacementLog_Write();
-            RestoreOverrides();
-            return;
         } else {
             printf("\n\nError %d with fill.\nPress Select to exit or B to go back to the menu.\n", ret);
-            RestoreOverrides();
-            return;
         }
+        RestoreOverrides();
+        return;
     }
 
     Music::DeleteOldArchive();

@@ -1,6 +1,7 @@
 #include "logic.hpp"
 
 #include <3ds.h>
+#include <limits.h>
 #include <algorithm>
 #include <cstdio>
 #include <string>
@@ -347,8 +348,6 @@ u8 BaseHearts      = 0;
 u8 Hearts          = 0;
 u8 Multiplier      = 0;
 u8 EffectiveHealth = 0;
-u8 FireTimer       = 0;
-u8 WaterTimer      = 0;
 
 bool GuaranteeTradePath     = false;
 bool GuaranteeHint          = false;
@@ -844,8 +843,6 @@ void UpdateHelpers() {
     EffectiveHealth =
         ((Hearts << (2 + DoubleDefense)) >> Multiplier) + ((Hearts << (2 + DoubleDefense)) % (1 << Multiplier) >
                                                            0); // Number of half heart hits to die, ranges from 1 to 160
-    FireTimer          = CanUse(GORON_TUNIC) ? 255 : (LogicFewerTunicRequirements) ? (Hearts * 8) : 0;
-    WaterTimer         = CanUse(ZORA_TUNIC) ? 255 : (LogicFewerTunicRequirements) ? (Hearts * 8) : 0;
     NeedNayrusLove     = (EffectiveHealth <= 1);
     CanSurviveDamage   = !NeedNayrusLove || CanUse(NAYRUS_LOVE);
     CanTakeDamage      = Fairy || CanSurviveDamage;
@@ -978,28 +975,24 @@ bool SmallKeys(Key dungeon, u8 requiredAmountGlitchless, u8 requiredAmountGlitch
     }
 }
 
-bool EventsUpdated() {
-
-    if (DekuTreeClearPast != DekuTreeClear || GoronRubyPast != GoronRuby || ZoraSapphirePast != ZoraSapphire ||
-        ForestTrialClearPast != ForestTrialClear || FireTrialClearPast != FireTrialClear ||
-        WaterTrialClearPast != WaterTrialClear || ShadowTrialClearPast != ShadowTrialClear ||
-        SpiritTrialClearPast != SpiritTrialClear || LightTrialClearPast != LightTrialClear ||
-        DrainWellPast != DrainWell || DampesWindmillAccessPast != DampesWindmillAccess ||
-        TimeTravelPast != TimeTravel) {
-        DekuTreeClearPast        = DekuTreeClear;
-        GoronRubyPast            = GoronRuby;
-        ZoraSapphirePast         = ZoraSapphire;
-        ForestTrialClearPast     = ForestTrialClear;
-        FireTrialClearPast       = FireTrialClear;
-        WaterTrialClearPast      = WaterTrialClear;
-        ShadowTrialClearPast     = ShadowTrialClear;
-        SpiritTrialClearPast     = SpiritTrialClear;
-        LightTrialClearPast      = LightTrialClear;
-        DrainWellPast            = DrainWell;
-        DampesWindmillAccessPast = DampesWindmillAccess;
-        return true;
+static bool CanSurviveHazardFor(s32 timeWithFTR, s32 timeWithoutFTR) {
+    if (timeWithoutFTR < 0) {
+        timeWithoutFTR = INT_MAX;
     }
-    return false;
+    if (timeWithFTR < 0) {
+        timeWithFTR = timeWithoutFTR;
+    }
+    s32 survivableTime = Hearts * 8;
+    s32 requiredTime   = LogicFewerTunicRequirements ? timeWithFTR : timeWithoutFTR;
+    return survivableTime >= requiredTime;
+}
+
+bool CanSurviveHeatFor(s32 timeWithFTR, s32 timeWithoutFTR /*= -1*/) {
+    return CanUse(GORON_TUNIC) || CanSurviveHazardFor(timeWithFTR, timeWithoutFTR);
+}
+
+bool CanSurviveUnderwaterFor(s32 timeWithFTR, s32 timeWithoutFTR /*= -1*/) {
+    return CanUse(ZORA_TUNIC) || CanSurviveHazardFor(timeWithFTR, timeWithoutFTR);
 }
 
 // Reset All Logic to false
@@ -1330,8 +1323,6 @@ void LogicReset() {
     Hearts          = 0;
     Multiplier      = (DamageMultiplier.Value<u8>() < 6) ? DamageMultiplier.Value<u8>() : 10;
     EffectiveHealth = 0;
-    FireTimer       = 0;
-    WaterTimer      = 0;
 
     GuaranteeTradePath     = false;
     GuaranteeHint          = false;

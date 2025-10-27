@@ -451,7 +451,7 @@ void GsTable_Init_HyruleField() {
               { [] { return false; },
                 /*Glitched*/
                 [] {
-                    return IsAdult && CanUse(IRON_BOOTS) && WaterTimer >= 16 &&
+                    return IsAdult && CanUse(IRON_BOOTS) && CanSurviveUnderwaterFor(16) &&
                            CanDoGlitch(GlitchType::HookshotClip, GlitchDifficulty::NOVICE);
                 } } },
             // https://noclip.website/#oot3d/turibori;ShareData=ACqN3UFMsI9ZYaMUweleV3fZOQ!QfOUpRw}UKf/n+tUKh9r)})9eF&KUK[xmVS
@@ -518,7 +518,8 @@ void GsTable_Init_HyruleField() {
                   { 16384, 12000, 0 },
               },
               { [] {
-                  return IsAdult && CanGetNightTimeGS && CanUse(IRON_BOOTS) && WaterTimer >= 8 && CanUse(HOOKSHOT);
+                  return IsAdult && CanGetNightTimeGS && CanUse(IRON_BOOTS) && CanSurviveUnderwaterFor(8) &&
+                         CanUse(HOOKSHOT);
               } } },
             // https://noclip.website/#oot3d/spot06;ShareData=ACvGwUt!c*TR+=h8pA=J=HD];6u)Y3Udom^UAVJ5=WTr{Tn_y29agDYUq{pSWP
             { LAKE_HYLIA,
