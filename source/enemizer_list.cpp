@@ -716,8 +716,8 @@ void InitEnemyLocations(void) {
         enemyLocations[7][0][4][2]       = EnemyLocation(ENEMY_DEAD_HAND_HAND,     LocType::ABOVE_GROUND);
         enemyLocations[7][0][4][3]       = EnemyLocation(ENEMY_DEAD_HAND_HAND,     LocType::ABOVE_GROUND);
         enemyLocations[7][0][4][4]       = EnemyLocation(ENEMY_DEAD_HAND_HAND,     LocType::ABOVE_GROUND);
-        // Leave Dead Hand and one of its hands to lure it out.
-        // enemyLocations[7][0][4][5]    = EnemyLocation(ENEMY_DEAD_HAND_HAND,     LocType::ABOVE_GROUND);
+        enemyLocations[7][0][4][5]       = EnemyLocation(ENEMY_DEAD_HAND_HAND,     LocType::ABOVE_GROUND);
+        // Don't randomize Dead Hand.
         // enemyLocations[7][0][4][6]    = EnemyLocation(ENEMY_DEAD_HAND,          LocType::ABOVE_GROUND);
         enemyLocations[7][0][5][0]       = EnemyLocation(ENEMY_BEAMOS,             LocType::ABOVE_GROUND);
         enemyLocations[7][0][7][0]       = EnemyLocation(ENEMY_GIBDO,              LocType::ABOVE_GROUND);
@@ -773,8 +773,8 @@ void InitEnemyLocations(void) {
         enemyLocations[8][0][4][0]       = EnemyLocation(ENEMY_DEAD_HAND_HAND,     LocType::ABOVE_GROUND);
         enemyLocations[8][0][4][1]       = EnemyLocation(ENEMY_DEAD_HAND_HAND,     LocType::ABOVE_GROUND);
         enemyLocations[8][0][4][2]       = EnemyLocation(ENEMY_DEAD_HAND_HAND,     LocType::ABOVE_GROUND);
-        // Leave Dead Hand and one of its hands to lure it out.
-        // enemyLocations[8][0][4][3]    = EnemyLocation(ENEMY_DEAD_HAND_HAND,     LocType::ABOVE_GROUND);
+        enemyLocations[8][0][4][3]       = EnemyLocation(ENEMY_DEAD_HAND_HAND,     LocType::ABOVE_GROUND);
+        // Don't randomize Dead Hand.
         // enemyLocations[8][0][4][4]    = EnemyLocation(ENEMY_DEAD_HAND,          LocType::ABOVE_GROUND);
         enemyLocations[8][0][5][0]       = EnemyLocation(ENEMY_KEESE_NORMAL,       LocType::ABOVE_GROUND);
         enemyLocations[8][0][5][1]       = EnemyLocation(ENEMY_KEESE_NORMAL,       LocType::ABOVE_GROUND);
@@ -1209,8 +1209,8 @@ void InitEnemyLocations(void) {
         enemyLocations[7][0][4][2]       = EnemyLocation(ENEMY_DEAD_HAND_HAND,     LocType::ABOVE_GROUND);
         enemyLocations[7][0][4][3]       = EnemyLocation(ENEMY_DEAD_HAND_HAND,     LocType::ABOVE_GROUND);
         enemyLocations[7][0][4][4]       = EnemyLocation(ENEMY_DEAD_HAND_HAND,     LocType::ABOVE_GROUND);
-        // Leave Dead Hand and one of its hands to lure it out.
-        // enemyLocations[7][0][4][5]    = EnemyLocation(ENEMY_DEAD_HAND_HAND,     LocType::ABOVE_GROUND);
+        enemyLocations[7][0][4][5]       = EnemyLocation(ENEMY_DEAD_HAND_HAND,     LocType::ABOVE_GROUND);
+        // Don't randomize Dead Hand.
         // enemyLocations[7][0][4][6]    = EnemyLocation(ENEMY_DEAD_HAND,          LocType::ABOVE_GROUND);
         enemyLocations[7][0][5][0]       = EnemyLocation(ENEMY_BEAMOS,             LocType::ABOVE_GROUND);
         enemyLocations[7][0][6][0]       = EnemyLocation(ENEMY_SKULLTULA,          LocType::ABOVE_GROUND);
@@ -1281,8 +1281,8 @@ void InitEnemyLocations(void) {
         enemyLocations[8][0][4][4]       = EnemyLocation(ENEMY_DEAD_HAND_HAND,     LocType::ABOVE_GROUND);
         enemyLocations[8][0][4][5]       = EnemyLocation(ENEMY_DEAD_HAND_HAND,     LocType::ABOVE_GROUND);
         enemyLocations[8][0][4][6]       = EnemyLocation(ENEMY_DEAD_HAND_HAND,     LocType::ABOVE_GROUND);
-        // Leave Dead Hand and one of its hands to lure it out.
-        // enemyLocations[8][0][4][7]    = EnemyLocation(ENEMY_DEAD_HAND_HAND,     LocType::ABOVE_GROUND);
+        enemyLocations[8][0][4][7]       = EnemyLocation(ENEMY_DEAD_HAND_HAND,     LocType::ABOVE_GROUND);
+        // Don't randomize Dead Hand.
         // enemyLocations[8][0][4][8]    = EnemyLocation(ENEMY_DEAD_HAND,          LocType::ABOVE_GROUND);
         enemyLocations[8][0][6][0]       = EnemyLocation(ENEMY_KEESE_NORMAL,       LocType::ABOVE_GROUND);
         enemyLocations[8][0][6][1]       = EnemyLocation(ENEMY_KEESE_NORMAL,       LocType::ABOVE_GROUND);

@@ -2809,7 +2809,6 @@ std::vector<std::pair<Option*, u8>> racingOverrides = {
 // Options that should be overridden and then restored after generating when vanilla logic is enabled
 std::vector<std::pair<Option*, u8>> vanillaLogicOverrides = {
     { &TriforceHunt, OFF },
-    { &Enemizer, OFF },
     { &LinksPocketItem, LINKSPOCKETITEM_DUNGEON_REWARD },
     { &ShuffleRewards, REWARDSHUFFLE_END_OF_DUNGEON },
     { &ShuffleSongs, SONGSHUFFLE_SONG_LOCATIONS },
