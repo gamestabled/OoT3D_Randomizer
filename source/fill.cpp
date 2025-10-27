@@ -958,6 +958,7 @@ void VanillaFill() {
         Location(loc)->PlaceVanillaItem();
     }
     // If necessary, handle ER stuff
+    playthroughEntrances.clear();
     if (ShuffleEntrances) {
         printf("\x1b[7;10HShuffling Entrances...");
         ShuffleAllEntrances();
@@ -969,6 +970,7 @@ void VanillaFill() {
     CreateItemOverrides();
     CreateEntranceOverrides();
     CreateAlwaysIncludedMessages();
+    CreateMiscHints();
 }
 
 void ClearProgress() {
