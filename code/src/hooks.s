@@ -2467,3 +2467,23 @@ hook_DrawHeartIcon:
     cmp r0,#0x0
     pop {r0-r12, lr}
     bx lr
+
+.global hook_OcarinaNoteSound_Player
+hook_OcarinaNoteSound_Player:
+    push {r0,r2,r3,lr}
+    bl 0x2CFE00 @ original instruction, sets vibrato
+    mov r0,#0x0 @ default ocarina instrument
+    bl OcarinaNotes_OverrideInstrument
+    cpy r1,r0
+    pop {r0,r2,r3,lr}
+    b 0x2CFD24 @ set instrument
+
+.global hook_OcarinaNoteSound_Npc
+hook_OcarinaNoteSound_Npc:
+    and r1,r0,#0xFF @ instrument
+    push {r0, r2-r12, lr}
+    cpy r0,r1
+    bl OcarinaNotes_OverrideInstrument
+    cpy r1,r0
+    pop {r0, r2-r12, lr}
+    bx lr
