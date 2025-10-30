@@ -1392,6 +1392,12 @@ string_view gsLocGuaranteeNewDesc     = "Excludes the original location from the
                                         "If no new locations are available, the original\n"//
                                         "will be used regardless.";                        //
                                                                                            //
+/*------------------------------                                                           //
+|      RANDOM SONG NOTES       |                                                           //
+------------------------------*/                                                           //
+string_view randomSongNotesDesc       = "Randomize the notes for each ocarina song.\n"     //
+                                        "Regular songs will be 3 notes repeated twice.\n"  //
+                                        "Warp songs will be between 5 and 8 notes.";       //
                                                                                            //--------------//
 /*------------------------------                                                                           //
 |  DETAILED LOGIC EXPLANATIONS |                                                                           //

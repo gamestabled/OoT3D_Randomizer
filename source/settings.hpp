@@ -504,6 +504,7 @@ extern Option HyperEnemies;
 extern Option FreeCamera;
 extern Option RandomGsLocations;
 extern Option GsLocGuaranteeNew;
+extern Option RandomSongNotes;
 extern bool HasNightStart;
 
 extern Option FaroresWindAnywhere;

@@ -39,8 +39,9 @@ void AreaTable_Init_ZorasDomain() {
             LocationAccess(ZR_MAGIC_BEAN_SALESMAN, { [] { return IsChild; } }),
             LocationAccess(ZR_FROGS_OCARINA_GAME,
                            { [] {
-                                return IsChild && CanPlay(ZeldasLullaby) && CanPlay(SariasSong) && CanPlay(SunsSong) &&
-                                       CanPlay(EponasSong) && CanPlay(SongOfTime) && CanPlay(SongOfStorms);
+                                return IsChild && OcarinaButtonsCount >= 5 && CanPlay(ZeldasLullaby) &&
+                                       CanPlay(SariasSong) && CanPlay(SunsSong) && CanPlay(EponasSong) &&
+                                       CanPlay(SongOfTime) && CanPlay(SongOfStorms);
                             },
                              /*Glitched*/
                              [] {
