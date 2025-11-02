@@ -230,6 +230,7 @@ static void ItemOverride_Clear(void) {
 }
 
 static void ItemOverride_PushPendingOverride(ItemOverride override) {
+    CitraPrint("Push Pending Override: %X", override.value.itemId);
     for (u32 i = 0; i < ARR_SIZE(rPendingOverrideQueue); ++i) {
         if (rPendingOverrideQueue[i].key.all == 0) {
             rPendingOverrideQueue[i] = override;
@@ -353,13 +354,14 @@ static u32 ItemOverride_PlayerIsReadyOnLand(void) {
 }
 
 static u32 ItemOverride_PlayerIsReadyInWater(void) {
+    CitraPrint("Checks PlayerIsReadyInWater");
     if ((PLAYER->stateFlags1 & 0xF4AC2085) == 0 /*&& (PLAYER->actor.bgCheckFlags & 0x0001)*/ &&
         (PLAYER->stateFlags2 & 0x000C0000) == 0 && PLAYER->actor.draw != NULL &&
         gGlobalContext->actorCtx.titleCtx.delayTimer == 0 && gGlobalContext->actorCtx.titleCtx.durationTimer == 0 &&
         gGlobalContext->actorCtx.titleCtx.alpha == 0 && (PLAYER->stateFlags1 & 0x08000000) != 0 && // Player is Swimming
         (PLAYER->stateFlags1 & 0x400) == 0 &&           // Player is not already receiving an item when surfacing
         gGlobalContext->sceneLoadFlag == 0 &&           // Another scene isn't about to be loaded
-        rPendingOverrideQueue[0].key.type == OVR_TEMPLE // Must be an item received for completing a dungeon
+        // rPendingOverrideQueue[0].key.type == OVR_TEMPLE // Must be an item received for completing a dungeon
         // && Multiworld is off
         // && (z64_event_state_1 & 0x20) == 0 //TODO
         // && (z64_game.camera_2 == 0) //TODO
@@ -377,11 +379,14 @@ static u32 ItemOverride_PlayerIsReadyInWater(void) {
 
 static u32 ItemOverride_PlayerIsReady(void) {
     if (ItemOverride_PlayerIsReadyOnLand()) {
+        CitraPrint("READY_ON_LAND");
         return READY_ON_LAND;
     }
     if (ItemOverride_PlayerIsReadyInWater()) {
+        CitraPrint("READY_IN_WATER");
         return READY_IN_WATER;
     }
+    
     return 0;
 }
 
@@ -418,6 +423,7 @@ void ItemOverride_Update(void) {
         } else {
             ItemOverride_TryPendingItem();
             if (readyStatus == READY_IN_WATER) {
+                CitraPrint("readyStatus == READY_IN_WATER");
                 // Force underwater player flag in order to play the correct get-item
                 // animation even if Link is at the water's surface.
                 PLAYER->stateFlags2 |= 0x400;
@@ -557,8 +563,10 @@ u8 ItemOverride_GetItemDrop(EnItem00* this) {
     u16 resolvedItemId = ItemTable_ResolveUpgrades(override.value.itemId);
     ItemRow* itemRow   = ItemTable_GetItemRow(resolvedItemId);
 
-    if (FALSE) { // TODO: check if random item is major
-        // TODO: handle major item
+    if ((itemRow->chestType != 0x01 && itemRow->chestType != 0x05) || resolvedItemId == ITEM_HEART_PIECE ||
+        resolvedItemId == ITEM_HEART_CONTAINER) { // TODO: check if random item is major
+        ItemOverride_PushPendingOverride(override);
+        Actor_Kill(&this->actor);
     } else {
         // Minor item, behave as item drop.
         this->actor.params = ITEM00_RECOVERY_HEART;
