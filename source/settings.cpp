@@ -215,7 +215,8 @@ Option ShuffleRewards         = Option::U8  ("Shuffle Dungeon Rewards",{"End of 
 Option LinksPocketItem        = Option::U8  ("Link's Pocket",          {"Dungeon Reward", "Advancement", "Anything", "Nothing"},          {linksPocketDungeonReward, linksPocketAdvancement, linksPocketAnything, linksPocketNothing});
 Option ShuffleSongs           = Option::U8  ("Shuffle Songs",          {"Song Locations", "Dungeon Rewards", "Anywhere"},                 {songsSongLocations, songsDungeonRewards, songsAllLocations});
 Option Shopsanity             = Option::U8  ("Shopsanity",             {MultiVecOpts({{"Off"}, NumOpts(0, 4), {"Random"}})},              {shopsOff, shopsZero, shopsOne, shopsTwo, shopsThree, shopsFour, shopsRandom});
-Option ShopsanityPrices       = Option::U8  (2, "Shopsanity Prices",   {"Random", "Affordable"},                                          {shopPriceRandom, shopPriceAffordable});
+Option ShopsanityPrices       = Option::U8  (2, "Shopsanity Prices",   {"Random", "Affordable", "Child wallet", "Adult wallet",
+                                                                        "Giant's wallet", "Tycoon wallet"},                               {shopPriceRandom, shopPriceAffordable, shopPriceChild, shopPriceAdult, shopPriceGiant, shopPriceTycoon});
 Option Tokensanity            = Option::U8  ("Tokensanity",            {"Off", "Dungeons", "Overworld", "All Tokens"},                    {tokensOff, tokensDungeon, tokensOverworld, tokensAllTokens});
 Option Scrubsanity            = Option::U8  ("Scrub Shuffle",          {"Off", "Affordable", "Expensive", "Random Prices"},               {scrubsOff, scrubsAffordable, scrubsExpensive, scrubsRandomPrices});
 Option ShuffleCows            = Option::Bool("Shuffle Cows",           {"Off", "On"},                                                     {shuffleCowsDesc});
@@ -463,6 +464,7 @@ Option FastBunnyHood       = Option::Bool("Fast Bunny Hood",        {"Off", "On"
 Option KeepFWWarpPoint     = Option::Bool("Keep FW Warp Point",     {"Off", "On"},                                                          {keepFWWarpPointDesc});
 Option DamageMultiplier    = Option::U8  ("Damage Multiplier",      {"x1/2", "x1", "x2", "x4", "x8", "x16", "OHKO"},                        {damageMultiDesc},                                                                                                OptionCategory::Setting,    DAMAGEMULTIPLIER_DEFAULT);
 Option Permadeath          = Option::Bool("Permadeath",             {"Off", "On"},                                                          {permadeathDesc});
+Option GloomMode           = Option::U8  ("Gloom Mode",             {"Off", "Death", "Damage", "Collision", "Empty"},                       {gloomModeOffDesc, gloomModeDeathDesc, gloomModeDamageDesc, gloomModeCollisionDesc, gloomModeEmptyDesc});
 Option RandomTrapDmg       = Option::U8  ("Random Trap Damage",     {"Off", "Basic", "Advanced"},                                           {randomTrapDmgDesc, basicTrapDmgDesc, advancedTrapDmgDesc},                                                       OptionCategory::Setting,    RANDOMTRAPS_BASIC);
 Option FireTrap            = Option::Bool(2, "Fire Trap",           {"Off", "On"},                                                          {fireTrapDesc},                                                                                                   OptionCategory::Setting,    ON);
 Option AntiFairyTrap       = Option::Bool(2, "Anti-Fairy Trap",     {"Off", "On"},                                                          {antiFairyTrapDesc},                                                                                              OptionCategory::Setting,    ON);
@@ -481,6 +483,7 @@ std::vector<Option*> gameplayOptions = {
     &KeepFWWarpPoint,
     &DamageMultiplier,
     &Permadeath,
+    &GloomMode,
     &RandomTrapDmg,
     &FireTrap,
     &AntiFairyTrap,
@@ -1555,6 +1558,7 @@ SettingsContext FillContext() {
     ctx.mapsShowDungeonMode = MapsShowDungeonMode.Value<u8>();
     ctx.damageMultiplier    = DamageMultiplier.Value<u8>();
     ctx.permadeath          = (Permadeath) ? 1 : 0;
+    ctx.gloomMode           = GloomMode.Value<u8>();
     ctx.startingTime        = StartingTime.Value<u8>();
     ctx.chestAnimations     = (ChestAnimations) ? 1 : 0;
     ctx.chestAppearance     = ChestAppearance.Value<u8>();
@@ -2807,7 +2811,6 @@ std::vector<std::pair<Option*, u8>> racingOverrides = {
 // Options that should be overridden and then restored after generating when vanilla logic is enabled
 std::vector<std::pair<Option*, u8>> vanillaLogicOverrides = {
     { &TriforceHunt, OFF },
-    { &Enemizer, OFF },
     { &LinksPocketItem, LINKSPOCKETITEM_DUNGEON_REWARD },
     { &ShuffleRewards, REWARDSHUFFLE_END_OF_DUNGEON },
     { &ShuffleSongs, SONGSHUFFLE_SONG_LOCATIONS },
@@ -3039,7 +3042,6 @@ void UpdateSettings() {
     // Override cosmetic options that can affect how fast a seed is beaten
     if (Racing) {
         for (auto overridePair : racingOverrides) {
-            overridePair.first->SetDelayedOption();
             overridePair.first->SetSelectedIndex(overridePair.second);
         }
     }
@@ -3047,8 +3049,13 @@ void UpdateSettings() {
     // If vanilla logic, we want to set all settings which unnecessarily modify vanilla behavior to off
     if (Logic.Is(LOGIC_VANILLA)) {
         for (auto overridePair : vanillaLogicOverrides) {
-            overridePair.first->SetDelayedOption();
             overridePair.first->SetSelectedIndex(overridePair.second);
+        }
+    }
+
+    if (GloomMode.IsNot(GLOOMMODE_OFF) && Logic.IsNot(LOGIC_NONE) && !(GoronTunicAsChild && AgeItemsInLogic)) {
+        for (LocationKey loc : childOnlyHotLocations) {
+            Location(loc)->GetExcludedOption()->SetSelectedIndex(EXCLUDE);
         }
     }
 
@@ -3350,6 +3357,24 @@ bool ValidateSettings() {
         posY += 7;
     }
 
+    // Check that there are no Heart requirements with Gloom Mode.
+    if (GloomMode.IsNot(GLOOMMODE_OFF) &&
+        (Bridge.Is(RAINBOWBRIDGE_HEARTS) || GanonsBossKey.Is(GANONSBOSSKEY_LACS_HEARTS))) {
+        if (Bridge.IsHidden() && GanonsBossKey.IsHidden()) {
+            Bridge.SetSelectedIndex(RAINBOWBRIDGE_VANILLA);
+            GanonsBossKey.SetSelectedIndex(GANONSBOSSKEY_VANILLA);
+        } else {
+            printf("\x1b[%d;0H"
+                   "----------------------------------------"
+                   "Gloom Mode is incompatible with Heart\n"
+                   "requirements for LACS or Rainbow Bridge."
+                   "----------------------------------------",
+                   posY);
+            valid = false;
+            posY += 5;
+        }
+    }
+
     // Check that there are no MQ dungeons with Enemy Souls or Enemy Randomizer.
     if ((ShuffleEnemySouls.Is(SHUFFLEENEMYSOULS_ALL) || Enemizer) && MQDungeonCount.IsNot(0) &&
         Logic.IsNot(LOGIC_NONE) && Logic.IsNot(LOGIC_VANILLA)) {
@@ -3366,7 +3391,7 @@ bool ValidateSettings() {
                    "Please disable one of the following:\n"
                    " - MQ Dungeons (setting Count to 0)\n"
                    " - Logic\n"
-                   " - Enemy Soul Shuffle / Enemy Randomizer\n"
+                   " - Enemy Soul Shuffle / Enemy Randomizer"
                    "----------------------------------------",
                    posY);
             valid = false;

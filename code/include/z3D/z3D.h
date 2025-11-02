@@ -90,7 +90,7 @@ typedef struct {
     /* 0x0030 */ char newf[6]; // string "ZELDAZ"
     /* 0x0036 */ u16 saveCount;
     /* 0x0038 */ char unk_38[0x000A];
-    /* 0x0042 */ u16 healthCapacity; // "max_life"
+    /* 0x0042 */ s16 healthCapacity; // "max_life"
     /* 0x0044 */ s16 health;         // "now_life"
     /* 0x0046 */ s8 magicLevel;
     /* 0x0047 */ s8 magic;

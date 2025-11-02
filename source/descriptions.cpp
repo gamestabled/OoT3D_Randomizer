@@ -432,8 +432,17 @@ string_view shopsFour                 = "Vanilla shop items will be shuffled amo
 string_view shopsRandom               = "Vanilla shop items will be shuffled among\n"      //
                                         "different shops, and each shop will contain\n"    //
                                         "1-4 non-vanilla shop items.";                     //
-string_view shopPriceRandom           = "Prices of shuffled shop items are random.";        //
-string_view shopPriceAffordable       = "Prices of shuffled shop items are 10 rupees.";     //
+string_view shopPriceRandom           = "Prices of shuffled shop items are random\n"       //
+                                        "varying between 0 and 295 rupees.";               //
+string_view shopPriceAffordable       = "Prices of shuffled shop items are 10 rupees.";    //
+string_view shopPriceChild            = "Prices of shuffled shop items are random\n"       //
+                                        "varying between 0 and 99 rupees.";                //
+string_view shopPriceAdult            = "Prices of shuffled shop items are random\n"       //
+                                        "varying between 0 and 200 rupees.";               //
+string_view shopPriceGiant            = "Prices of shuffled shop items are random\n"       //
+                                        "varying between 0 and 500 rupees.";               //
+string_view shopPriceTycoon           = "Prices of shuffled shop items are random\n"       //
+                                        "varying between 0 and 999 rupees.";               //
 /*------------------------------                                                           //
 |         TOKENSANITY          |                                                           //
 ------------------------------*/                                                           //
@@ -911,6 +920,27 @@ string_view damageMultiDesc           = "Changes the amount of damage taken.\n" 
 ------------------------------*/                                                           //
 string_view permadeathDesc            = "Dying deletes your save file and kicks you back\n"//
                                         "out to the main menu.";                           //
+/*------------------------------                                                           //
+|          GLOOM MODE          |                                                           //
+------------------------------*/                                                           //
+string_view gloomModeOffDesc          = "Enabling this setting will make your hearts\n"    //
+                                        "permanently disappear on various conditions.";    //
+string_view gloomModeDeathDesc        = "Delete 1 heart when getting a Game Over.\n\n"     //
+                                        "The Permadeath setting, if enabled, will be\n"    //
+                                        "changed to take effect when you lose all hearts.";//
+string_view gloomModeDamageDesc       = "Delete 1 heart when losing health for any reason,\n"
+                                        "except continuous elemental damage from being\n"  //
+                                        "burned or frozen.\n\n"                            //
+                                        "Double Defense will require 2 hits per heart.";   //
+string_view gloomModeCollisionDesc    = "Delete 1 heart not only when losing health, but\n"//
+                                        "also when any collision is detected: getting hit\n"
+                                        "during invincibility frames or blocking an attack\n"
+                                        "with your shield count as collisions.\n\n"        //
+                                        "Double Defense will require 2 hits per heart.\n\n"//
+                                        "WARNING: THE GAME MAY BE IMPOSSIBLE TO BEAT\n"    //
+                                        "because you can still be expected to use a shield\n"
+                                        "(for example to reflect Twinrova's attacks).";    //
+string_view gloomModeEmptyDesc        = "Hearts will be deleted when they become empty.";  //
 /*------------------------------                                                           //
 |        STARTING TIME         |                                                           //
 ------------------------------*/                                                           //

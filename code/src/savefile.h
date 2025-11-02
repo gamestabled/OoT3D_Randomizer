@@ -35,7 +35,7 @@ void SaveFile_SetCollectedRandomizedRespawningCollectibleFlag(s16 sceneNum, u16 
 u8 SaveFile_GetCollectedRandomizedRespawningCollectibleFlag(s16 sceneNum, u16 collectibleFlag);
 
 // Increment the version number whenever the ExtSaveData structure is changed
-#define EXTSAVEDATA_VERSION 15
+#define EXTSAVEDATA_VERSION 16
 
 typedef enum {
     EXTINF_BIGGORONTRADES,
@@ -65,6 +65,7 @@ typedef struct {
     u32 scenesDiscovered[SAVEFILE_SCENES_DISCOVERED_IDX_COUNT];
     u32 entrancesDiscovered[SAVEFILE_ENTRANCES_DISCOVERED_IDX_COUNT];
     u8 permadeath;
+    u8 gloomedHeart;
     u8 triforcePieces;
     // Ingame Options, all need to be s8
     s8 option_EnableBGM;

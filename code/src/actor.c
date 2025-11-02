@@ -82,6 +82,7 @@
 #include "lizalfos.h"
 #include "stalfos.h"
 #include "bubble.h"
+#include "ganondorf.h"
 
 #define OBJECT_GI_KEY 170
 #define OBJECT_GI_BOSSKEY 185
@@ -143,6 +144,7 @@ void Actor_Init() {
     gActorOverlayTable[0x2F].initInfo->init = EnDodojr_rInit;
 
     gActorOverlayTable[0x33].initInfo->type   = ACTORTYPE_ENEMY;
+    gActorOverlayTable[0x33].initInfo->init   = EnTorch2_rInit;
     gActorOverlayTable[0x33].initInfo->update = EnTorch2_rUpdate;
 
     gActorOverlayTable[0x3A].initInfo->update = EnEiyer_rUpdate;
@@ -210,6 +212,8 @@ void Actor_Init() {
     gActorOverlayTable[0xE6].initInfo->init = BgBdanSwitch_rInit;
 
     gActorOverlayTable[0xE7].initInfo->init = EnMa1_rInit;
+
+    gActorOverlayTable[0xE8].initInfo->update = BossGanon_rUpdate;
 
     gActorOverlayTable[0xF1].initInfo->init    = ItemOcarina_rInit;
     gActorOverlayTable[0xF1].initInfo->destroy = ItemOcarina_rDestroy;
@@ -293,6 +297,8 @@ void Actor_Init() {
     gActorOverlayTable[0x191].initInfo->update = BgSpot12Saku_rUpdate;
 
     gActorOverlayTable[0x192].initInfo->init = EnHintnuts_rInit;
+
+    gActorOverlayTable[0x193].initInfo->update = EnNutsball_rUpdate;
 
     gActorOverlayTable[0x195].initInfo->init = EnShopnuts_rInit;
 
@@ -525,9 +531,9 @@ void Actor_rDraw(Actor* actor, GlobalContext* globalCtx) {
 
     // As a temporary way to mark invulnerable enemies whose soul has not been collected yet,
     // the model will not be rendered and a flame will take its place.
-    s32 shouldDrawSoulless = !EnemySouls_CheckSoulForActor(actor) &&   // soul not owned;
-                             actor->scale.x != 0 &&                    // if scale is 0, enemy is invisible;
-                             actor->id != 0x11D && actor->id != 0x06B; // flying traps will appear normal.
+    s32 shouldDrawSoulless = !EnemySouls_CheckSoulForActor(actor) && // soul not owned;
+                             actor->scale.x != 0 &&                  // if scale is 0, enemy is invisible;
+                             !FlyingTraps_IsHiddenTrap(actor);       // hidden flying traps will appear normal.
     if (shouldDrawSoulless && (PauseContext_GetState() == 0) &&
         gSettingsContext.soullessEnemiesLook == SOULLESSLOOK_PURPLE_FLAME) {
         s32 velFrameIdx = (rGameplayFrames % 16);
@@ -562,6 +568,12 @@ s32 Actor_CollisionATvsAC(Collider* at, Collider* ac) {
          // randomized enemy touching Iron Knuckle's thrones and pillars
          (ac->actor->id == ACTOR_BG_JYA_IRONOBJ && at->actor != NULL && at->actor->id != ACTOR_IRON_KNUCKLE))) {
         return 0; // ignore this collision
+    }
+
+    // Detect collider hits (damageless and shielded) only if the relevant Gloom Mode is enabled.
+    if (gSettingsContext.gloomMode == GLOOMMODE_COLLISION && ac->actor == &PLAYER->actor &&
+        !Player_InBlockingCsMode(gGlobalContext, PLAYER)) {
+        Player_OnHit();
     }
 
     return 1; // continue as normal

@@ -163,6 +163,10 @@ typedef enum {
 typedef enum {
     SHOPSANITY_PRICE_RANDOM,
     SHOPSANITY_PRICE_AFFORDABLE,
+    SHOPSANITY_PRICE_CHILD,
+    SHOPSANITY_PRICE_ADULT,
+    SHOPSANITY_PRICE_GIANT,
+    SHOPSANITY_PRICE_TYCOON,
 } ShopsanityPriceSetting;
 
 typedef enum {
@@ -340,6 +344,14 @@ typedef enum {
     DAMAGEMULTIPLIER_SEXDECUPLE,
     DAMAGEMULTIPLIER_OHKO,
 } DamageMultiplierSetting;
+
+typedef enum {
+    GLOOMMODE_OFF,
+    GLOOMMODE_DEATH,
+    GLOOMMODE_DAMAGE,
+    GLOOMMODE_COLLISION,
+    GLOOMMODE_EMPTY,
+} GloomModeSetting;
 
 typedef enum {
     STARTINGTIME_DAY,
@@ -581,6 +593,7 @@ typedef struct {
 
     u8 damageMultiplier;
     u8 permadeath;
+    u8 gloomMode;
     u8 startingTime;
     u8 gossipStoneHints;
     u8 totAltarHints;

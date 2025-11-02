@@ -8,6 +8,8 @@
 #include "entrance.h"
 #include "multiplayer.h"
 #include "item_override.h"
+#include "permadeath.h"
+#include "gloom.h"
 
 #define DECLARE_EXTSAVEDATA
 #include "savefile.h"
@@ -853,6 +855,11 @@ void SaveFile_AfterLoadGame(void) {
 
         ItemOverride_PushHardcodedItem(GI_GANON_BOSS_KEY);
     }
+}
+
+void SaveFile_OnGameOver(void) {
+    Gloom_OnDeath();
+    Permadeath_DeleteSave();
 }
 
 void SaveFile_SetCollectedRandomizedRespawningCollectibleFlag(s16 sceneNum, u16 collectibleFlag) {

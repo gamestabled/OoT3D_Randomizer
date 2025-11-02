@@ -185,6 +185,10 @@ bool LoadPreset(std::string_view presetName, OptionCategory category) {
             }
         }
     }
+
+    // Update settings and menus that need to be hidden or revealed.
+    Settings::ForceChange(0, nullptr);
+
     return true;
 }
 

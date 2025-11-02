@@ -146,6 +146,10 @@ extern string_view shopsRandom;
 
 extern string_view shopPriceRandom;
 extern string_view shopPriceAffordable;
+extern string_view shopPriceChild;
+extern string_view shopPriceAdult;
+extern string_view shopPriceGiant;
+extern string_view shopPriceTycoon;
 
 extern string_view tokensOff;
 extern string_view tokensDungeon;
@@ -295,6 +299,13 @@ extern string_view mapsShowDungeonModesDesc;
 extern string_view damageMultiDesc;
 
 extern string_view permadeathDesc;
+
+extern string_view gloomModeOffDesc;
+extern string_view gloomModeDeathDesc;
+extern string_view gloomModeDamageDesc;
+extern string_view gloomModeHitDesc;
+extern string_view gloomModeCollisionDesc;
+extern string_view gloomModeEmptyDesc;
 
 extern string_view startingTimeDesc;
 

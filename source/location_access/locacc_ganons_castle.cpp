@@ -212,31 +212,32 @@ void AreaTable_Init_GanonsCastle() {
                  {});
     }
 
-    areaTable[GANONS_CASTLE_TOWER] = Area(
-        "Ganon's Castle Tower", "Ganons Castle", GANONS_CASTLE, NO_DAY_NIGHT_CYCLE,
-        {
-            // Events
-            EventAccess(&DekuBabaSticks, { [] { return DekuBabaSticks || CanGetDekuBabaSticks(10, 0, 7); } }),
-            EventAccess(&DekuBabaNuts, { [] { return DekuBabaNuts || CanGetDekuBabaNuts(10, 0, 7); } }),
-        },
-        {
-            // Locations
-            LocationAccess(GANONS_TOWER_BOSS_KEY_CHEST, { [] {
-                               return CanPassEnemy(10, 0, 7, 5) && CanDefeatEnemies(10, 0, 0) &&
-                                      CanDefeatEnemies(10, 0, 2);
-                           } }),
-            LocationAccess(GANONDORF_HINT, { [] {
-                               return CanPassEnemy(10, 0, 7, 5) && CanDefeatEnemies(10, 0, 0) &&
-                                      CanDefeatEnemies(10, 0, 2) && CanDefeatEnemies(10, 0, 4) && BossKeyGanonsCastle &&
-                                      (CanUse(KOKIRI_SWORD) || CanUse(MASTER_SWORD) || CanUse(BIGGORON_SWORD));
-                           } }),
-            LocationAccess(GANON, { [] {
-                               return CanPassEnemy(10, 0, 7, 5) && CanDefeatEnemies(10, 0, 0) &&
-                                      CanDefeatEnemies(10, 0, 2) && CanDefeatEnemies(10, 0, 4) && SoulGanon &&
-                                      BossKeyGanonsCastle && CanUse(LIGHT_ARROWS) && CanUse(MASTER_SWORD) && Hearts > 0;
-                           } }),
-        },
-        {});
+    areaTable[GANONS_CASTLE_TOWER] =
+        Area("Ganon's Castle Tower", "Ganons Castle", GANONS_CASTLE, NO_DAY_NIGHT_CYCLE,
+             {
+                 // Events
+                 EventAccess(&DekuBabaSticks, { [] { return DekuBabaSticks || CanGetDekuBabaSticks(10, 0, 7); } }),
+                 EventAccess(&DekuBabaNuts, { [] { return DekuBabaNuts || CanGetDekuBabaNuts(10, 0, 7); } }),
+             },
+             {
+                 // Locations
+                 LocationAccess(GANONS_TOWER_BOSS_KEY_CHEST, { [] {
+                                    return CanPassEnemy(10, 0, 7, 5) && CanDefeatEnemies(10, 0, 0) &&
+                                           CanDefeatEnemies(10, 0, 2);
+                                } }),
+                 LocationAccess(GANONDORF_HINT, { [] {
+                                    return CanPassEnemy(10, 0, 7, 5) && CanDefeatEnemies(10, 0, 0) &&
+                                           CanDefeatEnemies(10, 0, 2) && CanDefeatEnemies(10, 0, 4) &&
+                                           BossKeyGanonsCastle &&
+                                           (CanUse(KOKIRI_SWORD) || CanUse(MASTER_SWORD) || CanUse(BIGGORON_SWORD));
+                                } }),
+                 LocationAccess(GANON, { [] {
+                                    return CanPassEnemy(10, 0, 7, 5) && CanDefeatEnemies(10, 0, 0) &&
+                                           CanDefeatEnemies(10, 0, 2) && CanDefeatEnemies(10, 0, 4) && SoulGanon &&
+                                           BossKeyGanonsCastle && CanUse(LIGHT_ARROWS) && CanUse(MASTER_SWORD);
+                                } }),
+             },
+             {});
 
     /*---------------------------
     |   MASTER QUEST DUNGEON    |

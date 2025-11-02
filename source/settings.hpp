@@ -154,15 +154,6 @@ class Option {
         }
     }
 
-    void SetDelayedOption() {
-        delayedOption = selectedOption;
-    }
-
-    void RestoreDelayedOption() {
-        selectedOption = delayedOption;
-        SetVariable();
-    }
-
     void SetSelectedIndex(size_t idx) {
         selectedOption = idx;
         if (selectedOption >= options.size()) {
@@ -252,7 +243,6 @@ class Option {
     std::vector<std::string> options;
     std::vector<std::string_view> optionDescriptions;
     u8 selectedOption = 0;
-    u8 delayedOption  = 0;
     bool locked       = false;
     bool hidden       = false;
     OptionCategory category;
@@ -493,6 +483,7 @@ extern Option CompassesShowWotH;
 extern Option MapsShowDungeonMode;
 extern Option DamageMultiplier;
 extern Option Permadeath;
+extern Option GloomMode;
 extern Option StartingTime;
 extern Option ChestAnimations;
 extern Option ChestAppearance;

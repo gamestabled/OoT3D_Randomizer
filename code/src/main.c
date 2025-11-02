@@ -16,6 +16,7 @@
 #include "objects.h"
 #include "enemizer.h"
 #include "scene.h"
+#include "gloom.h"
 
 #include "z3D/z3D.h"
 #include "3ds/extdata.h"
@@ -55,6 +56,7 @@ void before_GlobalContext_Update(GlobalContext* globalCtx) {
     ExtendedObject_UpdateEntries();
     Model_UpdateAll(globalCtx);
     Input_Update();
+    Gloom_Update();
     SaveFile_EnforceHealthLimit();
     Settings_SkipSongReplays();
     Multiplayer_Run();

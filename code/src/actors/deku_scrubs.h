@@ -26,8 +26,20 @@ typedef struct EnHintnuts {
 } EnHintnuts;
 _Static_assert(sizeof(EnHintnuts) == 0x638, "EnHintnuts size");
 
+typedef struct EnNutsball {
+    /* 0x0000 */ Actor actor;
+    /* 0x01A4 */ void* actionFunc;
+    /* 0x01A8 */ s8 requiredObjectSlot;
+    /* 0x01AA */ s16 timer;
+    /* 0x01AC */ ColliderCylinder collider;
+    /* 0x0204 */ SkeletonAnimationModel* saModel;
+} EnNutsball;
+_Static_assert(sizeof(EnNutsball) == 0x208, "EnNutsball size");
+
 void EnDntNomal_rUpdate(Actor* thisx, GlobalContext* globalCtx);
 
 void EnHintnuts_rInit(Actor* thisx, GlobalContext* globalCtx);
+
+void EnNutsball_rUpdate(Actor* thisx, GlobalContext* globalCtx);
 
 #endif

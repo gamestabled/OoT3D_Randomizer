@@ -19,6 +19,7 @@ typedef struct EnTorch2 {
 } EnTorch2;
 _Static_assert(sizeof(EnTorch2) == 0x2AA8, "EnTorch2 size");
 
+void EnTorch2_rInit(Actor* thisx, GlobalContext* globalCtx);
 void EnTorch2_rUpdate(Actor* thisx, GlobalContext* globalCtx);
 
 #endif //_DARK_LINK_H_
