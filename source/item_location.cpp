@@ -208,7 +208,10 @@ void LocationTable_Init() {
     locationTable[ZR_NEAR_DOMAIN_FREESTANDING_POH]       = ItemLocation::Collectable(0x54, 0x0B, "ZR Near Domain Freestanding PoH",      ZR_NEAR_DOMAIN_FREESTANDING_POH,       PIECE_OF_HEART,            {Category::cZorasRiver,},                                                                                                                                                      SpoilerCollectionCheckGroup::GROUP_ZORAS_RIVER);
     locationTable[ZR_DEKU_SCRUB_GROTTO_REAR]             = ItemLocation::GrottoScrub(0xEB, 0x39, "ZR Deku Scrub Grotto Rear",            ZR_DEKU_SCRUB_GROTTO_REAR,             BUY_RED_POTION_30,         {Category::cZorasRiver, Category::cDekuScrub, Category::cGrotto},                                                     SpoilerCollectionCheck::Scrub(0x15, 0x08),               SpoilerCollectionCheckGroup::GROUP_ZORAS_RIVER);
     locationTable[ZR_DEKU_SCRUB_GROTTO_FRONT]            = ItemLocation::GrottoScrub(0xEB, 0x3A, "ZR Deku Scrub Grotto Front",           ZR_DEKU_SCRUB_GROTTO_FRONT,            BUY_GREEN_POTION,          {Category::cZorasRiver, Category::cDekuScrub, Category::cGrotto},                                                     SpoilerCollectionCheck::Scrub(0x15, 0x09),               SpoilerCollectionCheckGroup::GROUP_ZORAS_RIVER);
-
+    locationTable[ZR_WATERFALL_RED_RUPEE_1]              = ItemLocation::Collectable(0x54, 0x20, "ZR Waterfall Red Rupee 1",             ZR_WATERFALL_RED_RUPEE_1,              RED_RUPEE,                 {Category::cZorasRiver, Category::cFreestandingRupee},                                                                                                                         SpoilerCollectionCheckGroup::GROUP_ZORAS_RIVER);
+    locationTable[ZR_WATERFALL_RED_RUPEE_2]              = ItemLocation::Collectable(0x54, 0x21, "ZR Waterfall Red Rupee 2",             ZR_WATERFALL_RED_RUPEE_2,              RED_RUPEE,                 {Category::cZorasRiver, Category::cFreestandingRupee},                                                                                                                         SpoilerCollectionCheckGroup::GROUP_ZORAS_RIVER);
+    locationTable[ZR_WATERFALL_RED_RUPEE_3]              = ItemLocation::Collectable(0x54, 0x22, "ZR Waterfall Red Rupee 3",             ZR_WATERFALL_RED_RUPEE_3,              RED_RUPEE,                 {Category::cZorasRiver, Category::cFreestandingRupee},                                                                                                                         SpoilerCollectionCheckGroup::GROUP_ZORAS_RIVER);
+    locationTable[ZR_WATERFALL_RED_RUPEE_4]              = ItemLocation::Collectable(0x54, 0x23, "ZR Waterfall Red Rupee 4",             ZR_WATERFALL_RED_RUPEE_4,              RED_RUPEE,                 {Category::cZorasRiver, Category::cFreestandingRupee},                                                                                                                         SpoilerCollectionCheckGroup::GROUP_ZORAS_RIVER);
     // Zoras Domain
     locationTable[ZD_CHEST]                              = ItemLocation::Chest      (0x58, 0x00, "ZD Chest",                             ZD_CHEST,                              PIECE_OF_HEART,            {Category::cZorasDomain,},                                                                                                                                                     SpoilerCollectionCheckGroup::GROUP_ZORAS_DOMAIN);
     locationTable[ZD_DIVING_MINIGAME]                    = ItemLocation::Base       (0x58, 0x37, "ZD Diving Minigame",                   ZD_DIVING_MINIGAME,                    PROGRESSIVE_SCALE,         {Category::cZorasDomain, Category::cMinigame,},                                                                       SpoilerCollectionCheck::EventChkInf(0x38),               SpoilerCollectionCheckGroup::GROUP_ZORAS_DOMAIN);
@@ -1385,6 +1388,10 @@ std::vector<LocationKey> overworldLocations = {
   ZR_NEAR_DOMAIN_FREESTANDING_POH,
   ZR_DEKU_SCRUB_GROTTO_REAR,
   ZR_DEKU_SCRUB_GROTTO_FRONT,
+  ZR_WATERFALL_RED_RUPEE_1,
+  ZR_WATERFALL_RED_RUPEE_2,
+  ZR_WATERFALL_RED_RUPEE_3,
+  ZR_WATERFALL_RED_RUPEE_4,
 
   // Zoras Domain
   ZD_CHEST,

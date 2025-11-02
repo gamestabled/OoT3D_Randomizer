@@ -1398,6 +1398,26 @@ void HintTable_Init_Exclude_Overworld() {
                        Text{"a #scrub underground duo# sells", /*french*/"le #duo de peste Mojo près du fleuve# vend", /*spanish*/"un #par de dekus subterráneos# del río venden", /*italian*/"una #coppia di cespugli vicino al fiume# vende", /*german*/"die Ware, des #Deku-Händler-Duos eines Erdlochs#, |wäre|wären|"},
     });
 
+        hintTable[ZR_WATERFALL_RED_RUPEE_1] = HintText::Exclude({
+                       // obscure text
+                       Text{"EN: ZR_WATERFALL_RED_RUPEE_1 HINT", /*french*/"FR: ZR_WATERFALL_RED_RUPEE_1 HINT", /*spanish*/"ES: ZR_WATERFALL_RED_RUPEE_1 HINT", /*italian*/"IT: ZR_WATERFALL_RED_RUPEE_1 HINT", /*german*/"DE: ZR_WATERFALL_RED_RUPEE_1 HINT"},
+    });
+            hintTable[ZR_WATERFALL_RED_RUPEE_2] = HintText::Exclude({
+                       // obscure text
+                       Text{"EN: ZR_WATERFALL_RED_RUPEE_2 HINT", /*french*/"FR: ZR_WATERFALL_RED_RUPEE_2 HINT", /*spanish*/"ES: ZR_WATERFALL_RED_RUPEE_2 HINT", /*italian*/"IT: ZR_WATERFALL_RED_RUPEE_2 HINT", /*german*/"DE: ZR_WATERFALL_RED_RUPEE_2 HINT"},
+    });
+
+            hintTable[ZR_WATERFALL_RED_RUPEE_3] = HintText::Exclude({
+                       // obscure text
+                       Text{"EN: ZR_WATERFALL_RED_RUPEE_3 HINT", /*french*/"FR: ZR_WATERFALL_RED_RUPEE_3 HINT", /*spanish*/"ES: ZR_WATERFALL_RED_RUPEE_3 HINT", /*italian*/"IT: ZR_WATERFALL_RED_RUPEE_3 HINT", /*german*/"DE: ZR_WATERFALL_RED_RUPEE_3 HINT"},
+    });
+
+            hintTable[ZR_WATERFALL_RED_RUPEE_4] = HintText::Exclude({
+                       // obscure text
+                       Text{"EN: ZR_WATERFALL_RED_RUPEE_4 HINT", /*french*/"FR: ZR_WATERFALL_RED_RUPEE_4 HINT", /*spanish*/"ES: ZR_WATERFALL_RED_RUPEE_4 HINT", /*italian*/"IT: ZR_WATERFALL_RED_RUPEE_4 HINT", /*german*/"DE: ZR_WATERFALL_RED_RUPEE_4 HINT"},
+    });
+
+
 
     hintTable[LH_DEKU_SCRUB_GROTTO_LEFT] = HintText::Exclude({
                        // obscure text

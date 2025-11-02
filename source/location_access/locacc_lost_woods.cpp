@@ -249,35 +249,35 @@ void AreaTable_Init_LostWoods() {
           LocationAccess(LW_GOSSIP_STONE, { [] { return true; } }),
           LocationAccess(LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_1, { [] {
                              return IsChild &&
-                                    (CanDive || (CanUse(IRON_BOOTS) && WaterTimer >= 4) || CanUse(BOOMERANG));
+                                    (CanDive || (CanUse(IRON_BOOTS) && CanSurviveUnderwaterFor(4)) || CanUse(BOOMERANG));
                          } }),
           LocationAccess(LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_2, { [] {
                              return IsChild &&
-                                    (CanDive || (CanUse(IRON_BOOTS) && WaterTimer >= 4) || CanUse(BOOMERANG));
+                                    (CanDive || (CanUse(IRON_BOOTS) && CanSurviveUnderwaterFor(4)) || CanUse(BOOMERANG));
                          } }),
           LocationAccess(LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_3, { [] {
                              return IsChild &&
-                                    (CanDive || (CanUse(IRON_BOOTS) && WaterTimer >= 4) || CanUse(BOOMERANG));
+                                    (CanDive || (CanUse(IRON_BOOTS) && CanSurviveUnderwaterFor(4)) || CanUse(BOOMERANG));
                          } }),
           LocationAccess(LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_4, { [] {
                              return IsChild &&
-                                    (CanDive || (CanUse(IRON_BOOTS) && WaterTimer >= 4) || CanUse(BOOMERANG));
+                                    (CanDive || (CanUse(IRON_BOOTS) && CanSurviveUnderwaterFor(4)) || CanUse(BOOMERANG));
                          } }),
           LocationAccess(LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_5, { [] {
                              return IsChild &&
-                                    (CanDive || (CanUse(IRON_BOOTS) && WaterTimer >= 4) || CanUse(BOOMERANG));
+                                    (CanDive || (CanUse(IRON_BOOTS) && CanSurviveUnderwaterFor(4)) || CanUse(BOOMERANG));
                          } }),
           LocationAccess(LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_6, { [] {
                              return IsChild &&
-                                    (CanDive || (CanUse(IRON_BOOTS) && WaterTimer >= 4) || CanUse(BOOMERANG));
+                                    (CanDive || (CanUse(IRON_BOOTS) && CanSurviveUnderwaterFor(4)) || CanUse(BOOMERANG));
                          } }),
           LocationAccess(LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_7, { [] {
                              return IsChild &&
-                                    (CanDive || (CanUse(IRON_BOOTS) && WaterTimer >= 4) || CanUse(BOOMERANG));
+                                    (CanDive || (CanUse(IRON_BOOTS) && CanSurviveUnderwaterFor(4)) || CanUse(BOOMERANG));
                          } }),
           LocationAccess(LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_8, { [] {
                              return IsChild &&
-                                    (CanDive || (CanUse(IRON_BOOTS) && WaterTimer >= 4) || CanUse(BOOMERANG));
+                                    (CanDive || (CanUse(IRON_BOOTS) && CanSurviveUnderwaterFor(4)) || CanUse(BOOMERANG));
                          } }) },
         {
             // Exits

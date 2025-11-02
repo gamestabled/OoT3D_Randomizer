@@ -255,9 +255,9 @@ void AreaTable_Init_HyruleField() {
             LocationAccess(LH_UNDERWATER_ITEM, { [] { return IsChild && CanDive; } }),
             LocationAccess(LH_UNDER_WATER_GREEN_RUPEE_1, { [] { return IsChild; } }),
             LocationAccess(LH_UNDER_WATER_GREEN_RUPEE_2,
-                           { [] { return IsChild && (CanDive || (CanUse(IRON_BOOTS) && WaterTimer >= 8)); } }),
+                           { [] { return IsChild && (CanDive || (CanUse(IRON_BOOTS) && CanSurviveUnderwaterFor(8))); } }),
             LocationAccess(LH_UNDER_WATER_GREEN_RUPEE_3,
-                           { [] { return IsChild && (CanDive || (CanUse(IRON_BOOTS) && WaterTimer >= 8)); } }),
+                           { [] { return IsChild && (CanDive || (CanUse(IRON_BOOTS) && CanSurviveUnderwaterFor(8))); } }),
 
             LocationAccess(LH_SUN, { [] { return IsAdult && WaterTempleClear && CanUse(BOW); } }),
             LocationAccess(LH_FREESTANDING_POH,
@@ -358,11 +358,11 @@ void AreaTable_Init_HyruleField() {
                               CanUse(NAYRUS_LOVE) && CanDoGlitch(GlitchType::CutsceneDive, GlitchDifficulty::NOVICE));
                   } }),
             LocationAccess(LH_LAB_DIVE_RED_RUPEE_1,
-                           { [] { return ProgressiveScale >= 2 || (CanUse(IRON_BOOTS) && WaterTimer >= 8); } }),
+                           { [] { return ProgressiveScale >= 2 || (CanUse(IRON_BOOTS) && CanSurviveUnderwaterFor(8)); } }),
             LocationAccess(LH_LAB_DIVE_RED_RUPEE_2,
-                           { [] { return ProgressiveScale >= 2 || (CanUse(IRON_BOOTS) && WaterTimer >= 8); } }),
+                           { [] { return ProgressiveScale >= 2 || (CanUse(IRON_BOOTS) && CanSurviveUnderwaterFor(8)); } }),
             LocationAccess(LH_LAB_DIVE_RED_RUPEE_3,
-                           { [] { return ProgressiveScale >= 2 || (CanUse(IRON_BOOTS) && WaterTimer >= 8); } }),
+                           { [] { return ProgressiveScale >= 2 || (CanUse(IRON_BOOTS) && CanSurviveUnderwaterFor(8)); } }),
             LocationAccess(LH_TRADE_FROG, { [] { return IsAdult && EyeballFrog; } }),
         },
         {
