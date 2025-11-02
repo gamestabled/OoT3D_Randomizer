@@ -354,14 +354,13 @@ static u32 ItemOverride_PlayerIsReadyOnLand(void) {
 }
 
 static u32 ItemOverride_PlayerIsReadyInWater(void) {
-    CitraPrint("Checks PlayerIsReadyInWater");
     if ((PLAYER->stateFlags1 & 0xF4AC2085) == 0 /*&& (PLAYER->actor.bgCheckFlags & 0x0001)*/ &&
         (PLAYER->stateFlags2 & 0x000C0000) == 0 && PLAYER->actor.draw != NULL &&
         gGlobalContext->actorCtx.titleCtx.delayTimer == 0 && gGlobalContext->actorCtx.titleCtx.durationTimer == 0 &&
         gGlobalContext->actorCtx.titleCtx.alpha == 0 && (PLAYER->stateFlags1 & 0x08000000) != 0 && // Player is Swimming
-        (PLAYER->stateFlags1 & 0x400) == 0 &&           // Player is not already receiving an item when surfacing
-        gGlobalContext->sceneLoadFlag == 0 &&           // Another scene isn't about to be loaded
-        // rPendingOverrideQueue[0].key.type == OVR_TEMPLE // Must be an item received for completing a dungeon
+        (PLAYER->stateFlags1 & 0x400) == 0 && // Player is not already receiving an item when surfacing
+        gGlobalContext->sceneLoadFlag == 0 && // Another scene isn't about to be loaded
+        ItemOverride_IsAPendingOverride()
         // && Multiworld is off
         // && (z64_event_state_1 & 0x20) == 0 //TODO
         // && (z64_game.camera_2 == 0) //TODO
@@ -379,14 +378,12 @@ static u32 ItemOverride_PlayerIsReadyInWater(void) {
 
 static u32 ItemOverride_PlayerIsReady(void) {
     if (ItemOverride_PlayerIsReadyOnLand()) {
-        CitraPrint("READY_ON_LAND");
         return READY_ON_LAND;
     }
     if (ItemOverride_PlayerIsReadyInWater()) {
-        CitraPrint("READY_IN_WATER");
         return READY_IN_WATER;
     }
-    
+
     return 0;
 }
 
