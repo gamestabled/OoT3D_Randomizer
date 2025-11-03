@@ -12,8 +12,11 @@
 static std::array<ItemLocation, KEY_ENUM_MAX> locationTable;
 
 void LocationTable_Init() {
+    // No area                                                                       scene flag  name                                    hint key (hint_list.cpp)               vanilla item               categories                                                                                                            collection check (if needed)                             collection check group
     locationTable[NONE]                                  = ItemLocation::Base       (0xFF, 0xFF, "Invalid Location",                     NONE,                                  NONE,                      {},                                                                                                                   SpoilerCollectionCheck::None());
-    // Kokiri Forest                                                                 scene  flag  name                                    hint key (hint_list.cpp)               vanilla item               categories                                                                                                            collection check (if needed)                             collection check group
+    locationTable[TRIFORCE_HUNT_GOAL]                    = ItemLocation::Base       (0xFF, 0xFF, "Triforce Hunt Goal",                   NONE,                                  TRIFORCE,                  {},                                                                                                                   SpoilerCollectionCheck::None());
+
+    // Kokiri Forest
     locationTable[KF_KOKIRI_SWORD_CHEST]                 = ItemLocation::Chest      (0x55, 0x00, "KF Kokiri Sword Chest",                KF_KOKIRI_SWORD_CHEST,                 KOKIRI_SWORD,              {Category::cKokiriForest, Category::cForest,},                                                                                                                                 SpoilerCollectionCheckGroup::GROUP_KOKIRI_FOREST);
     locationTable[KF_MIDOS_TOP_LEFT_CHEST]               = ItemLocation::Chest      (0x28, 0x00, "KF Mido Top Left Chest",               KF_MIDOS_TOP_LEFT_CHEST,               BLUE_RUPEE,                {Category::cKokiriForest, Category::cForest,},                                                                                                                                 SpoilerCollectionCheckGroup::GROUP_KOKIRI_FOREST);
     locationTable[KF_MIDOS_TOP_RIGHT_CHEST]              = ItemLocation::Chest      (0x28, 0x01, "KF Mido Top Right Chest",              KF_MIDOS_TOP_RIGHT_CHEST,              BLUE_RUPEE,                {Category::cKokiriForest, Category::cForest,},                                                                                                                                 SpoilerCollectionCheckGroup::GROUP_KOKIRI_FOREST);
@@ -1473,6 +1476,10 @@ void GenerateLocationPool() {
     allLocations.clear();
     AddLocation(LINKS_POCKET);
     AddLocations(overworldLocations);
+
+    if (Settings::TriforceHunt) {
+        AddLocation(TRIFORCE_HUNT_GOAL);
+    }
 
     for (auto dungeon : Dungeon::dungeonList) {
         AddLocations(dungeon->GetDungeonLocations());

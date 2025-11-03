@@ -158,6 +158,10 @@ void WriteIngameSpoilerLog() {
         if (loc->IsExcluded()) {
             continue;
         }
+        // Win conditions that don't apply
+        else if ((key == GANON || key == TRIFORCE_HUNT_GOAL) && loc->GetPlacedItemKey() != TRIFORCE) {
+            continue;
+        }
         // Cows
         else if (!Settings::ShuffleCows && loc->IsCategory(Category::cCow)) {
             continue;
@@ -230,7 +234,7 @@ void WriteIngameSpoilerLog() {
         splrDatLoc->ItemLocations[spoilerItemIndex].LocationFlag        = loc->GetCollectionCheck().flag;
 
         // Collect Type and Reveal Type
-        if (key == GANON) {
+        if (key == GANON || key == TRIFORCE_HUNT_GOAL) {
             splrDatLoc->ItemLocations[spoilerItemIndex].CollectType = COLLECTTYPE_NEVER;
             splrDatLoc->ItemLocations[spoilerItemIndex].RevealType  = REVEALTYPE_ALWAYS;
         } else if (key == TOT_LIGHT_ARROWS_CUTSCENE &&
