@@ -221,7 +221,25 @@ void LocationTable_Init() {
     // Zoras Fountain
     locationTable[ZF_ICEBERG_FREESTANDING_POH]           = ItemLocation::Collectable(0x59, 0x01, "ZF Iceberg Freestanding PoH",          ZF_ICEBERG_FREESTANDING_POH,           PIECE_OF_HEART,            {Category::cZorasFountain,},                                                                                                                                                   SpoilerCollectionCheckGroup::GROUP_ZORAS_FOUNTAIN);
     locationTable[ZF_BOTTOM_FREESTANDING_POH]            = ItemLocation::Collectable(0x59, 0x14, "ZF Bottom Freestanding PoH",           ZF_BOTTOM_FREESTANDING_POH,            PIECE_OF_HEART,            {Category::cZorasFountain,},                                                                                                                                                   SpoilerCollectionCheckGroup::GROUP_ZORAS_FOUNTAIN);
-
+    locationTable[ZF_UNDERWATER_GREEN_RUPEE_1]           = ItemLocation::Collectable(0x59, 0x20, "ZF Underwater Green Rupee 1",          ZF_UNDERWATER_GREEN_RUPEE_1,              GREEN_RUPEE,                 {Category::cZorasFountain, Category::cFreestandingRupee},                                                                                                                 SpoilerCollectionCheckGroup::GROUP_ZORAS_FOUNTAIN);
+    locationTable[ZF_UNDERWATER_GREEN_RUPEE_2]           = ItemLocation::Collectable(0x59, 0x21, "ZF Underwater Green Rupee 2",          ZF_UNDERWATER_GREEN_RUPEE_2,              GREEN_RUPEE,                 {Category::cZorasFountain, Category::cFreestandingRupee},                                                                                                                 SpoilerCollectionCheckGroup::GROUP_ZORAS_FOUNTAIN);
+    locationTable[ZF_UNDERWATER_GREEN_RUPEE_3]           = ItemLocation::Collectable(0x59, 0x22, "ZF Underwater Green Rupee 3",          ZF_UNDERWATER_GREEN_RUPEE_3,              GREEN_RUPEE,                 {Category::cZorasFountain, Category::cFreestandingRupee},                                                                                                                 SpoilerCollectionCheckGroup::GROUP_ZORAS_FOUNTAIN);
+    locationTable[ZF_UNDERWATER_GREEN_RUPEE_4]           = ItemLocation::Collectable(0x59, 0x23, "ZF Underwater Green Rupee 4",          ZF_UNDERWATER_GREEN_RUPEE_4,              GREEN_RUPEE,                 {Category::cZorasFountain, Category::cFreestandingRupee},                                                                                                                 SpoilerCollectionCheckGroup::GROUP_ZORAS_FOUNTAIN);
+    locationTable[ZF_UNDERWATER_GREEN_RUPEE_5]           = ItemLocation::Collectable(0x59, 0x24, "ZF Underwater Green Rupee 5",          ZF_UNDERWATER_GREEN_RUPEE_5,              GREEN_RUPEE,                 {Category::cZorasFountain, Category::cFreestandingRupee},                                                                                                                 SpoilerCollectionCheckGroup::GROUP_ZORAS_FOUNTAIN);
+    locationTable[ZF_UNDERWATER_GREEN_RUPEE_6]           = ItemLocation::Collectable(0x59, 0x25, "ZF Underwater Green Rupee 6",          ZF_UNDERWATER_GREEN_RUPEE_6,              GREEN_RUPEE,                 {Category::cZorasFountain, Category::cFreestandingRupee},                                                                                                                 SpoilerCollectionCheckGroup::GROUP_ZORAS_FOUNTAIN);
+    locationTable[ZF_UNDERWATER_GREEN_RUPEE_7]           = ItemLocation::Collectable(0x59, 0x26, "ZF Underwater Green Rupee 7",          ZF_UNDERWATER_GREEN_RUPEE_7,              GREEN_RUPEE,                 {Category::cZorasFountain, Category::cFreestandingRupee},                                                                                                                 SpoilerCollectionCheckGroup::GROUP_ZORAS_FOUNTAIN);
+    locationTable[ZF_UNDERWATER_GREEN_RUPEE_8]           = ItemLocation::Collectable(0x59, 0x27, "ZF Underwater Green Rupee 8",          ZF_UNDERWATER_GREEN_RUPEE_8,              GREEN_RUPEE,                 {Category::cZorasFountain, Category::cFreestandingRupee},                                                                                                                 SpoilerCollectionCheckGroup::GROUP_ZORAS_FOUNTAIN);
+    locationTable[ZF_UNDERWATER_GREEN_RUPEE_9]           = ItemLocation::Collectable(0x59, 0x28, "ZF Underwater Green Rupee 9",          ZF_UNDERWATER_GREEN_RUPEE_9,              GREEN_RUPEE,                 {Category::cZorasFountain, Category::cFreestandingRupee},                                                                                                                 SpoilerCollectionCheckGroup::GROUP_ZORAS_FOUNTAIN);
+    locationTable[ZF_UNDERWATER_GREEN_RUPEE_10]           = ItemLocation::Collectable(0x59, 0x29, "ZF Underwater Green Rupee 10",          ZF_UNDERWATER_GREEN_RUPEE_10,              GREEN_RUPEE,                 {Category::cZorasFountain, Category::cFreestandingRupee},                                                                                                                 SpoilerCollectionCheckGroup::GROUP_ZORAS_FOUNTAIN);
+    locationTable[ZF_UNDERWATER_GREEN_RUPEE_11]           = ItemLocation::Collectable(0x59, 0x2A, "ZF Underwater Green Rupee 11",          ZF_UNDERWATER_GREEN_RUPEE_11,              GREEN_RUPEE,                 {Category::cZorasFountain, Category::cFreestandingRupee},                                                                                                                 SpoilerCollectionCheckGroup::GROUP_ZORAS_FOUNTAIN);
+    locationTable[ZF_UNDERWATER_GREEN_RUPEE_12]           = ItemLocation::Collectable(0x59, 0x2B, "ZF Underwater Green Rupee 12",          ZF_UNDERWATER_GREEN_RUPEE_12,              GREEN_RUPEE,                 {Category::cZorasFountain, Category::cFreestandingRupee},                                                                                                                 SpoilerCollectionCheckGroup::GROUP_ZORAS_FOUNTAIN);
+    locationTable[ZF_UNDERWATER_GREEN_RUPEE_13]           = ItemLocation::Collectable(0x59, 0x2C, "ZF Underwater Green Rupee 13",          ZF_UNDERWATER_GREEN_RUPEE_13,              GREEN_RUPEE,                 {Category::cZorasFountain, Category::cFreestandingRupee},                                                                                                                 SpoilerCollectionCheckGroup::GROUP_ZORAS_FOUNTAIN);
+    locationTable[ZF_UNDERWATER_GREEN_RUPEE_14]           = ItemLocation::Collectable(0x59, 0x2D, "ZF Underwater Green Rupee 14",          ZF_UNDERWATER_GREEN_RUPEE_14,              GREEN_RUPEE,                 {Category::cZorasFountain, Category::cFreestandingRupee},                                                                                                                 SpoilerCollectionCheckGroup::GROUP_ZORAS_FOUNTAIN);
+    locationTable[ZF_UNDERWATER_GREEN_RUPEE_15]           = ItemLocation::Collectable(0x59, 0x2E, "ZF Underwater Green Rupee 15",          ZF_UNDERWATER_GREEN_RUPEE_15,              GREEN_RUPEE,                 {Category::cZorasFountain, Category::cFreestandingRupee},                                                                                                                 SpoilerCollectionCheckGroup::GROUP_ZORAS_FOUNTAIN);
+    locationTable[ZF_UNDERWATER_GREEN_RUPEE_16]           = ItemLocation::Collectable(0x59, 0x2F, "ZF Underwater Green Rupee 16",          ZF_UNDERWATER_GREEN_RUPEE_16,              GREEN_RUPEE,                 {Category::cZorasFountain, Category::cFreestandingRupee},                                                                                                                 SpoilerCollectionCheckGroup::GROUP_ZORAS_FOUNTAIN);
+    locationTable[ZF_UNDERWATER_GREEN_RUPEE_17]           = ItemLocation::Collectable(0x59, 0x30, "ZF Underwater Green Rupee 17",          ZF_UNDERWATER_GREEN_RUPEE_17,              GREEN_RUPEE,                 {Category::cZorasFountain, Category::cFreestandingRupee},                                                                                                                 SpoilerCollectionCheckGroup::GROUP_ZORAS_FOUNTAIN);
+    locationTable[ZF_UNDERWATER_GREEN_RUPEE_18]           = ItemLocation::Collectable(0x59, 0x31, "ZF Underwater Green Rupee 18",          ZF_UNDERWATER_GREEN_RUPEE_18,              GREEN_RUPEE,                 {Category::cZorasFountain, Category::cFreestandingRupee},                                                                                                                 SpoilerCollectionCheckGroup::GROUP_ZORAS_FOUNTAIN);
+    
     // Lon Lon Ranch
     locationTable[LLR_TALONS_CHICKENS]                   = ItemLocation::Base       (0x4C, 0x14, "LLR Talons Chickens",                  LLR_TALONS_CHICKENS,                   BOTTLE_WITH_MILK,          {Category::cLonLonRanch, Category::cMinigame},                                                                        SpoilerCollectionCheck::ItemGetInf(10),                  SpoilerCollectionCheckGroup::GROUP_LON_LON_RANCH);
     locationTable[LLR_FREESTANDING_POH]                  = ItemLocation::Collectable(0x4C, 0x01, "LLR Freestanding PoH",                 LLR_FREESTANDING_POH,                  PIECE_OF_HEART,            {Category::cLonLonRanch,},                                                                                                                                                     SpoilerCollectionCheckGroup::GROUP_LON_LON_RANCH);
@@ -1413,6 +1431,24 @@ std::vector<LocationKey> overworldLocations = {
   ZF_ICEBERG_FREESTANDING_POH,
   ZF_BOTTOM_FREESTANDING_POH,
   ZF_GREAT_FAIRY_REWARD,
+  ZF_UNDERWATER_GREEN_RUPEE_1,
+  ZF_UNDERWATER_GREEN_RUPEE_2,
+  ZF_UNDERWATER_GREEN_RUPEE_3,
+  ZF_UNDERWATER_GREEN_RUPEE_4,
+  ZF_UNDERWATER_GREEN_RUPEE_5,
+  ZF_UNDERWATER_GREEN_RUPEE_6,
+  ZF_UNDERWATER_GREEN_RUPEE_7,
+  ZF_UNDERWATER_GREEN_RUPEE_8,
+  ZF_UNDERWATER_GREEN_RUPEE_9,
+  ZF_UNDERWATER_GREEN_RUPEE_10,
+  ZF_UNDERWATER_GREEN_RUPEE_11,
+  ZF_UNDERWATER_GREEN_RUPEE_12,
+  ZF_UNDERWATER_GREEN_RUPEE_13,
+  ZF_UNDERWATER_GREEN_RUPEE_14,
+  ZF_UNDERWATER_GREEN_RUPEE_15,
+  ZF_UNDERWATER_GREEN_RUPEE_16,
+  ZF_UNDERWATER_GREEN_RUPEE_17,
+  ZF_UNDERWATER_GREEN_RUPEE_18,
 
   // Lon Lon Ranch
   SONG_FROM_MALON,

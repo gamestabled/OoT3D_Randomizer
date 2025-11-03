@@ -239,6 +239,97 @@ void HintTable_Init_Exclude_Overworld() {
                        Text{"the #fairy of winds# holds", /*french*/"la #fée du vent# a", /*spanish*/"el #hada del viento# brinda", /*italian*/"la #fata del vento# consegna", /*german*/"in der #Feen-Quelle des Sturmes#, |wäre|wären|"},
     });
 
+                hintTable[ZF_UNDERWATER_GREEN_RUPEE_1] = HintText::Exclude({
+                       // obscure text
+                       Text{"EN: ZF_UNDERWATER_GREEN_RUPEE_1 HINT", /*french*/"FR: ZF_UNDERWATER_GREEN_RUPEE_1 HINT", /*spanish*/"ES: ZF_UNDERWATER_GREEN_RUPEE_1 HINT", /*italian*/"IT: ZF_UNDERWATER_GREEN_RUPEE_1 HINT", /*german*/"DE: ZF_UNDERWATER_GREEN_RUPEE_1 HINT"},
+    });
+                    hintTable[ZF_UNDERWATER_GREEN_RUPEE_2] = HintText::Exclude({
+                       // obscure text
+                       Text{"EN: ZF_UNDERWATER_GREEN_RUPEE_2 HINT", /*french*/"FR: ZF_UNDERWATER_GREEN_RUPEE_2 HINT", /*spanish*/"ES: ZF_UNDERWATER_GREEN_RUPEE_2 HINT", /*italian*/"IT: ZF_UNDERWATER_GREEN_RUPEE_2 HINT", /*german*/"DE: ZF_UNDERWATER_GREEN_RUPEE_2 HINT"},
+    });
+
+                    hintTable[ZF_UNDERWATER_GREEN_RUPEE_3] = HintText::Exclude({
+                       // obscure text
+                       Text{"EN: ZF_UNDERWATER_GREEN_RUPEE_3 HINT", /*french*/"FR: ZF_UNDERWATER_GREEN_RUPEE_3 HINT", /*spanish*/"ES: ZF_UNDERWATER_GREEN_RUPEE_3 HINT", /*italian*/"IT: ZF_UNDERWATER_GREEN_RUPEE_3 HINT", /*german*/"DE: ZF_UNDERWATER_GREEN_RUPEE_3 HINT"},
+    });
+
+                    hintTable[ZF_UNDERWATER_GREEN_RUPEE_4] = HintText::Exclude({
+                       // obscure text
+                       Text{"EN: ZF_UNDERWATER_GREEN_RUPEE_4 HINT", /*french*/"FR: ZF_UNDERWATER_GREEN_RUPEE_4 HINT", /*spanish*/"ES: ZF_UNDERWATER_GREEN_RUPEE_4 HINT", /*italian*/"IT: ZF_UNDERWATER_GREEN_RUPEE_4 HINT", /*german*/"DE: ZF_UNDERWATER_GREEN_RUPEE_4 HINT"},
+    });
+
+                    hintTable[ZF_UNDERWATER_GREEN_RUPEE_5] = HintText::Exclude({
+                       // obscure text
+                       Text{"EN: ZF_UNDERWATER_GREEN_RUPEE_5 HINT", /*french*/"FR: ZF_UNDERWATER_GREEN_RUPEE_5 HINT", /*spanish*/"ES: ZF_UNDERWATER_GREEN_RUPEE_5 HINT", /*italian*/"IT: ZF_UNDERWATER_GREEN_RUPEE_5 HINT", /*german*/"DE: ZF_UNDERWATER_GREEN_RUPEE_5 HINT"},
+    });
+
+                    hintTable[ZF_UNDERWATER_GREEN_RUPEE_6] = HintText::Exclude({
+                       // obscure text
+                       Text{"EN: ZF_UNDERWATER_GREEN_RUPEE_6 HINT", /*french*/"FR: ZF_UNDERWATER_GREEN_RUPEE_6 HINT", /*spanish*/"ES: ZF_UNDERWATER_GREEN_RUPEE_6 HINT", /*italian*/"IT: ZF_UNDERWATER_GREEN_RUPEE_6 HINT", /*german*/"DE: ZF_UNDERWATER_GREEN_RUPEE_6 HINT"},
+    });
+
+                    hintTable[ZF_UNDERWATER_GREEN_RUPEE_7] = HintText::Exclude({
+                       // obscure text
+                       Text{"EN: ZF_UNDERWATER_GREEN_RUPEE_7 HINT", /*french*/"FR: ZF_UNDERWATER_GREEN_RUPEE_7 HINT", /*spanish*/"ES: ZF_UNDERWATER_GREEN_RUPEE_7 HINT", /*italian*/"IT: ZF_UNDERWATER_GREEN_RUPEE_7 HINT", /*german*/"DE: ZF_UNDERWATER_GREEN_RUPEE_7 HINT"},
+    });
+
+                    hintTable[ZF_UNDERWATER_GREEN_RUPEE_8] = HintText::Exclude({
+                       // obscure text
+                       Text{"EN: ZF_UNDERWATER_GREEN_RUPEE_8 HINT", /*french*/"FR: ZF_UNDERWATER_GREEN_RUPEE_8 HINT", /*spanish*/"ES: ZF_UNDERWATER_GREEN_RUPEE_8 HINT", /*italian*/"IT: ZF_UNDERWATER_GREEN_RUPEE_8 HINT", /*german*/"DE: ZF_UNDERWATER_GREEN_RUPEE_8 HINT"},
+    });
+
+                    hintTable[ZF_UNDERWATER_GREEN_RUPEE_9] = HintText::Exclude({
+                       // obscure text
+                       Text{"EN: ZF_UNDERWATER_GREEN_RUPEE_9 HINT", /*french*/"FR: ZF_UNDERWATER_GREEN_RUPEE_9 HINT", /*spanish*/"ES: ZF_UNDERWATER_GREEN_RUPEE_9 HINT", /*italian*/"IT: ZF_UNDERWATER_GREEN_RUPEE_9 HINT", /*german*/"DE: ZF_UNDERWATER_GREEN_RUPEE_9 HINT"},
+    });
+
+                    hintTable[ZF_UNDERWATER_GREEN_RUPEE_10] = HintText::Exclude({
+                       // obscure text
+                       Text{"EN: ZF_UNDERWATER_GREEN_RUPEE_10 HINT", /*french*/"FR: ZF_UNDERWATER_GREEN_RUPEE_10 HINT", /*spanish*/"ES: ZF_UNDERWATER_GREEN_RUPEE_10 HINT", /*italian*/"IT: ZF_UNDERWATER_GREEN_RUPEE_10 HINT", /*german*/"DE: ZF_UNDERWATER_GREEN_RUPEE_10 HINT"},
+    });
+
+                    hintTable[ZF_UNDERWATER_GREEN_RUPEE_11] = HintText::Exclude({
+                       // obscure text
+                       Text{"EN: ZF_UNDERWATER_GREEN_RUPEE_11 HINT", /*french*/"FR: ZF_UNDERWATER_GREEN_RUPEE_11 HINT", /*spanish*/"ES: ZF_UNDERWATER_GREEN_RUPEE_11 HINT", /*italian*/"IT: ZF_UNDERWATER_GREEN_RUPEE_11 HINT", /*german*/"DE: ZF_UNDERWATER_GREEN_RUPEE_11 HINT"},
+    });
+
+                    hintTable[ZF_UNDERWATER_GREEN_RUPEE_12] = HintText::Exclude({
+                       // obscure text
+                       Text{"EN: ZF_UNDERWATER_GREEN_RUPEE_12 HINT", /*french*/"FR: ZF_UNDERWATER_GREEN_RUPEE_12 HINT", /*spanish*/"ES: ZF_UNDERWATER_GREEN_RUPEE_12 HINT", /*italian*/"IT: ZF_UNDERWATER_GREEN_RUPEE_12 HINT", /*german*/"DE: ZF_UNDERWATER_GREEN_RUPEE_12 HINT"},
+    });
+
+                    hintTable[ZF_UNDERWATER_GREEN_RUPEE_13] = HintText::Exclude({
+                       // obscure text
+                       Text{"EN: ZF_UNDERWATER_GREEN_RUPEE_13 HINT", /*french*/"FR: ZF_UNDERWATER_GREEN_RUPEE_13 HINT", /*spanish*/"ES: ZF_UNDERWATER_GREEN_RUPEE_13 HINT", /*italian*/"IT: ZF_UNDERWATER_GREEN_RUPEE_13 HINT", /*german*/"DE: ZF_UNDERWATER_GREEN_RUPEE_13 HINT"},
+    });
+
+                    hintTable[ZF_UNDERWATER_GREEN_RUPEE_14] = HintText::Exclude({
+                       // obscure text
+                       Text{"EN: ZF_UNDERWATER_GREEN_RUPEE_14 HINT", /*french*/"FR: ZF_UNDERWATER_GREEN_RUPEE_14 HINT", /*spanish*/"ES: ZF_UNDERWATER_GREEN_RUPEE_14 HINT", /*italian*/"IT: ZF_UNDERWATER_GREEN_RUPEE_14 HINT", /*german*/"DE: ZF_UNDERWATER_GREEN_RUPEE_14 HINT"},
+    });
+
+                    hintTable[ZF_UNDERWATER_GREEN_RUPEE_15] = HintText::Exclude({
+                       // obscure text
+                       Text{"EN: ZF_UNDERWATER_GREEN_RUPEE_15 HINT", /*french*/"FR: ZF_UNDERWATER_GREEN_RUPEE_15 HINT", /*spanish*/"ES: ZF_UNDERWATER_GREEN_RUPEE_15 HINT", /*italian*/"IT: ZF_UNDERWATER_GREEN_RUPEE_15 HINT", /*german*/"DE: ZF_UNDERWATER_GREEN_RUPEE_15 HINT"},
+    });
+
+                    hintTable[ZF_UNDERWATER_GREEN_RUPEE_16] = HintText::Exclude({
+                       // obscure text
+                       Text{"EN: ZF_UNDERWATER_GREEN_RUPEE_16 HINT", /*french*/"FR: ZF_UNDERWATER_GREEN_RUPEE_16 HINT", /*spanish*/"ES: ZF_UNDERWATER_GREEN_RUPEE_16 HINT", /*italian*/"IT: ZF_UNDERWATER_GREEN_RUPEE_16 HINT", /*german*/"DE: ZF_UNDERWATER_GREEN_RUPEE_16 HINT"},
+    });
+
+                    hintTable[ZF_UNDERWATER_GREEN_RUPEE_17] = HintText::Exclude({
+                       // obscure text
+                       Text{"EN: ZF_UNDERWATER_GREEN_RUPEE_17 HINT", /*french*/"FR: ZF_UNDERWATER_GREEN_RUPEE_17 HINT", /*spanish*/"ES: ZF_UNDERWATER_GREEN_RUPEE_17 HINT", /*italian*/"IT: ZF_UNDERWATER_GREEN_RUPEE_17 HINT", /*german*/"DE: ZF_UNDERWATER_GREEN_RUPEE_17 HINT"},
+    });
+
+                    hintTable[ZF_UNDERWATER_GREEN_RUPEE_18] = HintText::Exclude({
+                       // obscure text
+                       Text{"EN: ZF_UNDERWATER_GREEN_RUPEE_18 HINT", /*french*/"FR: ZF_UNDERWATER_GREEN_RUPEE_18 HINT", /*spanish*/"ES: ZF_UNDERWATER_GREEN_RUPEE_18 HINT", /*italian*/"IT: ZF_UNDERWATER_GREEN_RUPEE_18 HINT", /*german*/"DE: ZF_UNDERWATER_GREEN_RUPEE_18 HINT"},
+    });
+
+
+
     hintTable[HC_GREAT_FAIRY_REWARD] = HintText::Exclude({
                        // obscure text
                        Text{"the #fairy of fire# holds", /*french*/"la #fée du feu# a", /*spanish*/"el #hada del fuego# brinda", /*italian*/"la #fata del fuoco# consegna", /*german*/"in der #Feen-Quelle des Feuers#, |wäre|wären|"},
