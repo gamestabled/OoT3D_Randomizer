@@ -13,6 +13,7 @@
 #include "descriptions.hpp"
 #include "enemizer.hpp"
 #include "enemizer_logic.hpp"
+#include "ocarina_notes.hpp"
 
 using namespace Settings;
 
@@ -743,6 +744,8 @@ bool CanDoGlitch(GlitchType glitch, GlitchDifficulty difficulty) {
 
 // Updates all logic helpers. Should be called whenever a non-helper is changed
 void UpdateHelpers() {
+    using namespace OcarinaNotes;
+
     NumBottles      = ((NoBottles) ? 0 : (Bottles + ((DeliverLetter) ? 1 : 0)));
     HasBottle       = NumBottles >= 1;
     Slingshot       = (ProgressiveBulletBag >= 1) && (BuySeed || AmmoCanDrop);
@@ -762,18 +765,22 @@ void UpdateHelpers() {
     BiggoronSword   = BiggoronSword || ProgressiveGiantKnife >= 2;
 
     OcarinaButtonsCount = OcarinaButtonL + OcarinaButtonR + OcarinaButtonX + OcarinaButtonY + OcarinaButtonA;
-    ZeldasLullaby       = ZeldasLullaby_item && OcarinaButtonX && OcarinaButtonA && OcarinaButtonY;
-    SariasSong          = SariasSong_item && OcarinaButtonR && OcarinaButtonY && OcarinaButtonX;
-    SunsSong            = SunsSong_item && OcarinaButtonY && OcarinaButtonR && OcarinaButtonA;
-    SongOfStorms        = SongOfStorms_item && OcarinaButtonL && OcarinaButtonR && OcarinaButtonA;
-    EponasSong          = EponasSong_item && OcarinaButtonA && OcarinaButtonX && OcarinaButtonY;
-    SongOfTime          = SongOfTime_item && OcarinaButtonY && OcarinaButtonL && OcarinaButtonR;
-    MinuetOfForest      = MinuetOfForest_item && OcarinaButtonL && OcarinaButtonA && OcarinaButtonX && OcarinaButtonY;
-    BoleroOfFire        = BoleroOfFire_item && OcarinaButtonR && OcarinaButtonL && OcarinaButtonY;
-    SerenadeOfWater     = SerenadeOfWater_item && OcarinaButtonL && OcarinaButtonR && OcarinaButtonY && OcarinaButtonX;
-    RequiemOfSpirit     = RequiemOfSpirit_item && OcarinaButtonL && OcarinaButtonR && OcarinaButtonY;
-    NocturneOfShadow    = NocturneOfShadow_item && OcarinaButtonX && OcarinaButtonY && OcarinaButtonL && OcarinaButtonR;
-    PreludeOfLight      = PreludeOfLight_item && OcarinaButtonA && OcarinaButtonY && OcarinaButtonX;
+    u8 OwnedButtonsMask = OcarinaButtonL << OCARINA_BUTTON_L | OcarinaButtonR << OCARINA_BUTTON_R |
+                          OcarinaButtonX << OCARINA_BUTTON_X | OcarinaButtonY << OCARINA_BUTTON_Y |
+                          OcarinaButtonA << OCARINA_BUTTON_A;
+    // To consider the song playable, check for the song item and that no required buttons are missing
+    ZeldasLullaby    = ZeldasLullaby_item && !(SongRequiredButtons[OCARINA_SONG_LULLABY] & ~OwnedButtonsMask);
+    SariasSong       = SariasSong_item && !(SongRequiredButtons[OCARINA_SONG_SARIAS] & ~OwnedButtonsMask);
+    SunsSong         = SunsSong_item && !(SongRequiredButtons[OCARINA_SONG_SUNS] & ~OwnedButtonsMask);
+    SongOfStorms     = SongOfStorms_item && !(SongRequiredButtons[OCARINA_SONG_STORMS] & ~OwnedButtonsMask);
+    EponasSong       = EponasSong_item && !(SongRequiredButtons[OCARINA_SONG_EPONAS] & ~OwnedButtonsMask);
+    SongOfTime       = SongOfTime_item && !(SongRequiredButtons[OCARINA_SONG_TIME] & ~OwnedButtonsMask);
+    MinuetOfForest   = MinuetOfForest_item && !(SongRequiredButtons[OCARINA_SONG_MINUET] & ~OwnedButtonsMask);
+    BoleroOfFire     = BoleroOfFire_item && !(SongRequiredButtons[OCARINA_SONG_BOLERO] & ~OwnedButtonsMask);
+    SerenadeOfWater  = SerenadeOfWater_item && !(SongRequiredButtons[OCARINA_SONG_SERENADE] & ~OwnedButtonsMask);
+    RequiemOfSpirit  = RequiemOfSpirit_item && !(SongRequiredButtons[OCARINA_SONG_REQUIEM] & ~OwnedButtonsMask);
+    NocturneOfShadow = NocturneOfShadow_item && !(SongRequiredButtons[OCARINA_SONG_NOCTURNE] & ~OwnedButtonsMask);
+    PreludeOfLight   = PreludeOfLight_item && !(SongRequiredButtons[OCARINA_SONG_PRELUDE] & ~OwnedButtonsMask);
 
     ScarecrowSong    = ScarecrowSong || FreeScarecrow || (ChildScarecrow && AdultScarecrow);
     Scarecrow        = Hookshot && CanPlay(ScarecrowSong);
