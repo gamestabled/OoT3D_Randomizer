@@ -911,6 +911,10 @@ void UpdateHelpers() {
         (LACSCondition == LACSCONDITION_DUNGEONS && DungeonCount >= LACSDungeonCount.Value<u8>()) ||
         (LACSCondition == LACSCONDITION_TOKENS && GoldSkulltulaTokens >= LACSTokenCount.Value<u8>()) ||
         (LACSCondition == LACSCONDITION_HEARTS && Hearts >= LACSHeartCount.Value<u8>());
+
+    if (TriforceHunt) {
+        BossKeyGanonsCastle = TriforcePieces >= TriforcePiecesTotal.Value<u8>() + 1;
+    }
 }
 
 bool SmallKeys(Key dungeon, u8 requiredAmount) {

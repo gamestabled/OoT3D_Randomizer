@@ -530,7 +530,14 @@ void GenerateItemPool() {
     }
 
     // Fixed item locations
-    PlaceItemInLocation(GANON, TRIFORCE); // The Triforce is only used to make sure Ganon is accessible
+    // The Triforce is used to mark the win condition
+    if (TriforceHunt) {
+        PlaceItemInLocation(GANON, GREEN_RUPEE, false, true);
+        PlaceItemInLocation(TRIFORCE_HUNT_GOAL, TRIFORCE);
+    } else {
+        PlaceItemInLocation(GANON, TRIFORCE);
+        PlaceItemInLocation(TRIFORCE_HUNT_GOAL, GREEN_RUPEE, false, true);
+    }
     PlaceItemInLocation(MARKET_BOMBCHU_BOWLING_BOMBCHUS, BOMBCHU_DROP);
 
     if (ShuffleKokiriSword) {
