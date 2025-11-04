@@ -1,6 +1,7 @@
 #include "ocarina_notes.h"
 #include "savefile.h"
 #include "settings.h"
+#include "common.h"
 
 // Values to be written to OcarinaNote.pitch for each button.
 const u8 notePitches[5] = {
@@ -136,4 +137,14 @@ u32 OcarinaNotes_HandleInputs(u32 ocarinaInputs) {
     }
     ocarinaInputs &= ownedBtnsMask;
     return ocarinaInputs;
+}
+
+s32 OcarinaNotes_OverrideInstrument(u32 instrument) {
+    if (instrument != OCARINA_INSTRUMENT_DEFAULT) {
+        return instrument;
+    }
+    if (gSettingsContext.ocarinaNoteInstrument == OCARINA_INSTR_SETTING_SCENE_SPECIFIC) {
+        return Hash(gGlobalContext->sceneNum) % OCARINA_INSTRUMENT_MAX;
+    }
+    return gSettingsContext.ocarinaNoteInstrument - OCARINA_INSTR_SETTING_DEFAULT;
 }

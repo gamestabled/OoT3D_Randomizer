@@ -3,6 +3,17 @@
 
 #include "../include/z3D/z3D.h"
 
+// These values are one less than in OoT decomp
+typedef enum OcarinaInstrumentId {
+    OCARINA_INSTRUMENT_DEFAULT,
+    OCARINA_INSTRUMENT_MALON,
+    OCARINA_INSTRUMENT_WHISTLE,     // Impa
+    OCARINA_INSTRUMENT_HARP,        // Sheik
+    OCARINA_INSTRUMENT_GRIND_ORGAN, // Windmill Man
+    OCARINA_INSTRUMENT_FLUTE,       // Skull Kid
+    OCARINA_INSTRUMENT_MAX,
+} OcarinaInstrumentId;
+
 typedef enum OcarinaNoteButton {
     OCARINA_BUTTON_L,
     OCARINA_BUTTON_R,

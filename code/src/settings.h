@@ -448,6 +448,12 @@ typedef enum {
 } ShuffleSFXSetting;
 
 typedef enum {
+    OCARINA_INSTR_SETTING_RANDOM_CHOICE,
+    OCARINA_INSTR_SETTING_SCENE_SPECIFIC,
+    OCARINA_INSTR_SETTING_DEFAULT,
+} OcarinaNoteInstrumentSetting;
+
+typedef enum {
     DUNGEON_NEITHER,
     DUNGEON_BARREN,
     DUNGEON_WOTH,
@@ -699,6 +705,8 @@ typedef struct {
     u8 shuffleSFXFootsteps;
     u8 shuffleSFXLinkVoice;
     u8 shuffleSFXCategorically;
+
+    u8 ocarinaNoteInstrument;
 
     union {
         u8 dungeonModes[12];

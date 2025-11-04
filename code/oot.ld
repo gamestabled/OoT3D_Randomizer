@@ -844,6 +844,10 @@ SECTIONS
 		*(.patch_ActorDraw)
 	}
 
+	.patch_OcarinaNoteSound_Player 0x2D6A04 : {
+		*(.patch_OcarinaNoteSound_Player)
+	}
+
 	.patch_CamUpdate 0x2D84C8 : {
 		*(.patch_CamUpdate)
 	}
@@ -1732,6 +1736,10 @@ SECTIONS
 
 	.patch_EnableFW 0x476D1C + region_offset : {
 		*(.patch_EnableFW)
+	}
+
+	.patch_OcarinaNoteSound_Npc 0x477C08 + region_offset : {
+		*(.patch_OcarinaNoteSound_Npc)
 	}
 
 	.patch_StoreTargetActorType 0x479984 + region_offset : {
