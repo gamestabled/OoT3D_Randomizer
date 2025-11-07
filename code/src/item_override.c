@@ -8,6 +8,7 @@
 #include "entrance.h"
 #include "savefile.h"
 #include "common.h"
+#include "actors/obj_mure3.h"
 
 #include <stddef.h>
 
@@ -135,23 +136,7 @@ static ItemOverride_Key ItemOverride_GetSearchKey(Actor* actor, u8 scene, u8 ite
         u16 collectibleFlag   = ((EnItem00*)actor)->collectibleFlag;
         CitraPrint("CF-CT %X-%X", collectibleFlag, collectibleType);
         if (collectibleFlag == 0x00) {
-            CitraPrint("CurrentItem: %X", currentItem);
-            ObjMure3* rupeeSpawner = (ObjMure3*)Actor_FindNearby(gGlobalContext, actor, 0x01AB, ACTORTYPE_BG, 100.0);
-            EnItem00* spawned;
-            u8 extraFlag = 0;
-            do {
-                spawned = rupeeSpawner->spawnedRupees[extraFlag];
-                CitraPrint("Spawned: %X", spawned);
-                extraFlag++;
-            } while (extraFlag < 7 && spawned != currentItem && spawned != 0);
-
-            // Actor* searchThrough = gGlobalContext->actorCtx.actorList->first;
-            // while (searchThrough->id != 0x01AB) {
-            //     CitraPrint("SearchThrough Id:%X", searchThrough->id);
-            //     searchThrough = searchThrough->next;
-            // }
-
-            CitraPrint("extraFlag %x", extraFlag);
+            collectibleFlag = 0x40 + currentItem->actor.home.rot.z;
         }
 
         s32 respawningCollected = collectibleFlag >= 0x20 && SaveFile_GetCollectedRandomizedRespawningCollectibleFlag(

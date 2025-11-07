@@ -35,6 +35,8 @@ void AreaTable_Init_LostWoods() {
             LocationAccess(KF_NEAR_RAMP_GREEN_RUPEE_2, { [] { return IsChild; } }),
             LocationAccess(KF_NEAR_MIDOS_HOUSE_GREEN_RUPEE_1, { [] { return IsChild; } }),
             LocationAccess(KF_NEAR_MIDOS_HOUSE_GREEN_RUPEE_2, { [] { return IsChild; } }),
+            LocationAccess(KF_RUPEE_CIRCLE_GREEN_RUPEE_1,
+                           { [] { return IsAdult && (CanPlantBean(KOKIRI_FOREST) || CanUse(HOVER_BOOTS)); } }),
             LocationAccess(KF_GOSSIP_STONE, { [] { return true; } }),
         },
         {
@@ -464,10 +466,10 @@ void AreaTable_Init_LostWoods() {
         },
         {
             // Exits
-            Entrance(
-                SFM_ENTRYWAY, { [] {
-                    return ((IsChild && CanPassEnemies(86, 0, 0, { 8, 9 })) || (IsAdult && CanPassEnemy(86, 2, 0, 11)));
-                } }),
+            Entrance(SFM_ENTRYWAY, { [] {
+                         return ((IsChild && CanPassEnemies(86, 0, 0, { 8, 9 })) ||
+                                 (IsAdult && CanPassEnemy(86, 2, 0, 11)));
+                     } }),
             Entrance(
                 FOREST_TEMPLE_ENTRYWAY,
                 { [] { return CanUse(HOOKSHOT); },

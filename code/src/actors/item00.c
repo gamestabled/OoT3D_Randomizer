@@ -1,7 +1,9 @@
 #include "z3D/z3D.h"
 #include "z3D/actors/z_en_item00.h"
 #include "models.h"
+#include "actors/obj_mure3.h"
 #include "settings.h"
+#include "common.h"
 
 #define EnItem00_Init ((ActorFunc)GAME_ADDR(0x1F69B4))
 
@@ -45,6 +47,14 @@ void EnItem00_rInit(Actor* thisx, GlobalContext* globalCtx) {
         }
     }
     EnItem00_Init(&item->actor, globalCtx);
+
+    if (item->collectibleFlag == 0x00 && isObjMure3Updating && item->actor.home.rot.z == 0) {
+        item->actor.home.rot.z = extraCollectibleFlag;
+        extraCollectibleFlag += 1;
+        if (extraCollectibleFlag > 6) {
+            extraCollectibleFlag = 0;
+        }
+    }
     Model_SpawnByActor(&item->actor, globalCtx, 0);
 }
 
