@@ -48,6 +48,8 @@ void EnItem00_rInit(Actor* thisx, GlobalContext* globalCtx) {
     }
     EnItem00_Init(&item->actor, globalCtx);
 
+    // For rupees spawned by Rupee Circles (ObjMure3) We store the "collectibleFlag" in actor.home.rot.z since that is not really used for them.
+    // Since collectibleFlag normally gets truncated to 0x3F we can use any value at or above 0x40. We've reserved 0x40-0x46 for Rupee circle rupees.
     if (item->collectibleFlag == 0x00 && isObjMure3Updating && item->actor.home.rot.z == 0) {
         item->actor.home.rot.z = extraCollectibleFlag;
         extraCollectibleFlag += 1;

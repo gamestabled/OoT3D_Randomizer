@@ -4,6 +4,7 @@
 #include "z3D/z3D.h"
 extern u8 isObjMure3Updating; // global var
 extern u8 extraCollectibleFlag;
+void ObjMure3_rInit(Actor* thisx, GlobalContext* globalCtx);
 void ObjMure3_rUpdate(Actor* thisx, GlobalContext* globalCtx);
 
 #endif //_OBJ_MURE3_H_

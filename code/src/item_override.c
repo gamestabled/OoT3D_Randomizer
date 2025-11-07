@@ -136,6 +136,8 @@ static ItemOverride_Key ItemOverride_GetSearchKey(Actor* actor, u8 scene, u8 ite
         u16 collectibleFlag   = ((EnItem00*)actor)->collectibleFlag;
         CitraPrint("CF-CT %X-%X", collectibleFlag, collectibleType);
         if (collectibleFlag == 0x00) {
+            // For rupees spawned by Rupee Circles (ObjMure3) We store the "collectibleFlag" in actor.home.rot.z since that is not really used for them.
+            // Since collectibleFlag normally gets truncated to 0x3F we can use any value at or above 0x40. We've reserved 0x40-0x46 for Rupee circle rupees.
             collectibleFlag = 0x40 + currentItem->actor.home.rot.z;
         }
 
@@ -149,7 +151,7 @@ static ItemOverride_Key ItemOverride_GetSearchKey(Actor* actor, u8 scene, u8 ite
         return (ItemOverride_Key){
             .scene = scene,
             .type  = OVR_COLLECTABLE,
-            .flag  = ((EnItem00*)actor)->collectibleFlag,
+            .flag  = collectibleFlag,
         };
     } else if (actor->id == 0x19C) { // Gold Skulltula Token
         return (ItemOverride_Key){
