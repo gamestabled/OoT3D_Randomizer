@@ -78,6 +78,30 @@ void HintTable_Init_Exclude_Overworld() {
                        // obscure text
                        Text{"EN: KF_RUPEE_CIRCLE_GREEN_RUPEE_1 HINT", /*french*/"FR: KF_RUPEE_CIRCLE_GREEN_RUPEE_1 HINT", /*spanish*/"ES: KF_RUPEE_CIRCLE_GREEN_RUPEE_1 HINT", /*italian*/"IT: KF_RUPEE_CIRCLE_GREEN_RUPEE_1 HINT", /*german*/"DE: KF_RUPEE_CIRCLE_GREEN_RUPEE_1 HINT"},
     });
+    hintTable[KF_RUPEE_CIRCLE_GREEN_RUPEE_2] = HintText::Exclude({
+                       // obscure text
+                       Text{"EN: KF_RUPEE_CIRCLE_GREEN_RUPEE_2 HINT", /*french*/"FR: KF_RUPEE_CIRCLE_GREEN_RUPEE_2 HINT", /*spanish*/"ES: KF_RUPEE_CIRCLE_GREEN_RUPEE_2 HINT", /*italian*/"IT: KF_RUPEE_CIRCLE_GREEN_RUPEE_2 HINT", /*german*/"DE: KF_RUPEE_CIRCLE_GREEN_RUPEE_2 HINT"},
+    });
+    hintTable[KF_RUPEE_CIRCLE_GREEN_RUPEE_3] = HintText::Exclude({
+                       // obscure text
+                       Text{"EN: KF_RUPEE_CIRCLE_GREEN_RUPEE_3 HINT", /*french*/"FR: KF_RUPEE_CIRCLE_GREEN_RUPEE_3 HINT", /*spanish*/"ES: KF_RUPEE_CIRCLE_GREEN_RUPEE_3 HINT", /*italian*/"IT: KF_RUPEE_CIRCLE_GREEN_RUPEE_3 HINT", /*german*/"DE: KF_RUPEE_CIRCLE_GREEN_RUPEE_3 HINT"},
+    });
+    hintTable[KF_RUPEE_CIRCLE_GREEN_RUPEE_4] = HintText::Exclude({
+                       // obscure text
+                       Text{"EN: KF_RUPEE_CIRCLE_GREEN_RUPEE_4 HINT", /*french*/"FR: KF_RUPEE_CIRCLE_GREEN_RUPEE_4 HINT", /*spanish*/"ES: KF_RUPEE_CIRCLE_GREEN_RUPEE_4 HINT", /*italian*/"IT: KF_RUPEE_CIRCLE_GREEN_RUPEE_4 HINT", /*german*/"DE: KF_RUPEE_CIRCLE_GREEN_RUPEE_4 HINT"},
+    });
+    hintTable[KF_RUPEE_CIRCLE_GREEN_RUPEE_5] = HintText::Exclude({
+                       // obscure text
+                       Text{"EN: KF_RUPEE_CIRCLE_GREEN_RUPEE_5 HINT", /*french*/"FR: KF_RUPEE_CIRCLE_GREEN_RUPEE_5 HINT", /*spanish*/"ES: KF_RUPEE_CIRCLE_GREEN_RUPEE_5 HINT", /*italian*/"IT: KF_RUPEE_CIRCLE_GREEN_RUPEE_5 HINT", /*german*/"DE: KF_RUPEE_CIRCLE_GREEN_RUPEE_5 HINT"},
+    });
+    hintTable[KF_RUPEE_CIRCLE_GREEN_RUPEE_6] = HintText::Exclude({
+                       // obscure text
+                       Text{"EN: KF_RUPEE_CIRCLE_GREEN_RUPEE_6 HINT", /*french*/"FR: KF_RUPEE_CIRCLE_GREEN_RUPEE_6 HINT", /*spanish*/"ES: KF_RUPEE_CIRCLE_GREEN_RUPEE_6 HINT", /*italian*/"IT: KF_RUPEE_CIRCLE_GREEN_RUPEE_6 HINT", /*german*/"DE: KF_RUPEE_CIRCLE_GREEN_RUPEE_6 HINT"},
+    });
+    hintTable[KF_RUPEE_CIRCLE_RED_RUPEE] = HintText::Exclude({
+                       // obscure text
+                       Text{"EN: KF_RUPEE_CIRCLE_RED_RUPEE HINT", /*french*/"FR: KF_RUPEE_CIRCLE_RED_RUPEE HINT", /*spanish*/"ES: KF_RUPEE_CIRCLE_RED_RUPEE HINT", /*italian*/"IT: KF_RUPEE_CIRCLE_RED_RUPEE HINT", /*german*/"DE: KF_RUPEE_CIRCLE_RED_RUPEE HINT"},
+    });
 
     hintTable[GRAVEYARD_SHIELD_GRAVE_CHEST] = HintText::Exclude({
                        // obscure text

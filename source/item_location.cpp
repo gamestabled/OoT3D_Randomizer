@@ -29,6 +29,12 @@ void LocationTable_Init() {
     locationTable[KF_NEAR_MIDOS_HOUSE_GREEN_RUPEE_1]     = ItemLocation::Collectable(0x55, 0x25, "KF Near Mido's House Green Rupee 1",   KF_NEAR_MIDOS_HOUSE_GREEN_RUPEE_1,     GREEN_RUPEE,               {Category::cKokiriForest, Category::cForest,Category::cFreestandingRupee},                                                                                                     SpoilerCollectionCheckGroup::GROUP_KOKIRI_FOREST);
     locationTable[KF_NEAR_MIDOS_HOUSE_GREEN_RUPEE_2]     = ItemLocation::Collectable(0x55, 0x26, "KF Near Mido's House Green Rupee 2",   KF_NEAR_MIDOS_HOUSE_GREEN_RUPEE_2,     GREEN_RUPEE,               {Category::cKokiriForest, Category::cForest,Category::cFreestandingRupee},                                                                                                     SpoilerCollectionCheckGroup::GROUP_KOKIRI_FOREST);
     locationTable[KF_RUPEE_CIRCLE_GREEN_RUPEE_1]         = ItemLocation::Collectable(0x55, 0x40, "KF Rupee circle Green Rupee 1",        KF_RUPEE_CIRCLE_GREEN_RUPEE_1,         GREEN_RUPEE,               {Category::cKokiriForest, Category::cForest,Category::cFreestandingRupee},                                                                                                     SpoilerCollectionCheckGroup::GROUP_KOKIRI_FOREST);
+    locationTable[KF_RUPEE_CIRCLE_GREEN_RUPEE_2]         = ItemLocation::Collectable(0x55, 0x41, "KF Rupee circle Green Rupee 2",        KF_RUPEE_CIRCLE_GREEN_RUPEE_2,         GREEN_RUPEE,               {Category::cKokiriForest, Category::cForest,Category::cFreestandingRupee},                                                                                                     SpoilerCollectionCheckGroup::GROUP_KOKIRI_FOREST);
+    locationTable[KF_RUPEE_CIRCLE_GREEN_RUPEE_3]         = ItemLocation::Collectable(0x55, 0x42, "KF Rupee circle Green Rupee 3",        KF_RUPEE_CIRCLE_GREEN_RUPEE_3,         GREEN_RUPEE,               {Category::cKokiriForest, Category::cForest,Category::cFreestandingRupee},                                                                                                     SpoilerCollectionCheckGroup::GROUP_KOKIRI_FOREST);
+    locationTable[KF_RUPEE_CIRCLE_GREEN_RUPEE_4]         = ItemLocation::Collectable(0x55, 0x43, "KF Rupee circle Green Rupee 4",        KF_RUPEE_CIRCLE_GREEN_RUPEE_4,         GREEN_RUPEE,               {Category::cKokiriForest, Category::cForest,Category::cFreestandingRupee},                                                                                                     SpoilerCollectionCheckGroup::GROUP_KOKIRI_FOREST);
+    locationTable[KF_RUPEE_CIRCLE_GREEN_RUPEE_5]         = ItemLocation::Collectable(0x55, 0x44, "KF Rupee circle Green Rupee 5",        KF_RUPEE_CIRCLE_GREEN_RUPEE_5,         GREEN_RUPEE,               {Category::cKokiriForest, Category::cForest,Category::cFreestandingRupee},                                                                                                     SpoilerCollectionCheckGroup::GROUP_KOKIRI_FOREST);
+    locationTable[KF_RUPEE_CIRCLE_GREEN_RUPEE_6]         = ItemLocation::Collectable(0x55, 0x45, "KF Rupee circle Green Rupee 6",        KF_RUPEE_CIRCLE_GREEN_RUPEE_6,         GREEN_RUPEE,               {Category::cKokiriForest, Category::cForest,Category::cFreestandingRupee},                                                                                                     SpoilerCollectionCheckGroup::GROUP_KOKIRI_FOREST);
+    locationTable[KF_RUPEE_CIRCLE_RED_RUPEE]             = ItemLocation::Collectable(0x55, 0x46, "KF Rupee circle Red Rupee",            KF_RUPEE_CIRCLE_RED_RUPEE,             RED_RUPEE,                 {Category::cKokiriForest, Category::cForest,Category::cFreestandingRupee},                                                                                                     SpoilerCollectionCheckGroup::GROUP_KOKIRI_FOREST);
     
     // Lost Woods
     locationTable[LW_NEAR_SHORTCUTS_GROTTO_CHEST]        = ItemLocation::Chest      (0x3E, 0x14, "LW Near Shortcuts Grotto Chest",       LW_NEAR_SHORTCUTS_GROTTO_CHEST,        BLUE_RUPEE,                {Category::cLostWoods, Category::cForest, Category::cGrotto},                                                                                                                  SpoilerCollectionCheckGroup::GROUP_LOST_WOODS);
@@ -1139,6 +1145,12 @@ std::vector<LocationKey> overworldLocations = {
   KF_NEAR_MIDOS_HOUSE_GREEN_RUPEE_1,
   KF_NEAR_MIDOS_HOUSE_GREEN_RUPEE_2,
   KF_RUPEE_CIRCLE_GREEN_RUPEE_1,
+  KF_RUPEE_CIRCLE_GREEN_RUPEE_2,
+  KF_RUPEE_CIRCLE_GREEN_RUPEE_3,
+  KF_RUPEE_CIRCLE_GREEN_RUPEE_4,
+  KF_RUPEE_CIRCLE_GREEN_RUPEE_5,
+  KF_RUPEE_CIRCLE_GREEN_RUPEE_6,
+  KF_RUPEE_CIRCLE_RED_RUPEE,
 
   // Shop
   KF_SHOP_ITEM_1,
