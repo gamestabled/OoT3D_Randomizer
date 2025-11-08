@@ -53,10 +53,9 @@ void EnItem00_rInit(Actor* thisx, GlobalContext* globalCtx) {
     // 0x40. We've reserved 0x40-0x46 for Rupee circle rupees.
     if (item->collectibleFlag == 0x00 && isObjMure3Updating && item->actor.home.rot.z == 0) {
         item->actor.home.rot.z = extraCollectibleFlag;
-        item->actor.home.rot.x = 0x1234;
         extraCollectibleFlag += 1;
-        if (extraCollectibleFlag > 6) {
-            extraCollectibleFlag = 0;
+        if (extraCollectibleFlag > 0x46) {
+            extraCollectibleFlag = 0x40;
         }
     }
     Model_SpawnByActor(&item->actor, globalCtx, 0);

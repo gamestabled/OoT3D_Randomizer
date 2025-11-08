@@ -2,7 +2,7 @@
 #include "common.h"
 
 u8 isObjMure3Updating   = 0; // global var
-u8 extraCollectibleFlag = 0;
+u8 extraCollectibleFlag = 0x40;
 #define ObjMure3_Init ((ActorFunc)GAME_ADDR(0x001ff138))
 #define ObjMure3_Update ((ActorFunc)GAME_ADDR(0x002318ac))
 
