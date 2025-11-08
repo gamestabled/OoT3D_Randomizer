@@ -863,10 +863,27 @@ void SaveFile_OnGameOver(void) {
 }
 
 void SaveFile_SetCollectedRandomizedRespawningCollectibleFlag(s16 sceneNum, u16 collectibleFlag) {
-    gExtSaveData.collectedRandomizedRespawningRupeeFlags[gGlobalContext->sceneNum] |= (1 << (collectibleFlag - 0x20));
+    if (collectibleFlag >= 0x20 && collectibleFlag < 0x40) {
+        gExtSaveData.collectedRandomizedRespawningRupeeFlags[gGlobalContext->sceneNum] |=
+            (1 << (collectibleFlag - 0x20));
+    }
+    if (collectibleFlag >= 0x40) {
+        gExtSaveData.collectedRandomizedRupeeCircleRupeeFlags[gGlobalContext->sceneNum] |=
+            (1 << (collectibleFlag - 0x40));
+    }
 }
 
 u8 SaveFile_GetCollectedRandomizedRespawningCollectibleFlag(s16 sceneNum, u16 collectibleFlag) {
-    return ((gExtSaveData.collectedRandomizedRespawningRupeeFlags[gGlobalContext->sceneNum] &
-             (1 << (collectibleFlag - 0x20))) > 0);
+    u32 saveFlags;
+    u16 shiftBy;
+    if (collectibleFlag >= 0x20 && collectibleFlag < 0x40) {
+        saveFlags = gExtSaveData.collectedRandomizedRespawningRupeeFlags[gGlobalContext->sceneNum];
+        shiftBy   = 0x20;
+    }
+    if (collectibleFlag >= 0x40) {
+        saveFlags = gExtSaveData.collectedRandomizedRupeeCircleRupeeFlags[gGlobalContext->sceneNum];
+        shiftBy   = 0x40;
+    }
+
+    return ((saveFlags & (1 << (collectibleFlag - shiftBy))) > 0);
 }

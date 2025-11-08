@@ -136,11 +136,12 @@ static ItemOverride_Key ItemOverride_GetSearchKey(Actor* actor, u8 scene, u8 ite
         u16 collectibleFlag   = ((EnItem00*)actor)->collectibleFlag;
         CitraPrint("CF-CT %X-%X", collectibleFlag, collectibleType);
         if (collectibleFlag == 0x00) {
-            // For rupees spawned by Rupee Circles (ObjMure3) We store the "collectibleFlag" in actor.home.rot.z since that is not really used for them.
-            // Since collectibleFlag normally gets truncated to 0x3F we can use any value at or above 0x40. We've reserved 0x40-0x46 for Rupee circle rupees.
+            CitraPrint("ExtraFlag %x", currentItem->actor.home.rot.z);
+            // For rupees spawned by Rupee Circles (ObjMure3) We store the "collectibleFlag" in actor.home.rot.z since
+            // that is not really used for them. Since collectibleFlag normally gets truncated to 0x3F we can use any
+            // value at or above 0x40. We've reserved 0x40-0x46 for Rupee circle rupees.
             collectibleFlag = 0x40 + currentItem->actor.home.rot.z;
         }
-
         s32 respawningCollected = collectibleFlag >= 0x20 && SaveFile_GetCollectedRandomizedRespawningCollectibleFlag(
                                                                  gGlobalContext->sceneNum, collectibleFlag);
 
@@ -578,6 +579,10 @@ u8 ItemOverride_GetItemDrop(EnItem00* this) {
         this->actor.params = ITEM00_RECOVERY_HEART;
         ItemTable_CallEffect(itemRow);
         Item_Give(gGlobalContext, itemRow->actionId);
+    }
+    if (this->collectibleFlag == 0 && this->actor.home.rot.z>=0x40 && this->actor.home.rot.z<0x47 && this->actor.home.rot.x==0x1234) {
+        SaveFile_SetCollectedRandomizedRespawningCollectibleFlag(gGlobalContext->sceneNum,
+                                                                 0x40 + this->actor.home.rot.z);
     }
     if (this->collectibleFlag >= 0x20) {
         // collectibles with a collectibleFlag >= 0x20 respawn so we need to keep track of them in the gExtSaveData

@@ -75,6 +75,7 @@ typedef struct {
     s8 option_SkipSongReplays;
     s8 option_FreeCamControl;
     u32 collectedRandomizedRespawningRupeeFlags[SCENE_MAX];
+    u32 collectedRandomizedRupeeCircleRupeeFlags[SCENE_MAX];
 } ExtSaveData;
 
 #ifdef DECLARE_EXTSAVEDATA
