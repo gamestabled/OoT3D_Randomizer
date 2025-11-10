@@ -581,8 +581,7 @@ u8 ItemOverride_GetItemDrop(EnItem00* this) {
         Item_Give(gGlobalContext, itemRow->actionId);
     }
     if (this->collectibleFlag == 0 && this->actor.home.rot.z >= 0x40 && this->actor.home.rot.z < 0x47) {
-        SaveFile_SetCollectedRandomizedRespawningCollectibleFlag(gGlobalContext->sceneNum,
-                                                                 0x40 + this->actor.home.rot.z);
+        SaveFile_SetCollectedRandomizedRespawningCollectibleFlag(gGlobalContext->sceneNum, this->actor.home.rot.z);
     }
     if (this->collectibleFlag >= 0x20) {
         // collectibles with a collectibleFlag >= 0x20 respawn so we need to keep track of them in the gExtSaveData
