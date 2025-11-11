@@ -329,7 +329,6 @@ void Actor_Init() {
 
     gActorOverlayTable[0x1D2].initInfo->update  = (ActorFunc)ObjHamishi_rUpdate;
 
-    gActorOverlayTable[0x01AB].initInfo->init = ObjMure3_rInit;
     gActorOverlayTable[0x01AB].initInfo->update = ObjMure3_rUpdate;
 
     // Define object 4 to be by default the same as object 189

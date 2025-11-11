@@ -877,11 +877,11 @@ u8 SaveFile_GetCollectedRandomizedRespawningCollectibleFlag(s16 sceneNum, u16 co
     u32 saveFlags;
     u16 shiftBy;
     if (collectibleFlag >= 0x20 && collectibleFlag < 0x40) {
-        saveFlags = gExtSaveData.collectedRandomizedRespawningRupeeFlags[gGlobalContext->sceneNum];
+        saveFlags = gExtSaveData.collectedRandomizedRespawningRupeeFlags[sceneNum];
         shiftBy   = 0x20;
     }
     if (collectibleFlag >= 0x40) {
-        saveFlags = gExtSaveData.collectedRandomizedRupeeCircleRupeeFlags[gGlobalContext->sceneNum];
+        saveFlags = gExtSaveData.collectedRandomizedRupeeCircleRupeeFlags[sceneNum];
         shiftBy   = 0x40;
     }
 
