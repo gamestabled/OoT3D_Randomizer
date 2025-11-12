@@ -3,8 +3,8 @@
 
 #include "z3D/z3DActor.h"
 
-typedef void (*ObjMure3ActionFunc)(struct ObjMure3*, struct GlobalContext*);
-typedef void (*ObjMure3SpawnFunc)(struct ObjMure3*, struct GlobalContext*);
+typedef void (*ObjMure3ActionFunc)(struct Actor*, struct GlobalContext*);
+typedef void (*ObjMure3SpawnFunc)(struct Actor*, struct GlobalContext*);
 
 struct ObjMure3;
 
