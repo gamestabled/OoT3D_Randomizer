@@ -11,6 +11,7 @@
 #include "actors/obj_mure3.h"
 
 #include <stddef.h>
+#include "chest.h"
 
 #include "z3D/z3D.h"
 #include "z3D/actors/z_en_box.h"
@@ -565,9 +566,9 @@ u8 ItemOverride_GetItemDrop(EnItem00* this) {
 
     u16 resolvedItemId = ItemTable_ResolveUpgrades(override.value.itemId);
     ItemRow* itemRow   = ItemTable_GetItemRow(resolvedItemId);
-
-    if ((itemRow->chestType != 0x01 && itemRow->chestType != 0x05) || resolvedItemId == ITEM_HEART_PIECE ||
-        resolvedItemId == ITEM_HEART_CONTAINER) { // TODO: check if random item is major
+    
+    if ((itemRow->chestType != CHEST_JUNK && itemRow->chestType != CHEST_HEART) || itemRow->baseItemId == GI_HEART_PIECE ||
+        itemRow->baseItemId == GI_HEART_CONTAINER) { 
         ItemOverride_PushPendingOverride(override);
         Actor_Kill(&this->actor);
     } else {
