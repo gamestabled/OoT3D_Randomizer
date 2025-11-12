@@ -7,7 +7,7 @@ u8 extraCollectibleFlag = 0x40;
 
 void ObjMure3_rUpdate(Actor* thisx, GlobalContext* globalCtx) {
     extraCollectibleFlag = 0x40;
-    isObjMure3Updating = TRUE;
+    isObjMure3Updating   = TRUE;
     ObjMure3_Update(thisx, globalCtx);
     isObjMure3Updating = FALSE;
 }

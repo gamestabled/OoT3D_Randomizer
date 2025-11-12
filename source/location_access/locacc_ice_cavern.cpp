@@ -25,10 +25,10 @@ void AreaTable_Init_IceCavern() {
     ---------------------------*/
     if (Dungeon::IceCavern.IsVanilla()) {
         areaTable[ICE_CAVERN_BEGINNING] =
-            Area("Ice Cavern Beginning", "Ice Cavern", ICE_CAVERN, NO_DAY_NIGHT_CYCLE, {}, 
-                {
-                    LocationAccess(ICE_CAVERN_RED_ICE_BLUE_RUPEE, { [] { return BlueFire; } }),
-                },
+            Area("Ice Cavern Beginning", "Ice Cavern", ICE_CAVERN, NO_DAY_NIGHT_CYCLE, {},
+                 {
+                     LocationAccess(ICE_CAVERN_RED_ICE_BLUE_RUPEE, { [] { return BlueFire; } }),
+                 },
                  {
                      // Exits
                      Entrance(ICE_CAVERN_ENTRYWAY, { [] { return true; } }),
@@ -66,9 +66,12 @@ void AreaTable_Init_IceCavern() {
                 LocationAccess(ICE_CAVERN_GS_SPINNING_SCYTHE_ROOM, { [] { return HookshotOrBoomerang; } }),
                 LocationAccess(ICE_CAVERN_GS_HEART_PIECE_ROOM, { [] { return BlueFire && HookshotOrBoomerang; } }),
                 LocationAccess(ICE_CAVERN_GS_PUSH_BLOCK_ROOM, { [] { return BlueFire && HookshotOrBoomerang; } }),
-                LocationAccess(ICE_CAVERN_PUSH_BLOCK_ROOM_RED_RUPEE_1,{[]{return SongOfTime ||CanUse(BOOMERANG);}}),
-                LocationAccess(ICE_CAVERN_PUSH_BLOCK_ROOM_RED_RUPEE_2,{[]{return SongOfTime ||CanUse(BOOMERANG);}}),
-                LocationAccess(ICE_CAVERN_PUSH_BLOCK_ROOM_RED_RUPEE_3,{[]{return SongOfTime ||CanUse(BOOMERANG);}}),
+                LocationAccess(ICE_CAVERN_PUSH_BLOCK_ROOM_RED_RUPEE_1,
+                               { [] { return SongOfTime || CanUse(BOOMERANG); } }),
+                LocationAccess(ICE_CAVERN_PUSH_BLOCK_ROOM_RED_RUPEE_2,
+                               { [] { return SongOfTime || CanUse(BOOMERANG); } }),
+                LocationAccess(ICE_CAVERN_PUSH_BLOCK_ROOM_RED_RUPEE_3,
+                               { [] { return SongOfTime || CanUse(BOOMERANG); } }),
             },
             {});
     }

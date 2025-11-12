@@ -327,7 +327,7 @@ void Actor_Init() {
     gActorOverlayTable[0x1C6].initInfo->init    = EnCow_rInit;
     gActorOverlayTable[0x1C6].initInfo->destroy = EnCow_rDestroy;
 
-    gActorOverlayTable[0x1D2].initInfo->update  = (ActorFunc)ObjHamishi_rUpdate;
+    gActorOverlayTable[0x1D2].initInfo->update = (ActorFunc)ObjHamishi_rUpdate;
 
     gActorOverlayTable[0x01AB].initInfo->update = ObjMure3_rUpdate;
 
