@@ -1537,7 +1537,28 @@ void HintTable_Init_Exclude_Dungeon() {
                        // obscure text
                        Text{"a #wall of ice# protects", /*french*/"un #mur de glace rouge# cache", /*spanish*/"una #gélida pared# protege", /*italian*/"un #muro di ghiaccio# cela", /*german*/"hinter einer #Wand aus Eis#, |wäre|wären|"},
     });
+    hintTable[ICE_CAVERN_RED_ICE_BLUE_RUPEE] = HintText::Exclude({
+                       // obscure text
+                       Text{"EN: ICE_CAVERN_RED_ICE_BLUE_RUPEE Hint", /*french*/"FR: ICE_CAVERN_RED_ICE_BLUE_RUPEE Hint", /*spanish*/"ES: ICE_CAVERN_RED_ICE_BLUE_RUPEE Hint", /*italian*/"IT: ICE_CAVERN_RED_ICE_BLUE_RUPEE Hint", /*german*/"DE: ICE_CAVERN_RED_ICE_BLUE_RUPEE Hint"},
+                     }
+    );
+        hintTable[ICE_CAVERN_PUSH_BLOCK_ROOM_RED_RUPEE_1] = HintText::Exclude({
+                       // obscure text
+                       Text{"EN: ICE_CAVERN_PUSH_BLOCK_ROOM_RED_RUPEE_1 Hint", /*french*/"FR: ICE_CAVERN_PUSH_BLOCK_ROOM_RED_RUPEE_1 Hint", /*spanish*/"ES: ICE_CAVERN_PUSH_BLOCK_ROOM_RED_RUPEE_1 Hint", /*italian*/"IT: ICE_CAVERN_PUSH_BLOCK_ROOM_RED_RUPEE_1 Hint", /*german*/"DE: ICE_CAVERN_PUSH_BLOCK_ROOM_RED_RUPEE_1 Hint"},
+                     }
+    );
+        hintTable[ICE_CAVERN_PUSH_BLOCK_ROOM_RED_RUPEE_2] = HintText::Exclude({
+                       // obscure text
+                       Text{"EN: ICE_CAVERN_PUSH_BLOCK_ROOM_RED_RUPEE_2 Hint", /*french*/"FR: ICE_CAVERN_PUSH_BLOCK_ROOM_RED_RUPEE_2 Hint", /*spanish*/"ES: ICE_CAVERN_PUSH_BLOCK_ROOM_RED_RUPEE_2 Hint", /*italian*/"IT: ICE_CAVERN_PUSH_BLOCK_ROOM_RED_RUPEE_2 Hint", /*german*/"DE: ICE_CAVERN_PUSH_BLOCK_ROOM_RED_RUPEE_2 Hint"},
+                     }
+    );
 
+        hintTable[ICE_CAVERN_PUSH_BLOCK_ROOM_RED_RUPEE_3] = HintText::Exclude({
+                       // obscure text
+                       Text{"EN: ICE_CAVERN_PUSH_BLOCK_ROOM_RED_RUPEE_3 Hint", /*french*/"FR: ICE_CAVERN_PUSH_BLOCK_ROOM_RED_RUPEE_3 Hint", /*spanish*/"ES: ICE_CAVERN_PUSH_BLOCK_ROOM_RED_RUPEE_3 Hint", /*italian*/"IT: ICE_CAVERN_PUSH_BLOCK_ROOM_RED_RUPEE_3 Hint", /*german*/"DE: ICE_CAVERN_PUSH_BLOCK_ROOM_RED_RUPEE_3 Hint"},
+                     }
+    );
+    
 
     hintTable[ICE_CAVERN_MQ_IRON_BOOTS_CHEST] = HintText::Exclude({
                        // obscure text

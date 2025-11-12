@@ -550,6 +550,10 @@ DungeonInfo IceCavern =
                     ICE_CAVERN_GS_PUSH_BLOCK_ROOM,
                     ICE_CAVERN_GS_SPINNING_SCYTHE_ROOM,
                     ICE_CAVERN_GS_HEART_PIECE_ROOM,
+                    ICE_CAVERN_RED_ICE_BLUE_RUPEE,
+                    ICE_CAVERN_PUSH_BLOCK_ROOM_RED_RUPEE_1,
+                    ICE_CAVERN_PUSH_BLOCK_ROOM_RED_RUPEE_2,
+                    ICE_CAVERN_PUSH_BLOCK_ROOM_RED_RUPEE_3,
                 },
                 {
                     // MQ Locations
