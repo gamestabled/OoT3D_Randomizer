@@ -3398,6 +3398,30 @@ bool ValidateSettings() {
             posY += 11;
         }
     }
+    if (ShuffleRupees && MQDungeonCount.IsNot(0) &&
+        Logic.IsNot(LOGIC_NONE) && Logic.IsNot(LOGIC_VANILLA)
+    ) {
+        if(ShuffleRupees.IsHidden()){
+            ShuffleRupees.SetSelectedIndex(OFF);
+        }
+        else
+        {
+            printf("\x1b[%d;0H"
+                    "----------------------------------------"
+                    "Rupeesanity currently does not have\n"
+                    "logic for Master Quest dungeons.\n"
+                    "\n"
+                    "Please disable one of the following:\n"
+                    " - MQ Dungeons (setting Count to 0)\n"
+                    " - Logic\n"
+                    " - Rupeesanity\n"
+                    "----------------------------------------",
+                    posY);
+            valid = false;
+            posY += 11;
+        }
+    }
+
 
     return valid;
 }
