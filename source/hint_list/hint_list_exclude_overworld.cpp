@@ -715,6 +715,46 @@ void HintTable_Init_Exclude_Overworld() {
                        // obscure text
                        Text{"obscured by #volcanic ash# is", /*french*/"#recouvert de cendres volcaniques# gît", /*spanish*/"bajo la #ceniza volcánica# yace", /*italian*/"il #fumo di un vulcano# cela", /*german*/"auf einem #dampfenden Vulkan#, |wäre|wären|"},
     });
+        hintTable[DMC_LOWER_RED_RUPEE_1] = HintText::Exclude({
+                       // obscure text
+                       Text{"EN: DMC_LOWER_RED_RUPEE_1 Hint", /*french*/"FR: DMC_LOWER_RED_RUPEE_1 Hint", /*spanish*/"ES: DMC_LOWER_RED_RUPEE_1 Hint", /*italian*/"IT: DMC_LOWER_RED_RUPEE_1 Hint", /*german*/"DE: DMC_LOWER_RED_RUPEE_1 Hint"},
+                     }
+    );
+            hintTable[DMC_LOWER_RED_RUPEE_2] = HintText::Exclude({
+                       // obscure text
+                       Text{"EN: DMC_LOWER_RED_RUPEE_2 Hint", /*french*/"FR: DMC_LOWER_RED_RUPEE_2 Hint", /*spanish*/"ES: DMC_LOWER_RED_RUPEE_2 Hint", /*italian*/"IT: DMC_LOWER_RED_RUPEE_2 Hint", /*german*/"DE: DMC_LOWER_RED_RUPEE_2 Hint"},
+                     }
+    );
+            hintTable[DMC_LOWER_BLUE_RUPEE_1] = HintText::Exclude({
+                       // obscure text
+                       Text{"EN: DMC_LOWER_BLUE_RUPEE_1 Hint", /*french*/"FR: DMC_LOWER_BLUE_RUPEE_1 Hint", /*spanish*/"ES: DMC_LOWER_BLUE_RUPEE_1 Hint", /*italian*/"IT: DMC_LOWER_BLUE_RUPEE_1 Hint", /*german*/"DE: DMC_LOWER_BLUE_RUPEE_1 Hint"},
+                     }
+    );
+            hintTable[DMC_LOWER_BLUE_RUPEE_2] = HintText::Exclude({
+                       // obscure text
+                       Text{"EN: DMC_LOWER_BLUE_RUPEE_2 Hint", /*french*/"FR: DMC_LOWER_BLUE_RUPEE_2 Hint", /*spanish*/"ES: DMC_LOWER_BLUE_RUPEE_2 Hint", /*italian*/"IT: DMC_LOWER_BLUE_RUPEE_2 Hint", /*german*/"DE: DMC_LOWER_BLUE_RUPEE_2 Hint"},
+                     }
+    );
+            hintTable[DMC_LOWER_BLUE_RUPEE_3] = HintText::Exclude({
+                       // obscure text
+                       Text{"EN: DMC_LOWER_BLUE_RUPEE_3 Hint", /*french*/"FR: DMC_LOWER_BLUE_RUPEE_3 Hint", /*spanish*/"ES: DMC_LOWER_BLUE_RUPEE_3 Hint", /*italian*/"IT: DMC_LOWER_BLUE_RUPEE_3 Hint", /*german*/"DE: DMC_LOWER_BLUE_RUPEE_3 Hint"},
+                     }
+    );
+            hintTable[DMC_LOWER_BLUE_RUPEE_4] = HintText::Exclude({
+                       // obscure text
+                       Text{"EN: DMC_LOWER_BLUE_RUPEE_4 Hint", /*french*/"FR: DMC_LOWER_BLUE_RUPEE_4 Hint", /*spanish*/"ES: DMC_LOWER_BLUE_RUPEE_4 Hint", /*italian*/"IT: DMC_LOWER_BLUE_RUPEE_4 Hint", /*german*/"DE: DMC_LOWER_BLUE_RUPEE_4 Hint"},
+                     }
+    );
+            hintTable[DMC_LOWER_BLUE_RUPEE_5] = HintText::Exclude({
+                       // obscure text
+                       Text{"EN: DMC_LOWER_BLUE_RUPEE_5 Hint", /*french*/"FR: DMC_LOWER_BLUE_RUPEE_5 Hint", /*spanish*/"ES: DMC_LOWER_BLUE_RUPEE_5 Hint", /*italian*/"IT: DMC_LOWER_BLUE_RUPEE_5 Hint", /*german*/"DE: DMC_LOWER_BLUE_RUPEE_5 Hint"},
+                     }
+    );
+            hintTable[DMC_LOWER_BLUE_RUPEE_6] = HintText::Exclude({
+                       // obscure text
+                       Text{"EN: DMC_LOWER_BLUE_RUPEE_6 Hint", /*french*/"FR: DMC_LOWER_BLUE_RUPEE_6 Hint", /*spanish*/"ES: DMC_LOWER_BLUE_RUPEE_6 Hint", /*italian*/"IT: DMC_LOWER_BLUE_RUPEE_6 Hint", /*german*/"DE: DMC_LOWER_BLUE_RUPEE_6 Hint"},
+                     }
+    );
 
     hintTable[GF_NORTH_F1_CARPENTER] = HintText::Exclude({
                        // obscure text

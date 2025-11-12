@@ -202,6 +202,14 @@ void LocationTable_Init() {
     locationTable[DMC_DEKU_SCRUB_GROTTO_LEFT]            = ItemLocation::GrottoScrub(0xF9, 0x30, "DMC Deku Scrub Grotto Left",           DMC_DEKU_SCRUB_GROTTO_LEFT,            BUY_DEKU_NUT_5,            {Category::cDeathMountainCrater, Category::cDeathMountain, Category::cDekuScrub, Category::cGrotto},                  SpoilerCollectionCheck::Scrub(0x23, 0x01),               SpoilerCollectionCheckGroup::GROUP_DEATH_MOUNTAIN_CRATER);
     locationTable[DMC_DEKU_SCRUB_GROTTO_RIGHT]           = ItemLocation::GrottoScrub(0xF9, 0x37, "DMC Deku Scrub Grotto Right",          DMC_DEKU_SCRUB_GROTTO_RIGHT,           BUY_BOMBS_535,             {Category::cDeathMountainCrater, Category::cDeathMountain, Category::cDekuScrub, Category::cGrotto},                  SpoilerCollectionCheck::Scrub(0x23, 0x06),               SpoilerCollectionCheckGroup::GROUP_DEATH_MOUNTAIN_CRATER);
     locationTable[DMC_DEKU_SCRUB_GROTTO_CENTER]          = ItemLocation::GrottoScrub(0xF9, 0x33, "DMC Deku Scrub Grotto Center",         DMC_DEKU_SCRUB_GROTTO_CENTER,          BUY_ARROWS_30,             {Category::cDeathMountainCrater, Category::cDeathMountain, Category::cDekuScrub, Category::cGrotto},                  SpoilerCollectionCheck::Scrub(0x23, 0x04),               SpoilerCollectionCheckGroup::GROUP_DEATH_MOUNTAIN_CRATER);
+    locationTable[DMC_LOWER_RED_RUPEE_1]                 = ItemLocation::Collectable(0x61, 0x20, "DMC Lower Red Rupee 1",                  DMC_LOWER_RED_RUPEE_1,                   RED_RUPEE,                {Category::cDeathMountainCrater,Category::cDeathMountain, Category::cFreestandingRupee,},                                                                                 SpoilerCollectionCheckGroup::GROUP_DEATH_MOUNTAIN_CRATER);
+    locationTable[DMC_LOWER_RED_RUPEE_2]                 = ItemLocation::Collectable(0x61, 0x21, "DMC Lower Red Rupee 2",                  DMC_LOWER_RED_RUPEE_2,                   RED_RUPEE,                {Category::cDeathMountainCrater,Category::cDeathMountain, Category::cFreestandingRupee,},                                                                                 SpoilerCollectionCheckGroup::GROUP_DEATH_MOUNTAIN_CRATER);
+    locationTable[DMC_LOWER_BLUE_RUPEE_1]                 = ItemLocation::Collectable(0x61, 0x22, "DMC Lower Blue Rupee 1",                  DMC_LOWER_BLUE_RUPEE_1,                   BLUE_RUPEE,                {Category::cDeathMountainCrater,Category::cDeathMountain, Category::cFreestandingRupee,},                                                                                 SpoilerCollectionCheckGroup::GROUP_DEATH_MOUNTAIN_CRATER);
+    locationTable[DMC_LOWER_BLUE_RUPEE_2]                 = ItemLocation::Collectable(0x61, 0x23, "DMC Lower Blue Rupee 2",                  DMC_LOWER_BLUE_RUPEE_2,                   BLUE_RUPEE,                {Category::cDeathMountainCrater,Category::cDeathMountain, Category::cFreestandingRupee,},                                                                                 SpoilerCollectionCheckGroup::GROUP_DEATH_MOUNTAIN_CRATER);
+    locationTable[DMC_LOWER_BLUE_RUPEE_3]                 = ItemLocation::Collectable(0x61, 0x24, "DMC Lower Blue Rupee 3",                  DMC_LOWER_BLUE_RUPEE_3,                   BLUE_RUPEE,                {Category::cDeathMountainCrater,Category::cDeathMountain, Category::cFreestandingRupee,},                                                                                 SpoilerCollectionCheckGroup::GROUP_DEATH_MOUNTAIN_CRATER);
+    locationTable[DMC_LOWER_BLUE_RUPEE_4]                 = ItemLocation::Collectable(0x61, 0x25, "DMC Lower Blue Rupee 4",                  DMC_LOWER_BLUE_RUPEE_4,                   BLUE_RUPEE,                {Category::cDeathMountainCrater,Category::cDeathMountain, Category::cFreestandingRupee,},                                                                                 SpoilerCollectionCheckGroup::GROUP_DEATH_MOUNTAIN_CRATER);
+    locationTable[DMC_LOWER_BLUE_RUPEE_5]                 = ItemLocation::Collectable(0x61, 0x26, "DMC Lower Blue Rupee 5",                  DMC_LOWER_BLUE_RUPEE_5,                   BLUE_RUPEE,                {Category::cDeathMountainCrater,Category::cDeathMountain, Category::cFreestandingRupee,},                                                                                 SpoilerCollectionCheckGroup::GROUP_DEATH_MOUNTAIN_CRATER);
+    locationTable[DMC_LOWER_BLUE_RUPEE_6]                 = ItemLocation::Collectable(0x61, 0x27, "DMC Lower Blue Rupee 6",                  DMC_LOWER_BLUE_RUPEE_6,                   BLUE_RUPEE,                {Category::cDeathMountainCrater,Category::cDeathMountain, Category::cFreestandingRupee,},                                                                                 SpoilerCollectionCheckGroup::GROUP_DEATH_MOUNTAIN_CRATER);
 
     // Zoras River
     locationTable[ZR_OPEN_GROTTO_CHEST]                  = ItemLocation::Chest      (0x3E, 0x09, "ZR Open Grotto Chest",                 ZR_OPEN_GROTTO_CHEST,                  RED_RUPEE,                 {Category::cZorasRiver, Category::cGrotto,},                                                                                                                                   SpoilerCollectionCheckGroup::GROUP_ZORAS_RIVER);
@@ -1409,6 +1417,14 @@ std::vector<LocationKey> overworldLocations = {
   DMC_DEKU_SCRUB_GROTTO_LEFT,
   DMC_DEKU_SCRUB_GROTTO_RIGHT,
   DMC_DEKU_SCRUB_GROTTO_CENTER,
+  DMC_LOWER_RED_RUPEE_1,
+  DMC_LOWER_RED_RUPEE_2,
+  DMC_LOWER_BLUE_RUPEE_1,
+  DMC_LOWER_BLUE_RUPEE_2,
+  DMC_LOWER_BLUE_RUPEE_3,
+  DMC_LOWER_BLUE_RUPEE_4,
+  DMC_LOWER_BLUE_RUPEE_5,
+  DMC_LOWER_BLUE_RUPEE_6,
 
   // Zoras River
   ZR_OPEN_GROTTO_CHEST,

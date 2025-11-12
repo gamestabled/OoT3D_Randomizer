@@ -32,10 +32,11 @@ void AreaTable_Init_DeathMountain() {
                                       (IsAdult && CanPlantBean(DEATH_MOUNTAIN_TRAIL) &&
                                        (HasExplosives || GoronBracelet));
                            } }),
-            LocationAccess(DMT_ROCK_BLUE_RUPEE, { [] { return IsChild && Here(DEATH_MOUNTAIN_TRAIL, [] { return CanBlastOrSmash; }); } }),
+            LocationAccess(DMT_ROCK_BLUE_RUPEE,
+                           { [] { return IsChild && Here(DEATH_MOUNTAIN_TRAIL, [] { return CanBlastOrSmash; }); } }),
             LocationAccess(DMT_ROCK_RED_RUPEE, { [] {
                                return IsChild && (Here(DEATH_MOUNTAIN_TRAIL, [] { return CanBlastOrSmash; }) ||
-                                      Here(DEATH_MOUNTAIN_SUMMIT, [] { return CanBlastOrSmash; }));
+                                                  Here(DEATH_MOUNTAIN_SUMMIT, [] { return CanBlastOrSmash; }));
                            } }),
         },
         {
@@ -504,7 +505,16 @@ void AreaTable_Init_DeathMountain() {
                      return BeanPlantFairy || (CanPlantBean(DMC_CENTRAL_LOCAL) && CanPlay(SongOfStorms));
                  } }),
              },
-             {},
+             { 
+                LocationAccess(DMC_LOWER_RED_RUPEE_1, { [] { return IsChild && CanSurviveHeatFor(8, 24); } }),
+                LocationAccess(DMC_LOWER_RED_RUPEE_2, { [] { return IsChild && CanSurviveHeatFor(8, 24); } }),
+                LocationAccess(DMC_LOWER_BLUE_RUPEE_1, { [] { return IsChild && CanSurviveHeatFor(8, 24); } }),
+                LocationAccess(DMC_LOWER_BLUE_RUPEE_2, { [] { return IsChild && CanSurviveHeatFor(8, 24); } }),
+                LocationAccess(DMC_LOWER_BLUE_RUPEE_3, { [] { return IsChild && CanSurviveHeatFor(8, 24); } }),
+                LocationAccess(DMC_LOWER_BLUE_RUPEE_4, { [] { return IsChild && CanSurviveHeatFor(8, 24); } }),
+                LocationAccess(DMC_LOWER_BLUE_RUPEE_5, { [] { return IsChild && CanSurviveHeatFor(8, 24); } }),
+                LocationAccess(DMC_LOWER_BLUE_RUPEE_6, { [] { return IsChild && CanSurviveHeatFor(8, 24); } })
+             },
              {
                  // Exits
                  Entrance(DMC_CENTRAL_NEARBY, { [] { return true; } }),
