@@ -706,6 +706,49 @@ void HintTable_Init_Exclude_Overworld() {
                      }
     );
 
+    
+    hintTable[DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_1] = HintText::Exclude({
+                       // obscure text
+                       Text{"EN: DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_1 Hint", /*french*/"FR: DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_1 Hint", /*spanish*/"ES: DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_1 Hint", /*italian*/"IT: DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_1 Hint", /*german*/"DE: DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_1 Hint"},
+                     }
+    );
+    
+    hintTable[DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_2] = HintText::Exclude({
+                       // obscure text
+                       Text{"EN: DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_2 Hint", /*french*/"FR: DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_2 Hint", /*spanish*/"ES: DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_2 Hint", /*italian*/"IT: DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_2 Hint", /*german*/"DE: DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_2 Hint"},
+                     }
+    );
+    
+    hintTable[DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_3] = HintText::Exclude({
+                       // obscure text
+                       Text{"EN: DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_3 Hint", /*french*/"FR: DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_3 Hint", /*spanish*/"ES: DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_3 Hint", /*italian*/"IT: DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_3 Hint", /*german*/"DE: DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_3 Hint"},
+                     }
+    );
+    
+    hintTable[DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_4] = HintText::Exclude({
+                       // obscure text
+                       Text{"EN: DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_4 Hint", /*french*/"FR: DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_4 Hint", /*spanish*/"ES: DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_4 Hint", /*italian*/"IT: DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_4 Hint", /*german*/"DE: DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_4 Hint"},
+                     }
+    );
+    
+    hintTable[DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_5] = HintText::Exclude({
+                       // obscure text
+                       Text{"EN: DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_5 Hint", /*french*/"FR: DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_5 Hint", /*spanish*/"ES: DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_5 Hint", /*italian*/"IT: DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_5 Hint", /*german*/"DE: DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_5 Hint"},
+                     }
+    );
+    
+    hintTable[DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_6] = HintText::Exclude({
+                       // obscure text
+                       Text{"EN: DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_6 Hint", /*french*/"FR: DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_6 Hint", /*spanish*/"ES: DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_6 Hint", /*italian*/"IT: DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_6 Hint", /*german*/"DE: DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_6 Hint"},
+                     }
+    );
+    
+    hintTable[DMT_COW_GROTTO_RUPEE_CIRCLE_RED_RUPEE] = HintText::Exclude({
+                       // obscure text
+                       Text{"EN: DMT_COW_GROTTO_RUPEE_CIRCLE_RED_RUPEE Hint", /*french*/"FR: DMT_COW_GROTTO_RUPEE_CIRCLE_RED_RUPEE Hint", /*spanish*/"ES: DMT_COW_GROTTO_RUPEE_CIRCLE_RED_RUPEE Hint", /*italian*/"IT: DMT_COW_GROTTO_RUPEE_CIRCLE_RED_RUPEE Hint", /*german*/"DE: DMT_COW_GROTTO_RUPEE_CIRCLE_RED_RUPEE Hint"},
+                     }
+    );
+
     hintTable[DMC_WALL_FREESTANDING_POH] = HintText::Exclude({
                        // obscure text
                        Text{"nestled in a #volcanic wall# is", /*french*/"dans une #alcove volcanique# gît", /*spanish*/"entre unas #murallas volcánicas# yace", /*italian*/"in una #nicchia vulcanica# puoi trovare", /*german*/"in einer #vulkanischen Wand#, |wäre|wären|"},

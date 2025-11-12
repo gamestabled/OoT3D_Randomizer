@@ -1,5 +1,3 @@
-#include "location_access.hpp"
-#include "logic.hpp"
 #include "entrance.hpp"
 #include "enemizer_logic.hpp"
 
@@ -138,6 +136,34 @@ void AreaTable_Init_DeathMountain() {
                                                CanDoGlitch(GlitchType::ActionSwap, GlitchDifficulty::ADVANCED))) &&
                                              EponasSong;
                                   } }),
+                 LocationAccess(DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_1,
+                                {
+                                    [] { return true; },
+                                }),
+                 LocationAccess(DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_2,
+                                {
+                                    [] { return true; },
+                                }),
+                 LocationAccess(DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_3,
+                                {
+                                    [] { return true; },
+                                }),
+                 LocationAccess(DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_4,
+                                {
+                                    [] { return true; },
+                                }),
+                 LocationAccess(DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_5,
+                                {
+                                    [] { return true; },
+                                }),
+                 LocationAccess(DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_6,
+                                {
+                                    [] { return true; },
+                                }),
+                 LocationAccess(DMT_COW_GROTTO_RUPEE_CIRCLE_RED_RUPEE,
+                                {
+                                    [] { return true; },
+                                }),
              },
              {
                  // Exits
