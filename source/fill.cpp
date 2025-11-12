@@ -1107,7 +1107,7 @@ int Fill() {
 
             AssumedFill(songs, songLocations, true);
         }
-
+        PlaceItemInLocation(KF_NEAR_RAMP_GREEN_RUPEE_1, HEART_CONTAINER);
         // Then place dungeon items that are assigned to restrictive location pools
         RandomizeDungeonItems();
 

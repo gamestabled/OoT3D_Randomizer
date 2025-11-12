@@ -134,9 +134,7 @@ static ItemOverride_Key ItemOverride_GetSearchKey(Actor* actor, u8 scene, u8 ite
         EnItem00* currentItem = ((EnItem00*)actor);
         u32 collectibleType   = actor->params & 0xFF;
         u16 collectibleFlag   = ((EnItem00*)actor)->collectibleFlag;
-        CitraPrint("CF-CT %X-%X", collectibleFlag, collectibleType);
         if (collectibleFlag == 0x00 && currentItem->actor.home.rot.z >= 0x40) {
-            CitraPrint("ExtraFlag %x", currentItem->actor.home.rot.z);
             // For rupees spawned by Rupee Circles (ObjMure3) We store the "collectibleFlag" in actor.home.rot.z since
             // that is not really used for them. Since collectibleFlag normally gets truncated to 0x3F we can use any
             // value at or above 0x40. We've reserved 0x40-0x46 for Rupee circle rupees.
@@ -240,7 +238,6 @@ static void ItemOverride_Clear(void) {
 }
 
 static void ItemOverride_PushPendingOverride(ItemOverride override) {
-    CitraPrint("Push Pending Override: %X", override.value.itemId);
     for (u32 i = 0; i < ARR_SIZE(rPendingOverrideQueue); ++i) {
         if (rPendingOverrideQueue[i].key.all == 0) {
             rPendingOverrideQueue[i] = override;
@@ -430,7 +427,6 @@ void ItemOverride_Update(void) {
         } else {
             ItemOverride_TryPendingItem();
             if (readyStatus == READY_IN_WATER) {
-                CitraPrint("readyStatus == READY_IN_WATER");
                 // Force underwater player flag in order to play the correct get-item
                 // animation even if Link is at the water's surface.
                 PLAYER->stateFlags2 |= 0x400;
