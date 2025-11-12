@@ -1,7 +1,7 @@
 #ifndef Z_OBJ_MURE3_H
 #define Z_OBJ_MURE3_H
 
-#include "z3D/z3DActor.h"
+#include "z3D/z3D.h"
 
 typedef void (*ObjMure3ActionFunc)(struct Actor*, struct GlobalContext*);
 typedef void (*ObjMure3SpawnFunc)(struct Actor*, struct GlobalContext*);
