@@ -178,6 +178,8 @@ void LocationTable_Init() {
     locationTable[DMT_TRADE_EYEDROPS]                    = ItemLocation::Base       (0x60, 0x26, "DMT Trade Eyedrops",                   DMT_TRADE_EYEDROPS,                    CLAIM_CHECK,               {Category::cDeathMountainTrail, Category::cDeathMountain, Category::cAdultTrade},                                     SpoilerCollectionCheck::Biggoron(0x2),                   SpoilerCollectionCheckGroup::GROUP_DEATH_MOUNTAIN_TRAIL);
     locationTable[DMT_TRADE_CLAIM_CHECK]                 = ItemLocation::Base       (0x60, 0x57, "DMT Trade Claim Check",                DMT_TRADE_CLAIM_CHECK,                 BIGGORON_SWORD,            {Category::cDeathMountainTrail, Category::cDeathMountain},                                                            SpoilerCollectionCheck::Biggoron(0x1),                   SpoilerCollectionCheckGroup::GROUP_DEATH_MOUNTAIN_TRAIL);
     locationTable[DMT_FREESTANDING_POH]                  = ItemLocation::Collectable(0x60, 0x1E, "DMT Freestanding PoH",                 DMT_FREESTANDING_POH,                  PIECE_OF_HEART,            {Category::cDeathMountainTrail, Category::cDeathMountain,},                                                                                                                    SpoilerCollectionCheckGroup::GROUP_DEATH_MOUNTAIN_TRAIL);
+    locationTable[DMT_ROCK_BLUE_RUPEE]                   = ItemLocation::Collectable(0x60, 0x07, "DMT Rock Blue Rupee",                  DMT_ROCK_BLUE_RUPEE,                   BLUE_RUPEE,                 {Category::cDeathMountainTrail, Category::cFreestandingRupee,},                                                                                                                 SpoilerCollectionCheckGroup::GROUP_DEATH_MOUNTAIN_TRAIL);
+    locationTable[DMT_ROCK_RED_RUPEE]                    = ItemLocation::Collectable(0x60, 0x0A, "DMT Rock Red Rupee",                   DMT_ROCK_RED_RUPEE,                    RED_RUPEE,                  {Category::cDeathMountainTrail, Category::cFreestandingRupee,},                                                                                                                 SpoilerCollectionCheckGroup::GROUP_DEATH_MOUNTAIN_TRAIL);
 
     // Goron City
     locationTable[GC_MAZE_LEFT_CHEST]                    = ItemLocation::Chest      (0x62, 0x00, "GC Maze Left Chest",                   GC_MAZE_LEFT_CHEST,                    HUGE_RUPEE,                {Category::cGoronCity,},                                                                                                                                                       SpoilerCollectionCheckGroup::GROUP_GORON_CITY);
@@ -1371,6 +1373,8 @@ std::vector<LocationKey> overworldLocations = {
   DMT_GREAT_FAIRY_REWARD,
   DMT_FREESTANDING_POH,
   DMT_COW_GROTTO_COW,
+  DMT_ROCK_BLUE_RUPEE,
+  DMT_ROCK_RED_RUPEE,
 
   // Goron City
   GC_MAZE_LEFT_CHEST,

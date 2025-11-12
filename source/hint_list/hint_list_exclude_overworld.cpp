@@ -135,52 +135,46 @@ void HintTable_Init_Exclude_Overworld() {
                        //clear text
                        Text{"#dead Dampé's first prize# is", /*french*/"la #première course d'Igor# donne", /*spanish*/"el primer premio de #la carrera de Dampé# se trata de", /*italian*/"la prima ricompensa del #fantasma di Danpei# è", /*german*/"#Boris' erster Preis#, |wäre|wären|"}
     );
-    
-    hintTable[GRAVEYARD_DAMPE_RACE_GREEN_RUPEE_8] = HintText::Exclude({
-                       // obscure text
-                       Text{"EN: GRAVEYARD_DAMPE_RACE_GREEN_RUPEE_8 Hint", /*french*/"FR: GRAVEYARD_DAMPE_RACE_GREEN_RUPEE_8 Hint", /*spanish*/"ES: GRAVEYARD_DAMPE_RACE_GREEN_RUPEE_8 Hint", /*italian*/"IT: GRAVEYARD_DAMPE_RACE_GREEN_RUPEE_8 Hint", /*german*/"DE: GRAVEYARD_DAMPE_RACE_GREEN_RUPEE_8 Hint"},
-                     }
-    );
 
-        hintTable[GRAVEYARD_DAMPE_RACE_GREEN_RUPEE_2] = HintText::Exclude({
+    hintTable[GRAVEYARD_DAMPE_RACE_GREEN_RUPEE_2] = HintText::Exclude({
                        // obscure text
                        Text{"EN: GRAVEYARD_DAMPE_RACE_GREEN_RUPEE_2 Hint", /*french*/"FR: GRAVEYARD_DAMPE_RACE_GREEN_RUPEE_2 Hint", /*spanish*/"ES: GRAVEYARD_DAMPE_RACE_GREEN_RUPEE_2 Hint", /*italian*/"IT: GRAVEYARD_DAMPE_RACE_GREEN_RUPEE_2 Hint", /*german*/"DE: GRAVEYARD_DAMPE_RACE_GREEN_RUPEE_2 Hint"},
                      }
     );
 
-        hintTable[GRAVEYARD_DAMPE_RACE_GREEN_RUPEE_3] = HintText::Exclude({
+    hintTable[GRAVEYARD_DAMPE_RACE_GREEN_RUPEE_3] = HintText::Exclude({
                        // obscure text
                        Text{"EN: GRAVEYARD_DAMPE_RACE_GREEN_RUPEE_3 Hint", /*french*/"FR: GRAVEYARD_DAMPE_RACE_GREEN_RUPEE_3 Hint", /*spanish*/"ES: GRAVEYARD_DAMPE_RACE_GREEN_RUPEE_3 Hint", /*italian*/"IT: GRAVEYARD_DAMPE_RACE_GREEN_RUPEE_3 Hint", /*german*/"DE: GRAVEYARD_DAMPE_RACE_GREEN_RUPEE_3 Hint"},
                      }
     );
 
-        hintTable[GRAVEYARD_DAMPE_RACE_GREEN_RUPEE_4] = HintText::Exclude({
+    hintTable[GRAVEYARD_DAMPE_RACE_GREEN_RUPEE_4] = HintText::Exclude({
                        // obscure text
                        Text{"EN: GRAVEYARD_DAMPE_RACE_GREEN_RUPEE_4 Hint", /*french*/"FR: GRAVEYARD_DAMPE_RACE_GREEN_RUPEE_4 Hint", /*spanish*/"ES: GRAVEYARD_DAMPE_RACE_GREEN_RUPEE_4 Hint", /*italian*/"IT: GRAVEYARD_DAMPE_RACE_GREEN_RUPEE_4 Hint", /*german*/"DE: GRAVEYARD_DAMPE_RACE_GREEN_RUPEE_4 Hint"},
                      }
     );
 
-        hintTable[GRAVEYARD_DAMPE_RACE_GREEN_RUPEE_5] = HintText::Exclude({
+    hintTable[GRAVEYARD_DAMPE_RACE_GREEN_RUPEE_5] = HintText::Exclude({
                        // obscure text
                        Text{"EN: GRAVEYARD_DAMPE_RACE_GREEN_RUPEE_5 Hint", /*french*/"FR: GRAVEYARD_DAMPE_RACE_GREEN_RUPEE_5 Hint", /*spanish*/"ES: GRAVEYARD_DAMPE_RACE_GREEN_RUPEE_5 Hint", /*italian*/"IT: GRAVEYARD_DAMPE_RACE_GREEN_RUPEE_5 Hint", /*german*/"DE: GRAVEYARD_DAMPE_RACE_GREEN_RUPEE_5 Hint"},
                      }
     );
 
-        hintTable[GRAVEYARD_DAMPE_RACE_GREEN_RUPEE_6] = HintText::Exclude({
+    hintTable[GRAVEYARD_DAMPE_RACE_GREEN_RUPEE_6] = HintText::Exclude({
                        // obscure text
                        Text{"EN: GRAVEYARD_DAMPE_RACE_GREEN_RUPEE_6 Hint", /*french*/"FR: GRAVEYARD_DAMPE_RACE_GREEN_RUPEE_6 Hint", /*spanish*/"ES: GRAVEYARD_DAMPE_RACE_GREEN_RUPEE_6 Hint", /*italian*/"IT: GRAVEYARD_DAMPE_RACE_GREEN_RUPEE_6 Hint", /*german*/"DE: GRAVEYARD_DAMPE_RACE_GREEN_RUPEE_6 Hint"},
                      }
     );
 
-        hintTable[GRAVEYARD_DAMPE_RACE_GREEN_RUPEE_7] = HintText::Exclude({
+    hintTable[GRAVEYARD_DAMPE_RACE_GREEN_RUPEE_7] = HintText::Exclude({
                        // obscure text
                        Text{"EN: GRAVEYARD_DAMPE_RACE_GREEN_RUPEE_7 Hint", /*french*/"FR: GRAVEYARD_DAMPE_RACE_GREEN_RUPEE_7 Hint", /*spanish*/"ES: GRAVEYARD_DAMPE_RACE_GREEN_RUPEE_7 Hint", /*italian*/"IT: GRAVEYARD_DAMPE_RACE_GREEN_RUPEE_7 Hint", /*german*/"DE: GRAVEYARD_DAMPE_RACE_GREEN_RUPEE_7 Hint"},
                      }
     );
 
-        hintTable[GRAVEYARD_DAMPE_RACE_GREEN_RUPEE_1] = HintText::Exclude({
+    hintTable[GRAVEYARD_DAMPE_RACE_GREEN_RUPEE_8] = HintText::Exclude({
                        // obscure text
-                       Text{"EN: GRAVEYARD_DAMPE_RACE_GREEN_RUPEE_1 Hint", /*french*/"FR: GRAVEYARD_DAMPE_RACE_GREEN_RUPEE_1 Hint", /*spanish*/"ES: GRAVEYARD_DAMPE_RACE_GREEN_RUPEE_1 Hint", /*italian*/"IT: GRAVEYARD_DAMPE_RACE_GREEN_RUPEE_1 Hint", /*german*/"DE: GRAVEYARD_DAMPE_RACE_GREEN_RUPEE_1 Hint"},
+                       Text{"EN: GRAVEYARD_DAMPE_RACE_GREEN_RUPEE_8 Hint", /*french*/"FR: GRAVEYARD_DAMPE_RACE_GREEN_RUPEE_8 Hint", /*spanish*/"ES: GRAVEYARD_DAMPE_RACE_GREEN_RUPEE_8 Hint", /*italian*/"IT: GRAVEYARD_DAMPE_RACE_GREEN_RUPEE_8 Hint", /*german*/"DE: GRAVEYARD_DAMPE_RACE_GREEN_RUPEE_8 Hint"},
                      }
     );
 
@@ -700,6 +694,17 @@ void HintTable_Init_Exclude_Overworld() {
                        // obscure text
                        Text{"above a #mountain cavern entrance# is", /*french*/"gisant #au dessus de la caverne montagneuse# gît", /*spanish*/"en lo alto de la #entrada de una cueva en la montaña# yace", /*italian*/"sopra #l'ingresso di una caverna montana# puoi trovare", /*german*/"über einem #Höhleneingang des Berges#, |wäre|wären|"},
     });
+    hintTable[DMT_ROCK_BLUE_RUPEE] = HintText::Exclude({
+                       // obscure text
+                       Text{"EN: DMT_ROCK_BLUE_RUPEE Hint", /*french*/"FR: DMT_ROCK_BLUE_RUPEE Hint", /*spanish*/"ES: DMT_ROCK_BLUE_RUPEE Hint", /*italian*/"IT: DMT_ROCK_BLUE_RUPEE Hint", /*german*/"DE: DMT_ROCK_BLUE_RUPEE Hint"},
+                     }
+    );
+
+    hintTable[DMT_ROCK_RED_RUPEE] = HintText::Exclude({
+                       // obscure text
+                       Text{"EN: DMT_ROCK_RED_RUPEE Hint", /*french*/"FR: DMT_ROCK_RED_RUPEE Hint", /*spanish*/"ES: DMT_ROCK_RED_RUPEE Hint", /*italian*/"IT: DMT_ROCK_RED_RUPEE Hint", /*german*/"DE: DMT_ROCK_RED_RUPEE Hint"},
+                     }
+    );
 
     hintTable[DMC_WALL_FREESTANDING_POH] = HintText::Exclude({
                        // obscure text

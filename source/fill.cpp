@@ -1029,6 +1029,7 @@ int Fill() {
         showItemProgress = true;
         // Place shop items first, since a buy shield is needed to place a dungeon reward on Gohma due
         // to access
+
         NonShopItems = {};
         if (Shopsanity.Is(SHOPSANITY_OFF)) {
             PlaceVanillaShopItems(); // Place vanilla shop items in vanilla location
@@ -1115,6 +1116,7 @@ int Fill() {
         // Then place the rest of the advancement items
         std::vector<ItemKey> remainingAdvancementItems =
             FilterAndEraseFromPool(ItemPool, [](const ItemKey i) { return ItemTable(i).IsAdvancement(); });
+
         AssumedFill(remainingAdvancementItems, allLocations, true);
         // Then place any remaining non-junk items
         // Fast fill as these don't affect logic
