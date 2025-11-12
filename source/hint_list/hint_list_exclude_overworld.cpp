@@ -1695,6 +1695,47 @@ void HintTable_Init_Exclude_Overworld() {
                        Text{"a #scrub underground duo# sells", /*french*/"le #duo de peste Mojo près de la vallée# vend", /*spanish*/"un #par de dekus subterráneos# del valle venden", /*italian*/"una #coppia di cespugli da canyon# vende", /*german*/"die Ware, des #Deku-Händler-Duos eines Erdlochs#, |wäre|wären|"},
     });
 
+        hintTable[GV_OCTOROCK_GROTTO_GREEN_RUPEE_1] = HintText::Exclude({
+                       // obscure text
+                       Text{"EN: GV_OCTOROCK_GROTTO_GREEN_RUPEE_1 Hint", /*french*/"FR: GV_OCTOROCK_GROTTO_GREEN_RUPEE_1 Hint", /*spanish*/"ES: GV_OCTOROCK_GROTTO_GREEN_RUPEE_1 Hint", /*italian*/"IT: GV_OCTOROCK_GROTTO_GREEN_RUPEE_1 Hint", /*german*/"DE: GV_OCTOROCK_GROTTO_GREEN_RUPEE_1 Hint"},
+                     }
+    );
+        hintTable[GV_OCTOROCK_GROTTO_GREEN_RUPEE_2] = HintText::Exclude({
+                       // obscure text
+                       Text{"EN: GV_OCTOROCK_GROTTO_GREEN_RUPEE_2 Hint", /*french*/"FR: GV_OCTOROCK_GROTTO_GREEN_RUPEE_2 Hint", /*spanish*/"ES: GV_OCTOROCK_GROTTO_GREEN_RUPEE_2 Hint", /*italian*/"IT: GV_OCTOROCK_GROTTO_GREEN_RUPEE_2 Hint", /*german*/"DE: GV_OCTOROCK_GROTTO_GREEN_RUPEE_2 Hint"},
+                     }
+    );
+        hintTable[GV_OCTOROCK_GROTTO_GREEN_RUPEE_3] = HintText::Exclude({
+                       // obscure text
+                       Text{"EN: GV_OCTOROCK_GROTTO_GREEN_RUPEE_3 Hint", /*french*/"FR: GV_OCTOROCK_GROTTO_GREEN_RUPEE_3 Hint", /*spanish*/"ES: GV_OCTOROCK_GROTTO_GREEN_RUPEE_3 Hint", /*italian*/"IT: GV_OCTOROCK_GROTTO_GREEN_RUPEE_3 Hint", /*german*/"DE: GV_OCTOROCK_GROTTO_GREEN_RUPEE_3 Hint"},
+                     }
+    );
+        hintTable[GV_OCTOROCK_GROTTO_GREEN_RUPEE_4] = HintText::Exclude({
+                       // obscure text
+                       Text{"EN: GV_OCTOROCK_GROTTO_GREEN_RUPEE_4 Hint", /*french*/"FR: GV_OCTOROCK_GROTTO_GREEN_RUPEE_4 Hint", /*spanish*/"ES: GV_OCTOROCK_GROTTO_GREEN_RUPEE_4 Hint", /*italian*/"IT: GV_OCTOROCK_GROTTO_GREEN_RUPEE_4 Hint", /*german*/"DE: GV_OCTOROCK_GROTTO_GREEN_RUPEE_4 Hint"},
+                     }
+    );
+        hintTable[GV_OCTOROCK_GROTTO_BLUE_RUPEE_1] = HintText::Exclude({
+                       // obscure text
+                       Text{"EN: GV_OCTOROCK_GROTTO_BLUE_RUPEE_1 Hint", /*french*/"FR: GV_OCTOROCK_GROTTO_BLUE_RUPEE_1 Hint", /*spanish*/"ES: GV_OCTOROCK_GROTTO_BLUE_RUPEE_1 Hint", /*italian*/"IT: GV_OCTOROCK_GROTTO_BLUE_RUPEE_1 Hint", /*german*/"DE: GV_OCTOROCK_GROTTO_BLUE_RUPEE_1 Hint"},
+                     }
+    );
+        hintTable[GV_OCTOROCK_GROTTO_BLUE_RUPEE_2] = HintText::Exclude({
+                       // obscure text
+                       Text{"EN: GV_OCTOROCK_GROTTO_BLUE_RUPEE_2 Hint", /*french*/"FR: GV_OCTOROCK_GROTTO_BLUE_RUPEE_2 Hint", /*spanish*/"ES: GV_OCTOROCK_GROTTO_BLUE_RUPEE_2 Hint", /*italian*/"IT: GV_OCTOROCK_GROTTO_BLUE_RUPEE_2 Hint", /*german*/"DE: GV_OCTOROCK_GROTTO_BLUE_RUPEE_2 Hint"},
+                     }
+    );
+        hintTable[GV_OCTOROCK_GROTTO_BLUE_RUPEE_3] = HintText::Exclude({
+                       // obscure text
+                       Text{"EN: GV_OCTOROCK_GROTTO_BLUE_RUPEE_3 Hint", /*french*/"FR: GV_OCTOROCK_GROTTO_BLUE_RUPEE_3 Hint", /*spanish*/"ES: GV_OCTOROCK_GROTTO_BLUE_RUPEE_3 Hint", /*italian*/"IT: GV_OCTOROCK_GROTTO_BLUE_RUPEE_3 Hint", /*german*/"DE: GV_OCTOROCK_GROTTO_BLUE_RUPEE_3 Hint"},
+                     }
+    );
+        hintTable[GV_OCTOROCK_GROTTO_RED_RUPEE] = HintText::Exclude({
+                       // obscure text
+                       Text{"EN: GV_OCTOROCK_GROTTO_RED_RUPEE Hint", /*french*/"FR: GV_OCTOROCK_GROTTO_RED_RUPEE Hint", /*spanish*/"ES: GV_OCTOROCK_GROTTO_RED_RUPEE Hint", /*italian*/"IT: GV_OCTOROCK_GROTTO_RED_RUPEE Hint", /*german*/"DE: GV_OCTOROCK_GROTTO_RED_RUPEE Hint"},
+                     }
+    );
+
 
     hintTable[COLOSSUS_DEKU_SCRUB_GROTTO_FRONT] = HintText::Exclude({
                        // obscure text

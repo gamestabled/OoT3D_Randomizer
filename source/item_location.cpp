@@ -98,7 +98,16 @@ void LocationTable_Init() {
     locationTable[GV_CRATE_FREESTANDING_POH]             = ItemLocation::Collectable(0x5A, 0x02, "GV Crate Freestanding PoH",            GV_CRATE_FREESTANDING_POH,             PIECE_OF_HEART,            {Category::cGerudoValley, Category::cGerudo,},                                                                                                                                 SpoilerCollectionCheckGroup::GROUP_GERUDO_VALLEY);
     locationTable[GV_DEKU_SCRUB_GROTTO_REAR]             = ItemLocation::GrottoScrub(0xF0, 0x39, "GV Deku Scrub Grotto Rear",            GV_DEKU_SCRUB_GROTTO_REAR,             BUY_RED_POTION_30,         {Category::cGerudoValley, Category::cGerudo, Category::cDekuScrub, Category::cGrotto},                                SpoilerCollectionCheck::Scrub(0x1A, 0x08),               SpoilerCollectionCheckGroup::GROUP_GERUDO_VALLEY);
     locationTable[GV_DEKU_SCRUB_GROTTO_FRONT]            = ItemLocation::GrottoScrub(0xF0, 0x3A, "GV Deku Scrub Grotto Front",           GV_DEKU_SCRUB_GROTTO_FRONT,            BUY_GREEN_POTION,          {Category::cGerudoValley, Category::cGerudo, Category::cDekuScrub, Category::cGrotto},                                SpoilerCollectionCheck::Scrub(0x1A, 0x09),               SpoilerCollectionCheckGroup::GROUP_GERUDO_VALLEY);
-
+    locationTable[GV_OCTOROCK_GROTTO_BLUE_RUPEE_1]         = ItemLocation::Collectable(0x3E, 0x38, "GV Octorock Grotto Blue Rupee 1",        GV_OCTOROCK_GROTTO_BLUE_RUPEE_1,         BLUE_RUPEE,            {Category::cGerudoValley, Category::cGerudo,Category::cGrotto},                                                                                                                                 SpoilerCollectionCheckGroup::GROUP_GERUDO_VALLEY);
+    locationTable[GV_OCTOROCK_GROTTO_BLUE_RUPEE_2]         = ItemLocation::Collectable(0x3E, 0x39, "GV Octorock Grotto Blue Rupee 2",        GV_OCTOROCK_GROTTO_BLUE_RUPEE_2,         BLUE_RUPEE,            {Category::cGerudoValley, Category::cGerudo,Category::cGrotto},                                                                                                                                 SpoilerCollectionCheckGroup::GROUP_GERUDO_VALLEY);
+    locationTable[GV_OCTOROCK_GROTTO_BLUE_RUPEE_3]         = ItemLocation::Collectable(0x3E, 0x3A, "GV Octorock Grotto Blue Rupee 3",        GV_OCTOROCK_GROTTO_BLUE_RUPEE_3,         BLUE_RUPEE,            {Category::cGerudoValley, Category::cGerudo,Category::cGrotto},                                                                                                                                 SpoilerCollectionCheckGroup::GROUP_GERUDO_VALLEY);
+    locationTable[GV_OCTOROCK_GROTTO_GREEN_RUPEE_1]         = ItemLocation::Collectable(0x3E, 0x3B, "GV Octorock Grotto Green Rupee 1",        GV_OCTOROCK_GROTTO_GREEN_RUPEE_1,         GREEN_RUPEE,            {Category::cGerudoValley, Category::cGerudo,Category::cGrotto},                                                                                                                                 SpoilerCollectionCheckGroup::GROUP_GERUDO_VALLEY);
+    locationTable[GV_OCTOROCK_GROTTO_GREEN_RUPEE_2]         = ItemLocation::Collectable(0x3E, 0x3C, "GV Octorock Grotto Green Rupee 2",        GV_OCTOROCK_GROTTO_GREEM_RUPEE_2,         GREEN_RUPEE,            {Category::cGerudoValley, Category::cGerudo,Category::cGrotto},                                                                                                                                 SpoilerCollectionCheckGroup::GROUP_GERUDO_VALLEY);
+    locationTable[GV_OCTOROCK_GROTTO_GREEN_RUPEE_3]         = ItemLocation::Collectable(0x3E, 0x3D, "GV Octorock Grotto Green Rupee 3",        GV_OCTOROCK_GROTTO_GREEN_RUPEE_3,         GREEN_RUPEE,            {Category::cGerudoValley, Category::cGerudo,Category::cGrotto},                                                                                                                                 SpoilerCollectionCheckGroup::GROUP_GERUDO_VALLEY);
+    locationTable[GV_OCTOROCK_GROTTO_GREEN_RUPEE_4]         = ItemLocation::Collectable(0x3E, 0x3E, "GV Octorock Grotto Green Rupee 4",        GV_OCTOROCK_GROTTO_GREEN_RUPEE_4,         GREEN_RUPEE,            {Category::cGerudoValley, Category::cGerudo,Category::cGrotto},                                                                                                                                 SpoilerCollectionCheckGroup::GROUP_GERUDO_VALLEY);
+    locationTable[GV_OCTOROCK_GROTTO_RED_RUPEE]         = ItemLocation::Collectable(0x3E, 0x3F, "GV Octorock Grotto Red Rupee",        GV_OCTOROCK_GROTTO_RED_RUPEE,         RED_RUPEE,            {Category::cGerudoValley, Category::cGerudo,Category::cGrotto},                                                                                                                                 SpoilerCollectionCheckGroup::GROUP_GERUDO_VALLEY);
+    
+    
     // Gerudo Fortress
     locationTable[GF_CHEST]                              = ItemLocation::Chest      (0x5D, 0x00, "GF Chest",                             GF_CHEST,                              PIECE_OF_HEART,            {Category::cGerudoFortress, Category::cGerudo,},                                                                                                                               SpoilerCollectionCheckGroup::GROUP_GERUDO_VALLEY);
     locationTable[GF_HBA_1000_POINTS]                    = ItemLocation::Base       (0x5D, 0x3E, "GF HBA 1000 Points",                   GF_HBA_1000_POINTS,                    PIECE_OF_HEART,            {Category::cGerudoFortress, Category::cGerudo, Category::cMinigame},                                                  SpoilerCollectionCheck::InfTable(0x19, 0x08),            SpoilerCollectionCheckGroup::GROUP_GERUDO_VALLEY);
@@ -1257,6 +1266,14 @@ std::vector<LocationKey> overworldLocations = {
   GV_DEKU_SCRUB_GROTTO_REAR,
   GV_DEKU_SCRUB_GROTTO_FRONT,
   GV_COW,
+  GV_OCTOROCK_GROTTO_GREEN_RUPEE_1,
+  GV_OCTOROCK_GROTTO_GREEN_RUPEE_2,
+  GV_OCTOROCK_GROTTO_GREEN_RUPEE_3,
+  GV_OCTOROCK_GROTTO_GREEN_RUPEE_4,
+  GV_OCTOROCK_GROTTO_BLUE_RUPEE_1,
+  GV_OCTOROCK_GROTTO_BLUE_RUPEE_2,
+  GV_OCTOROCK_GROTTO_BLUE_RUPEE_3,
+  GV_OCTOROCK_GROTTO_RED_RUPEE,
 
   // Gerudo Fortress
   GF_CHEST,
