@@ -566,9 +566,9 @@ u8 ItemOverride_GetItemDrop(EnItem00* this) {
 
     u16 resolvedItemId = ItemTable_ResolveUpgrades(override.value.itemId);
     ItemRow* itemRow   = ItemTable_GetItemRow(resolvedItemId);
-    
-    if ((itemRow->chestType != CHEST_JUNK && itemRow->chestType != CHEST_HEART) || itemRow->baseItemId == GI_HEART_PIECE ||
-        itemRow->baseItemId == GI_HEART_CONTAINER) { 
+
+    if ((itemRow->chestType != CHEST_JUNK && itemRow->chestType != CHEST_HEART) ||
+        itemRow->baseItemId == GI_HEART_PIECE || itemRow->baseItemId == GI_HEART_CONTAINER) {
         ItemOverride_PushPendingOverride(override);
         Actor_Kill(&this->actor);
     } else {
