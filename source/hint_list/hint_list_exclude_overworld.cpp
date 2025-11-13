@@ -695,20 +695,29 @@ void HintTable_Init_Exclude_Overworld() {
                        Text{"the #sunken treasure in a lake# is", /*french*/"le #trésor au fond du lac# est", /*spanish*/"el #tesoro hundido del lago# se trata de", /*italian*/"il #tesoro sommerso nel lago# è", /*german*/"der #versunkene Schatz eines Sees#, |wäre|wären|"},
     });
 
-        hintTable[LH_UNDER_WATER_GREEN_RUPEE_1] = HintText::Exclude({
+    hintTable[LH_UNDER_WATER_GREEN_RUPEE_1] = HintText::Exclude({
                        // obscure text
-                       Text{"EN: LH_UNDER_WATER_GREEN_RUPEE_1 HINT", /*french*/"FR: LH_UNDER_WATER_GREEN_RUPEE_1 HINT", /*spanish*/"ES: LH_UNDER_WATER_GREEN_RUPEE_1 HINT", /*italian*/"IT: LH_UNDER_WATER_GREEN_RUPEE_1 HINT", /*german*/"DE: LH_UNDER_WATER_GREEN_RUPEE_1 HINT"},
-    });
+                       Text{"#In shallow water of a lake# shimmers", /*french*/"FR: LH_UNDER_WATER_GREEN_RUPEE_1 HINT", /*spanish*/"ES: LH_UNDER_WATER_GREEN_RUPEE_1 HINT", /*italian*/"IT: LH_UNDER_WATER_GREEN_RUPEE_1 HINT", /*german*/"DE: LH_UNDER_WATER_GREEN_RUPEE_1 HINT"},
+                        },{},
+                       //clear text
+                       Text{"#The first underwater rupee in Lake Hylia# is", /*french*/"FR: LH_UNDER_WATER_GREEN_RUPEE_1 HINT", /*spanish*/"ES: LH_UNDER_WATER_GREEN_RUPEE_1 HINT", /*italian*/"IT: LH_UNDER_WATER_GREEN_RUPEE_1 HINT", /*german*/"DE: LH_UNDER_WATER_GREEN_RUPEE_1 HINT"},
+                       );
 
-        hintTable[LH_UNDER_WATER_GREEN_RUPEE_2] = HintText::Exclude({
+    hintTable[LH_UNDER_WATER_GREEN_RUPEE_2] = HintText::Exclude({
                        // obscure text
-                       Text{"EN: LH_UNDER_WATER_GREEN_RUPEE_2 HINT", /*french*/"FR: LH_UNDER_WATER_GREEN_RUPEE_2 HINT", /*spanish*/"ES: LH_UNDER_WATER_GREEN_RUPEE_2 HINT", /*italian*/"IT: LH_UNDER_WATER_GREEN_RUPEE_2 HINT", /*german*/"DE: LH_UNDER_WATER_GREEN_RUPEE_2 HINT"},
-    });
+                       Text{"#In deeper water water of a lake# shimmers", /*french*/"FR: LH_UNDER_WATER_GREEN_RUPEE_2 HINT", /*spanish*/"ES: LH_UNDER_WATER_GREEN_RUPEE_2 HINT", /*italian*/"IT: LH_UNDER_WATER_GREEN_RUPEE_2 HINT", /*german*/"DE: LH_UNDER_WATER_GREEN_RUPEE_2 HINT"},
+                       },{},
+                       //clear text
+                       Text{"#The second underwater rupee in Lake Hylia# is", /*french*/"FR: LH_UNDER_WATER_GREEN_RUPEE_2 HINT", /*spanish*/"ES: LH_UNDER_WATER_GREEN_RUPEE_2 HINT", /*italian*/"IT: LH_UNDER_WATER_GREEN_RUPEE_2 HINT", /*german*/"DE: LH_UNDER_WATER_GREEN_RUPEE_2 HINT"},
+                       );
 
         hintTable[LH_UNDER_WATER_GREEN_RUPEE_3] = HintText::Exclude({
                        // obscure text
-                       Text{"EN: LH_UNDER_WATER_GREEN_RUPEE_3 HINT", /*french*/"FR: LH_UNDER_WATER_GREEN_RUPEE_3 HINT", /*spanish*/"ES: LH_UNDER_WATER_GREEN_RUPEE_3 HINT", /*italian*/"IT: LH_UNDER_WATER_GREEN_RUPEE_3 HINT", /*german*/"DE: LH_UNDER_WATER_GREEN_RUPEE_3 HINT"},
-    });
+                       Text{"#In deeper water water of a lake# shimmers", /*french*/"FR: LH_UNDER_WATER_GREEN_RUPEE_3 HINT", /*spanish*/"ES: LH_UNDER_WATER_GREEN_RUPEE_3 HINT", /*italian*/"IT: LH_UNDER_WATER_GREEN_RUPEE_3 HINT", /*german*/"DE: LH_UNDER_WATER_GREEN_RUPEE_3 HINT"},
+                      },{},
+                       //clear text
+                       Text{"#The third underwater rupee in Lake Hylia# is", /*french*/"FR: LH_UNDER_WATER_GREEN_RUPEE_3 HINT", /*spanish*/"ES: LH_UNDER_WATER_GREEN_RUPEE_3 HINT", /*italian*/"IT: LH_UNDER_WATER_GREEN_RUPEE_3 HINT", /*german*/"DE: LH_UNDER_WATER_GREEN_RUPEE_3 HINT"},
+                       );
 
 
     hintTable[GF_GERUDO_TOKEN] = HintText::Exclude({
@@ -808,59 +817,77 @@ void HintTable_Init_Exclude_Overworld() {
                        // obscure text
                        Text{"above a #mountain cavern entrance# is", /*french*/"gisant #au dessus de la caverne montagneuse# gît", /*spanish*/"en lo alto de la #entrada de una cueva en la montaña# yace", /*italian*/"sopra #l'ingresso di una caverna montana# puoi trovare", /*german*/"über einem #Höhleneingang des Berges#, |wäre|wären|"},
     });
+
     hintTable[DMT_ROCK_BLUE_RUPEE] = HintText::Exclude({
                        // obscure text
-                       Text{"EN: DMT_ROCK_BLUE_RUPEE Hint", /*french*/"FR: DMT_ROCK_BLUE_RUPEE Hint", /*spanish*/"ES: DMT_ROCK_BLUE_RUPEE Hint", /*italian*/"IT: DMT_ROCK_BLUE_RUPEE Hint", /*german*/"DE: DMT_ROCK_BLUE_RUPEE Hint"},
-                     }
+                       Text{"#A mountain boulder# holds", /*french*/"FR: DMT_ROCK_BLUE_RUPEE Hint", /*spanish*/"ES: DMT_ROCK_BLUE_RUPEE Hint", /*italian*/"IT: DMT_ROCK_BLUE_RUPEE Hint", /*german*/"DE: DMT_ROCK_BLUE_RUPEE Hint"},
+                       }, {},
+                       //clear text
+                       Text{"#A rock with a rupee on Death Mountain Trail# has", /*french*/"FR: DMT_ROCK_BLUE_RUPEE Hint", /*spanish*/"ES: DMT_ROCK_BLUE_RUPEE Hint", /*italian*/"IT: DMT_ROCK_BLUE_RUPEE Hint", /*german*/"DE: DMT_ROCK_BLUE_RUPEE Hint"},
     );
 
     hintTable[DMT_ROCK_RED_RUPEE] = HintText::Exclude({
                        // obscure text
-                       Text{"EN: DMT_ROCK_RED_RUPEE Hint", /*french*/"FR: DMT_ROCK_RED_RUPEE Hint", /*spanish*/"ES: DMT_ROCK_RED_RUPEE Hint", /*italian*/"IT: DMT_ROCK_RED_RUPEE Hint", /*german*/"DE: DMT_ROCK_RED_RUPEE Hint"},
-                     }
+                       Text{"#A mountain boulder# holds", /*french*/"FR: DMT_ROCK_RED_RUPEE Hint", /*spanish*/"ES: DMT_ROCK_RED_RUPEE Hint", /*italian*/"IT: DMT_ROCK_RED_RUPEE Hint", /*german*/"DE: DMT_ROCK_RED_RUPEE Hint"},
+                     }, {},
+                     // clear text
+                     Text{"#A rock with a rupee on Death Mountain Trail# has", /*french*/"FR: DMT_ROCK_BLUE_RUPEE Hint", /*spanish*/"ES: DMT_ROCK_BLUE_RUPEE Hint", /*italian*/"IT: DMT_ROCK_BLUE_RUPEE Hint", /*german*/"DE: DMT_ROCK_BLUE_RUPEE Hint"},
     );
 
-    
     hintTable[DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_1] = HintText::Exclude({
                        // obscure text
-                       Text{"EN: DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_1 Hint", /*french*/"FR: DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_1 Hint", /*spanish*/"ES: DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_1 Hint", /*italian*/"IT: DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_1 Hint", /*german*/"DE: DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_1 Hint"},
-                     }
+                       Text{"#A cow looks at#", /*french*/"FR: DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_1 Hint", /*spanish*/"ES: DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_1 Hint", /*italian*/"IT: DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_1 Hint", /*german*/"DE: DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_1 Hint"},
+                     }, {},
+                     // clear text
+                     Text{"#The rupee circle in the cow grotto in DMT# includes", /*french*/"FR: DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_1 Hint", /*spanish*/"ES: DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_1 Hint", /*italian*/"IT: DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_1 Hint", /*german*/"DE: DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_1 Hint"},
     );
     
     hintTable[DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_2] = HintText::Exclude({
                        // obscure text
-                       Text{"EN: DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_2 Hint", /*french*/"FR: DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_2 Hint", /*spanish*/"ES: DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_2 Hint", /*italian*/"IT: DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_2 Hint", /*german*/"DE: DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_2 Hint"},
-                     }
+                       Text{"#A cow looks at#", /*french*/"FR: DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_2 Hint", /*spanish*/"ES: DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_2 Hint", /*italian*/"IT: DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_2 Hint", /*german*/"DE: DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_2 Hint"},
+                     }, {},
+                     // clear text
+                     Text{"#The rupee circle in the cow grotto in DMT# includes", /*french*/"FR: DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_2 Hint", /*spanish*/"ES: DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_2 Hint", /*italian*/"IT: DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_2 Hint", /*german*/"DE: DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_2 Hint"},
     );
     
     hintTable[DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_3] = HintText::Exclude({
                        // obscure text
-                       Text{"EN: DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_3 Hint", /*french*/"FR: DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_3 Hint", /*spanish*/"ES: DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_3 Hint", /*italian*/"IT: DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_3 Hint", /*german*/"DE: DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_3 Hint"},
-                     }
+                       Text{"#A cow looks at#", /*french*/"FR: DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_3 Hint", /*spanish*/"ES: DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_3 Hint", /*italian*/"IT: DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_3 Hint", /*german*/"DE: DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_3 Hint"},
+                     }, {},
+                     // clear text
+                     Text{"#The rupee circle in the cow grotto in DMT# includes", /*french*/"FR: DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_3 Hint", /*spanish*/"ES: DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_3 Hint", /*italian*/"IT: DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_3 Hint", /*german*/"DE: DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_3 Hint"},
     );
     
     hintTable[DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_4] = HintText::Exclude({
                        // obscure text
-                       Text{"EN: DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_4 Hint", /*french*/"FR: DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_4 Hint", /*spanish*/"ES: DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_4 Hint", /*italian*/"IT: DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_4 Hint", /*german*/"DE: DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_4 Hint"},
-                     }
+                       Text{"#A cow looks at#", /*french*/"FR: DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_4 Hint", /*spanish*/"ES: DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_4 Hint", /*italian*/"IT: DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_4 Hint", /*german*/"DE: DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_4 Hint"},
+                     }, {},
+                     // clear text
+                     Text{"#The rupee circle in the cow grotto in DMT# includes", /*french*/"FR: DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_4 Hint", /*spanish*/"ES: DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_4 Hint", /*italian*/"IT: DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_4 Hint", /*german*/"DE: DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_4 Hint"},
     );
     
     hintTable[DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_5] = HintText::Exclude({
                        // obscure text
-                       Text{"EN: DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_5 Hint", /*french*/"FR: DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_5 Hint", /*spanish*/"ES: DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_5 Hint", /*italian*/"IT: DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_5 Hint", /*german*/"DE: DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_5 Hint"},
-                     }
+                       Text{"#A cow looks at#", /*french*/"FR: DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_5 Hint", /*spanish*/"ES: DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_5 Hint", /*italian*/"IT: DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_5 Hint", /*german*/"DE: DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_5 Hint"},
+                     }, {},
+                     // clear text
+                     Text{"#The rupee circle in the cow grotto in DMT# includes", /*french*/"FR: DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_5 Hint", /*spanish*/"ES: DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_5 Hint", /*italian*/"IT: DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_5 Hint", /*german*/"DE: DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_5 Hint"},
     );
     
     hintTable[DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_6] = HintText::Exclude({
                        // obscure text
-                       Text{"EN: DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_6 Hint", /*french*/"FR: DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_6 Hint", /*spanish*/"ES: DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_6 Hint", /*italian*/"IT: DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_6 Hint", /*german*/"DE: DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_6 Hint"},
-                     }
+                       Text{"#A cow looks at#", /*french*/"FR: DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_6 Hint", /*spanish*/"ES: DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_6 Hint", /*italian*/"IT: DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_6 Hint", /*german*/"DE: DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_6 Hint"},
+                     }, {},
+                     // clear text
+                     Text{"#The rupee circle in the cow grotto in DMT# includes", /*french*/"FR: DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_6 Hint", /*spanish*/"ES: DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_6 Hint", /*italian*/"IT: DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_6 Hint", /*german*/"DE: DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_6 Hint"},
     );
     
     hintTable[DMT_COW_GROTTO_RUPEE_CIRCLE_RED_RUPEE] = HintText::Exclude({
                        // obscure text
-                       Text{"EN: DMT_COW_GROTTO_RUPEE_CIRCLE_RED_RUPEE Hint", /*french*/"FR: DMT_COW_GROTTO_RUPEE_CIRCLE_RED_RUPEE Hint", /*spanish*/"ES: DMT_COW_GROTTO_RUPEE_CIRCLE_RED_RUPEE Hint", /*italian*/"IT: DMT_COW_GROTTO_RUPEE_CIRCLE_RED_RUPEE Hint", /*german*/"DE: DMT_COW_GROTTO_RUPEE_CIRCLE_RED_RUPEE Hint"},
-                     }
+                       Text{"#A cow looks at#", /*french*/"FR: DMT_COW_GROTTO_RUPEE_CIRCLE_RED_RUPEE Hint", /*spanish*/"ES: DMT_COW_GROTTO_RUPEE_CIRCLE_RED_RUPEE Hint", /*italian*/"IT: DMT_COW_GROTTO_RUPEE_CIRCLE_RED_RUPEE Hint", /*german*/"DE: DMT_COW_GROTTO_RUPEE_CIRCLE_RED_RUPEE Hint"},
+                     }, {},
+                     // clear text
+                     Text{"#The rupee circle in the cow grotto in DMT# includes", /*french*/"FR: DMT_COW_GROTTO_RUPEE_CIRCLE_RED_RUPEE Hint", /*spanish*/"ES: DMT_COW_GROTTO_RUPEE_CIRCLE_RED_RUPEE Hint", /*italian*/"IT: DMT_COW_GROTTO_RUPEE_CIRCLE_RED_RUPEE Hint", /*german*/"DE: DMT_COW_GROTTO_RUPEE_CIRCLE_RED_RUPEE Hint"},
     );
 
     hintTable[DMC_WALL_FREESTANDING_POH] = HintText::Exclude({
@@ -872,51 +899,77 @@ void HintTable_Init_Exclude_Overworld() {
                        // obscure text
                        Text{"obscured by #volcanic ash# is", /*french*/"#recouvert de cendres volcaniques# gît", /*spanish*/"bajo la #ceniza volcánica# yace", /*italian*/"il #fumo di un vulcano# cela", /*german*/"auf einem #dampfenden Vulkan#, |wäre|wären|"},
     });
-        hintTable[DMC_LOWER_RED_RUPEE_1] = HintText::Exclude({
+
+    hintTable[DMC_LOWER_RED_RUPEE_1] = HintText::Exclude({
                        // obscure text
-                       Text{"EN: DMC_LOWER_RED_RUPEE_1 Hint", /*french*/"FR: DMC_LOWER_RED_RUPEE_1 Hint", /*spanish*/"ES: DMC_LOWER_RED_RUPEE_1 Hint", /*italian*/"IT: DMC_LOWER_RED_RUPEE_1 Hint", /*german*/"DE: DMC_LOWER_RED_RUPEE_1 Hint"},
-                     }
+                       Text{"#An obsidian# is", /*french*/"FR: DMC_LOWER_RED_RUPEE_1 Hint", /*spanish*/"ES: DMC_LOWER_RED_RUPEE_1 Hint", /*italian*/"IT: DMC_LOWER_RED_RUPEE_1 Hint", /*german*/"DE: DMC_LOWER_RED_RUPEE_1 Hint"},
+                     }, {},
+                     // clear text
+                     Text{"#The first red rupee in Death Mountain Crater# is", /*french*/"FR: DMC_LOWER_RED_RUPEE_1 Hint", /*spanish*/"ES: DMC_LOWER_RED_RUPEE_1 Hint", /*italian*/"IT: DMC_LOWER_RED_RUPEE_1 Hint", /*german*/"DE: DMC_LOWER_RED_RUPEE_1 Hint"},
     );
-            hintTable[DMC_LOWER_RED_RUPEE_2] = HintText::Exclude({
+    
+    hintTable[DMC_LOWER_RED_RUPEE_2] = HintText::Exclude({
                        // obscure text
-                       Text{"EN: DMC_LOWER_RED_RUPEE_2 Hint", /*french*/"FR: DMC_LOWER_RED_RUPEE_2 Hint", /*spanish*/"ES: DMC_LOWER_RED_RUPEE_2 Hint", /*italian*/"IT: DMC_LOWER_RED_RUPEE_2 Hint", /*german*/"DE: DMC_LOWER_RED_RUPEE_2 Hint"},
-                     }
+                       Text{"#An obsidian# is", /*french*/"FR: DMC_LOWER_RED_RUPEE_2 Hint", /*spanish*/"ES: DMC_LOWER_RED_RUPEE_2 Hint", /*italian*/"IT: DMC_LOWER_RED_RUPEE_2 Hint", /*german*/"DE: DMC_LOWER_RED_RUPEE_2 Hint"},
+                     }, {},
+                     // clear text
+                     Text{"#The second red rupee in Death Mountain Crater# is", /*french*/"FR: DMC_LOWER_RED_RUPEE_2 Hint", /*spanish*/"ES: DMC_LOWER_RED_RUPEE_2 Hint", /*italian*/"IT: DMC_LOWER_RED_RUPEE_2 Hint", /*german*/"DE: DMC_LOWER_RED_RUPEE_2 Hint"},
     );
-            hintTable[DMC_LOWER_BLUE_RUPEE_1] = HintText::Exclude({
+    
+    hintTable[DMC_LOWER_BLUE_RUPEE_1] = HintText::Exclude({
                        // obscure text
-                       Text{"EN: DMC_LOWER_BLUE_RUPEE_1 Hint", /*french*/"FR: DMC_LOWER_BLUE_RUPEE_1 Hint", /*spanish*/"ES: DMC_LOWER_BLUE_RUPEE_1 Hint", /*italian*/"IT: DMC_LOWER_BLUE_RUPEE_1 Hint", /*german*/"DE: DMC_LOWER_BLUE_RUPEE_1 Hint"},
-                     }
+                       Text{"#An obsidian# is", /*french*/"FR: DMC_LOWER_BLUE_RUPEE_1 Hint", /*spanish*/"ES: DMC_LOWER_BLUE_RUPEE_1 Hint", /*italian*/"IT: DMC_LOWER_BLUE_RUPEE_1 Hint", /*german*/"DE: DMC_LOWER_BLUE_RUPEE_1 Hint"},
+                     }, {},
+                       // clear text
+                       Text{"#One of the blue rupees in Death Mountain Crater# is", /*french*/"FR: DMC_LOWER_BLUE_RUPEE_1 Hint", /*spanish*/"ES: DMC_LOWER_BLUE_RUPEE_1 Hint", /*italian*/"IT: DMC_LOWER_BLUE_RUPEE_1 Hint", /*german*/"DE: DMC_LOWER_BLUE_RUPEE_1 Hint"},
     );
-            hintTable[DMC_LOWER_BLUE_RUPEE_2] = HintText::Exclude({
-                       // obscure text
-                       Text{"EN: DMC_LOWER_BLUE_RUPEE_2 Hint", /*french*/"FR: DMC_LOWER_BLUE_RUPEE_2 Hint", /*spanish*/"ES: DMC_LOWER_BLUE_RUPEE_2 Hint", /*italian*/"IT: DMC_LOWER_BLUE_RUPEE_2 Hint", /*german*/"DE: DMC_LOWER_BLUE_RUPEE_2 Hint"},
-                     }
+    
+    hintTable[DMC_LOWER_BLUE_RUPEE_2] = HintText::Exclude({
+      // obscure text
+                       Text{"#An obsidian# is", /*french*/"FR: DMC_LOWER_BLUE_RUPEE_2 Hint", /*spanish*/"ES: DMC_LOWER_BLUE_RUPEE_2 Hint", /*italian*/"IT: DMC_LOWER_BLUE_RUPEE_2 Hint", /*german*/"DE: DMC_LOWER_BLUE_RUPEE_2 Hint"},
+                     }, {},
+                       // clear text
+                       Text{"#One of the blue rupees in Death Mountain Crater# is", /*french*/"FR: DMC_LOWER_BLUE_RUPEE_2 Hint", /*spanish*/"ES: DMC_LOWER_BLUE_RUPEE_2 Hint", /*italian*/"IT: DMC_LOWER_BLUE_RUPEE_2 Hint", /*german*/"DE: DMC_LOWER_BLUE_RUPEE_2 Hint"},
     );
-            hintTable[DMC_LOWER_BLUE_RUPEE_3] = HintText::Exclude({
+    
+    hintTable[DMC_LOWER_BLUE_RUPEE_3] = HintText::Exclude({
                        // obscure text
-                       Text{"EN: DMC_LOWER_BLUE_RUPEE_3 Hint", /*french*/"FR: DMC_LOWER_BLUE_RUPEE_3 Hint", /*spanish*/"ES: DMC_LOWER_BLUE_RUPEE_3 Hint", /*italian*/"IT: DMC_LOWER_BLUE_RUPEE_3 Hint", /*german*/"DE: DMC_LOWER_BLUE_RUPEE_3 Hint"},
-                     }
+                       Text{"#An obsidian# is", /*french*/"FR: DMC_LOWER_BLUE_RUPEE_3 Hint", /*spanish*/"ES: DMC_LOWER_BLUE_RUPEE_3 Hint", /*italian*/"IT: DMC_LOWER_BLUE_RUPEE_3 Hint", /*german*/"DE: DMC_LOWER_BLUE_RUPEE_3 Hint"},
+                     }, {},
+                       // clear text
+                       Text{"#One of the blue rupees in Death Mountain Crater# is", /*french*/"FR: DMC_LOWER_BLUE_RUPEE_3 Hint", /*spanish*/"ES: DMC_LOWER_BLUE_RUPEE_3 Hint", /*italian*/"IT: DMC_LOWER_BLUE_RUPEE_3 Hint", /*german*/"DE: DMC_LOWER_BLUE_RUPEE_3 Hint"},
     );
-            hintTable[DMC_LOWER_BLUE_RUPEE_4] = HintText::Exclude({
+    
+    hintTable[DMC_LOWER_BLUE_RUPEE_4] = HintText::Exclude({
                        // obscure text
-                       Text{"EN: DMC_LOWER_BLUE_RUPEE_4 Hint", /*french*/"FR: DMC_LOWER_BLUE_RUPEE_4 Hint", /*spanish*/"ES: DMC_LOWER_BLUE_RUPEE_4 Hint", /*italian*/"IT: DMC_LOWER_BLUE_RUPEE_4 Hint", /*german*/"DE: DMC_LOWER_BLUE_RUPEE_4 Hint"},
-                     }
+                       Text{"#An obsidian# is", /*french*/"FR: DMC_LOWER_BLUE_RUPEE_4 Hint", /*spanish*/"ES: DMC_LOWER_BLUE_RUPEE_4 Hint", /*italian*/"IT: DMC_LOWER_BLUE_RUPEE_4 Hint", /*german*/"DE: DMC_LOWER_BLUE_RUPEE_4 Hint"},
+                     }, {},
+                       // clear text
+                       Text{"#One of the blue rupees in Death Mountain Crater# is", /*french*/"FR: DMC_LOWER_BLUE_RUPEE_4 Hint", /*spanish*/"ES: DMC_LOWER_BLUE_RUPEE_4 Hint", /*italian*/"IT: DMC_LOWER_BLUE_RUPEE_4 Hint", /*german*/"DE: DMC_LOWER_BLUE_RUPEE_4 Hint"},
     );
-            hintTable[DMC_LOWER_BLUE_RUPEE_5] = HintText::Exclude({
+    
+    hintTable[DMC_LOWER_BLUE_RUPEE_5] = HintText::Exclude({
                        // obscure text
-                       Text{"EN: DMC_LOWER_BLUE_RUPEE_5 Hint", /*french*/"FR: DMC_LOWER_BLUE_RUPEE_5 Hint", /*spanish*/"ES: DMC_LOWER_BLUE_RUPEE_5 Hint", /*italian*/"IT: DMC_LOWER_BLUE_RUPEE_5 Hint", /*german*/"DE: DMC_LOWER_BLUE_RUPEE_5 Hint"},
-                     }
+                       Text{"#An obsidian# is", /*french*/"FR: DMC_LOWER_BLUE_RUPEE_5 Hint", /*spanish*/"ES: DMC_LOWER_BLUE_RUPEE_5 Hint", /*italian*/"IT: DMC_LOWER_BLUE_RUPEE_5 Hint", /*german*/"DE: DMC_LOWER_BLUE_RUPEE_5 Hint"},
+                     }, {},
+                       // clear text
+                       Text{"#One of the blue rupees in Death Mountain Crater# is", /*french*/"FR: DMC_LOWER_BLUE_RUPEE_5 Hint", /*spanish*/"ES: DMC_LOWER_BLUE_RUPEE_5 Hint", /*italian*/"IT: DMC_LOWER_BLUE_RUPEE_5 Hint", /*german*/"DE: DMC_LOWER_BLUE_RUPEE_5 Hint"},
     );
-            hintTable[DMC_LOWER_BLUE_RUPEE_6] = HintText::Exclude({
+    
+    hintTable[DMC_LOWER_BLUE_RUPEE_6] = HintText::Exclude({
                        // obscure text
-                       Text{"EN: DMC_LOWER_BLUE_RUPEE_6 Hint", /*french*/"FR: DMC_LOWER_BLUE_RUPEE_6 Hint", /*spanish*/"ES: DMC_LOWER_BLUE_RUPEE_6 Hint", /*italian*/"IT: DMC_LOWER_BLUE_RUPEE_6 Hint", /*german*/"DE: DMC_LOWER_BLUE_RUPEE_6 Hint"},
-                     }
+                       Text{"#An obsidian# is", /*french*/"FR: DMC_LOWER_BLUE_RUPEE_6 Hint", /*spanish*/"ES: DMC_LOWER_BLUE_RUPEE_6 Hint", /*italian*/"IT: DMC_LOWER_BLUE_RUPEE_6 Hint", /*german*/"DE: DMC_LOWER_BLUE_RUPEE_6 Hint"},
+                     }, {},
+                       // clear text
+                       Text{"#One of the blue rupees in Death Mountain Crater# is", /*french*/"FR: DMC_LOWER_BLUE_RUPEE_6 Hint", /*spanish*/"ES: DMC_LOWER_BLUE_RUPEE_6 Hint", /*italian*/"IT: DMC_LOWER_BLUE_RUPEE_6 Hint", /*german*/"DE: DMC_LOWER_BLUE_RUPEE_6 Hint"},
     );
 
     hintTable[DMC_SCARE_CROW_RUPEE_CIRCLE_GREEN_RUPEE_1] = HintText::Exclude({
                        // obscure text
                        Text{"EN: DMC_SCARE_CROW_RUPEE_CIRCLE_GREEN_RUPEE_1 Hint", /*french*/"FR: DMC_SCARE_CROW_RUPEE_CIRCLE_GREEN_RUPEE_1 Hint", /*spanish*/"ES: DMC_SCARE_CROW_RUPEE_CIRCLE_GREEN_RUPEE_1 Hint", /*italian*/"IT: DMC_SCARE_CROW_RUPEE_CIRCLE_GREEN_RUPEE_1 Hint", /*german*/"DE: DMC_SCARE_CROW_RUPEE_CIRCLE_GREEN_RUPEE_1 Hint"},
-                     }
+                       }, {},
+                       // clear text
+                       Text{"EN: DMC_SCARE_CROW_RUPEE_CIRCLE_GREEN_RUPEE_1 Hint", /*french*/"FR: DMC_SCARE_CROW_RUPEE_CIRCLE_GREEN_RUPEE_1 Hint", /*spanish*/"ES: DMC_SCARE_CROW_RUPEE_CIRCLE_GREEN_RUPEE_1 Hint", /*italian*/"IT: DMC_SCARE_CROW_RUPEE_CIRCLE_GREEN_RUPEE_1 Hint", /*german*/"DE: DMC_SCARE_CROW_RUPEE_CIRCLE_GREEN_RUPEE_1 Hint"},
     );
         hintTable[DMC_SCARE_CROW_RUPEE_CIRCLE_GREEN_RUPEE_2] = HintText::Exclude({
                        // obscure text
