@@ -1711,44 +1711,79 @@ void HintTable_Init_Exclude_Overworld() {
                        // obscure text
                        Text{"a #scrub by a bridge# sells", /*french*/"la #peste Mojo près du pont dans les bois# vend", /*spanish*/"un #deku bajo un puente# del bosque venden", /*italian*/"un #cespuglio vicino a un ponte# vende", /*german*/"die Ware, des #Deku-Händlers nahe einer Brücke#, |wäre|wären|"},
     });
-            hintTable[LW_IN_BOULDER_BLUE_RUPEE] = HintText::Exclude({
+
+    hintTable[LW_IN_BOULDER_BLUE_RUPEE] = HintText::Exclude({
                        // obscure text
-                       Text{"EN: LW_IN_BOULDER_BLUE_RUPEE HINT", /*french*/"FR: LW_IN_BOULDER_BLUE_RUPEE HINT", /*spanish*/"ES: LW_IN_BOULDER_BLUE_RUPEE HINT", /*italian*/"IT: LW_IN_BOULDER_BLUE_RUPEE HINT", /*german*/"DE: LW_IN_BOULDER_BLUE_RUPEE HINT"},
-    });
+                       Text{"A #disoriented monolith# gives you", /*french*/"FR: LW_IN_BOULDER_BLUE_RUPEE HINT", /*spanish*/"ES: LW_IN_BOULDER_BLUE_RUPEE HINT", /*italian*/"IT: LW_IN_BOULDER_BLUE_RUPEE HINT", /*german*/"DE: LW_IN_BOULDER_BLUE_RUPEE HINT"},
+                       }, {},
+                       //clear text
+                       Text{"A #boulder in the Lost Woods# gives you", /*french*/"FR: LW_IN_BOULDER_BLUE_RUPEE HINT", /*spanish*/"ES: LW_IN_BOULDER_BLUE_RUPEE HINT", /*italian*/"IT: LW_IN_BOULDER_BLUE_RUPEE HINT", /*german*/"DE: LW_IN_BOULDER_BLUE_RUPEE HINT"},
+                      );
 
     hintTable[LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_1] = HintText::Exclude({
                        // obscure text
-                       Text{"EN: LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_1 HINT", /*french*/"FR: LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_1 HINT", /*spanish*/"ES: LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_1 HINT", /*italian*/"IT: LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_1 HINT", /*german*/"DE: LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_1 HINT"},
-    });
+                       Text{"A #drowning bypass gem# is", /*french*/"FR: LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_1 HINT", /*spanish*/"ES: LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_1 HINT", /*italian*/"IT: LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_1 HINT", /*german*/"DE: LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_1 HINT"},
+                        }, {},
+                       //clear text
+                       Text{"A #rupee near the Zora's River shortcut# is", /*french*/"FR: LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_1 HINT", /*spanish*/"ES: LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_1 HINT", /*italian*/"IT: LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_1 HINT", /*german*/"DE: LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_1 HINT"},
+                       );
 
     hintTable[LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_2] = HintText::Exclude({
                        // obscure text
-                       Text{"EN: LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_2 HINT", /*french*/"FR: LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_2 HINT", /*spanish*/"ES: LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_2 HINT", /*italian*/"IT: LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_2 HINT", /*german*/"DE: LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_2 HINT"},
-    });
+                       Text{"A #drowning bypass gem# is", /*french*/"FR: LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_2 HINT", /*spanish*/"ES: LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_2 HINT", /*italian*/"IT: LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_2 HINT", /*german*/"DE: LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_2 HINT"},
+                        }, {},
+                       //clear text
+                       Text{"A #rupee near the Zora's River shortcut# is", /*french*/"FR: LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_2 HINT", /*spanish*/"ES: LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_2 HINT", /*italian*/"IT: LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_2 HINT", /*german*/"DE: LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_2 HINT"},
+                       );
+
     hintTable[LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_3] = HintText::Exclude({
                        // obscure text
-                       Text{"EN: LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_3 HINT", /*french*/"FR: LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_3 HINT", /*spanish*/"ES: LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_3 HINT", /*italian*/"IT: LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_3 HINT", /*german*/"DE: LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_3 HINT"},
-    });
+                       Text{"A #drowning bypass gem# is", /*french*/"FR: LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_3 HINT", /*spanish*/"ES: LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_3 HINT", /*italian*/"IT: LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_3 HINT", /*german*/"DE: LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_3 HINT"},
+                        }, {},
+                       //clear text
+                       Text{"A #rupee near the Zora's River shortcut# is", /*french*/"FR: LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_3 HINT", /*spanish*/"ES: LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_3 HINT", /*italian*/"IT: LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_3 HINT", /*german*/"DE: LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_3 HINT"},
+                       );
+
     hintTable[LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_4] = HintText::Exclude({
                        // obscure text
-                       Text{"EN: LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_4 HINT", /*french*/"FR: LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_4 HINT", /*spanish*/"ES: LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_4 HINT", /*italian*/"IT: LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_4 HINT", /*german*/"DE: LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_4 HINT"},
-    });
+                       Text{"A #drowning bypass gem# is", /*french*/"FR: LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_4 HINT", /*spanish*/"ES: LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_4 HINT", /*italian*/"IT: LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_4 HINT", /*german*/"DE: LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_4 HINT"},
+                        }, {},
+                       //clear text
+                       Text{"A #rupee near the Zora's River shortcut# is", /*french*/"FR: LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_4 HINT", /*spanish*/"ES: LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_4 HINT", /*italian*/"IT: LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_4 HINT", /*german*/"DE: LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_4 HINT"},
+                       );
+
     hintTable[LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_5] = HintText::Exclude({
                        // obscure text
-                       Text{"EN: LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_5 HINT", /*french*/"FR: LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_5 HINT", /*spanish*/"ES: LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_5 HINT", /*italian*/"IT: LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_5 HINT", /*german*/"DE: LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_5 HINT"},
-    });
+                       Text{"A #drowning bypass gem# is", /*french*/"FR: LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_5 HINT", /*spanish*/"ES: LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_5 HINT", /*italian*/"IT: LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_5 HINT", /*german*/"DE: LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_5 HINT"},
+                        }, {},
+                       //clear text
+                       Text{"A #rupee near the Zora's River shortcut# is", /*french*/"FR: LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_5 HINT", /*spanish*/"ES: LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_5 HINT", /*italian*/"IT: LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_5 HINT", /*german*/"DE: LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_5 HINT"},
+                       );
+
     hintTable[LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_6] = HintText::Exclude({
                        // obscure text
-                       Text{"EN: LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_6 HINT", /*french*/"FR: LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_6 HINT", /*spanish*/"ES: LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_6 HINT", /*italian*/"IT: LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_6 HINT", /*german*/"DE: LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_6 HINT"},
-    });
+                       Text{"A #drowning bypass gem# is", /*french*/"FR: LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_6 HINT", /*spanish*/"ES: LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_6 HINT", /*italian*/"IT: LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_6 HINT", /*german*/"DE: LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_6 HINT"},
+                        }, {},
+                       //clear text
+                       Text{"A #rupee near the Zora's River shortcut# is", /*french*/"FR: LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_6 HINT", /*spanish*/"ES: LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_6 HINT", /*italian*/"IT: LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_6 HINT", /*german*/"DE: LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_6 HINT"},
+                       );
+
     hintTable[LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_7] = HintText::Exclude({
                        // obscure text
-                       Text{"EN: LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_7 HINT", /*french*/"FR: LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_7 HINT", /*spanish*/"ES: LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_7 HINT", /*italian*/"IT: LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_7 HINT", /*german*/"DE: LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_7 HINT"},
-    });
+                       Text{"A #drowning bypass gem# is", /*french*/"FR: LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_7 HINT", /*spanish*/"ES: LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_7 HINT", /*italian*/"IT: LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_7 HINT", /*german*/"DE: LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_7 HINT"},
+                        }, {},
+                       //clear text
+                       Text{"A #rupee near the Zora's River shortcut# is", /*french*/"FR: LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_7 HINT", /*spanish*/"ES: LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_7 HINT", /*italian*/"IT: LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_7 HINT", /*german*/"DE: LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_7 HINT"},
+                       );
+
     hintTable[LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_8] = HintText::Exclude({
                        // obscure text
-                       Text{"EN: LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_8 HINT", /*french*/"FR: LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_8 HINT", /*spanish*/"ES: LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_8 HINT", /*italian*/"IT: LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_8 HINT", /*german*/"DE: LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_8 HINT"},
-    });
+                       Text{"A #drowning bypass gem# is", /*french*/"FR: LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_8 HINT", /*spanish*/"ES: LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_8 HINT", /*italian*/"IT: LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_8 HINT", /*german*/"DE: LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_8 HINT"},
+                        }, {},
+                       //clear text
+                       Text{"A #rupee near the Zora's River shortcut# is", /*french*/"FR: LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_8 HINT", /*spanish*/"ES: LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_8 HINT", /*italian*/"IT: LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_8 HINT", /*german*/"DE: LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_8 HINT"},
+                       );
+
 
 
     hintTable[LW_DEKU_SCRUB_GROTTO_REAR] = HintText::Exclude({
