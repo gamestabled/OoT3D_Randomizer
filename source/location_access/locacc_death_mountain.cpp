@@ -31,7 +31,7 @@ void AreaTable_Init_DeathMountain() {
                                        (HasExplosives || GoronBracelet));
                            } }),
             LocationAccess(DMT_ROCK_BLUE_RUPEE,
-                           { [] { return IsChild && Here(DEATH_MOUNTAIN_TRAIL, [] { return CanBlastOrSmash; }); } }),
+                           { [] { return IsChild && CanBlastOrSmash; } }),
             LocationAccess(DMT_ROCK_RED_RUPEE, { [] {
                                return IsChild && (Here(DEATH_MOUNTAIN_TRAIL, [] { return CanBlastOrSmash; }) ||
                                                   Here(DEATH_MOUNTAIN_SUMMIT, [] { return CanBlastOrSmash; }));
