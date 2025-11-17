@@ -3398,18 +3398,23 @@ bool ValidateSettings() {
             posY += 11;
         }
     }
-    if (ShuffleRupees && MQDungeonCount.IsNot(0) && Logic.IsNot(LOGIC_NONE) && Logic.IsNot(LOGIC_VANILLA)) {
-        if (ShuffleRupees.IsHidden()) {
+    // Check features that don't support logic for MQ dungeons.
+    if (MQDungeonCount.IsNot(0) && Logic.IsNot(LOGIC_NONE) && Logic.IsNot(LOGIC_VANILLA) &&
+        (ShuffleEnemySouls.Is(SHUFFLEENEMYSOULS_ALL) || ShuffleRupees || Enemizer)) {
+        if (ShuffleEnemySouls.IsHidden() && ShuffleRupees.IsHidden() && Enemizer.IsHidden()) {
+            ShuffleEnemySouls.SetSelectedIndex(SHUFFLEENEMYSOULS_OFF);
             ShuffleRupees.SetSelectedIndex(OFF);
+            Enemizer.SetSelectedIndex(OFF);
         } else {
             printf("\x1b[%d;0H"
                    "----------------------------------------"
-                   "Rupeesanity currently does not have\n"
-                   "logic for Master Quest dungeons.\n"
+                   "The following features currently do not\n"
+                   "support logic for Master Quest dungeons."
+                   "To use them you must disable Logic OR\n"
+                   "set MQ Dungeon Count to 0.\n"
                    "\n"
-                   "Please disable one of the following:\n"
-                   " - MQ Dungeons (setting Count to 0)\n"
-                   " - Logic\n"
+                   " - Enemy Randomizer\n"
+                   " - Shuffle Enemy Souls\n"
                    " - Rupeesanity\n"
                    "----------------------------------------",
                    posY);
