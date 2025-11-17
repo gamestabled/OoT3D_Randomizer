@@ -365,7 +365,7 @@ void AreaTable_Init_LostWoods() {
                  LocationAccess(LW_DEKU_SCRUB_NEAR_DEKU_THEATER_RIGHT, { [] { return IsChild && CanStunDeku; } }),
                  LocationAccess(LW_DEKU_SCRUB_NEAR_DEKU_THEATER_LEFT, { [] { return IsChild && CanStunDeku; } }),
                  LocationAccess(LW_IN_BOULDER_BLUE_RUPEE,
-                                { [] { return Here(LW_BEYOND_MIDO, [] { return CanBlastOrSmash; }); },
+                                { [] { return CanBlastOrSmash; },
                                   [] {
                                       return Here(LW_BEYOND_MIDO, [] {
                                           return IsChild && CanUse(STICKS) &&
