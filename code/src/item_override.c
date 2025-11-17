@@ -567,8 +567,20 @@ u8 ItemOverride_GetItemDrop(EnItem00* this) {
     u16 resolvedItemId = ItemTable_ResolveUpgrades(override.value.itemId);
     ItemRow* itemRow   = ItemTable_GetItemRow(resolvedItemId);
 
-    if ((itemRow->chestType != CHEST_JUNK && itemRow->chestType != CHEST_HEART) ||
-        itemRow->baseItemId == GI_HEART_PIECE || itemRow->baseItemId == GI_HEART_CONTAINER) {
+    u8 isMajorItem = TRUE;
+    switch (itemRow->chestType) {
+        case CHEST_JUNK:
+            isMajorItem = FALSE;
+            break;
+        case CHEST_BOMBCHUS:
+            isMajorItem = gSaveContext.items[8] == 0xFF; // bombchus not obtained yet
+            break;
+        case CHEST_HEART:
+            isMajorItem = resolvedItemId != GI_HEART;
+            break;
+    }
+
+    if (isMajorItem) {
         ItemOverride_PushPendingOverride(override);
         Actor_Kill(&this->actor);
     } else {
