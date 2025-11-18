@@ -64,6 +64,8 @@ typedef struct {
     u32 playtimeSeconds;
     u32 scenesDiscovered[SAVEFILE_SCENES_DISCOVERED_IDX_COUNT];
     u32 entrancesDiscovered[SAVEFILE_ENTRANCES_DISCOVERED_IDX_COUNT];
+    u32 rupeesanityFlags[SCENE_MAX];
+    u32 rupeesanityRupeeCircleFlags[SCENE_MAX];
     u8 permadeath;
     u8 gloomedHeart;
     u8 triforcePieces;
@@ -74,8 +76,6 @@ typedef struct {
     s8 option_IgnoreMaskReaction;
     s8 option_SkipSongReplays;
     s8 option_FreeCamControl;
-    u32 rupeesanityFlags[SCENE_MAX];
-    u32 rupeesanityRupeeCircleFlags[SCENE_MAX];
 } ExtSaveData;
 
 #ifdef DECLARE_EXTSAVEDATA
