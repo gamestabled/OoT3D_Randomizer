@@ -40,7 +40,7 @@ u8 SpoilerData_CollectableCheck(SpoilerItemLocation* itemLoc) {
             return (gSaveContext.sceneFlags[itemLoc->LocationScene].collect & (1 << itemLoc->LocationFlag)) != 0;
         }
     } else {
-        return SaveFile_GetCollectedRandomizedRespawningCollectibleFlag(itemLoc->LocationScene, itemLoc->LocationFlag);
+        return SaveFile_GetRupeeSanityFlag(itemLoc->LocationScene, itemLoc->LocationFlag);
     }
 }
 
