@@ -31,8 +31,8 @@ void SaveFile_LoadExtSaveData(u32 saveNumber);
 void SaveFile_SaveExtSaveData(u32 saveNumber);
 void SaveFile_EnforceHealthLimit(void);
 u8 SaveFile_SwordlessPatchesEnabled(void);
-void SaveFile_SetCollectedRandomizedRespawningCollectibleFlag(s16 sceneNum, u16 collectibleFlag);
-u8 SaveFile_GetCollectedRandomizedRespawningCollectibleFlag(s16 sceneNum, u16 collectibleFlag);
+void SaveFile_SetRupeeSanityFlag(s16 sceneNum, u16 collectibleFlag);
+u8 SaveFile_GetRupeeSanityFlag(s16 sceneNum, u16 collectibleFlag);
 
 // Increment the version number whenever the ExtSaveData structure is changed
 #define EXTSAVEDATA_VERSION 16
@@ -74,8 +74,8 @@ typedef struct {
     s8 option_IgnoreMaskReaction;
     s8 option_SkipSongReplays;
     s8 option_FreeCamControl;
-    u32 collectedRandomizedRespawningRupeeFlags[SCENE_MAX];
-    u32 collectedRandomizedRupeeCircleRupeeFlags[SCENE_MAX];
+    u32 rupeesanityFlags[SCENE_MAX];
+    u32 rupeesanityRupeeCircleFlags[SCENE_MAX];
 } ExtSaveData;
 
 #ifdef DECLARE_EXTSAVEDATA

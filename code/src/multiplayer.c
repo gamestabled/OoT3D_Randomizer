@@ -1172,6 +1172,12 @@ void Multiplayer_Send_BaseSync(u16 targetID) {
     for (size_t i = 0; i < ARRAY_SIZE(mSaveContext.extInf); i++) {
         mBuffer[memSpacer++] = mSaveContext.extInf[i];
     }
+    for(size_t i=0; i<ARRAY_SIZE(mSaveContext.rupeesanityFlags);i++){
+        mBuffer[memSpacer++]=mSaveContext.rupeesanityFlags[i];
+    }
+    for(size_t i=0; i<ARRAY_SIZE(mSaveContext.rupeesanityRupeeCircleRupeeFlags);i++){
+        mBuffer[memSpacer++]=mSaveContext.rupeesanityFlags[i];
+    }
     mBuffer[memSpacer++] = mSaveContext.triforcePieces;
     mBuffer[memSpacer++] = mSaveContext.health;
     mBuffer[memSpacer++] = mSaveContext.rupees;
