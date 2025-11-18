@@ -781,6 +781,7 @@ Option LogicWindmillPoHHookshot         = LogicTrick("Windmill PoH\n  w/ Hooksho
 Option LogicDMTBombable                 = LogicTrick("DMT Wall Chest\n  w/ Strength",             LogicDMTBombableDesc);
 Option LogicDMTSoilGS                   = LogicTrick("DMT Soil GS\n  w/o Opening DC",             LogicDMTSoilGSDesc);
 Option LogicDMTSummitHover              = LogicTrick("DMT Summit\n  w/ Hover Boots",              LogicDMTSummitHoverDesc);
+Option LogicDMCPlatformJump             = LogicTrick("DMC Scarecrow Rupee Circle w/ nothing",     LogicDMCPlatformJumpDesc);
 Option LogicLinkGoronDins               = LogicTrick("GoC Adult Goron\n  w/ Din's Fire",          LogicLinkGoronDinsDesc);
 Option LogicGoronCityLeftMost           = LogicTrick("GoC Maze Left Chest\n  w/ Hover Boots",     LogicGoronCityLeftMostDesc);
 Option LogicGoronCityPot                = LogicTrick("GoC Goron Vase PoH\n  w/ Bombchu",          LogicGoronCityPotDesc); //Needs Testing
@@ -791,6 +792,7 @@ Option LogicCraterBeanPoHWithHovers     = LogicTrick("DMC Bean PoH\n  w/ Hover B
 Option LogicBiggoronBolero              = LogicTrick("DMC Deliver Eyedrops\n  w/ Bolero of Fire", LogicBiggoronBoleroDesc);
 Option LogicZoraRiverLower              = LogicTrick("ZR Lower PoH\n  w/ Nothing",                LogicZoraRiverLowerDesc);
 Option LogicZoraRiverUpper              = LogicTrick("ZR Upper PoH\n  w/ Nothing",                LogicZoraRiverUpperDesc);
+Option LogicZoraRiverRupeesJump             = LogicTrick("ZR Waterfall Rupees without Iron Boots",    LogicZoraRiverRupeesJumpDesc);
 Option LogicZFGreatFairy                = LogicTrick("ZF Great Fairy\n  w/o Explosives",          LogicZFGreatFairyDesc);
 Option LogicDekuB1WebsWithBow           = LogicTrick("DT B1 Web\n  w/ Bow",                       LogicDekuB1WebsWithBowDesc);
 Option LogicDekuB1Skip                  = LogicTrick("DT B1 Navigation\n  w/o Slingshot",         LogicDekuB1SkipDesc);
@@ -873,6 +875,7 @@ std::vector<Option *> trickOptions = {
     &LogicDMTBombable,
     &LogicDMTSoilGS,
     &LogicDMTSummitHover,
+    &LogicDMCPlatFormJump,
     &LogicLinkGoronDins,
     &LogicGoronCityLeftMost,
     &LogicGoronCityPot,
@@ -883,6 +886,7 @@ std::vector<Option *> trickOptions = {
     &LogicBiggoronBolero,
     &LogicZoraRiverLower,
     &LogicZoraRiverUpper,
+    &LogicZoraRiverRupeesJump,
     &LogicZFGreatFairy,
     &LogicDekuB1WebsWithBow,
     &LogicDekuB1Skip,
@@ -2541,8 +2545,10 @@ void ForceChange(u32 kDown, Option* currentSetting) {
                 LogicManOnRoof.SetSelectedIndex(1);
                 LogicWindmillPoHHookshot.SetSelectedIndex(1);
                 LogicGoronCityLeftMost.SetSelectedIndex(1);
+                LogicDMCPlatFormJump.SetSelectedIndex(1);
                 LogicZoraRiverLower.SetSelectedIndex(1);
                 LogicZoraRiverUpper.SetSelectedIndex(1);
+                LogicZoraRiverRupeesJump.SetSelectedIndex(1);
                 LogicZFGreatFairy.SetSelectedIndex(1);
                 LogicDekuB1WebsWithBow.SetSelectedIndex(1);
                 LogicDCJump.SetSelectedIndex(1);

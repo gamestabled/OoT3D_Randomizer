@@ -1484,6 +1484,9 @@ string_view LogicDMTSummitHoverDesc                   = "Difficulty: Intermediat
                                                         "boots and grabbing the ledge with the higher\n"   //
                                                         "boulder near the wall, you'll be able to grab the\n"
                                                         "ledge above it to reach the summit.";             //
+string_view LogicDMCPlatformJumpDesc                  = "Difficulty: Novice\n"                             //
+                                                        "Adult can reach these rupees by jumping down from\n"
+                                                        "the upper part of DMC, without scarecrow/longshot.";//                                                        
 string_view LogicLinkGoronDinsDesc                    = "Difficulty: Intermediate\n"                       //
                                                         "The timing is quite awkward.";                    //
 string_view LogicGoronCityLeftMostDesc                = "Difficulty: Novice\n"                             //
@@ -1524,6 +1527,9 @@ string_view LogicZoraRiverLowerDesc                   = "Difficulty: Novice\n"  
 string_view LogicZoraRiverUpperDesc                   = "Difficulty: Novice\n"                             //
                                                         "Adult can reach this PoH with a precise jump, no\n"
                                                         "Hover Boots required.";                           //
+string_view LogicZoraRiverRupeesJumpDesc              = "Difficulty: Novice\n"                             //
+                                                        "Adult can reach these rupees by jumping down from\n"
+                                                        "the lullaby platform no Iron Boots required.";    //
 string_view LogicZFGreatFairyDesc                     = "Difficulty: Novice\n"                             //
                                                         "Destroying the boulders blocking the hidden area\n"
                                                         "with silver gauntlets and hammer lets you pass\n" //
