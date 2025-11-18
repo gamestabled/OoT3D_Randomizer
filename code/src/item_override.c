@@ -141,8 +141,8 @@ static ItemOverride_Key ItemOverride_GetSearchKey(Actor* actor, u8 scene, u8 ite
             // value at or above 0x40. We've reserved 0x40-0x46 for Rupee circle rupees.
             collectibleFlag = currentItem->actor.home.rot.z;
         }
-        s32 respawningCollected = collectibleFlag >= 0x20 && SaveFile_GetRupeeSanityFlag(
-                                                                 gGlobalContext->sceneNum, collectibleFlag);
+        s32 respawningCollected =
+            collectibleFlag >= 0x20 && SaveFile_GetRupeeSanityFlag(gGlobalContext->sceneNum, collectibleFlag);
 
         if ((collectibleType > 0x02 && collectibleType != 0x06 && collectibleType != 0x11) || respawningCollected) {
             return (ItemOverride_Key){ .all = 0 };

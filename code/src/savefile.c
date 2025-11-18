@@ -864,12 +864,10 @@ void SaveFile_OnGameOver(void) {
 
 void SaveFile_SetRupeeSanityFlag(s16 sceneNum, u16 collectibleFlag) {
     if (collectibleFlag >= 0x20 && collectibleFlag < 0x40) {
-        gExtSaveData.rupeesanityFlags[gGlobalContext->sceneNum] |=
-            (1 << (collectibleFlag - 0x20));
+        gExtSaveData.rupeesanityFlags[gGlobalContext->sceneNum] |= (1 << (collectibleFlag - 0x20));
     }
     if (collectibleFlag >= 0x40) {
-        gExtSaveData.rupeesanityRupeeCircleFlags[gGlobalContext->sceneNum] |=
-            (1 << (collectibleFlag - 0x40));
+        gExtSaveData.rupeesanityRupeeCircleFlags[gGlobalContext->sceneNum] |= (1 << (collectibleFlag - 0x40));
     }
 }
 
