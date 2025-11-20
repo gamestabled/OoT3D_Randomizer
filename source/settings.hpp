@@ -634,7 +634,7 @@ extern Option LogicWindmillPoHHookshot;
 extern Option LogicDMTBombable;
 extern Option LogicDMTSoilGS;
 extern Option LogicDMTSummitHover;
-extern Option LogicDMCPlatFormJump;
+extern Option LogicDMCPlatformJump;
 extern Option LogicLinkGoronDins;
 extern Option LogicGoronCityLeftMost;
 extern Option LogicGoronCityPot;
