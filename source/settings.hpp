@@ -505,6 +505,7 @@ extern Option HyperEnemies;
 extern Option FreeCamera;
 extern Option RandomGsLocations;
 extern Option GsLocGuaranteeNew;
+extern Option RandomSongNotes;
 extern bool HasNightStart;
 
 extern Option FaroresWindAnywhere;
@@ -827,6 +828,8 @@ extern Option ShuffleSFX;
 extern Option ShuffleSFXFootsteps;
 extern Option ShuffleSFXLinkVoice;
 extern Option ShuffleSFXCategorically;
+
+extern Option OcarinaNoteInstrument;
 
 extern u32 LinksPocketRewardBitMask;
 extern std::array<u32, 9> rDungeonRewardOverrides;

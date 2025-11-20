@@ -2536,6 +2536,16 @@ AfterInvalidatingRoomObjects_patch:
 .global DrawHeartIcon_patch
 DrawHeartIcon_patch:
     bl hook_DrawHeartIcon
+
+.section .patch_OcarinaNoteSound_Player
+.global OcarinaNoteSound_Player_patch
+OcarinaNoteSound_Player_patch:
+    b hook_OcarinaNoteSound_Player
+
+.section .patch_OcarinaNoteSound_Npc
+.global OcarinaNoteSound_Npc_patch
+OcarinaNoteSound_Npc_patch:
+    bl hook_OcarinaNoteSound_Npc
     
 .section .patch_Item00GiveAutomaticItemDrop
 .global Item00GiveAutomaticItemDrop_patch

@@ -478,6 +478,7 @@ Option HyperEnemies        = Option::Bool(2, "Hyper Enemies",       {"Off", "On"
 Option FreeCamera          = Option::Bool("Free Camera",            {"Off", "On"},                                                          {freeCamDesc},                                                                                                    OptionCategory::Setting,    ON);
 Option RandomGsLocations   = Option::Bool("Random GS Locations",    {"Off", "On"},                                                          {randomGsLocationsDesc});
 Option GsLocGuaranteeNew   = Option::Bool(2, "Guarantee New",       {"Off", "On"},                                                          {gsLocGuaranteeNewDesc});
+Option RandomSongNotes     = Option::Bool("Random Ocarina Melodies",{"Off", "On"},                                                          {randomSongNotesDesc});
 std::vector<Option*> gameplayOptions = {
     &FastBunnyHood,
     &KeepFWWarpPoint,
@@ -497,6 +498,7 @@ std::vector<Option*> gameplayOptions = {
     &FreeCamera,
     &RandomGsLocations,
     &GsLocGuaranteeNew,
+    &RandomSongNotes,
 };
 
 // Excluded Locations (Individual definitions made in ItemLocation class)
@@ -1337,6 +1339,10 @@ Option ShuffleSFXFootsteps     = Option::Bool(2, "Include Footsteps",    {"No", 
 Option ShuffleSFXLinkVoice     = Option::Bool(2, "Include Link's Voice", {"No", "Yes"},                             {""},                                                                                                                                      OptionCategory::Cosmetic,               ON);
 Option ShuffleSFXCategorically = Option::Bool(2, "Categorical Shuffle",  {"Off", "On"},                             {shuffleSFXCategorically},                                                                                                                 OptionCategory::Cosmetic,               ON);
 
+Option OcarinaNoteInstrument   = Option::U8  ("Ocarina Instrument",      {"Random Choice", "Scene Specific",
+                                                                          "Default", "Malon", "Whistle", "Harp",
+                                                                          "Grind Organ", "Flute"},                  {ocarinaInstrRandomDesc, ocarinaInstrSceneDesc, ocarinaInstrDesc},                                                                         OptionCategory::Cosmetic,               OCARINA_INSTR_SETTING_DEFAULT);
+
 std::vector<Option*> audioOptions = {
     &ShuffleMusic,
     &ShuffleBGM,
@@ -1347,6 +1353,7 @@ std::vector<Option*> audioOptions = {
     &ShuffleSFXFootsteps,
     &ShuffleSFXLinkVoice,
     &ShuffleSFXCategorically,
+    &OcarinaNoteInstrument,
 };
 
 Menu preferences              = Menu::SubMenu("Misc Preferences",           &preferenceOptions);
@@ -1582,6 +1589,7 @@ SettingsContext FillContext() {
     ctx.hyperEnemies        = (HyperEnemies) ? 1 : 0;
     ctx.freeCamera          = (FreeCamera) ? 1 : 0;
     ctx.randomGsLocations   = (RandomGsLocations) ? 1 : 0;
+    ctx.randomSongNotes     = (RandomSongNotes) ? 1 : 0;
 
     ctx.faroresWindAnywhere  = (FaroresWindAnywhere) ? 1 : 0;
     ctx.stickAsAdult         = (StickAsAdult) ? 1 : 0;
@@ -1658,6 +1666,7 @@ SettingsContext FillContext() {
     ctx.shuffleSFXFootsteps         = (ShuffleSFXFootsteps) ? 1 : 0;
     ctx.shuffleSFXLinkVoice         = (ShuffleSFXLinkVoice) ? 1 : 0;
     ctx.shuffleSFXCategorically     = (ShuffleSFXCategorically) ? 1 : 0;
+    ctx.ocarinaNoteInstrument       = OcarinaNoteInstrument.Value<u8>();
 
     ctx.linksPocketRewardBitMask = LinksPocketRewardBitMask;
 
@@ -3244,6 +3253,11 @@ void UpdateSettings() {
     InitSFXRandomizer();
     if (ShuffleSFX.IsNot(SHUFFLESFX_OFF)) {
         SFX::ShuffleSequences(ShuffleSFXCategorically.Value<bool>());
+    }
+
+    if (OcarinaNoteInstrument.Is(OCARINA_INSTR_SETTING_RANDOM_CHOICE)) {
+        size_t randomIndex = Random(OCARINA_INSTR_SETTING_DEFAULT, OcarinaNoteInstrument.GetOptionCount(), true);
+        OcarinaNoteInstrument.SetSelectedIndex(randomIndex);
     }
 }
 

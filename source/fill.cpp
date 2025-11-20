@@ -15,6 +15,7 @@
 #include "shops.hpp"
 #include "debug.hpp"
 #include "enemizer.hpp"
+#include "ocarina_notes.hpp"
 
 #include <vector>
 #include <unistd.h>
@@ -961,6 +962,7 @@ void VanillaFill() {
         Location(loc)->PlaceVanillaItem();
     }
     Enemizer::RandomizeEnemies();
+    OcarinaNotes::GenerateSongList();
     // If necessary, handle ER stuff
     playthroughEntrances.clear();
     if (ShuffleEntrances) {
@@ -1006,6 +1008,7 @@ int Fill() {
         // can validate the world using deku/hylian shields
         AddElementsToPool(ItemPool, GetMinVanillaShopItems(32)); // assume worst case shopsanity 4
         Enemizer::RandomizeEnemies();
+        OcarinaNotes::GenerateSongList();
         Logic::LogicReset();
         GetAccessibleLocations({}, SearchMode::ValidateWorld, "", false, false);
         if (!allLocationsReachable) {

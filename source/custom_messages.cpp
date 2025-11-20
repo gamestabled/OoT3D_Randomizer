@@ -1268,13 +1268,18 @@ Text AddColorsAndFormat(Text text, const std::vector<u8>& colors /*= {}*/) {
                 // or move the lastNewline cursor to the next line if a '^' is encountered
             } else if (carrot < lastNewline + lineLength) {
                 lastNewline = carrot + 1;
+            } else if (lastSpace != std::string::npos) {
+                textStr->replace(lastSpace, 1, NEWLINE());
+                lastNewline = lastSpace + NEWLINE().length();
+            } else if (lastPeriod != std::string::npos) {
                 // some lines need to be split but don't have spaces, look for periods instead
-            } else if (lastSpace == std::string::npos) {
                 textStr->replace(lastPeriod, 1, "." + NEWLINE());
                 lastNewline = lastPeriod + NEWLINE().length() + 1;
             } else {
-                textStr->replace(lastSpace, 1, NEWLINE());
-                lastNewline = lastSpace + NEWLINE().length();
+                // should never get here
+                CitraPrint("ERROR: Line too long in " + (*textStr));
+                textStr->insert(lastNewline + lineLength, NEWLINE());
+                lastNewline = lastNewline + lineLength + NEWLINE().length() + 1;
             }
             lineLength = NextLineLength(textStr, lastNewline);
         }

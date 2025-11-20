@@ -419,6 +419,10 @@ extern string_view shuffleSFXSceneSpecific;
 extern string_view shuffleSFXChaos;
 extern string_view shuffleSFXCategorically;
 
+extern string_view ocarinaInstrRandomDesc;
+extern string_view ocarinaInstrSceneDesc;
+extern string_view ocarinaInstrDesc;
+
 extern string_view randomTrapDmgDesc;
 extern string_view basicTrapDmgDesc;
 extern string_view advancedTrapDmgDesc;
@@ -434,6 +438,7 @@ extern string_view hyperEnemiesDesc;
 extern string_view freeCamDesc;
 extern string_view randomGsLocationsDesc;
 extern string_view gsLocGuaranteeNewDesc;
+extern string_view randomSongNotesDesc;
 
 extern string_view ToggleAllTricksDesc;
 
