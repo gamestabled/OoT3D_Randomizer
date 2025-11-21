@@ -125,19 +125,19 @@ void AreaTable_Init_ZorasDomain() {
                            { [] { return IsChild || CanUse(HOVER_BOOTS) || (IsAdult && LogicZoraRiverUpper); } }),
             LocationAccess(ZR_WATERFALL_RED_RUPEE_1, { [] {
                                return IsAdult && ((CanUse(IRON_BOOTS) && CanSurviveUnderwaterFor(4, 12)) ||
-                                      LogicZoraRiverRupeesJump);
+                                                  LogicZoraRiverRupeesJump);
                            } }),
             LocationAccess(ZR_WATERFALL_RED_RUPEE_2, { [] {
                                return IsAdult && ((CanUse(IRON_BOOTS) && CanSurviveUnderwaterFor(4, 12)) ||
-                                      LogicZoraRiverRupeesJump);
+                                                  LogicZoraRiverRupeesJump);
                            } }),
             LocationAccess(ZR_WATERFALL_RED_RUPEE_3, { [] {
                                return IsAdult && ((CanUse(IRON_BOOTS) && CanSurviveUnderwaterFor(4, 12)) ||
-                                      LogicZoraRiverRupeesJump);
+                                                  LogicZoraRiverRupeesJump);
                            } }),
             LocationAccess(ZR_WATERFALL_RED_RUPEE_4, { [] {
                                return IsAdult && ((CanUse(IRON_BOOTS) && CanSurviveUnderwaterFor(4, 12)) ||
-                                      LogicZoraRiverRupeesJump);
+                                                  LogicZoraRiverRupeesJump);
                            } }),
             LocationAccess(ZR_NEAR_GROTTOS_GOSSIP_STONE, { [] { return true; } }),
             LocationAccess(ZR_NEAR_DOMAIN_GOSSIP_STONE, { [] { return true; } }),
