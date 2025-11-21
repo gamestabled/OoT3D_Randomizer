@@ -1,3 +1,5 @@
+#include "location_access.hpp"
+#include "logic.hpp"
 #include "entrance.hpp"
 #include "enemizer_logic.hpp"
 
