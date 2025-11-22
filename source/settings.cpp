@@ -3394,29 +3394,6 @@ bool ValidateSettings() {
         }
     }
 
-    // Check that there are no MQ dungeons with Enemy Souls or Enemy Randomizer.
-    if ((ShuffleEnemySouls.Is(SHUFFLEENEMYSOULS_ALL) || Enemizer) && MQDungeonCount.IsNot(0) &&
-        Logic.IsNot(LOGIC_NONE) && Logic.IsNot(LOGIC_VANILLA)) {
-        if (ShuffleEnemySouls.IsHidden() && Enemizer.IsHidden()) {
-            ShuffleEnemySouls.SetSelectedIndex(SHUFFLEENEMYSOULS_OFF);
-            Enemizer.SetSelectedIndex(OFF);
-        } else {
-            printf("\x1b[%d;0H"
-                   "----------------------------------------"
-                   "Enemy Soul Shuffle and Enemy Randomizer\n"
-                   "currently do not have logic for Master\n"
-                   "Quest dungeons.\n"
-                   "\n"
-                   "Please disable one of the following:\n"
-                   " - MQ Dungeons (setting Count to 0)\n"
-                   " - Logic\n"
-                   " - Enemy Soul Shuffle / Enemy Randomizer"
-                   "----------------------------------------",
-                   posY);
-            valid = false;
-            posY += 11;
-        }
-    }
     // Check features that don't support logic for MQ dungeons.
     if (MQDungeonCount.IsNot(0) && Logic.IsNot(LOGIC_NONE) && Logic.IsNot(LOGIC_VANILLA) &&
         (ShuffleEnemySouls.Is(SHUFFLEENEMYSOULS_ALL) || ShuffleRupees || Enemizer)) {

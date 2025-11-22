@@ -21,7 +21,7 @@ typedef void (*SkeletonAnimationModel_SpawnAt_proc)(Actor* actor, GlobalContext*
 typedef void (*Actor_SetModelMatrix_proc)(f32 x, f32 y, f32 z, nn_math_MTX34* mtx, ActorShape* shape);
 #define Actor_SetModelMatrix ((Actor_SetModelMatrix_proc)GAME_ADDR(0x3679D0))
 
-#define LOADEDMODELS_MAX 16
+#define LOADEDMODELS_MAX 20
 Model ModelContext[LOADEDMODELS_MAX] = { 0 };
 
 void Model_SetAnim(SkeletonAnimationModel* model, s16 objectId, u32 objectAnimIdx) {
