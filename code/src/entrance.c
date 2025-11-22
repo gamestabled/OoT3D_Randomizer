@@ -1051,4 +1051,10 @@ void Entrance_OverrideSpawnScene(void) {
         gGlobalContext->linkActorEntry->rot.y                            = 0;
         gGlobalContext->setupEntranceList[gGlobalContext->curSpawn].room = 11;
     }
+
+    //  Fix Hyrule Field spawn from Zora River (Land) to not be inside the loading zone
+    if (gGlobalContext->sceneNum == 81 && gGlobalContext->curSpawn == 2) {
+        gGlobalContext->linkActorEntry->pos.x = 0x173D;
+        gGlobalContext->linkActorEntry->pos.z = 0x0E96;
+    }
 }
