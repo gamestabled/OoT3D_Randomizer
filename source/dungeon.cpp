@@ -525,6 +525,11 @@ DungeonInfo BottomOfTheWell =
                     BOTTOM_OF_THE_WELL_GS_LIKE_LIKE_CAGE,
                     BOTTOM_OF_THE_WELL_GS_EAST_INNER_ROOM,
                     BOTTOM_OF_THE_WELL_GS_WEST_INNER_ROOM,
+                    BOTTOM_OF_THE_WELL_CENTER_ROOM_PIT_FALL_BLUE_RUPEE_1,
+                    BOTTOM_OF_THE_WELL_CENTER_ROOM_PIT_FALL_BLUE_RUPEE_2,
+                    BOTTOM_OF_THE_WELL_CENTER_ROOM_PIT_FALL_BLUE_RUPEE_3,
+                    BOTTOM_OF_THE_WELL_CENTER_ROOM_PIT_FALL_BLUE_RUPEE_4,
+                    BOTTOM_OF_THE_WELL_CENTER_ROOM_PIT_FALL_BLUE_RUPEE_5,
                 },
                 {
                     // MQ Locations
@@ -550,6 +555,10 @@ DungeonInfo IceCavern =
                     ICE_CAVERN_GS_PUSH_BLOCK_ROOM,
                     ICE_CAVERN_GS_SPINNING_SCYTHE_ROOM,
                     ICE_CAVERN_GS_HEART_PIECE_ROOM,
+                    ICE_CAVERN_RED_ICE_BLUE_RUPEE,
+                    ICE_CAVERN_PUSH_BLOCK_ROOM_RED_RUPEE_1,
+                    ICE_CAVERN_PUSH_BLOCK_ROOM_RED_RUPEE_2,
+                    ICE_CAVERN_PUSH_BLOCK_ROOM_RED_RUPEE_3,
                 },
                 {
                     // MQ Locations

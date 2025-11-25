@@ -233,6 +233,7 @@ Option ShuffleChestMinigame   = Option::U8  ("Shuffle Chest Minigame", {"Off", "
 Option ShuffleFrogSongRupees  = Option::Bool("Shuffle Frog Rupees",    {"Off", "On"},                                                     {frogSongRupeesDesc});
 Option ShuffleEnemySouls      = Option::U8  ("Shuffle Enemy Souls",    {"Off", "All enemies", "Bosses only"},                             {enemySoulDesc});
 Option ShuffleOcarinaButtons  = Option::Bool("Shuffle Ocarina Buttons",{"Off", "On"},                                                     {ocarinaButtonsDesc});
+Option ShuffleRupees          = Option::Bool("Rupeesanity",            {"Off","On"},                                                 {shuffleRupeesDesc});
 std::vector<Option *> shuffleOptions = {
     &RandomizeShuffle,
     &ShuffleRewards,
@@ -256,6 +257,7 @@ std::vector<Option *> shuffleOptions = {
     &ShuffleFrogSongRupees,
     &ShuffleEnemySouls,
     &ShuffleOcarinaButtons,
+    &ShuffleRupees,
 };
 
 // Shuffle Dungeon Items
@@ -476,6 +478,7 @@ Option HyperEnemies        = Option::Bool(2, "Hyper Enemies",       {"Off", "On"
 Option FreeCamera          = Option::Bool("Free Camera",            {"Off", "On"},                                                          {freeCamDesc},                                                                                                    OptionCategory::Setting,    ON);
 Option RandomGsLocations   = Option::Bool("Random GS Locations",    {"Off", "On"},                                                          {randomGsLocationsDesc});
 Option GsLocGuaranteeNew   = Option::Bool(2, "Guarantee New",       {"Off", "On"},                                                          {gsLocGuaranteeNewDesc});
+Option RandomSongNotes     = Option::Bool("Random Ocarina Melodies",{"Off", "On"},                                                          {randomSongNotesDesc});
 std::vector<Option*> gameplayOptions = {
     &FastBunnyHood,
     &KeepFWWarpPoint,
@@ -495,6 +498,7 @@ std::vector<Option*> gameplayOptions = {
     &FreeCamera,
     &RandomGsLocations,
     &GsLocGuaranteeNew,
+    &RandomSongNotes,
 };
 
 // Excluded Locations (Individual definitions made in ItemLocation class)
@@ -778,6 +782,7 @@ Option LogicManOnRoof                   = LogicTrick("Kak Roof Guy\n  w/o Hooksh
 Option LogicWindmillPoHHookshot         = LogicTrick("Windmill PoH\n  w/ Hookshot",               LogicWindmillPoHHookshotDesc);
 Option LogicDMTBombable                 = LogicTrick("DMT Wall Chest\n  w/ Strength",             LogicDMTBombableDesc);
 Option LogicDMTSoilGS                   = LogicTrick("DMT Soil GS\n  w/o Opening DC",             LogicDMTSoilGSDesc);
+Option LogicDMCPlatformJump             = LogicTrick("DMC Scarecrow Rupee circle w/ nothing",     LogicDMCPlatformJumpDesc);
 Option LogicDMTSummitHover              = LogicTrick("DMT Summit\n  w/ Hover Boots",              LogicDMTSummitHoverDesc);
 Option LogicLinkGoronDins               = LogicTrick("GoC Adult Goron\n  w/ Din's Fire",          LogicLinkGoronDinsDesc);
 Option LogicGoronCityLeftMost           = LogicTrick("GoC Maze Left Chest\n  w/ Hover Boots",     LogicGoronCityLeftMostDesc);
@@ -789,6 +794,7 @@ Option LogicCraterBeanPoHWithHovers     = LogicTrick("DMC Bean PoH\n  w/ Hover B
 Option LogicBiggoronBolero              = LogicTrick("DMC Deliver Eyedrops\n  w/ Bolero of Fire", LogicBiggoronBoleroDesc);
 Option LogicZoraRiverLower              = LogicTrick("ZR Lower PoH\n  w/ Nothing",                LogicZoraRiverLowerDesc);
 Option LogicZoraRiverUpper              = LogicTrick("ZR Upper PoH\n  w/ Nothing",                LogicZoraRiverUpperDesc);
+Option LogicZoraRiverRupeesJump         = LogicTrick("ZR Under waterfall rupees w/o Iron boots",  LogicZoraRiverRupeesJumpDesc);
 Option LogicZFGreatFairy                = LogicTrick("ZF Great Fairy\n  w/o Explosives",          LogicZFGreatFairyDesc);
 Option LogicDekuB1WebsWithBow           = LogicTrick("DT B1 Web\n  w/ Bow",                       LogicDekuB1WebsWithBowDesc);
 Option LogicDekuB1Skip                  = LogicTrick("DT B1 Navigation\n  w/o Slingshot",         LogicDekuB1SkipDesc);
@@ -871,6 +877,7 @@ std::vector<Option *> trickOptions = {
     &LogicDMTBombable,
     &LogicDMTSoilGS,
     &LogicDMTSummitHover,
+    &LogicDMCPlatformJump,
     &LogicLinkGoronDins,
     &LogicGoronCityLeftMost,
     &LogicGoronCityPot,
@@ -881,6 +888,7 @@ std::vector<Option *> trickOptions = {
     &LogicBiggoronBolero,
     &LogicZoraRiverLower,
     &LogicZoraRiverUpper,
+    &LogicZoraRiverRupeesJump,
     &LogicZFGreatFairy,
     &LogicDekuB1WebsWithBow,
     &LogicDekuB1Skip,
@@ -1331,6 +1339,10 @@ Option ShuffleSFXFootsteps     = Option::Bool(2, "Include Footsteps",    {"No", 
 Option ShuffleSFXLinkVoice     = Option::Bool(2, "Include Link's Voice", {"No", "Yes"},                             {""},                                                                                                                                      OptionCategory::Cosmetic,               ON);
 Option ShuffleSFXCategorically = Option::Bool(2, "Categorical Shuffle",  {"Off", "On"},                             {shuffleSFXCategorically},                                                                                                                 OptionCategory::Cosmetic,               ON);
 
+Option OcarinaNoteInstrument   = Option::U8  ("Ocarina Instrument",      {"Random Choice", "Scene Specific",
+                                                                          "Default", "Malon", "Whistle", "Harp",
+                                                                          "Grind Organ", "Flute"},                  {ocarinaInstrRandomDesc, ocarinaInstrSceneDesc, ocarinaInstrDesc},                                                                         OptionCategory::Cosmetic,               OCARINA_INSTR_SETTING_DEFAULT);
+
 std::vector<Option*> audioOptions = {
     &ShuffleMusic,
     &ShuffleBGM,
@@ -1341,6 +1353,7 @@ std::vector<Option*> audioOptions = {
     &ShuffleSFXFootsteps,
     &ShuffleSFXLinkVoice,
     &ShuffleSFXCategorically,
+    &OcarinaNoteInstrument,
 };
 
 Menu preferences              = Menu::SubMenu("Misc Preferences",           &preferenceOptions);
@@ -1576,6 +1589,7 @@ SettingsContext FillContext() {
     ctx.hyperEnemies        = (HyperEnemies) ? 1 : 0;
     ctx.freeCamera          = (FreeCamera) ? 1 : 0;
     ctx.randomGsLocations   = (RandomGsLocations) ? 1 : 0;
+    ctx.randomSongNotes     = (RandomSongNotes) ? 1 : 0;
 
     ctx.faroresWindAnywhere  = (FaroresWindAnywhere) ? 1 : 0;
     ctx.stickAsAdult         = (StickAsAdult) ? 1 : 0;
@@ -1652,6 +1666,7 @@ SettingsContext FillContext() {
     ctx.shuffleSFXFootsteps         = (ShuffleSFXFootsteps) ? 1 : 0;
     ctx.shuffleSFXLinkVoice         = (ShuffleSFXLinkVoice) ? 1 : 0;
     ctx.shuffleSFXCategorically     = (ShuffleSFXCategorically) ? 1 : 0;
+    ctx.ocarinaNoteInstrument       = OcarinaNoteInstrument.Value<u8>();
 
     ctx.linksPocketRewardBitMask = LinksPocketRewardBitMask;
 
@@ -2541,6 +2556,7 @@ void ForceChange(u32 kDown, Option* currentSetting) {
                 LogicGoronCityLeftMost.SetSelectedIndex(1);
                 LogicZoraRiverLower.SetSelectedIndex(1);
                 LogicZoraRiverUpper.SetSelectedIndex(1);
+                LogicZoraRiverRupeesJump.SetSelectedIndex(1);
                 LogicZFGreatFairy.SetSelectedIndex(1);
                 LogicDekuB1WebsWithBow.SetSelectedIndex(1);
                 LogicDCJump.SetSelectedIndex(1);
@@ -3238,6 +3254,11 @@ void UpdateSettings() {
     if (ShuffleSFX.IsNot(SHUFFLESFX_OFF)) {
         SFX::ShuffleSequences(ShuffleSFXCategorically.Value<bool>());
     }
+
+    if (OcarinaNoteInstrument.Is(OCARINA_INSTR_SETTING_RANDOM_CHOICE)) {
+        size_t randomIndex = Random(OCARINA_INSTR_SETTING_DEFAULT, OcarinaNoteInstrument.GetOptionCount(), true);
+        OcarinaNoteInstrument.SetSelectedIndex(randomIndex);
+    }
 }
 
 // If this is an option menu, return the options
@@ -3373,23 +3394,24 @@ bool ValidateSettings() {
         }
     }
 
-    // Check that there are no MQ dungeons with Enemy Souls or Enemy Randomizer.
-    if ((ShuffleEnemySouls.Is(SHUFFLEENEMYSOULS_ALL) || Enemizer) && MQDungeonCount.IsNot(0) &&
-        Logic.IsNot(LOGIC_NONE) && Logic.IsNot(LOGIC_VANILLA)) {
-        if (ShuffleEnemySouls.IsHidden() && Enemizer.IsHidden()) {
+    // Check features that don't support logic for MQ dungeons.
+    if (MQDungeonCount.IsNot(0) && Logic.IsNot(LOGIC_NONE) && Logic.IsNot(LOGIC_VANILLA) &&
+        (ShuffleEnemySouls.Is(SHUFFLEENEMYSOULS_ALL) || ShuffleRupees || Enemizer)) {
+        if (ShuffleEnemySouls.IsHidden() && ShuffleRupees.IsHidden() && Enemizer.IsHidden()) {
             ShuffleEnemySouls.SetSelectedIndex(SHUFFLEENEMYSOULS_OFF);
+            ShuffleRupees.SetSelectedIndex(OFF);
             Enemizer.SetSelectedIndex(OFF);
         } else {
             printf("\x1b[%d;0H"
                    "----------------------------------------"
-                   "Enemy Soul Shuffle and Enemy Randomizer\n"
-                   "currently do not have logic for Master\n"
-                   "Quest dungeons.\n"
+                   "The following features currently do not\n"
+                   "support logic for Master Quest dungeons."
+                   "To use them you must disable Logic OR\n"
+                   "set MQ Dungeon Count to 0.\n"
                    "\n"
-                   "Please disable one of the following:\n"
-                   " - MQ Dungeons (setting Count to 0)\n"
-                   " - Logic\n"
-                   " - Enemy Soul Shuffle / Enemy Randomizer"
+                   " - Enemy Randomizer\n"
+                   " - Shuffle Enemy Souls\n"
+                   " - Rupeesanity\n"
                    "----------------------------------------",
                    posY);
             valid = false;

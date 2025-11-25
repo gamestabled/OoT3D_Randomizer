@@ -15,6 +15,7 @@
 #include "shops.hpp"
 #include "debug.hpp"
 #include "enemizer.hpp"
+#include "ocarina_notes.hpp"
 
 #include <vector>
 #include <unistd.h>
@@ -961,6 +962,7 @@ void VanillaFill() {
         Location(loc)->PlaceVanillaItem();
     }
     Enemizer::RandomizeEnemies();
+    OcarinaNotes::GenerateSongList();
     // If necessary, handle ER stuff
     playthroughEntrances.clear();
     if (ShuffleEntrances) {
@@ -1006,6 +1008,7 @@ int Fill() {
         // can validate the world using deku/hylian shields
         AddElementsToPool(ItemPool, GetMinVanillaShopItems(32)); // assume worst case shopsanity 4
         Enemizer::RandomizeEnemies();
+        OcarinaNotes::GenerateSongList();
         Logic::LogicReset();
         GetAccessibleLocations({}, SearchMode::ValidateWorld, "", false, false);
         if (!allLocationsReachable) {
@@ -1029,6 +1032,7 @@ int Fill() {
         showItemProgress = true;
         // Place shop items first, since a buy shield is needed to place a dungeon reward on Gohma due
         // to access
+
         NonShopItems = {};
         if (Shopsanity.Is(SHOPSANITY_OFF)) {
             PlaceVanillaShopItems(); // Place vanilla shop items in vanilla location
@@ -1115,6 +1119,7 @@ int Fill() {
         // Then place the rest of the advancement items
         std::vector<ItemKey> remainingAdvancementItems =
             FilterAndEraseFromPool(ItemPool, [](const ItemKey i) { return ItemTable(i).IsAdvancement(); });
+
         AssumedFill(remainingAdvancementItems, allLocations, true);
         // Then place any remaining non-junk items
         // Fast fill as these don't affect logic

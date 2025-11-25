@@ -189,6 +189,8 @@ extern string_view enemySoulDesc;
 
 extern string_view ocarinaButtonsDesc;
 
+extern string_view shuffleRupeesDesc;
+
 extern string_view mapCompassStartWith;
 extern string_view mapCompassVanilla;
 extern string_view mapCompassOwnDungeon;
@@ -417,6 +419,10 @@ extern string_view shuffleSFXSceneSpecific;
 extern string_view shuffleSFXChaos;
 extern string_view shuffleSFXCategorically;
 
+extern string_view ocarinaInstrRandomDesc;
+extern string_view ocarinaInstrSceneDesc;
+extern string_view ocarinaInstrDesc;
+
 extern string_view randomTrapDmgDesc;
 extern string_view basicTrapDmgDesc;
 extern string_view advancedTrapDmgDesc;
@@ -432,6 +438,7 @@ extern string_view hyperEnemiesDesc;
 extern string_view freeCamDesc;
 extern string_view randomGsLocationsDesc;
 extern string_view gsLocGuaranteeNewDesc;
+extern string_view randomSongNotesDesc;
 
 extern string_view ToggleAllTricksDesc;
 
@@ -459,6 +466,7 @@ extern string_view LogicWindmillPoHHookshotDesc;
 extern string_view LogicDMTBombableDesc;
 extern string_view LogicDMTSoilGSDesc;
 extern string_view LogicDMTSummitHoverDesc;
+extern string_view LogicDMCPlatformJumpDesc;
 extern string_view LogicLinkGoronDinsDesc;
 extern string_view LogicGoronCityLeftMostDesc;
 extern string_view LogicGoronCityPotDesc;
@@ -469,6 +477,7 @@ extern string_view LogicCraterBeanPoHWithHoversDesc;
 extern string_view LogicBiggoronBoleroDesc;
 extern string_view LogicZoraRiverLowerDesc;
 extern string_view LogicZoraRiverUpperDesc;
+extern string_view LogicZoraRiverRupeesJumpDesc;
 extern string_view LogicZFGreatFairyDesc;
 extern string_view LogicDekuB1WebsWithBowDesc;
 extern string_view LogicDekuB1SkipDesc;

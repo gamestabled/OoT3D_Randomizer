@@ -12,6 +12,7 @@
 #include "shops.hpp"
 #include "gold_skulltulas.hpp"
 #include "enemizer.hpp"
+#include "ocarina_notes.hpp"
 
 #include <3ds.h>
 #include <cstdio>
@@ -158,6 +159,10 @@ void WriteIngameSpoilerLog() {
         if (loc->IsExcluded()) {
             continue;
         }
+        // Win conditions that don't apply
+        else if ((key == GANON || key == TRIFORCE_HUNT_GOAL) && loc->GetPlacedItemKey() != TRIFORCE) {
+            continue;
+        }
         // Cows
         else if (!Settings::ShuffleCows && loc->IsCategory(Category::cCow)) {
             continue;
@@ -230,7 +235,7 @@ void WriteIngameSpoilerLog() {
         splrDatLoc->ItemLocations[spoilerItemIndex].LocationFlag        = loc->GetCollectionCheck().flag;
 
         // Collect Type and Reveal Type
-        if (key == GANON) {
+        if (key == GANON || key == TRIFORCE_HUNT_GOAL) {
             splrDatLoc->ItemLocations[spoilerItemIndex].CollectType = COLLECTTYPE_NEVER;
             splrDatLoc->ItemLocations[spoilerItemIndex].RevealType  = REVEALTYPE_ALWAYS;
         } else if (key == TOT_LIGHT_ARROWS_CUTSCENE &&
@@ -567,6 +572,43 @@ static void WriteRequiredTrials(tinyxml2::XMLDocument& spoilerLog) {
     }
 }
 
+static void InsertSongNode(tinyxml2::XMLElement* parentNode, std::string songName, u8 songLength, u8 notes[]) {
+    auto node = parentNode->InsertNewChildElement("song");
+    node->SetAttribute("name", songName.c_str());
+
+    constexpr int16_t LONGEST_NAME = 18; // The longest song name.
+    // Insert a padding so we get a kind of table in the XML document.
+    int16_t requiredPadding = LONGEST_NAME - songName.length();
+    if (requiredPadding >= 0) {
+        std::string padding(requiredPadding, ' ');
+        node->SetAttribute("_", padding.c_str());
+    }
+
+    std::string noteStr = "";
+    for (u32 btnIndex = 0; btnIndex < songLength; btnIndex++) {
+        noteStr += OcarinaNotes::ButtonNames[notes[btnIndex]] + " ";
+    }
+    node->SetText(noteStr.c_str());
+}
+
+// Writes the randomized notes for each song.
+static void WriteSongNotes(tinyxml2::XMLDocument& spoilerLog) {
+    using namespace OcarinaNotes;
+    if (!Settings::RandomSongNotes) {
+        return;
+    }
+
+    auto parentNode = spoilerLog.NewElement("song-notes");
+
+    for (u8 songId = OCARINA_SONG_MINUET; songId < OCARINA_SONG_MAX; songId++) {
+        InsertSongNode(parentNode, SongNames[songId], SongData[songId].length, SongData[songId].buttons);
+    }
+
+    InsertSongNode(parentNode, "Frog Choir Game", FROG_SONG_LENGTH, FrogSongNotes);
+
+    spoilerLog.RootElement()->InsertEndChild(parentNode);
+}
+
 // Writes the area and a description of where any moved Gold Skulltulas are.
 static void WriteNewGsLocations(tinyxml2::XMLDocument& spoilerLog, const bool collapsible = false) {
     if (!Settings::RandomGsLocations) {
@@ -826,6 +868,7 @@ bool SpoilerLog_Write() {
     }
     WriteMasterQuestDungeons(spoilerLog, true);
     WriteRequiredTrials(spoilerLog);
+    WriteSongNotes(spoilerLog);
     WriteNewGsLocations(spoilerLog, true);
     WritePlaythrough(spoilerLog, true);
     WriteWayOfTheHeroLocation(spoilerLog, true);

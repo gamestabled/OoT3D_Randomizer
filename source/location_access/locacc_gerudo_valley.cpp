@@ -158,7 +158,18 @@ void AreaTable_Init_GerudoValley() {
                                             Entrance(GV_FORTRESS_SIDE, { [] { return true; } }),
                                         });
 
-    areaTable[GV_OCTOROK_GROTTO] = Area("GV Octorok Grotto", "GV Octorok Grotto", NONE, NO_DAY_NIGHT_CYCLE, {}, {},
+    areaTable[GV_OCTOROK_GROTTO] = Area("GV Octorok Grotto", "GV Octorok Grotto", NONE, NO_DAY_NIGHT_CYCLE, {},
+                                        {
+                                            LocationAccess(GV_OCTOROCK_GROTTO_BLUE_RUPEE_1, { [] { return true; } }),
+                                            LocationAccess(GV_OCTOROCK_GROTTO_BLUE_RUPEE_2, { [] { return true; } }),
+                                            LocationAccess(GV_OCTOROCK_GROTTO_BLUE_RUPEE_3, { [] { return true; } }),
+                                            LocationAccess(GV_OCTOROCK_GROTTO_GREEN_RUPEE_1, { [] { return true; } }),
+                                            LocationAccess(GV_OCTOROCK_GROTTO_GREEN_RUPEE_2, { [] { return true; } }),
+                                            LocationAccess(GV_OCTOROCK_GROTTO_GREEN_RUPEE_3, { [] { return true; } }),
+                                            LocationAccess(GV_OCTOROCK_GROTTO_GREEN_RUPEE_4, { [] { return true; } }),
+                                            LocationAccess(GV_OCTOROCK_GROTTO_RED_RUPEE, { [] { return true; } }),
+
+                                        },
                                         {
                                             // Exits
                                             Entrance(GV_GROTTO_LEDGE, { [] { return true; } }),

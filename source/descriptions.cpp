@@ -591,6 +591,11 @@ string_view ocarinaButtonsDesc        = "Enabling this locks all Ocarina inputs,
                                         "Ocarina notes.\n\n"                               //
                                         "They can also be added to the Starting Inventory.";
 /*------------------------------                                                           //
+|  SHUFFLE FREESTANDING RUPEES |                                                           //
+------------------------------*/                                                           //
+string_view shuffleRupeesDesc         = "Shuffles freestanding rupees and adds them to the\n"//
+                                        "item pool. Currently work in progress.";          //
+/*------------------------------                                                           //
 |      MAPS AND COMPASSES      |                                                           //
 ------------------------------*/                                                           //
 string_view mapCompassStartWith       = "Maps and Compasses are given to you from the\n"   //
@@ -1321,6 +1326,13 @@ string_view shuffleSFXCategorically   = "Sound effects will be shuffled in categ
                                         "\n"                                               //
                                         "The sound may get annoying fast when disabled.";  //
 /*------------------------------                                                           //
+|      OCARINA INSTRUMENT      |                                                           //
+------------------------------*/                                                           //
+string_view ocarinaInstrDesc          = "Change the instrument used when playing the\n"    //
+                                        "ocarina.";                                        //
+string_view ocarinaInstrRandomDesc    = "A random instrument from the list will be chosen.";
+string_view ocarinaInstrSceneDesc     = "The instrument will be different in each scene."; //
+/*------------------------------                                                           //
 |    RANDOM TRAP DAMAGE TYPE   |                                                           //
 ------------------------------*/                                                           //
 string_view randomTrapDmgDesc         = "All traps will be the base game ice trap";        //
@@ -1392,6 +1404,12 @@ string_view gsLocGuaranteeNewDesc     = "Excludes the original location from the
                                         "If no new locations are available, the original\n"//
                                         "will be used regardless.";                        //
                                                                                            //
+/*------------------------------                                                           //
+|      RANDOM SONG NOTES       |                                                           //
+------------------------------*/                                                           //
+string_view randomSongNotesDesc       = "Randomize the notes for each ocarina song.\n"     //
+                                        "Regular songs will be 3 notes repeated twice.\n"  //
+                                        "Warp songs will be between 5 and 8 notes.";       //
                                                                                            //--------------//
 /*------------------------------                                                                           //
 |  DETAILED LOGIC EXPLANATIONS |                                                                           //
@@ -1479,6 +1497,9 @@ string_view LogicDMTSummitHoverDesc                   = "Difficulty: Intermediat
                                                         "boots and grabbing the ledge with the higher\n"   //
                                                         "boulder near the wall, you'll be able to grab the\n"
                                                         "ledge above it to reach the summit.";             //
+string_view LogicDMCPlatformJumpDesc                  = "Difficulty: Novice\n"                             //
+                                                        "Adult can reach these rupees by jumping down from\n"
+                                                        "the upper part of DMC, without scarecrow/longshot.";//                                                        
 string_view LogicLinkGoronDinsDesc                    = "Difficulty: Intermediate\n"                       //
                                                         "The timing is quite awkward.";                    //
 string_view LogicGoronCityLeftMostDesc                = "Difficulty: Novice\n"                             //
@@ -1519,6 +1540,9 @@ string_view LogicZoraRiverLowerDesc                   = "Difficulty: Novice\n"  
 string_view LogicZoraRiverUpperDesc                   = "Difficulty: Novice\n"                             //
                                                         "Adult can reach this PoH with a precise jump, no\n"
                                                         "Hover Boots required.";                           //
+string_view LogicZoraRiverRupeesJumpDesc              = "Difficulty: Novice\n"                             //
+                                                        "Adult can reach these rupees by jumping down from\n"
+                                                        "the lullaby platform no Iron Boots required.";    //
 string_view LogicZFGreatFairyDesc                     = "Difficulty: Novice\n"                             //
                                                         "Destroying the boulders blocking the hidden area\n"
                                                         "with silver gauntlets and hammer lets you pass\n" //

@@ -37,6 +37,71 @@ void HintTable_Init_Exclude_Overworld() {
                        //clear text
                        Text{"#inside Mido's house# is", /*french*/"#dans la maison de Mido# gît", /*spanish*/"en la #casa de Mido# yace", /*italian*/"nella #casa di Mido# puoi trovare", /*german*/"#in Midos Haus#, |wäre|wären|"}
     );
+    hintTable[KF_END_OF_BRIDGE_BLUE_RUPEE] = HintText::Exclude({
+                       // obscure text
+                       Text{"EN: KF_END_OF_BRIDGE_BLUE_RUPEE HINT", /*french*/"FR: KF_END_OF_BRIDGE_BLUE_RUPEE HINT", /*spanish*/"ES: KF_END_OF_BRIDGE_BLUE_RUPEE HINT", /*italian*/"IT: KF_END_OF_BRIDGE_BLUE_RUPEE HINT", /*german*/"DE: KF_END_OF_BRIDGE_BLUE_RUPEE HINT"},
+    });
+
+    hintTable[KF_BEHIND_MIDOS_HOUSE_BLUE_RUPEE] = HintText::Exclude({
+                       // obscure text
+                       Text{"EN: KF_BEHIND_MIDOS_HOUSE_BLUE_RUPEE HINT", /*french*/"FR: KF_BEHIND_MIDOS_HOUSE_BLUE_RUPEE HINT", /*spanish*/"ES: KF_BEHIND_MIDOS_HOUSE_BLUE_RUPEE HINT", /*italian*/"IT: KF_BEHIND_MIDOS_HOUSE_BLUE_RUPEE HINT", /*german*/"DE: KF_BEHIND_MIDOS_HOUSE_BLUE_RUPEE HINT"},
+    });
+
+    hintTable[KF_BOULDER_MAZE_BLUE_RUPEE_1] = HintText::Exclude({
+                       // obscure text
+                       Text{"EN: KF_BOULDER_MAZE_BLUE_RUPEE_1 HINT", /*french*/"FR: KF_BOULDER_MAZE_BLUE_RUPEE_1 HINT", /*spanish*/"ES: KF_BOULDER_MAZE_BLUE_RUPEE_1 HINT", /*italian*/"IT: KF_BOULDER_MAZE_BLUE_RUPEE_1 HINT", /*german*/"DE: KF_BOULDER_MAZE_BLUE_RUPEE_1 HINT"},
+    });
+
+    hintTable[KF_BOULDER_MAZE_BLUE_RUPEE_2] = HintText::Exclude({
+                       // obscure text
+                       Text{"EN: KF_BOULDER_MAZE_BLUE_RUPEE_2 HINT", /*french*/"FR: KF_BOULDER_MAZE_BLUE_RUPEE_2 HINT", /*spanish*/"ES: KF_BOULDER_MAZE_BLUE_RUPEE_2 HINT", /*italian*/"IT: KF_BOULDER_MAZE_BLUE_RUPEE_2 HINT", /*german*/"DE: KF_BOULDER_MAZE_BLUE_RUPEE_2 HINT"},
+    });
+    hintTable[KF_NEAR_RAMP_GREEN_RUPEE_1] = HintText::Exclude({
+                       // obscure text
+                       Text{"EN: KF_NEAR_RAMP_GREEN_RUPEE_1 HINT", /*french*/"FR: KF_NEAR_RAMP_GREEN_RUPEE_1 HINT", /*spanish*/"ES: KF_NEAR_RAMP_GREEN_RUPEE_1 HINT", /*italian*/"IT: KF_NEAR_RAMP_GREEN_RUPEE_1 HINT", /*german*/"DE: KF_NEAR_RAMP_GREEN_RUPEE_1 HINT"},
+    });
+        hintTable[KF_NEAR_RAMP_GREEN_RUPEE_2] = HintText::Exclude({
+                       // obscure text
+                       Text{"EN: KF_NEAR_RAMP_GREEN_RUPEE_2 HINT", /*french*/"FR: KF_NEAR_RAMP_GREEN_RUPEE_2 HINT", /*spanish*/"ES: KF_NEAR_RAMP_GREEN_RUPEE_2 HINT", /*italian*/"IT: KF_NEAR_RAMP_GREEN_RUPEE_2 HINT", /*german*/"DE: KF_NEAR_RAMP_GREEN_RUPEE_2 HINT"},
+    });
+
+        hintTable[KF_NEAR_MIDOS_HOUSE_GREEN_RUPEE_1] = HintText::Exclude({
+                       // obscure text
+                       Text{"EN: KF_NEAR_MIDOS_HOUSE_GREEN_RUPEE_1 HINT", /*french*/"FR: KF_NEAR_MIDOS_HOUSE_GREEN_RUPEE_1 HINT", /*spanish*/"ES: KF_NEAR_MIDOS_HOUSE_GREEN_RUPEE_1 HINT", /*italian*/"IT: KF_NEAR_MIDOS_HOUSE_GREEN_RUPEE_1 HINT", /*german*/"DE: KF_NEAR_MIDOS_HOUSE_GREEN_RUPEE_1 HINT"},
+    });
+        hintTable[KF_NEAR_MIDOS_HOUSE_GREEN_RUPEE_2] = HintText::Exclude({
+                       // obscure text
+                       Text{"EN: KF_NEAR_MIDOS_HOUSE_GREEN_RUPEE_2 HINT", /*french*/"FR: KF_NEAR_MIDOS_HOUSE_GREEN_RUPEE_2 HINT", /*spanish*/"ES: KF_NEAR_MIDOS_HOUSE_GREEN_RUPEE_2 HINT", /*italian*/"IT: KF_NEAR_MIDOS_HOUSE_GREEN_RUPEE_2 HINT", /*german*/"DE: KF_NEAR_MIDOS_HOUSE_GREEN_RUPEE_2 HINT"},
+    });
+
+    hintTable[KF_RUPEE_CIRCLE_GREEN_RUPEE_1] = HintText::Exclude({
+                       // obscure text
+                       Text{"EN: KF_RUPEE_CIRCLE_GREEN_RUPEE_1 HINT", /*french*/"FR: KF_RUPEE_CIRCLE_GREEN_RUPEE_1 HINT", /*spanish*/"ES: KF_RUPEE_CIRCLE_GREEN_RUPEE_1 HINT", /*italian*/"IT: KF_RUPEE_CIRCLE_GREEN_RUPEE_1 HINT", /*german*/"DE: KF_RUPEE_CIRCLE_GREEN_RUPEE_1 HINT"},
+    });
+    hintTable[KF_RUPEE_CIRCLE_GREEN_RUPEE_2] = HintText::Exclude({
+                       // obscure text
+                       Text{"EN: KF_RUPEE_CIRCLE_GREEN_RUPEE_2 HINT", /*french*/"FR: KF_RUPEE_CIRCLE_GREEN_RUPEE_2 HINT", /*spanish*/"ES: KF_RUPEE_CIRCLE_GREEN_RUPEE_2 HINT", /*italian*/"IT: KF_RUPEE_CIRCLE_GREEN_RUPEE_2 HINT", /*german*/"DE: KF_RUPEE_CIRCLE_GREEN_RUPEE_2 HINT"},
+    });
+    hintTable[KF_RUPEE_CIRCLE_GREEN_RUPEE_3] = HintText::Exclude({
+                       // obscure text
+                       Text{"EN: KF_RUPEE_CIRCLE_GREEN_RUPEE_3 HINT", /*french*/"FR: KF_RUPEE_CIRCLE_GREEN_RUPEE_3 HINT", /*spanish*/"ES: KF_RUPEE_CIRCLE_GREEN_RUPEE_3 HINT", /*italian*/"IT: KF_RUPEE_CIRCLE_GREEN_RUPEE_3 HINT", /*german*/"DE: KF_RUPEE_CIRCLE_GREEN_RUPEE_3 HINT"},
+    });
+    hintTable[KF_RUPEE_CIRCLE_GREEN_RUPEE_4] = HintText::Exclude({
+                       // obscure text
+                       Text{"EN: KF_RUPEE_CIRCLE_GREEN_RUPEE_4 HINT", /*french*/"FR: KF_RUPEE_CIRCLE_GREEN_RUPEE_4 HINT", /*spanish*/"ES: KF_RUPEE_CIRCLE_GREEN_RUPEE_4 HINT", /*italian*/"IT: KF_RUPEE_CIRCLE_GREEN_RUPEE_4 HINT", /*german*/"DE: KF_RUPEE_CIRCLE_GREEN_RUPEE_4 HINT"},
+    });
+    hintTable[KF_RUPEE_CIRCLE_GREEN_RUPEE_5] = HintText::Exclude({
+                       // obscure text
+                       Text{"EN: KF_RUPEE_CIRCLE_GREEN_RUPEE_5 HINT", /*french*/"FR: KF_RUPEE_CIRCLE_GREEN_RUPEE_5 HINT", /*spanish*/"ES: KF_RUPEE_CIRCLE_GREEN_RUPEE_5 HINT", /*italian*/"IT: KF_RUPEE_CIRCLE_GREEN_RUPEE_5 HINT", /*german*/"DE: KF_RUPEE_CIRCLE_GREEN_RUPEE_5 HINT"},
+    });
+    hintTable[KF_RUPEE_CIRCLE_GREEN_RUPEE_6] = HintText::Exclude({
+                       // obscure text
+                       Text{"EN: KF_RUPEE_CIRCLE_GREEN_RUPEE_6 HINT", /*french*/"FR: KF_RUPEE_CIRCLE_GREEN_RUPEE_6 HINT", /*spanish*/"ES: KF_RUPEE_CIRCLE_GREEN_RUPEE_6 HINT", /*italian*/"IT: KF_RUPEE_CIRCLE_GREEN_RUPEE_6 HINT", /*german*/"DE: KF_RUPEE_CIRCLE_GREEN_RUPEE_6 HINT"},
+    });
+    hintTable[KF_RUPEE_CIRCLE_RED_RUPEE] = HintText::Exclude({
+                       // obscure text
+                       Text{"EN: KF_RUPEE_CIRCLE_RED_RUPEE HINT", /*french*/"FR: KF_RUPEE_CIRCLE_RED_RUPEE HINT", /*spanish*/"ES: KF_RUPEE_CIRCLE_RED_RUPEE HINT", /*italian*/"IT: KF_RUPEE_CIRCLE_RED_RUPEE HINT", /*german*/"DE: KF_RUPEE_CIRCLE_RED_RUPEE HINT"},
+    });
 
     hintTable[GRAVEYARD_SHIELD_GRAVE_CHEST] = HintText::Exclude({
                        // obscure text
@@ -69,6 +134,48 @@ void HintTable_Init_Exclude_Overworld() {
                      }, {},
                        //clear text
                        Text{"#dead Dampé's first prize# is", /*french*/"la #première course d'Igor# donne", /*spanish*/"el primer premio de #la carrera de Dampé# se trata de", /*italian*/"la prima ricompensa del #fantasma di Danpei# è", /*german*/"#Boris' erster Preis#, |wäre|wären|"}
+    );
+
+    hintTable[GRAVEYARD_DAMPE_RACE_GREEN_RUPEE_2] = HintText::Exclude({
+                       // obscure text
+                       Text{"EN: GRAVEYARD_DAMPE_RACE_GREEN_RUPEE_2 Hint", /*french*/"FR: GRAVEYARD_DAMPE_RACE_GREEN_RUPEE_2 Hint", /*spanish*/"ES: GRAVEYARD_DAMPE_RACE_GREEN_RUPEE_2 Hint", /*italian*/"IT: GRAVEYARD_DAMPE_RACE_GREEN_RUPEE_2 Hint", /*german*/"DE: GRAVEYARD_DAMPE_RACE_GREEN_RUPEE_2 Hint"},
+                     }
+    );
+
+    hintTable[GRAVEYARD_DAMPE_RACE_GREEN_RUPEE_3] = HintText::Exclude({
+                       // obscure text
+                       Text{"EN: GRAVEYARD_DAMPE_RACE_GREEN_RUPEE_3 Hint", /*french*/"FR: GRAVEYARD_DAMPE_RACE_GREEN_RUPEE_3 Hint", /*spanish*/"ES: GRAVEYARD_DAMPE_RACE_GREEN_RUPEE_3 Hint", /*italian*/"IT: GRAVEYARD_DAMPE_RACE_GREEN_RUPEE_3 Hint", /*german*/"DE: GRAVEYARD_DAMPE_RACE_GREEN_RUPEE_3 Hint"},
+                     }
+    );
+
+    hintTable[GRAVEYARD_DAMPE_RACE_GREEN_RUPEE_4] = HintText::Exclude({
+                       // obscure text
+                       Text{"EN: GRAVEYARD_DAMPE_RACE_GREEN_RUPEE_4 Hint", /*french*/"FR: GRAVEYARD_DAMPE_RACE_GREEN_RUPEE_4 Hint", /*spanish*/"ES: GRAVEYARD_DAMPE_RACE_GREEN_RUPEE_4 Hint", /*italian*/"IT: GRAVEYARD_DAMPE_RACE_GREEN_RUPEE_4 Hint", /*german*/"DE: GRAVEYARD_DAMPE_RACE_GREEN_RUPEE_4 Hint"},
+                     }
+    );
+
+    hintTable[GRAVEYARD_DAMPE_RACE_GREEN_RUPEE_5] = HintText::Exclude({
+                       // obscure text
+                       Text{"EN: GRAVEYARD_DAMPE_RACE_GREEN_RUPEE_5 Hint", /*french*/"FR: GRAVEYARD_DAMPE_RACE_GREEN_RUPEE_5 Hint", /*spanish*/"ES: GRAVEYARD_DAMPE_RACE_GREEN_RUPEE_5 Hint", /*italian*/"IT: GRAVEYARD_DAMPE_RACE_GREEN_RUPEE_5 Hint", /*german*/"DE: GRAVEYARD_DAMPE_RACE_GREEN_RUPEE_5 Hint"},
+                     }
+    );
+
+    hintTable[GRAVEYARD_DAMPE_RACE_GREEN_RUPEE_6] = HintText::Exclude({
+                       // obscure text
+                       Text{"EN: GRAVEYARD_DAMPE_RACE_GREEN_RUPEE_6 Hint", /*french*/"FR: GRAVEYARD_DAMPE_RACE_GREEN_RUPEE_6 Hint", /*spanish*/"ES: GRAVEYARD_DAMPE_RACE_GREEN_RUPEE_6 Hint", /*italian*/"IT: GRAVEYARD_DAMPE_RACE_GREEN_RUPEE_6 Hint", /*german*/"DE: GRAVEYARD_DAMPE_RACE_GREEN_RUPEE_6 Hint"},
+                     }
+    );
+
+    hintTable[GRAVEYARD_DAMPE_RACE_GREEN_RUPEE_7] = HintText::Exclude({
+                       // obscure text
+                       Text{"EN: GRAVEYARD_DAMPE_RACE_GREEN_RUPEE_7 Hint", /*french*/"FR: GRAVEYARD_DAMPE_RACE_GREEN_RUPEE_7 Hint", /*spanish*/"ES: GRAVEYARD_DAMPE_RACE_GREEN_RUPEE_7 Hint", /*italian*/"IT: GRAVEYARD_DAMPE_RACE_GREEN_RUPEE_7 Hint", /*german*/"DE: GRAVEYARD_DAMPE_RACE_GREEN_RUPEE_7 Hint"},
+                     }
+    );
+
+    hintTable[GRAVEYARD_DAMPE_RACE_GREEN_RUPEE_8] = HintText::Exclude({
+                       // obscure text
+                       Text{"EN: GRAVEYARD_DAMPE_RACE_GREEN_RUPEE_8 Hint", /*french*/"FR: GRAVEYARD_DAMPE_RACE_GREEN_RUPEE_8 Hint", /*spanish*/"ES: GRAVEYARD_DAMPE_RACE_GREEN_RUPEE_8 Hint", /*italian*/"IT: GRAVEYARD_DAMPE_RACE_GREEN_RUPEE_8 Hint", /*german*/"DE: GRAVEYARD_DAMPE_RACE_GREEN_RUPEE_8 Hint"},
+                     }
     );
 
     hintTable[GF_CHEST] = HintText::Exclude({
@@ -154,6 +261,97 @@ void HintTable_Init_Exclude_Overworld() {
                        // obscure text
                        Text{"the #fairy of winds# holds", /*french*/"la #fée du vent# a", /*spanish*/"el #hada del viento# brinda", /*italian*/"la #fata del vento# consegna", /*german*/"in der #Feen-Quelle des Sturmes#, |wäre|wären|"},
     });
+
+                hintTable[ZF_UNDERWATER_GREEN_RUPEE_1] = HintText::Exclude({
+                       // obscure text
+                       Text{"EN: ZF_UNDERWATER_GREEN_RUPEE_1 HINT", /*french*/"FR: ZF_UNDERWATER_GREEN_RUPEE_1 HINT", /*spanish*/"ES: ZF_UNDERWATER_GREEN_RUPEE_1 HINT", /*italian*/"IT: ZF_UNDERWATER_GREEN_RUPEE_1 HINT", /*german*/"DE: ZF_UNDERWATER_GREEN_RUPEE_1 HINT"},
+    });
+                    hintTable[ZF_UNDERWATER_GREEN_RUPEE_2] = HintText::Exclude({
+                       // obscure text
+                       Text{"EN: ZF_UNDERWATER_GREEN_RUPEE_2 HINT", /*french*/"FR: ZF_UNDERWATER_GREEN_RUPEE_2 HINT", /*spanish*/"ES: ZF_UNDERWATER_GREEN_RUPEE_2 HINT", /*italian*/"IT: ZF_UNDERWATER_GREEN_RUPEE_2 HINT", /*german*/"DE: ZF_UNDERWATER_GREEN_RUPEE_2 HINT"},
+    });
+
+                    hintTable[ZF_UNDERWATER_GREEN_RUPEE_3] = HintText::Exclude({
+                       // obscure text
+                       Text{"EN: ZF_UNDERWATER_GREEN_RUPEE_3 HINT", /*french*/"FR: ZF_UNDERWATER_GREEN_RUPEE_3 HINT", /*spanish*/"ES: ZF_UNDERWATER_GREEN_RUPEE_3 HINT", /*italian*/"IT: ZF_UNDERWATER_GREEN_RUPEE_3 HINT", /*german*/"DE: ZF_UNDERWATER_GREEN_RUPEE_3 HINT"},
+    });
+
+                    hintTable[ZF_UNDERWATER_GREEN_RUPEE_4] = HintText::Exclude({
+                       // obscure text
+                       Text{"EN: ZF_UNDERWATER_GREEN_RUPEE_4 HINT", /*french*/"FR: ZF_UNDERWATER_GREEN_RUPEE_4 HINT", /*spanish*/"ES: ZF_UNDERWATER_GREEN_RUPEE_4 HINT", /*italian*/"IT: ZF_UNDERWATER_GREEN_RUPEE_4 HINT", /*german*/"DE: ZF_UNDERWATER_GREEN_RUPEE_4 HINT"},
+    });
+
+                    hintTable[ZF_UNDERWATER_GREEN_RUPEE_5] = HintText::Exclude({
+                       // obscure text
+                       Text{"EN: ZF_UNDERWATER_GREEN_RUPEE_5 HINT", /*french*/"FR: ZF_UNDERWATER_GREEN_RUPEE_5 HINT", /*spanish*/"ES: ZF_UNDERWATER_GREEN_RUPEE_5 HINT", /*italian*/"IT: ZF_UNDERWATER_GREEN_RUPEE_5 HINT", /*german*/"DE: ZF_UNDERWATER_GREEN_RUPEE_5 HINT"},
+    });
+
+                    hintTable[ZF_UNDERWATER_GREEN_RUPEE_6] = HintText::Exclude({
+                       // obscure text
+                       Text{"EN: ZF_UNDERWATER_GREEN_RUPEE_6 HINT", /*french*/"FR: ZF_UNDERWATER_GREEN_RUPEE_6 HINT", /*spanish*/"ES: ZF_UNDERWATER_GREEN_RUPEE_6 HINT", /*italian*/"IT: ZF_UNDERWATER_GREEN_RUPEE_6 HINT", /*german*/"DE: ZF_UNDERWATER_GREEN_RUPEE_6 HINT"},
+    });
+
+                    hintTable[ZF_UNDERWATER_GREEN_RUPEE_7] = HintText::Exclude({
+                       // obscure text
+                       Text{"EN: ZF_UNDERWATER_GREEN_RUPEE_7 HINT", /*french*/"FR: ZF_UNDERWATER_GREEN_RUPEE_7 HINT", /*spanish*/"ES: ZF_UNDERWATER_GREEN_RUPEE_7 HINT", /*italian*/"IT: ZF_UNDERWATER_GREEN_RUPEE_7 HINT", /*german*/"DE: ZF_UNDERWATER_GREEN_RUPEE_7 HINT"},
+    });
+
+                    hintTable[ZF_UNDERWATER_GREEN_RUPEE_8] = HintText::Exclude({
+                       // obscure text
+                       Text{"EN: ZF_UNDERWATER_GREEN_RUPEE_8 HINT", /*french*/"FR: ZF_UNDERWATER_GREEN_RUPEE_8 HINT", /*spanish*/"ES: ZF_UNDERWATER_GREEN_RUPEE_8 HINT", /*italian*/"IT: ZF_UNDERWATER_GREEN_RUPEE_8 HINT", /*german*/"DE: ZF_UNDERWATER_GREEN_RUPEE_8 HINT"},
+    });
+
+                    hintTable[ZF_UNDERWATER_GREEN_RUPEE_9] = HintText::Exclude({
+                       // obscure text
+                       Text{"EN: ZF_UNDERWATER_GREEN_RUPEE_9 HINT", /*french*/"FR: ZF_UNDERWATER_GREEN_RUPEE_9 HINT", /*spanish*/"ES: ZF_UNDERWATER_GREEN_RUPEE_9 HINT", /*italian*/"IT: ZF_UNDERWATER_GREEN_RUPEE_9 HINT", /*german*/"DE: ZF_UNDERWATER_GREEN_RUPEE_9 HINT"},
+    });
+
+                    hintTable[ZF_UNDERWATER_GREEN_RUPEE_10] = HintText::Exclude({
+                       // obscure text
+                       Text{"EN: ZF_UNDERWATER_GREEN_RUPEE_10 HINT", /*french*/"FR: ZF_UNDERWATER_GREEN_RUPEE_10 HINT", /*spanish*/"ES: ZF_UNDERWATER_GREEN_RUPEE_10 HINT", /*italian*/"IT: ZF_UNDERWATER_GREEN_RUPEE_10 HINT", /*german*/"DE: ZF_UNDERWATER_GREEN_RUPEE_10 HINT"},
+    });
+
+                    hintTable[ZF_UNDERWATER_GREEN_RUPEE_11] = HintText::Exclude({
+                       // obscure text
+                       Text{"EN: ZF_UNDERWATER_GREEN_RUPEE_11 HINT", /*french*/"FR: ZF_UNDERWATER_GREEN_RUPEE_11 HINT", /*spanish*/"ES: ZF_UNDERWATER_GREEN_RUPEE_11 HINT", /*italian*/"IT: ZF_UNDERWATER_GREEN_RUPEE_11 HINT", /*german*/"DE: ZF_UNDERWATER_GREEN_RUPEE_11 HINT"},
+    });
+
+                    hintTable[ZF_UNDERWATER_GREEN_RUPEE_12] = HintText::Exclude({
+                       // obscure text
+                       Text{"EN: ZF_UNDERWATER_GREEN_RUPEE_12 HINT", /*french*/"FR: ZF_UNDERWATER_GREEN_RUPEE_12 HINT", /*spanish*/"ES: ZF_UNDERWATER_GREEN_RUPEE_12 HINT", /*italian*/"IT: ZF_UNDERWATER_GREEN_RUPEE_12 HINT", /*german*/"DE: ZF_UNDERWATER_GREEN_RUPEE_12 HINT"},
+    });
+
+                    hintTable[ZF_UNDERWATER_GREEN_RUPEE_13] = HintText::Exclude({
+                       // obscure text
+                       Text{"EN: ZF_UNDERWATER_GREEN_RUPEE_13 HINT", /*french*/"FR: ZF_UNDERWATER_GREEN_RUPEE_13 HINT", /*spanish*/"ES: ZF_UNDERWATER_GREEN_RUPEE_13 HINT", /*italian*/"IT: ZF_UNDERWATER_GREEN_RUPEE_13 HINT", /*german*/"DE: ZF_UNDERWATER_GREEN_RUPEE_13 HINT"},
+    });
+
+                    hintTable[ZF_UNDERWATER_GREEN_RUPEE_14] = HintText::Exclude({
+                       // obscure text
+                       Text{"EN: ZF_UNDERWATER_GREEN_RUPEE_14 HINT", /*french*/"FR: ZF_UNDERWATER_GREEN_RUPEE_14 HINT", /*spanish*/"ES: ZF_UNDERWATER_GREEN_RUPEE_14 HINT", /*italian*/"IT: ZF_UNDERWATER_GREEN_RUPEE_14 HINT", /*german*/"DE: ZF_UNDERWATER_GREEN_RUPEE_14 HINT"},
+    });
+
+                    hintTable[ZF_UNDERWATER_GREEN_RUPEE_15] = HintText::Exclude({
+                       // obscure text
+                       Text{"EN: ZF_UNDERWATER_GREEN_RUPEE_15 HINT", /*french*/"FR: ZF_UNDERWATER_GREEN_RUPEE_15 HINT", /*spanish*/"ES: ZF_UNDERWATER_GREEN_RUPEE_15 HINT", /*italian*/"IT: ZF_UNDERWATER_GREEN_RUPEE_15 HINT", /*german*/"DE: ZF_UNDERWATER_GREEN_RUPEE_15 HINT"},
+    });
+
+                    hintTable[ZF_UNDERWATER_GREEN_RUPEE_16] = HintText::Exclude({
+                       // obscure text
+                       Text{"EN: ZF_UNDERWATER_GREEN_RUPEE_16 HINT", /*french*/"FR: ZF_UNDERWATER_GREEN_RUPEE_16 HINT", /*spanish*/"ES: ZF_UNDERWATER_GREEN_RUPEE_16 HINT", /*italian*/"IT: ZF_UNDERWATER_GREEN_RUPEE_16 HINT", /*german*/"DE: ZF_UNDERWATER_GREEN_RUPEE_16 HINT"},
+    });
+
+                    hintTable[ZF_UNDERWATER_GREEN_RUPEE_17] = HintText::Exclude({
+                       // obscure text
+                       Text{"EN: ZF_UNDERWATER_GREEN_RUPEE_17 HINT", /*french*/"FR: ZF_UNDERWATER_GREEN_RUPEE_17 HINT", /*spanish*/"ES: ZF_UNDERWATER_GREEN_RUPEE_17 HINT", /*italian*/"IT: ZF_UNDERWATER_GREEN_RUPEE_17 HINT", /*german*/"DE: ZF_UNDERWATER_GREEN_RUPEE_17 HINT"},
+    });
+
+                    hintTable[ZF_UNDERWATER_GREEN_RUPEE_18] = HintText::Exclude({
+                       // obscure text
+                       Text{"EN: ZF_UNDERWATER_GREEN_RUPEE_18 HINT", /*french*/"FR: ZF_UNDERWATER_GREEN_RUPEE_18 HINT", /*spanish*/"ES: ZF_UNDERWATER_GREEN_RUPEE_18 HINT", /*italian*/"IT: ZF_UNDERWATER_GREEN_RUPEE_18 HINT", /*german*/"DE: ZF_UNDERWATER_GREEN_RUPEE_18 HINT"},
+    });
+
+
 
     hintTable[HC_GREAT_FAIRY_REWARD] = HintText::Exclude({
                        // obscure text
@@ -383,6 +581,22 @@ void HintTable_Init_Exclude_Overworld() {
                        Text{"the #sunken treasure in a lake# is", /*french*/"le #trésor au fond du lac# est", /*spanish*/"el #tesoro hundido del lago# se trata de", /*italian*/"il #tesoro sommerso nel lago# è", /*german*/"der #versunkene Schatz eines Sees#, |wäre|wären|"},
     });
 
+        hintTable[LH_UNDER_WATER_GREEN_RUPEE_1] = HintText::Exclude({
+                       // obscure text
+                       Text{"EN: LH_UNDER_WATER_GREEN_RUPEE_1 HINT", /*french*/"FR: LH_UNDER_WATER_GREEN_RUPEE_1 HINT", /*spanish*/"ES: LH_UNDER_WATER_GREEN_RUPEE_1 HINT", /*italian*/"IT: LH_UNDER_WATER_GREEN_RUPEE_1 HINT", /*german*/"DE: LH_UNDER_WATER_GREEN_RUPEE_1 HINT"},
+    });
+
+        hintTable[LH_UNDER_WATER_GREEN_RUPEE_2] = HintText::Exclude({
+                       // obscure text
+                       Text{"EN: LH_UNDER_WATER_GREEN_RUPEE_2 HINT", /*french*/"FR: LH_UNDER_WATER_GREEN_RUPEE_2 HINT", /*spanish*/"ES: LH_UNDER_WATER_GREEN_RUPEE_2 HINT", /*italian*/"IT: LH_UNDER_WATER_GREEN_RUPEE_2 HINT", /*german*/"DE: LH_UNDER_WATER_GREEN_RUPEE_2 HINT"},
+    });
+
+        hintTable[LH_UNDER_WATER_GREEN_RUPEE_3] = HintText::Exclude({
+                       // obscure text
+                       Text{"EN: LH_UNDER_WATER_GREEN_RUPEE_3 HINT", /*french*/"FR: LH_UNDER_WATER_GREEN_RUPEE_3 HINT", /*spanish*/"ES: LH_UNDER_WATER_GREEN_RUPEE_3 HINT", /*italian*/"IT: LH_UNDER_WATER_GREEN_RUPEE_3 HINT", /*german*/"DE: LH_UNDER_WATER_GREEN_RUPEE_3 HINT"},
+    });
+
+
     hintTable[GF_GERUDO_TOKEN] = HintText::Exclude({
                        // obscure text
                        Text{"#rescuing captured carpenters# is rewarded with", /*french*/"#secourir les charpentiers capturés# assure", /*spanish*/"#rescatar los apresados carpinteros# se premia con", /*italian*/"chi salverà i #carpentieri prigionieri# riceverà", /*german*/"bei #geretteten Zimmerleuten#, |wäre|wären|"},
@@ -480,6 +694,60 @@ void HintTable_Init_Exclude_Overworld() {
                        // obscure text
                        Text{"above a #mountain cavern entrance# is", /*french*/"gisant #au dessus de la caverne montagneuse# gît", /*spanish*/"en lo alto de la #entrada de una cueva en la montaña# yace", /*italian*/"sopra #l'ingresso di una caverna montana# puoi trovare", /*german*/"über einem #Höhleneingang des Berges#, |wäre|wären|"},
     });
+    hintTable[DMT_ROCK_BLUE_RUPEE] = HintText::Exclude({
+                       // obscure text
+                       Text{"EN: DMT_ROCK_BLUE_RUPEE Hint", /*french*/"FR: DMT_ROCK_BLUE_RUPEE Hint", /*spanish*/"ES: DMT_ROCK_BLUE_RUPEE Hint", /*italian*/"IT: DMT_ROCK_BLUE_RUPEE Hint", /*german*/"DE: DMT_ROCK_BLUE_RUPEE Hint"},
+                     }
+    );
+
+    hintTable[DMT_ROCK_RED_RUPEE] = HintText::Exclude({
+                       // obscure text
+                       Text{"EN: DMT_ROCK_RED_RUPEE Hint", /*french*/"FR: DMT_ROCK_RED_RUPEE Hint", /*spanish*/"ES: DMT_ROCK_RED_RUPEE Hint", /*italian*/"IT: DMT_ROCK_RED_RUPEE Hint", /*german*/"DE: DMT_ROCK_RED_RUPEE Hint"},
+                     }
+    );
+
+    
+    hintTable[DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_1] = HintText::Exclude({
+                       // obscure text
+                       Text{"EN: DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_1 Hint", /*french*/"FR: DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_1 Hint", /*spanish*/"ES: DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_1 Hint", /*italian*/"IT: DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_1 Hint", /*german*/"DE: DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_1 Hint"},
+                     }
+    );
+    
+    hintTable[DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_2] = HintText::Exclude({
+                       // obscure text
+                       Text{"EN: DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_2 Hint", /*french*/"FR: DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_2 Hint", /*spanish*/"ES: DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_2 Hint", /*italian*/"IT: DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_2 Hint", /*german*/"DE: DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_2 Hint"},
+                     }
+    );
+    
+    hintTable[DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_3] = HintText::Exclude({
+                       // obscure text
+                       Text{"EN: DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_3 Hint", /*french*/"FR: DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_3 Hint", /*spanish*/"ES: DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_3 Hint", /*italian*/"IT: DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_3 Hint", /*german*/"DE: DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_3 Hint"},
+                     }
+    );
+    
+    hintTable[DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_4] = HintText::Exclude({
+                       // obscure text
+                       Text{"EN: DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_4 Hint", /*french*/"FR: DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_4 Hint", /*spanish*/"ES: DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_4 Hint", /*italian*/"IT: DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_4 Hint", /*german*/"DE: DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_4 Hint"},
+                     }
+    );
+    
+    hintTable[DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_5] = HintText::Exclude({
+                       // obscure text
+                       Text{"EN: DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_5 Hint", /*french*/"FR: DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_5 Hint", /*spanish*/"ES: DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_5 Hint", /*italian*/"IT: DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_5 Hint", /*german*/"DE: DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_5 Hint"},
+                     }
+    );
+    
+    hintTable[DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_6] = HintText::Exclude({
+                       // obscure text
+                       Text{"EN: DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_6 Hint", /*french*/"FR: DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_6 Hint", /*spanish*/"ES: DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_6 Hint", /*italian*/"IT: DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_6 Hint", /*german*/"DE: DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_6 Hint"},
+                     }
+    );
+    
+    hintTable[DMT_COW_GROTTO_RUPEE_CIRCLE_RED_RUPEE] = HintText::Exclude({
+                       // obscure text
+                       Text{"EN: DMT_COW_GROTTO_RUPEE_CIRCLE_RED_RUPEE Hint", /*french*/"FR: DMT_COW_GROTTO_RUPEE_CIRCLE_RED_RUPEE Hint", /*spanish*/"ES: DMT_COW_GROTTO_RUPEE_CIRCLE_RED_RUPEE Hint", /*italian*/"IT: DMT_COW_GROTTO_RUPEE_CIRCLE_RED_RUPEE Hint", /*german*/"DE: DMT_COW_GROTTO_RUPEE_CIRCLE_RED_RUPEE Hint"},
+                     }
+    );
 
     hintTable[DMC_WALL_FREESTANDING_POH] = HintText::Exclude({
                        // obscure text
@@ -490,6 +758,88 @@ void HintTable_Init_Exclude_Overworld() {
                        // obscure text
                        Text{"obscured by #volcanic ash# is", /*french*/"#recouvert de cendres volcaniques# gît", /*spanish*/"bajo la #ceniza volcánica# yace", /*italian*/"il #fumo di un vulcano# cela", /*german*/"auf einem #dampfenden Vulkan#, |wäre|wären|"},
     });
+        hintTable[DMC_LOWER_RED_RUPEE_1] = HintText::Exclude({
+                       // obscure text
+                       Text{"EN: DMC_LOWER_RED_RUPEE_1 Hint", /*french*/"FR: DMC_LOWER_RED_RUPEE_1 Hint", /*spanish*/"ES: DMC_LOWER_RED_RUPEE_1 Hint", /*italian*/"IT: DMC_LOWER_RED_RUPEE_1 Hint", /*german*/"DE: DMC_LOWER_RED_RUPEE_1 Hint"},
+                     }
+    );
+            hintTable[DMC_LOWER_RED_RUPEE_2] = HintText::Exclude({
+                       // obscure text
+                       Text{"EN: DMC_LOWER_RED_RUPEE_2 Hint", /*french*/"FR: DMC_LOWER_RED_RUPEE_2 Hint", /*spanish*/"ES: DMC_LOWER_RED_RUPEE_2 Hint", /*italian*/"IT: DMC_LOWER_RED_RUPEE_2 Hint", /*german*/"DE: DMC_LOWER_RED_RUPEE_2 Hint"},
+                     }
+    );
+            hintTable[DMC_LOWER_BLUE_RUPEE_1] = HintText::Exclude({
+                       // obscure text
+                       Text{"EN: DMC_LOWER_BLUE_RUPEE_1 Hint", /*french*/"FR: DMC_LOWER_BLUE_RUPEE_1 Hint", /*spanish*/"ES: DMC_LOWER_BLUE_RUPEE_1 Hint", /*italian*/"IT: DMC_LOWER_BLUE_RUPEE_1 Hint", /*german*/"DE: DMC_LOWER_BLUE_RUPEE_1 Hint"},
+                     }
+    );
+            hintTable[DMC_LOWER_BLUE_RUPEE_2] = HintText::Exclude({
+                       // obscure text
+                       Text{"EN: DMC_LOWER_BLUE_RUPEE_2 Hint", /*french*/"FR: DMC_LOWER_BLUE_RUPEE_2 Hint", /*spanish*/"ES: DMC_LOWER_BLUE_RUPEE_2 Hint", /*italian*/"IT: DMC_LOWER_BLUE_RUPEE_2 Hint", /*german*/"DE: DMC_LOWER_BLUE_RUPEE_2 Hint"},
+                     }
+    );
+            hintTable[DMC_LOWER_BLUE_RUPEE_3] = HintText::Exclude({
+                       // obscure text
+                       Text{"EN: DMC_LOWER_BLUE_RUPEE_3 Hint", /*french*/"FR: DMC_LOWER_BLUE_RUPEE_3 Hint", /*spanish*/"ES: DMC_LOWER_BLUE_RUPEE_3 Hint", /*italian*/"IT: DMC_LOWER_BLUE_RUPEE_3 Hint", /*german*/"DE: DMC_LOWER_BLUE_RUPEE_3 Hint"},
+                     }
+    );
+            hintTable[DMC_LOWER_BLUE_RUPEE_4] = HintText::Exclude({
+                       // obscure text
+                       Text{"EN: DMC_LOWER_BLUE_RUPEE_4 Hint", /*french*/"FR: DMC_LOWER_BLUE_RUPEE_4 Hint", /*spanish*/"ES: DMC_LOWER_BLUE_RUPEE_4 Hint", /*italian*/"IT: DMC_LOWER_BLUE_RUPEE_4 Hint", /*german*/"DE: DMC_LOWER_BLUE_RUPEE_4 Hint"},
+                     }
+    );
+            hintTable[DMC_LOWER_BLUE_RUPEE_5] = HintText::Exclude({
+                       // obscure text
+                       Text{"EN: DMC_LOWER_BLUE_RUPEE_5 Hint", /*french*/"FR: DMC_LOWER_BLUE_RUPEE_5 Hint", /*spanish*/"ES: DMC_LOWER_BLUE_RUPEE_5 Hint", /*italian*/"IT: DMC_LOWER_BLUE_RUPEE_5 Hint", /*german*/"DE: DMC_LOWER_BLUE_RUPEE_5 Hint"},
+                     }
+    );
+            hintTable[DMC_LOWER_BLUE_RUPEE_6] = HintText::Exclude({
+                       // obscure text
+                       Text{"EN: DMC_LOWER_BLUE_RUPEE_6 Hint", /*french*/"FR: DMC_LOWER_BLUE_RUPEE_6 Hint", /*spanish*/"ES: DMC_LOWER_BLUE_RUPEE_6 Hint", /*italian*/"IT: DMC_LOWER_BLUE_RUPEE_6 Hint", /*german*/"DE: DMC_LOWER_BLUE_RUPEE_6 Hint"},
+                     }
+    );
+
+    hintTable[DMC_SCARE_CROW_RUPEE_CIRCLE_GREEN_RUPEE_1] = HintText::Exclude({
+                       // obscure text
+                       Text{"EN: DMC_SCARE_CROW_RUPEE_CIRCLE_GREEN_RUPEE_1 Hint", /*french*/"FR: DMC_SCARE_CROW_RUPEE_CIRCLE_GREEN_RUPEE_1 Hint", /*spanish*/"ES: DMC_SCARE_CROW_RUPEE_CIRCLE_GREEN_RUPEE_1 Hint", /*italian*/"IT: DMC_SCARE_CROW_RUPEE_CIRCLE_GREEN_RUPEE_1 Hint", /*german*/"DE: DMC_SCARE_CROW_RUPEE_CIRCLE_GREEN_RUPEE_1 Hint"},
+                     }
+    );
+        hintTable[DMC_SCARE_CROW_RUPEE_CIRCLE_GREEN_RUPEE_2] = HintText::Exclude({
+                       // obscure text
+                       Text{"EN: DMC_SCARE_CROW_RUPEE_CIRCLE_GREEN_RUPEE_2 Hint", /*french*/"FR: DMC_SCARE_CROW_RUPEE_CIRCLE_GREEN_RUPEE_2 Hint", /*spanish*/"ES: DMC_SCARE_CROW_RUPEE_CIRCLE_GREEN_RUPEE_2 Hint", /*italian*/"IT: DMC_SCARE_CROW_RUPEE_CIRCLE_GREEN_RUPEE_2 Hint", /*german*/"DE: DMC_SCARE_CROW_RUPEE_CIRCLE_GREEN_RUPEE_2 Hint"},
+                     }
+    );
+
+        hintTable[DMC_SCARE_CROW_RUPEE_CIRCLE_GREEN_RUPEE_3] = HintText::Exclude({
+                       // obscure text
+                       Text{"EN: DMC_SCARE_CROW_RUPEE_CIRCLE_GREEN_RUPEE_3 Hint", /*french*/"FR: DMC_SCARE_CROW_RUPEE_CIRCLE_GREEN_RUPEE_3 Hint", /*spanish*/"ES: DMC_SCARE_CROW_RUPEE_CIRCLE_GREEN_RUPEE_3 Hint", /*italian*/"IT: DMC_SCARE_CROW_RUPEE_CIRCLE_GREEN_RUPEE_3 Hint", /*german*/"DE: DMC_SCARE_CROW_RUPEE_CIRCLE_GREEN_RUPEE_3 Hint"},
+                     }
+    );
+
+        hintTable[DMC_SCARE_CROW_RUPEE_CIRCLE_GREEN_RUPEE_4] = HintText::Exclude({
+                       // obscure text
+                       Text{"EN: DMC_SCARE_CROW_RUPEE_CIRCLE_GREEN_RUPEE_4 Hint", /*french*/"FR: DMC_SCARE_CROW_RUPEE_CIRCLE_GREEN_RUPEE_4 Hint", /*spanish*/"ES: DMC_SCARE_CROW_RUPEE_CIRCLE_GREEN_RUPEE_4 Hint", /*italian*/"IT: DMC_SCARE_CROW_RUPEE_CIRCLE_GREEN_RUPEE_4 Hint", /*german*/"DE: DMC_SCARE_CROW_RUPEE_CIRCLE_GREEN_RUPEE_4 Hint"},
+                     }
+    );
+
+        hintTable[DMC_SCARE_CROW_RUPEE_CIRCLE_GREEN_RUPEE_5] = HintText::Exclude({
+                       // obscure text
+                       Text{"EN: DMC_SCARE_CROW_RUPEE_CIRCLE_GREEN_RUPEE_5 Hint", /*french*/"FR: DMC_SCARE_CROW_RUPEE_CIRCLE_GREEN_RUPEE_5 Hint", /*spanish*/"ES: DMC_SCARE_CROW_RUPEE_CIRCLE_GREEN_RUPEE_5 Hint", /*italian*/"IT: DMC_SCARE_CROW_RUPEE_CIRCLE_GREEN_RUPEE_5 Hint", /*german*/"DE: DMC_SCARE_CROW_RUPEE_CIRCLE_GREEN_RUPEE_5 Hint"},
+                     }
+    );
+
+        hintTable[DMC_SCARE_CROW_RUPEE_CIRCLE_GREEN_RUPEE_6] = HintText::Exclude({
+                       // obscure text
+                       Text{"EN: DMC_SCARE_CROW_RUPEE_CIRCLE_GREEN_RUPEE_6 Hint", /*french*/"FR: DMC_SCARE_CROW_RUPEE_CIRCLE_GREEN_RUPEE_6 Hint", /*spanish*/"ES: DMC_SCARE_CROW_RUPEE_CIRCLE_GREEN_RUPEE_6 Hint", /*italian*/"IT: DMC_SCARE_CROW_RUPEE_CIRCLE_GREEN_RUPEE_6 Hint", /*german*/"DE: DMC_SCARE_CROW_RUPEE_CIRCLE_GREEN_RUPEE_6 Hint"},
+                     }
+    );
+
+        hintTable[DMC_SCARE_CROW_RUPEE_CIRCLE_RED_RUPEE] = HintText::Exclude({
+                       // obscure text
+                       Text{"EN: DMC_SCARE_CROW_RUPEE_CIRCLE_RED_RUPEE Hint", /*french*/"FR: DMC_SCARE_CROW_RUPEE_CIRCLE_RED_RUPEE Hint", /*spanish*/"ES: DMC_SCARE_CROW_RUPEE_CIRCLE_RED_RUPEE Hint", /*italian*/"IT: DMC_SCARE_CROW_RUPEE_CIRCLE_RED_RUPEE Hint", /*german*/"DE: DMC_SCARE_CROW_RUPEE_CIRCLE_RED_RUPEE Hint"},
+                     }
+    );
+
 
     hintTable[GF_NORTH_F1_CARPENTER] = HintText::Exclude({
                        // obscure text
@@ -1194,6 +1544,45 @@ void HintTable_Init_Exclude_Overworld() {
                        // obscure text
                        Text{"a #scrub by a bridge# sells", /*french*/"la #peste Mojo près du pont dans les bois# vend", /*spanish*/"un #deku bajo un puente# del bosque venden", /*italian*/"un #cespuglio vicino a un ponte# vende", /*german*/"die Ware, des #Deku-Händlers nahe einer Brücke#, |wäre|wären|"},
     });
+            hintTable[LW_IN_BOULDER_BLUE_RUPEE] = HintText::Exclude({
+                       // obscure text
+                       Text{"EN: LW_IN_BOULDER_BLUE_RUPEE HINT", /*french*/"FR: LW_IN_BOULDER_BLUE_RUPEE HINT", /*spanish*/"ES: LW_IN_BOULDER_BLUE_RUPEE HINT", /*italian*/"IT: LW_IN_BOULDER_BLUE_RUPEE HINT", /*german*/"DE: LW_IN_BOULDER_BLUE_RUPEE HINT"},
+    });
+
+    hintTable[LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_1] = HintText::Exclude({
+                       // obscure text
+                       Text{"EN: LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_1 HINT", /*french*/"FR: LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_1 HINT", /*spanish*/"ES: LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_1 HINT", /*italian*/"IT: LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_1 HINT", /*german*/"DE: LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_1 HINT"},
+    });
+
+    hintTable[LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_2] = HintText::Exclude({
+                       // obscure text
+                       Text{"EN: LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_2 HINT", /*french*/"FR: LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_2 HINT", /*spanish*/"ES: LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_2 HINT", /*italian*/"IT: LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_2 HINT", /*german*/"DE: LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_2 HINT"},
+    });
+    hintTable[LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_3] = HintText::Exclude({
+                       // obscure text
+                       Text{"EN: LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_3 HINT", /*french*/"FR: LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_3 HINT", /*spanish*/"ES: LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_3 HINT", /*italian*/"IT: LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_3 HINT", /*german*/"DE: LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_3 HINT"},
+    });
+    hintTable[LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_4] = HintText::Exclude({
+                       // obscure text
+                       Text{"EN: LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_4 HINT", /*french*/"FR: LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_4 HINT", /*spanish*/"ES: LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_4 HINT", /*italian*/"IT: LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_4 HINT", /*german*/"DE: LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_4 HINT"},
+    });
+    hintTable[LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_5] = HintText::Exclude({
+                       // obscure text
+                       Text{"EN: LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_5 HINT", /*french*/"FR: LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_5 HINT", /*spanish*/"ES: LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_5 HINT", /*italian*/"IT: LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_5 HINT", /*german*/"DE: LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_5 HINT"},
+    });
+    hintTable[LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_6] = HintText::Exclude({
+                       // obscure text
+                       Text{"EN: LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_6 HINT", /*french*/"FR: LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_6 HINT", /*spanish*/"ES: LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_6 HINT", /*italian*/"IT: LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_6 HINT", /*german*/"DE: LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_6 HINT"},
+    });
+    hintTable[LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_7] = HintText::Exclude({
+                       // obscure text
+                       Text{"EN: LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_7 HINT", /*french*/"FR: LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_7 HINT", /*spanish*/"ES: LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_7 HINT", /*italian*/"IT: LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_7 HINT", /*german*/"DE: LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_7 HINT"},
+    });
+    hintTable[LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_8] = HintText::Exclude({
+                       // obscure text
+                       Text{"EN: LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_8 HINT", /*french*/"FR: LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_8 HINT", /*spanish*/"ES: LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_8 HINT", /*italian*/"IT: LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_8 HINT", /*german*/"DE: LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_8 HINT"},
+    });
+
 
     hintTable[LW_DEKU_SCRUB_GROTTO_REAR] = HintText::Exclude({
                        // obscure text
@@ -1259,6 +1648,26 @@ void HintTable_Init_Exclude_Overworld() {
                        Text{"a #scrub underground duo# sells", /*french*/"le #duo de peste Mojo près du fleuve# vend", /*spanish*/"un #par de dekus subterráneos# del río venden", /*italian*/"una #coppia di cespugli vicino al fiume# vende", /*german*/"die Ware, des #Deku-Händler-Duos eines Erdlochs#, |wäre|wären|"},
     });
 
+        hintTable[ZR_WATERFALL_RED_RUPEE_1] = HintText::Exclude({
+                       // obscure text
+                       Text{"EN: ZR_WATERFALL_RED_RUPEE_1 HINT", /*french*/"FR: ZR_WATERFALL_RED_RUPEE_1 HINT", /*spanish*/"ES: ZR_WATERFALL_RED_RUPEE_1 HINT", /*italian*/"IT: ZR_WATERFALL_RED_RUPEE_1 HINT", /*german*/"DE: ZR_WATERFALL_RED_RUPEE_1 HINT"},
+    });
+            hintTable[ZR_WATERFALL_RED_RUPEE_2] = HintText::Exclude({
+                       // obscure text
+                       Text{"EN: ZR_WATERFALL_RED_RUPEE_2 HINT", /*french*/"FR: ZR_WATERFALL_RED_RUPEE_2 HINT", /*spanish*/"ES: ZR_WATERFALL_RED_RUPEE_2 HINT", /*italian*/"IT: ZR_WATERFALL_RED_RUPEE_2 HINT", /*german*/"DE: ZR_WATERFALL_RED_RUPEE_2 HINT"},
+    });
+
+            hintTable[ZR_WATERFALL_RED_RUPEE_3] = HintText::Exclude({
+                       // obscure text
+                       Text{"EN: ZR_WATERFALL_RED_RUPEE_3 HINT", /*french*/"FR: ZR_WATERFALL_RED_RUPEE_3 HINT", /*spanish*/"ES: ZR_WATERFALL_RED_RUPEE_3 HINT", /*italian*/"IT: ZR_WATERFALL_RED_RUPEE_3 HINT", /*german*/"DE: ZR_WATERFALL_RED_RUPEE_3 HINT"},
+    });
+
+            hintTable[ZR_WATERFALL_RED_RUPEE_4] = HintText::Exclude({
+                       // obscure text
+                       Text{"EN: ZR_WATERFALL_RED_RUPEE_4 HINT", /*french*/"FR: ZR_WATERFALL_RED_RUPEE_4 HINT", /*spanish*/"ES: ZR_WATERFALL_RED_RUPEE_4 HINT", /*italian*/"IT: ZR_WATERFALL_RED_RUPEE_4 HINT", /*german*/"DE: ZR_WATERFALL_RED_RUPEE_4 HINT"},
+    });
+
+
 
     hintTable[LH_DEKU_SCRUB_GROTTO_LEFT] = HintText::Exclude({
                        // obscure text
@@ -1285,6 +1694,47 @@ void HintTable_Init_Exclude_Overworld() {
                        // obscure text
                        Text{"a #scrub underground duo# sells", /*french*/"le #duo de peste Mojo près de la vallée# vend", /*spanish*/"un #par de dekus subterráneos# del valle venden", /*italian*/"una #coppia di cespugli da canyon# vende", /*german*/"die Ware, des #Deku-Händler-Duos eines Erdlochs#, |wäre|wären|"},
     });
+
+        hintTable[GV_OCTOROCK_GROTTO_GREEN_RUPEE_1] = HintText::Exclude({
+                       // obscure text
+                       Text{"EN: GV_OCTOROCK_GROTTO_GREEN_RUPEE_1 Hint", /*french*/"FR: GV_OCTOROCK_GROTTO_GREEN_RUPEE_1 Hint", /*spanish*/"ES: GV_OCTOROCK_GROTTO_GREEN_RUPEE_1 Hint", /*italian*/"IT: GV_OCTOROCK_GROTTO_GREEN_RUPEE_1 Hint", /*german*/"DE: GV_OCTOROCK_GROTTO_GREEN_RUPEE_1 Hint"},
+                     }
+    );
+        hintTable[GV_OCTOROCK_GROTTO_GREEN_RUPEE_2] = HintText::Exclude({
+                       // obscure text
+                       Text{"EN: GV_OCTOROCK_GROTTO_GREEN_RUPEE_2 Hint", /*french*/"FR: GV_OCTOROCK_GROTTO_GREEN_RUPEE_2 Hint", /*spanish*/"ES: GV_OCTOROCK_GROTTO_GREEN_RUPEE_2 Hint", /*italian*/"IT: GV_OCTOROCK_GROTTO_GREEN_RUPEE_2 Hint", /*german*/"DE: GV_OCTOROCK_GROTTO_GREEN_RUPEE_2 Hint"},
+                     }
+    );
+        hintTable[GV_OCTOROCK_GROTTO_GREEN_RUPEE_3] = HintText::Exclude({
+                       // obscure text
+                       Text{"EN: GV_OCTOROCK_GROTTO_GREEN_RUPEE_3 Hint", /*french*/"FR: GV_OCTOROCK_GROTTO_GREEN_RUPEE_3 Hint", /*spanish*/"ES: GV_OCTOROCK_GROTTO_GREEN_RUPEE_3 Hint", /*italian*/"IT: GV_OCTOROCK_GROTTO_GREEN_RUPEE_3 Hint", /*german*/"DE: GV_OCTOROCK_GROTTO_GREEN_RUPEE_3 Hint"},
+                     }
+    );
+        hintTable[GV_OCTOROCK_GROTTO_GREEN_RUPEE_4] = HintText::Exclude({
+                       // obscure text
+                       Text{"EN: GV_OCTOROCK_GROTTO_GREEN_RUPEE_4 Hint", /*french*/"FR: GV_OCTOROCK_GROTTO_GREEN_RUPEE_4 Hint", /*spanish*/"ES: GV_OCTOROCK_GROTTO_GREEN_RUPEE_4 Hint", /*italian*/"IT: GV_OCTOROCK_GROTTO_GREEN_RUPEE_4 Hint", /*german*/"DE: GV_OCTOROCK_GROTTO_GREEN_RUPEE_4 Hint"},
+                     }
+    );
+        hintTable[GV_OCTOROCK_GROTTO_BLUE_RUPEE_1] = HintText::Exclude({
+                       // obscure text
+                       Text{"EN: GV_OCTOROCK_GROTTO_BLUE_RUPEE_1 Hint", /*french*/"FR: GV_OCTOROCK_GROTTO_BLUE_RUPEE_1 Hint", /*spanish*/"ES: GV_OCTOROCK_GROTTO_BLUE_RUPEE_1 Hint", /*italian*/"IT: GV_OCTOROCK_GROTTO_BLUE_RUPEE_1 Hint", /*german*/"DE: GV_OCTOROCK_GROTTO_BLUE_RUPEE_1 Hint"},
+                     }
+    );
+        hintTable[GV_OCTOROCK_GROTTO_BLUE_RUPEE_2] = HintText::Exclude({
+                       // obscure text
+                       Text{"EN: GV_OCTOROCK_GROTTO_BLUE_RUPEE_2 Hint", /*french*/"FR: GV_OCTOROCK_GROTTO_BLUE_RUPEE_2 Hint", /*spanish*/"ES: GV_OCTOROCK_GROTTO_BLUE_RUPEE_2 Hint", /*italian*/"IT: GV_OCTOROCK_GROTTO_BLUE_RUPEE_2 Hint", /*german*/"DE: GV_OCTOROCK_GROTTO_BLUE_RUPEE_2 Hint"},
+                     }
+    );
+        hintTable[GV_OCTOROCK_GROTTO_BLUE_RUPEE_3] = HintText::Exclude({
+                       // obscure text
+                       Text{"EN: GV_OCTOROCK_GROTTO_BLUE_RUPEE_3 Hint", /*french*/"FR: GV_OCTOROCK_GROTTO_BLUE_RUPEE_3 Hint", /*spanish*/"ES: GV_OCTOROCK_GROTTO_BLUE_RUPEE_3 Hint", /*italian*/"IT: GV_OCTOROCK_GROTTO_BLUE_RUPEE_3 Hint", /*german*/"DE: GV_OCTOROCK_GROTTO_BLUE_RUPEE_3 Hint"},
+                     }
+    );
+        hintTable[GV_OCTOROCK_GROTTO_RED_RUPEE] = HintText::Exclude({
+                       // obscure text
+                       Text{"EN: GV_OCTOROCK_GROTTO_RED_RUPEE Hint", /*french*/"FR: GV_OCTOROCK_GROTTO_RED_RUPEE Hint", /*spanish*/"ES: GV_OCTOROCK_GROTTO_RED_RUPEE Hint", /*italian*/"IT: GV_OCTOROCK_GROTTO_RED_RUPEE Hint", /*german*/"DE: GV_OCTOROCK_GROTTO_RED_RUPEE Hint"},
+                     }
+    );
 
 
     hintTable[COLOSSUS_DEKU_SCRUB_GROTTO_FRONT] = HintText::Exclude({

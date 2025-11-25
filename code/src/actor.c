@@ -83,6 +83,7 @@
 #include "stalfos.h"
 #include "bubble.h"
 #include "ganondorf.h"
+#include "obj_mure3.h"
 
 #define OBJECT_GI_KEY 170
 #define OBJECT_GI_BOSSKEY 185
@@ -327,6 +328,8 @@ void Actor_Init() {
     gActorOverlayTable[0x1C6].initInfo->destroy = EnCow_rDestroy;
 
     gActorOverlayTable[0x1D2].initInfo->update = (ActorFunc)ObjHamishi_rUpdate;
+
+    gActorOverlayTable[0x01AB].initInfo->update = ObjMure3_rUpdate;
 
     // Define object 4 to be by default the same as object 189
     strncpy(gObjectTable[OBJECT_CUSTOM_DOUBLE_DEFENSE].filename, gObjectTable[OBJECT_GI_HEARTS].filename, 0x40);
