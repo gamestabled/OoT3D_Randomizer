@@ -67,11 +67,11 @@ void AreaTable_Init_IceCavern() {
                 LocationAccess(ICE_CAVERN_GS_HEART_PIECE_ROOM, { [] { return BlueFire && HookshotOrBoomerang; } }),
                 LocationAccess(ICE_CAVERN_GS_PUSH_BLOCK_ROOM, { [] { return BlueFire && HookshotOrBoomerang; } }),
                 LocationAccess(ICE_CAVERN_PUSH_BLOCK_ROOM_RED_RUPEE_1,
-                               { [] { return SongOfTime || CanUse(BOOMERANG); } }),
+                               { [] { return CanPlay(SongOfTime) || CanUse(BOOMERANG); } }),
                 LocationAccess(ICE_CAVERN_PUSH_BLOCK_ROOM_RED_RUPEE_2,
-                               { [] { return SongOfTime || CanUse(BOOMERANG); } }),
+                               { [] { return CanPlay(SongOfTime) || CanUse(BOOMERANG); } }),
                 LocationAccess(ICE_CAVERN_PUSH_BLOCK_ROOM_RED_RUPEE_3,
-                               { [] { return SongOfTime || CanUse(BOOMERANG); } }),
+                               { [] { return CanPlay(SongOfTime) || CanUse(BOOMERANG); } }),
             },
             {});
     }

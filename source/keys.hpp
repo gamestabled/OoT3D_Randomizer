@@ -300,6 +300,8 @@ typedef enum {
 
     // ITEMLOCATIONS
 
+    TRIFORCE_HUNT_GOAL,
+
     // DUNGEON REWARDS
     LINKS_POCKET,
     QUEEN_GOHMA,

@@ -1,3 +1,5 @@
+#include "location_access.hpp"
+#include "logic.hpp"
 #include "entrance.hpp"
 #include "enemizer_logic.hpp"
 
@@ -30,8 +32,7 @@ void AreaTable_Init_DeathMountain() {
                                       (IsAdult && CanPlantBean(DEATH_MOUNTAIN_TRAIL) &&
                                        (HasExplosives || GoronBracelet));
                            } }),
-            LocationAccess(DMT_ROCK_BLUE_RUPEE,
-                           { [] { return IsChild && Here(DEATH_MOUNTAIN_TRAIL, [] { return CanBlastOrSmash; }); } }),
+            LocationAccess(DMT_ROCK_BLUE_RUPEE, { [] { return IsChild && CanBlastOrSmash; } }),
             LocationAccess(DMT_ROCK_RED_RUPEE, { [] {
                                return IsChild && (Here(DEATH_MOUNTAIN_TRAIL, [] { return CanBlastOrSmash; }) ||
                                                   Here(DEATH_MOUNTAIN_SUMMIT, [] { return CanBlastOrSmash; }));
@@ -542,31 +543,52 @@ void AreaTable_Init_DeathMountain() {
             LocationAccess(DMC_LOWER_BLUE_RUPEE_6, { [] { return IsChild && CanSurviveHeatFor(8, 24); } }),
             LocationAccess(DMC_SCARE_CROW_RUPEE_CIRCLE_GREEN_RUPEE_1, { [] {
                                return IsAdult && CanSurviveHeatFor(24, -1) &&
-                                      (CanUse(DistantScarecrow) || Here(DMC_UPPER_LOCAL, { [] { return IsAdult; } }));
+                                      (DistantScarecrow || (LogicDMCPlatformJump &&
+                                                            Here(DMC_UPPER_LOCAL, { [] {
+                                                                     return IsAdult && (EffectiveHealth > 2 || Fairy);
+                                                                 } })));
                            } }),
             LocationAccess(DMC_SCARE_CROW_RUPEE_CIRCLE_GREEN_RUPEE_2, { [] {
                                return IsAdult && CanSurviveHeatFor(24, -1) &&
-                                      (CanUse(DistantScarecrow) || Here(DMC_UPPER_LOCAL, { [] { return IsAdult; } }));
+                                      (DistantScarecrow || (LogicDMCPlatformJump &&
+                                                            Here(DMC_UPPER_LOCAL, { [] {
+                                                                     return IsAdult && (EffectiveHealth > 2 || Fairy);
+                                                                 } })));
                            } }),
             LocationAccess(DMC_SCARE_CROW_RUPEE_CIRCLE_GREEN_RUPEE_3, { [] {
                                return IsAdult && CanSurviveHeatFor(24, -1) &&
-                                      (CanUse(DistantScarecrow) || Here(DMC_UPPER_LOCAL, { [] { return IsAdult; } }));
+                                      (DistantScarecrow || (LogicDMCPlatformJump &&
+                                                            Here(DMC_UPPER_LOCAL, { [] {
+                                                                     return IsAdult && (EffectiveHealth > 2 || Fairy);
+                                                                 } })));
                            } }),
             LocationAccess(DMC_SCARE_CROW_RUPEE_CIRCLE_GREEN_RUPEE_4, { [] {
                                return IsAdult && CanSurviveHeatFor(24, -1) &&
-                                      (CanUse(DistantScarecrow) || Here(DMC_UPPER_LOCAL, { [] { return IsAdult; } }));
+                                      (DistantScarecrow || (LogicDMCPlatformJump &&
+                                                            Here(DMC_UPPER_LOCAL, { [] {
+                                                                     return IsAdult && (EffectiveHealth > 2 || Fairy);
+                                                                 } })));
                            } }),
             LocationAccess(DMC_SCARE_CROW_RUPEE_CIRCLE_GREEN_RUPEE_5, { [] {
                                return IsAdult && CanSurviveHeatFor(24, -1) &&
-                                      (CanUse(DistantScarecrow) || Here(DMC_UPPER_LOCAL, { [] { return IsAdult; } }));
+                                      (DistantScarecrow || (LogicDMCPlatformJump &&
+                                                            Here(DMC_UPPER_LOCAL, { [] {
+                                                                     return IsAdult && (EffectiveHealth > 2 || Fairy);
+                                                                 } })));
                            } }),
             LocationAccess(DMC_SCARE_CROW_RUPEE_CIRCLE_GREEN_RUPEE_6, { [] {
                                return IsAdult && CanSurviveHeatFor(24, -1) &&
-                                      (CanUse(DistantScarecrow) || Here(DMC_UPPER_LOCAL, { [] { return IsAdult; } }));
+                                      (DistantScarecrow || (LogicDMCPlatformJump &&
+                                                            Here(DMC_UPPER_LOCAL, { [] {
+                                                                     return IsAdult && (EffectiveHealth > 2 || Fairy);
+                                                                 } })));
                            } }),
             LocationAccess(DMC_SCARE_CROW_RUPEE_CIRCLE_RED_RUPEE, { [] {
                                return IsAdult && CanSurviveHeatFor(24, -1) &&
-                                      (CanUse(DistantScarecrow) || Here(DMC_UPPER_LOCAL, { [] { return IsAdult; } }));
+                                      (DistantScarecrow || (LogicDMCPlatformJump &&
+                                                            Here(DMC_UPPER_LOCAL, { [] {
+                                                                     return IsAdult && (EffectiveHealth > 2 || Fairy);
+                                                                 } })));
                            } }),
         },
         {

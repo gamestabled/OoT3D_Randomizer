@@ -39,8 +39,9 @@ void AreaTable_Init_ZorasDomain() {
             LocationAccess(ZR_MAGIC_BEAN_SALESMAN, { [] { return IsChild; } }),
             LocationAccess(ZR_FROGS_OCARINA_GAME,
                            { [] {
-                                return IsChild && CanPlay(ZeldasLullaby) && CanPlay(SariasSong) && CanPlay(SunsSong) &&
-                                       CanPlay(EponasSong) && CanPlay(SongOfTime) && CanPlay(SongOfStorms);
+                                return IsChild && OcarinaButtonsCount >= 5 && CanPlay(ZeldasLullaby) &&
+                                       CanPlay(SariasSong) && CanPlay(SunsSong) && CanPlay(EponasSong) &&
+                                       CanPlay(SongOfTime) && CanPlay(SongOfStorms);
                             },
                              /*Glitched*/
                              [] {
@@ -122,10 +123,22 @@ void AreaTable_Init_ZorasDomain() {
                            { [] { return IsChild || CanUse(HOVER_BOOTS) || (IsAdult && LogicZoraRiverLower); } }),
             LocationAccess(ZR_NEAR_DOMAIN_FREESTANDING_POH,
                            { [] { return IsChild || CanUse(HOVER_BOOTS) || (IsAdult && LogicZoraRiverUpper); } }),
-            LocationAccess(ZR_WATERFALL_RED_RUPEE_1, { [] { return IsAdult; } }),
-            LocationAccess(ZR_WATERFALL_RED_RUPEE_2, { [] { return IsAdult; } }),
-            LocationAccess(ZR_WATERFALL_RED_RUPEE_3, { [] { return IsAdult; } }),
-            LocationAccess(ZR_WATERFALL_RED_RUPEE_4, { [] { return IsAdult; } }),
+            LocationAccess(ZR_WATERFALL_RED_RUPEE_1, { [] {
+                               return IsAdult && ((CanUse(IRON_BOOTS) && CanSurviveUnderwaterFor(4, 12)) ||
+                                                  LogicZoraRiverRupeesJump);
+                           } }),
+            LocationAccess(ZR_WATERFALL_RED_RUPEE_2, { [] {
+                               return IsAdult && ((CanUse(IRON_BOOTS) && CanSurviveUnderwaterFor(4, 12)) ||
+                                                  LogicZoraRiverRupeesJump);
+                           } }),
+            LocationAccess(ZR_WATERFALL_RED_RUPEE_3, { [] {
+                               return IsAdult && ((CanUse(IRON_BOOTS) && CanSurviveUnderwaterFor(4, 12)) ||
+                                                  LogicZoraRiverRupeesJump);
+                           } }),
+            LocationAccess(ZR_WATERFALL_RED_RUPEE_4, { [] {
+                               return IsAdult && ((CanUse(IRON_BOOTS) && CanSurviveUnderwaterFor(4, 12)) ||
+                                                  LogicZoraRiverRupeesJump);
+                           } }),
             LocationAccess(ZR_NEAR_GROTTOS_GOSSIP_STONE, { [] { return true; } }),
             LocationAccess(ZR_NEAR_DOMAIN_GOSSIP_STONE, { [] { return true; } }),
         },

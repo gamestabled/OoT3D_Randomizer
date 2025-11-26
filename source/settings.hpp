@@ -505,6 +505,7 @@ extern Option HyperEnemies;
 extern Option FreeCamera;
 extern Option RandomGsLocations;
 extern Option GsLocGuaranteeNew;
+extern Option RandomSongNotes;
 extern bool HasNightStart;
 
 extern Option FaroresWindAnywhere;
@@ -634,6 +635,7 @@ extern Option LogicWindmillPoHHookshot;
 extern Option LogicDMTBombable;
 extern Option LogicDMTSoilGS;
 extern Option LogicDMTSummitHover;
+extern Option LogicDMCPlatformJump;
 extern Option LogicLinkGoronDins;
 extern Option LogicGoronCityLeftMost;
 extern Option LogicGoronCityPot;
@@ -644,6 +646,7 @@ extern Option LogicCraterBeanPoHWithHovers;
 extern Option LogicBiggoronBolero;
 extern Option LogicZoraRiverLower;
 extern Option LogicZoraRiverUpper;
+extern Option LogicZoraRiverRupeesJump;
 extern Option LogicZFGreatFairy;
 extern Option LogicDekuB1WebsWithBow;
 extern Option LogicDekuB1Skip;
@@ -825,6 +828,8 @@ extern Option ShuffleSFX;
 extern Option ShuffleSFXFootsteps;
 extern Option ShuffleSFXLinkVoice;
 extern Option ShuffleSFXCategorically;
+
+extern Option OcarinaNoteInstrument;
 
 extern u32 LinksPocketRewardBitMask;
 extern std::array<u32, 9> rDungeonRewardOverrides;

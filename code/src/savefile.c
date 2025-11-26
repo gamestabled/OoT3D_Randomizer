@@ -862,26 +862,24 @@ void SaveFile_OnGameOver(void) {
     Permadeath_DeleteSave();
 }
 
-void SaveFile_SetCollectedRandomizedRespawningCollectibleFlag(s16 sceneNum, u16 collectibleFlag) {
+void SaveFile_SetRupeeSanityFlag(s16 sceneNum, u16 collectibleFlag) {
     if (collectibleFlag >= 0x20 && collectibleFlag < 0x40) {
-        gExtSaveData.collectedRandomizedRespawningRupeeFlags[gGlobalContext->sceneNum] |=
-            (1 << (collectibleFlag - 0x20));
+        gExtSaveData.rupeesanityFlags[gGlobalContext->sceneNum] |= (1 << (collectibleFlag - 0x20));
     }
     if (collectibleFlag >= 0x40) {
-        gExtSaveData.collectedRandomizedRupeeCircleRupeeFlags[gGlobalContext->sceneNum] |=
-            (1 << (collectibleFlag - 0x40));
+        gExtSaveData.rupeesanityRupeeCircleFlags[gGlobalContext->sceneNum] |= (1 << (collectibleFlag - 0x40));
     }
 }
 
-u8 SaveFile_GetCollectedRandomizedRespawningCollectibleFlag(s16 sceneNum, u16 collectibleFlag) {
+u8 SaveFile_GetRupeeSanityFlag(s16 sceneNum, u16 collectibleFlag) {
     u32 saveFlags;
     u16 shiftBy;
     if (collectibleFlag >= 0x20 && collectibleFlag < 0x40) {
-        saveFlags = gExtSaveData.collectedRandomizedRespawningRupeeFlags[sceneNum];
+        saveFlags = gExtSaveData.rupeesanityFlags[sceneNum];
         shiftBy   = 0x20;
     }
     if (collectibleFlag >= 0x40) {
-        saveFlags = gExtSaveData.collectedRandomizedRupeeCircleRupeeFlags[sceneNum];
+        saveFlags = gExtSaveData.rupeesanityRupeeCircleFlags[sceneNum];
         shiftBy   = 0x40;
     }
 

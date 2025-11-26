@@ -17,6 +17,7 @@
 #include "enemizer.h"
 #include "scene.h"
 #include "gloom.h"
+#include "ocarina_notes.h"
 
 #include "z3D/z3D.h"
 #include "3ds/extdata.h"
@@ -33,6 +34,7 @@ void Randomizer_Init() {
     Entrance_Init();
     ItemOverride_Init();
     Enemizer_Init();
+    OcarinaNotes_Init();
     extDataInit();
     irrstInit();
 
