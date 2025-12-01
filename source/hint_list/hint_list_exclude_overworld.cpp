@@ -1897,50 +1897,66 @@ void HintTable_Init_Exclude_Overworld() {
 
     hintTable[GV_OCTOROCK_GROTTO_GREEN_RUPEE_1] = HintText::Exclude({
                        // obscure text
-                       Text{"EN: GV_OCTOROCK_GROTTO_GREEN_RUPEE_1 Hint", /*french*/"FR: GV_OCTOROCK_GROTTO_GREEN_RUPEE_1 Hint", /*spanish*/"ES: GV_OCTOROCK_GROTTO_GREEN_RUPEE_1 Hint", /*italian*/"IT: GV_OCTOROCK_GROTTO_GREEN_RUPEE_1 Hint", /*german*/"DE: GV_OCTOROCK_GROTTO_GREEN_RUPEE_1 Hint"},
-                     }
+                       Text{"A #purple monster# hoards", /*french*/"FR: GV_OCTOROCK_GROTTO_GREEN_RUPEE_1 Hint", /*spanish*/"ES: GV_OCTOROCK_GROTTO_GREEN_RUPEE_1 Hint", /*italian*/"IT: GV_OCTOROCK_GROTTO_GREEN_RUPEE_1 Hint", /*german*/"DE: GV_OCTOROCK_GROTTO_GREEN_RUPEE_1 Hint"},
+                     },{},
+                       //clear text
+                       Text{"The #Gerudo Valley Octorock# guards", /*french*/"FR: GV_OCTOROCK_GROTTO_GREEN_RUPEE_1 Hint", /*spanish*/"ES: GV_OCTOROCK_GROTTO_GREEN_RUPEE_1 Hint", /*italian*/"IT: GV_OCTOROCK_GROTTO_GREEN_RUPEE_1 Hint", /*german*/"DE: GV_OCTOROCK_GROTTO_GREEN_RUPEE_1 Hint"}
     );
     
     hintTable[GV_OCTOROCK_GROTTO_GREEN_RUPEE_2] = HintText::Exclude({
                        // obscure text
-                       Text{"EN: GV_OCTOROCK_GROTTO_GREEN_RUPEE_2 Hint", /*french*/"FR: GV_OCTOROCK_GROTTO_GREEN_RUPEE_2 Hint", /*spanish*/"ES: GV_OCTOROCK_GROTTO_GREEN_RUPEE_2 Hint", /*italian*/"IT: GV_OCTOROCK_GROTTO_GREEN_RUPEE_2 Hint", /*german*/"DE: GV_OCTOROCK_GROTTO_GREEN_RUPEE_2 Hint"},
-                     }
+                       Text{"A #purple monster# hoards", /*french*/"FR: GV_OCTOROCK_GROTTO_GREEN_RUPEE_2 Hint", /*spanish*/"ES: GV_OCTOROCK_GROTTO_GREEN_RUPEE_2 Hint", /*italian*/"IT: GV_OCTOROCK_GROTTO_GREEN_RUPEE_2 Hint", /*german*/"DE: GV_OCTOROCK_GROTTO_GREEN_RUPEE_2 Hint"},
+                     },{},
+                       //clear text
+                       Text{"The #Gerudo Valley Octorock# guards", /*french*/"FR: GV_OCTOROCK_GROTTO_GREEN_RUPEE_2 Hint", /*spanish*/"ES: GV_OCTOROCK_GROTTO_GREEN_RUPEE_2 Hint", /*italian*/"IT: GV_OCTOROCK_GROTTO_GREEN_RUPEE_2 Hint", /*german*/"DE: GV_OCTOROCK_GROTTO_GREEN_RUPEE_2 Hint"}
     );
     
     hintTable[GV_OCTOROCK_GROTTO_GREEN_RUPEE_3] = HintText::Exclude({
                        // obscure text
-                       Text{"EN: GV_OCTOROCK_GROTTO_GREEN_RUPEE_3 Hint", /*french*/"FR: GV_OCTOROCK_GROTTO_GREEN_RUPEE_3 Hint", /*spanish*/"ES: GV_OCTOROCK_GROTTO_GREEN_RUPEE_3 Hint", /*italian*/"IT: GV_OCTOROCK_GROTTO_GREEN_RUPEE_3 Hint", /*german*/"DE: GV_OCTOROCK_GROTTO_GREEN_RUPEE_3 Hint"},
-                     }
+                       Text{"A #purple monster# hoards", /*french*/"FR: GV_OCTOROCK_GROTTO_GREEN_RUPEE_3 Hint", /*spanish*/"ES: GV_OCTOROCK_GROTTO_GREEN_RUPEE_3 Hint", /*italian*/"IT: GV_OCTOROCK_GROTTO_GREEN_RUPEE_3 Hint", /*german*/"DE: GV_OCTOROCK_GROTTO_GREEN_RUPEE_3 Hint"},
+                     },{},
+                       //clear text
+                       Text{"The #Gerudo Valley Octorock# guards", /*french*/"FR: GV_OCTOROCK_GROTTO_GREEN_RUPEE_3 Hint", /*spanish*/"ES: GV_OCTOROCK_GROTTO_GREEN_RUPEE_3 Hint", /*italian*/"IT: GV_OCTOROCK_GROTTO_GREEN_RUPEE_3 Hint", /*german*/"DE: GV_OCTOROCK_GROTTO_GREEN_RUPEE_3 Hint"}
     );
     
     hintTable[GV_OCTOROCK_GROTTO_GREEN_RUPEE_4] = HintText::Exclude({
                        // obscure text
-                       Text{"EN: GV_OCTOROCK_GROTTO_GREEN_RUPEE_4 Hint", /*french*/"FR: GV_OCTOROCK_GROTTO_GREEN_RUPEE_4 Hint", /*spanish*/"ES: GV_OCTOROCK_GROTTO_GREEN_RUPEE_4 Hint", /*italian*/"IT: GV_OCTOROCK_GROTTO_GREEN_RUPEE_4 Hint", /*german*/"DE: GV_OCTOROCK_GROTTO_GREEN_RUPEE_4 Hint"},
-                     }
+                       Text{"A #purple monster# hoards", /*french*/"FR: GV_OCTOROCK_GROTTO_GREEN_RUPEE_4 Hint", /*spanish*/"ES: GV_OCTOROCK_GROTTO_GREEN_RUPEE_4 Hint", /*italian*/"IT: GV_OCTOROCK_GROTTO_GREEN_RUPEE_4 Hint", /*german*/"DE: GV_OCTOROCK_GROTTO_GREEN_RUPEE_4 Hint"},
+                     },{},
+                       //clear text
+                       Text{"The #Gerudo Valley Octorock# guards", /*french*/"FR: GV_OCTOROCK_GROTTO_GREEN_RUPEE_4 Hint", /*spanish*/"ES: GV_OCTOROCK_GROTTO_GREEN_RUPEE_4 Hint", /*italian*/"IT: GV_OCTOROCK_GROTTO_GREEN_RUPEE_4 Hint", /*german*/"DE: GV_OCTOROCK_GROTTO_GREEN_RUPEE_4 Hint"}
     );
     
     hintTable[GV_OCTOROCK_GROTTO_BLUE_RUPEE_1] = HintText::Exclude({
                        // obscure text
-                       Text{"EN: GV_OCTOROCK_GROTTO_BLUE_RUPEE_1 Hint", /*french*/"FR: GV_OCTOROCK_GROTTO_BLUE_RUPEE_1 Hint", /*spanish*/"ES: GV_OCTOROCK_GROTTO_BLUE_RUPEE_1 Hint", /*italian*/"IT: GV_OCTOROCK_GROTTO_BLUE_RUPEE_1 Hint", /*german*/"DE: GV_OCTOROCK_GROTTO_BLUE_RUPEE_1 Hint"},
-                     }
+                       Text{"A #purple monster# hoards", /*french*/"FR: GV_OCTOROCK_GROTTO_BLUE_RUPEE_1 Hint", /*spanish*/"ES: GV_OCTOROCK_GROTTO_BLUE_RUPEE_1 Hint", /*italian*/"IT: GV_OCTOROCK_GROTTO_BLUE_RUPEE_1 Hint", /*german*/"DE: GV_OCTOROCK_GROTTO_BLUE_RUPEE_1 Hint"}
+                     },{},
+                       //clear text
+                       Text{"The #Gerudo Valley Octorock# guards", /*french*/"FR: GV_OCTOROCK_GROTTO_BLUE_RUPEE_1 Hint", /*spanish*/"ES: GV_OCTOROCK_GROTTO_BLUE_RUPEE_1 Hint", /*italian*/"IT: GV_OCTOROCK_GROTTO_BLUE_RUPEE_1 Hint", /*german*/"DE: GV_OCTOROCK_GROTTO_BLUE_RUPEE_1 Hint"}
     );
     
     hintTable[GV_OCTOROCK_GROTTO_BLUE_RUPEE_2] = HintText::Exclude({
                        // obscure text
-                       Text{"EN: GV_OCTOROCK_GROTTO_BLUE_RUPEE_2 Hint", /*french*/"FR: GV_OCTOROCK_GROTTO_BLUE_RUPEE_2 Hint", /*spanish*/"ES: GV_OCTOROCK_GROTTO_BLUE_RUPEE_2 Hint", /*italian*/"IT: GV_OCTOROCK_GROTTO_BLUE_RUPEE_2 Hint", /*german*/"DE: GV_OCTOROCK_GROTTO_BLUE_RUPEE_2 Hint"},
-                     }
+                       Text{"A #purple monster# hoards", /*french*/"FR: GV_OCTOROCK_GROTTO_BLUE_RUPEE_2 Hint", /*spanish*/"ES: GV_OCTOROCK_GROTTO_BLUE_RUPEE_2 Hint", /*italian*/"IT: GV_OCTOROCK_GROTTO_BLUE_RUPEE_2 Hint", /*german*/"DE: GV_OCTOROCK_GROTTO_BLUE_RUPEE_2 Hint"},
+                     },{},
+                       //clear text
+                       Text{"The #Gerudo Valley Octorock# guards", /*french*/"FR: GV_OCTOROCK_GROTTO_BLUE_RUPEE_2 Hint", /*spanish*/"ES: GV_OCTOROCK_GROTTO_BLUE_RUPEE_2 Hint", /*italian*/"IT: GV_OCTOROCK_GROTTO_BLUE_RUPEE_2 Hint", /*german*/"DE: GV_OCTOROCK_GROTTO_BLUE_RUPEE_2 Hint"}
     );
     
     hintTable[GV_OCTOROCK_GROTTO_BLUE_RUPEE_3] = HintText::Exclude({
                        // obscure text
-                       Text{"EN: GV_OCTOROCK_GROTTO_BLUE_RUPEE_3 Hint", /*french*/"FR: GV_OCTOROCK_GROTTO_BLUE_RUPEE_3 Hint", /*spanish*/"ES: GV_OCTOROCK_GROTTO_BLUE_RUPEE_3 Hint", /*italian*/"IT: GV_OCTOROCK_GROTTO_BLUE_RUPEE_3 Hint", /*german*/"DE: GV_OCTOROCK_GROTTO_BLUE_RUPEE_3 Hint"},
-                     }
+                       Text{"A #purple monster# hoards", /*french*/"FR: GV_OCTOROCK_GROTTO_BLUE_RUPEE_3 Hint", /*spanish*/"ES: GV_OCTOROCK_GROTTO_BLUE_RUPEE_3 Hint", /*italian*/"IT: GV_OCTOROCK_GROTTO_BLUE_RUPEE_3 Hint", /*german*/"DE: GV_OCTOROCK_GROTTO_BLUE_RUPEE_3 Hint"},
+                     },{},
+                       //clear text
+                       Text{"The #Gerudo Valley Octorock# guards", /*french*/"FR: GV_OCTOROCK_GROTTO_BLUE_RUPEE_3 Hint", /*spanish*/"ES: GV_OCTOROCK_GROTTO_BLUE_RUPEE_3 Hint", /*italian*/"IT: GV_OCTOROCK_GROTTO_BLUE_RUPEE_3 Hint", /*german*/"DE: GV_OCTOROCK_GROTTO_BLUE_RUPEE_3 Hint"}
     );
     
     hintTable[GV_OCTOROCK_GROTTO_RED_RUPEE] = HintText::Exclude({
                        // obscure text
-                       Text{"EN: GV_OCTOROCK_GROTTO_RED_RUPEE Hint", /*french*/"FR: GV_OCTOROCK_GROTTO_RED_RUPEE Hint", /*spanish*/"ES: GV_OCTOROCK_GROTTO_RED_RUPEE Hint", /*italian*/"IT: GV_OCTOROCK_GROTTO_RED_RUPEE Hint", /*german*/"DE: GV_OCTOROCK_GROTTO_RED_RUPEE Hint"},
-                     }
+                       Text{"A #purple monster# hoards", /*french*/"FR: GV_OCTOROCK_GROTTO_RED_RUPEE Hint", /*spanish*/"ES: GV_OCTOROCK_GROTTO_RED_RUPEE Hint", /*italian*/"IT: GV_OCTOROCK_GROTTO_RED_RUPEE Hint", /*german*/"DE: GV_OCTOROCK_GROTTO_RED_RUPEE Hint"},
+                     },{},
+                       //clear text
+                       Text{"The #Gerudo Valley Octorock# guards", /*french*/"FR: GV_OCTOROCK_GROTTO_RED_RUPEE Hint", /*spanish*/"ES: GV_OCTOROCK_GROTTO_RED_RUPEE Hint", /*italian*/"IT: GV_OCTOROCK_GROTTO_RED_RUPEE Hint", /*german*/"DE: GV_OCTOROCK_GROTTO_RED_RUPEE Hint"}
     );
 
     hintTable[COLOSSUS_DEKU_SCRUB_GROTTO_FRONT] = HintText::Exclude({
