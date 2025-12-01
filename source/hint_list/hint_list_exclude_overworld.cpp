@@ -1048,12 +1048,10 @@ void HintTable_Init_Exclude_Overworld() {
                        Text{"#defeating Gerudo guards# reveals", /*french*/"les #geôliers Gerudo# détiennent", /*spanish*/"#derrotar a las guardas Gerudo# revela", /*italian*/"una #guardia Gerudo# possiede", /*german*/"nahe einer #Gerudo-Wächterin#, |wäre|wären|"},
     });
 
-
     hintTable[HF_GS_NEAR_KAK_GROTTO] = HintText::Exclude({
                        // obscure text
                        Text{"a #spider-guarded spider in a hole# hoards", /*french*/"une #Skulltula dans un trou d'arachnides# a", /*spanish*/"una #Skulltula custodiada por otra# de un hoyo otorga", /*italian*/"in una grotta un #ragno protegge un'altro ragno# con", /*german*/"in einem Erdloch mit #zwei Spinnen#, |wäre|wären|"},
     });
-
 
     hintTable[LLR_GS_BACK_WALL] = HintText::Exclude({
                        // obscure text
@@ -1075,7 +1073,6 @@ void HintTable_Init_Exclude_Overworld() {
                        Text{"a spider hiding in a #ranch tree# holds", /*french*/"une #Skulltula dans l'arbre de la ferme# a", /*spanish*/"una Skulltula escondida en el #árbol de un rancho# otorga", /*italian*/"#su un albero nella fattoria# si nasconde un ragno con", /*german*/"in der Spinne im #Baum einer Farm#, |wäre|wären|"},
     });
 
-
     hintTable[KF_GS_BEAN_PATCH] = HintText::Exclude({
                        // obscure text
                        Text{"a #spider buried in a forest# holds", /*french*/"une #Skulltula enterrée dans la forêt# a", /*spanish*/"una #Skulltula enterrada en un bosque# otorga", /*italian*/"un #ragno sepolto nella foresta# nasconde", /*german*/"in einer, #im Wald vergrabenen Spinne#, |wäre|wären|"},
@@ -1090,7 +1087,6 @@ void HintTable_Init_Exclude_Overworld() {
                        // obscure text
                        Text{"night in the future reveals a #spider in a forest# holding", /*french*/"une #Skulltula sur une cabane de la forêt# a", /*spanish*/"la noche revela en el futuro una #Skulltula del bosque# que otorga", /*italian*/"un ragno #sopra una casa nella foresta# ha", /*german*/"in einer nachtaktiven #Spinne eines Waldes#, |wäre|wären|"},
     });
-
 
     hintTable[LW_GS_BEAN_PATCH_NEAR_BRIDGE] = HintText::Exclude({
                        // obscure text
@@ -1112,7 +1108,6 @@ void HintTable_Init_Exclude_Overworld() {
                        Text{"night reveals a #spider in a forest meadow# holding", /*french*/"une #Skulltula dans le sanctuaire des bois# a", /*spanish*/"la noche revela una #Skulltula de la pradera del bosque# que otorga", /*italian*/"#in una radura di notte# esce un ragno con", /*german*/"in einer nachtaktiven #Spinne einer Lichtung#, |wäre|wären|"},
     });
 
-
     hintTable[OGC_GS] = HintText::Exclude({
                        // obscure text
                        Text{"a #spider outside a tyrant's tower# holds", /*french*/"une #Skulltula parmi les ruines du château# a", /*spanish*/"una #Skulltula a las afueras de la torre de un tirano# otorga", /*italian*/"un ragno #vicino alla torre di un tiranno# ha", /*german*/"in einer #Spinne am Turm des Tyrannen#, |wäre|wären|"},
@@ -1128,12 +1123,10 @@ void HintTable_Init_Exclude_Overworld() {
                        Text{"a #spider in a guarded crate# holds", /*french*/"une #Skulltula dans une boîte en ville# a", /*spanish*/"una #Skulltula bajo una custodiada caja# otorga", /*italian*/"un #ragno sotto una cassa custodita# ha", /*german*/"in der #Spinne einer streng bewachten Kiste#, |wäre|wären|"},
     });
 
-
     hintTable[DMC_GS_BEAN_PATCH] = HintText::Exclude({
                        // obscure text
                        Text{"a #spider buried in a volcano# holds", /*french*/"une #Skulltula enterrée dans un volcan# a", /*spanish*/"una #Skulltula enterrada en un volcán# otorga", /*italian*/"un #ragno sepolto in un vulcano# ha", /*german*/"in einer, #im Krater vergrabenen Spinne#, |wäre|wären|"},
     });
-
 
     hintTable[DMT_GS_BEAN_PATCH] = HintText::Exclude({
                        // obscure text
@@ -1155,7 +1148,6 @@ void HintTable_Init_Exclude_Overworld() {
                        Text{"the hammer reveals a #spider on a mountain# holding", /*french*/"une #Skulltula derrière un rocher massif près du sommet d'un volcan# a", /*spanish*/"el martillo revela #una Skulltula de la montaña# que otorga", /*italian*/"il martello rivela un #ragno in montagna# con", /*german*/"in einer, hinter #braunen Felsen# krabbelnden Spinne, |wäre|wären|"},
     });
 
-
     hintTable[GC_GS_CENTER_PLATFORM] = HintText::Exclude({
                        // obscure text
                        Text{"a #suspended spider# in Goron City holds", /*french*/"une #Skulltula perchée dans le village Goron# a", /*spanish*/"una #Skulltula suspendida# en la Ciudad Goron otorga", /*italian*/"un #ragno sospeso# nella città dei Goron ha", /*german*/"in der #einsamen Spinne# Goronias, |wäre|wären|"},
@@ -1165,7 +1157,6 @@ void HintTable_Init_Exclude_Overworld() {
                        // obscure text
                        Text{"a spider in a #Goron City crate# holds", /*french*/"une #Skulltula dans une boîte du village Goron# a", /*spanish*/"una #Skulltula bajo una caja# de la Ciudad Goron otorga", /*italian*/"in una #cassa nella città dei Goron# si nasconde un ragno con", /*german*/"in der Spinne einer #Kiste Goronias#, |wäre|wären|"},
     });
-
 
     hintTable[KAK_GS_HOUSE_UNDER_CONSTRUCTION] = HintText::Exclude({
                        // obscure text
@@ -1197,7 +1188,6 @@ void HintTable_Init_Exclude_Overworld() {
                        Text{"night in the future reveals a #spider in a town# holding", /*french*/"une #Skulltula au dessus d'une grande maison# a", /*spanish*/"la noche del futuro revela una #Skulltula del pueblo# que otorga", /*italian*/"la notte nel futuro rivela un #ragno in un villaggio# con", /*german*/"in einer nachtaktiven #Spinne eines Dorfes#, |wäre|wären|"},
     });
 
-
     hintTable[GRAVEYARD_GS_WALL] = HintText::Exclude({
                        // obscure text
                        Text{"night reveals a #spider in a graveyard# holding", /*french*/"une #Skulltula sur une façade du cimetière# a", /*spanish*/"la noche revela una #Skulltula del cementerio# que otorga", /*italian*/"di notte appare un #ragno nel cimitero# con", /*german*/"in einer nachtaktiven #Spinne eines Friedhofs#, |wäre|wären|"},
@@ -1207,7 +1197,6 @@ void HintTable_Init_Exclude_Overworld() {
                        // obscure text
                        Text{"a #spider buried in a graveyard# holds", /*french*/"une #Skulltula enterrée dans le cimetière# a", /*spanish*/"una #Skulltula enterrada en el cementerio# otorga", /*italian*/"un #ragno sepolto nel cimitero# ha", /*german*/"in einer, #am Friedhof vergrabenen Spinne#, |wäre|wären|"},
     });
-
 
     hintTable[ZR_GS_LADDER] = HintText::Exclude({
                        // obscure text
@@ -1229,7 +1218,6 @@ void HintTable_Init_Exclude_Overworld() {
                        Text{"night in the future reveals a #spider in a river# holding", /*french*/"une #Skulltula sur une façade près d'une grotte du fleuve# a", /*spanish*/"la noche del futuro revela una #Skulltula del río# que otorga", /*italian*/"di notte nel futuro appare un #ragno nel fiume# con", /*german*/"in einer nachtaktiven #Spinne eines Flusses#, |wäre|wären|"},
     });
 
-
     hintTable[ZD_GS_FROZEN_WATERFALL] = HintText::Exclude({
                        // obscure text
                        Text{"night reveals a #spider by a frozen waterfall# holding", /*french*/"une #Skulltula près d'une cascade gelée# a", /*spanish*/"la noche revela una #Skulltula junto a una congelada cascada# que otorga", /*italian*/"di notte appare un #ragno presso una cascata congelata# con", /*german*/"in einer nachtaktiven #Spinne eines gefrorenen Wasserfalls#, |wäre|wären|"},
@@ -1244,7 +1232,6 @@ void HintTable_Init_Exclude_Overworld() {
                        // obscure text
                        Text{"a spider hiding in a #tree near a deity# holds", /*french*/"une #Skulltula dans un arbre dans un réservoir# a", /*spanish*/"una Skulltula escondida en el #árbol junto a cierta deidad# otorga", /*italian*/"un ragno su un #albero presso una divinità# ha", /*german*/"in der Spinne am #Baum nahe einer Gottheit#, |wäre|wären|"},
     });
-
 
     hintTable[LH_GS_BEAN_PATCH] = HintText::Exclude({
                        // obscure text
@@ -1271,7 +1258,6 @@ void HintTable_Init_Exclude_Overworld() {
                        Text{"night reveals a #spider by a lake high in a tree# holding", /*french*/"une #Skulltula dans un grand arbre du lac# a", /*spanish*/"la noche revela #una Skulltula del lago sobre un árbol# que otorga", /*italian*/"di notte appare un #ragno arboreo lacustre# che ha", /*german*/"in einer nachtaktiven #Spinne eines Sees#, |wäre|wären|"},
     });
 
-
     hintTable[GV_GS_BEAN_PATCH] = HintText::Exclude({
                        // obscure text
                        Text{"a #spider buried in a valley# holds", /*french*/"une #Skulltula enterré dans une vallée# a", /*spanish*/"una #Skulltula enterrada en un valle# otorga", /*italian*/"un #ragno sepolto nella valle# nasconde", /*german*/"in einer, #im Tal vergrabenen Spinne#, |wäre|wären|"},
@@ -1292,7 +1278,6 @@ void HintTable_Init_Exclude_Overworld() {
                        Text{"night in the future reveals a #spider in a valley# holding", /*french*/"une #Skulltula derrière une tente# a", /*spanish*/"la noche del futuro revela una #Skulltula del valle# que otorga", /*italian*/"di notte nel futuro appare un #ragno in una valle# con", /*german*/"in einer nachtaktiven #Spinne des Tals#, |wäre|wären|"},
     });
 
-
     hintTable[GF_GS_ARCHERY_RANGE] = HintText::Exclude({
                        // obscure text
                        Text{"night reveals a #spider in a fortress# holding", /*french*/"une #Skulltula sur une cible de tir# a", /*spanish*/"la noche revela una #Skulltula de una fortaleza# que otorga", /*italian*/"di notte appare un #ragno in una fortezza# con", /*german*/"in einer nachtaktiven #Spinne einer Festung#, |wäre|wären|"},
@@ -1302,7 +1287,6 @@ void HintTable_Init_Exclude_Overworld() {
                        // obscure text
                        Text{"night reveals a #spider in a fortress# holding", /*french*/"une #Skulltula au sommet d'une forteresse# a", /*spanish*/"la noche revela una #Skulltula de una fortaleza# que otorga", /*italian*/"di notte appare un #ragno in una fortezza# con", /*german*/"in einer nachtaktiven #Spinne einer Festung#, |wäre|wären|"},
     });
-
 
     hintTable[COLOSSUS_GS_BEAN_PATCH] = HintText::Exclude({
                        // obscure text
@@ -1318,7 +1302,6 @@ void HintTable_Init_Exclude_Overworld() {
                        // obscure text
                        Text{"night reveals a #spider deep in the desert# holding", /*french*/"une #Skulltula dans un arbre du désert# a", /*spanish*/"la noche revela una #Skulltula en las profundidades del desierto# que otorga", /*italian*/"di notte appare un #ragno nel cuore del deserto# con", /*german*/"in einer nachtaktiven #Spinne der Wüste#, |wäre|wären|"},
     });
-
 
     hintTable[KF_SHOP_ITEM_1] = HintText::Exclude({
                        // obscure text
@@ -1359,7 +1342,6 @@ void HintTable_Init_Exclude_Overworld() {
                        // obscure text
                        Text{"a #child shopkeeper# sells", /*french*/"la #boutique Kokiri# vend", /*spanish*/"un #joven dependiente# vende", /*italian*/"un #commerciante bambino# vende", /*german*/"die Ware eines #jungen Ladenbesitzers#, |wäre|wären|"},
     });
-
 
     hintTable[KAK_POTION_SHOP_ITEM_1] = HintText::Exclude({
                        // obscure text
@@ -1425,7 +1407,6 @@ void HintTable_Init_Exclude_Overworld() {
                        Text{"the #Kakariko Potion Shop# offers", /*french*/"l'#apothicaire de Kakariko# vend", /*spanish*/"la #tienda de pociones de Kakariko# ofrece", /*italian*/"il #negozio di pozioni di Calbarico# offre", /*german*/"die Ware vom #Magie-Laden von Kakariko#, |wäre|wären|"}
     );
 
-
     hintTable[MARKET_BOMBCHU_SHOP_ITEM_1] = HintText::Exclude({
                        // obscure text
                        Text{"a #Bombchu merchant# sells", /*french*/"le #marchand de missiles# vend", /*spanish*/"un #mercader de bombchus# vende", /*italian*/"un #commerciante di radiomine# vende", /*german*/"die Ware eines #Krabbelminenhändlers#, |wäre|wären|"},
@@ -1465,7 +1446,6 @@ void HintTable_Init_Exclude_Overworld() {
                        // obscure text
                        Text{"a #Bombchu merchant# sells", /*french*/"le #marchand de missiles# vend", /*spanish*/"un #mercader de bombchus# vende", /*italian*/"un #commerciante di radiomine# vende", /*german*/"die Ware eines #Krabbelminenhändlers#, |wäre|wären|"},
     });
-
 
     hintTable[MARKET_POTION_SHOP_ITEM_1] = HintText::Exclude({
                        // obscure text
@@ -1531,7 +1511,6 @@ void HintTable_Init_Exclude_Overworld() {
                        Text{"the #Market Potion Shop# offers", /*french*/"l'#apothicaire dans la place du marché# vend", /*spanish*/"la #tienda de pociones del mercado# ofrece", /*italian*/"il #negozio di pozioni del mercato# offre", /*german*/"die Ware vom #Magie-Laden des Marktplatzes#, |wäre|wären|"}
     );
 
-
     hintTable[MARKET_BAZAAR_ITEM_1] = HintText::Exclude({
                        // obscure text
                        Text{"the #Market Bazaar# offers", /*french*/"le #bazar de la place du marché# vend", /*spanish*/"el #bazar del mercado# ofrece", /*italian*/"il #bazar del mercato# offre", /*german*/"die Ware des #Basars des Marktplatzes#, |wäre|wären|"},
@@ -1572,7 +1551,6 @@ void HintTable_Init_Exclude_Overworld() {
                        Text{"the #Market Bazaar# offers", /*french*/"le #bazar de la place du marché# vend", /*spanish*/"el #bazar del mercado# ofrece", /*italian*/"il #bazar del mercato# offre", /*german*/"die Ware des #Basars des Marktplatzes#, |wäre|wären|"},
     });
 
-
     hintTable[KAK_BAZAAR_ITEM_1] = HintText::Exclude({
                        // obscure text
                        Text{"the #Kakariko Bazaar# offers", /*french*/"le #bazar de Kakariko# vend", /*spanish*/"el #bazar de Kakariko# ofrece", /*italian*/"il #bazar di Calbarico# offre", /*german*/"die Ware des #Basars von Kakariko#, |wäre|wären|"},
@@ -1612,7 +1590,6 @@ void HintTable_Init_Exclude_Overworld() {
                        // obscure text
                        Text{"the #Kakariko Bazaar# offers", /*french*/"le #bazar de Kakariko# vend", /*spanish*/"el #bazar de Kakariko# ofrece", /*italian*/"il #bazar di Calbarico# offre", /*german*/"die Ware des #Basars von Kakariko#, |wäre|wären|"},
     });
-
 
     hintTable[ZD_SHOP_ITEM_1] = HintText::Exclude({
                        // obscure text
@@ -1836,7 +1813,6 @@ void HintTable_Init_Exclude_Overworld() {
                        Text{"a #trio of scrubs# sells", /*french*/"le #trio de peste Mojo dans le village Goron# vend", /*spanish*/"un #trío de dekus# de la Ciudad Goron venden", /*italian*/"un #trio di cespugli fra i Goron# vende", /*german*/"die Ware eines #Deku-Händler-Trios#, |wäre|wären|"},
     });
 
-
     hintTable[DMC_DEKU_SCRUB_GROTTO_LEFT] = HintText::Exclude({
                        // obscure text
                        Text{"a #trio of scrubs# sells", /*french*/"le #trio de peste Mojo dans le volcan# vend", /*spanish*/"un #trío de dekus# del volcán venden", /*italian*/"un #trio di cespugli sotto un macigno# vende", /*german*/"die Ware eines #Deku-Händler-Trios#, |wäre|wären|"},
@@ -1852,7 +1828,6 @@ void HintTable_Init_Exclude_Overworld() {
                        Text{"a #trio of scrubs# sells", /*french*/"le #trio de peste Mojo dans le volcan# vend", /*spanish*/"un #trío de dekus# del volcán venden", /*italian*/"un #trio di cespugli sotto un macigno# vende", /*german*/"die Ware eines #Deku-Händler-Trios#, |wäre|wären|"},
     });
 
-
     hintTable[ZR_DEKU_SCRUB_GROTTO_REAR] = HintText::Exclude({
                        // obscure text
                        Text{"a #scrub underground duo# sells", /*french*/"le #duo de peste Mojo près du fleuve# vend", /*spanish*/"un #par de dekus subterráneos# del río venden", /*italian*/"una #coppia di cespugli vicino al fiume# vende", /*german*/"die Ware, des #Deku-Händler-Duos eines Erdlochs#, |wäre|wären|"},
@@ -1865,23 +1840,35 @@ void HintTable_Init_Exclude_Overworld() {
 
     hintTable[ZR_WATERFALL_RED_RUPEE_1] = HintText::Exclude({
                        // obscure text
-                       Text{"EN: ZR_WATERFALL_RED_RUPEE_1 HINT", /*french*/"FR: ZR_WATERFALL_RED_RUPEE_1 HINT", /*spanish*/"ES: ZR_WATERFALL_RED_RUPEE_1 HINT", /*italian*/"IT: ZR_WATERFALL_RED_RUPEE_1 HINT", /*german*/"DE: ZR_WATERFALL_RED_RUPEE_1 HINT"},
-    });
+                       Text{"The #sound of rushing water# is enjoyed by", /*french*/"FR: ZR_WATERFALL_RED_RUPEE_1 HINT", /*spanish*/"ES: ZR_WATERFALL_RED_RUPEE_1 HINT", /*italian*/"IT: ZR_WATERFALL_RED_RUPEE_1 HINT", /*german*/"DE: ZR_WATERFALL_RED_RUPEE_1 HINT"},
+                     }, {},
+                       //clear text
+                       Text{"#Under the Zora's River Waterfall# is", /*french*/"FR: ZR_WATERFALL_RED_RUPEE_1 HINT", /*spanish*/"ES: ZR_WATERFALL_RED_RUPEE_1 HINT", /*italian*/"IT: ZR_WATERFALL_RED_RUPEE_1 HINT", /*german*/"DE: ZR_WATERFALL_RED_RUPEE_1 HINT"}
+    );
     
     hintTable[ZR_WATERFALL_RED_RUPEE_2] = HintText::Exclude({
                        // obscure text
-                       Text{"EN: ZR_WATERFALL_RED_RUPEE_2 HINT", /*french*/"FR: ZR_WATERFALL_RED_RUPEE_2 HINT", /*spanish*/"ES: ZR_WATERFALL_RED_RUPEE_2 HINT", /*italian*/"IT: ZR_WATERFALL_RED_RUPEE_2 HINT", /*german*/"DE: ZR_WATERFALL_RED_RUPEE_2 HINT"},
-    });
+                       Text{"The #sound of rushing water# is enjoyed by", /*french*/"FR: ZR_WATERFALL_RED_RUPEE_2 HINT", /*spanish*/"ES: ZR_WATERFALL_RED_RUPEE_2 HINT", /*italian*/"IT: ZR_WATERFALL_RED_RUPEE_2 HINT", /*german*/"DE: ZR_WATERFALL_RED_RUPEE_2 HINT"},
+                     }, {},
+                       //clear text
+                       Text{"#Under the Zora's River Waterfall# is", /*french*/"FR: ZR_WATERFALL_RED_RUPEE_2 HINT", /*spanish*/"ES: ZR_WATERFALL_RED_RUPEE_2 HINT", /*italian*/"IT: ZR_WATERFALL_RED_RUPEE_2 HINT", /*german*/"DE: ZR_WATERFALL_RED_RUPEE_2 HINT"}
+    );
 
     hintTable[ZR_WATERFALL_RED_RUPEE_3] = HintText::Exclude({
                        // obscure text
-                       Text{"EN: ZR_WATERFALL_RED_RUPEE_3 HINT", /*french*/"FR: ZR_WATERFALL_RED_RUPEE_3 HINT", /*spanish*/"ES: ZR_WATERFALL_RED_RUPEE_3 HINT", /*italian*/"IT: ZR_WATERFALL_RED_RUPEE_3 HINT", /*german*/"DE: ZR_WATERFALL_RED_RUPEE_3 HINT"},
-    });
+                       Text{"The #sound of rushing water# is enjoyed by", /*french*/"FR: ZR_WATERFALL_RED_RUPEE_3 HINT", /*spanish*/"ES: ZR_WATERFALL_RED_RUPEE_3 HINT", /*italian*/"IT: ZR_WATERFALL_RED_RUPEE_3 HINT", /*german*/"DE: ZR_WATERFALL_RED_RUPEE_3 HINT"},
+                     }, {},
+                       //clear text
+                       Text{"#Under the Zora's River Waterfall# is", /*french*/"FR: ZR_WATERFALL_RED_RUPEE_3 HINT", /*spanish*/"ES: ZR_WATERFALL_RED_RUPEE_3 HINT", /*italian*/"IT: ZR_WATERFALL_RED_RUPEE_3 HINT", /*german*/"DE: ZR_WATERFALL_RED_RUPEE_3 HINT"}
+    );
 
     hintTable[ZR_WATERFALL_RED_RUPEE_4] = HintText::Exclude({
                        // obscure text
-                       Text{"EN: ZR_WATERFALL_RED_RUPEE_4 HINT", /*french*/"FR: ZR_WATERFALL_RED_RUPEE_4 HINT", /*spanish*/"ES: ZR_WATERFALL_RED_RUPEE_4 HINT", /*italian*/"IT: ZR_WATERFALL_RED_RUPEE_4 HINT", /*german*/"DE: ZR_WATERFALL_RED_RUPEE_4 HINT"},
-    });
+                       Text{"The #sound of rushing water# is enjoyed by", /*french*/"FR: ZR_WATERFALL_RED_RUPEE_4 HINT", /*spanish*/"ES: ZR_WATERFALL_RED_RUPEE_4 HINT", /*italian*/"IT: ZR_WATERFALL_RED_RUPEE_4 HINT", /*german*/"DE: ZR_WATERFALL_RED_RUPEE_4 HINT"},
+                     }, {},
+                       //clear text
+                       Text{"#Under the Zora's River Waterfall# is", /*french*/"FR: ZR_WATERFALL_RED_RUPEE_4 HINT", /*spanish*/"ES: ZR_WATERFALL_RED_RUPEE_4 HINT", /*italian*/"IT: ZR_WATERFALL_RED_RUPEE_4 HINT", /*german*/"DE: ZR_WATERFALL_RED_RUPEE_4 HINT"}
+    );
 
     hintTable[LH_DEKU_SCRUB_GROTTO_LEFT] = HintText::Exclude({
                        // obscure text
