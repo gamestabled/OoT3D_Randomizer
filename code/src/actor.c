@@ -418,7 +418,8 @@ s32 Actor_IsBoss(Actor* actor) {
 }
 
 void HyperActors_Main(Actor* thisx, GlobalContext* globalCtx) {
-    if (!IsInGame() || thisx->update == NULL || (PLAYER != NULL && Player_InBlockingCsMode(globalCtx, PLAYER))) {
+    if (!IsInGameOrBossChallenge() || thisx->update == NULL ||
+        (PLAYER != NULL && Player_InBlockingCsMode(globalCtx, PLAYER))) {
         return;
     }
 
