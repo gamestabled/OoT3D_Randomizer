@@ -136,7 +136,7 @@ static ItemOverride_Key ItemOverride_GetSearchKey(Actor* actor, u8 scene, u8 ite
         u16 collectibleFlag   = currentItem->collectibleFlag;
 
         // Don't override respawning collectibles dropped by other actors (e.g. pots)
-        if ((collectibleFlag == 0x00 || collectibleFlag >= 0x20) && !currentItem->rExt.spawnedBySceneLayer) {
+        if ((currentItem->rExt.extraCollectibleFlag == 0x00 && (collectibleFlag == 0x00 || collectibleFlag >= 0x20)) && !currentItem->rExt.spawnedBySceneLayer) {
             return (ItemOverride_Key){ .all = 0 };
         }
 
