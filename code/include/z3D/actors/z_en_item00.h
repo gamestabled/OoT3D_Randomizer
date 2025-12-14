@@ -34,6 +34,11 @@ typedef enum Item00Type {
     /* 0xFF */ ITEM00_NONE = 0xFF
 } Item00Type;
 
+typedef struct EnItem00Extension {
+    u16 extraCollectibleFlag;
+    u8 spawnedBySceneLayer;
+} EnItem00Extension;
+
 typedef struct EnItem00 {
     /* 0x000 */ Actor actor;
     /* 0x1A4 */ void* action_fn;
@@ -42,6 +47,9 @@ typedef struct EnItem00 {
     /* 0x1AE */ u16 unk_1AE;
     /* 0x1B0 */ u16 unk_1B0;
     /* 0x1B2 */ char unk_1B2[0x66];
-} EnItem00; // size 0x218
+    // end of base game struct
+    /* 0x218 */ EnItem00Extension rExt;
+} EnItem00;
+_Static_assert(offsetof(EnItem00, rExt) == 0x218, "EnItem00 size");
 
 #endif //_EN_ITEM00_H_

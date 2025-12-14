@@ -46,16 +46,23 @@ void EnItem00_rInit(Actor* thisx, GlobalContext* globalCtx) {
             item->actor.params = (item->actor.params & 0xFF00) | 0x00;
         }
     }
+
+    // If Z rotation is -1, it was set in `ActorSetup_OverrideEntry`
+    if (thisx->home.rot.z == -1) {
+        item->rExt.spawnedBySceneLayer = TRUE;
+        thisx->home.rot.z              = 0;
+    }
+
     EnItem00_Init(&item->actor, globalCtx);
 
-    // For rupees spawned by Rupee Circles (ObjMure3) We store the "collectibleFlag" in actor.home.rot.z since that is
-    // not really used for them. Since collectibleFlag normally gets truncated to 0x3F we can use any value at or above
+    // For rupees spawned by Rupee Circles (ObjMure3) we use an "extraCollectibleFlag".
+    // Since collectibleFlag normally gets truncated to 0x3F we can use any value at or above
     // 0x40. We've reserved 0x40-0x46 for Rupee circle rupees.
-    if (item->collectibleFlag == 0x00 && isObjMure3Updating && item->actor.home.rot.z == 0) {
-        item->actor.home.rot.z = extraCollectibleFlag;
-        extraCollectibleFlag += 1;
-        if (extraCollectibleFlag > 0x46) {
-            extraCollectibleFlag = 0x40;
+    if (item->collectibleFlag == 0x00 && gIsObjMure3Updating) {
+        item->rExt.extraCollectibleFlag = gExtraCollectibleFlag;
+        gExtraCollectibleFlag += 1;
+        if (gExtraCollectibleFlag > 0x46) {
+            gExtraCollectibleFlag = 0x40;
         }
     }
     Model_SpawnByActor(&item->actor, globalCtx, 0);

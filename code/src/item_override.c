@@ -131,20 +131,27 @@ static ItemOverride_Key ItemOverride_GetSearchKey(Actor* actor, u8 scene, u8 ite
             .flag  = actor->params & 0x1F,
         };
     } else if (actor->id == 0x15) { // Collectible
-        // Only override heart pieces and keys blue rupees
         EnItem00* currentItem = ((EnItem00*)actor);
         u32 collectibleType   = actor->params & 0xFF;
-        u16 collectibleFlag   = ((EnItem00*)actor)->collectibleFlag;
-        if (collectibleFlag == 0x00 && currentItem->actor.home.rot.z >= 0x40) {
-            // For rupees spawned by Rupee Circles (ObjMure3) We store the "collectibleFlag" in actor.home.rot.z since
-            // that is not really used for them. Since collectibleFlag normally gets truncated to 0x3F we can use any
+        u16 collectibleFlag   = currentItem->collectibleFlag;
+
+        // Don't override respawning collectibles dropped by other actors (e.g. pots)
+        if ((collectibleFlag == 0x00 || collectibleFlag >= 0x20) && !currentItem->rExt.spawnedBySceneLayer) {
+            return (ItemOverride_Key){ .all = 0 };
+        }
+
+        if (collectibleFlag == 0x00 && currentItem->rExt.extraCollectibleFlag >= 0x40) {
+            // For rupees spawned by Rupee Circles (ObjMure3) we use an "extraCollectibleFlag".
+            // Since collectibleFlag normally gets truncated to 0x3F we can use any
             // value at or above 0x40. We've reserved 0x40-0x46 for Rupee circle rupees.
-            collectibleFlag = currentItem->actor.home.rot.z;
+            collectibleFlag = currentItem->rExt.extraCollectibleFlag;
         }
         s32 respawningCollected =
             collectibleFlag >= 0x20 && SaveFile_GetRupeeSanityFlag(gGlobalContext->sceneNum, collectibleFlag);
 
-        if ((collectibleType > 0x02 && collectibleType != 0x06 && collectibleType != 0x11) || respawningCollected) {
+        if ((collectibleType > ITEM00_RUPEE_RED && collectibleType != ITEM00_HEART_PIECE &&
+             collectibleType != ITEM00_SMALL_KEY) ||
+            respawningCollected) {
             return (ItemOverride_Key){ .all = 0 };
         }
 
@@ -591,8 +598,9 @@ u8 ItemOverride_GetItemDrop(EnItem00* this) {
         ItemTable_CallEffect(itemRow);
         Item_Give(gGlobalContext, itemRow->actionId);
     }
-    if (this->collectibleFlag == 0 && this->actor.home.rot.z >= 0x40 && this->actor.home.rot.z < 0x47) {
-        SaveFile_SetRupeeSanityFlag(gGlobalContext->sceneNum, this->actor.home.rot.z);
+    if (this->collectibleFlag == 0 && this->rExt.extraCollectibleFlag >= 0x40 &&
+        this->rExt.extraCollectibleFlag < 0x47) {
+        SaveFile_SetRupeeSanityFlag(gGlobalContext->sceneNum, this->rExt.extraCollectibleFlag);
     } else if (this->collectibleFlag >= 0x20) {
         // collectibles with a collectibleFlag >= 0x20 respawn so we need to keep track of them in the gExtSaveData
         SaveFile_SetRupeeSanityFlag(gGlobalContext->sceneNum, this->collectibleFlag);

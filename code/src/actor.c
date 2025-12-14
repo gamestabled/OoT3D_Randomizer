@@ -130,10 +130,11 @@ void Actor_Init() {
 
     gActorOverlayTable[0xF].initInfo->update = (ActorFunc)BgYdanSp_rUpdate;
 
-    gActorOverlayTable[0x15].initInfo->init    = EnItem00_rInit;
-    gActorOverlayTable[0x15].initInfo->destroy = EnItem00_rDestroy;
-    gActorOverlayTable[0x15].initInfo->update  = EnItem00_rUpdate;
-    gActorOverlayTable[0x15].initInfo->draw    = EnItem00_rDraw;
+    gActorOverlayTable[0x15].initInfo->init         = EnItem00_rInit;
+    gActorOverlayTable[0x15].initInfo->destroy      = EnItem00_rDestroy;
+    gActorOverlayTable[0x15].initInfo->update       = EnItem00_rUpdate;
+    gActorOverlayTable[0x15].initInfo->draw         = EnItem00_rDraw;
+    gActorOverlayTable[0x15].initInfo->instanceSize = sizeof(EnItem00);
 
     gActorOverlayTable[0x1D].initInfo->update = EnPeehat_rUpdate;
 
@@ -380,6 +381,14 @@ u8 ActorSetup_OverrideEntry(ActorEntry* actorEntry, s32 actorEntryIndex) {
     // Alternate Gold Skulltula Locations
     if (actorEntry->id == 0x95 && (actorEntry->params & 0xE000) && Gs_HasAltLoc(actorEntry, GS_PPT_ACTORENTRY, TRUE)) {
         return TRUE;
+    }
+
+    if (actorEntry->id == ACTOR_EN_ITEM00) {
+        // Mark as spawned by scene layer.
+        // All vanilla actor entries for EnItem00 have Z rotation set to 0,
+        // so we can use it as a custom flag.
+        actorEntry->rot.z = -1;
+        return FALSE;
     }
 
     return Enemizer_OverrideActorEntry(actorEntry, actorEntryIndex);
