@@ -58,11 +58,11 @@ void EnItem00_rInit(Actor* thisx, GlobalContext* globalCtx) {
     // For rupees spawned by Rupee Circles (ObjMure3) we use an "extraCollectibleFlag".
     // Since collectibleFlag normally gets truncated to 0x3F we can use any value at or above
     // 0x40. We've reserved 0x40-0x46 for Rupee circle rupees.
-    if (item->collectibleFlag == 0x00 && isObjMure3Updating) {
-        item->rExt.extraCollectibleFlag = extraCollectibleFlag;
-        extraCollectibleFlag += 1;
-        if (extraCollectibleFlag > 0x46) {
-            extraCollectibleFlag = 0x40;
+    if (item->collectibleFlag == 0x00 && gIsObjMure3Updating) {
+        item->rExt.extraCollectibleFlag = gExtraCollectibleFlag;
+        gExtraCollectibleFlag += 1;
+        if (gExtraCollectibleFlag > 0x46) {
+            gExtraCollectibleFlag = 0x40;
         }
     }
     Model_SpawnByActor(&item->actor, globalCtx, 0);
