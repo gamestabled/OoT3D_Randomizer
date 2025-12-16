@@ -590,7 +590,7 @@ u8 ItemOverride_GetItemDrop(EnItem00* this) {
     if (isMajorItem) {
         ItemOverride_PushPendingOverride(override);
         this->actor.params = ITEM00_HEART_PIECE; // to play no SFX
-        this->actor.parent = &PLAYER->actor;     // to set collection flag
+        Flags_SetCollectible(gGlobalContext, this->collectibleFlag);
         Actor_Kill(&this->actor);
     } else {
         // Minor item, behave as item drop.
