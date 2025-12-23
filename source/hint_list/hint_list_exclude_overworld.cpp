@@ -37,13 +37,14 @@ void HintTable_Init_Exclude_Overworld() {
                        //clear text
                        Text{"#inside Mido's house# is", /*french*/"#dans la maison de Mido# gît", /*spanish*/"en la #casa de Mido# yace", /*italian*/"nella #casa di Mido# puoi trovare", /*german*/"#in Midos Haus#, |wäre|wären|"}
     );
+
     hintTable[KF_END_OF_BRIDGE_BLUE_RUPEE] = HintText::Exclude({
                        // obscure text
                        Text{"A #gem next to a forest girl# is", /*french*/"FR: KF_END_OF_BRIDGE_BLUE_RUPEE HINT", /*spanish*/"ES: KF_END_OF_BRIDGE_BLUE_RUPEE HINT", /*italian*/"IT: KF_END_OF_BRIDGE_BLUE_RUPEE HINT", /*german*/"DE: KF_END_OF_BRIDGE_BLUE_RUPEE HINT"},
                      }, {},
                        // clear text
                        Text{"A #rupee on the end of a bridge# is", /*french*/"FR: KF_END_OF_BRIDGE_BLUE_RUPEE HINT", /*spanish*/"ES: KF_END_OF_BRIDGE_BLUE_RUPEE HINT", /*italian*/"IT: KF_END_OF_BRIDGE_BLUE_RUPEE HINT", /*german*/"DE: KF_END_OF_BRIDGE_BLUE_RUPEE HINT"}
-  );
+    );
 
     hintTable[KF_BEHIND_MIDOS_HOUSE_BLUE_RUPEE] = HintText::Exclude({
                        // obscure text
@@ -51,7 +52,7 @@ void HintTable_Init_Exclude_Overworld() {
                      }, {},
                        // clear text
                        Text{"The #rupee behind Mido's house# hides", /*french*/"FR: KF_BEHIND_MIDOS_HOUSE_BLUE_RUPEE HINT", /*spanish*/"ES: KF_BEHIND_MIDOS_HOUSE_BLUE_RUPEE HINT", /*italian*/"IT: KF_BEHIND_MIDOS_HOUSE_BLUE_RUPEE HINT", /*german*/"DE: KF_BEHIND_MIDOS_HOUSE_BLUE_RUPEE HINT"}
-  );
+    );
 
     hintTable[KF_BOULDER_MAZE_BLUE_RUPEE_1] = HintText::Exclude({
                        // obscure text
@@ -68,7 +69,7 @@ void HintTable_Init_Exclude_Overworld() {
                        // clear text
                        Text{"In #the #Kokiri boulder maze# you can find", /*french*/"FR: KF_BOULDER_MAZE_BLUE_RUPEE_2 HINT", /*spanish*/"ES: KF_BOULDER_MAZE_BLUE_RUPEE_2 HINT", /*italian*/"IT: KF_BOULDER_MAZE_BLUE_RUPEE_2 HINT", /*german*/"DE: KF_BOULDER_MAZE_BLUE_RUPEE_2 HINT"}
     );
-    
+
     hintTable[KF_NEAR_RAMP_GREEN_RUPEE_1] = HintText::Exclude({
                        // obscure text
                        Text{"Some #grassy flowers# obscure", /*french*/"FR: KF_NEAR_RAMP_GREEN_RUPEE_1 HINT", /*spanish*/"ES: KF_NEAR_RAMP_GREEN_RUPEE_1 HINT", /*italian*/"IT: KF_NEAR_RAMP_GREEN_RUPEE_1 HINT", /*german*/"DE: KF_NEAR_RAMP_GREEN_RUPEE_1 HINT"},
@@ -92,7 +93,7 @@ void HintTable_Init_Exclude_Overworld() {
                        // clear text
                        Text{"#Near Mido's house in the grass# is", /*french*/"FR: KF_NEAR_MIDOS_HOUSE_GREEN_RUPEE_1 HINT", /*spanish*/"ES: KF_NEAR_MIDOS_HOUSE_GREEN_RUPEE_1 HINT", /*italian*/"IT: KF_NEAR_MIDOS_HOUSE_GREEN_RUPEE_1 HINT", /*german*/"DE: KF_NEAR_MIDOS_HOUSE_GREEN_RUPEE_1 HINT"}
     );
-    
+
     hintTable[KF_NEAR_MIDOS_HOUSE_GREEN_RUPEE_2] = HintText::Exclude({
                        // obscure text
                        Text{"Some #grassy flowers# obscure", /*french*/"FR: KF_NEAR_MIDOS_HOUSE_GREEN_RUPEE_2 HINT", /*spanish*/"ES: KF_NEAR_MIDOS_HOUSE_GREEN_RUPEE_2 HINT", /*italian*/"IT: KF_NEAR_MIDOS_HOUSE_GREEN_RUPEE_2 HINT", /*german*/"DE: KF_NEAR_MIDOS_HOUSE_GREEN_RUPEE_2 HINT"},
@@ -108,7 +109,7 @@ void HintTable_Init_Exclude_Overworld() {
                        // clear text
                        Text{"A #rupee on the platform in Kokiri Forest# is", /*french*/"FR: KF_RUPEE_CIRCLE_GREEN_RUPEE_1 HINT", /*spanish*/"ES: KF_RUPEE_CIRCLE_GREEN_RUPEE_1 HINT", /*italian*/"IT: KF_RUPEE_CIRCLE_GREEN_RUPEE_1 HINT", /*german*/"DE: KF_RUPEE_CIRCLE_GREEN_RUPEE_1 HINT"}
     );
-    
+
     hintTable[KF_RUPEE_CIRCLE_GREEN_RUPEE_2] = HintText::Exclude({
                       // obscure text
                        Text{"A #sparkly circle in the forest# includes", /*french*/"FR: KF_RUPEE_CIRCLE_GREEN_RUPEE_2 HINT", /*spanish*/"ES: KF_RUPEE_CIRCLE_GREEN_RUPEE_2 HINT", /*italian*/"IT: KF_RUPEE_CIRCLE_GREEN_RUPEE_2 HINT", /*german*/"DE: KF_RUPEE_CIRCLE_GREEN_RUPEE_2 HINT"},
@@ -116,7 +117,7 @@ void HintTable_Init_Exclude_Overworld() {
                        // clear text
                        Text{"A #rupee on the platform in Kokiri Forest# is", /*french*/"FR: KF_RUPEE_CIRCLE_GREEN_RUPEE_2 HINT", /*spanish*/"ES: KF_RUPEE_CIRCLE_GREEN_RUPEE_2 HINT", /*italian*/"IT: KF_RUPEE_CIRCLE_GREEN_RUPEE_2 HINT", /*german*/"DE: KF_RUPEE_CIRCLE_GREEN_RUPEE_2 HINT"}
     );
-    
+
     hintTable[KF_RUPEE_CIRCLE_GREEN_RUPEE_3] = HintText::Exclude({
                        // obscure text
                        Text{"A #sparkly circle in the forest# includes", /*french*/"FR: KF_RUPEE_CIRCLE_GREEN_RUPEE_3 HINT", /*spanish*/"ES: KF_RUPEE_CIRCLE_GREEN_RUPEE_3 HINT", /*italian*/"IT: KF_RUPEE_CIRCLE_GREEN_RUPEE_3 HINT", /*german*/"DE: KF_RUPEE_CIRCLE_GREEN_RUPEE_3 HINT"},
@@ -124,7 +125,7 @@ void HintTable_Init_Exclude_Overworld() {
                        // clear text
                        Text{"A #rupee on the platform in Kokiri Forest# is", /*french*/"FR: KF_RUPEE_CIRCLE_GREEN_RUPEE_3 HINT", /*spanish*/"ES: KF_RUPEE_CIRCLE_GREEN_RUPEE_3 HINT", /*italian*/"IT: KF_RUPEE_CIRCLE_GREEN_RUPEE_3 HINT", /*german*/"DE: KF_RUPEE_CIRCLE_GREEN_RUPEE_3 HINT"}
     );
-    
+
     hintTable[KF_RUPEE_CIRCLE_GREEN_RUPEE_4] = HintText::Exclude({
                        // obscure text
                        Text{"A #sparkly circle in the forest# includes", /*french*/"FR: KF_RUPEE_CIRCLE_GREEN_RUPEE_4 HINT", /*spanish*/"ES: KF_RUPEE_CIRCLE_GREEN_RUPEE_4 HINT", /*italian*/"IT: KF_RUPEE_CIRCLE_GREEN_RUPEE_4 HINT", /*german*/"DE: KF_RUPEE_CIRCLE_GREEN_RUPEE_4 HINT"},
@@ -132,7 +133,7 @@ void HintTable_Init_Exclude_Overworld() {
                        // clear text
                        Text{"A #rupee on the platform in Kokiri Forest# is", /*french*/"FR: KF_RUPEE_CIRCLE_GREEN_RUPEE_4 HINT", /*spanish*/"ES: KF_RUPEE_CIRCLE_GREEN_RUPEE_4 HINT", /*italian*/"IT: KF_RUPEE_CIRCLE_GREEN_RUPEE_4 HINT", /*german*/"DE: KF_RUPEE_CIRCLE_GREEN_RUPEE_4 HINT"}
     );
-    
+
     hintTable[KF_RUPEE_CIRCLE_GREEN_RUPEE_5] = HintText::Exclude({
                        // obscure text
                        Text{"A #sparkly circle in the forest# includes", /*french*/"FR: KF_RUPEE_CIRCLE_GREEN_RUPEE_5 HINT", /*spanish*/"ES: KF_RUPEE_CIRCLE_GREEN_RUPEE_5 HINT", /*italian*/"IT: KF_RUPEE_CIRCLE_GREEN_RUPEE_5 HINT", /*german*/"DE: KF_RUPEE_CIRCLE_GREEN_RUPEE_5 HINT"},
@@ -140,7 +141,7 @@ void HintTable_Init_Exclude_Overworld() {
                        // clear text
                        Text{"A #rupee on the platform in Kokiri Forest# is", /*french*/"FR: KF_RUPEE_CIRCLE_GREEN_RUPEE_5 HINT", /*spanish*/"ES: KF_RUPEE_CIRCLE_GREEN_RUPEE_5 HINT", /*italian*/"IT: KF_RUPEE_CIRCLE_GREEN_RUPEE_5 HINT", /*german*/"DE: KF_RUPEE_CIRCLE_GREEN_RUPEE_5 HINT"}
     );
-    
+
     hintTable[KF_RUPEE_CIRCLE_GREEN_RUPEE_6] = HintText::Exclude({
                        // obscure text
                        Text{"A #sparkly circle in the forest# includes", /*french*/"FR: KF_RUPEE_CIRCLE_GREEN_RUPEE_6 HINT", /*spanish*/"ES: KF_RUPEE_CIRCLE_GREEN_RUPEE_6 HINT", /*italian*/"IT: KF_RUPEE_CIRCLE_GREEN_RUPEE_6 HINT", /*german*/"DE: KF_RUPEE_CIRCLE_GREEN_RUPEE_6 HINT"},
@@ -337,7 +338,7 @@ void HintTable_Init_Exclude_Overworld() {
                        //clear text
                        Text{"#One of the rupees underwater in Zora's Fountain# is", /*french*/"FR: ZF_UNDERWATER_GREEN_RUPEE_1 HINT", /*spanish*/"ES: ZF_UNDERWATER_GREEN_RUPEE_1 HINT", /*italian*/"IT: ZF_UNDERWATER_GREEN_RUPEE_1 HINT", /*german*/"DE: ZF_UNDERWATER_GREEN_RUPEE_1 HINT"}
     );
-    
+
     hintTable[ZF_UNDERWATER_GREEN_RUPEE_2] = HintText::Exclude({
                        // obscure text
                        Text{"#Jabu's shiny poo# includes", /*french*/"FR: ZF_UNDERWATER_GREEN_RUPEE_2 HINT", /*spanish*/"ES: ZF_UNDERWATER_GREEN_RUPEE_2 HINT", /*italian*/"IT: ZF_UNDERWATER_GREEN_RUPEE_2 HINT", /*german*/"DE: ZF_UNDERWATER_GREEN_RUPEE_2 HINT"},
@@ -361,7 +362,7 @@ void HintTable_Init_Exclude_Overworld() {
                        //clear text
                        Text{"#One of the rupees underwater in Zora's Fountain# is", /*french*/"FR: ZF_UNDERWATER_GREEN_RUPEE_4 HINT", /*spanish*/"ES: ZF_UNDERWATER_GREEN_RUPEE_4 HINT", /*italian*/"IT: ZF_UNDERWATER_GREEN_RUPEE_4 HINT", /*german*/"DE: ZF_UNDERWATER_GREEN_RUPEE_4 HINT"}
     );
-    
+
     hintTable[ZF_UNDERWATER_GREEN_RUPEE_5] = HintText::Exclude({
                        // obscure text
                        Text{"#Jabu's shiny poo# includes", /*french*/"FR: ZF_UNDERWATER_GREEN_RUPEE_5 HINT", /*spanish*/"ES: ZF_UNDERWATER_GREEN_RUPEE_5 HINT", /*italian*/"IT: ZF_UNDERWATER_GREEN_RUPEE_5 HINT", /*german*/"DE: ZF_UNDERWATER_GREEN_RUPEE_5 HINT"},
@@ -377,7 +378,7 @@ void HintTable_Init_Exclude_Overworld() {
                        //clear text
                        Text{"#One of the rupees underwater in Zora's Fountain# is", /*french*/"FR: ZF_UNDERWATER_GREEN_RUPEE_6 HINT", /*spanish*/"ES: ZF_UNDERWATER_GREEN_RUPEE_6 HINT", /*italian*/"IT: ZF_UNDERWATER_GREEN_RUPEE_6 HINT", /*german*/"DE: ZF_UNDERWATER_GREEN_RUPEE_6 HINT"}
     );
-    
+
     hintTable[ZF_UNDERWATER_GREEN_RUPEE_7] = HintText::Exclude({
                        // obscure text
                        Text{"#Jabu's shiny poo# includes", /*french*/"FR: ZF_UNDERWATER_GREEN_RUPEE_7 HINT", /*spanish*/"ES: ZF_UNDERWATER_GREEN_RUPEE_7 HINT", /*italian*/"IT: ZF_UNDERWATER_GREEN_RUPEE_7 HINT", /*german*/"DE: ZF_UNDERWATER_GREEN_RUPEE_7 HINT"},
@@ -385,7 +386,7 @@ void HintTable_Init_Exclude_Overworld() {
                        //clear text
                        Text{"#One of the rupees underwater in Zora's Fountain# is", /*french*/"FR: ZF_UNDERWATER_GREEN_RUPEE_7 HINT", /*spanish*/"ES: ZF_UNDERWATER_GREEN_RUPEE_7 HINT", /*italian*/"IT: ZF_UNDERWATER_GREEN_RUPEE_7 HINT", /*german*/"DE: ZF_UNDERWATER_GREEN_RUPEE_7 HINT"}
     );
-    
+
     hintTable[ZF_UNDERWATER_GREEN_RUPEE_8] = HintText::Exclude({
                        // obscure text
                        Text{"#Jabu's shiny poo# includes", /*french*/"FR: ZF_UNDERWATER_GREEN_RUPEE_8 HINT", /*spanish*/"ES: ZF_UNDERWATER_GREEN_RUPEE_8 HINT", /*italian*/"IT: ZF_UNDERWATER_GREEN_RUPEE_8 HINT", /*german*/"DE: ZF_UNDERWATER_GREEN_RUPEE_8 HINT"},
@@ -401,7 +402,7 @@ void HintTable_Init_Exclude_Overworld() {
                        //clear text
                        Text{"#One of the rupees underwater in Zora's Fountain# is", /*french*/"FR: ZF_UNDERWATER_GREEN_RUPEE_9 HINT", /*spanish*/"ES: ZF_UNDERWATER_GREEN_RUPEE_9 HINT", /*italian*/"IT: ZF_UNDERWATER_GREEN_RUPEE_9 HINT", /*german*/"DE: ZF_UNDERWATER_GREEN_RUPEE_9 HINT"}
     );
-    
+
     hintTable[ZF_UNDERWATER_GREEN_RUPEE_10] = HintText::Exclude({
                        // obscure text
                        Text{"#Jabu's shiny poo# includes", /*french*/"FR: ZF_UNDERWATER_GREEN_RUPEE_10 HINT", /*spanish*/"ES: ZF_UNDERWATER_GREEN_RUPEE_10 HINT", /*italian*/"IT: ZF_UNDERWATER_GREEN_RUPEE_10 HINT", /*german*/"DE: ZF_UNDERWATER_GREEN_RUPEE_10 HINT"},
@@ -409,7 +410,7 @@ void HintTable_Init_Exclude_Overworld() {
                        //clear text
                        Text{"#One of the rupees underwater in Zora's Fountain# is", /*french*/"FR: ZF_UNDERWATER_GREEN_RUPEE_10 HINT", /*spanish*/"ES: ZF_UNDERWATER_GREEN_RUPEE_10 HINT", /*italian*/"IT: ZF_UNDERWATER_GREEN_RUPEE_10 HINT", /*german*/"DE: ZF_UNDERWATER_GREEN_RUPEE_10 HINT"}
     );
-    
+
     hintTable[ZF_UNDERWATER_GREEN_RUPEE_11] = HintText::Exclude({
                        // obscure text
                        Text{"#Jabu's shiny poo# includes", /*french*/"FR: ZF_UNDERWATER_GREEN_RUPEE_11 HINT", /*spanish*/"ES: ZF_UNDERWATER_GREEN_RUPEE_11 HINT", /*italian*/"IT: ZF_UNDERWATER_GREEN_RUPEE_11 HINT", /*german*/"DE: ZF_UNDERWATER_GREEN_RUPEE_11 HINT"},
@@ -425,7 +426,7 @@ void HintTable_Init_Exclude_Overworld() {
                        //clear text
                        Text{"#One of the rupees underwater in Zora's Fountain# is", /*french*/"FR: ZF_UNDERWATER_GREEN_RUPEE_12 HINT", /*spanish*/"ES: ZF_UNDERWATER_GREEN_RUPEE_12 HINT", /*italian*/"IT: ZF_UNDERWATER_GREEN_RUPEE_12 HINT", /*german*/"DE: ZF_UNDERWATER_GREEN_RUPEE_12 HINT"}
     );
-    
+
     hintTable[ZF_UNDERWATER_GREEN_RUPEE_13] = HintText::Exclude({
                        // obscure text
                        Text{"#Jabu's shiny poo# includes", /*french*/"FR: ZF_UNDERWATER_GREEN_RUPEE_13 HINT", /*spanish*/"ES: ZF_UNDERWATER_GREEN_RUPEE_13 HINT", /*italian*/"IT: ZF_UNDERWATER_GREEN_RUPEE_13 HINT", /*german*/"DE: ZF_UNDERWATER_GREEN_RUPEE_13 HINT"},
@@ -433,7 +434,7 @@ void HintTable_Init_Exclude_Overworld() {
                        //clear text
                        Text{"#One of the rupees underwater in Zora's Fountain# is", /*french*/"FR: ZF_UNDERWATER_GREEN_RUPEE_13 HINT", /*spanish*/"ES: ZF_UNDERWATER_GREEN_RUPEE_13 HINT", /*italian*/"IT: ZF_UNDERWATER_GREEN_RUPEE_13 HINT", /*german*/"DE: ZF_UNDERWATER_GREEN_RUPEE_13 HINT"}
     );
-    
+
     hintTable[ZF_UNDERWATER_GREEN_RUPEE_14] = HintText::Exclude({
                        // obscure text
                        Text{"#Jabu's shiny poo# includes", /*french*/"FR: ZF_UNDERWATER_GREEN_RUPEE_14 HINT", /*spanish*/"ES: ZF_UNDERWATER_GREEN_RUPEE_14 HINT", /*italian*/"IT: ZF_UNDERWATER_GREEN_RUPEE_14 HINT", /*german*/"DE: ZF_UNDERWATER_GREEN_RUPEE_14 HINT"},
@@ -450,7 +451,7 @@ void HintTable_Init_Exclude_Overworld() {
                        Text{"#One of the rupees underwater in Zora's Fountain# is", /*french*/"FR: ZF_UNDERWATER_GREEN_RUPEE_15 HINT", /*spanish*/"ES: ZF_UNDERWATER_GREEN_RUPEE_15 HINT", /*italian*/"IT: ZF_UNDERWATER_GREEN_RUPEE_15 HINT", /*german*/"DE: ZF_UNDERWATER_GREEN_RUPEE_15 HINT"}
     );
 
-        
+
     hintTable[ZF_UNDERWATER_GREEN_RUPEE_16] = HintText::Exclude({
                        // obscure text
                        Text{"#Jabu's shiny poo# includes", /*french*/"FR: ZF_UNDERWATER_GREEN_RUPEE_16 HINT", /*spanish*/"ES: ZF_UNDERWATER_GREEN_RUPEE_16 HINT", /*italian*/"IT: ZF_UNDERWATER_GREEN_RUPEE_16 HINT", /*german*/"DE: ZF_UNDERWATER_GREEN_RUPEE_16 HINT"},
@@ -458,7 +459,7 @@ void HintTable_Init_Exclude_Overworld() {
                        //clear text
                        Text{"#One of the rupees underwater in Zora's Fountain# is", /*french*/"FR: ZF_UNDERWATER_GREEN_RUPEE_16 HINT", /*spanish*/"ES: ZF_UNDERWATER_GREEN_RUPEE_16 HINT", /*italian*/"IT: ZF_UNDERWATER_GREEN_RUPEE_16 HINT", /*german*/"DE: ZF_UNDERWATER_GREEN_RUPEE_16 HINT"}
     );
-    
+
     hintTable[ZF_UNDERWATER_GREEN_RUPEE_17] = HintText::Exclude({
                        // obscure text
                        Text{"#Jabu's shiny poo# includes", /*french*/"FR: ZF_UNDERWATER_GREEN_RUPEE_17 HINT", /*spanish*/"ES: ZF_UNDERWATER_GREEN_RUPEE_17 HINT", /*italian*/"IT: ZF_UNDERWATER_GREEN_RUPEE_17 HINT", /*german*/"DE: ZF_UNDERWATER_GREEN_RUPEE_17 HINT"},
@@ -849,7 +850,7 @@ void HintTable_Init_Exclude_Overworld() {
                        // clear text
                        Text{"#The rupee circle in the cow grotto in DMT# includes", /*french*/"FR: DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_1 Hint", /*spanish*/"ES: DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_1 Hint", /*italian*/"IT: DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_1 Hint", /*german*/"DE: DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_1 Hint"}
     );
-    
+
     hintTable[DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_2] = HintText::Exclude({
                        // obscure text
                        Text{"#A cow looks at#", /*french*/"FR: DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_2 Hint", /*spanish*/"ES: DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_2 Hint", /*italian*/"IT: DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_2 Hint", /*german*/"DE: DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_2 Hint"},
@@ -857,7 +858,7 @@ void HintTable_Init_Exclude_Overworld() {
                        // clear text
                        Text{"#The rupee circle in the cow grotto in DMT# includes", /*french*/"FR: DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_2 Hint", /*spanish*/"ES: DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_2 Hint", /*italian*/"IT: DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_2 Hint", /*german*/"DE: DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_2 Hint"}
     );
-    
+
     hintTable[DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_3] = HintText::Exclude({
                        // obscure text
                        Text{"#A cow looks at#", /*french*/"FR: DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_3 Hint", /*spanish*/"ES: DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_3 Hint", /*italian*/"IT: DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_3 Hint", /*german*/"DE: DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_3 Hint"},
@@ -865,7 +866,7 @@ void HintTable_Init_Exclude_Overworld() {
                        // clear text
                        Text{"#The rupee circle in the cow grotto in DMT# includes", /*french*/"FR: DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_3 Hint", /*spanish*/"ES: DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_3 Hint", /*italian*/"IT: DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_3 Hint", /*german*/"DE: DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_3 Hint"}
     );
-    
+
     hintTable[DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_4] = HintText::Exclude({
                        // obscure text
                        Text{"#A cow looks at#", /*french*/"FR: DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_4 Hint", /*spanish*/"ES: DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_4 Hint", /*italian*/"IT: DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_4 Hint", /*german*/"DE: DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_4 Hint"},
@@ -873,7 +874,7 @@ void HintTable_Init_Exclude_Overworld() {
                        // clear text
                        Text{"#The rupee circle in the cow grotto in DMT# includes", /*french*/"FR: DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_4 Hint", /*spanish*/"ES: DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_4 Hint", /*italian*/"IT: DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_4 Hint", /*german*/"DE: DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_4 Hint"}
     );
-    
+
     hintTable[DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_5] = HintText::Exclude({
                        // obscure text
                        Text{"#A cow looks at#", /*french*/"FR: DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_5 Hint", /*spanish*/"ES: DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_5 Hint", /*italian*/"IT: DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_5 Hint", /*german*/"DE: DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_5 Hint"},
@@ -881,7 +882,7 @@ void HintTable_Init_Exclude_Overworld() {
                        // clear text
                        Text{"#The rupee circle in the cow grotto in DMT# includes", /*french*/"FR: DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_5 Hint", /*spanish*/"ES: DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_5 Hint", /*italian*/"IT: DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_5 Hint", /*german*/"DE: DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_5 Hint"}
     );
-    
+
     hintTable[DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_6] = HintText::Exclude({
                        // obscure text
                        Text{"#A cow looks at#", /*french*/"FR: DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_6 Hint", /*spanish*/"ES: DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_6 Hint", /*italian*/"IT: DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_6 Hint", /*german*/"DE: DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_6 Hint"},
@@ -889,7 +890,7 @@ void HintTable_Init_Exclude_Overworld() {
                        // clear text
                        Text{"#The rupee circle in the cow grotto in DMT# includes", /*french*/"FR: DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_6 Hint", /*spanish*/"ES: DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_6 Hint", /*italian*/"IT: DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_6 Hint", /*german*/"DE: DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_6 Hint"}
     );
-    
+
     hintTable[DMT_COW_GROTTO_RUPEE_CIRCLE_RED_RUPEE] = HintText::Exclude({
                        // obscure text
                        Text{"#A cow looks at#", /*french*/"FR: DMT_COW_GROTTO_RUPEE_CIRCLE_RED_RUPEE Hint", /*spanish*/"ES: DMT_COW_GROTTO_RUPEE_CIRCLE_RED_RUPEE Hint", /*italian*/"IT: DMT_COW_GROTTO_RUPEE_CIRCLE_RED_RUPEE Hint", /*german*/"DE: DMT_COW_GROTTO_RUPEE_CIRCLE_RED_RUPEE Hint"},
@@ -915,7 +916,7 @@ void HintTable_Init_Exclude_Overworld() {
                        // clear text
                        Text{"#The first red rupee in Death Mountain Crater# is", /*french*/"FR: DMC_LOWER_RED_RUPEE_1 Hint", /*spanish*/"ES: DMC_LOWER_RED_RUPEE_1 Hint", /*italian*/"IT: DMC_LOWER_RED_RUPEE_1 Hint", /*german*/"DE: DMC_LOWER_RED_RUPEE_1 Hint"}
     );
-    
+
     hintTable[DMC_LOWER_RED_RUPEE_2] = HintText::Exclude({
                        // obscure text
                        Text{"#An obsidian# is", /*french*/"FR: DMC_LOWER_RED_RUPEE_2 Hint", /*spanish*/"ES: DMC_LOWER_RED_RUPEE_2 Hint", /*italian*/"IT: DMC_LOWER_RED_RUPEE_2 Hint", /*german*/"DE: DMC_LOWER_RED_RUPEE_2 Hint"},
@@ -923,7 +924,7 @@ void HintTable_Init_Exclude_Overworld() {
                        // clear text
                        Text{"#The second red rupee in Death Mountain Crater# is", /*french*/"FR: DMC_LOWER_RED_RUPEE_2 Hint", /*spanish*/"ES: DMC_LOWER_RED_RUPEE_2 Hint", /*italian*/"IT: DMC_LOWER_RED_RUPEE_2 Hint", /*german*/"DE: DMC_LOWER_RED_RUPEE_2 Hint"}
     );
-    
+
     hintTable[DMC_LOWER_BLUE_RUPEE_1] = HintText::Exclude({
                        // obscure text
                        Text{"#An obsidian# is", /*french*/"FR: DMC_LOWER_BLUE_RUPEE_1 Hint", /*spanish*/"ES: DMC_LOWER_BLUE_RUPEE_1 Hint", /*italian*/"IT: DMC_LOWER_BLUE_RUPEE_1 Hint", /*german*/"DE: DMC_LOWER_BLUE_RUPEE_1 Hint"},
@@ -931,7 +932,7 @@ void HintTable_Init_Exclude_Overworld() {
                        // clear text
                        Text{"#One of the blue rupees in Death Mountain Crater# is", /*french*/"FR: DMC_LOWER_BLUE_RUPEE_1 Hint", /*spanish*/"ES: DMC_LOWER_BLUE_RUPEE_1 Hint", /*italian*/"IT: DMC_LOWER_BLUE_RUPEE_1 Hint", /*german*/"DE: DMC_LOWER_BLUE_RUPEE_1 Hint"}
     );
-    
+
     hintTable[DMC_LOWER_BLUE_RUPEE_2] = HintText::Exclude({
                        // obscure text
                        Text{"#An obsidian# is", /*french*/"FR: DMC_LOWER_BLUE_RUPEE_2 Hint", /*spanish*/"ES: DMC_LOWER_BLUE_RUPEE_2 Hint", /*italian*/"IT: DMC_LOWER_BLUE_RUPEE_2 Hint", /*german*/"DE: DMC_LOWER_BLUE_RUPEE_2 Hint"},
@@ -939,7 +940,7 @@ void HintTable_Init_Exclude_Overworld() {
                        // clear text
                        Text{"#One of the blue rupees in Death Mountain Crater# is", /*french*/"FR: DMC_LOWER_BLUE_RUPEE_2 Hint", /*spanish*/"ES: DMC_LOWER_BLUE_RUPEE_2 Hint", /*italian*/"IT: DMC_LOWER_BLUE_RUPEE_2 Hint", /*german*/"DE: DMC_LOWER_BLUE_RUPEE_2 Hint"}
     );
-    
+
     hintTable[DMC_LOWER_BLUE_RUPEE_3] = HintText::Exclude({
                        // obscure text
                        Text{"#An obsidian# is", /*french*/"FR: DMC_LOWER_BLUE_RUPEE_3 Hint", /*spanish*/"ES: DMC_LOWER_BLUE_RUPEE_3 Hint", /*italian*/"IT: DMC_LOWER_BLUE_RUPEE_3 Hint", /*german*/"DE: DMC_LOWER_BLUE_RUPEE_3 Hint"},
@@ -947,7 +948,7 @@ void HintTable_Init_Exclude_Overworld() {
                        // clear text
                        Text{"#One of the blue rupees in Death Mountain Crater# is", /*french*/"FR: DMC_LOWER_BLUE_RUPEE_3 Hint", /*spanish*/"ES: DMC_LOWER_BLUE_RUPEE_3 Hint", /*italian*/"IT: DMC_LOWER_BLUE_RUPEE_3 Hint", /*german*/"DE: DMC_LOWER_BLUE_RUPEE_3 Hint"}
     );
-    
+
     hintTable[DMC_LOWER_BLUE_RUPEE_4] = HintText::Exclude({
                        // obscure text
                        Text{"#An obsidian# is", /*french*/"FR: DMC_LOWER_BLUE_RUPEE_4 Hint", /*spanish*/"ES: DMC_LOWER_BLUE_RUPEE_4 Hint", /*italian*/"IT: DMC_LOWER_BLUE_RUPEE_4 Hint", /*german*/"DE: DMC_LOWER_BLUE_RUPEE_4 Hint"},
@@ -955,7 +956,7 @@ void HintTable_Init_Exclude_Overworld() {
                        // clear text
                        Text{"#One of the blue rupees in Death Mountain Crater# is", /*french*/"FR: DMC_LOWER_BLUE_RUPEE_4 Hint", /*spanish*/"ES: DMC_LOWER_BLUE_RUPEE_4 Hint", /*italian*/"IT: DMC_LOWER_BLUE_RUPEE_4 Hint", /*german*/"DE: DMC_LOWER_BLUE_RUPEE_4 Hint"}
     );
-    
+
     hintTable[DMC_LOWER_BLUE_RUPEE_5] = HintText::Exclude({
                        // obscure text
                        Text{"#An obsidian# is", /*french*/"FR: DMC_LOWER_BLUE_RUPEE_5 Hint", /*spanish*/"ES: DMC_LOWER_BLUE_RUPEE_5 Hint", /*italian*/"IT: DMC_LOWER_BLUE_RUPEE_5 Hint", /*german*/"DE: DMC_LOWER_BLUE_RUPEE_5 Hint"},
@@ -963,7 +964,7 @@ void HintTable_Init_Exclude_Overworld() {
                        // clear text
                        Text{"#One of the blue rupees in Death Mountain Crater# is", /*french*/"FR: DMC_LOWER_BLUE_RUPEE_5 Hint", /*spanish*/"ES: DMC_LOWER_BLUE_RUPEE_5 Hint", /*italian*/"IT: DMC_LOWER_BLUE_RUPEE_5 Hint", /*german*/"DE: DMC_LOWER_BLUE_RUPEE_5 Hint"}
     );
-    
+
     hintTable[DMC_LOWER_BLUE_RUPEE_6] = HintText::Exclude({
                        // obscure text
                        Text{"#An obsidian# is", /*french*/"FR: DMC_LOWER_BLUE_RUPEE_6 Hint", /*spanish*/"ES: DMC_LOWER_BLUE_RUPEE_6 Hint", /*italian*/"IT: DMC_LOWER_BLUE_RUPEE_6 Hint", /*german*/"DE: DMC_LOWER_BLUE_RUPEE_6 Hint"},
@@ -979,7 +980,7 @@ void HintTable_Init_Exclude_Overworld() {
                        // clear text
                        Text{"#The scarecrow rupee circle in DMC# has", /*french*/"FR: DMC_SCARE_CROW_RUPEE_CIRCLE_GREEN_RUPEE_1 Hint", /*spanish*/"ES: DMC_SCARE_CROW_RUPEE_CIRCLE_GREEN_RUPEE_1 Hint", /*italian*/"IT: DMC_SCARE_CROW_RUPEE_CIRCLE_GREEN_RUPEE_1 Hint", /*german*/"DE: DMC_SCARE_CROW_RUPEE_CIRCLE_GREEN_RUPEE_1 Hint"}
     );
-    
+
     hintTable[DMC_SCARE_CROW_RUPEE_CIRCLE_GREEN_RUPEE_2] = HintText::Exclude({
                        // obscure text
                        Text{"A #red hot strawman# stands next to", /*french*/"FR: DMC_SCARE_CROW_RUPEE_CIRCLE_GREEN_RUPEE_2 Hint", /*spanish*/"ES: DMC_SCARE_CROW_RUPEE_CIRCLE_GREEN_RUPEE_2 Hint", /*italian*/"IT: DMC_SCARE_CROW_RUPEE_CIRCLE_GREEN_RUPEE_2 Hint", /*german*/"DE: DMC_SCARE_CROW_RUPEE_CIRCLE_GREEN_RUPEE_2 Hint"},
@@ -1845,7 +1846,7 @@ void HintTable_Init_Exclude_Overworld() {
                        //clear text
                        Text{"#Under the Zora's River Waterfall# is", /*french*/"FR: ZR_WATERFALL_RED_RUPEE_1 HINT", /*spanish*/"ES: ZR_WATERFALL_RED_RUPEE_1 HINT", /*italian*/"IT: ZR_WATERFALL_RED_RUPEE_1 HINT", /*german*/"DE: ZR_WATERFALL_RED_RUPEE_1 HINT"}
     );
-    
+
     hintTable[ZR_WATERFALL_RED_RUPEE_2] = HintText::Exclude({
                        // obscure text
                        Text{"The #sound of rushing water# is enjoyed by", /*french*/"FR: ZR_WATERFALL_RED_RUPEE_2 HINT", /*spanish*/"ES: ZR_WATERFALL_RED_RUPEE_2 HINT", /*italian*/"IT: ZR_WATERFALL_RED_RUPEE_2 HINT", /*german*/"DE: ZR_WATERFALL_RED_RUPEE_2 HINT"},
@@ -1902,7 +1903,7 @@ void HintTable_Init_Exclude_Overworld() {
                        //clear text
                        Text{"The #Gerudo Valley Octorock# guards", /*french*/"FR: GV_OCTOROCK_GROTTO_GREEN_RUPEE_1 Hint", /*spanish*/"ES: GV_OCTOROCK_GROTTO_GREEN_RUPEE_1 Hint", /*italian*/"IT: GV_OCTOROCK_GROTTO_GREEN_RUPEE_1 Hint", /*german*/"DE: GV_OCTOROCK_GROTTO_GREEN_RUPEE_1 Hint"}
     );
-    
+
     hintTable[GV_OCTOROCK_GROTTO_GREEN_RUPEE_2] = HintText::Exclude({
                        // obscure text
                        Text{"A #purple monster# hoards", /*french*/"FR: GV_OCTOROCK_GROTTO_GREEN_RUPEE_2 Hint", /*spanish*/"ES: GV_OCTOROCK_GROTTO_GREEN_RUPEE_2 Hint", /*italian*/"IT: GV_OCTOROCK_GROTTO_GREEN_RUPEE_2 Hint", /*german*/"DE: GV_OCTOROCK_GROTTO_GREEN_RUPEE_2 Hint"},
@@ -1910,7 +1911,7 @@ void HintTable_Init_Exclude_Overworld() {
                        //clear text
                        Text{"The #Gerudo Valley Octorock# guards", /*french*/"FR: GV_OCTOROCK_GROTTO_GREEN_RUPEE_2 Hint", /*spanish*/"ES: GV_OCTOROCK_GROTTO_GREEN_RUPEE_2 Hint", /*italian*/"IT: GV_OCTOROCK_GROTTO_GREEN_RUPEE_2 Hint", /*german*/"DE: GV_OCTOROCK_GROTTO_GREEN_RUPEE_2 Hint"}
     );
-    
+
     hintTable[GV_OCTOROCK_GROTTO_GREEN_RUPEE_3] = HintText::Exclude({
                        // obscure text
                        Text{"A #purple monster# hoards", /*french*/"FR: GV_OCTOROCK_GROTTO_GREEN_RUPEE_3 Hint", /*spanish*/"ES: GV_OCTOROCK_GROTTO_GREEN_RUPEE_3 Hint", /*italian*/"IT: GV_OCTOROCK_GROTTO_GREEN_RUPEE_3 Hint", /*german*/"DE: GV_OCTOROCK_GROTTO_GREEN_RUPEE_3 Hint"},
@@ -1918,7 +1919,7 @@ void HintTable_Init_Exclude_Overworld() {
                        //clear text
                        Text{"The #Gerudo Valley Octorock# guards", /*french*/"FR: GV_OCTOROCK_GROTTO_GREEN_RUPEE_3 Hint", /*spanish*/"ES: GV_OCTOROCK_GROTTO_GREEN_RUPEE_3 Hint", /*italian*/"IT: GV_OCTOROCK_GROTTO_GREEN_RUPEE_3 Hint", /*german*/"DE: GV_OCTOROCK_GROTTO_GREEN_RUPEE_3 Hint"}
     );
-    
+
     hintTable[GV_OCTOROCK_GROTTO_GREEN_RUPEE_4] = HintText::Exclude({
                        // obscure text
                        Text{"A #purple monster# hoards", /*french*/"FR: GV_OCTOROCK_GROTTO_GREEN_RUPEE_4 Hint", /*spanish*/"ES: GV_OCTOROCK_GROTTO_GREEN_RUPEE_4 Hint", /*italian*/"IT: GV_OCTOROCK_GROTTO_GREEN_RUPEE_4 Hint", /*german*/"DE: GV_OCTOROCK_GROTTO_GREEN_RUPEE_4 Hint"},
@@ -1926,7 +1927,7 @@ void HintTable_Init_Exclude_Overworld() {
                        //clear text
                        Text{"The #Gerudo Valley Octorock# guards", /*french*/"FR: GV_OCTOROCK_GROTTO_GREEN_RUPEE_4 Hint", /*spanish*/"ES: GV_OCTOROCK_GROTTO_GREEN_RUPEE_4 Hint", /*italian*/"IT: GV_OCTOROCK_GROTTO_GREEN_RUPEE_4 Hint", /*german*/"DE: GV_OCTOROCK_GROTTO_GREEN_RUPEE_4 Hint"}
     );
-    
+
     hintTable[GV_OCTOROCK_GROTTO_BLUE_RUPEE_1] = HintText::Exclude({
                        // obscure text
                        Text{"A #purple monster# hoards", /*french*/"FR: GV_OCTOROCK_GROTTO_BLUE_RUPEE_1 Hint", /*spanish*/"ES: GV_OCTOROCK_GROTTO_BLUE_RUPEE_1 Hint", /*italian*/"IT: GV_OCTOROCK_GROTTO_BLUE_RUPEE_1 Hint", /*german*/"DE: GV_OCTOROCK_GROTTO_BLUE_RUPEE_1 Hint"}
@@ -1934,7 +1935,7 @@ void HintTable_Init_Exclude_Overworld() {
                        //clear text
                        Text{"The #Gerudo Valley Octorock# guards", /*french*/"FR: GV_OCTOROCK_GROTTO_BLUE_RUPEE_1 Hint", /*spanish*/"ES: GV_OCTOROCK_GROTTO_BLUE_RUPEE_1 Hint", /*italian*/"IT: GV_OCTOROCK_GROTTO_BLUE_RUPEE_1 Hint", /*german*/"DE: GV_OCTOROCK_GROTTO_BLUE_RUPEE_1 Hint"}
     );
-    
+
     hintTable[GV_OCTOROCK_GROTTO_BLUE_RUPEE_2] = HintText::Exclude({
                        // obscure text
                        Text{"A #purple monster# hoards", /*french*/"FR: GV_OCTOROCK_GROTTO_BLUE_RUPEE_2 Hint", /*spanish*/"ES: GV_OCTOROCK_GROTTO_BLUE_RUPEE_2 Hint", /*italian*/"IT: GV_OCTOROCK_GROTTO_BLUE_RUPEE_2 Hint", /*german*/"DE: GV_OCTOROCK_GROTTO_BLUE_RUPEE_2 Hint"},
@@ -1942,7 +1943,7 @@ void HintTable_Init_Exclude_Overworld() {
                        //clear text
                        Text{"The #Gerudo Valley Octorock# guards", /*french*/"FR: GV_OCTOROCK_GROTTO_BLUE_RUPEE_2 Hint", /*spanish*/"ES: GV_OCTOROCK_GROTTO_BLUE_RUPEE_2 Hint", /*italian*/"IT: GV_OCTOROCK_GROTTO_BLUE_RUPEE_2 Hint", /*german*/"DE: GV_OCTOROCK_GROTTO_BLUE_RUPEE_2 Hint"}
     );
-    
+
     hintTable[GV_OCTOROCK_GROTTO_BLUE_RUPEE_3] = HintText::Exclude({
                        // obscure text
                        Text{"A #purple monster# hoards", /*french*/"FR: GV_OCTOROCK_GROTTO_BLUE_RUPEE_3 Hint", /*spanish*/"ES: GV_OCTOROCK_GROTTO_BLUE_RUPEE_3 Hint", /*italian*/"IT: GV_OCTOROCK_GROTTO_BLUE_RUPEE_3 Hint", /*german*/"DE: GV_OCTOROCK_GROTTO_BLUE_RUPEE_3 Hint"},
@@ -1950,7 +1951,7 @@ void HintTable_Init_Exclude_Overworld() {
                        //clear text
                        Text{"The #Gerudo Valley Octorock# guards", /*french*/"FR: GV_OCTOROCK_GROTTO_BLUE_RUPEE_3 Hint", /*spanish*/"ES: GV_OCTOROCK_GROTTO_BLUE_RUPEE_3 Hint", /*italian*/"IT: GV_OCTOROCK_GROTTO_BLUE_RUPEE_3 Hint", /*german*/"DE: GV_OCTOROCK_GROTTO_BLUE_RUPEE_3 Hint"}
     );
-    
+
     hintTable[GV_OCTOROCK_GROTTO_RED_RUPEE] = HintText::Exclude({
                        // obscure text
                        Text{"A #purple monster# hoards", /*french*/"FR: GV_OCTOROCK_GROTTO_RED_RUPEE Hint", /*spanish*/"ES: GV_OCTOROCK_GROTTO_RED_RUPEE Hint", /*italian*/"IT: GV_OCTOROCK_GROTTO_RED_RUPEE Hint", /*german*/"DE: GV_OCTOROCK_GROTTO_RED_RUPEE Hint"},

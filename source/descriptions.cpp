@@ -593,7 +593,7 @@ string_view ocarinaButtonsDesc        = "Enabling this locks all Ocarina inputs,
 /*------------------------------                                                           //
 |  SHUFFLE FREESTANDING RUPEES |                                                           //
 ------------------------------*/                                                           //
-string_view shuffleRupeesDesc         = "Shuffles freestanding rupees and adds them to the\n"//
+string_view shuffleRupeesDesc         = "Shuffles freestanding rupees and adds them to the\n"
                                         "item pool. Currently work in progress.";          //
 /*------------------------------                                                           //
 |      MAPS AND COMPASSES      |                                                           //
@@ -1499,7 +1499,7 @@ string_view LogicDMTSummitHoverDesc                   = "Difficulty: Intermediat
                                                         "ledge above it to reach the summit.";             //
 string_view LogicDMCPlatformJumpDesc                  = "Difficulty: Novice\n"                             //
                                                         "Adult can reach these rupees by jumping down from\n"
-                                                        "the upper part of DMC, without scarecrow/longshot.";//                                                        
+                                                        "the upper part of DMC, without scarecrow/longshot.";
 string_view LogicLinkGoronDinsDesc                    = "Difficulty: Intermediate\n"                       //
                                                         "The timing is quite awkward.";                    //
 string_view LogicGoronCityLeftMostDesc                = "Difficulty: Novice\n"                             //
