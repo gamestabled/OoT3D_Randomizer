@@ -60,12 +60,11 @@ void OcarinaNotes_Init(void) {
 }
 
 s32 OcarinaNotes_IsButtonOwned(OcarinaNoteButton button) {
-    return (gSettingsContext.shuffleOcarinaButtons == OFF) ||
-           (gExtSaveData.extInf[EXTINF_OCARINA_BUTTONS] & (1 << button));
+    return (gSettingsContext.shuffleOcarinaButtons == OFF) || (gExtSaveData.extInf.ocarinaButtons & (1 << button));
 }
 
 void OcarinaNotes_RegisterButtonOwned(OcarinaNoteButton button) {
-    gExtSaveData.extInf[EXTINF_OCARINA_BUTTONS] |= (1 << button);
+    gExtSaveData.extInf.ocarinaButtons |= (1 << button);
 }
 
 void OcarinaNotes_MoveButtons(void* spriteStruct, Vec2f* posOffset, u32 unk, u32 spriteIndex) {

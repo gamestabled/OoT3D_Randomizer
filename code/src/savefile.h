@@ -32,22 +32,24 @@ void SaveFile_EnforceHealthLimit(void);
 u8 SaveFile_SwordlessPatchesEnabled(void);
 
 // Increment the version number whenever the ExtSaveData structure is changed
-#define EXTSAVEDATA_VERSION 16
+#define EXTSAVEDATA_VERSION 17
 
-typedef enum {
-    EXTINF_BIGGORONTRADES,
-    EXTINF_HASTIMETRAVELED,
-    EXTINF_MASTERSWORDFLAGS,
-    EXTINF_TOTALTAR_FLAGS,
-    EXTINF_ENEMYSOULSFLAGS_START, // 64 bits (at least one for each EnemySoulId)
-    EXTINF_ENEMYSOULSFLAGS_END = EXTINF_ENEMYSOULSFLAGS_START + 7,
-    EXTINF_OCARINA_BUTTONS,
-    EXTINF_SIZE,
+typedef struct ExtInf {
+    u8 biggoronTrades;
+    u8 masterSwordFlags;
+    u8 totAltarFlags;
+    u8 enemySouls[8];
+    u8 ocarinaButtons;
 } ExtInf;
 
+#define EXTINF_SIZE sizeof(ExtInf)
+
 typedef struct {
-    u32 version;            // Needs to always be the first field of the structure
-    u8 extInf[EXTINF_SIZE]; // Used for various bit flags that should also be synced in multiplayer
+    u32 version; // Needs to always be the first field of the structure
+    union {
+        ExtInf extInf; // Used for various bit flags that should also be synced in multiplayer with shared progress
+        u8 extInfArray[EXTINF_SIZE]; // Used only by multiplayer code for easier management of bit flags
+    };
     struct {
         Vec3i pos;
         s32 yaw;
@@ -61,6 +63,7 @@ typedef struct {
     u32 playtimeSeconds;
     u32 scenesDiscovered[SAVEFILE_SCENES_DISCOVERED_IDX_COUNT];
     u32 entrancesDiscovered[SAVEFILE_ENTRANCES_DISCOVERED_IDX_COUNT];
+    u8 hasTimeTraveled;
     u8 permadeath;
     u8 gloomedHeart;
     u8 triforcePieces;

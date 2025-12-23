@@ -541,11 +541,11 @@ void SaveFile_SetStartingInventory(void) {
     }
 
     // Set owned ocarina buttons. If the shuffle option is disabled, this value will be ignored.
-    gExtSaveData.extInf[EXTINF_OCARINA_BUTTONS] = gSettingsContext.startingOcarinaButtons;
+    gExtSaveData.extInf.ocarinaButtons = gSettingsContext.startingOcarinaButtons;
 
     // Set owned enemy souls. If the shuffle option is disabled, these values will be ignored.
     for (u32 i = 0; i < sizeof(gSettingsContext.startingEnemySouls); i++) {
-        gExtSaveData.extInf[EXTINF_ENEMYSOULSFLAGS_START + i] = gSettingsContext.startingEnemySouls[i];
+        gExtSaveData.extInf.enemySouls[i] = gSettingsContext.startingEnemySouls[i];
     }
 }
 
@@ -718,7 +718,7 @@ void SaveFile_InitExtSaveData(u32 saveNumber, u8 fromSaveCreation) {
     memset(&gExtSaveData, 0, sizeof(gExtSaveData));
 
     gExtSaveData.version = EXTSAVEDATA_VERSION; // Do not change this line
-    gExtSaveData.extInf[EXTINF_MASTERSWORDFLAGS] =
+    gExtSaveData.extInf.masterSwordFlags =
         (gSettingsContext.shuffleMasterSword && !(gSettingsContext.startingEquipment & 0x2)) ? 0 : 1;
     gExtSaveData.permadeath = fromSaveCreation ? gSettingsContext.permadeath : 0;
     // Ingame Options
@@ -803,7 +803,7 @@ void SaveFile_EnforceHealthLimit(void) {
 }
 
 u8 SaveFile_SwordlessPatchesEnabled(void) {
-    return gSettingsContext.shuffleMasterSword && !(gExtSaveData.extInf[EXTINF_MASTERSWORDFLAGS] & 1);
+    return gSettingsContext.shuffleMasterSword && !(gExtSaveData.extInf.masterSwordFlags & 1);
 }
 
 u8 SaveFile_BecomeAdult(void) {
@@ -835,12 +835,12 @@ u8 SaveFile_BecomeAdult(void) {
 void SaveFile_LoadFileSwordless(void) {
     if (gSaveContext.linkAge == 0) {
         // Push pedestal item if adult and haven't received yet
-        if (gSettingsContext.shuffleMasterSword && !(gExtSaveData.extInf[EXTINF_MASTERSWORDFLAGS] & 2)) {
+        if (gSettingsContext.shuffleMasterSword && !(gExtSaveData.extInf.masterSwordFlags & 2)) {
             ItemOverride_PushDelayedOverride(0x00);
         }
 
         // Mark pedestal item collected
-        gExtSaveData.extInf[EXTINF_MASTERSWORDFLAGS] |= 2;
+        gExtSaveData.extInf.masterSwordFlags |= 2;
     }
 }
 
