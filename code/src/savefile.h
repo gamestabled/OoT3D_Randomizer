@@ -38,6 +38,8 @@ u8 SaveFile_GetRupeeSanityFlag(s16 sceneNum, u16 collectibleFlag);
 #define EXTSAVEDATA_VERSION 17
 
 typedef struct ExtInf {
+    u32 rupeesanityFlags[SCENE_MAX];
+    u32 rupeesanityRupeeCircleFlags[SCENE_MAX];
     u8 biggoronTrades;
     u8 masterSwordFlags;
     u8 totAltarFlags;
@@ -66,8 +68,6 @@ typedef struct {
     u32 playtimeSeconds;
     u32 scenesDiscovered[SAVEFILE_SCENES_DISCOVERED_IDX_COUNT];
     u32 entrancesDiscovered[SAVEFILE_ENTRANCES_DISCOVERED_IDX_COUNT];
-    u32 rupeesanityFlags[SCENE_MAX];
-    u32 rupeesanityRupeeCircleFlags[SCENE_MAX];
     u8 hasTimeTraveled;
     u8 permadeath;
     u8 gloomedHeart;

@@ -4,6 +4,7 @@
 #include "actors/obj_mure3.h"
 #include "settings.h"
 #include "common.h"
+#include "savefile.h"
 
 #define EnItem00_Init ((ActorFunc)GAME_ADDR(0x1F69B4))
 
@@ -15,7 +16,7 @@
 
 #define THIS ((EnItem00*)thisx)
 
-#define FUN_002B175C (void*)GAME_ADDR(0x2B175C)
+#define EnItem00_Collected ((void*)GAME_ADDR(0x2B175C))
 
 void EnItem00_rInit(Actor* thisx, GlobalContext* globalCtx) {
     EnItem00* item = THIS;
@@ -78,9 +79,16 @@ void EnItem00_rDestroy(Actor* thisx, GlobalContext* globalCtx) {
 void EnItem00_rUpdate(Actor* thisx, GlobalContext* globalCtx) {
     EnItem00* item = THIS;
 
-    if (Flags_GetCollectible(globalCtx, item->collectibleFlag) && item->action_fn != FUN_002B175C) {
-        Actor_Kill(&item->actor);
-        return;
+    if (gSettingsContext.mp_Enabled && item->actionFunc != EnItem00_Collected) {
+        if (Flags_GetCollectible(globalCtx, item->collectibleFlag)) {
+            Actor_Kill(&item->actor);
+            return;
+        }
+
+        u16 flag = item->rExt.extraCollectibleFlag ? item->rExt.extraCollectibleFlag : item->collectibleFlag;
+        if (SaveFile_GetRupeeSanityFlag(globalCtx->sceneNum, flag)) {
+            Model_DestroyByActor(thisx);
+        }
     }
 
     EnItem00_Update(&item->actor, globalCtx);
