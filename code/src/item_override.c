@@ -24,7 +24,7 @@
 static ItemOverride rItemOverrides[640] = { 0 };
 static s32 rItemOverrides_Count         = 0;
 
-static ItemOverride rPendingOverrideQueue[3] = { 0 };
+static ItemOverride rPendingOverrideQueue[7] = { 0 };
 static Actor* rDummyActor                    = NULL;
 
 static ItemOverride rActiveItemOverride = { 0 };
@@ -275,10 +275,16 @@ void ItemOverride_PushDelayedOverride(u8 flag) {
 }
 
 static void ItemOverride_PopPendingOverride(void) {
-    rPendingOverrideQueue[0]           = rPendingOverrideQueue[1];
-    rPendingOverrideQueue[1]           = rPendingOverrideQueue[2];
-    rPendingOverrideQueue[2].key.all   = 0;
-    rPendingOverrideQueue[2].value.all = 0;
+    u8 queueSize =ARR_SIZE(rPendingOverrideQueue); 
+    for(u8 i =0;i<queueSize;i++){
+        if(i<queueSize-1){
+            rPendingOverrideQueue[i]=rPendingOverrideQueue[i+1];
+        }
+        else{
+            rPendingOverrideQueue[i].key.all =0;
+            rPendingOverrideQueue[i].value.all=0;
+        }
+    }
 }
 
 static void ItemOverride_AfterKeyReceived(ItemOverride_Key key) {
