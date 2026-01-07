@@ -275,14 +275,13 @@ void ItemOverride_PushDelayedOverride(u8 flag) {
 }
 
 static void ItemOverride_PopPendingOverride(void) {
-    u8 queueSize =ARR_SIZE(rPendingOverrideQueue); 
-    for(u8 i =0;i<queueSize;i++){
-        if(i<queueSize-1){
-            rPendingOverrideQueue[i]=rPendingOverrideQueue[i+1];
-        }
-        else{
-            rPendingOverrideQueue[i].key.all =0;
-            rPendingOverrideQueue[i].value.all=0;
+    u8 queueSize = ARR_SIZE(rPendingOverrideQueue);
+    for (u8 i = 0; i < queueSize; i++) {
+        if (i < queueSize - 1) {
+            rPendingOverrideQueue[i] = rPendingOverrideQueue[i + 1];
+        } else {
+            rPendingOverrideQueue[i].key.all   = 0;
+            rPendingOverrideQueue[i].value.all = 0;
         }
     }
 }
