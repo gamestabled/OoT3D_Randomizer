@@ -86,14 +86,14 @@ u8 EnemySouls_GetSoulFlag(EnemySoulId soulId) {
     if (soulId == SOUL_NONE) {
         return 1;
     }
-    return gExtSaveData.extInf[EXTINF_ENEMYSOULSFLAGS_START + (soulId >> 3)] & (1 << (soulId & 0b111));
+    return gExtSaveData.extInf.enemySouls[(soulId >> 3)] & (1 << (soulId & 0b111));
 }
 
 void EnemySouls_SetSoulFlag(EnemySoulId soulId) {
     if (soulId == SOUL_NONE) {
         return;
     }
-    gExtSaveData.extInf[EXTINF_ENEMYSOULSFLAGS_START + (soulId >> 3)] |= (1 << (soulId & 0b111));
+    gExtSaveData.extInf.enemySouls[(soulId >> 3)] |= (1 << (soulId & 0b111));
 }
 
 u8 EnemySouls_CheckSoulForActor(Actor* actor) {

@@ -114,11 +114,11 @@ u16 GearMenu_GetRewardHint(void) {
 
     if (gGearMenuSelectedSlot >= GEARSLOT_KOKIRI_EMERALD && gGearMenuSelectedSlot <= GEARSLOT_ZORA_SAPPHIRE) {
         rewardId     = gGearMenuSelectedSlot - GEARSLOT_KOKIRI_EMERALD;
-        checkedAltar = gExtSaveData.extInf[EXTINF_TOTALTAR_FLAGS] & (1 << AGE_CHILD);
+        checkedAltar = gExtSaveData.extInf.totAltarFlags & (1 << AGE_CHILD);
     } else if (gGearMenuSelectedSlot >= GEARSLOT_FOREST_MEDALLION &&
                gGearMenuSelectedSlot <= GEARSLOT_LIGHT_MEDALLION) {
         rewardId     = gGearMenuSelectedSlot - GEARSLOT_FOREST_MEDALLION + 3;
-        checkedAltar = gExtSaveData.extInf[EXTINF_TOTALTAR_FLAGS] & (1 << AGE_ADULT);
+        checkedAltar = gExtSaveData.extInf.totAltarFlags & (1 << AGE_ADULT);
     } else {
         return 0;
     }
