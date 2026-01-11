@@ -2487,7 +2487,7 @@ hook_OcarinaNoteSound_Npc:
     cpy r1,r0
     pop {r0, r2-r12, lr}
     bx lr
-    
+
 .global hook_Item00GiveAutomaticItemDrop
 hook_Item00GiveAutomaticItemDrop:
     ldrsh r0,[r4,#0x1c]
