@@ -10,7 +10,7 @@
 void EnWonderTalk_rUpdate(Actor* thisx, GlobalContext* globalCtx) {
     EnWonderTalk* this = (EnWonderTalk*)thisx;
     if (this->actionFunc == (ActorFunc)GAME_ADDR(0x2065E0) && thisx->params == 0x0FFF) { // reading ToT altar
-        gExtSaveData.extInf[EXTINF_TOTALTAR_FLAGS] |= (1 << gSaveContext.linkAge);
+        gExtSaveData.extInf.totAltarFlags |= (1 << gSaveContext.linkAge);
     }
     EnWonderTalk_Update(thisx, globalCtx);
 }

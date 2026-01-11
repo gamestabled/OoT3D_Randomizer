@@ -131,7 +131,7 @@ void ItemEffect_IceTrap(SaveContext* saveCtx, s16 arg1, s16 arg2) {
 }
 
 void ItemEffect_GiveMasterSword(SaveContext* saveCtx, s16 arg1, s16 arg2) {
-    gExtSaveData.extInf[EXTINF_MASTERSWORDFLAGS] |= 1;
+    gExtSaveData.extInf.masterSwordFlags |= 1;
 }
 
 void ItemEffect_EquipMasterSword(void) {
