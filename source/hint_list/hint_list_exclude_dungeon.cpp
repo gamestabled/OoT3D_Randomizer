@@ -1448,42 +1448,42 @@ void HintTable_Init_Exclude_Dungeon() {
 
     hintTable[BOTTOM_OF_THE_WELL_CENTER_ROOM_PIT_FALL_BLUE_RUPEE_1] = HintText::Exclude({
                        // obscure text
-                       Text{"Falling through #an invisible floor# gives", /*french*/"FR: BOTTOM_OF_THE_WELL_CENTER_ROOM_PIT_FALL_BLUE_RUPEE_1 Hint", /*spanish*/"ES: BOTTOM_OF_THE_WELL_CENTER_ROOM_PIT_FALL_BLUE_RUPEE_1 Hint", /*italian*/"IT: BOTTOM_OF_THE_WELL_CENTER_ROOM_PIT_FALL_BLUE_RUPEE_1 Hint", /*german*/"DE: BOTTOM_OF_THE_WELL_CENTER_ROOM_PIT_FALL_BLUE_RUPEE_1 Hint"},
+                       Text{"Falling through #an invisible floor# gives", /*french*/"Falling through #an invisible floor# gives", /*spanish*/"Falling through #an invisible floor# gives", /*italian*/"Falling through #an invisible floor# gives", /*german*/"Falling through #an invisible floor# gives"},
                      },{},
                        // clear text
-                       Text{"The #rupees on the platform in the center pit of BOTW# hold", /*french*/"FR: BOTTOM_OF_THE_WELL_CENTER_ROOM_PIT_FALL_BLUE_RUPEE_1 Hint", /*spanish*/"ES: BOTTOM_OF_THE_WELL_CENTER_ROOM_PIT_FALL_BLUE_RUPEE_1 Hint", /*italian*/"IT: BOTTOM_OF_THE_WELL_CENTER_ROOM_PIT_FALL_BLUE_RUPEE_1 Hint", /*german*/"DE: BOTTOM_OF_THE_WELL_CENTER_ROOM_PIT_FALL_BLUE_RUPEE_1 Hint"}
+                       Text{"The #rupees on the platform in the center pit of BOTW# hold", /*french*/"The #rupees on the platform in the center pit of BOTW# hold", /*spanish*/"The #rupees on the platform in the center pit of BOTW# hold", /*italian*/"The #rupees on the platform in the center pit of BOTW# hold", /*german*/"The #rupees on the platform in the center pit of BOTW# hold"}
     );
 
     hintTable[BOTTOM_OF_THE_WELL_CENTER_ROOM_PIT_FALL_BLUE_RUPEE_2] = HintText::Exclude({
                        // obscure text
-                       Text{"Falling through #an invisible floor# gives", /*french*/"FR: BOTTOM_OF_THE_WELL_CENTER_ROOM_PIT_FALL_BLUE_RUPEE_2 Hint", /*spanish*/"ES: BOTTOM_OF_THE_WELL_CENTER_ROOM_PIT_FALL_BLUE_RUPEE_2 Hint", /*italian*/"IT: BOTTOM_OF_THE_WELL_CENTER_ROOM_PIT_FALL_BLUE_RUPEE_2 Hint", /*german*/"DE: BOTTOM_OF_THE_WELL_CENTER_ROOM_PIT_FALL_BLUE_RUPEE_2 Hint"},
+                       Text{"Falling through #an invisible floor# gives", /*french*/"Falling through #an invisible floor# gives", /*spanish*/"Falling through #an invisible floor# gives", /*italian*/"Falling through #an invisible floor# gives", /*german*/"Falling through #an invisible floor# gives"},
                      },{},
                        // clear text
-                       Text{"The #rupees on the platform in the center pit of BOTW# hold", /*french*/"FR: BOTTOM_OF_THE_WELL_CENTER_ROOM_PIT_FALL_BLUE_RUPEE_2 Hint", /*spanish*/"ES: BOTTOM_OF_THE_WELL_CENTER_ROOM_PIT_FALL_BLUE_RUPEE_2 Hint", /*italian*/"IT: BOTTOM_OF_THE_WELL_CENTER_ROOM_PIT_FALL_BLUE_RUPEE_2 Hint", /*german*/"DE: BOTTOM_OF_THE_WELL_CENTER_ROOM_PIT_FALL_BLUE_RUPEE_2 Hint"}
+                       Text{"The #rupees on the platform in the center pit of BOTW# hold", /*french*/"The #rupees on the platform in the center pit of BOTW# hold", /*spanish*/"The #rupees on the platform in the center pit of BOTW# hold", /*italian*/"The #rupees on the platform in the center pit of BOTW# hold", /*german*/"The #rupees on the platform in the center pit of BOTW# hold"}
     );
 
     hintTable[BOTTOM_OF_THE_WELL_CENTER_ROOM_PIT_FALL_BLUE_RUPEE_3] = HintText::Exclude({
                        // obscure text
-                       Text{"Falling through #an invisible floor# gives", /*french*/"FR: BOTTOM_OF_THE_WELL_CENTER_ROOM_PIT_FALL_BLUE_RUPEE_3 Hint", /*spanish*/"ES: BOTTOM_OF_THE_WELL_CENTER_ROOM_PIT_FALL_BLUE_RUPEE_3 Hint", /*italian*/"IT: BOTTOM_OF_THE_WELL_CENTER_ROOM_PIT_FALL_BLUE_RUPEE_3 Hint", /*german*/"DE: BOTTOM_OF_THE_WELL_CENTER_ROOM_PIT_FALL_BLUE_RUPEE_3 Hint"},
+                       Text{"Falling through #an invisible floor# gives", /*french*/"Falling through #an invisible floor# gives", /*spanish*/"Falling through #an invisible floor# gives", /*italian*/"Falling through #an invisible floor# gives", /*german*/"Falling through #an invisible floor# gives"},
                      },{},
                        // clear text
-                       Text{"The #rupees on the platform in the center pit of BOTW# hold", /*french*/"FR: BOTTOM_OF_THE_WELL_CENTER_ROOM_PIT_FALL_BLUE_RUPEE_3 Hint", /*spanish*/"ES: BOTTOM_OF_THE_WELL_CENTER_ROOM_PIT_FALL_BLUE_RUPEE_3 Hint", /*italian*/"IT: BOTTOM_OF_THE_WELL_CENTER_ROOM_PIT_FALL_BLUE_RUPEE_3 Hint", /*german*/"DE: BOTTOM_OF_THE_WELL_CENTER_ROOM_PIT_FALL_BLUE_RUPEE_3 Hint"}
+                       Text{"The #rupees on the platform in the center pit of BOTW# hold", /*french*/"The #rupees on the platform in the center pit of BOTW# hold", /*spanish*/"The #rupees on the platform in the center pit of BOTW# hold", /*italian*/"The #rupees on the platform in the center pit of BOTW# hold", /*german*/"The #rupees on the platform in the center pit of BOTW# hold"}
     );
 
     hintTable[BOTTOM_OF_THE_WELL_CENTER_ROOM_PIT_FALL_BLUE_RUPEE_4] = HintText::Exclude({
                        // obscure text
-                       Text{"Falling through #an invisible floor# gives", /*french*/"FR: BOTTOM_OF_THE_WELL_CENTER_ROOM_PIT_FALL_BLUE_RUPEE_4 Hint", /*spanish*/"ES: BOTTOM_OF_THE_WELL_CENTER_ROOM_PIT_FALL_BLUE_RUPEE_4 Hint", /*italian*/"IT: BOTTOM_OF_THE_WELL_CENTER_ROOM_PIT_FALL_BLUE_RUPEE_4 Hint", /*german*/"DE: BOTTOM_OF_THE_WELL_CENTER_ROOM_PIT_FALL_BLUE_RUPEE_4 Hint"},
+                       Text{"Falling through #an invisible floor# gives", /*french*/"Falling through #an invisible floor# gives", /*spanish*/"Falling through #an invisible floor# gives", /*italian*/"Falling through #an invisible floor# gives", /*german*/"Falling through #an invisible floor# gives"},
                      },{},
                        // clear text
-                       Text{"The #rupees on the platform in the center pit of BOTW# hold", /*french*/"FR: BOTTOM_OF_THE_WELL_CENTER_ROOM_PIT_FALL_BLUE_RUPEE_4 Hint", /*spanish*/"ES: BOTTOM_OF_THE_WELL_CENTER_ROOM_PIT_FALL_BLUE_RUPEE_4 Hint", /*italian*/"IT: BOTTOM_OF_THE_WELL_CENTER_ROOM_PIT_FALL_BLUE_RUPEE_4 Hint", /*german*/"DE: BOTTOM_OF_THE_WELL_CENTER_ROOM_PIT_FALL_BLUE_RUPEE_4 Hint"}
+                       Text{"The #rupees on the platform in the center pit of BOTW# hold", /*french*/"The #rupees on the platform in the center pit of BOTW# hold", /*spanish*/"The #rupees on the platform in the center pit of BOTW# hold", /*italian*/"The #rupees on the platform in the center pit of BOTW# hold", /*german*/"The #rupees on the platform in the center pit of BOTW# hold"}
     );
 
     hintTable[BOTTOM_OF_THE_WELL_CENTER_ROOM_PIT_FALL_BLUE_RUPEE_5] = HintText::Exclude({
                        // obscure text
-                       Text{"Falling through #an invisible floor# gives", /*french*/"FR: BOTTOM_OF_THE_WELL_CENTER_ROOM_PIT_FALL_BLUE_RUPEE_5 Hint", /*spanish*/"ES: BOTTOM_OF_THE_WELL_CENTER_ROOM_PIT_FALL_BLUE_RUPEE_5 Hint", /*italian*/"IT: BOTTOM_OF_THE_WELL_CENTER_ROOM_PIT_FALL_BLUE_RUPEE_5 Hint", /*german*/"DE: BOTTOM_OF_THE_WELL_CENTER_ROOM_PIT_FALL_BLUE_RUPEE_5 Hint"},
+                       Text{"Falling through #an invisible floor# gives", /*french*/"Falling through #an invisible floor# gives", /*spanish*/"Falling through #an invisible floor# gives", /*italian*/"Falling through #an invisible floor# gives", /*german*/"Falling through #an invisible floor# gives"},
                      },{},
                        // clear text
-                       Text{"The #rupees on the platform in the center pit of BOTW# hold", /*french*/"FR: BOTTOM_OF_THE_WELL_CENTER_ROOM_PIT_FALL_BLUE_RUPEE_5 Hint", /*spanish*/"ES: BOTTOM_OF_THE_WELL_CENTER_ROOM_PIT_FALL_BLUE_RUPEE_5 Hint", /*italian*/"IT: BOTTOM_OF_THE_WELL_CENTER_ROOM_PIT_FALL_BLUE_RUPEE_5 Hint", /*german*/"DE: BOTTOM_OF_THE_WELL_CENTER_ROOM_PIT_FALL_BLUE_RUPEE_5 Hint"}
+                       Text{"The #rupees on the platform in the center pit of BOTW# hold", /*french*/"The #rupees on the platform in the center pit of BOTW# hold", /*spanish*/"The #rupees on the platform in the center pit of BOTW# hold", /*italian*/"The #rupees on the platform in the center pit of BOTW# hold", /*german*/"The #rupees on the platform in the center pit of BOTW# hold"}
     );
 
     hintTable[BOTTOM_OF_THE_WELL_MQ_MAP_CHEST] = HintText::Exclude({
@@ -1561,34 +1561,34 @@ void HintTable_Init_Exclude_Dungeon() {
 
     hintTable[ICE_CAVERN_RED_ICE_BLUE_RUPEE] = HintText::Exclude({
                        // obscure text
-                       Text{"#Some Gatorade will melt# ", /*french*/"FR: ICE_CAVERN_RED_ICE_BLUE_RUPEE Hint", /*spanish*/"ES: ICE_CAVERN_RED_ICE_BLUE_RUPEE Hint", /*italian*/"IT: ICE_CAVERN_RED_ICE_BLUE_RUPEE Hint", /*german*/"DE: ICE_CAVERN_RED_ICE_BLUE_RUPEE Hint"},
+                       Text{"#Some Gatorade will melt# ", /*french*/"#Some Gatorade will melt# ", /*spanish*/"#Some Gatorade will melt# ", /*italian*/"#Some Gatorade will melt# ", /*german*/"#Some Gatorade will melt# "},
                      },{},
                        // clear text
-                       Text{"Melting #the red ice in the first Ice Cavern room# will give", /*french*/"FR: ICE_CAVERN_RED_ICE_BLUE_RUPEE Hint", /*spanish*/"ES: ICE_CAVERN_RED_ICE_BLUE_RUPEE Hint", /*italian*/"IT: ICE_CAVERN_RED_ICE_BLUE_RUPEE Hint", /*german*/"DE: ICE_CAVERN_RED_ICE_BLUE_RUPEE Hint"}
+                       Text{"Melting #the red ice in the first Ice Cavern room# will give", /*french*/"Melting #the red ice in the first Ice Cavern room# will give", /*spanish*/"Melting #the red ice in the first Ice Cavern room# will give", /*italian*/"Melting #the red ice in the first Ice Cavern room# will give", /*german*/"Melting #the red ice in the first Ice Cavern room# will give"}
     );
 
     hintTable[ICE_CAVERN_PUSH_BLOCK_ROOM_RED_RUPEE_1] = HintText::Exclude({
                        // obscure text
-                       Text{"Aparrently #cold cancels out gravity# on", /*french*/"FR: ICE_CAVERN_PUSH_BLOCK_ROOM_RED_RUPEE_1 Hint", /*spanish*/"ES: ICE_CAVERN_PUSH_BLOCK_ROOM_RED_RUPEE_1 Hint", /*italian*/"IT: ICE_CAVERN_PUSH_BLOCK_ROOM_RED_RUPEE_1 Hint", /*german*/"DE: ICE_CAVERN_PUSH_BLOCK_ROOM_RED_RUPEE_1 Hint"},
+                       Text{"Aparrently #cold cancels out gravity# on", /*french*/"Aparrently #cold cancels out gravity# on", /*spanish*/"Aparrently #cold cancels out gravity# on", /*italian*/"Aparrently #cold cancels out gravity# on", /*german*/"Aparrently #cold cancels out gravity# on"},
                      },{},
                        // clear text
-                       Text{"#The rupees floating above the push blocks in Ice Cavern# are", /*french*/"FR: ICE_CAVERN_PUSH_BLOCK_ROOM_RED_RUPEE_1 Hint", /*spanish*/"ES: ICE_CAVERN_PUSH_BLOCK_ROOM_RED_RUPEE_1 Hint", /*italian*/"IT: ICE_CAVERN_PUSH_BLOCK_ROOM_RED_RUPEE_1 Hint", /*german*/"DE: ICE_CAVERN_PUSH_BLOCK_ROOM_RED_RUPEE_1 Hint"}
+                       Text{"#The rupees floating above the push blocks in Ice Cavern# are", /*french*/"#The rupees floating above the push blocks in Ice Cavern# are", /*spanish*/"#The rupees floating above the push blocks in Ice Cavern# are", /*italian*/"#The rupees floating above the push blocks in Ice Cavern# are", /*german*/"#The rupees floating above the push blocks in Ice Cavern# are"}
     );
 
     hintTable[ICE_CAVERN_PUSH_BLOCK_ROOM_RED_RUPEE_2] = HintText::Exclude({
                        // obscure text
-                       Text{"Aparrently #cold cancels out gravity# on", /*french*/"FR: ICE_CAVERN_PUSH_BLOCK_ROOM_RED_RUPEE_2 Hint", /*spanish*/"ES: ICE_CAVERN_PUSH_BLOCK_ROOM_RED_RUPEE_2 Hint", /*italian*/"IT: ICE_CAVERN_PUSH_BLOCK_ROOM_RED_RUPEE_2 Hint", /*german*/"DE: ICE_CAVERN_PUSH_BLOCK_ROOM_RED_RUPEE_2 Hint"},
+                       Text{"Aparrently #cold cancels out gravity# on", /*french*/"Aparrently #cold cancels out gravity# on", /*spanish*/"Aparrently #cold cancels out gravity# on", /*italian*/"Aparrently #cold cancels out gravity# on", /*german*/"Aparrently #cold cancels out gravity# on"},
                      },{},
                        // clear text
-                       Text{"#The rupees floating above the push blocks in Ice Cavern# are", /*french*/"FR: ICE_CAVERN_PUSH_BLOCK_ROOM_RED_RUPEE_2 Hint", /*spanish*/"ES: ICE_CAVERN_PUSH_BLOCK_ROOM_RED_RUPEE_2 Hint", /*italian*/"IT: ICE_CAVERN_PUSH_BLOCK_ROOM_RED_RUPEE_2 Hint", /*german*/"DE: ICE_CAVERN_PUSH_BLOCK_ROOM_RED_RUPEE_2 Hint"}
+                       Text{"#The rupees floating above the push blocks in Ice Cavern# are", /*french*/"#The rupees floating above the push blocks in Ice Cavern# are", /*spanish*/"#The rupees floating above the push blocks in Ice Cavern# are", /*italian*/"#The rupees floating above the push blocks in Ice Cavern# are", /*german*/"#The rupees floating above the push blocks in Ice Cavern# are"}
     );
 
     hintTable[ICE_CAVERN_PUSH_BLOCK_ROOM_RED_RUPEE_3] = HintText::Exclude({
                        // obscure text
-                       Text{"Aparrently #cold cancels out gravity# on", /*french*/"FR: ICE_CAVERN_PUSH_BLOCK_ROOM_RED_RUPEE_3 Hint", /*spanish*/"ES: ICE_CAVERN_PUSH_BLOCK_ROOM_RED_RUPEE_3 Hint", /*italian*/"IT: ICE_CAVERN_PUSH_BLOCK_ROOM_RED_RUPEE_3 Hint", /*german*/"DE: ICE_CAVERN_PUSH_BLOCK_ROOM_RED_RUPEE_3 Hint"},
+                       Text{"Aparrently #cold cancels out gravity# on", /*french*/"Aparrently #cold cancels out gravity# on", /*spanish*/"Aparrently #cold cancels out gravity# on", /*italian*/"Aparrently #cold cancels out gravity# on", /*german*/"Aparrently #cold cancels out gravity# on"},
                      },{},
                        // clear text
-                       Text{"#The rupees floating above the push blocks in Ice Cavern# are", /*french*/"FR: ICE_CAVERN_PUSH_BLOCK_ROOM_RED_RUPEE_3 Hint", /*spanish*/"ES: ICE_CAVERN_PUSH_BLOCK_ROOM_RED_RUPEE_3 Hint", /*italian*/"IT: ICE_CAVERN_PUSH_BLOCK_ROOM_RED_RUPEE_3 Hint", /*german*/"DE: ICE_CAVERN_PUSH_BLOCK_ROOM_RED_RUPEE_3 Hint"}
+                       Text{"#The rupees floating above the push blocks in Ice Cavern# are", /*french*/"#The rupees floating above the push blocks in Ice Cavern# are", /*spanish*/"#The rupees floating above the push blocks in Ice Cavern# are", /*italian*/"#The rupees floating above the push blocks in Ice Cavern# are", /*german*/"#The rupees floating above the push blocks in Ice Cavern# are"}
     );
 
     hintTable[ICE_CAVERN_MQ_IRON_BOOTS_CHEST] = HintText::Exclude({
