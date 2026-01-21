@@ -221,6 +221,9 @@ DungeonInfo JabuJabusBelly = DungeonInfo("Jabu Jabu's Belly", JABU_JABUS_BELLY, 
                                              JABU_JABUS_BELLY_MQ_GS_INVISIBLE_ENEMIES_ROOM,
                                              JABU_JABUS_BELLY_MQ_GS_BOOMERANG_CHEST_ROOM,
                                              JABU_JABUS_BELLY_MQ_GS_NEAR_BOSS,
+                                             JABU_JABUS_BELLY_MQ_NEAR_COW_BOTTOM_GREEN_RUPEE,
+                                             JABU_JABUS_BELLY_MQ_NEAR_COW_MIDDLE_GREEN_RUPEE,
+                                             JABU_JABUS_BELLY_MQ_NEAR_COW_TOP_GREEN_RUPEE
                                          },
                                          {},
                                          {

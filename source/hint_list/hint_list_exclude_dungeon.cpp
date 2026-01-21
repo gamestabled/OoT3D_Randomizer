@@ -352,6 +352,31 @@ void HintTable_Init_Exclude_Dungeon() {
                        Text{"a school of #stingers swallowed by Jabu-Jabu# guard", /*french*/"les #raies avallées par Jabu-Jabu# protègent", /*spanish*/"unos #stingers engullidos por Jabu-Jabu# guardan", /*italian*/"#un banco di trigoni volanti# nella pancia di Jabu Jabu protegge", /*german*/"nahe #Fischen in Jabu-Jabus Bauch#, |wäre|wären|"}
     );
 
+    hintTable[JABU_JABUS_BELLY_MQ_NEAR_COW_BOTTOM_GREEN_RUPEE] = HintText::Exclude({
+                       // obscure text
+                       Text{"#deep in belly juice near a steak# you'll find", /*french*/"#deep in belly juice near a steak# you'll find", /*spanish*/"#deep in belly juice near a steak# you'll find", /*italian*/"#deep in belly juice near a steak# you'll find", /*german*/"#deep in belly juice near a steak# you'll find"},
+                     }, {},
+                       // clear text
+                       Text{"#on the bottom of water in Jabu's Belly near a cow# is", /*french*/"#on the bottom of water in Jabu's Belly near a cow# is", /*spanish*/"#on the bottom of water in Jabu's Belly near a cow# is", /*italian*/"#on the bottom of water in Jabu's Belly near a cow# is", /*german*/"#on the bottom of water in Jabu's Belly near a cow# is"}
+    );
+
+    hintTable[JABU_JABUS_BELLY_MQ_NEAR_COW_MIDDLE_GREEN_RUPEE] = HintText::Exclude({
+                       // obscure text
+                       Text{"#halfway in belly juice near a steak# you'll find", /*french*/"#halfway in belly juice near a steak# you'll find", /*spanish*/"#halfway in belly juice near a steak# you'll find", /*italian*/"#halfway in belly juice near a steak# you'll find", /*german*/"#halfway in belly juice near a steak# you'll find"},
+                     }, {},
+                       // clear text
+                       Text{"#in the middle of water in Jabu's Belly near a cow# is", /*french*/"#in the middle of water in Jabu's Belly near a cow# is", /*spanish*/"#in the middle of water in Jabu's Belly near a cow# is", /*italian*/"#in the middle of water in Jabu's Belly near a cow# is", /*german*/"#in the middle of water in Jabu's Belly near a cow# is"}
+    );
+    
+    hintTable[JABU_JABUS_BELLY_MQ_NEAR_COW_TOP_GREEN_RUPEE] = HintText::Exclude({
+                       // obscure text
+                       Text{"#almost floating in belly juice near a steak# you'll find", /*french*/"#Deep in belly juice near a steak# you'll find", /*spanish*/"#Deep in belly juice near a steak# you'll find", /*italian*/"#Deep in belly juice near a steak# you'll find", /*german*/"#Deep in belly juice near a steak# you'll find"},
+                     }, {},
+                       // clear text
+                       Text{"#near the top of water in Jabu's Belly near a cow# is", /*french*/"near the top of water in Jabu's Belly near a cow# is", /*spanish*/"near the top of water in Jabu's Belly near a cow# is", /*italian*/"near the top of water in Jabu's Belly near a cow# is", /*german*/"near the top of water in Jabu's Belly near a cow# is"}
+    );
+    
+
     hintTable[JABU_JABUS_BELLY_BARINADE_HEART] = HintText::Exclude({
                        // obscure text
                        Text{"the #Bio-Electric Anemone# holds", /*french*/"l'#anémone bioélectrique# possède", /*spanish*/"la #anémona bioeléctrica# porta", /*italian*/"l'#anemone bio-elettrico# possiede", /*german*/"nahe dem #elektroterrestrischen Biotentakel#, |wäre|wären|"},
