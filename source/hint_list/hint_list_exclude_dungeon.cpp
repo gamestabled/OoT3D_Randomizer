@@ -367,7 +367,7 @@ void HintTable_Init_Exclude_Dungeon() {
                        // clear text
                        Text{"#in the middle of water in Jabu's Belly near a cow# is", /*french*/"#in the middle of water in Jabu's Belly near a cow# is", /*spanish*/"#in the middle of water in Jabu's Belly near a cow# is", /*italian*/"#in the middle of water in Jabu's Belly near a cow# is", /*german*/"#in the middle of water in Jabu's Belly near a cow# is"}
     );
-    
+
     hintTable[JABU_JABUS_BELLY_MQ_NEAR_COW_TOP_GREEN_RUPEE] = HintText::Exclude({
                        // obscure text
                        Text{"#almost floating in belly juice near a steak# you'll find", /*french*/"#Deep in belly juice near a steak# you'll find", /*spanish*/"#Deep in belly juice near a steak# you'll find", /*italian*/"#Deep in belly juice near a steak# you'll find", /*german*/"#Deep in belly juice near a steak# you'll find"},
@@ -375,7 +375,6 @@ void HintTable_Init_Exclude_Dungeon() {
                        // clear text
                        Text{"#near the top of water in Jabu's Belly near a cow# is", /*french*/"near the top of water in Jabu's Belly near a cow# is", /*spanish*/"near the top of water in Jabu's Belly near a cow# is", /*italian*/"near the top of water in Jabu's Belly near a cow# is", /*german*/"near the top of water in Jabu's Belly near a cow# is"}
     );
-    
 
     hintTable[JABU_JABUS_BELLY_BARINADE_HEART] = HintText::Exclude({
                        // obscure text
