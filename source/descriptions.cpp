@@ -593,14 +593,13 @@ string_view ocarinaButtonsDesc        = "Enabling this locks all Ocarina inputs,
 /*------------------------------                                                           //
 |  SHUFFLE FREESTANDING RUPEES |                                                           //
 ------------------------------*/                                                           //
-string_view shuffleRupeesDesc         = "Rupeesanity shuffles all freestanding visible\n"
-                                        "rupees that are placed in the world without player\n"
-                                        "intervention. So it does include rupees that are\n" 
-                                        "placed in other object like boulders, but it\n"
-                                        "doesn't include Wonder Items or rupees that spawn\n"
-                                        "from the Goron City spinning pot or the pots in\n"
-                                        "Shadow Temple.";
-                                        
+string_view shuffleRupeesDesc         = "Rupeesanity shuffles all freestanding visible\n"  //
+                                        "rupees that are placed in the world without player"
+                                        "intervention. So it does include rupees that are\n"
+                                        "placed in other objects like boulders, but it\n"  //
+                                        "doesn't include Wonder Items, rupees that spawn\n"//
+                                        "from the Goron City spinning pot or the pots in\n"//
+                                        "Shadow Temple.";                                  //
 /*------------------------------                                                           //
 |      MAPS AND COMPASSES      |                                                           //
 ------------------------------*/                                                           //
