@@ -40,122 +40,122 @@ void HintTable_Init_Exclude_Overworld() {
 
     hintTable[KF_END_OF_BRIDGE_BLUE_RUPEE] = HintText::Exclude({
                        // obscure text
-                       Text{"A #gem next to a forest girl# is", /*french*/"A #gem next to a forest girl# is", /*spanish*/"A #gem next to a forest girl# is", /*italian*/"A #gem next to a forest girl# is", /*german*/"A #gem next to a forest girl# is"},
+                       Text{"a #gem next to a forest girl# is", /*french*/"a #gem next to a forest girl# is", /*spanish*/"a #gem next to a forest girl# is", /*italian*/"#di fianco a una ragazza bionda nella foresta# puoi trovare", /*german*/"a #gem next to a forest girl# is"},
                      }, {},
                        // clear text
-                       Text{"A #rupee on the end of a bridge# is", /*french*/"A #rupee on the end of a bridge# is", /*spanish*/"A #rupee on the end of a bridge# is", /*italian*/"A #rupee on the end of a bridge# is", /*german*/"A #rupee on the end of a bridge# is"}
+                       Text{"a #rupee on the end of a bridge# is", /*french*/"a #rupee on the end of a bridge# is", /*spanish*/"a #rupee on the end of a bridge# is", /*italian*/"#alla fine di una passerella nella foresta# puoi trovare", /*german*/"a #rupee on the end of a bridge# is"}
     );
 
     hintTable[KF_BEHIND_MIDOS_HOUSE_BLUE_RUPEE] = HintText::Exclude({
                        // obscure text
-                       Text{"The #backside of a kokiri house# hides", /*french*/"The #backside of a kokiri house# hides", /*spanish*/"The #backside of a kokiri house# hides", /*italian*/"The #backside of a kokiri house# hides", /*german*/"The #backside of a kokiri house# hides"},
+                       Text{"the #backside of a Kokiri house# hides", /*french*/"the #backside of a Kokiri house# hides", /*spanish*/"the #backside of a Kokiri house# hides", /*italian*/"il #retro di una casa Kokiri# nasconde", /*german*/"the #backside of a Kokiri house# hides"},
                      }, {},
                        // clear text
-                       Text{"The #rupee behind Mido's house# hides", /*french*/"The #rupee behind Mido's house# hides", /*spanish*/"The #rupee behind Mido's house# hides", /*italian*/"The #rupee behind Mido's house# hides", /*german*/"The #rupee behind Mido's house# hides"}
+                       Text{"the #rupee behind Mido's house# hides", /*french*/"the #rupee behind Mido's house# hides", /*spanish*/"the #rupee behind Mido's house# hides", /*italian*/"#dietro alla casa di Mido# puoi trovare", /*german*/"the #rupee behind Mido's house# hides"}
     );
 
     hintTable[KF_BOULDER_MAZE_BLUE_RUPEE_1] = HintText::Exclude({
                        // obscure text
-                       Text{"When #playing Indiana Jones# you can find", /*french*/"When #playing Indiana Jones# you can find", /*spanish*/"When #playing Indiana Jones# you can find", /*italian*/"When #playing Indiana Jones# you can find", /*german*/"When #playing Indiana Jones# you can find"},
+                       Text{"when #playing Indiana Jones# you can find", /*french*/"when #playing Indiana Jones# you can find", /*spanish*/"when #playing Indiana Jones# you can find", /*italian*/"#giocando a Indiana Jones# puoi trovare", /*german*/"when #playing Indiana Jones# you can find"},
                      }, {},
                        // clear text
-                       Text{"In #the #Kokiri boulder maze# you can find", /*french*/"In #the #Kokiri boulder maze# you can find", /*spanish*/"In #the #Kokiri boulder maze# you can find", /*italian*/"In #the #Kokiri boulder maze# you can find", /*german*/"In #the #Kokiri boulder maze# you can find"}
+                       Text{"in the #Kokiri boulder maze# you can find", /*french*/"in the #Kokiri boulder maze# you can find", /*spanish*/"in the #Kokiri boulder maze# you can find", /*italian*/"presso #un masso rotolante nella foresta dei Kokiri# puoi trovare", /*german*/"in the #Kokiri boulder maze# you can find"}
     );
 
     hintTable[KF_BOULDER_MAZE_BLUE_RUPEE_2] = HintText::Exclude({
                        // obscure text
-                       Text{"#Watching out for rolling stones# you can find", /*french*/"#Watching out for rolling stones# you can find", /*spanish*/"#Watching out for rolling stones# you can find", /*italian*/"#Watching out for rolling stones# you can find", /*german*/"#Watching out for rolling stones# you can find"},
+                       Text{"#watching out for rolling stones# you can find", /*french*/"#watching out for rolling stones# you can find", /*spanish*/"#watching out for rolling stones# you can find", /*italian*/"chi #impara a usare L# può trovare", /*german*/"#watching out for rolling stones# you can find"},
                      }, {},
                        // clear text
-                       Text{"In #the #Kokiri boulder maze# you can find", /*french*/"In #the #Kokiri boulder maze# you can find", /*spanish*/"In #the #Kokiri boulder maze# you can find", /*italian*/"In #the #Kokiri boulder maze# you can find", /*german*/"In #the #Kokiri boulder maze# you can find"}
+                       Text{"in the #Kokiri boulder maze# you can find", /*french*/"in the #Kokiri boulder maze# you can find", /*spanish*/"in the #Kokiri boulder maze# you can find", /*italian*/"presso #un masso rotolante nella foresta dei Kokiri# puoi trovare", /*german*/"in the #Kokiri boulder maze# you can find"}
     );
 
     hintTable[KF_NEAR_RAMP_GREEN_RUPEE_1] = HintText::Exclude({
                        // obscure text
-                       Text{"Some #grassy flowers# obscure", /*french*/"Some #grassy flowers# obscure", /*spanish*/"Some #grassy flowers# obscure", /*italian*/"Some #grassy flowers# obscure", /*german*/"Some #grassy flowers# obscure"},
+                       Text{"some #grassy flowers# obscure", /*french*/"some #grassy flowers# obscure", /*spanish*/"some #grassy flowers# obscure", /*italian*/"un #prato fiorito# nasconde", /*german*/"some #grassy flowers# obscure"},
                      }, {},
                        // clear text
-                       Text{"#In the grass near the ramp in Kokiri Forest# is", /*french*/"#In the grass near the ramp in Kokiri Forest# is", /*spanish*/"#In the grass near the ramp in Kokiri Forest# is", /*italian*/"#In the grass near the ramp in Kokiri Forest# is", /*german*/"#In the grass near the ramp in Kokiri Forest# is"}
+                       Text{"#in the grass near the ramp in Kokiri Forest# is", /*french*/"#in the grass near the ramp in Kokiri Forest# is", /*spanish*/"#in the grass near the ramp in Kokiri Forest# is", /*italian*/"#l'erba nella foresta dei Kokiri# nasconde", /*german*/"#in the grass near the ramp in Kokiri Forest# is"}
     );
 
     hintTable[KF_NEAR_RAMP_GREEN_RUPEE_2] = HintText::Exclude({
                        // obscure text
-                       Text{"Some #grassy flowers# obscure", /*french*/"Some #grassy flowers# obscure", /*spanish*/"Some #grassy flowers# obscure", /*italian*/"Some #grassy flowers# obscure", /*german*/"Some #grassy flowers# obscure"},
+                       Text{"some #grassy flowers# obscure", /*french*/"some #grassy flowers# obscure", /*spanish*/"some #grassy flowers# obscure", /*italian*/"un #prato fiorito# nasconde", /*german*/"some #grassy flowers# obscure"},
                      }, {},
                        // clear text
-                       Text{"#In the grass near the ramp in Kokiri Forest# is", /*french*/"#In the grass near the ramp in Kokiri Forest# is", /*spanish*/"#In the grass near the ramp in Kokiri Forest# is", /*italian*/"#In the grass near the ramp in Kokiri Forest# is", /*german*/"#In the grass near the ramp in Kokiri Forest# is"}
+                       Text{"#in the grass near the ramp in Kokiri Forest# is", /*french*/"#in the grass near the ramp in Kokiri Forest# is", /*spanish*/"#in the grass near the ramp in Kokiri Forest# is", /*italian*/"#l'erba nella foresta dei Kokiri# nasconde", /*german*/"#in the grass near the ramp in Kokiri Forest# is"}
     );
 
     hintTable[KF_NEAR_MIDOS_HOUSE_GREEN_RUPEE_1] = HintText::Exclude({
                        // obscure text
-                       Text{"Some #grassy flowers# obscure", /*french*/"Some #grassy flowers# obscure", /*spanish*/"Some #grassy flowers# obscure", /*italian*/"Some #grassy flowers# obscure", /*german*/"Some #grassy flowers# obscure"},
+                       Text{"some #grassy flowers# obscure", /*french*/"some #grassy flowers# obscure", /*spanish*/"some #grassy flowers# obscure", /*italian*/"un #prato fiorito# nasconde", /*german*/"some #grassy flowers# obscure"},
                      }, {},
                        // clear text
-                       Text{"#Near Mido's house in the grass# is", /*french*/"#Near Mido's house in the grass# is", /*spanish*/"#Near Mido's house in the grass# is", /*italian*/"#Near Mido's house in the grass# is", /*german*/"#Near Mido's house in the grass# is"}
+                       Text{"#near Mido's house in the grass# is", /*french*/"#near Mido's house in the grass# is", /*spanish*/"#near Mido's house in the grass# is", /*italian*/"#l'erba vicino alla casa di Mido# nasconde", /*german*/"#near Mido's house in the grass# is"}
     );
 
     hintTable[KF_NEAR_MIDOS_HOUSE_GREEN_RUPEE_2] = HintText::Exclude({
                        // obscure text
-                       Text{"Some #grassy flowers# obscure", /*french*/"Some #grassy flowers# obscure", /*spanish*/"Some #grassy flowers# obscure", /*italian*/"Some #grassy flowers# obscure", /*german*/"Some #grassy flowers# obscure"},
+                       Text{"some #grassy flowers# obscure", /*french*/"some #grassy flowers# obscure", /*spanish*/"some #grassy flowers# obscure", /*italian*/"un #prato fiorito# nasconde", /*german*/"some #grassy flowers# obscure"},
                      }, {},
                        // clear text
-                       Text{"#Near Mido's house in the grass# is", /*french*/"#Near Mido's house in the grass# is", /*spanish*/"#Near Mido's house in the grass# is", /*italian*/"#Near Mido's house in the grass# is", /*german*/"#Near Mido's house in the grass# is"}
+                       Text{"#near Mido's house in the grass# is", /*french*/"#near Mido's house in the grass# is", /*spanish*/"#near Mido's house in the grass# is", /*italian*/"#l'erba vicino alla casa di Mido# nasconde", /*german*/"#near Mido's house in the grass# is"}
     );
 
     hintTable[KF_RUPEE_CIRCLE_GREEN_RUPEE_1] = HintText::Exclude({
                        // obscure text
-                       Text{"A #sparkly circle in the forest# includes", /*french*/"A #sparkly circle in the forest# includes", /*spanish*/"A #sparkly circle in the forest# includes", /*italian*/"A #sparkly circle in the forest# includes", /*german*/"A #sparkly circle in the forest# includes"},
+                       Text{"a #sparkly circle in the forest# includes", /*french*/"a #sparkly circle in the forest# includes", /*spanish*/"a #sparkly circle in the forest# includes", /*italian*/"in una #nicchia rialzata nella foresta# puoi trovare", /*german*/"a #sparkly circle in the forest# includes"},
                      }, {},
                        // clear text
-                       Text{"A #rupee on the platform in Kokiri Forest# is", /*french*/"A #rupee on the platform in Kokiri Forest# is", /*spanish*/"A #rupee on the platform in Kokiri Forest# is", /*italian*/"A #rupee on the platform in Kokiri Forest# is", /*german*/"A #rupee on the platform in Kokiri Forest# is"}
+                       Text{"a #rupee on the platform in Kokiri Forest# is", /*french*/"a #rupee on the platform in Kokiri Forest# is", /*spanish*/"a #rupee on the platform in Kokiri Forest# is", /*italian*/"un #cerchio di oggetti nella foresta dei Kokiri# include", /*german*/"a #rupee on the platform in Kokiri Forest# is"}
     );
 
     hintTable[KF_RUPEE_CIRCLE_GREEN_RUPEE_2] = HintText::Exclude({
                       // obscure text
-                       Text{"A #sparkly circle in the forest# includes", /*french*/"A #sparkly circle in the forest# includes", /*spanish*/"A #sparkly circle in the forest# includes", /*italian*/"A #sparkly circle in the forest# includes", /*german*/"A #sparkly circle in the forest# includes"},
+                       Text{"a #sparkly circle in the forest# includes", /*french*/"a #sparkly circle in the forest# includes", /*spanish*/"a #sparkly circle in the forest# includes", /*italian*/"in una #nicchia rialzata nella foresta# puoi trovare", /*german*/"a #sparkly circle in the forest# includes"},
                      }, {},
                        // clear text
-                       Text{"A #rupee on the platform in Kokiri Forest# is", /*french*/"A #rupee on the platform in Kokiri Forest# is", /*spanish*/"A #rupee on the platform in Kokiri Forest# is", /*italian*/"A #rupee on the platform in Kokiri Forest# is", /*german*/"A #rupee on the platform in Kokiri Forest# is"}
+                       Text{"a #rupee on the platform in Kokiri Forest# is", /*french*/"a #rupee on the platform in Kokiri Forest# is", /*spanish*/"a #rupee on the platform in Kokiri Forest# is", /*italian*/"un #cerchio di oggetti nella foresta dei Kokiri# include", /*german*/"a #rupee on the platform in Kokiri Forest# is"}
     );
 
     hintTable[KF_RUPEE_CIRCLE_GREEN_RUPEE_3] = HintText::Exclude({
                        // obscure text
-                       Text{"A #sparkly circle in the forest# includes", /*french*/"A #sparkly circle in the forest# includes", /*spanish*/"A #sparkly circle in the forest# includes", /*italian*/"A #sparkly circle in the forest# includes", /*german*/"A #sparkly circle in the forest# includes"},
+                       Text{"a #sparkly circle in the forest# includes", /*french*/"a #sparkly circle in the forest# includes", /*spanish*/"a #sparkly circle in the forest# includes", /*italian*/"in una #nicchia rialzata nella foresta# puoi trovare", /*german*/"a #sparkly circle in the forest# includes"},
                      }, {},
                        // clear text
-                       Text{"A #rupee on the platform in Kokiri Forest# is", /*french*/"A #rupee on the platform in Kokiri Forest# is", /*spanish*/"A #rupee on the platform in Kokiri Forest# is", /*italian*/"A #rupee on the platform in Kokiri Forest# is", /*german*/"A #rupee on the platform in Kokiri Forest# is"}
+                       Text{"a #rupee on the platform in Kokiri Forest# is", /*french*/"a #rupee on the platform in Kokiri Forest# is", /*spanish*/"a #rupee on the platform in Kokiri Forest# is", /*italian*/"un #cerchio di oggetti nella foresta dei Kokiri# include", /*german*/"a #rupee on the platform in Kokiri Forest# is"}
     );
 
     hintTable[KF_RUPEE_CIRCLE_GREEN_RUPEE_4] = HintText::Exclude({
                        // obscure text
-                       Text{"A #sparkly circle in the forest# includes", /*french*/"A #sparkly circle in the forest# includes", /*spanish*/"A #sparkly circle in the forest# includes", /*italian*/"A #sparkly circle in the forest# includes", /*german*/"A #sparkly circle in the forest# includes"},
+                       Text{"a #sparkly circle in the forest# includes", /*french*/"a #sparkly circle in the forest# includes", /*spanish*/"a #sparkly circle in the forest# includes", /*italian*/"in una #nicchia rialzata nella foresta# puoi trovare", /*german*/"a #sparkly circle in the forest# includes"},
                      }, {},
                        // clear text
-                       Text{"A #rupee on the platform in Kokiri Forest# is", /*french*/"A #rupee on the platform in Kokiri Forest# is", /*spanish*/"A #rupee on the platform in Kokiri Forest# is", /*italian*/"A #rupee on the platform in Kokiri Forest# is", /*german*/"A #rupee on the platform in Kokiri Forest# is"}
+                       Text{"a #rupee on the platform in Kokiri Forest# is", /*french*/"a #rupee on the platform in Kokiri Forest# is", /*spanish*/"a #rupee on the platform in Kokiri Forest# is", /*italian*/"un #cerchio di oggetti nella foresta dei Kokiri# include", /*german*/"a #rupee on the platform in Kokiri Forest# is"}
     );
 
     hintTable[KF_RUPEE_CIRCLE_GREEN_RUPEE_5] = HintText::Exclude({
                        // obscure text
-                       Text{"A #sparkly circle in the forest# includes", /*french*/"A #sparkly circle in the forest# includes", /*spanish*/"A #sparkly circle in the forest# includes", /*italian*/"A #sparkly circle in the forest# includes", /*german*/"A #sparkly circle in the forest# includes"},
+                       Text{"a #sparkly circle in the forest# includes", /*french*/"a #sparkly circle in the forest# includes", /*spanish*/"a #sparkly circle in the forest# includes", /*italian*/"in una #nicchia rialzata nella foresta# puoi trovare", /*german*/"a #sparkly circle in the forest# includes"},
                      }, {},
                        // clear text
-                       Text{"A #rupee on the platform in Kokiri Forest# is", /*french*/"A #rupee on the platform in Kokiri Forest# is", /*spanish*/"A #rupee on the platform in Kokiri Forest# is", /*italian*/"A #rupee on the platform in Kokiri Forest# is", /*german*/"A #rupee on the platform in Kokiri Forest# is"}
+                       Text{"a #rupee on the platform in Kokiri Forest# is", /*french*/"a #rupee on the platform in Kokiri Forest# is", /*spanish*/"a #rupee on the platform in Kokiri Forest# is", /*italian*/"un #cerchio di oggetti nella foresta dei Kokiri# include", /*german*/"a #rupee on the platform in Kokiri Forest# is"}
     );
 
     hintTable[KF_RUPEE_CIRCLE_GREEN_RUPEE_6] = HintText::Exclude({
                        // obscure text
-                       Text{"A #sparkly circle in the forest# includes", /*french*/"A #sparkly circle in the forest# includes", /*spanish*/"A #sparkly circle in the forest# includes", /*italian*/"A #sparkly circle in the forest# includes", /*german*/"A #sparkly circle in the forest# includes"},
+                       Text{"a #sparkly circle in the forest# includes", /*french*/"a #sparkly circle in the forest# includes", /*spanish*/"a #sparkly circle in the forest# includes", /*italian*/"in una #nicchia rialzata nella foresta# puoi trovare", /*german*/"a #sparkly circle in the forest# includes"},
                      }, {},
                        // clear text
-                       Text{"A #rupee on the platform in Kokiri Forest# is", /*french*/"A #rupee on the platform in Kokiri Forest# is", /*spanish*/"A #rupee on the platform in Kokiri Forest# is", /*italian*/"A #rupee on the platform in Kokiri Forest# is", /*german*/"A #rupee on the platform in Kokiri Forest# is"}
+                       Text{"a #rupee on the platform in Kokiri Forest# is", /*french*/"a #rupee on the platform in Kokiri Forest# is", /*spanish*/"a #rupee on the platform in Kokiri Forest# is", /*italian*/"un #cerchio di oggetti nella foresta dei Kokiri# include", /*german*/"a #rupee on the platform in Kokiri Forest# is"}
     );
 
     hintTable[KF_RUPEE_CIRCLE_RED_RUPEE] = HintText::Exclude({
                        // obscure text
-                       Text{"A #red one in green surroundings# has", /*french*/"A #red one in green surroundings# has", /*spanish*/"A #red one in green surroundings# has", /*italian*/"A #red one in green surroundings# has", /*german*/"A #red one in green surroundings# has"},
+                       Text{"a #red one in green surroundings# has", /*french*/"a #red one in green surroundings# has", /*spanish*/"a #red one in green surroundings# has", /*italian*/"in una #nicchia rialzata nella foresta# puoi trovare", /*german*/"a #red one in green surroundings# has"},
                      }, {},
                        // clear text
-                       Text{"The #red rupee on the platform in Kokiri Forest# is", /*french*/"The #red rupee on the platform in Kokiri Forest# is", /*spanish*/"The #red rupee on the platform in Kokiri Forest# is", /*italian*/"The #red rupee on the platform in Kokiri Forest# is", /*german*/"The #red rupee on the platform in Kokiri Forest# is"}
+                       Text{"the #red rupee on the platform in Kokiri Forest# is", /*french*/"the #red rupee on the platform in Kokiri Forest# is", /*spanish*/"the #red rupee on the platform in Kokiri Forest# is", /*italian*/"un #cerchio di oggetti nella foresta dei Kokiri# include", /*german*/"the #red rupee on the platform in Kokiri Forest# is"}
     );
 
     hintTable[GRAVEYARD_SHIELD_GRAVE_CHEST] = HintText::Exclude({
@@ -193,58 +193,58 @@ void HintTable_Init_Exclude_Overworld() {
 
     hintTable[GRAVEYARD_DAMPE_RACE_GREEN_RUPEE_1] = HintText::Exclude({
                        // obscure text
-                       Text{"#Straying of a racing course# gives you", /*french*/"#Straying of a racing course# gives you", /*spanish*/"#Straying of a racing course# gives you", /*italian*/"#Straying of a racing course# gives you", /*german*/"#Straying of a racing course# gives you"},
+                       Text{"#straying off a racing course# gives you", /*french*/"#straying off a racing course# gives you", /*spanish*/"#straying off a racing course# gives you", /*italian*/"#sbagliare strada durante una gara# conduce a", /*german*/"#straying off a racing course# gives you"},
                      },{},
-                       Text{"#During Dampé's race# you can find", /*french*/"#During Dampé's race# you can find", /*spanish*/"#During Dampé's race# you can find", /*italian*/"#During Dampé's race# you can find", /*german*/"#During Dampé's race# you can find"}
+                       Text{"#during Dampé's race# you can find", /*french*/"#during Dampé's race# you can find", /*spanish*/"#during Dampé's race# you can find", /*italian*/"#durante la gara con Danpei# puoi trovare", /*german*/"#during Dampé's race# you can find"}
     );
 
     hintTable[GRAVEYARD_DAMPE_RACE_GREEN_RUPEE_2] = HintText::Exclude({
                        // obscure text
-                       Text{"#Straying of a racing course# gives you", /*french*/"#Straying of a racing course# gives you", /*spanish*/"#Straying of a racing course# gives you", /*italian*/"#Straying of a racing course# gives you", /*german*/"#Straying of a racing course# gives you"},
+                       Text{"#straying off a racing course# gives you", /*french*/"#straying off a racing course# gives you", /*spanish*/"#straying off a racing course# gives you", /*italian*/"#sbagliare strada durante una gara# conduce a", /*german*/"#straying off a racing course# gives you"},
                      },{},
-                       Text{"#During Dampé's race# you can find", /*french*/"#During Dampé's race# you can find", /*spanish*/"#During Dampé's race# you can find", /*italian*/"#During Dampé's race# you can find", /*german*/"#During Dampé's race# you can find"}
+                       Text{"#during Dampé's race# you can find", /*french*/"#during Dampé's race# you can find", /*spanish*/"#during Dampé's race# you can find", /*italian*/"#durante la gara con Danpei# puoi trovare", /*german*/"#during Dampé's race# you can find"}
     );
 
     hintTable[GRAVEYARD_DAMPE_RACE_GREEN_RUPEE_3] = HintText::Exclude({
                        // obscure text
-                       Text{"#Straying of a racing course# gives you", /*french*/"#Straying of a racing course# gives you", /*spanish*/"#Straying of a racing course# gives you", /*italian*/"#Straying of a racing course# gives you", /*german*/"#Straying of a racing course# gives you"},
+                       Text{"#straying off a racing course# gives you", /*french*/"#straying off a racing course# gives you", /*spanish*/"#straying off a racing course# gives you", /*italian*/"#sbagliare strada durante una gara# conduce a", /*german*/"#straying off a racing course# gives you"},
                      },{},
-                       Text{"#During Dampé's race# you can find", /*french*/"#During Dampé's race# you can find", /*spanish*/"#During Dampé's race# you can find", /*italian*/"#During Dampé's race# you can find", /*german*/"#During Dampé's race# you can find"}
+                       Text{"#during Dampé's race# you can find", /*french*/"#during Dampé's race# you can find", /*spanish*/"#during Dampé's race# you can find", /*italian*/"#durante la gara con Danpei# puoi trovare", /*german*/"#during Dampé's race# you can find"}
     );
 
     hintTable[GRAVEYARD_DAMPE_RACE_GREEN_RUPEE_4] = HintText::Exclude({
                        // obscure text
-                       Text{"#Straying of a racing course# gives you", /*french*/"#Straying of a racing course# gives you", /*spanish*/"#Straying of a racing course# gives you", /*italian*/"#Straying of a racing course# gives you", /*german*/"#Straying of a racing course# gives you"},
+                       Text{"#straying off a racing course# gives you", /*french*/"#straying off a racing course# gives you", /*spanish*/"#straying off a racing course# gives you", /*italian*/"#sbagliare strada durante una gara# conduce a", /*german*/"#straying off a racing course# gives you"},
                      },{},
-                       Text{"#During Dampé's race# you can find", /*french*/"#During Dampé's race# you can find", /*spanish*/"#During Dampé's race# you can find", /*italian*/"#During Dampé's race# you can find", /*german*/"#During Dampé's race# you can find"}
+                       Text{"#during Dampé's race# you can find", /*french*/"#during Dampé's race# you can find", /*spanish*/"#during Dampé's race# you can find", /*italian*/"#durante la gara con Danpei# puoi trovare", /*german*/"#during Dampé's race# you can find"}
     );
 
     hintTable[GRAVEYARD_DAMPE_RACE_GREEN_RUPEE_5] = HintText::Exclude({
                        // obscure text
-                       Text{"#Straying of a racing course# gives you", /*french*/"#Straying of a racing course# gives you", /*spanish*/"#Straying of a racing course# gives you", /*italian*/"#Straying of a racing course# gives you", /*german*/"#Straying of a racing course# gives you"},
+                       Text{"#straying off a racing course# gives you", /*french*/"#straying off a racing course# gives you", /*spanish*/"#straying off a racing course# gives you", /*italian*/"#sbagliare strada durante una gara# conduce a", /*german*/"#straying off a racing course# gives you"},
                      },{},
-                       Text{"#During Dampé's race# you can find", /*french*/"#During Dampé's race# you can find", /*spanish*/"#During Dampé's race# you can find", /*italian*/"#During Dampé's race# you can find", /*german*/"#During Dampé's race# you can find"}
+                       Text{"#during Dampé's race# you can find", /*french*/"#during Dampé's race# you can find", /*spanish*/"#during Dampé's race# you can find", /*italian*/"#durante la gara con Danpei# puoi trovare", /*german*/"#during Dampé's race# you can find"}
     );
 
     hintTable[GRAVEYARD_DAMPE_RACE_GREEN_RUPEE_6] = HintText::Exclude({
                        // obscure text
-                       Text{"#Straying of a racing course# gives you", /*french*/"#Straying of a racing course# gives you", /*spanish*/"#Straying of a racing course# gives you", /*italian*/"#Straying of a racing course# gives you", /*german*/"#Straying of a racing course# gives you"},
+                       Text{"#straying off a racing course# gives you", /*french*/"#straying off a racing course# gives you", /*spanish*/"#straying off a racing course# gives you", /*italian*/"#sbagliare strada durante una gara# conduce a", /*german*/"#straying off a racing course# gives you"},
                      },{},
-                       Text{"#During Dampé's race# you can find", /*french*/"#During Dampé's race# you can find", /*spanish*/"#During Dampé's race# you can find", /*italian*/"#During Dampé's race# you can find", /*german*/"#During Dampé's race# you can find"}
+                       Text{"#during Dampé's race# you can find", /*french*/"#during Dampé's race# you can find", /*spanish*/"#during Dampé's race# you can find", /*italian*/"#durante la gara con Danpei# puoi trovare", /*german*/"#during Dampé's race# you can find"}
     );
 
     hintTable[GRAVEYARD_DAMPE_RACE_GREEN_RUPEE_7] = HintText::Exclude({
                        // obscure text
-                       Text{"#Straying of a racing course# gives you", /*french*/"#Straying of a racing course# gives you", /*spanish*/"#Straying of a racing course# gives you", /*italian*/"#Straying of a racing course# gives you", /*german*/"#Straying of a racing course# gives you"},
+                       Text{"#straying off a racing course# gives you", /*french*/"#straying off a racing course# gives you", /*spanish*/"#straying off a racing course# gives you", /*italian*/"#sbagliare strada durante una gara# conduce a", /*german*/"#straying off a racing course# gives you"},
                      },{},
-                       Text{"#During Dampé's race# you can find", /*french*/"#During Dampé's race# you can find", /*spanish*/"#During Dampé's race# you can find", /*italian*/"#During Dampé's race# you can find", /*german*/"#During Dampé's race# you can find"}
+                       Text{"#during Dampé's race# you can find", /*french*/"#during Dampé's race# you can find", /*spanish*/"#during Dampé's race# you can find", /*italian*/"#durante la gara con Danpei# puoi trovare", /*german*/"#during Dampé's race# you can find"}
     );
 
     hintTable[GRAVEYARD_DAMPE_RACE_GREEN_RUPEE_8] = HintText::Exclude({
                        // obscure text
-                       Text{"#Straying of a racing course# gives you", /*french*/"#Straying of a racing course# gives you", /*spanish*/"#Straying of a racing course# gives you", /*italian*/"#Straying of a racing course# gives you", /*german*/"#Straying of a racing course# gives you"},
+                       Text{"#straying off a racing course# gives you", /*french*/"#straying off a racing course# gives you", /*spanish*/"#straying off a racing course# gives you", /*italian*/"#sbagliare strada durante una gara# conduce a", /*german*/"#straying off a racing course# gives you"},
                      },{},
-                       Text{"#During Dampé's race# you can find", /*french*/"#During Dampé's race# you can find", /*spanish*/"#During Dampé's race# you can find", /*italian*/"#During Dampé's race# you can find", /*german*/"#During Dampé's race# you can find"}
+                       Text{"#during Dampé's race# you can find", /*french*/"#during Dampé's race# you can find", /*spanish*/"#during Dampé's race# you can find", /*italian*/"#durante la gara con Danpei# puoi trovare", /*german*/"#during Dampé's race# you can find"}
     );
 
     hintTable[GF_CHEST] = HintText::Exclude({
@@ -333,147 +333,147 @@ void HintTable_Init_Exclude_Overworld() {
 
     hintTable[ZF_UNDERWATER_GREEN_RUPEE_1] = HintText::Exclude({
                        // obscure text
-                       Text{"#Jabu's shiny poo# includes", /*french*/"#Jabu's shiny poo# includes", /*spanish*/"#Jabu's shiny poo# includes", /*italian*/"#Jabu's shiny poo# includes", /*german*/"#Jabu's shiny poo# includes"},
+                       Text{"#Jabu's shiny poo# includes", /*french*/"#Jabu's shiny poo# includes", /*spanish*/"#Jabu's shiny poo# includes", /*italian*/"nelle #acque ghiacciate# qualcuno ha buttato", /*german*/"#Jabu's shiny poo# includes"},
                      }, {},
                        //clear text
-                       Text{"#One of the rupees underwater in Zora's Fountain# is", /*french*/"#One of the rupees underwater in Zora's Fountain# is", /*spanish*/"#One of the rupees underwater in Zora's Fountain# is", /*italian*/"#One of the rupees underwater in Zora's Fountain# is", /*german*/"#One of the rupees underwater in Zora's Fountain# is"}
+                       Text{"#one of the rupees underwater in Zora's Fountain# is", /*french*/"#one of the rupees underwater in Zora's Fountain# is", /*spanish*/"#one of the rupees underwater in Zora's Fountain# is", /*italian*/"#sott'acqua nella sorgente Zora# puoi trovare", /*german*/"#one of the rupees underwater in Zora's Fountain# is"}
     );
 
     hintTable[ZF_UNDERWATER_GREEN_RUPEE_2] = HintText::Exclude({
                        // obscure text
-                       Text{"#Jabu's shiny poo# includes", /*french*/"#Jabu's shiny poo# includes", /*spanish*/"#Jabu's shiny poo# includes", /*italian*/"#Jabu's shiny poo# includes", /*german*/"#Jabu's shiny poo# includes"},
+                       Text{"#Jabu's shiny poo# includes", /*french*/"#Jabu's shiny poo# includes", /*spanish*/"#Jabu's shiny poo# includes", /*italian*/"nelle #acque ghiacciate# qualcuno ha buttato", /*german*/"#Jabu's shiny poo# includes"},
                      }, {},
                        //clear text
-                       Text{"#One of the rupees underwater in Zora's Fountain# is", /*french*/"#One of the rupees underwater in Zora's Fountain# is", /*spanish*/"#One of the rupees underwater in Zora's Fountain# is", /*italian*/"#One of the rupees underwater in Zora's Fountain# is", /*german*/"#One of the rupees underwater in Zora's Fountain# is"}
+                       Text{"#one of the rupees underwater in Zora's Fountain# is", /*french*/"#one of the rupees underwater in Zora's Fountain# is", /*spanish*/"#one of the rupees underwater in Zora's Fountain# is", /*italian*/"#sott'acqua nella sorgente Zora# puoi trovare", /*german*/"#one of the rupees underwater in Zora's Fountain# is"}
     );
 
     hintTable[ZF_UNDERWATER_GREEN_RUPEE_3] = HintText::Exclude({
                        // obscure text
-                       Text{"#Jabu's shiny poo# includes", /*french*/"#Jabu's shiny poo# includes", /*spanish*/"#Jabu's shiny poo# includes", /*italian*/"#Jabu's shiny poo# includes", /*german*/"#Jabu's shiny poo# includes"},
+                       Text{"#Jabu's shiny poo# includes", /*french*/"#Jabu's shiny poo# includes", /*spanish*/"#Jabu's shiny poo# includes", /*italian*/"nelle #acque ghiacciate# qualcuno ha buttato", /*german*/"#Jabu's shiny poo# includes"},
                      }, {},
                        //clear text
-                       Text{"#One of the rupees underwater in Zora's Fountain# is", /*french*/"#One of the rupees underwater in Zora's Fountain# is", /*spanish*/"#One of the rupees underwater in Zora's Fountain# is", /*italian*/"#One of the rupees underwater in Zora's Fountain# is", /*german*/"#One of the rupees underwater in Zora's Fountain# is"}
+                       Text{"#one of the rupees underwater in Zora's Fountain# is", /*french*/"#one of the rupees underwater in Zora's Fountain# is", /*spanish*/"#one of the rupees underwater in Zora's Fountain# is", /*italian*/"#sott'acqua nella sorgente Zora# puoi trovare", /*german*/"#one of the rupees underwater in Zora's Fountain# is"}
     );
 
     hintTable[ZF_UNDERWATER_GREEN_RUPEE_4] = HintText::Exclude({
                        // obscure text
-                       Text{"#Jabu's shiny poo# includes", /*french*/"#Jabu's shiny poo# includes", /*spanish*/"#Jabu's shiny poo# includes", /*italian*/"#Jabu's shiny poo# includes", /*german*/"#Jabu's shiny poo# includes"},
+                       Text{"#Jabu's shiny poo# includes", /*french*/"#Jabu's shiny poo# includes", /*spanish*/"#Jabu's shiny poo# includes", /*italian*/"nelle #acque ghiacciate# qualcuno ha buttato", /*german*/"#Jabu's shiny poo# includes"},
                      }, {},
                        //clear text
-                       Text{"#One of the rupees underwater in Zora's Fountain# is", /*french*/"#One of the rupees underwater in Zora's Fountain# is", /*spanish*/"#One of the rupees underwater in Zora's Fountain# is", /*italian*/"#One of the rupees underwater in Zora's Fountain# is", /*german*/"#One of the rupees underwater in Zora's Fountain# is"}
+                       Text{"#one of the rupees underwater in Zora's Fountain# is", /*french*/"#one of the rupees underwater in Zora's Fountain# is", /*spanish*/"#one of the rupees underwater in Zora's Fountain# is", /*italian*/"#sott'acqua nella sorgente Zora# puoi trovare", /*german*/"#one of the rupees underwater in Zora's Fountain# is"}
     );
 
     hintTable[ZF_UNDERWATER_GREEN_RUPEE_5] = HintText::Exclude({
                        // obscure text
-                       Text{"#Jabu's shiny poo# includes", /*french*/"#Jabu's shiny poo# includes", /*spanish*/"#Jabu's shiny poo# includes", /*italian*/"#Jabu's shiny poo# includes", /*german*/"#Jabu's shiny poo# includes"},
+                       Text{"#Jabu's shiny poo# includes", /*french*/"#Jabu's shiny poo# includes", /*spanish*/"#Jabu's shiny poo# includes", /*italian*/"nelle #acque ghiacciate# qualcuno ha buttato", /*german*/"#Jabu's shiny poo# includes"},
                      }, {},
                        //clear text
-                       Text{"#One of the rupees underwater in Zora's Fountain# is", /*french*/"#One of the rupees underwater in Zora's Fountain# is", /*spanish*/"#One of the rupees underwater in Zora's Fountain# is", /*italian*/"#One of the rupees underwater in Zora's Fountain# is", /*german*/"#One of the rupees underwater in Zora's Fountain# is"}
+                       Text{"#one of the rupees underwater in Zora's Fountain# is", /*french*/"#one of the rupees underwater in Zora's Fountain# is", /*spanish*/"#one of the rupees underwater in Zora's Fountain# is", /*italian*/"#sott'acqua nella sorgente Zora# puoi trovare", /*german*/"#one of the rupees underwater in Zora's Fountain# is"}
     );
 
     hintTable[ZF_UNDERWATER_GREEN_RUPEE_6] = HintText::Exclude({
                        // obscure text
-                       Text{"#Jabu's shiny poo# includes", /*french*/"#Jabu's shiny poo# includes", /*spanish*/"#Jabu's shiny poo# includes", /*italian*/"#Jabu's shiny poo# includes", /*german*/"#Jabu's shiny poo# includes"},
+                       Text{"#Jabu's shiny poo# includes", /*french*/"#Jabu's shiny poo# includes", /*spanish*/"#Jabu's shiny poo# includes", /*italian*/"nelle #acque ghiacciate# qualcuno ha buttato", /*german*/"#Jabu's shiny poo# includes"},
                      }, {},
                        //clear text
-                       Text{"#One of the rupees underwater in Zora's Fountain# is", /*french*/"#One of the rupees underwater in Zora's Fountain# is", /*spanish*/"#One of the rupees underwater in Zora's Fountain# is", /*italian*/"#One of the rupees underwater in Zora's Fountain# is", /*german*/"#One of the rupees underwater in Zora's Fountain# is"}
+                       Text{"#one of the rupees underwater in Zora's Fountain# is", /*french*/"#one of the rupees underwater in Zora's Fountain# is", /*spanish*/"#one of the rupees underwater in Zora's Fountain# is", /*italian*/"#sott'acqua nella sorgente Zora# puoi trovare", /*german*/"#one of the rupees underwater in Zora's Fountain# is"}
     );
 
     hintTable[ZF_UNDERWATER_GREEN_RUPEE_7] = HintText::Exclude({
                        // obscure text
-                       Text{"#Jabu's shiny poo# includes", /*french*/"#Jabu's shiny poo# includes", /*spanish*/"#Jabu's shiny poo# includes", /*italian*/"#Jabu's shiny poo# includes", /*german*/"#Jabu's shiny poo# includes"},
+                       Text{"#Jabu's shiny poo# includes", /*french*/"#Jabu's shiny poo# includes", /*spanish*/"#Jabu's shiny poo# includes", /*italian*/"nelle #acque ghiacciate# qualcuno ha buttato", /*german*/"#Jabu's shiny poo# includes"},
                      }, {},
                        //clear text
-                       Text{"#One of the rupees underwater in Zora's Fountain# is", /*french*/"#One of the rupees underwater in Zora's Fountain# is", /*spanish*/"#One of the rupees underwater in Zora's Fountain# is", /*italian*/"#One of the rupees underwater in Zora's Fountain# is", /*german*/"#One of the rupees underwater in Zora's Fountain# is"}
+                       Text{"#one of the rupees underwater in Zora's Fountain# is", /*french*/"#one of the rupees underwater in Zora's Fountain# is", /*spanish*/"#one of the rupees underwater in Zora's Fountain# is", /*italian*/"#sott'acqua nella sorgente Zora# puoi trovare", /*german*/"#one of the rupees underwater in Zora's Fountain# is"}
     );
 
     hintTable[ZF_UNDERWATER_GREEN_RUPEE_8] = HintText::Exclude({
                        // obscure text
-                       Text{"#Jabu's shiny poo# includes", /*french*/"#Jabu's shiny poo# includes", /*spanish*/"#Jabu's shiny poo# includes", /*italian*/"#Jabu's shiny poo# includes", /*german*/"#Jabu's shiny poo# includes"},
+                       Text{"#Jabu's shiny poo# includes", /*french*/"#Jabu's shiny poo# includes", /*spanish*/"#Jabu's shiny poo# includes", /*italian*/"nelle #acque ghiacciate# qualcuno ha buttato", /*german*/"#Jabu's shiny poo# includes"},
                      }, {},
                        //clear text
-                       Text{"#One of the rupees underwater in Zora's Fountain# is", /*french*/"#One of the rupees underwater in Zora's Fountain# is", /*spanish*/"#One of the rupees underwater in Zora's Fountain# is", /*italian*/"#One of the rupees underwater in Zora's Fountain# is", /*german*/"#One of the rupees underwater in Zora's Fountain# is"}
+                       Text{"#one of the rupees underwater in Zora's Fountain# is", /*french*/"#one of the rupees underwater in Zora's Fountain# is", /*spanish*/"#one of the rupees underwater in Zora's Fountain# is", /*italian*/"#sott'acqua nella sorgente Zora# puoi trovare", /*german*/"#one of the rupees underwater in Zora's Fountain# is"}
     );
 
     hintTable[ZF_UNDERWATER_GREEN_RUPEE_9] = HintText::Exclude({
                        // obscure text
-                       Text{"#Jabu's shiny poo# includes", /*french*/"#Jabu's shiny poo# includes", /*spanish*/"#Jabu's shiny poo# includes", /*italian*/"#Jabu's shiny poo# includes", /*german*/"#Jabu's shiny poo# includes"},
+                       Text{"#Jabu's shiny poo# includes", /*french*/"#Jabu's shiny poo# includes", /*spanish*/"#Jabu's shiny poo# includes", /*italian*/"nelle #acque ghiacciate# qualcuno ha buttato", /*german*/"#Jabu's shiny poo# includes"},
                      }, {},
                        //clear text
-                       Text{"#One of the rupees underwater in Zora's Fountain# is", /*french*/"#One of the rupees underwater in Zora's Fountain# is", /*spanish*/"#One of the rupees underwater in Zora's Fountain# is", /*italian*/"#One of the rupees underwater in Zora's Fountain# is", /*german*/"#One of the rupees underwater in Zora's Fountain# is"}
+                       Text{"#one of the rupees underwater in Zora's Fountain# is", /*french*/"#one of the rupees underwater in Zora's Fountain# is", /*spanish*/"#one of the rupees underwater in Zora's Fountain# is", /*italian*/"#sott'acqua nella sorgente Zora# puoi trovare", /*german*/"#one of the rupees underwater in Zora's Fountain# is"}
     );
 
     hintTable[ZF_UNDERWATER_GREEN_RUPEE_10] = HintText::Exclude({
                        // obscure text
-                       Text{"#Jabu's shiny poo# includes", /*french*/"#Jabu's shiny poo# includes", /*spanish*/"#Jabu's shiny poo# includes", /*italian*/"#Jabu's shiny poo# includes", /*german*/"#Jabu's shiny poo# includes"},
+                       Text{"#Jabu's shiny poo# includes", /*french*/"#Jabu's shiny poo# includes", /*spanish*/"#Jabu's shiny poo# includes", /*italian*/"nelle #acque ghiacciate# qualcuno ha buttato", /*german*/"#Jabu's shiny poo# includes"},
                      }, {},
                        //clear text
-                       Text{"#One of the rupees underwater in Zora's Fountain# is", /*french*/"#One of the rupees underwater in Zora's Fountain# is", /*spanish*/"#One of the rupees underwater in Zora's Fountain# is", /*italian*/"#One of the rupees underwater in Zora's Fountain# is", /*german*/"#One of the rupees underwater in Zora's Fountain# is"}
+                       Text{"#one of the rupees underwater in Zora's Fountain# is", /*french*/"#one of the rupees underwater in Zora's Fountain# is", /*spanish*/"#one of the rupees underwater in Zora's Fountain# is", /*italian*/"#sott'acqua nella sorgente Zora# puoi trovare", /*german*/"#one of the rupees underwater in Zora's Fountain# is"}
     );
 
     hintTable[ZF_UNDERWATER_GREEN_RUPEE_11] = HintText::Exclude({
                        // obscure text
-                       Text{"#Jabu's shiny poo# includes", /*french*/"#Jabu's shiny poo# includes", /*spanish*/"#Jabu's shiny poo# includes", /*italian*/"#Jabu's shiny poo# includes", /*german*/"#Jabu's shiny poo# includes"},
+                       Text{"#Jabu's shiny poo# includes", /*french*/"#Jabu's shiny poo# includes", /*spanish*/"#Jabu's shiny poo# includes", /*italian*/"nelle #acque ghiacciate# qualcuno ha buttato", /*german*/"#Jabu's shiny poo# includes"},
                      }, {},
                        //clear text
-                       Text{"#One of the rupees underwater in Zora's Fountain# is", /*french*/"#One of the rupees underwater in Zora's Fountain# is", /*spanish*/"#One of the rupees underwater in Zora's Fountain# is", /*italian*/"#One of the rupees underwater in Zora's Fountain# is", /*german*/"#One of the rupees underwater in Zora's Fountain# is"}
+                       Text{"#one of the rupees underwater in Zora's Fountain# is", /*french*/"#one of the rupees underwater in Zora's Fountain# is", /*spanish*/"#one of the rupees underwater in Zora's Fountain# is", /*italian*/"#sott'acqua nella sorgente Zora# puoi trovare", /*german*/"#one of the rupees underwater in Zora's Fountain# is"}
     );
 
     hintTable[ZF_UNDERWATER_GREEN_RUPEE_12] = HintText::Exclude({
                        // obscure text
-                       Text{"#Jabu's shiny poo# includes", /*french*/"#Jabu's shiny poo# includes", /*spanish*/"#Jabu's shiny poo# includes", /*italian*/"#Jabu's shiny poo# includes", /*german*/"#Jabu's shiny poo# includes"},
+                       Text{"#Jabu's shiny poo# includes", /*french*/"#Jabu's shiny poo# includes", /*spanish*/"#Jabu's shiny poo# includes", /*italian*/"nelle #acque ghiacciate# qualcuno ha buttato", /*german*/"#Jabu's shiny poo# includes"},
                      }, {},
                        //clear text
-                       Text{"#One of the rupees underwater in Zora's Fountain# is", /*french*/"#One of the rupees underwater in Zora's Fountain# is", /*spanish*/"#One of the rupees underwater in Zora's Fountain# is", /*italian*/"#One of the rupees underwater in Zora's Fountain# is", /*german*/"#One of the rupees underwater in Zora's Fountain# is"}
+                       Text{"#one of the rupees underwater in Zora's Fountain# is", /*french*/"#one of the rupees underwater in Zora's Fountain# is", /*spanish*/"#one of the rupees underwater in Zora's Fountain# is", /*italian*/"#sott'acqua nella sorgente Zora# puoi trovare", /*german*/"#one of the rupees underwater in Zora's Fountain# is"}
     );
 
     hintTable[ZF_UNDERWATER_GREEN_RUPEE_13] = HintText::Exclude({
                        // obscure text
-                       Text{"#Jabu's shiny poo# includes", /*french*/"#Jabu's shiny poo# includes", /*spanish*/"#Jabu's shiny poo# includes", /*italian*/"#Jabu's shiny poo# includes", /*german*/"#Jabu's shiny poo# includes"},
+                       Text{"#Jabu's shiny poo# includes", /*french*/"#Jabu's shiny poo# includes", /*spanish*/"#Jabu's shiny poo# includes", /*italian*/"nelle #acque ghiacciate# qualcuno ha buttato", /*german*/"#Jabu's shiny poo# includes"},
                      }, {},
                        //clear text
-                       Text{"#One of the rupees underwater in Zora's Fountain# is", /*french*/"#One of the rupees underwater in Zora's Fountain# is", /*spanish*/"#One of the rupees underwater in Zora's Fountain# is", /*italian*/"#One of the rupees underwater in Zora's Fountain# is", /*german*/"#One of the rupees underwater in Zora's Fountain# is"}
+                       Text{"#one of the rupees underwater in Zora's Fountain# is", /*french*/"#one of the rupees underwater in Zora's Fountain# is", /*spanish*/"#one of the rupees underwater in Zora's Fountain# is", /*italian*/"#sott'acqua nella sorgente Zora# puoi trovare", /*german*/"#one of the rupees underwater in Zora's Fountain# is"}
     );
 
     hintTable[ZF_UNDERWATER_GREEN_RUPEE_14] = HintText::Exclude({
                        // obscure text
-                       Text{"#Jabu's shiny poo# includes", /*french*/"#Jabu's shiny poo# includes", /*spanish*/"#Jabu's shiny poo# includes", /*italian*/"#Jabu's shiny poo# includes", /*german*/"#Jabu's shiny poo# includes"},
+                       Text{"#Jabu's shiny poo# includes", /*french*/"#Jabu's shiny poo# includes", /*spanish*/"#Jabu's shiny poo# includes", /*italian*/"nelle #acque ghiacciate# qualcuno ha buttato", /*german*/"#Jabu's shiny poo# includes"},
                      }, {},
                        //clear text
-                       Text{"#One of the rupees underwater in Zora's Fountain# is", /*french*/"#One of the rupees underwater in Zora's Fountain# is", /*spanish*/"#One of the rupees underwater in Zora's Fountain# is", /*italian*/"#One of the rupees underwater in Zora's Fountain# is", /*german*/"#One of the rupees underwater in Zora's Fountain# is"}
+                       Text{"#one of the rupees underwater in Zora's Fountain# is", /*french*/"#one of the rupees underwater in Zora's Fountain# is", /*spanish*/"#one of the rupees underwater in Zora's Fountain# is", /*italian*/"#sott'acqua nella sorgente Zora# puoi trovare", /*german*/"#one of the rupees underwater in Zora's Fountain# is"}
     );
 
     hintTable[ZF_UNDERWATER_GREEN_RUPEE_15] = HintText::Exclude({
                        // obscure text
-                       Text{"#Jabu's shiny poo# includes", /*french*/"#Jabu's shiny poo# includes", /*spanish*/"#Jabu's shiny poo# includes", /*italian*/"#Jabu's shiny poo# includes", /*german*/"#Jabu's shiny poo# includes"},
+                       Text{"#Jabu's shiny poo# includes", /*french*/"#Jabu's shiny poo# includes", /*spanish*/"#Jabu's shiny poo# includes", /*italian*/"nelle #acque ghiacciate# qualcuno ha buttato", /*german*/"#Jabu's shiny poo# includes"},
                      }, {},
                        //clear text
-                       Text{"#One of the rupees underwater in Zora's Fountain# is", /*french*/"#One of the rupees underwater in Zora's Fountain# is", /*spanish*/"#One of the rupees underwater in Zora's Fountain# is", /*italian*/"#One of the rupees underwater in Zora's Fountain# is", /*german*/"#One of the rupees underwater in Zora's Fountain# is"}
+                       Text{"#one of the rupees underwater in Zora's Fountain# is", /*french*/"#one of the rupees underwater in Zora's Fountain# is", /*spanish*/"#one of the rupees underwater in Zora's Fountain# is", /*italian*/"#sott'acqua nella sorgente Zora# puoi trovare", /*german*/"#one of the rupees underwater in Zora's Fountain# is"}
     );
 
 
     hintTable[ZF_UNDERWATER_GREEN_RUPEE_16] = HintText::Exclude({
                        // obscure text
-                       Text{"#Jabu's shiny poo# includes", /*french*/"#Jabu's shiny poo# includes", /*spanish*/"#Jabu's shiny poo# includes", /*italian*/"#Jabu's shiny poo# includes", /*german*/"#Jabu's shiny poo# includes"},
+                       Text{"#Jabu's shiny poo# includes", /*french*/"#Jabu's shiny poo# includes", /*spanish*/"#Jabu's shiny poo# includes", /*italian*/"nelle #acque ghiacciate# qualcuno ha buttato", /*german*/"#Jabu's shiny poo# includes"},
                      }, {},
                        //clear text
-                       Text{"#One of the rupees underwater in Zora's Fountain# is", /*french*/"#One of the rupees underwater in Zora's Fountain# is", /*spanish*/"#One of the rupees underwater in Zora's Fountain# is", /*italian*/"#One of the rupees underwater in Zora's Fountain# is", /*german*/"#One of the rupees underwater in Zora's Fountain# is"}
+                       Text{"#one of the rupees underwater in Zora's Fountain# is", /*french*/"#one of the rupees underwater in Zora's Fountain# is", /*spanish*/"#one of the rupees underwater in Zora's Fountain# is", /*italian*/"#sott'acqua nella sorgente Zora# puoi trovare", /*german*/"#one of the rupees underwater in Zora's Fountain# is"}
     );
 
     hintTable[ZF_UNDERWATER_GREEN_RUPEE_17] = HintText::Exclude({
                        // obscure text
-                       Text{"#Jabu's shiny poo# includes", /*french*/"#Jabu's shiny poo# includes", /*spanish*/"#Jabu's shiny poo# includes", /*italian*/"#Jabu's shiny poo# includes", /*german*/"#Jabu's shiny poo# includes"},
+                       Text{"#Jabu's shiny poo# includes", /*french*/"#Jabu's shiny poo# includes", /*spanish*/"#Jabu's shiny poo# includes", /*italian*/"nelle #acque ghiacciate# qualcuno ha buttato", /*german*/"#Jabu's shiny poo# includes"},
                      }, {},
                        //clear text
-                       Text{"#One of the rupees underwater in Zora's Fountain# is", /*french*/"#One of the rupees underwater in Zora's Fountain# is", /*spanish*/"#One of the rupees underwater in Zora's Fountain# is", /*italian*/"#One of the rupees underwater in Zora's Fountain# is", /*german*/"#One of the rupees underwater in Zora's Fountain# is"}
+                       Text{"#one of the rupees underwater in Zora's Fountain# is", /*french*/"#one of the rupees underwater in Zora's Fountain# is", /*spanish*/"#one of the rupees underwater in Zora's Fountain# is", /*italian*/"#sott'acqua nella sorgente Zora# puoi trovare", /*german*/"#one of the rupees underwater in Zora's Fountain# is"}
     );
 
     hintTable[ZF_UNDERWATER_GREEN_RUPEE_18] = HintText::Exclude({
                        // obscure text
-                       Text{"#Jabu's shiny poo# includes", /*french*/"#Jabu's shiny poo# includes", /*spanish*/"#Jabu's shiny poo# includes", /*italian*/"#Jabu's shiny poo# includes", /*german*/"#Jabu's shiny poo# includes"},
+                       Text{"#Jabu's shiny poo# includes", /*french*/"#Jabu's shiny poo# includes", /*spanish*/"#Jabu's shiny poo# includes", /*italian*/"nelle #acque ghiacciate# qualcuno ha buttato", /*german*/"#Jabu's shiny poo# includes"},
                      }, {},
                        //clear text
-                       Text{"#One of the rupees underwater in Zora's Fountain# is", /*french*/"#One of the rupees underwater in Zora's Fountain# is", /*spanish*/"#One of the rupees underwater in Zora's Fountain# is", /*italian*/"#One of the rupees underwater in Zora's Fountain# is", /*german*/"#One of the rupees underwater in Zora's Fountain# is"}
+                       Text{"#one of the rupees underwater in Zora's Fountain# is", /*french*/"#one of the rupees underwater in Zora's Fountain# is", /*spanish*/"#one of the rupees underwater in Zora's Fountain# is", /*italian*/"#sott'acqua nella sorgente Zora# puoi trovare", /*german*/"#one of the rupees underwater in Zora's Fountain# is"}
     );
 
     hintTable[HC_GREAT_FAIRY_REWARD] = HintText::Exclude({
@@ -706,28 +706,54 @@ void HintTable_Init_Exclude_Overworld() {
 
     hintTable[LH_UNDER_WATER_GREEN_RUPEE_1] = HintText::Exclude({
                        // obscure text
-                       Text{"#In shallow water of a lake# shimmers", /*french*/"#In shallow water of a lake# shimmers", /*spanish*/"#In shallow water of a lake# shimmers", /*italian*/"#In shallow water of a lake# shimmers", /*german*/"#In shallow water of a lake# shimmers"},
+                       Text{"#in shallow water of a lake# shimmers", /*french*/"#in shallow water of a lake# shimmers", /*spanish*/"#in shallow water of a lake# shimmers", /*italian*/"#nell'acqua bassa in riva a un lago# luccica||no|", /*german*/"#in shallow water of a lake# shimmers"},
                      },{},
                        //clear text
-                       Text{"#The first underwater rupee in Lake Hylia# is", /*french*/"#The first underwater rupee in Lake Hylia# is", /*spanish*/"#The first underwater rupee in Lake Hylia# is", /*italian*/"#The first underwater rupee in Lake Hylia# is", /*german*/"#The first underwater rupee in Lake Hylia# is"}
+                       Text{"#the first underwater rupee in Lake Hylia# is", /*french*/"#the first underwater rupee in Lake Hylia# is", /*spanish*/"#the first underwater rupee in Lake Hylia# is", /*italian*/"il #primo oggetto sott'acqua nel Lago Hylia# |è|sono|", /*german*/"#the first underwater rupee in Lake Hylia# is"}
     );
 
     hintTable[LH_UNDER_WATER_GREEN_RUPEE_2] = HintText::Exclude({
                        // obscure text
-                       Text{"#In deeper water water of a lake# shimmers", /*french*/"#In deeper water water of a lake# shimmers", /*spanish*/"#In deeper water water of a lake# shimmers", /*italian*/"#In deeper water water of a lake# shimmers", /*german*/"#In deeper water water of a lake# shimmers"},
+                       Text{"#in deeper water of a lake# shimmers", /*french*/"#in deeper water of a lake# shimmers", /*spanish*/"#in deeper water of a lake# shimmers", /*italian*/"#nell'acqua profonda in riva a un lago# luccica||no|", /*german*/"#in deeper water of a lake# shimmers"},
                      },{},
                        //clear text
-                       Text{"#The second underwater rupee in Lake Hylia# is", /*french*/"#The second underwater rupee in Lake Hylia# is", /*spanish*/"#The second underwater rupee in Lake Hylia# is", /*italian*/"#The second underwater rupee in Lake Hylia# is", /*german*/"#The second underwater rupee in Lake Hylia# is"}
+                       Text{"#the second underwater rupee in Lake Hylia# is", /*french*/"#the second underwater rupee in Lake Hylia# is", /*spanish*/"#the second underwater rupee in Lake Hylia# is", /*italian*/"il #secondo oggetto sott'acqua nel Lago Hylia# |è|sono|", /*german*/"#the second underwater rupee in Lake Hylia# is"}
     );
 
     hintTable[LH_UNDER_WATER_GREEN_RUPEE_3] = HintText::Exclude({
                        // obscure text
-                       Text{"#In deeper water water of a lake# shimmers", /*french*/"#In deeper water water of a lake# shimmers", /*spanish*/"#In deeper water water of a lake# shimmers", /*italian*/"#In deeper water water of a lake# shimmers", /*german*/"#In deeper water water of a lake# shimmers"},
+                       Text{"#in deeper water of a lake# shimmers", /*french*/"#in deeper water of a lake# shimmers", /*spanish*/"#in deeper water of a lake# shimmers", /*italian*/"#nell'acqua profonda in riva a un lago# luccica||no|", /*german*/"#in deeper water of a lake# shimmers"},
                      },{},
                        //clear text
-                       Text{"#The third underwater rupee in Lake Hylia# is", /*french*/"#The third underwater rupee in Lake Hylia# is", /*spanish*/"#The third underwater rupee in Lake Hylia# is", /*italian*/"#The third underwater rupee in Lake Hylia# is", /*german*/"#The third underwater rupee in Lake Hylia# is"}
+                       Text{"#the third underwater rupee in Lake Hylia# is", /*french*/"#the third underwater rupee in Lake Hylia# is", /*spanish*/"#the third underwater rupee in Lake Hylia# is", /*italian*/"il #terzo oggetto sott'acqua nel Lago Hylia# |è|sono|", /*german*/"#the third underwater rupee in Lake Hylia# is"}
     );
 
+    hintTable[LH_LAB_DIVE_RED_RUPEE_1] = HintText::Exclude({
+                       // obscure text
+                       Text{"#a shark stares at#", /*french*/"#a shark stares at#", /*spanish*/"#a shark stares at#", /*italian*/"#uno squalo osserva con attenzione#", /*german*/"#a shark stares at#"},
+                       Text{"someone is trying to #make medicine by mixing water and#", /*french*/"someone is trying to #make medicine by mixing water and#", /*spanish*/"someone is trying to #make medicine by mixing water and#", /*italian*/"qualcuno sta cercando di #produrre nuove medicine combinando acqua e#", /*german*/"someone is trying to #make medicine by mixing water and#"},
+                     },{},
+                       //clear text
+                       Text{"#in the water of the Lake Hylia Lab# you can find", /*french*/"#in the water of the Lake Hylia Lab# you can find", /*spanish*/"#in the water of the Lake Hylia Lab# you can find", /*italian*/"#nell'acqua del laboratorio del Lago Hylia# puoi trovare", /*german*/"#in the water of the Lake Hylia Lab# you can find"}
+    );
+
+    hintTable[LH_LAB_DIVE_RED_RUPEE_2] = HintText::Exclude({
+                       // obscure text
+                       Text{"#a shark stares at#", /*french*/"#a shark stares at#", /*spanish*/"#a shark stares at#", /*italian*/"#uno squalo osserva con attenzione#", /*german*/"#a shark stares at#"},
+                       Text{"someone is trying to #make medicine by mixing water and#", /*french*/"someone is trying to #make medicine by mixing water and#", /*spanish*/"someone is trying to #make medicine by mixing water and#", /*italian*/"qualcuno sta cercando di #produrre nuove medicine combinando acqua e#", /*german*/"someone is trying to #make medicine by mixing water and#"},
+                     },{},
+                       //clear text
+                       Text{"#in the water of the Lake Hylia Lab# you can find", /*french*/"#in the water of the Lake Hylia Lab# you can find", /*spanish*/"#in the water of the Lake Hylia Lab# you can find", /*italian*/"#nell'acqua del laboratorio del Lago Hylia# puoi trovare", /*german*/"#in the water of the Lake Hylia Lab# you can find"}
+    );
+
+    hintTable[LH_LAB_DIVE_RED_RUPEE_3] = HintText::Exclude({
+                       // obscure text
+                       Text{"#a shark stares at#", /*french*/"#a shark stares at#", /*spanish*/"#a shark stares at#", /*italian*/"#uno squalo osserva con attenzione#", /*german*/"#a shark stares at#"},
+                       Text{"someone is trying to #make medicine by mixing water and#", /*french*/"someone is trying to #make medicine by mixing water and#", /*spanish*/"someone is trying to #make medicine by mixing water and#", /*italian*/"qualcuno sta cercando di #produrre nuove medicine combinando acqua e#", /*german*/"someone is trying to #make medicine by mixing water and#"},
+                     },{},
+                       //clear text
+                       Text{"#in the water of the Lake Hylia Lab# you can find", /*french*/"#in the water of the Lake Hylia Lab# you can find", /*spanish*/"#in the water of the Lake Hylia Lab# you can find", /*italian*/"#nell'acqua del laboratorio del Lago Hylia# puoi trovare", /*german*/"#in the water of the Lake Hylia Lab# you can find"}
+    );
 
     hintTable[GF_GERUDO_TOKEN] = HintText::Exclude({
                        // obscure text
@@ -829,74 +855,74 @@ void HintTable_Init_Exclude_Overworld() {
 
     hintTable[DMT_ROCK_BLUE_RUPEE] = HintText::Exclude({
                        // obscure text
-                       Text{"#A mountain boulder# holds", /*french*/"#A mountain boulder# holds", /*spanish*/"#A mountain boulder# holds", /*italian*/"#A mountain boulder# holds", /*german*/"#A mountain boulder# holds"},
+                       Text{"#a mountain boulder# holds", /*french*/"#a mountain boulder# holds", /*spanish*/"#a mountain boulder# holds", /*italian*/"un #macigno in montagna# nasconde", /*german*/"#a mountain boulder# holds"},
                      }, {},
                        //clear text
-                       Text{"#The rock with a blue rupee on Death Mountain Trail# has", /*french*/"#The rock with a blue rupee on Death Mountain Trail# has", /*spanish*/"#The rock with a blue rupee on Death Mountain Trail# has", /*italian*/"#The rock with a blue rupee on Death Mountain Trail# has", /*german*/"#The rock with a blue rupee on Death Mountain Trail# has"}
+                       Text{"#the rock with a blue rupee on Death Mountain Trail# has", /*french*/"#the rock with a blue rupee on Death Mountain Trail# has", /*spanish*/"#the rock with a blue rupee on Death Mountain Trail# has", /*italian*/"un #macigno sul sentiero del Monte Morte# copre", /*german*/"#the rock with a blue rupee on Death Mountain Trail# has"}
     );
 
     hintTable[DMT_ROCK_RED_RUPEE] = HintText::Exclude({
                        // obscure text
-                       Text{"#A mountain boulder# holds", /*french*/"#A mountain boulder# holds", /*spanish*/"#A mountain boulder# holds", /*italian*/"#A mountain boulder# holds", /*german*/"#A mountain boulder# holds"},
+                       Text{"#a mountain boulder# holds", /*french*/"#a mountain boulder# holds", /*spanish*/"#a mountain boulder# holds", /*italian*/"un #macigno in montagna# nasconde", /*german*/"#a mountain boulder# holds"},
                      }, {},
                        // clear text
-                       Text{"#The rock with a red rupee on Death Mountain Trail# has", /*french*/"#The rock with a red rupee on Death Mountain Trail# has", /*spanish*/"#The rock with a red rupee on Death Mountain Trail# has", /*italian*/"#The rock with a red rupee on Death Mountain Trail# has", /*german*/"#The rock with a red rupee on Death Mountain Trail# has"}
+                       Text{"#the rock with a red rupee on Death Mountain Trail# has", /*french*/"#the rock with a red rupee on Death Mountain Trail# has", /*spanish*/"#the rock with a red rupee on Death Mountain Trail# has", /*italian*/"un #macigno sul sentiero del Monte Morte# copre", /*german*/"#the rock with a red rupee on Death Mountain Trail# has"}
     );
 
     hintTable[DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_1] = HintText::Exclude({
                        // obscure text
-                       Text{"#A cow looks at#", /*french*/"#A cow looks at#", /*spanish*/"#A cow looks at#", /*italian*/"#A cow looks at#", /*german*/"#A cow looks at#"},
+                       Text{"#a cow looks at#", /*french*/"#a cow looks at#", /*spanish*/"#a cow looks at#", /*italian*/"#una mucca osserva con attenzione#", /*german*/"#a cow looks at#"},
                      }, {},
                        // clear text
-                       Text{"#The rupee circle in the cow grotto in DMT# includes", /*french*/"#The rupee circle in the cow grotto in DMT# includes", /*spanish*/"#The rupee circle in the cow grotto in DMT# includes", /*italian*/"#The rupee circle in the cow grotto in DMT# includes", /*german*/"#The rupee circle in the cow grotto in DMT# includes"}
+                       Text{"#the rupee circle in the cow grotto in DMT# includes", /*french*/"#the rupee circle in the cow grotto in DMT# includes", /*spanish*/"#the rupee circle in the cow grotto in DMT# includes", /*italian*/"il #cerchio di oggetti nella grotta sul sentiero del Monte Morte# include", /*german*/"#the rupee circle in the cow grotto in DMT# includes"}
     );
 
     hintTable[DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_2] = HintText::Exclude({
                        // obscure text
-                       Text{"#A cow looks at#", /*french*/"#A cow looks at#", /*spanish*/"#A cow looks at#", /*italian*/"#A cow looks at#", /*german*/"#A cow looks at#"},
+                       Text{"#a cow looks at#", /*french*/"#a cow looks at#", /*spanish*/"#a cow looks at#", /*italian*/"#una mucca osserva con attenzione#", /*german*/"#a cow looks at#"},
                      }, {},
                        // clear text
-                       Text{"#The rupee circle in the cow grotto in DMT# includes", /*french*/"#The rupee circle in the cow grotto in DMT# includes", /*spanish*/"#The rupee circle in the cow grotto in DMT# includes", /*italian*/"#The rupee circle in the cow grotto in DMT# includes", /*german*/"#The rupee circle in the cow grotto in DMT# includes"}
+                       Text{"#the rupee circle in the cow grotto in DMT# includes", /*french*/"#the rupee circle in the cow grotto in DMT# includes", /*spanish*/"#the rupee circle in the cow grotto in DMT# includes", /*italian*/"il #cerchio di oggetti nella grotta sul sentiero del Monte Morte# include", /*german*/"#the rupee circle in the cow grotto in DMT# includes"}
     );
 
     hintTable[DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_3] = HintText::Exclude({
                        // obscure text
-                       Text{"#A cow looks at#", /*french*/"#A cow looks at#", /*spanish*/"#A cow looks at#", /*italian*/"#A cow looks at#", /*german*/"#A cow looks at#"},
+                       Text{"#a cow looks at#", /*french*/"#a cow looks at#", /*spanish*/"#a cow looks at#", /*italian*/"#una mucca osserva con attenzione#", /*german*/"#a cow looks at#"},
                      }, {},
                        // clear text
-                       Text{"#The rupee circle in the cow grotto in DMT# includes", /*french*/"#The rupee circle in the cow grotto in DMT# includes", /*spanish*/"#The rupee circle in the cow grotto in DMT# includes", /*italian*/"#The rupee circle in the cow grotto in DMT# includes", /*german*/"#The rupee circle in the cow grotto in DMT# includes"}
+                       Text{"#the rupee circle in the cow grotto in DMT# includes", /*french*/"#the rupee circle in the cow grotto in DMT# includes", /*spanish*/"#the rupee circle in the cow grotto in DMT# includes", /*italian*/"il #cerchio di oggetti nella grotta sul sentiero del Monte Morte# include", /*german*/"#the rupee circle in the cow grotto in DMT# includes"}
     );
 
     hintTable[DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_4] = HintText::Exclude({
                        // obscure text
-                       Text{"#A cow looks at#", /*french*/"#A cow looks at#", /*spanish*/"#A cow looks at#", /*italian*/"#A cow looks at#", /*german*/"#A cow looks at#"},
+                       Text{"#a cow looks at#", /*french*/"#a cow looks at#", /*spanish*/"#a cow looks at#", /*italian*/"#una mucca osserva con attenzione#", /*german*/"#a cow looks at#"},
                      }, {},
                        // clear text
-                       Text{"#The rupee circle in the cow grotto in DMT# includes", /*french*/"#The rupee circle in the cow grotto in DMT# includes", /*spanish*/"#The rupee circle in the cow grotto in DMT# includes", /*italian*/"#The rupee circle in the cow grotto in DMT# includes", /*german*/"#The rupee circle in the cow grotto in DMT# includes"}
+                       Text{"#the rupee circle in the cow grotto in DMT# includes", /*french*/"#the rupee circle in the cow grotto in DMT# includes", /*spanish*/"#the rupee circle in the cow grotto in DMT# includes", /*italian*/"il #cerchio di oggetti nella grotta sul sentiero del Monte Morte# include", /*german*/"#the rupee circle in the cow grotto in DMT# includes"}
     );
 
     hintTable[DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_5] = HintText::Exclude({
                        // obscure text
-                       Text{"#A cow looks at#", /*french*/"#A cow looks at#", /*spanish*/"#A cow looks at#", /*italian*/"#A cow looks at#", /*german*/"#A cow looks at#"},
+                       Text{"#a cow looks at#", /*french*/"#a cow looks at#", /*spanish*/"#a cow looks at#", /*italian*/"#una mucca osserva con attenzione#", /*german*/"#a cow looks at#"},
                      }, {},
                        // clear text
-                       Text{"#The rupee circle in the cow grotto in DMT# includes", /*french*/"#The rupee circle in the cow grotto in DMT# includes", /*spanish*/"#The rupee circle in the cow grotto in DMT# includes", /*italian*/"#The rupee circle in the cow grotto in DMT# includes", /*german*/"#The rupee circle in the cow grotto in DMT# includes"}
+                       Text{"#the rupee circle in the cow grotto in DMT# includes", /*french*/"#the rupee circle in the cow grotto in DMT# includes", /*spanish*/"#the rupee circle in the cow grotto in DMT# includes", /*italian*/"il #cerchio di oggetti nella grotta sul sentiero del Monte Morte# include", /*german*/"#the rupee circle in the cow grotto in DMT# includes"}
     );
 
     hintTable[DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_6] = HintText::Exclude({
                        // obscure text
-                       Text{"#A cow looks at#", /*french*/"#A cow looks at#", /*spanish*/"#A cow looks at#", /*italian*/"#A cow looks at#", /*german*/"#A cow looks at#"},
+                       Text{"#a cow looks at#", /*french*/"#a cow looks at#", /*spanish*/"#a cow looks at#", /*italian*/"#una mucca osserva con attenzione#", /*german*/"#a cow looks at#"},
                      }, {},
                        // clear text
-                       Text{"#The rupee circle in the cow grotto in DMT# includes", /*french*/"#The rupee circle in the cow grotto in DMT# includes", /*spanish*/"#The rupee circle in the cow grotto in DMT# includes", /*italian*/"#The rupee circle in the cow grotto in DMT# includes", /*german*/"#The rupee circle in the cow grotto in DMT# includes"}
+                       Text{"#the rupee circle in the cow grotto in DMT# includes", /*french*/"#the rupee circle in the cow grotto in DMT# includes", /*spanish*/"#the rupee circle in the cow grotto in DMT# includes", /*italian*/"il #cerchio di oggetti nella grotta sul sentiero del Monte Morte# include", /*german*/"#the rupee circle in the cow grotto in DMT# includes"}
     );
 
     hintTable[DMT_COW_GROTTO_RUPEE_CIRCLE_RED_RUPEE] = HintText::Exclude({
                        // obscure text
-                       Text{"#A cow looks at#", /*french*/"#A cow looks at#", /*spanish*/"#A cow looks at#", /*italian*/"#A cow looks at#", /*german*/"#A cow looks at#"},
+                       Text{"#a cow looks at#", /*french*/"#a cow looks at#", /*spanish*/"#a cow looks at#", /*italian*/"#una mucca osserva con attenzione#", /*german*/"#a cow looks at#"},
                      }, {},
                        // clear text
-                       Text{"#The rupee circle in the cow grotto in DMT# includes", /*french*/"#The rupee circle in the cow grotto in DMT# includes", /*spanish*/"#The rupee circle in the cow grotto in DMT# includes", /*italian*/"#The rupee circle in the cow grotto in DMT# includes", /*german*/"#The rupee circle in the cow grotto in DMT# includes"}
+                       Text{"#the rupee circle in the cow grotto in DMT# includes", /*french*/"#the rupee circle in the cow grotto in DMT# includes", /*spanish*/"#the rupee circle in the cow grotto in DMT# includes", /*italian*/"il #cerchio di oggetti nella grotta sul sentiero del Monte Morte# include", /*german*/"#the rupee circle in the cow grotto in DMT# includes"}
     );
 
     hintTable[DMC_WALL_FREESTANDING_POH] = HintText::Exclude({
@@ -911,122 +937,122 @@ void HintTable_Init_Exclude_Overworld() {
 
     hintTable[DMC_LOWER_RED_RUPEE_1] = HintText::Exclude({
                        // obscure text
-                       Text{"#An obsidian# is", /*french*/"#An obsidian# is", /*spanish*/"#An obsidian# is", /*italian*/"#An obsidian# is", /*german*/"#An obsidian# is"},
+                       Text{"#an obsidian# is", /*french*/"#an obsidian# is", /*spanish*/"#an obsidian# is", /*italian*/"#camminando su assi bollenti# puoi raggiungere", /*german*/"#an obsidian# is"},
                      }, {},
                        // clear text
-                       Text{"#The first red rupee in Death Mountain Crater# is", /*french*/"#The first red rupee in Death Mountain Crater# is", /*spanish*/"#The first red rupee in Death Mountain Crater# is", /*italian*/"#The first red rupee in Death Mountain Crater# is", /*german*/"#The first red rupee in Death Mountain Crater# is"}
+                       Text{"#the first red rupee in Death Mountain Crater# is", /*french*/"#the first red rupee in Death Mountain Crater# is", /*spanish*/"#the first red rupee in Death Mountain Crater# is", /*italian*/"#oltre le assi nel cratere del Monte Morte# puoi trovare", /*german*/"#the first red rupee in Death Mountain Crater# is"}
     );
 
     hintTable[DMC_LOWER_RED_RUPEE_2] = HintText::Exclude({
                        // obscure text
-                       Text{"#An obsidian# is", /*french*/"#An obsidian# is", /*spanish*/"#An obsidian# is", /*italian*/"#An obsidian# is", /*german*/"#An obsidian# is"},
+                       Text{"#an obsidian# is", /*french*/"#an obsidian# is", /*spanish*/"#an obsidian# is", /*italian*/"#camminando su assi bollenti# puoi raggiungere", /*german*/"#an obsidian# is"},
                      }, {},
                        // clear text
-                       Text{"#The second red rupee in Death Mountain Crater# is", /*french*/"#The second red rupee in Death Mountain Crater# is", /*spanish*/"#The second red rupee in Death Mountain Crater# is", /*italian*/"#The second red rupee in Death Mountain Crater# is", /*german*/"#The second red rupee in Death Mountain Crater# is"}
+                       Text{"#the second red rupee in Death Mountain Crater# is", /*french*/"#the second red rupee in Death Mountain Crater# is", /*spanish*/"#the second red rupee in Death Mountain Crater# is", /*italian*/"#oltre le assi nel cratere del Monte Morte# puoi trovare", /*german*/"#the second red rupee in Death Mountain Crater# is"}
     );
 
     hintTable[DMC_LOWER_BLUE_RUPEE_1] = HintText::Exclude({
                        // obscure text
-                       Text{"#An obsidian# is", /*french*/"#An obsidian# is", /*spanish*/"#An obsidian# is", /*italian*/"#An obsidian# is", /*german*/"#An obsidian# is"},
+                       Text{"#an obsidian# is", /*french*/"#an obsidian# is", /*spanish*/"#an obsidian# is", /*italian*/"#camminando su assi bollenti# puoi raggiungere", /*german*/"#an obsidian# is"},
                      }, {},
                        // clear text
-                       Text{"#One of the blue rupees in Death Mountain Crater# is", /*french*/"#One of the blue rupees in Death Mountain Crater# is", /*spanish*/"#One of the blue rupees in Death Mountain Crater# is", /*italian*/"#One of the blue rupees in Death Mountain Crater# is", /*german*/"#One of the blue rupees in Death Mountain Crater# is"}
+                       Text{"#one of the blue rupees in Death Mountain Crater# is", /*french*/"#one of the blue rupees in Death Mountain Crater# is", /*spanish*/"#one of the blue rupees in Death Mountain Crater# is", /*italian*/"#oltre le assi nel cratere del Monte Morte# puoi trovare", /*german*/"#one of the blue rupees in Death Mountain Crater# is"}
     );
 
     hintTable[DMC_LOWER_BLUE_RUPEE_2] = HintText::Exclude({
                        // obscure text
-                       Text{"#An obsidian# is", /*french*/"#An obsidian# is", /*spanish*/"#An obsidian# is", /*italian*/"#An obsidian# is", /*german*/"#An obsidian# is"},
+                       Text{"#an obsidian# is", /*french*/"#an obsidian# is", /*spanish*/"#an obsidian# is", /*italian*/"#camminando su assi bollenti# puoi raggiungere", /*german*/"#an obsidian# is"},
                      }, {},
                        // clear text
-                       Text{"#One of the blue rupees in Death Mountain Crater# is", /*french*/"#One of the blue rupees in Death Mountain Crater# is", /*spanish*/"#One of the blue rupees in Death Mountain Crater# is", /*italian*/"#One of the blue rupees in Death Mountain Crater# is", /*german*/"#One of the blue rupees in Death Mountain Crater# is"}
+                       Text{"#one of the blue rupees in Death Mountain Crater# is", /*french*/"#one of the blue rupees in Death Mountain Crater# is", /*spanish*/"#one of the blue rupees in Death Mountain Crater# is", /*italian*/"#oltre le assi nel cratere del Monte Morte# puoi trovare", /*german*/"#one of the blue rupees in Death Mountain Crater# is"}
     );
 
     hintTable[DMC_LOWER_BLUE_RUPEE_3] = HintText::Exclude({
                        // obscure text
-                       Text{"#An obsidian# is", /*french*/"#An obsidian# is", /*spanish*/"#An obsidian# is", /*italian*/"#An obsidian# is", /*german*/"#An obsidian# is"},
+                       Text{"#an obsidian# is", /*french*/"#an obsidian# is", /*spanish*/"#an obsidian# is", /*italian*/"#camminando su assi bollenti# puoi raggiungere", /*german*/"#an obsidian# is"},
                      }, {},
                        // clear text
-                       Text{"#One of the blue rupees in Death Mountain Crater# is", /*french*/"#One of the blue rupees in Death Mountain Crater# is", /*spanish*/"#One of the blue rupees in Death Mountain Crater# is", /*italian*/"#One of the blue rupees in Death Mountain Crater# is", /*german*/"#One of the blue rupees in Death Mountain Crater# is"}
+                       Text{"#one of the blue rupees in Death Mountain Crater# is", /*french*/"#one of the blue rupees in Death Mountain Crater# is", /*spanish*/"#one of the blue rupees in Death Mountain Crater# is", /*italian*/"#oltre le assi nel cratere del Monte Morte# puoi trovare", /*german*/"#one of the blue rupees in Death Mountain Crater# is"}
     );
 
     hintTable[DMC_LOWER_BLUE_RUPEE_4] = HintText::Exclude({
                        // obscure text
-                       Text{"#An obsidian# is", /*french*/"#An obsidian# is", /*spanish*/"#An obsidian# is", /*italian*/"#An obsidian# is", /*german*/"#An obsidian# is"},
+                       Text{"#an obsidian# is", /*french*/"#an obsidian# is", /*spanish*/"#an obsidian# is", /*italian*/"#camminando su assi bollenti# puoi raggiungere", /*german*/"#an obsidian# is"},
                      }, {},
                        // clear text
-                       Text{"#One of the blue rupees in Death Mountain Crater# is", /*french*/"#One of the blue rupees in Death Mountain Crater# is", /*spanish*/"#One of the blue rupees in Death Mountain Crater# is", /*italian*/"#One of the blue rupees in Death Mountain Crater# is", /*german*/"#One of the blue rupees in Death Mountain Crater# is"}
+                       Text{"#one of the blue rupees in Death Mountain Crater# is", /*french*/"#one of the blue rupees in Death Mountain Crater# is", /*spanish*/"#one of the blue rupees in Death Mountain Crater# is", /*italian*/"#oltre le assi nel cratere del Monte Morte# puoi trovare", /*german*/"#one of the blue rupees in Death Mountain Crater# is"}
     );
 
     hintTable[DMC_LOWER_BLUE_RUPEE_5] = HintText::Exclude({
                        // obscure text
-                       Text{"#An obsidian# is", /*french*/"#An obsidian# is", /*spanish*/"#An obsidian# is", /*italian*/"#An obsidian# is", /*german*/"#An obsidian# is"},
+                       Text{"#an obsidian# is", /*french*/"#an obsidian# is", /*spanish*/"#an obsidian# is", /*italian*/"#camminando su assi bollenti# puoi raggiungere", /*german*/"#an obsidian# is"},
                      }, {},
                        // clear text
-                       Text{"#One of the blue rupees in Death Mountain Crater# is", /*french*/"#One of the blue rupees in Death Mountain Crater# is", /*spanish*/"#One of the blue rupees in Death Mountain Crater# is", /*italian*/"#One of the blue rupees in Death Mountain Crater# is", /*german*/"#One of the blue rupees in Death Mountain Crater# is"}
+                       Text{"#one of the blue rupees in Death Mountain Crater# is", /*french*/"#one of the blue rupees in Death Mountain Crater# is", /*spanish*/"#one of the blue rupees in Death Mountain Crater# is", /*italian*/"#oltre le assi nel cratere del Monte Morte# puoi trovare", /*german*/"#one of the blue rupees in Death Mountain Crater# is"}
     );
 
     hintTable[DMC_LOWER_BLUE_RUPEE_6] = HintText::Exclude({
                        // obscure text
-                       Text{"#An obsidian# is", /*french*/"#An obsidian# is", /*spanish*/"#An obsidian# is", /*italian*/"#An obsidian# is", /*german*/"#An obsidian# is"},
+                       Text{"#an obsidian# is", /*french*/"#an obsidian# is", /*spanish*/"#an obsidian# is", /*italian*/"#camminando su assi bollenti# puoi raggiungere", /*german*/"#an obsidian# is"},
                      }, {},
                        // clear text
-                       Text{"#One of the blue rupees in Death Mountain Crater# is", /*french*/"#One of the blue rupees in Death Mountain Crater# is", /*spanish*/"#One of the blue rupees in Death Mountain Crater# is", /*italian*/"#One of the blue rupees in Death Mountain Crater# is", /*german*/"#One of the blue rupees in Death Mountain Crater# is"}
+                       Text{"#one of the blue rupees in Death Mountain Crater# is", /*french*/"#one of the blue rupees in Death Mountain Crater# is", /*spanish*/"#one of the blue rupees in Death Mountain Crater# is", /*italian*/"#oltre le assi nel cratere del Monte Morte# puoi trovare", /*german*/"#one of the blue rupees in Death Mountain Crater# is"}
     );
 
     hintTable[DMC_SCARE_CROW_RUPEE_CIRCLE_GREEN_RUPEE_1] = HintText::Exclude({
                        // obscure text
-                       Text{"A #red hot strawman# stands next to", /*french*/"A #red hot strawman# stands next to", /*spanish*/"A #red hot strawman# stands next to", /*italian*/"A #red hot strawman# stands next to", /*german*/"A #red hot strawman# stands next to"},
+                       Text{"a #red hot strawman# stands next to", /*french*/"a #red hot strawman# stands next to", /*spanish*/"a #red hot strawman# stands next to", /*italian*/"un #focoso uomo di paglia# sorveglia", /*german*/"a #red hot strawman# stands next to"},
                      }, {},
                        // clear text
-                       Text{"#The scarecrow rupee circle in DMC# has", /*french*/"#The scarecrow rupee circle in DMC# has", /*spanish*/"#The scarecrow rupee circle in DMC# has", /*italian*/"#The scarecrow rupee circle in DMC# has", /*german*/"#The scarecrow rupee circle in DMC# has"}
+                       Text{"#the scarecrow rupee circle in DMC# has", /*french*/"#the scarecrow rupee circle in DMC# has", /*spanish*/"#the scarecrow rupee circle in DMC# has", /*italian*/"il #cerchio di oggetti dello spaventapasseri nel cratere del Monte Morte# include", /*german*/"#the scarecrow rupee circle in DMC# has"}
     );
 
     hintTable[DMC_SCARE_CROW_RUPEE_CIRCLE_GREEN_RUPEE_2] = HintText::Exclude({
                        // obscure text
-                       Text{"A #red hot strawman# stands next to", /*french*/"A #red hot strawman# stands next to", /*spanish*/"A #red hot strawman# stands next to", /*italian*/"A #red hot strawman# stands next to", /*german*/"A #red hot strawman# stands next to"},
+                       Text{"a #red hot strawman# stands next to", /*french*/"a #red hot strawman# stands next to", /*spanish*/"a #red hot strawman# stands next to", /*italian*/"un #focoso uomo di paglia# sorveglia", /*german*/"a #red hot strawman# stands next to"},
                      }, {},
                        // clear text
-                       Text{"#The scarecrow rupee circle in DMC# has", /*french*/"#The scarecrow rupee circle in DMC# has", /*spanish*/"#The scarecrow rupee circle in DMC# has", /*italian*/"#The scarecrow rupee circle in DMC# has", /*german*/"#The scarecrow rupee circle in DMC# has"}
+                       Text{"#the scarecrow rupee circle in DMC# has", /*french*/"#the scarecrow rupee circle in DMC# has", /*spanish*/"#the scarecrow rupee circle in DMC# has", /*italian*/"il #cerchio di oggetti dello spaventapasseri nel cratere del Monte Morte# include", /*german*/"#the scarecrow rupee circle in DMC# has"}
     );
 
     hintTable[DMC_SCARE_CROW_RUPEE_CIRCLE_GREEN_RUPEE_3] = HintText::Exclude({
                        // obscure text
-                       Text{"A #red hot strawman# stands next to", /*french*/"A #red hot strawman# stands next to", /*spanish*/"A #red hot strawman# stands next to", /*italian*/"A #red hot strawman# stands next to", /*german*/"A #red hot strawman# stands next to"},
+                       Text{"a #red hot strawman# stands next to", /*french*/"a #red hot strawman# stands next to", /*spanish*/"a #red hot strawman# stands next to", /*italian*/"un #focoso uomo di paglia# sorveglia", /*german*/"a #red hot strawman# stands next to"},
                      }, {},
                        // clear text
-                       Text{"#The scarecrow rupee circle in DMC# has", /*french*/"#The scarecrow rupee circle in DMC# has", /*spanish*/"#The scarecrow rupee circle in DMC# has", /*italian*/"#The scarecrow rupee circle in DMC# has", /*german*/"#The scarecrow rupee circle in DMC# has"}
+                       Text{"#the scarecrow rupee circle in DMC# has", /*french*/"#the scarecrow rupee circle in DMC# has", /*spanish*/"#the scarecrow rupee circle in DMC# has", /*italian*/"il #cerchio di oggetti dello spaventapasseri nel cratere del Monte Morte# include", /*german*/"#the scarecrow rupee circle in DMC# has"}
     );
 
     hintTable[DMC_SCARE_CROW_RUPEE_CIRCLE_GREEN_RUPEE_4] = HintText::Exclude({
                        // obscure text
-                       Text{"A #red hot strawman# stands next to", /*french*/"A #red hot strawman# stands next to", /*spanish*/"A #red hot strawman# stands next to", /*italian*/"A #red hot strawman# stands next to", /*german*/"A #red hot strawman# stands next to"},
+                       Text{"a #red hot strawman# stands next to", /*french*/"a #red hot strawman# stands next to", /*spanish*/"a #red hot strawman# stands next to", /*italian*/"un #focoso uomo di paglia# sorveglia", /*german*/"a #red hot strawman# stands next to"},
                      }, {},
                        // clear text
-                       Text{"#The scarecrow rupee circle in DMC# has", /*french*/"#The scarecrow rupee circle in DMC# has", /*spanish*/"#The scarecrow rupee circle in DMC# has", /*italian*/"#The scarecrow rupee circle in DMC# has", /*german*/"#The scarecrow rupee circle in DMC# has"}
+                       Text{"#the scarecrow rupee circle in DMC# has", /*french*/"#the scarecrow rupee circle in DMC# has", /*spanish*/"#the scarecrow rupee circle in DMC# has", /*italian*/"il #cerchio di oggetti dello spaventapasseri nel cratere del Monte Morte# include", /*german*/"#the scarecrow rupee circle in DMC# has"}
     );
 
     hintTable[DMC_SCARE_CROW_RUPEE_CIRCLE_GREEN_RUPEE_5] = HintText::Exclude({
                        // obscure text
-                       Text{"A #red hot strawman# stands next to", /*french*/"A #red hot strawman# stands next to", /*spanish*/"A #red hot strawman# stands next to", /*italian*/"A #red hot strawman# stands next to", /*german*/"A #red hot strawman# stands next to"},
+                       Text{"a #red hot strawman# stands next to", /*french*/"a #red hot strawman# stands next to", /*spanish*/"a #red hot strawman# stands next to", /*italian*/"un #focoso uomo di paglia# sorveglia", /*german*/"a #red hot strawman# stands next to"},
                      }, {},
                        // clear text
-                       Text{"#The scarecrow rupee circle in DMC# has", /*french*/"#The scarecrow rupee circle in DMC# has", /*spanish*/"#The scarecrow rupee circle in DMC# has", /*italian*/"#The scarecrow rupee circle in DMC# has", /*german*/"#The scarecrow rupee circle in DMC# has"}
+                       Text{"#the scarecrow rupee circle in DMC# has", /*french*/"#the scarecrow rupee circle in DMC# has", /*spanish*/"#the scarecrow rupee circle in DMC# has", /*italian*/"il #cerchio di oggetti dello spaventapasseri nel cratere del Monte Morte# include", /*german*/"#the scarecrow rupee circle in DMC# has"}
     );
 
     hintTable[DMC_SCARE_CROW_RUPEE_CIRCLE_GREEN_RUPEE_6] = HintText::Exclude({
                        // obscure text
-                       Text{"A #red hot strawman# stands next to", /*french*/"A #red hot strawman# stands next to", /*spanish*/"A #red hot strawman# stands next to", /*italian*/"A #red hot strawman# stands next to", /*german*/"A #red hot strawman# stands next to"},
+                       Text{"a #red hot strawman# stands next to", /*french*/"a #red hot strawman# stands next to", /*spanish*/"a #red hot strawman# stands next to", /*italian*/"un #focoso uomo di paglia# sorveglia", /*german*/"a #red hot strawman# stands next to"},
                      }, {},
                        // clear text
-                       Text{"#The scarecrow rupee circle in DMC# has", /*french*/"#The scarecrow rupee circle in DMC# has", /*spanish*/"#The scarecrow rupee circle in DMC# has", /*italian*/"#The scarecrow rupee circle in DMC# has", /*german*/"#The scarecrow rupee circle in DMC# has"}
+                       Text{"#the scarecrow rupee circle in DMC# has", /*french*/"#the scarecrow rupee circle in DMC# has", /*spanish*/"#the scarecrow rupee circle in DMC# has", /*italian*/"il #cerchio di oggetti dello spaventapasseri nel cratere del Monte Morte# include", /*german*/"#the scarecrow rupee circle in DMC# has"}
     );
 
     hintTable[DMC_SCARE_CROW_RUPEE_CIRCLE_RED_RUPEE] = HintText::Exclude({
                        // obscure text
-                       Text{"A #red hot strawman# stands next to", /*french*/"A #red hot strawman# stands next to", /*spanish*/"A #red hot strawman# stands next to", /*italian*/"A #red hot strawman# stands next to", /*german*/"A #red hot strawman# stands next to"},
+                       Text{"a #red hot strawman# stands next to", /*french*/"a #red hot strawman# stands next to", /*spanish*/"a #red hot strawman# stands next to", /*italian*/"un #focoso uomo di paglia# sorveglia", /*german*/"a #red hot strawman# stands next to"},
                      }, {},
                        // clear text
-                       Text{"#The scarecrow rupee circle in DMC# has", /*french*/"#The scarecrow rupee circle in DMC# has", /*spanish*/"#The scarecrow rupee circle in DMC# has", /*italian*/"#The scarecrow rupee circle in DMC# has", /*german*/"#The scarecrow rupee circle in DMC# has"}
+                       Text{"#the scarecrow rupee circle in DMC# has", /*french*/"#the scarecrow rupee circle in DMC# has", /*spanish*/"#the scarecrow rupee circle in DMC# has", /*italian*/"il #cerchio di oggetti dello spaventapasseri nel cratere del Monte Morte# include", /*german*/"#the scarecrow rupee circle in DMC# has"}
     );
 
     hintTable[GF_NORTH_F1_CARPENTER] = HintText::Exclude({
@@ -1709,74 +1735,74 @@ void HintTable_Init_Exclude_Overworld() {
 
     hintTable[LW_IN_BOULDER_BLUE_RUPEE] = HintText::Exclude({
                        // obscure text
-                       Text{"A #disoriented monolith# gives you", /*french*/"A #disoriented monolith# gives you", /*spanish*/"A #disoriented monolith# gives you", /*italian*/"A #disoriented monolith# gives you", /*german*/"A #disoriented monolith# gives you"},
+                       Text{"a #disoriented monolith# gives you", /*french*/"a #disoriented monolith# gives you", /*spanish*/"a #disoriented monolith# gives you", /*italian*/"una #pietra smarrita# ti darà", /*german*/"a #disoriented monolith# gives you"},
                      }, {},
                        //clear text
-                       Text{"A #boulder in the Lost Woods# gives you", /*french*/"A #boulder in the Lost Woods# gives you", /*spanish*/"A #boulder in the Lost Woods# gives you", /*italian*/"A #boulder in the Lost Woods# gives you", /*german*/"A #boulder in the Lost Woods# gives you"}
+                       Text{"a #boulder in the Lost Woods# gives you", /*french*/"a #boulder in the Lost Woods# gives you", /*spanish*/"a #boulder in the Lost Woods# gives you", /*italian*/"un #macigno nel bosco perduto# copre", /*german*/"a #boulder in the Lost Woods# gives you"}
     );
 
     hintTable[LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_1] = HintText::Exclude({
                        // obscure text
-                       Text{"A #drowning bypass gem# is", /*french*/"A #drowning bypass gem# is", /*spanish*/"A #drowning bypass gem# is", /*italian*/"A #drowning bypass gem# is", /*german*/"A #drowning bypass gem# is"},
+                       Text{"a #drowning bypass gem# is", /*french*/"a #drowning bypass gem# is", /*spanish*/"a #drowning bypass gem# is", /*italian*/"fra #gli oggetti che indicano il fiume Zora# puoi pescare", /*german*/"a #drowning bypass gem# is"},
                      }, {},
                        //clear text
-                       Text{"A #rupee near the Zora's River shortcut# is", /*french*/"A #rupee near the Zora's River shortcut# is", /*spanish*/"A #rupee near the Zora's River shortcut# is", /*italian*/"A #rupee near the Zora's River shortcut# is", /*german*/"A #rupee near the Zora's River shortcut# is"}
+                       Text{"a #rupee near the Zora's River shortcut# is", /*french*/"a #rupee near the Zora's River shortcut# is", /*spanish*/"a #rupee near the Zora's River shortcut# is", /*italian*/"#nello stagno del bosco perduto# puoi pescare", /*german*/"a #rupee near the Zora's River shortcut# is"}
     );
 
     hintTable[LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_2] = HintText::Exclude({
                        // obscure text
-                       Text{"A #drowning bypass gem# is", /*french*/"A #drowning bypass gem# is", /*spanish*/"A #drowning bypass gem# is", /*italian*/"A #drowning bypass gem# is", /*german*/"A #drowning bypass gem# is"},
+                       Text{"a #drowning bypass gem# is", /*french*/"a #drowning bypass gem# is", /*spanish*/"a #drowning bypass gem# is", /*italian*/"fra #gli oggetti che indicano il fiume Zora# puoi pescare", /*german*/"a #drowning bypass gem# is"},
                      }, {},
                        //clear text
-                       Text{"A #rupee near the Zora's River shortcut# is", /*french*/"A #rupee near the Zora's River shortcut# is", /*spanish*/"A #rupee near the Zora's River shortcut# is", /*italian*/"A #rupee near the Zora's River shortcut# is", /*german*/"A #rupee near the Zora's River shortcut# is"}
+                       Text{"a #rupee near the Zora's River shortcut# is", /*french*/"a #rupee near the Zora's River shortcut# is", /*spanish*/"a #rupee near the Zora's River shortcut# is", /*italian*/"#nello stagno del bosco perduto# puoi pescare", /*german*/"a #rupee near the Zora's River shortcut# is"}
     );
 
     hintTable[LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_3] = HintText::Exclude({
                        // obscure text
-                       Text{"A #drowning bypass gem# is", /*french*/"A #drowning bypass gem# is", /*spanish*/"A #drowning bypass gem# is", /*italian*/"A #drowning bypass gem# is", /*german*/"A #drowning bypass gem# is"},
+                       Text{"a #drowning bypass gem# is", /*french*/"a #drowning bypass gem# is", /*spanish*/"a #drowning bypass gem# is", /*italian*/"fra #gli oggetti che indicano il fiume Zora# puoi pescare", /*german*/"a #drowning bypass gem# is"},
                      }, {},
                        //clear text
-                       Text{"A #rupee near the Zora's River shortcut# is", /*french*/"A #rupee near the Zora's River shortcut# is", /*spanish*/"A #rupee near the Zora's River shortcut# is", /*italian*/"A #rupee near the Zora's River shortcut# is", /*german*/"A #rupee near the Zora's River shortcut# is"}
+                       Text{"a #rupee near the Zora's River shortcut# is", /*french*/"a #rupee near the Zora's River shortcut# is", /*spanish*/"a #rupee near the Zora's River shortcut# is", /*italian*/"#nello stagno del bosco perduto# puoi pescare", /*german*/"a #rupee near the Zora's River shortcut# is"}
     );
 
     hintTable[LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_4] = HintText::Exclude({
                        // obscure text
-                       Text{"A #drowning bypass gem# is", /*french*/"A #drowning bypass gem# is", /*spanish*/"A #drowning bypass gem# is", /*italian*/"A #drowning bypass gem# is", /*german*/"A #drowning bypass gem# is"},
+                       Text{"a #drowning bypass gem# is", /*french*/"a #drowning bypass gem# is", /*spanish*/"a #drowning bypass gem# is", /*italian*/"fra #gli oggetti che indicano il fiume Zora# puoi pescare", /*german*/"a #drowning bypass gem# is"},
                      }, {},
                        //clear text
-                       Text{"A #rupee near the Zora's River shortcut# is", /*french*/"A #rupee near the Zora's River shortcut# is", /*spanish*/"A #rupee near the Zora's River shortcut# is", /*italian*/"A #rupee near the Zora's River shortcut# is", /*german*/"A #rupee near the Zora's River shortcut# is"}
+                       Text{"a #rupee near the Zora's River shortcut# is", /*french*/"a #rupee near the Zora's River shortcut# is", /*spanish*/"a #rupee near the Zora's River shortcut# is", /*italian*/"#nello stagno del bosco perduto# puoi pescare", /*german*/"a #rupee near the Zora's River shortcut# is"}
     );
 
     hintTable[LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_5] = HintText::Exclude({
                        // obscure text
-                       Text{"A #drowning bypass gem# is", /*french*/"A #drowning bypass gem# is", /*spanish*/"A #drowning bypass gem# is", /*italian*/"A #drowning bypass gem# is", /*german*/"A #drowning bypass gem# is"},
+                       Text{"a #drowning bypass gem# is", /*french*/"a #drowning bypass gem# is", /*spanish*/"a #drowning bypass gem# is", /*italian*/"fra #gli oggetti che indicano il fiume Zora# puoi pescare", /*german*/"a #drowning bypass gem# is"},
                      }, {},
                        //clear text
-                       Text{"A #rupee near the Zora's River shortcut# is", /*french*/"A #rupee near the Zora's River shortcut# is", /*spanish*/"A #rupee near the Zora's River shortcut# is", /*italian*/"A #rupee near the Zora's River shortcut# is", /*german*/"A #rupee near the Zora's River shortcut# is"}
+                       Text{"a #rupee near the Zora's River shortcut# is", /*french*/"a #rupee near the Zora's River shortcut# is", /*spanish*/"a #rupee near the Zora's River shortcut# is", /*italian*/"#nello stagno del bosco perduto# puoi pescare", /*german*/"a #rupee near the Zora's River shortcut# is"}
     );
 
     hintTable[LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_6] = HintText::Exclude({
                        // obscure text
-                       Text{"A #drowning bypass gem# is", /*french*/"A #drowning bypass gem# is", /*spanish*/"A #drowning bypass gem# is", /*italian*/"A #drowning bypass gem# is", /*german*/"A #drowning bypass gem# is"},
+                       Text{"a #drowning bypass gem# is", /*french*/"a #drowning bypass gem# is", /*spanish*/"a #drowning bypass gem# is", /*italian*/"fra #gli oggetti che indicano il fiume Zora# puoi pescare", /*german*/"a #drowning bypass gem# is"},
                      }, {},
                        //clear text
-                       Text{"A #rupee near the Zora's River shortcut# is", /*french*/"A #rupee near the Zora's River shortcut# is", /*spanish*/"A #rupee near the Zora's River shortcut# is", /*italian*/"A #rupee near the Zora's River shortcut# is", /*german*/"A #rupee near the Zora's River shortcut# is"}
+                       Text{"a #rupee near the Zora's River shortcut# is", /*french*/"a #rupee near the Zora's River shortcut# is", /*spanish*/"a #rupee near the Zora's River shortcut# is", /*italian*/"#nello stagno del bosco perduto# puoi pescare", /*german*/"a #rupee near the Zora's River shortcut# is"}
     );
 
     hintTable[LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_7] = HintText::Exclude({
                        // obscure text
-                       Text{"A #drowning bypass gem# is", /*french*/"A #drowning bypass gem# is", /*spanish*/"A #drowning bypass gem# is", /*italian*/"A #drowning bypass gem# is", /*german*/"A #drowning bypass gem# is"},
+                       Text{"a #drowning bypass gem# is", /*french*/"a #drowning bypass gem# is", /*spanish*/"a #drowning bypass gem# is", /*italian*/"fra #gli oggetti che indicano il fiume Zora# puoi pescare", /*german*/"a #drowning bypass gem# is"},
                      }, {},
                        //clear text
-                       Text{"A #rupee near the Zora's River shortcut# is", /*french*/"A #rupee near the Zora's River shortcut# is", /*spanish*/"A #rupee near the Zora's River shortcut# is", /*italian*/"A #rupee near the Zora's River shortcut# is", /*german*/"A #rupee near the Zora's River shortcut# is"}
+                       Text{"a #rupee near the Zora's River shortcut# is", /*french*/"a #rupee near the Zora's River shortcut# is", /*spanish*/"a #rupee near the Zora's River shortcut# is", /*italian*/"#nello stagno del bosco perduto# puoi pescare", /*german*/"a #rupee near the Zora's River shortcut# is"}
     );
 
     hintTable[LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_8] = HintText::Exclude({
                        // obscure text
-                       Text{"A #drowning bypass gem# is", /*french*/"A #drowning bypass gem# is", /*spanish*/"A #drowning bypass gem# is", /*italian*/"A #drowning bypass gem# is", /*german*/"A #drowning bypass gem# is"},
+                       Text{"a #drowning bypass gem# is", /*french*/"a #drowning bypass gem# is", /*spanish*/"a #drowning bypass gem# is", /*italian*/"fra #gli oggetti che indicano il fiume Zora# puoi pescare", /*german*/"a #drowning bypass gem# is"},
                      }, {},
                        //clear text
-                       Text{"A #rupee near the Zora's River shortcut# is", /*french*/"A #rupee near the Zora's River shortcut# is", /*spanish*/"A #rupee near the Zora's River shortcut# is", /*italian*/"A #rupee near the Zora's River shortcut# is", /*german*/"A #rupee near the Zora's River shortcut# is"}
+                       Text{"a #rupee near the Zora's River shortcut# is", /*french*/"a #rupee near the Zora's River shortcut# is", /*spanish*/"a #rupee near the Zora's River shortcut# is", /*italian*/"#nello stagno del bosco perduto# puoi pescare", /*german*/"a #rupee near the Zora's River shortcut# is"}
     );
 
     hintTable[LW_DEKU_SCRUB_GROTTO_REAR] = HintText::Exclude({
@@ -1841,34 +1867,34 @@ void HintTable_Init_Exclude_Overworld() {
 
     hintTable[ZR_WATERFALL_RED_RUPEE_1] = HintText::Exclude({
                        // obscure text
-                       Text{"The #sound of rushing water# is enjoyed by", /*french*/"The #sound of rushing water# is enjoyed by", /*spanish*/"The #sound of rushing water# is enjoyed by", /*italian*/"The #sound of rushing water# is enjoyed by", /*german*/"The #sound of rushing water# is enjoyed by"},
+                       Text{"the #sound of rushing water# is enjoyed by", /*french*/"the #sound of rushing water# is enjoyed by", /*spanish*/"the #sound of rushing water# is enjoyed by", /*italian*/"il #suono di acqua corrente# allieta", /*german*/"the #sound of rushing water# is enjoyed by"},
                      }, {},
                        //clear text
-                       Text{"#Under the Zora's River Waterfall# is", /*french*/"#Under the Zora's River Waterfall# is", /*spanish*/"#Under the Zora's River Waterfall# is", /*italian*/"#Under the Zora's River Waterfall# is", /*german*/"#Under the Zora's River Waterfall# is"}
+                       Text{"#under the Zora's River Waterfall# is", /*french*/"#under the Zora's River Waterfall# is", /*spanish*/"#under the Zora's River Waterfall# is", /*italian*/"#sotto la cascata nel fiume Zora# puoi trovare", /*german*/"#under the Zora's River Waterfall# is"}
     );
 
     hintTable[ZR_WATERFALL_RED_RUPEE_2] = HintText::Exclude({
                        // obscure text
-                       Text{"The #sound of rushing water# is enjoyed by", /*french*/"The #sound of rushing water# is enjoyed by", /*spanish*/"The #sound of rushing water# is enjoyed by", /*italian*/"The #sound of rushing water# is enjoyed by", /*german*/"The #sound of rushing water# is enjoyed by"},
+                       Text{"the #sound of rushing water# is enjoyed by", /*french*/"the #sound of rushing water# is enjoyed by", /*spanish*/"the #sound of rushing water# is enjoyed by", /*italian*/"il #suono di acqua corrente# allieta", /*german*/"the #sound of rushing water# is enjoyed by"},
                      }, {},
                        //clear text
-                       Text{"#Under the Zora's River Waterfall# is", /*french*/"#Under the Zora's River Waterfall# is", /*spanish*/"#Under the Zora's River Waterfall# is", /*italian*/"#Under the Zora's River Waterfall# is", /*german*/"#Under the Zora's River Waterfall# is"}
+                       Text{"#under the Zora's River Waterfall# is", /*french*/"#under the Zora's River Waterfall# is", /*spanish*/"#under the Zora's River Waterfall# is", /*italian*/"#sotto la cascata nel fiume Zora# puoi trovare", /*german*/"#under the Zora's River Waterfall# is"}
     );
 
     hintTable[ZR_WATERFALL_RED_RUPEE_3] = HintText::Exclude({
                        // obscure text
-                       Text{"The #sound of rushing water# is enjoyed by", /*french*/"The #sound of rushing water# is enjoyed by", /*spanish*/"The #sound of rushing water# is enjoyed by", /*italian*/"The #sound of rushing water# is enjoyed by", /*german*/"The #sound of rushing water# is enjoyed by"},
+                       Text{"the #sound of rushing water# is enjoyed by", /*french*/"the #sound of rushing water# is enjoyed by", /*spanish*/"the #sound of rushing water# is enjoyed by", /*italian*/"il #suono di acqua corrente# allieta", /*german*/"the #sound of rushing water# is enjoyed by"},
                      }, {},
                        //clear text
-                       Text{"#Under the Zora's River Waterfall# is", /*french*/"#Under the Zora's River Waterfall# is", /*spanish*/"#Under the Zora's River Waterfall# is", /*italian*/"#Under the Zora's River Waterfall# is", /*german*/"#Under the Zora's River Waterfall# is"}
+                       Text{"#under the Zora's River Waterfall# is", /*french*/"#under the Zora's River Waterfall# is", /*spanish*/"#under the Zora's River Waterfall# is", /*italian*/"#sotto la cascata nel fiume Zora# puoi trovare", /*german*/"#under the Zora's River Waterfall# is"}
     );
 
     hintTable[ZR_WATERFALL_RED_RUPEE_4] = HintText::Exclude({
                        // obscure text
-                       Text{"The #sound of rushing water# is enjoyed by", /*french*/"The #sound of rushing water# is enjoyed by", /*spanish*/"The #sound of rushing water# is enjoyed by", /*italian*/"The #sound of rushing water# is enjoyed by", /*german*/"The #sound of rushing water# is enjoyed by"},
+                       Text{"the #sound of rushing water# is enjoyed by", /*french*/"the #sound of rushing water# is enjoyed by", /*spanish*/"the #sound of rushing water# is enjoyed by", /*italian*/"il #suono di acqua corrente# allieta", /*german*/"the #sound of rushing water# is enjoyed by"},
                      }, {},
                        //clear text
-                       Text{"#Under the Zora's River Waterfall# is", /*french*/"#Under the Zora's River Waterfall# is", /*spanish*/"#Under the Zora's River Waterfall# is", /*italian*/"#Under the Zora's River Waterfall# is", /*german*/"#Under the Zora's River Waterfall# is"}
+                       Text{"#under the Zora's River Waterfall# is", /*french*/"#under the Zora's River Waterfall# is", /*spanish*/"#under the Zora's River Waterfall# is", /*italian*/"#sotto la cascata nel fiume Zora# puoi trovare", /*german*/"#under the Zora's River Waterfall# is"}
     );
 
     hintTable[LH_DEKU_SCRUB_GROTTO_LEFT] = HintText::Exclude({
@@ -1898,66 +1924,66 @@ void HintTable_Init_Exclude_Overworld() {
 
     hintTable[GV_OCTOROCK_GROTTO_GREEN_RUPEE_1] = HintText::Exclude({
                        // obscure text
-                       Text{"A #purple monster# hoards", /*french*/"A #purple monster# hoards", /*spanish*/"A #purple monster# hoards", /*italian*/"A #purple monster# hoards", /*german*/"A #purple monster# hoards"},
+                       Text{"a #purple monster# hoards", /*french*/"a #purple monster# hoards", /*spanish*/"a #purple monster# hoards", /*italian*/"un #polpo# difende", /*german*/"a #purple monster# hoards"},
                      },{},
                        //clear text
-                       Text{"The #Gerudo Valley Octorock# guards", /*french*/"The #Gerudo Valley Octorock# guards", /*spanish*/"The #Gerudo Valley Octorock# guards", /*italian*/"The #Gerudo Valley Octorock# guards", /*german*/"The #Gerudo Valley Octorock# guards"}
+                       Text{"the #Gerudo Valley Octorok# guards", /*french*/"the #Gerudo Valley Octorok# guards", /*spanish*/"the #Gerudo Valley Octorok# guards", /*italian*/"#l'Octorok nella grotta della valle Gerudo# difende", /*german*/"the #Gerudo Valley Octorok# guards"}
     );
 
     hintTable[GV_OCTOROCK_GROTTO_GREEN_RUPEE_2] = HintText::Exclude({
                        // obscure text
-                       Text{"A #purple monster# hoards", /*french*/"A #purple monster# hoards", /*spanish*/"A #purple monster# hoards", /*italian*/"A #purple monster# hoards", /*german*/"A #purple monster# hoards"},
+                       Text{"a #purple monster# hoards", /*french*/"a #purple monster# hoards", /*spanish*/"a #purple monster# hoards", /*italian*/"un #polpo# difende", /*german*/"a #purple monster# hoards"},
                      },{},
                        //clear text
-                       Text{"The #Gerudo Valley Octorock# guards", /*french*/"The #Gerudo Valley Octorock# guards", /*spanish*/"The #Gerudo Valley Octorock# guards", /*italian*/"The #Gerudo Valley Octorock# guards", /*german*/"The #Gerudo Valley Octorock# guards"}
+                       Text{"the #Gerudo Valley Octorok# guards", /*french*/"the #Gerudo Valley Octorok# guards", /*spanish*/"the #Gerudo Valley Octorok# guards", /*italian*/"#l'Octorok nella grotta della valle Gerudo# difende", /*german*/"the #Gerudo Valley Octorok# guards"}
     );
 
     hintTable[GV_OCTOROCK_GROTTO_GREEN_RUPEE_3] = HintText::Exclude({
                        // obscure text
-                       Text{"A #purple monster# hoards", /*french*/"A #purple monster# hoards", /*spanish*/"A #purple monster# hoards", /*italian*/"A #purple monster# hoards", /*german*/"A #purple monster# hoards"},
+                       Text{"a #purple monster# hoards", /*french*/"a #purple monster# hoards", /*spanish*/"a #purple monster# hoards", /*italian*/"un #polpo# difende", /*german*/"a #purple monster# hoards"},
                      },{},
                        //clear text
-                       Text{"The #Gerudo Valley Octorock# guards", /*french*/"The #Gerudo Valley Octorock# guards", /*spanish*/"The #Gerudo Valley Octorock# guards", /*italian*/"The #Gerudo Valley Octorock# guards", /*german*/"The #Gerudo Valley Octorock# guards"}
+                       Text{"the #Gerudo Valley Octorok# guards", /*french*/"the #Gerudo Valley Octorok# guards", /*spanish*/"the #Gerudo Valley Octorok# guards", /*italian*/"#l'Octorok nella grotta della valle Gerudo# difende", /*german*/"the #Gerudo Valley Octorok# guards"}
     );
 
     hintTable[GV_OCTOROCK_GROTTO_GREEN_RUPEE_4] = HintText::Exclude({
                        // obscure text
-                       Text{"A #purple monster# hoards", /*french*/"A #purple monster# hoards", /*spanish*/"A #purple monster# hoards", /*italian*/"A #purple monster# hoards", /*german*/"A #purple monster# hoards"},
+                       Text{"a #purple monster# hoards", /*french*/"a #purple monster# hoards", /*spanish*/"a #purple monster# hoards", /*italian*/"un #polpo# difende", /*german*/"a #purple monster# hoards"},
                      },{},
                        //clear text
-                       Text{"The #Gerudo Valley Octorock# guards", /*french*/"The #Gerudo Valley Octorock# guards", /*spanish*/"The #Gerudo Valley Octorock# guards", /*italian*/"The #Gerudo Valley Octorock# guards", /*german*/"The #Gerudo Valley Octorock# guards"}
+                       Text{"the #Gerudo Valley Octorok# guards", /*french*/"the #Gerudo Valley Octorok# guards", /*spanish*/"the #Gerudo Valley Octorok# guards", /*italian*/"#l'Octorok nella grotta della valle Gerudo# difende", /*german*/"the #Gerudo Valley Octorok# guards"}
     );
 
     hintTable[GV_OCTOROCK_GROTTO_BLUE_RUPEE_1] = HintText::Exclude({
                        // obscure text
-                       Text{"A #purple monster# hoards", /*french*/"A #purple monster# hoards", /*spanish*/"A #purple monster# hoards", /*italian*/"A #purple monster# hoards", /*german*/"A #purple monster# hoards"}
+                       Text{"a #purple monster# hoards", /*french*/"a #purple monster# hoards", /*spanish*/"a #purple monster# hoards", /*italian*/"un #polpo# difende", /*german*/"a #purple monster# hoards"}
                      },{},
                        //clear text
-                       Text{"The #Gerudo Valley Octorock# guards", /*french*/"The #Gerudo Valley Octorock# guards", /*spanish*/"The #Gerudo Valley Octorock# guards", /*italian*/"The #Gerudo Valley Octorock# guards", /*german*/"The #Gerudo Valley Octorock# guards"}
+                       Text{"the #Gerudo Valley Octorok# guards", /*french*/"the #Gerudo Valley Octorok# guards", /*spanish*/"the #Gerudo Valley Octorok# guards", /*italian*/"#l'Octorok nella grotta della valle Gerudo# difende", /*german*/"the #Gerudo Valley Octorok# guards"}
     );
 
     hintTable[GV_OCTOROCK_GROTTO_BLUE_RUPEE_2] = HintText::Exclude({
                        // obscure text
-                       Text{"A #purple monster# hoards", /*french*/"A #purple monster# hoards", /*spanish*/"A #purple monster# hoards", /*italian*/"A #purple monster# hoards", /*german*/"A #purple monster# hoards"},
+                       Text{"a #purple monster# hoards", /*french*/"a #purple monster# hoards", /*spanish*/"a #purple monster# hoards", /*italian*/"un #polpo# difende", /*german*/"a #purple monster# hoards"},
                      },{},
                        //clear text
-                       Text{"The #Gerudo Valley Octorock# guards", /*french*/"The #Gerudo Valley Octorock# guards", /*spanish*/"The #Gerudo Valley Octorock# guards", /*italian*/"The #Gerudo Valley Octorock# guards", /*german*/"The #Gerudo Valley Octorock# guards"}
+                       Text{"the #Gerudo Valley Octorok# guards", /*french*/"the #Gerudo Valley Octorok# guards", /*spanish*/"the #Gerudo Valley Octorok# guards", /*italian*/"#l'Octorok nella grotta della valle Gerudo# difende", /*german*/"the #Gerudo Valley Octorok# guards"}
     );
 
     hintTable[GV_OCTOROCK_GROTTO_BLUE_RUPEE_3] = HintText::Exclude({
                        // obscure text
-                       Text{"A #purple monster# hoards", /*french*/"A #purple monster# hoards", /*spanish*/"A #purple monster# hoards", /*italian*/"A #purple monster# hoards", /*german*/"A #purple monster# hoards"},
+                       Text{"a #purple monster# hoards", /*french*/"a #purple monster# hoards", /*spanish*/"a #purple monster# hoards", /*italian*/"un #polpo# difende", /*german*/"a #purple monster# hoards"},
                      },{},
                        //clear text
-                       Text{"The #Gerudo Valley Octorock# guards", /*french*/"The #Gerudo Valley Octorock# guards", /*spanish*/"The #Gerudo Valley Octorock# guards", /*italian*/"The #Gerudo Valley Octorock# guards", /*german*/"The #Gerudo Valley Octorock# guards"}
+                       Text{"the #Gerudo Valley Octorok# guards", /*french*/"the #Gerudo Valley Octorok# guards", /*spanish*/"the #Gerudo Valley Octorok# guards", /*italian*/"#l'Octorok nella grotta della valle Gerudo# difende", /*german*/"the #Gerudo Valley Octorok# guards"}
     );
 
     hintTable[GV_OCTOROCK_GROTTO_RED_RUPEE] = HintText::Exclude({
                        // obscure text
-                       Text{"A #purple monster# hoards", /*french*/"A #purple monster# hoards", /*spanish*/"A #purple monster# hoards", /*italian*/"A #purple monster# hoards", /*german*/"A #purple monster# hoards"},
+                       Text{"a #purple monster# hoards", /*french*/"a #purple monster# hoards", /*spanish*/"a #purple monster# hoards", /*italian*/"un #polpo# difende", /*german*/"a #purple monster# hoards"},
                      },{},
                        //clear text
-                       Text{"The #Gerudo Valley Octorock# guards", /*french*/"The #Gerudo Valley Octorock# guards", /*spanish*/"The #Gerudo Valley Octorock# guards", /*italian*/"The #Gerudo Valley Octorock# guards", /*german*/"The #Gerudo Valley Octorock# guards"}
+                       Text{"the #Gerudo Valley Octorok# guards", /*french*/"the #Gerudo Valley Octorok# guards", /*spanish*/"the #Gerudo Valley Octorok# guards", /*italian*/"#l'Octorok nella grotta della valle Gerudo# difende", /*german*/"the #Gerudo Valley Octorok# guards"}
     );
 
     hintTable[COLOSSUS_DEKU_SCRUB_GROTTO_FRONT] = HintText::Exclude({
