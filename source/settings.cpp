@@ -3413,7 +3413,7 @@ bool ValidateSettings() {
                    "----------------------------------------",
                    posY);
             valid = false;
-            posY += 11;
+            posY += 10;
         }
     }
 
