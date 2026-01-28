@@ -390,4 +390,8 @@ typedef void (*Actor_UpdateBgCheckInfo_proc)(struct GlobalContext* globalCtx, Ac
 typedef s32 (*Player_InCsMode_proc)(struct GlobalContext* globalCtx);
 #define Player_InCsMode ((Player_InCsMode_proc)GAME_ADDR(0x36A7A0))
 
+typedef Actor* (*Actor_FindNearby_proc)(struct GlobalContext* globalCtx, Actor* ref_actor, s16 actorId,
+                                        u8 actor_category, f32 range);
+#define Actor_FindNearby ((Actor_FindNearby_proc)GAME_ADDR(0x369334))
+
 #endif

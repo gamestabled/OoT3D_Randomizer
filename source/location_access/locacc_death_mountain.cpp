@@ -32,6 +32,11 @@ void AreaTable_Init_DeathMountain() {
                                       (IsAdult && CanPlantBean(DEATH_MOUNTAIN_TRAIL) &&
                                        (HasExplosives || GoronBracelet));
                            } }),
+            LocationAccess(DMT_ROCK_BLUE_RUPEE, { [] { return IsChild && CanBlastOrSmash; } }),
+            LocationAccess(DMT_ROCK_RED_RUPEE, { [] {
+                               return IsChild && (Here(DEATH_MOUNTAIN_TRAIL, [] { return CanBlastOrSmash; }) ||
+                                                  Here(DEATH_MOUNTAIN_SUMMIT, [] { return CanBlastOrSmash; }));
+                           } }),
         },
         {
             // Exits
@@ -132,6 +137,34 @@ void AreaTable_Init_DeathMountain() {
                                                CanDoGlitch(GlitchType::ActionSwap, GlitchDifficulty::ADVANCED))) &&
                                              EponasSong;
                                   } }),
+                 LocationAccess(DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_1,
+                                {
+                                    [] { return true; },
+                                }),
+                 LocationAccess(DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_2,
+                                {
+                                    [] { return true; },
+                                }),
+                 LocationAccess(DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_3,
+                                {
+                                    [] { return true; },
+                                }),
+                 LocationAccess(DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_4,
+                                {
+                                    [] { return true; },
+                                }),
+                 LocationAccess(DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_5,
+                                {
+                                    [] { return true; },
+                                }),
+                 LocationAccess(DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_6,
+                                {
+                                    [] { return true; },
+                                }),
+                 LocationAccess(DMT_COW_GROTTO_RUPEE_CIRCLE_RED_RUPEE,
+                                {
+                                    [] { return true; },
+                                }),
              },
              {
                  // Exits
@@ -491,40 +524,98 @@ void AreaTable_Init_DeathMountain() {
             Entrance(DMC_CENTRAL_LOCAL, { [] { return CanSurviveHeatFor(48); } }),
         });
 
-    areaTable[DMC_CENTRAL_LOCAL] =
-        Area("DMC Central Local", "Death Mountain Crater", DEATH_MOUNTAIN_CRATER, NO_DAY_NIGHT_CYCLE,
-             {
-                 // Events
-                 EventAccess(&BeanPlantFairy, { [] {
-                     return BeanPlantFairy || (CanPlantBean(DMC_CENTRAL_LOCAL) && CanPlay(SongOfStorms));
-                 } }),
-             },
-             {},
-             {
-                 // Exits
-                 Entrance(DMC_CENTRAL_NEARBY, { [] { return true; } }),
-                 Entrance(DMC_LOWER_NEARBY, { [] {
-                                                 return (IsAdult && CanPlantBean(DMC_CENTRAL_LOCAL)) ||
-                                                        CanUse(HOVER_BOOTS) || CanUse(HOOKSHOT);
-                                             },
-                                              /*Glitched*/
-                                              [] {
-                                                  return IsChild && CanSurviveHeatFor(-1, 24) && HasBombchus &&
-                                                         CanDoGlitch(GlitchType::BombHover, GlitchDifficulty::NOVICE);
-                                              } }),
-                 Entrance(DMC_UPPER_NEARBY, { [] { return IsAdult && CanPlantBean(DMC_CENTRAL_LOCAL); } }),
-                 Entrance(FIRE_TEMPLE_ENTRYWAY, { [] {
-                                                     return (IsChild && CanSurviveHeatFor(-1, 24) &&
-                                                             ShuffleDungeonEntrances.IsNot(SHUFFLEDUNGEONS_OFF)) ||
-                                                            (IsAdult && CanSurviveHeatFor(24));
-                                                 },
-                                                  /*Glitched*/
-                                                  [] {
-                                                      return CanDoGlitch(GlitchType::ASlide,
-                                                                         GlitchDifficulty::INTERMEDIATE) &&
-                                                             CanSurviveHeatFor(48);
-                                                  } }),
-             });
+    areaTable[DMC_CENTRAL_LOCAL] = Area(
+        "DMC Central Local", "Death Mountain Crater", DEATH_MOUNTAIN_CRATER, NO_DAY_NIGHT_CYCLE,
+        {
+            // Events
+            EventAccess(&BeanPlantFairy, { [] {
+                return BeanPlantFairy || (CanPlantBean(DMC_CENTRAL_LOCAL) && CanPlay(SongOfStorms));
+            } }),
+        },
+        {
+            LocationAccess(DMC_LOWER_RED_RUPEE_1, { [] { return IsChild && CanSurviveHeatFor(8, 24); } }),
+            LocationAccess(DMC_LOWER_RED_RUPEE_2, { [] { return IsChild && CanSurviveHeatFor(8, 24); } }),
+            LocationAccess(DMC_LOWER_BLUE_RUPEE_1, { [] { return IsChild && CanSurviveHeatFor(8, 24); } }),
+            LocationAccess(DMC_LOWER_BLUE_RUPEE_2, { [] { return IsChild && CanSurviveHeatFor(8, 24); } }),
+            LocationAccess(DMC_LOWER_BLUE_RUPEE_3, { [] { return IsChild && CanSurviveHeatFor(8, 24); } }),
+            LocationAccess(DMC_LOWER_BLUE_RUPEE_4, { [] { return IsChild && CanSurviveHeatFor(8, 24); } }),
+            LocationAccess(DMC_LOWER_BLUE_RUPEE_5, { [] { return IsChild && CanSurviveHeatFor(8, 24); } }),
+            LocationAccess(DMC_LOWER_BLUE_RUPEE_6, { [] { return IsChild && CanSurviveHeatFor(8, 24); } }),
+            LocationAccess(DMC_SCARE_CROW_RUPEE_CIRCLE_GREEN_RUPEE_1, { [] {
+                               return IsAdult && CanSurviveHeatFor(24, -1) &&
+                                      (DistantScarecrow || (LogicDMCPlatformJump &&
+                                                            Here(DMC_UPPER_LOCAL, { [] {
+                                                                     return IsAdult && (EffectiveHealth > 2 || Fairy);
+                                                                 } })));
+                           } }),
+            LocationAccess(DMC_SCARE_CROW_RUPEE_CIRCLE_GREEN_RUPEE_2, { [] {
+                               return IsAdult && CanSurviveHeatFor(24, -1) &&
+                                      (DistantScarecrow || (LogicDMCPlatformJump &&
+                                                            Here(DMC_UPPER_LOCAL, { [] {
+                                                                     return IsAdult && (EffectiveHealth > 2 || Fairy);
+                                                                 } })));
+                           } }),
+            LocationAccess(DMC_SCARE_CROW_RUPEE_CIRCLE_GREEN_RUPEE_3, { [] {
+                               return IsAdult && CanSurviveHeatFor(24, -1) &&
+                                      (DistantScarecrow || (LogicDMCPlatformJump &&
+                                                            Here(DMC_UPPER_LOCAL, { [] {
+                                                                     return IsAdult && (EffectiveHealth > 2 || Fairy);
+                                                                 } })));
+                           } }),
+            LocationAccess(DMC_SCARE_CROW_RUPEE_CIRCLE_GREEN_RUPEE_4, { [] {
+                               return IsAdult && CanSurviveHeatFor(24, -1) &&
+                                      (DistantScarecrow || (LogicDMCPlatformJump &&
+                                                            Here(DMC_UPPER_LOCAL, { [] {
+                                                                     return IsAdult && (EffectiveHealth > 2 || Fairy);
+                                                                 } })));
+                           } }),
+            LocationAccess(DMC_SCARE_CROW_RUPEE_CIRCLE_GREEN_RUPEE_5, { [] {
+                               return IsAdult && CanSurviveHeatFor(24, -1) &&
+                                      (DistantScarecrow || (LogicDMCPlatformJump &&
+                                                            Here(DMC_UPPER_LOCAL, { [] {
+                                                                     return IsAdult && (EffectiveHealth > 2 || Fairy);
+                                                                 } })));
+                           } }),
+            LocationAccess(DMC_SCARE_CROW_RUPEE_CIRCLE_GREEN_RUPEE_6, { [] {
+                               return IsAdult && CanSurviveHeatFor(24, -1) &&
+                                      (DistantScarecrow || (LogicDMCPlatformJump &&
+                                                            Here(DMC_UPPER_LOCAL, { [] {
+                                                                     return IsAdult && (EffectiveHealth > 2 || Fairy);
+                                                                 } })));
+                           } }),
+            LocationAccess(DMC_SCARE_CROW_RUPEE_CIRCLE_RED_RUPEE, { [] {
+                               return IsAdult && CanSurviveHeatFor(24, -1) &&
+                                      (DistantScarecrow || (LogicDMCPlatformJump &&
+                                                            Here(DMC_UPPER_LOCAL, { [] {
+                                                                     return IsAdult && (EffectiveHealth > 2 || Fairy);
+                                                                 } })));
+                           } }),
+        },
+        {
+            // Exits
+            Entrance(DMC_CENTRAL_NEARBY, { [] { return true; } }),
+            Entrance(DMC_LOWER_NEARBY, { [] {
+                                            return (IsAdult && CanPlantBean(DMC_CENTRAL_LOCAL)) ||
+                                                   CanUse(HOVER_BOOTS) || CanUse(HOOKSHOT);
+                                        },
+                                         /*Glitched*/
+                                         [] {
+                                             return IsChild && CanSurviveHeatFor(-1, 24) && HasBombchus &&
+                                                    CanDoGlitch(GlitchType::BombHover, GlitchDifficulty::NOVICE);
+                                         } }),
+            Entrance(DMC_UPPER_NEARBY, { [] { return IsAdult && CanPlantBean(DMC_CENTRAL_LOCAL); } }),
+            Entrance(FIRE_TEMPLE_ENTRYWAY, { [] {
+                                                return (IsChild && CanSurviveHeatFor(-1, 24) &&
+                                                        ShuffleDungeonEntrances.IsNot(SHUFFLEDUNGEONS_OFF)) ||
+                                                       (IsAdult && CanSurviveHeatFor(24));
+                                            },
+                                             /*Glitched*/
+                                             [] {
+                                                 return CanDoGlitch(GlitchType::ASlide,
+                                                                    GlitchDifficulty::INTERMEDIATE) &&
+                                                        CanSurviveHeatFor(48);
+                                             } }),
+        });
 
     areaTable[DMC_GREAT_FAIRY_FOUNTAIN] =
         Area("DMC Great Fairy Fountain", "DMC Great Fairy Fountain", NONE, NO_DAY_NIGHT_CYCLE, {},

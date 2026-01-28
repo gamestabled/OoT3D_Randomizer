@@ -686,6 +686,16 @@ void GenerateItemPool() {
         AddItemToMainPool(GOLD_SKULLTULA_TOKEN, 100);
     }
 
+    if (ShuffleRupees) {
+        for (LocationKey loc : GetLocations(allLocations, Category::cFreestandingRupee)) {
+            AddItemToMainPool(Location(loc)->GetVanillaItem());
+        }
+    } else {
+        for (LocationKey loc : GetLocations(allLocations, Category::cFreestandingRupee)) {
+            Location(loc)->PlaceVanillaItem();
+        }
+    }
+
     if (BombchusInLogic) {
         AddItemToMainPool(PROGRESSIVE_BOMBCHUS, 5);
     } else {

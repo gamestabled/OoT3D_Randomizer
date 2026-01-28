@@ -1,7 +1,10 @@
 #include "z3D/z3D.h"
 #include "z3D/actors/z_en_item00.h"
 #include "models.h"
+#include "actors/obj_mure3.h"
 #include "settings.h"
+#include "common.h"
+#include "savefile.h"
 
 #define EnItem00_Init ((ActorFunc)GAME_ADDR(0x1F69B4))
 
@@ -13,7 +16,7 @@
 
 #define THIS ((EnItem00*)thisx)
 
-#define FUN_002B175C (void*)GAME_ADDR(0x2B175C)
+#define EnItem00_Collected ((void*)GAME_ADDR(0x2B175C))
 
 void EnItem00_rInit(Actor* thisx, GlobalContext* globalCtx) {
     EnItem00* item = THIS;
@@ -44,7 +47,25 @@ void EnItem00_rInit(Actor* thisx, GlobalContext* globalCtx) {
             item->actor.params = (item->actor.params & 0xFF00) | 0x00;
         }
     }
+
+    // If Z rotation is -1, it was set in `ActorSetup_OverrideEntry`
+    if (thisx->home.rot.z == -1) {
+        item->rExt.spawnedBySceneLayer = TRUE;
+        thisx->home.rot.z              = 0;
+    }
+
     EnItem00_Init(&item->actor, globalCtx);
+
+    // For rupees spawned by Rupee Circles (ObjMure3) we use an "extraCollectibleFlag".
+    // Since collectibleFlag normally gets truncated to 0x3F we can use any value at or above
+    // 0x40. We've reserved 0x40-0x46 for Rupee circle rupees.
+    if (item->collectibleFlag == 0x00 && gIsObjMure3Updating) {
+        item->rExt.extraCollectibleFlag = gExtraCollectibleFlag;
+        gExtraCollectibleFlag += 1;
+        if (gExtraCollectibleFlag > 0x46) {
+            gExtraCollectibleFlag = 0x40;
+        }
+    }
     Model_SpawnByActor(&item->actor, globalCtx, 0);
 }
 
@@ -58,9 +79,16 @@ void EnItem00_rDestroy(Actor* thisx, GlobalContext* globalCtx) {
 void EnItem00_rUpdate(Actor* thisx, GlobalContext* globalCtx) {
     EnItem00* item = THIS;
 
-    if (Flags_GetCollectible(globalCtx, item->collectibleFlag) && item->action_fn != FUN_002B175C) {
-        Actor_Kill(&item->actor);
-        return;
+    if (gSettingsContext.mp_Enabled && item->actionFunc != EnItem00_Collected) {
+        if (Flags_GetCollectible(globalCtx, item->collectibleFlag)) {
+            Actor_Kill(&item->actor);
+            return;
+        }
+
+        u16 flag = item->rExt.extraCollectibleFlag ? item->rExt.extraCollectibleFlag : item->collectibleFlag;
+        if (SaveFile_GetRupeeSanityFlag(globalCtx->sceneNum, flag)) {
+            Model_DestroyByActor(thisx);
+        }
     }
 
     EnItem00_Update(&item->actor, globalCtx);

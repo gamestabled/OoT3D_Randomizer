@@ -177,6 +177,10 @@ class ItemLocation {
         return placedItem;
     }
 
+    ItemKey GetVanillaItem() const {
+        return vanillaItem;
+    }
+
     void SetPlacedItem(const ItemKey item) {
         placedItem = item;
         SetPrice(ItemTable(placedItem).GetPrice());

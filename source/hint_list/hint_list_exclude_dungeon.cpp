@@ -34,7 +34,6 @@ void HintTable_Init_Exclude_Dungeon() {
                        Text{"#webs in the Deku Tree# hide", /*french*/"les #toiles dans l'arbre Mojo# cachent", /*spanish*/"entre #telarañas del Gran Árbol Deku# yace", /*italian*/"una #ragnatela nell'Albero Deku# copre", /*german*/"unterhalb von #Spinnenweben# des Deku-Baumes, |wäre|wären|"},
     });
 
-
     hintTable[DEKU_TREE_MQ_MAP_CHEST] = HintText::Exclude({
                        // obscure text
                        Text{"in the #center of the Deku Tree# lies", /*french*/"#le cœur de l'arbre Mojo# recèle", /*spanish*/"al #centro del Gran Árbol Deku# yace", /*italian*/"al #centro dell'Albero Deku# puoi trovare", /*german*/"im #Zentrum des Deku-Baumes#, |wäre|wären|"},
@@ -93,7 +92,6 @@ void HintTable_Init_Exclude_Dungeon() {
                        Text{"a #spider atop the Deku Tree# holds", /*french*/"une #Skulltula au sommet de l'arbre Mojo# a", /*spanish*/"una #Skulltula en lo alto del Árbol Deku# otorga", /*italian*/"un #ragno in cima all'Albero Deku# nasconde", /*german*/"in einer #Spinne, im oberen Teil des Deku-Baumes#, |wäre|wären|"},
     });
 
-
     hintTable[DEKU_TREE_MQ_GS_LOBBY] = HintText::Exclude({
                        // obscure text
                        Text{"a #spider in a crate# within the Deku Tree hides", /*french*/"une #Skulltula dans une boîte dans l'arbre Mojo# a", /*spanish*/"una #Skulltula bajo una caja# del Árbol Deku otorga", /*italian*/"un #ragno in una cassa# nell'Albero Deku nasconde", /*german*/"in der #Spinne, in einer Kiste# des Deku-Baumes, |wäre|wären|"},
@@ -146,7 +144,6 @@ void HintTable_Init_Exclude_Dungeon() {
                        // obscure text
                        Text{"a #chest at the end of a bridge# yields", /*french*/"le #trésor à l'extrémité d'un pont# contient", /*spanish*/"un #cofre al final de un quebrado puente# contiene", /*italian*/"un #forziere alla fine di un ponte# contiene", /*german*/"in einer #Truhe, am Ende einer Brücke#, |wäre|wären|"},
     });
-
 
     hintTable[DODONGOS_CAVERN_MQ_MAP_CHEST] = HintText::Exclude({
                        // obscure text
@@ -211,7 +208,6 @@ void HintTable_Init_Exclude_Dungeon() {
                        Text{"a #spider among bats# in Dodongo's Cavern holds", /*french*/"une #Skulltula entourée de Saigneurs dans la caverne Dodongo# a", /*spanish*/"una #Skulltula rodeada de murciélagos# de la Cueva de los Dodongos otorga", /*italian*/"un #ragno in mezzo ai pipistrelli# nella caverna dei Dodongo nasconde", /*german*/"in einer, #von Fledermäusen umgebenen Spinne# in Dodongos Höhle, |wäre|wären|"},
     });
 
-
     hintTable[DODONGOS_CAVERN_MQ_GS_SCRUB_ROOM] = HintText::Exclude({
                        // obscure text
                        Text{"a #spider high on a wall# in Dodongo's Cavern holds", /*french*/"une #Skulltula haut perchée dans la caverne Dodongo# a", /*spanish*/"una #Skulltula en lo alto de una pared# de la Cueva de los Dodongos otorga", /*italian*/"un #ragno in alto su un muro# nella caverna dei Dodongo protegge", /*german*/"in einer, #an einer hohen Wand krabbelnden Spinne# in Dodongos Höhle, |wäre|wären|"},
@@ -252,7 +248,6 @@ void HintTable_Init_Exclude_Dungeon() {
                        Text{"a #scrub in Dodongo's Cavern# sells", /*french*/"la #peste Mojo dans l'entrée de la caverne Dodongo# vend", /*spanish*/"un #deku en la Cueva de los Dodongos# vende", /*italian*/"un #cespuglio solitario# vicino all'ingresso della caverna dei Dodongo vende", /*german*/"die Ware, eines #Deku-Händlers in Dodongos Höhle#, |wäre|wären|"},
     });
 
-
     hintTable[DODONGOS_CAVERN_MQ_DEKU_SCRUB_LOBBY_REAR] = HintText::Exclude({
                        // obscure text
                        Text{"a pair of #scrubs in Dodongo's Cavern# sells", /*french*/"le #duo de peste Mojo dans l'entrée de la caverne Dodongo# vend", /*spanish*/"un #par de dekus en la Cueva de los Dodongos# venden", /*italian*/"una #coppia di cespugli# nella caverna dei Dodongo vende", /*german*/"die Ware, eines #Deku-Händler-Duos in Dodongos Höhle#, |wäre|wären|"},
@@ -291,7 +286,6 @@ void HintTable_Init_Exclude_Dungeon() {
                        // clear text
                        Text{"#bubbles# guard", /*french*/"des #bulles# entourent", /*spanish*/"unas #burbujas# protegen", /*italian*/"gli #shabom# proteggono", /*german*/"nahe #Blubberblasen#, |wäre|wären|"}
     );
-
 
     hintTable[JABU_JABUS_BELLY_MQ_FIRST_ROOM_SIDE_CHEST] = HintText::Exclude({
                        // obscure text
@@ -358,6 +352,30 @@ void HintTable_Init_Exclude_Dungeon() {
                        Text{"a school of #stingers swallowed by Jabu-Jabu# guard", /*french*/"les #raies avallées par Jabu-Jabu# protègent", /*spanish*/"unos #stingers engullidos por Jabu-Jabu# guardan", /*italian*/"#un banco di trigoni volanti# nella pancia di Jabu Jabu protegge", /*german*/"nahe #Fischen in Jabu-Jabus Bauch#, |wäre|wären|"}
     );
 
+    hintTable[JABU_JABUS_BELLY_MQ_NEAR_COW_BOTTOM_GREEN_RUPEE] = HintText::Exclude({
+                       // obscure text
+                       Text{"#deep in belly juice near a steak# you'll find", /*french*/"#deep in belly juice near a steak# you'll find", /*spanish*/"#deep in belly juice near a steak# you'll find", /*italian*/"#in profondità nei succhi gastrici che digeriscono una bistecca# troverai", /*german*/"#deep in belly juice near a steak# you'll find"},
+                     }, {},
+                       // clear text
+                       Text{"#on the bottom of water in Jabu's Belly near a cow# is", /*french*/"#on the bottom of water in Jabu's Belly near a cow# is", /*spanish*/"#on the bottom of water in Jabu's Belly near a cow# is", /*italian*/"#nella pancia di Jabu Jabu, sul fondo dell'acqua in cui è immersa una mucca#, troverai", /*german*/"#on the bottom of water in Jabu's Belly near a cow# is"}
+    );
+
+    hintTable[JABU_JABUS_BELLY_MQ_NEAR_COW_MIDDLE_GREEN_RUPEE] = HintText::Exclude({
+                       // obscure text
+                       Text{"#halfway in belly juice near a steak# you'll find", /*french*/"#halfway in belly juice near a steak# you'll find", /*spanish*/"#halfway in belly juice near a steak# you'll find", /*italian*/"#a mollo nei succhi gastrici che digeriscono una bistecca# troverai", /*german*/"#halfway in belly juice near a steak# you'll find"},
+                     }, {},
+                       // clear text
+                       Text{"#in the middle of water in Jabu's Belly near a cow# is", /*french*/"#in the middle of water in Jabu's Belly near a cow# is", /*spanish*/"#in the middle of water in Jabu's Belly near a cow# is", /*italian*/"#nella pancia di Jabu Jabu, in mezzo all'acqua in cui è immersa una mucca#, troverai", /*german*/"#in the middle of water in Jabu's Belly near a cow# is"}
+    );
+
+    hintTable[JABU_JABUS_BELLY_MQ_NEAR_COW_TOP_GREEN_RUPEE] = HintText::Exclude({
+                       // obscure text
+                       Text{"#almost floating in belly juice near a steak# you'll find", /*french*/"#almost floating in belly juice near a steak# you'll find", /*spanish*/"#almost floating in belly juice near a steak# you'll find", /*italian*/"#quasi a galla nei succhi gastrici che digeriscono una bistecca# troverai", /*german*/"#almost floating in belly juice near a steak# you'll find"},
+                     }, {},
+                       // clear text
+                       Text{"#near the top of water in Jabu's Belly near a cow# is", /*french*/"#near the top of water in Jabu's Belly near a cow# is", /*spanish*/"#near the top of water in Jabu's Belly near a cow# is", /*italian*/"#nella pancia di Jabu Jabu, vicino al pelo dell'acqua in cui è immersa una mucca#, troverai", /*german*/"#near the top of water in Jabu's Belly near a cow# is"}
+    );
+
     hintTable[JABU_JABUS_BELLY_BARINADE_HEART] = HintText::Exclude({
                        // obscure text
                        Text{"the #Bio-Electric Anemone# holds", /*french*/"l'#anémone bioélectrique# possède", /*spanish*/"la #anémona bioeléctrica# porta", /*italian*/"l'#anemone bio-elettrico# possiede", /*german*/"nahe dem #elektroterrestrischen Biotentakel#, |wäre|wären|"},
@@ -385,7 +403,6 @@ void HintTable_Init_Exclude_Dungeon() {
                        // obscure text
                        Text{"a #spider guarded by a school of stingers# in Jabu-Jabu's Belly holds", /*french*/"une #Skulltula protégée par des raies dans le ventre de Jabu-Jabu# a", /*spanish*/"una #Skulltula rodeada por unos stingers# en la Tripa de Jabu-Jabu otorga", /*italian*/"un #ragno protetto da trigoni volanti# nasconde", /*german*/"in einer #Spinne, nahe eines Fischschwarms# in Jabu-Jabus Bauch"},
     });
-
 
     hintTable[JABU_JABUS_BELLY_MQ_GS_TAILPASARAN_ROOM] = HintText::Exclude({
                        // obscure text
@@ -486,7 +503,6 @@ void HintTable_Init_Exclude_Dungeon() {
                        // obscure text
                        Text{"#revolving walls# in the Forest Temple conceal", /*french*/"des #murs rotatifs dans la forêt# recèlent", /*spanish*/"las #paredes giratorias# del Templo del Bosque conceden", /*italian*/"#muri rotanti# nel Santuario della Foresta nascondono", /*german*/"nahe #drehbarer Wände# des Waldtempels, |wäre|wären|"},
     });
-
 
     hintTable[FOREST_TEMPLE_MQ_FIRST_ROOM_CHEST] = HintText::Exclude({
                        // obscure text
@@ -590,7 +606,6 @@ void HintTable_Init_Exclude_Dungeon() {
                        Text{"a #spider within revolving walls# in the Forest Temple holds", /*french*/"une #Skulltula derrière les murs pivotants du temple de la forêt# a", /*spanish*/"una #Skulltula entre paredes giratorias# del Templo del Bosque otorga", /*italian*/"un #ragno fra muri rotanti# nel Santuario della Foresta nasconde", /*german*/"in einer #Spinne, nahe drehbarer Wände# des Waldtempels, |wäre|wären|"},
     });
 
-
     hintTable[FOREST_TEMPLE_MQ_GS_FIRST_HALLWAY] = HintText::Exclude({
                        // obscure text
                        Text{"an #ivy-hidden spider# in the Forest Temple hoards", /*french*/"une #Skulltula près de l'entrée du temple de la forêt# a", /*spanish*/"una #Skulltula escondida entre cepas# del Templo del Bosque otorga", /*italian*/"un #ragno dopo altri tre# nel Santuario della Foresta protegge", /*german*/"in einer, #in Efeu versteckten Spinne# des Waldtempels, |wäre|wären|"},
@@ -678,7 +693,6 @@ void HintTable_Init_Exclude_Dungeon() {
                        // obscure text
                        Text{"a #Goron atop the Fire Temple# holds", /*french*/"le #Goron au sommet du temple du feu# a", /*spanish*/"un #goron en lo alto del Templo del Fuego# guarda", /*italian*/"un #Goron in cima al Santuario del Fuoco# possiede", /*german*/"nahe eines #Goronen, im oberen Teil des Feuertempels#, |wäre|wären|"},
     });
-
 
     hintTable[FIRE_TEMPLE_MQ_NEAR_BOSS_CHEST] = HintText::Exclude({
                        // obscure text
@@ -777,7 +791,6 @@ void HintTable_Init_Exclude_Dungeon() {
                        Text{"a #spider-friendly scarecrow# atop the Fire Temple hides", /*french*/"une #Skulltula repérée par l'épouvantail du temple du feu# a", /*spanish*/"un #espantapájaros del Templo del Fuego# custodia una Skulltula que otorga", /*italian*/"uno #spaventapasseri nel Santuario del Fuoco# indica un ragno che ha", /*german*/"in einer #Spinne über einer Vogelscheuche#, im oberen Teil des Feuertempels, |wäre|wären|"}
     );
 
-
     hintTable[FIRE_TEMPLE_MQ_GS_ABOVE_FIRE_WALL_MAZE] = HintText::Exclude({
                        // obscure text
                        Text{"a #spider above a fiery maze# holds", /*french*/"une #Skulltula au dessus du labyrinthe enflammé du temple du feu# a", /*spanish*/"una #Skulltula sobre un ardiente laberinto# otorga", /*italian*/"un #ragno sopra un labirinto di fiamme# nasconde", /*german*/"in einer #Spinne über einem feurigen Irrgarten#, |wäre|wären|"},
@@ -845,7 +858,6 @@ void HintTable_Init_Exclude_Dungeon() {
                        Text{"#Dark @# guards", /*french*/"l'#Ombre de @# protège", /*spanish*/"#@ Oscuro# guarda", /*italian*/"#@ oscuro# protegge", /*german*/"nahe #dem schwarzen @#, |wäre|wären|"}
     );
 
-
     hintTable[WATER_TEMPLE_MQ_CENTRAL_PILLAR_CHEST] = HintText::Exclude({
                        // obscure text
                        Text{"in the #depths of the Water Temple# lies", /*french*/"le #cœur du temple de l'eau# cache", /*spanish*/"en las #profundidades del Templo del Agua# yace", /*italian*/"#nel più profondo del Santuario dell'Acqua# puoi recuperare", /*german*/"in #den Tiefen# des Wassertempels, |wäre|wären|"},
@@ -901,7 +913,6 @@ void HintTable_Init_Exclude_Dungeon() {
                        // obscure text
                        Text{"a #spider over a river# in the Water Temple holds", /*french*/"une #Skulltula au dessus de la rivière du temple de l'eau# a", /*spanish*/"una #Skulltula sobre un río# del Templo del Agua otorga", /*italian*/"un #ragno sopra un fiume# nel Santuario dell'Acqua nasconde", /*german*/"in einer #Spinne, oberhalb eines Flusses# des Wassertempels, |wäre|wären|"},
     });
-
 
     hintTable[WATER_TEMPLE_MQ_GS_BEFORE_UPPER_WATER_SWITCH] = HintText::Exclude({
                        // obscure text
@@ -1005,7 +1016,6 @@ void HintTable_Init_Exclude_Dungeon() {
                        // obscure text
                        Text{"those who #show the light above the Colossus# find", /*french*/"le #soleil au sommet du colosse# révèle", /*spanish*/"aquellos que #iluminen en lo alto del Coloso# encontrarán", /*italian*/"#chi sa riflettere bene# in cima al colosso può trovare", /*german*/"nahe einer #lichtbedürftigen Sonne, an der Spitze des Kolosses#, |wäre|wären|"},
     });
-
 
     hintTable[SPIRIT_TEMPLE_MQ_ENTRANCE_FRONT_LEFT_CHEST] = HintText::Exclude({
                        // obscure text
@@ -1130,7 +1140,6 @@ void HintTable_Init_Exclude_Dungeon() {
                        Text{"a child defeats a #spider among bats# in the Spirit Temple to gain", /*french*/"une #Skulltula sur le grillage du temple de l'esprit# a", /*spanish*/"el joven que derrote la #Skulltula entre murciélagos# del Templo del Espíritu hallará", /*italian*/"un bambino può sconfiggere #un ragno fra i pipistrelli# nel Santuario dello Spirito per ottenere", /*german*/"in einer, #von Fledermäusen umgebenen Spinne# des Geistertempels, |wäre|wären|"},
     });
 
-
     hintTable[SPIRIT_TEMPLE_MQ_GS_LEEVER_ROOM] = HintText::Exclude({
                        // obscure text
                        Text{"#above a pit of sand# in the Spirit Temple hides", /*french*/"une #Skulltula au dessus du trou sableux du temple de l'esprit# a", /*spanish*/"una #Skulltula sobre un pozo de arena# del Templo del Espíritu otorga", /*italian*/"#sopra una fossa sabbiosa# nel Santuario dello Spirito si nasconde un ragno con", /*german*/"in einer Spinne, #über einer Sandgrube# des Geistertempels, |wäre|wären|"},
@@ -1236,7 +1245,6 @@ void HintTable_Init_Exclude_Dungeon() {
                        // obscure text
                        Text{"#inside a burning skull# lies", /*french*/"#dans un crâne enflammé# gît", /*spanish*/"en el #interior de una calavera en llamas# aguarda", /*italian*/"da un #vaso a forma di teschio# |salta|saltano| fuori", /*german*/"#in einem brennenden Schädel#, |wäre|wären|"},
     });
-
 
     hintTable[SHADOW_TEMPLE_MQ_COMPASS_CHEST] = HintText::Exclude({
                        // obscure text
@@ -1369,7 +1377,6 @@ void HintTable_Init_Exclude_Dungeon() {
                        Text{"a spider near a #docked ship# hoards", /*french*/"une #Skulltula près du traversier du temple de l'ombre# a", /*spanish*/"una #Skulltula cercana a un navío# otorga", /*italian*/"un ragno vicino a un #traghetto infernale# nasconde", /*german*/"in einer Spinne, nahe eines #anlegenden Schiffes#, |wäre|wären|"},
     });
 
-
     hintTable[SHADOW_TEMPLE_MQ_GS_FALLING_SPIKES_ROOM] = HintText::Exclude({
                        // obscure text
                        Text{"a #spider beyond falling spikes# holds", /*french*/"une #Skulltula au delà de la pluie de clous du temple de l'ombre# a", /*spanish*/"una #Skulltula tras los pinchos del techo# otorga", /*italian*/"un #ragno oltre la pioggia d'acciaio# nasconde", /*german*/"in einer #Spinne hinter fallenden Stacheln#, |wäre|wären|"},
@@ -1463,6 +1470,45 @@ void HintTable_Init_Exclude_Dungeon() {
                        Text{"#inside a coffin# hides", /*french*/"dans #un cercueil# gît", /*spanish*/"en el #interior de un ataúd# yace", /*italian*/"#dentro una bara# puoi trovare", /*german*/"in einem #Sarg#, |wäre|wären|"},
     });
 
+    hintTable[BOTTOM_OF_THE_WELL_CENTER_ROOM_PIT_FALL_BLUE_RUPEE_1] = HintText::Exclude({
+                       // obscure text
+                       Text{"falling through #an invisible floor# gives", /*french*/"falling through #an invisible floor# gives", /*spanish*/"falling through #an invisible floor# gives", /*italian*/"cadendo attraverso #un pavimento invisible# puoi ottenere", /*german*/"falling through #an invisible floor# gives"},
+                     },{},
+                       // clear text
+                       Text{"the #rupees on the platform in the center pit of BOTW# hold", /*french*/"the #rupees on the platform in the center pit of BOTW# hold", /*spanish*/"the #rupees on the platform in the center pit of BOTW# hold", /*italian*/"#sulla piattaforma centrale nel pozzo# puoi trovare", /*german*/"the #rupees on the platform in the center pit of BOTW# hold"}
+    );
+
+    hintTable[BOTTOM_OF_THE_WELL_CENTER_ROOM_PIT_FALL_BLUE_RUPEE_2] = HintText::Exclude({
+                       // obscure text
+                       Text{"falling through #an invisible floor# gives", /*french*/"falling through #an invisible floor# gives", /*spanish*/"falling through #an invisible floor# gives", /*italian*/"cadendo attraverso #un pavimento invisible# puoi ottenere", /*german*/"falling through #an invisible floor# gives"},
+                     },{},
+                       // clear text
+                       Text{"the #rupees on the platform in the center pit of BOTW# hold", /*french*/"the #rupees on the platform in the center pit of BOTW# hold", /*spanish*/"the #rupees on the platform in the center pit of BOTW# hold", /*italian*/"#sulla piattaforma centrale nel pozzo# puoi trovare", /*german*/"the #rupees on the platform in the center pit of BOTW# hold"}
+    );
+
+    hintTable[BOTTOM_OF_THE_WELL_CENTER_ROOM_PIT_FALL_BLUE_RUPEE_3] = HintText::Exclude({
+                       // obscure text
+                       Text{"falling through #an invisible floor# gives", /*french*/"falling through #an invisible floor# gives", /*spanish*/"falling through #an invisible floor# gives", /*italian*/"cadendo attraverso #un pavimento invisible# puoi ottenere", /*german*/"falling through #an invisible floor# gives"},
+                     },{},
+                       // clear text
+                       Text{"the #rupees on the platform in the center pit of BOTW# hold", /*french*/"the #rupees on the platform in the center pit of BOTW# hold", /*spanish*/"the #rupees on the platform in the center pit of BOTW# hold", /*italian*/"#sulla piattaforma centrale nel pozzo# puoi trovare", /*german*/"the #rupees on the platform in the center pit of BOTW# hold"}
+    );
+
+    hintTable[BOTTOM_OF_THE_WELL_CENTER_ROOM_PIT_FALL_BLUE_RUPEE_4] = HintText::Exclude({
+                       // obscure text
+                       Text{"falling through #an invisible floor# gives", /*french*/"falling through #an invisible floor# gives", /*spanish*/"falling through #an invisible floor# gives", /*italian*/"cadendo attraverso #un pavimento invisible# puoi ottenere", /*german*/"falling through #an invisible floor# gives"},
+                     },{},
+                       // clear text
+                       Text{"the #rupees on the platform in the center pit of BOTW# hold", /*french*/"the #rupees on the platform in the center pit of BOTW# hold", /*spanish*/"the #rupees on the platform in the center pit of BOTW# hold", /*italian*/"#sulla piattaforma centrale nel pozzo# puoi trovare", /*german*/"the #rupees on the platform in the center pit of BOTW# hold"}
+    );
+
+    hintTable[BOTTOM_OF_THE_WELL_CENTER_ROOM_PIT_FALL_BLUE_RUPEE_5] = HintText::Exclude({
+                       // obscure text
+                       Text{"falling through #an invisible floor# gives", /*french*/"falling through #an invisible floor# gives", /*spanish*/"falling through #an invisible floor# gives", /*italian*/"cadendo attraverso #un pavimento invisible# puoi ottenere", /*german*/"falling through #an invisible floor# gives"},
+                     },{},
+                       // clear text
+                       Text{"the #rupees on the platform in the center pit of BOTW# hold", /*french*/"the #rupees on the platform in the center pit of BOTW# hold", /*spanish*/"the #rupees on the platform in the center pit of BOTW# hold", /*italian*/"#sulla piattaforma centrale nel pozzo# puoi trovare", /*german*/"the #rupees on the platform in the center pit of BOTW# hold"}
+    );
 
     hintTable[BOTTOM_OF_THE_WELL_MQ_MAP_CHEST] = HintText::Exclude({
                        // obscure text
@@ -1498,7 +1544,6 @@ void HintTable_Init_Exclude_Dungeon() {
                        // obscure text
                        Text{"a #spider locked in a crypt# within the well guards", /*french*/"une #Skulltula embarrée dans la crypte au fonds du puits# a", /*spanish*/"una #Skulltula encerrada en una cripta# del pozo otorga", /*italian*/"un #ragno in una cripta# nel pozzo possiede", /*german*/"in der #Spinne, einer verschlossenen Krypta# des Brunnens, |wäre|wären|"},
     });
-
 
     hintTable[BOTTOM_OF_THE_WELL_MQ_GS_BASEMENT] = HintText::Exclude({
                        // obscure text
@@ -1538,6 +1583,37 @@ void HintTable_Init_Exclude_Dungeon() {
                        Text{"a #wall of ice# protects", /*french*/"un #mur de glace rouge# cache", /*spanish*/"una #gélida pared# protege", /*italian*/"un #muro di ghiaccio# cela", /*german*/"hinter einer #Wand aus Eis#, |wäre|wären|"},
     });
 
+    hintTable[ICE_CAVERN_RED_ICE_BLUE_RUPEE] = HintText::Exclude({
+                       // obscure text
+                       Text{"#some Gatorade will melt#", /*french*/"#some Gatorade will melt#", /*spanish*/"#some Gatorade will melt#", /*italian*/"#un po' di Gatorade può scongelare#", /*german*/"#some Gatorade will melt#"},
+                     },{},
+                       // clear text
+                       Text{"melting #the red ice in the first Ice Cavern room# will give", /*french*/"melting #the red ice in the first Ice Cavern room# will give", /*spanish*/"melting #the red ice in the first Ice Cavern room# will give", /*italian*/"il #ghiaccio rosso nella prima stanza della caverna di ghiaccio# contiene", /*german*/"melting #the red ice in the first Ice Cavern room# will give"}
+    );
+
+    hintTable[ICE_CAVERN_PUSH_BLOCK_ROOM_RED_RUPEE_1] = HintText::Exclude({
+                       // obscure text
+                       Text{"apparently #cold cancels out gravity# on", /*french*/"apparently #cold cancels out gravity# on", /*spanish*/"apparently #cold cancels out gravity# on", /*italian*/"apparentemente #il freddo annulla la forza di gravità# per", /*german*/"apparently #cold cancels out gravity# on"},
+                     },{},
+                       // clear text
+                       Text{"#the rupees floating above the push blocks in Ice Cavern# are", /*french*/"#the rupees floating above the push blocks in Ice Cavern# are", /*spanish*/"#the rupees floating above the push blocks in Ice Cavern# are", /*italian*/"#a mezz'aria nella caverna di ghiaccio# puoi veder fluttuare", /*german*/"#the rupees floating above the push blocks in Ice Cavern# are"}
+    );
+
+    hintTable[ICE_CAVERN_PUSH_BLOCK_ROOM_RED_RUPEE_2] = HintText::Exclude({
+                       // obscure text
+                       Text{"apparently #cold cancels out gravity# on", /*french*/"apparently #cold cancels out gravity# on", /*spanish*/"apparently #cold cancels out gravity# on", /*italian*/"apparentemente #il freddo annulla la forza di gravità# per", /*german*/"apparently #cold cancels out gravity# on"},
+                     },{},
+                       // clear text
+                       Text{"#the rupees floating above the push blocks in Ice Cavern# are", /*french*/"#the rupees floating above the push blocks in Ice Cavern# are", /*spanish*/"#the rupees floating above the push blocks in Ice Cavern# are", /*italian*/"#a mezz'aria nella caverna di ghiaccio# puoi veder fluttuare", /*german*/"#the rupees floating above the push blocks in Ice Cavern# are"}
+    );
+
+    hintTable[ICE_CAVERN_PUSH_BLOCK_ROOM_RED_RUPEE_3] = HintText::Exclude({
+                       // obscure text
+                       Text{"apparently #cold cancels out gravity# on", /*french*/"apparently #cold cancels out gravity# on", /*spanish*/"apparently #cold cancels out gravity# on", /*italian*/"apparentemente #il freddo annulla la forza di gravità# per", /*german*/"apparently #cold cancels out gravity# on"},
+                     },{},
+                       // clear text
+                       Text{"#the rupees floating above the push blocks in Ice Cavern# are", /*french*/"#the rupees floating above the push blocks in Ice Cavern# are", /*spanish*/"#the rupees floating above the push blocks in Ice Cavern# are", /*italian*/"#a mezz'aria nella caverna di ghiaccio# puoi veder fluttuare", /*german*/"#the rupees floating above the push blocks in Ice Cavern# are"}
+    );
 
     hintTable[ICE_CAVERN_MQ_IRON_BOOTS_CHEST] = HintText::Exclude({
                        // obscure text
@@ -1573,7 +1649,6 @@ void HintTable_Init_Exclude_Dungeon() {
                        // obscure text
                        Text{"a #spider behind a wall of ice# hides", /*french*/"une #Skulltula derrière un mur de glace# a", /*spanish*/"una #Skulltula tras una gélida pared# otorga", /*italian*/"un #ragno dietro un muro di ghiaccio# cela", /*german*/"in einer #Spinne hinter einer Wand aus Eis#, |wäre|wären|"},
     });
-
 
     hintTable[ICE_CAVERN_MQ_GS_SCARECROW] = HintText::Exclude({
                        // obscure text
@@ -1693,7 +1768,6 @@ void HintTable_Init_Exclude_Dungeon() {
                        Text{"the #Song of Time# in the Gerudo Training Grounds leads to", /*french*/"le #chant du temps# révèle dans le gymnase Gerudo", /*spanish*/"la #Canción del Tiempo# en el Centro de Instrucción Gerudo conduce a", /*italian*/"la #Canzone del tempo# nella zona di addestramento Gerudo apre la via per", /*german*/"nach der #Hymne der Zeit# beim Training der Diebe, |wäre|wären|"},
     });
 
-
     hintTable[GERUDO_TRAINING_GROUNDS_MQ_LOBBY_RIGHT_CHEST] = HintText::Exclude({
                        // obscure text
                        Text{"#thieves prepare for training# with", /*french*/"dans #l'entrée du gymnase Gerudo# gît", /*spanish*/"las #bandidas se instruyen# con", /*italian*/"i #ladri si preparano all'addestramento# con", /*german*/"vor dem Training der Diebe, |wäre|wären|"},
@@ -1777,7 +1851,6 @@ void HintTable_Init_Exclude_Dungeon() {
                        Text{"the #Evil King# hoards", /*french*/"le #Roi du Mal# possède", /*spanish*/"el #Rey del Mal# acapara", /*italian*/"il #re del male# custodisce", /*german*/"der Schatz vom #Großmeister des Bösen#, |wäre|wären|"},
     });
 
-
     hintTable[GANONS_CASTLE_FOREST_TRIAL_CHEST] = HintText::Exclude({
                        // obscure text
                        Text{"the #test of the wilds# holds", /*french*/"l'#épreuve des bois# contient", /*spanish*/"la #prueba de la naturaleza# brinda", /*italian*/"la #prova della natura# cela", /*german*/"in der #Prüfung der Wildnis#, |wäre|wären|"},
@@ -1852,7 +1925,6 @@ void HintTable_Init_Exclude_Dungeon() {
                        // obscure text
                        Text{"#music in the test of radiance# reveals", /*french*/"la #musique dans l'épreuve du ciel# révèle", /*spanish*/"la #música en la prueba del resplandor# revela", /*italian*/"#musica nella prova dello splendore# cela", /*german*/"nahe #Musik in der Prüfung der Strahlen#, |wäre|wären|"},
     });
-
 
     hintTable[GANONS_CASTLE_MQ_WATER_TRIAL_CHEST] = HintText::Exclude({
                        // obscure text
@@ -1938,7 +2010,6 @@ void HintTable_Init_Exclude_Dungeon() {
                        // obscure text
                        Text{"#scrubs in Ganon's Castle# sell", /*french*/"les #pestes Mojo dans le château de Ganon# vendent", /*spanish*/"los #dekus del Castillo de Ganon# venden", /*italian*/"un #cespuglio nel castello di Ganon# vende", /*german*/"die Ware, eines #Deku-Händlers in Ganons Schloss#, |wäre|wären|"},
     });
-
 
     hintTable[GANONS_CASTLE_MQ_DEKU_SCRUB_RIGHT] = HintText::Exclude({
                        // obscure text

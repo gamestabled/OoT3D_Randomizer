@@ -492,6 +492,14 @@ void AreaTable_Init_Kakariko() {
             // Locations
             LocationAccess(GRAVEYARD_HOOKSHOT_CHEST, { [] { return true; } }),
             LocationAccess(GRAVEYARD_DAMPE_RACE_FREESTANDING_POH, { [] { return IsAdult || LogicChildDampeRacePoH; } }),
+            LocationAccess(GRAVEYARD_DAMPE_RACE_GREEN_RUPEE_1, { [] { return true; } }),
+            LocationAccess(GRAVEYARD_DAMPE_RACE_GREEN_RUPEE_2, { [] { return true; } }),
+            LocationAccess(GRAVEYARD_DAMPE_RACE_GREEN_RUPEE_3, { [] { return true; } }),
+            LocationAccess(GRAVEYARD_DAMPE_RACE_GREEN_RUPEE_4, { [] { return true; } }),
+            LocationAccess(GRAVEYARD_DAMPE_RACE_GREEN_RUPEE_5, { [] { return true; } }),
+            LocationAccess(GRAVEYARD_DAMPE_RACE_GREEN_RUPEE_6, { [] { return true; } }),
+            LocationAccess(GRAVEYARD_DAMPE_RACE_GREEN_RUPEE_7, { [] { return true; } }),
+            LocationAccess(GRAVEYARD_DAMPE_RACE_GREEN_RUPEE_8, { [] { return true; } }),
         },
         {
             // Exits

@@ -2487,3 +2487,25 @@ hook_OcarinaNoteSound_Npc:
     cpy r1,r0
     pop {r0, r2-r12, lr}
     bx lr
+
+.global hook_Item00GiveAutomaticItemDrop
+hook_Item00GiveAutomaticItemDrop:
+    ldrsh r0,[r4,#0x1c]
+    push {r0-r12, lr}
+    cpy r0,r4 @ actor
+    bl ItemOverride_GetItemDrop
+    cmp r0,#0x0
+    pop {r0-r12, lr}
+    addne lr,lr,#0x8 @ Item overridden, skip Item_Give
+    bx lr
+
+.global hook_Item00GiveCollectedItemDrop
+hook_Item00GiveCollectedItemDrop:
+    ldrsh r0,[r5,#0x1c]
+    push {r0-r12, lr}
+    cpy r0,r5 @ actor
+    bl ItemOverride_GetItemDrop
+    cmp r0,#0x0
+    pop {r0-r12, lr}
+    addne lr,lr,#0x8 @ Item overridden, skip Item_Give
+    bx lr

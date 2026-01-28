@@ -540,6 +540,10 @@ SECTIONS
 		*(.patch_GohmaEggDeathSignalParent)
 	}
 
+	.patch_Item00GiveAutomaticItemDrop 0x1F6E4C : {
+		*(.patch_Item00GiveAutomaticItemDrop)
+	}
+
 	.patch_ItemGiveBombchuDropOne 0x1F6F70 : {
 		*(.patch_ItemGiveBombchuDropOne)
 	}
@@ -638,6 +642,10 @@ SECTIONS
 
 	.patch_GetObjectEntry_EnHintnutsInit 0x22AB70 : {
 		*(.patch_GetObjectEntry_EnHintnutsInit)
+	}
+
+	.patch_Item00GiveCollectedItemDrop 0x22B974 : {
+		*(.patch_Item00GiveCollectedItemDrop)
 	}
 
 	.patch_patch_ItemGiveBombchuDropTwo 0x22BAE4 : {

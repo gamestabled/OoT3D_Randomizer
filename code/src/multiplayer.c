@@ -2151,14 +2151,15 @@ void Multiplayer_Receive_WorldMapBit(u16 senderID) {
     }
 }
 
-void Multiplayer_Send_ExtInfBit(u8 index, u8 bit, u8 setOrUnset) {
+void Multiplayer_Send_ExtInfBit(u16 index, u8 bit, u8 setOrUnset) {
     if (!IsSendReceiveReady() || gSettingsContext.mp_SharedProgress == OFF) {
         return;
     }
     memset(mBuffer, 0, mBufSize);
     u8 memSpacer = PrepareSharedProgressPacket(PACKET_EXTINF);
 
-    mBuffer[memSpacer++] = index;
+    mBuffer[memSpacer] = index;
+    memSpacer += sizeof(index);
     mBuffer[memSpacer++] = bit;
     mBuffer[memSpacer++] = setOrUnset;
     Multiplayer_SendPacket(memSpacer, UDS_BROADCAST_NETWORKNODEID);
@@ -2170,7 +2171,8 @@ void Multiplayer_Receive_ExtInfBit(u16 senderID) {
     }
     u8 memSpacer = GetSharedProgressMemSpacerOffset();
 
-    u8 index      = mBuffer[memSpacer++];
+    u16 index = mBuffer[memSpacer];
+    memSpacer += sizeof(index);
     u8 bit        = mBuffer[memSpacer++];
     u8 setOrUnset = mBuffer[memSpacer++];
 

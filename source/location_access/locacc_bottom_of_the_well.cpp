@@ -83,6 +83,16 @@ void AreaTable_Init_BottomOfTheWell() {
                 LocationAccess(BOTTOM_OF_THE_WELL_BACK_LEFT_BOMBABLE_CHEST,
                                { [] { return (LogicLensBotw || CanUse(LENS_OF_TRUTH)) && HasExplosives; } }),
                 LocationAccess(BOTTOM_OF_THE_WELL_FREESTANDING_KEY, { [] { return Sticks || CanUse(DINS_FIRE); } }),
+                LocationAccess(BOTTOM_OF_THE_WELL_CENTER_ROOM_PIT_FALL_BLUE_RUPEE_1,
+                               { [] { return LogicLensBotw || CanUse(LENS_OF_TRUTH); } }),
+                LocationAccess(BOTTOM_OF_THE_WELL_CENTER_ROOM_PIT_FALL_BLUE_RUPEE_2,
+                               { [] { return LogicLensBotw || CanUse(LENS_OF_TRUTH); } }),
+                LocationAccess(BOTTOM_OF_THE_WELL_CENTER_ROOM_PIT_FALL_BLUE_RUPEE_3,
+                               { [] { return LogicLensBotw || CanUse(LENS_OF_TRUTH); } }),
+                LocationAccess(BOTTOM_OF_THE_WELL_CENTER_ROOM_PIT_FALL_BLUE_RUPEE_4,
+                               { [] { return LogicLensBotw || CanUse(LENS_OF_TRUTH); } }),
+                LocationAccess(BOTTOM_OF_THE_WELL_CENTER_ROOM_PIT_FALL_BLUE_RUPEE_5,
+                               { [] { return LogicLensBotw || CanUse(LENS_OF_TRUTH); } }),
                 LocationAccess(BOTTOM_OF_THE_WELL_LENS_OF_TRUTH_CHEST, { [] {
                                    return SoulDeadHand && CanDefeatEnemies(8, 0, 4) &&
                                           (CanDeadHandGrab(8, 0, 4) || (CanUse(LENS_OF_TRUTH) && HasExplosives)) &&
