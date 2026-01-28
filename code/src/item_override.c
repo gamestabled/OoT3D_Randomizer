@@ -583,7 +583,7 @@ u8 ItemOverride_GetItemDrop(EnItem00* this) {
     u8 isMajorItem = TRUE;
     switch (itemRow->chestType) {
         case CHEST_JUNK:
-            isMajorItem = FALSE;
+            isMajorItem = resolvedItemId >= GI_DEKU_COMPASS && resolvedItemId <= GI_ICE_CAVERN_MAP;
             break;
         case CHEST_BOMBCHUS:
             isMajorItem = gSaveContext.items[8] == 0xFF; // bombchus not obtained yet
