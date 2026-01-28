@@ -2553,6 +2553,7 @@ void ForceChange(u32 kDown, Option* currentSetting) {
                 LogicGVHammerChest.SetSelectedIndex(1);
                 LogicManOnRoof.SetSelectedIndex(1);
                 LogicWindmillPoHHookshot.SetSelectedIndex(1);
+                LogicDMCPlatformJump.SetSelectedIndex(1);
                 LogicGoronCityLeftMost.SetSelectedIndex(1);
                 LogicZoraRiverLower.SetSelectedIndex(1);
                 LogicZoraRiverUpper.SetSelectedIndex(1);
