@@ -3397,9 +3397,8 @@ bool ValidateSettings() {
     // Check features that don't support logic for MQ dungeons.
     if (MQDungeonCount.IsNot(0) && Logic.IsNot(LOGIC_NONE) && Logic.IsNot(LOGIC_VANILLA) &&
         (ShuffleEnemySouls.Is(SHUFFLEENEMYSOULS_ALL) || Enemizer)) {
-        if (ShuffleEnemySouls.IsHidden() && ShuffleRupees.IsHidden() && Enemizer.IsHidden()) {
+        if (ShuffleEnemySouls.IsHidden() && Enemizer.IsHidden()) {
             ShuffleEnemySouls.SetSelectedIndex(SHUFFLEENEMYSOULS_OFF);
-            ShuffleRupees.SetSelectedIndex(OFF);
             Enemizer.SetSelectedIndex(OFF);
         } else {
             printf("\x1b[%d;0H"
