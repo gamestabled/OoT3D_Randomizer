@@ -233,7 +233,7 @@ Option ShuffleChestMinigame   = Option::U8  ("Shuffle Chest Minigame", {"Off", "
 Option ShuffleFrogSongRupees  = Option::Bool("Shuffle Frog Rupees",    {"Off", "On"},                                                     {frogSongRupeesDesc});
 Option ShuffleEnemySouls      = Option::U8  ("Shuffle Enemy Souls",    {"Off", "All enemies", "Bosses only"},                             {enemySoulDesc});
 Option ShuffleOcarinaButtons  = Option::Bool("Shuffle Ocarina Buttons",{"Off", "On"},                                                     {ocarinaButtonsDesc});
-Option ShuffleRupees          = Option::Bool("Rupeesanity",            {"Off","On"},                                                      {shuffleRupeesDesc});
+Option ShuffleRupees          = Option::Bool("Shuffle Standing Rupees",{"Off","On"},                                                      {shuffleRupeesDesc});
 std::vector<Option *> shuffleOptions = {
     &RandomizeShuffle,
     &ShuffleRewards,
