@@ -8,12 +8,15 @@
 #include "entrance.h"
 #include "savefile.h"
 #include "common.h"
+#include "actors/obj_mure3.h"
 
 #include <stddef.h>
+#include "chest.h"
 
 #include "z3D/z3D.h"
 #include "z3D/actors/z_en_box.h"
 #include "z3D/actors/z_en_item00.h"
+#include "z3D/actors/z_obj_mure3.h"
 
 #define READY_ON_LAND 1
 #define READY_IN_WATER 2
@@ -21,7 +24,7 @@
 static ItemOverride rItemOverrides[640] = { 0 };
 static s32 rItemOverrides_Count         = 0;
 
-static ItemOverride rPendingOverrideQueue[3] = { 0 };
+static ItemOverride rPendingOverrideQueue[7] = { 0 };
 static Actor* rDummyActor                    = NULL;
 
 static ItemOverride rActiveItemOverride = { 0 };
@@ -128,16 +131,35 @@ static ItemOverride_Key ItemOverride_GetSearchKey(Actor* actor, u8 scene, u8 ite
             .flag  = actor->params & 0x1F,
         };
     } else if (actor->id == 0x15) { // Collectible
-        // Only override heart pieces and keys
-        u32 collectibleType = actor->params & 0xFF;
-        if (collectibleType != 0x06 && collectibleType != 0x11) {
+        EnItem00* currentItem = ((EnItem00*)actor);
+        u32 collectibleType   = actor->params & 0xFF;
+        u16 collectibleFlag   = currentItem->collectibleFlag;
+
+        // Don't override respawning collectibles dropped by other actors (e.g. pots)
+        if ((currentItem->rExt.extraCollectibleFlag == 0x00 && (collectibleFlag == 0x00 || collectibleFlag >= 0x20)) &&
+            !currentItem->rExt.spawnedBySceneLayer) {
+            return (ItemOverride_Key){ .all = 0 };
+        }
+
+        if (collectibleFlag == 0x00 && currentItem->rExt.extraCollectibleFlag >= 0x40) {
+            // For rupees spawned by Rupee Circles (ObjMure3) we use an "extraCollectibleFlag".
+            // Since collectibleFlag normally gets truncated to 0x3F we can use any
+            // value at or above 0x40. We've reserved 0x40-0x46 for Rupee circle rupees.
+            collectibleFlag = currentItem->rExt.extraCollectibleFlag;
+        }
+        s32 respawningCollected =
+            collectibleFlag >= 0x20 && SaveFile_GetRupeeSanityFlag(gGlobalContext->sceneNum, collectibleFlag);
+
+        if ((collectibleType > ITEM00_RUPEE_RED && collectibleType != ITEM00_HEART_PIECE &&
+             collectibleType != ITEM00_SMALL_KEY) ||
+            respawningCollected) {
             return (ItemOverride_Key){ .all = 0 };
         }
 
         return (ItemOverride_Key){
             .scene = scene,
             .type  = OVR_COLLECTABLE,
-            .flag  = ((EnItem00*)actor)->collectibleFlag,
+            .flag  = collectibleFlag,
         };
     } else if (actor->id == 0x19C) { // Gold Skulltula Token
         return (ItemOverride_Key){
@@ -253,10 +275,15 @@ void ItemOverride_PushDelayedOverride(u8 flag) {
 }
 
 static void ItemOverride_PopPendingOverride(void) {
-    rPendingOverrideQueue[0]           = rPendingOverrideQueue[1];
-    rPendingOverrideQueue[1]           = rPendingOverrideQueue[2];
-    rPendingOverrideQueue[2].key.all   = 0;
-    rPendingOverrideQueue[2].value.all = 0;
+    u8 queueSize = ARR_SIZE(rPendingOverrideQueue);
+    for (u8 i = 0; i < queueSize; i++) {
+        if (i < queueSize - 1) {
+            rPendingOverrideQueue[i] = rPendingOverrideQueue[i + 1];
+        } else {
+            rPendingOverrideQueue[i].key.all   = 0;
+            rPendingOverrideQueue[i].value.all = 0;
+        }
+    }
 }
 
 static void ItemOverride_AfterKeyReceived(ItemOverride_Key key) {
@@ -352,9 +379,9 @@ static u32 ItemOverride_PlayerIsReadyInWater(void) {
         (PLAYER->stateFlags2 & 0x000C0000) == 0 && PLAYER->actor.draw != NULL &&
         gGlobalContext->actorCtx.titleCtx.delayTimer == 0 && gGlobalContext->actorCtx.titleCtx.durationTimer == 0 &&
         gGlobalContext->actorCtx.titleCtx.alpha == 0 && (PLAYER->stateFlags1 & 0x08000000) != 0 && // Player is Swimming
-        (PLAYER->stateFlags1 & 0x400) == 0 &&           // Player is not already receiving an item when surfacing
-        gGlobalContext->sceneLoadFlag == 0 &&           // Another scene isn't about to be loaded
-        rPendingOverrideQueue[0].key.type == OVR_TEMPLE // Must be an item received for completing a dungeon
+        (PLAYER->stateFlags1 & 0x400) == 0 && // Player is not already receiving an item when surfacing
+        gGlobalContext->sceneLoadFlag == 0 && // Another scene isn't about to be loaded
+        ItemOverride_IsAPendingOverride()
         // && Multiworld is off
         // && (z64_event_state_1 & 0x20) == 0 //TODO
         // && (z64_game.camera_2 == 0) //TODO
@@ -377,6 +404,7 @@ static u32 ItemOverride_PlayerIsReady(void) {
     if (ItemOverride_PlayerIsReadyInWater()) {
         return READY_IN_WATER;
     }
+
     return 0;
 }
 
@@ -521,6 +549,70 @@ void ItemOverride_GetSkulltulaToken(Actor* tokenActor) {
         DisplayTextbox(gGlobalContext, itemRow->textId, 0);
         Item_Give(gGlobalContext, itemRow->actionId);
     }
+}
+
+u8 ItemOverride_GetItemDrop(EnItem00* this) {
+    // Override items that always behave as drops and never trigger a Get Item event.
+    switch (this->actor.params) {
+        case ITEM00_RUPEE_GREEN:
+        case ITEM00_RUPEE_BLUE:
+        case ITEM00_RUPEE_RED:
+        case ITEM00_RUPEE_PURPLE:
+        case ITEM00_RUPEE_ORANGE:
+        case ITEM00_RECOVERY_HEART:
+        case ITEM00_FLEXIBLE:
+        case ITEM00_BOMBS_A:
+        case ITEM00_BOMBS_B:
+        case ITEM00_ARROWS_SINGLE:
+        case ITEM00_ARROWS_SMALL:
+        case ITEM00_ARROWS_MEDIUM:
+        case ITEM00_ARROWS_LARGE:
+            break;
+        default:
+            return FALSE; // Proceed normally with the Get Item event.
+    }
+
+    ItemOverride override = ItemOverride_Lookup(&this->actor, gGlobalContext->sceneNum, GI_INVALID);
+    if (override.key.all == 0) {
+        return FALSE; // No override, proceed with Item_Give.
+    }
+
+    u16 resolvedItemId = ItemTable_ResolveUpgrades(override.value.itemId);
+    ItemRow* itemRow   = ItemTable_GetItemRow(resolvedItemId);
+
+    u8 isMajorItem = TRUE;
+    switch (itemRow->chestType) {
+        case CHEST_JUNK:
+            isMajorItem = resolvedItemId >= GI_DEKU_COMPASS && resolvedItemId <= GI_ICE_CAVERN_MAP;
+            break;
+        case CHEST_BOMBCHUS:
+            isMajorItem = gSaveContext.items[8] == 0xFF; // bombchus not obtained yet
+            break;
+        case CHEST_HEART:
+            isMajorItem = resolvedItemId != GI_HEART;
+            break;
+    }
+
+    if (isMajorItem) {
+        ItemOverride_PushPendingOverride(override);
+        this->actor.params = ITEM00_HEART_PIECE; // to play no SFX
+        Flags_SetCollectible(gGlobalContext, this->collectibleFlag);
+        Actor_Kill(&this->actor);
+    } else {
+        // Minor item, behave as item drop.
+        this->actor.params = ITEM00_RECOVERY_HEART; // to play minor item SFX
+        ItemTable_CallEffect(itemRow);
+        Item_Give(gGlobalContext, itemRow->actionId);
+    }
+    if (this->collectibleFlag == 0 && this->rExt.extraCollectibleFlag >= 0x40 &&
+        this->rExt.extraCollectibleFlag < 0x47) {
+        SaveFile_SetRupeeSanityFlag(gGlobalContext->sceneNum, this->rExt.extraCollectibleFlag);
+    } else if (this->collectibleFlag >= 0x20) {
+        // collectibles with a collectibleFlag >= 0x20 respawn so we need to keep track of them in the gExtSaveData
+        SaveFile_SetRupeeSanityFlag(gGlobalContext->sceneNum, this->collectibleFlag);
+    }
+
+    return TRUE; // Item overridden, skip Item_Give.
 }
 
 static s32 ItemOverride_IsDrawItemVanilla(void) {

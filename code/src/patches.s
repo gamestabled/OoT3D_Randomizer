@@ -2546,3 +2546,13 @@ OcarinaNoteSound_Player_patch:
 .global OcarinaNoteSound_Npc_patch
 OcarinaNoteSound_Npc_patch:
     bl hook_OcarinaNoteSound_Npc
+
+.section .patch_Item00GiveAutomaticItemDrop
+.global Item00GiveAutomaticItemDrop_patch
+Item00GiveAutomaticItemDrop_patch:
+    bl hook_Item00GiveAutomaticItemDrop
+
+.section .patch_Item00GiveCollectedItemDrop
+.global Item00GiveCollectedItemDrop_patch
+Item00GiveCollectedItemDrop_patch:
+    bl hook_Item00GiveCollectedItemDrop

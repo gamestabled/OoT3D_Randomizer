@@ -811,6 +811,9 @@ typedef u32 (*Flags_GetSwitch_proc)(GlobalContext* globalCtx, u32 flag);
 typedef u32 (*Flags_GetCollectible_proc)(GlobalContext* globalCtx, u32 flag);
 #define Flags_GetCollectible ((Flags_GetCollectible_proc)GAME_ADDR(0x36405C))
 
+typedef u32 (*Flags_SetCollectible_proc)(GlobalContext* globalCtx, u32 flag);
+#define Flags_SetCollectible ((Flags_SetCollectible_proc)GAME_ADDR(0x3329D8))
+
 typedef u32 (*Flags_GetClear_proc)(GlobalContext* globalCtx, u32 flag);
 #define Flags_GetClear ((Flags_GetClear_proc)GAME_ADDR(0x36CF6C))
 

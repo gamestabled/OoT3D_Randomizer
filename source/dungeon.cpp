@@ -190,44 +190,35 @@ DungeonInfo DodongosCavern = DungeonInfo("Dodongo's Cavern", DODONGOS_CAVERN, DO
                                              KING_DODONGO,
                                          });
 
-DungeonInfo JabuJabusBelly = DungeonInfo("Jabu Jabu's Belly", JABU_JABUS_BELLY, JABU_JABUS_BELLY_MAP,
-                                         JABU_JABUS_BELLY_COMPASS, NONE, NONE, NONE, 0, 0,
-                                         {
-                                             // Vanilla Locations
-                                             JABU_JABUS_BELLY_MAP_CHEST,
-                                             JABU_JABUS_BELLY_COMPASS_CHEST,
-                                             JABU_JABUS_BELLY_BOOMERANG_CHEST,
-                                             JABU_JABUS_BELLY_DEKU_SCRUB,
-                                             JABU_JABUS_BELLY_GS_LOBBY_BASEMENT_LOWER,
-                                             JABU_JABUS_BELLY_GS_LOBBY_BASEMENT_UPPER,
-                                             JABU_JABUS_BELLY_GS_NEAR_BOSS,
-                                             JABU_JABUS_BELLY_GS_WATER_SWITCH_ROOM,
-                                         },
-                                         {
-                                             // MQ Locations
-                                             JABU_JABUS_BELLY_MQ_FIRST_ROOM_SIDE_CHEST,
-                                             JABU_JABUS_BELLY_MQ_MAP_CHEST,
-                                             JABU_JABUS_BELLY_MQ_SECOND_ROOM_LOWER_CHEST,
-                                             JABU_JABUS_BELLY_MQ_COMPASS_CHEST,
-                                             JABU_JABUS_BELLY_MQ_SECOND_ROOM_UPPER_CHEST,
-                                             JABU_JABUS_BELLY_MQ_BASEMENT_NEAR_SWITCHES_CHEST,
-                                             JABU_JABUS_BELLY_MQ_BASEMENT_NEAR_VINES_CHEST,
-                                             JABU_JABUS_BELLY_MQ_NEAR_BOSS_CHEST,
-                                             JABU_JABUS_BELLY_MQ_FALLING_LIKE_LIKE_ROOM_CHEST,
-                                             JABU_JABUS_BELLY_MQ_BOOMERANG_ROOM_SMALL_CHEST,
-                                             JABU_JABUS_BELLY_MQ_BOOMERANG_CHEST,
-                                             JABU_JABUS_BELLY_MQ_COW,
-                                             JABU_JABUS_BELLY_MQ_GS_TAILPASARAN_ROOM,
-                                             JABU_JABUS_BELLY_MQ_GS_INVISIBLE_ENEMIES_ROOM,
-                                             JABU_JABUS_BELLY_MQ_GS_BOOMERANG_CHEST_ROOM,
-                                             JABU_JABUS_BELLY_MQ_GS_NEAR_BOSS,
-                                         },
-                                         {},
-                                         {
-                                             // Boss Room Locations
-                                             JABU_JABUS_BELLY_BARINADE_HEART,
-                                             BARINADE,
-                                         });
+DungeonInfo JabuJabusBelly = DungeonInfo(
+    "Jabu Jabu's Belly", JABU_JABUS_BELLY, JABU_JABUS_BELLY_MAP, JABU_JABUS_BELLY_COMPASS, NONE, NONE, NONE, 0, 0,
+    {
+        // Vanilla Locations
+        JABU_JABUS_BELLY_MAP_CHEST,
+        JABU_JABUS_BELLY_COMPASS_CHEST,
+        JABU_JABUS_BELLY_BOOMERANG_CHEST,
+        JABU_JABUS_BELLY_DEKU_SCRUB,
+        JABU_JABUS_BELLY_GS_LOBBY_BASEMENT_LOWER,
+        JABU_JABUS_BELLY_GS_LOBBY_BASEMENT_UPPER,
+        JABU_JABUS_BELLY_GS_NEAR_BOSS,
+        JABU_JABUS_BELLY_GS_WATER_SWITCH_ROOM,
+    },
+    { // MQ Locations
+      JABU_JABUS_BELLY_MQ_FIRST_ROOM_SIDE_CHEST, JABU_JABUS_BELLY_MQ_MAP_CHEST,
+      JABU_JABUS_BELLY_MQ_SECOND_ROOM_LOWER_CHEST, JABU_JABUS_BELLY_MQ_COMPASS_CHEST,
+      JABU_JABUS_BELLY_MQ_SECOND_ROOM_UPPER_CHEST, JABU_JABUS_BELLY_MQ_BASEMENT_NEAR_SWITCHES_CHEST,
+      JABU_JABUS_BELLY_MQ_BASEMENT_NEAR_VINES_CHEST, JABU_JABUS_BELLY_MQ_NEAR_BOSS_CHEST,
+      JABU_JABUS_BELLY_MQ_FALLING_LIKE_LIKE_ROOM_CHEST, JABU_JABUS_BELLY_MQ_BOOMERANG_ROOM_SMALL_CHEST,
+      JABU_JABUS_BELLY_MQ_BOOMERANG_CHEST, JABU_JABUS_BELLY_MQ_COW, JABU_JABUS_BELLY_MQ_GS_TAILPASARAN_ROOM,
+      JABU_JABUS_BELLY_MQ_GS_INVISIBLE_ENEMIES_ROOM, JABU_JABUS_BELLY_MQ_GS_BOOMERANG_CHEST_ROOM,
+      JABU_JABUS_BELLY_MQ_GS_NEAR_BOSS, JABU_JABUS_BELLY_MQ_NEAR_COW_BOTTOM_GREEN_RUPEE,
+      JABU_JABUS_BELLY_MQ_NEAR_COW_MIDDLE_GREEN_RUPEE, JABU_JABUS_BELLY_MQ_NEAR_COW_TOP_GREEN_RUPEE },
+    {},
+    {
+        // Boss Room Locations
+        JABU_JABUS_BELLY_BARINADE_HEART,
+        BARINADE,
+    });
 
 DungeonInfo ForestTemple =
     DungeonInfo("Forest Temple", FOREST_TEMPLE, FOREST_TEMPLE_MAP, FOREST_TEMPLE_COMPASS, FOREST_TEMPLE_SMALL_KEY,
@@ -525,6 +516,11 @@ DungeonInfo BottomOfTheWell =
                     BOTTOM_OF_THE_WELL_GS_LIKE_LIKE_CAGE,
                     BOTTOM_OF_THE_WELL_GS_EAST_INNER_ROOM,
                     BOTTOM_OF_THE_WELL_GS_WEST_INNER_ROOM,
+                    BOTTOM_OF_THE_WELL_CENTER_ROOM_PIT_FALL_BLUE_RUPEE_1,
+                    BOTTOM_OF_THE_WELL_CENTER_ROOM_PIT_FALL_BLUE_RUPEE_2,
+                    BOTTOM_OF_THE_WELL_CENTER_ROOM_PIT_FALL_BLUE_RUPEE_3,
+                    BOTTOM_OF_THE_WELL_CENTER_ROOM_PIT_FALL_BLUE_RUPEE_4,
+                    BOTTOM_OF_THE_WELL_CENTER_ROOM_PIT_FALL_BLUE_RUPEE_5,
                 },
                 {
                     // MQ Locations
@@ -550,6 +546,10 @@ DungeonInfo IceCavern =
                     ICE_CAVERN_GS_PUSH_BLOCK_ROOM,
                     ICE_CAVERN_GS_SPINNING_SCYTHE_ROOM,
                     ICE_CAVERN_GS_HEART_PIECE_ROOM,
+                    ICE_CAVERN_RED_ICE_BLUE_RUPEE,
+                    ICE_CAVERN_PUSH_BLOCK_ROOM_RED_RUPEE_1,
+                    ICE_CAVERN_PUSH_BLOCK_ROOM_RED_RUPEE_2,
+                    ICE_CAVERN_PUSH_BLOCK_ROOM_RED_RUPEE_3,
                 },
                 {
                     // MQ Locations

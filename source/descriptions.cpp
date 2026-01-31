@@ -591,6 +591,16 @@ string_view ocarinaButtonsDesc        = "Enabling this locks all Ocarina inputs,
                                         "Ocarina notes.\n\n"                               //
                                         "They can also be added to the Starting Inventory.";
 /*------------------------------                                                           //
+|  SHUFFLE FREESTANDING RUPEES |                                                           //
+------------------------------*/                                                           //
+string_view shuffleRupeesDesc         = "Shuffles all freestanding visible rupees\n"       //
+                                        "that are placed in the world without player\n"    //
+                                        "intervention. So it does include Rupees that are\n"
+                                        "placed in other objects like boulders, but it\n"  //
+                                        "doesn't include Wonder Items or Rupees that spawn\n"
+                                        "from the Goron City spinning pot or the pots in\n"//
+                                        "Shadow Temple.";                                  //
+/*------------------------------                                                           //
 |      MAPS AND COMPASSES      |                                                           //
 ------------------------------*/                                                           //
 string_view mapCompassStartWith       = "Maps and Compasses are given to you from the\n"   //
@@ -1492,6 +1502,9 @@ string_view LogicDMTSummitHoverDesc                   = "Difficulty: Intermediat
                                                         "boots and grabbing the ledge with the higher\n"   //
                                                         "boulder near the wall, you'll be able to grab the\n"
                                                         "ledge above it to reach the summit.";             //
+string_view LogicDMCPlatformJumpDesc                  = "Difficulty: Novice\n"                             //
+                                                        "Adult can reach these rupees by jumping down from\n"
+                                                        "the upper part of DMC, without scarecrow/longshot.";
 string_view LogicLinkGoronDinsDesc                    = "Difficulty: Intermediate\n"                       //
                                                         "The timing is quite awkward.";                    //
 string_view LogicGoronCityLeftMostDesc                = "Difficulty: Novice\n"                             //
@@ -1532,6 +1545,9 @@ string_view LogicZoraRiverLowerDesc                   = "Difficulty: Novice\n"  
 string_view LogicZoraRiverUpperDesc                   = "Difficulty: Novice\n"                             //
                                                         "Adult can reach this PoH with a precise jump, no\n"
                                                         "Hover Boots required.";                           //
+string_view LogicZoraRiverRupeesJumpDesc              = "Difficulty: Novice\n"                             //
+                                                        "Adult can reach these rupees by jumping down from\n"
+                                                        "the lullaby platform no Iron Boots required.";    //
 string_view LogicZFGreatFairyDesc                     = "Difficulty: Novice\n"                             //
                                                         "Destroying the boulders blocking the hidden area\n"
                                                         "with silver gauntlets and hammer lets you pass\n" //

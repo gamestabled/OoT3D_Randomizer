@@ -233,6 +233,7 @@ Option ShuffleChestMinigame   = Option::U8  ("Shuffle Chest Minigame", {"Off", "
 Option ShuffleFrogSongRupees  = Option::Bool("Shuffle Frog Rupees",    {"Off", "On"},                                                     {frogSongRupeesDesc});
 Option ShuffleEnemySouls      = Option::U8  ("Shuffle Enemy Souls",    {"Off", "All enemies", "Bosses only"},                             {enemySoulDesc});
 Option ShuffleOcarinaButtons  = Option::Bool("Shuffle Ocarina Buttons",{"Off", "On"},                                                     {ocarinaButtonsDesc});
+Option ShuffleRupees          = Option::Bool("Shuffle Standing Rupees",{"Off", "On"},                                                     {shuffleRupeesDesc});
 std::vector<Option *> shuffleOptions = {
     &RandomizeShuffle,
     &ShuffleRewards,
@@ -256,6 +257,7 @@ std::vector<Option *> shuffleOptions = {
     &ShuffleFrogSongRupees,
     &ShuffleEnemySouls,
     &ShuffleOcarinaButtons,
+    &ShuffleRupees,
 };
 
 // Shuffle Dungeon Items
@@ -780,6 +782,7 @@ Option LogicManOnRoof                   = LogicTrick("Kak Roof Guy\n  w/o Hooksh
 Option LogicWindmillPoHHookshot         = LogicTrick("Windmill PoH\n  w/ Hookshot",               LogicWindmillPoHHookshotDesc);
 Option LogicDMTBombable                 = LogicTrick("DMT Wall Chest\n  w/ Strength",             LogicDMTBombableDesc);
 Option LogicDMTSoilGS                   = LogicTrick("DMT Soil GS\n  w/o Opening DC",             LogicDMTSoilGSDesc);
+Option LogicDMCPlatformJump             = LogicTrick("DMC Scarecrow Rupee\n circle w/ nothing",   LogicDMCPlatformJumpDesc);
 Option LogicDMTSummitHover              = LogicTrick("DMT Summit\n  w/ Hover Boots",              LogicDMTSummitHoverDesc);
 Option LogicLinkGoronDins               = LogicTrick("GoC Adult Goron\n  w/ Din's Fire",          LogicLinkGoronDinsDesc);
 Option LogicGoronCityLeftMost           = LogicTrick("GoC Maze Left Chest\n  w/ Hover Boots",     LogicGoronCityLeftMostDesc);
@@ -791,6 +794,7 @@ Option LogicCraterBeanPoHWithHovers     = LogicTrick("DMC Bean PoH\n  w/ Hover B
 Option LogicBiggoronBolero              = LogicTrick("DMC Deliver Eyedrops\n  w/ Bolero of Fire", LogicBiggoronBoleroDesc);
 Option LogicZoraRiverLower              = LogicTrick("ZR Lower PoH\n  w/ Nothing",                LogicZoraRiverLowerDesc);
 Option LogicZoraRiverUpper              = LogicTrick("ZR Upper PoH\n  w/ Nothing",                LogicZoraRiverUpperDesc);
+Option LogicZoraRiverRupeesJump         = LogicTrick("ZR Under waterfall\n rupees w/o Iron boots",LogicZoraRiverRupeesJumpDesc);
 Option LogicZFGreatFairy                = LogicTrick("ZF Great Fairy\n  w/o Explosives",          LogicZFGreatFairyDesc);
 Option LogicDekuB1WebsWithBow           = LogicTrick("DT B1 Web\n  w/ Bow",                       LogicDekuB1WebsWithBowDesc);
 Option LogicDekuB1Skip                  = LogicTrick("DT B1 Navigation\n  w/o Slingshot",         LogicDekuB1SkipDesc);
@@ -873,6 +877,7 @@ std::vector<Option *> trickOptions = {
     &LogicDMTBombable,
     &LogicDMTSoilGS,
     &LogicDMTSummitHover,
+    &LogicDMCPlatformJump,
     &LogicLinkGoronDins,
     &LogicGoronCityLeftMost,
     &LogicGoronCityPot,
@@ -883,6 +888,7 @@ std::vector<Option *> trickOptions = {
     &LogicBiggoronBolero,
     &LogicZoraRiverLower,
     &LogicZoraRiverUpper,
+    &LogicZoraRiverRupeesJump,
     &LogicZFGreatFairy,
     &LogicDekuB1WebsWithBow,
     &LogicDekuB1Skip,
@@ -2547,9 +2553,11 @@ void ForceChange(u32 kDown, Option* currentSetting) {
                 LogicGVHammerChest.SetSelectedIndex(1);
                 LogicManOnRoof.SetSelectedIndex(1);
                 LogicWindmillPoHHookshot.SetSelectedIndex(1);
+                LogicDMCPlatformJump.SetSelectedIndex(1);
                 LogicGoronCityLeftMost.SetSelectedIndex(1);
                 LogicZoraRiverLower.SetSelectedIndex(1);
                 LogicZoraRiverUpper.SetSelectedIndex(1);
+                LogicZoraRiverRupeesJump.SetSelectedIndex(1);
                 LogicZFGreatFairy.SetSelectedIndex(1);
                 LogicDekuB1WebsWithBow.SetSelectedIndex(1);
                 LogicDCJump.SetSelectedIndex(1);
@@ -3387,27 +3395,26 @@ bool ValidateSettings() {
         }
     }
 
-    // Check that there are no MQ dungeons with Enemy Souls or Enemy Randomizer.
-    if ((ShuffleEnemySouls.Is(SHUFFLEENEMYSOULS_ALL) || Enemizer) && MQDungeonCount.IsNot(0) &&
-        Logic.IsNot(LOGIC_NONE) && Logic.IsNot(LOGIC_VANILLA)) {
+    // Check features that don't support logic for MQ dungeons.
+    if (MQDungeonCount.IsNot(0) && Logic.IsNot(LOGIC_NONE) && Logic.IsNot(LOGIC_VANILLA) &&
+        (ShuffleEnemySouls.Is(SHUFFLEENEMYSOULS_ALL) || Enemizer)) {
         if (ShuffleEnemySouls.IsHidden() && Enemizer.IsHidden()) {
             ShuffleEnemySouls.SetSelectedIndex(SHUFFLEENEMYSOULS_OFF);
             Enemizer.SetSelectedIndex(OFF);
         } else {
             printf("\x1b[%d;0H"
                    "----------------------------------------"
-                   "Enemy Soul Shuffle and Enemy Randomizer\n"
-                   "currently do not have logic for Master\n"
-                   "Quest dungeons.\n"
+                   "The following features currently do not\n"
+                   "support logic for Master Quest dungeons."
+                   "To use them you must disable Logic OR\n"
+                   "set MQ Dungeon Count to 0.\n"
                    "\n"
-                   "Please disable one of the following:\n"
-                   " - MQ Dungeons (setting Count to 0)\n"
-                   " - Logic\n"
-                   " - Enemy Soul Shuffle / Enemy Randomizer"
+                   " - Enemy Randomizer\n"
+                   " - Shuffle Enemy Souls\n"
                    "----------------------------------------",
                    posY);
             valid = false;
-            posY += 11;
+            posY += 10;
         }
     }
 

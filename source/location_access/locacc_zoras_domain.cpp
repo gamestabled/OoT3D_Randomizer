@@ -123,6 +123,22 @@ void AreaTable_Init_ZorasDomain() {
                            { [] { return IsChild || CanUse(HOVER_BOOTS) || (IsAdult && LogicZoraRiverLower); } }),
             LocationAccess(ZR_NEAR_DOMAIN_FREESTANDING_POH,
                            { [] { return IsChild || CanUse(HOVER_BOOTS) || (IsAdult && LogicZoraRiverUpper); } }),
+            LocationAccess(ZR_WATERFALL_RED_RUPEE_1, { [] {
+                               return IsAdult && ((CanUse(IRON_BOOTS) && CanSurviveUnderwaterFor(4, 12)) ||
+                                                  LogicZoraRiverRupeesJump);
+                           } }),
+            LocationAccess(ZR_WATERFALL_RED_RUPEE_2, { [] {
+                               return IsAdult && ((CanUse(IRON_BOOTS) && CanSurviveUnderwaterFor(4, 12)) ||
+                                                  LogicZoraRiverRupeesJump);
+                           } }),
+            LocationAccess(ZR_WATERFALL_RED_RUPEE_3, { [] {
+                               return IsAdult && ((CanUse(IRON_BOOTS) && CanSurviveUnderwaterFor(4, 12)) ||
+                                                  LogicZoraRiverRupeesJump);
+                           } }),
+            LocationAccess(ZR_WATERFALL_RED_RUPEE_4, { [] {
+                               return IsAdult && ((CanUse(IRON_BOOTS) && CanSurviveUnderwaterFor(4, 12)) ||
+                                                  LogicZoraRiverRupeesJump);
+                           } }),
             LocationAccess(ZR_NEAR_GROTTOS_GOSSIP_STONE, { [] { return true; } }),
             LocationAccess(ZR_NEAR_DOMAIN_GOSSIP_STONE, { [] { return true; } }),
         },
@@ -355,6 +371,43 @@ void AreaTable_Init_ZorasDomain() {
             LocationAccess(ZF_ICEBERG_FREESTANDING_POH, { [] { return IsAdult; } }),
             LocationAccess(ZF_BOTTOM_FREESTANDING_POH,
                            { [] { return IsAdult && IronBoots && CanSurviveUnderwaterFor(24); } }),
+            LocationAccess(ZF_UNDERWATER_GREEN_RUPEE_1,
+                           { [] { return IsAdult && IronBoots && CanSurviveUnderwaterFor(24); } }),
+            LocationAccess(ZF_UNDERWATER_GREEN_RUPEE_2,
+                           { [] { return IsAdult && IronBoots && CanSurviveUnderwaterFor(24); } }),
+            LocationAccess(ZF_UNDERWATER_GREEN_RUPEE_3,
+                           { [] { return IsAdult && IronBoots && CanSurviveUnderwaterFor(24); } }),
+            LocationAccess(ZF_UNDERWATER_GREEN_RUPEE_4,
+                           { [] { return IsAdult && IronBoots && CanSurviveUnderwaterFor(24); } }),
+            LocationAccess(ZF_UNDERWATER_GREEN_RUPEE_5,
+                           { [] { return IsAdult && IronBoots && CanSurviveUnderwaterFor(24); } }),
+            LocationAccess(ZF_UNDERWATER_GREEN_RUPEE_6,
+                           { [] { return IsAdult && IronBoots && CanSurviveUnderwaterFor(24); } }),
+            LocationAccess(ZF_UNDERWATER_GREEN_RUPEE_7,
+                           { [] { return IsAdult && IronBoots && CanSurviveUnderwaterFor(24); } }),
+            LocationAccess(ZF_UNDERWATER_GREEN_RUPEE_8,
+                           { [] { return IsAdult && IronBoots && CanSurviveUnderwaterFor(24); } }),
+            LocationAccess(ZF_UNDERWATER_GREEN_RUPEE_9,
+                           { [] { return IsAdult && IronBoots && CanSurviveUnderwaterFor(24); } }),
+            LocationAccess(ZF_UNDERWATER_GREEN_RUPEE_10,
+                           { [] { return IsAdult && IronBoots && CanSurviveUnderwaterFor(24); } }),
+            LocationAccess(ZF_UNDERWATER_GREEN_RUPEE_11,
+                           { [] { return IsAdult && IronBoots && CanSurviveUnderwaterFor(24); } }),
+            LocationAccess(ZF_UNDERWATER_GREEN_RUPEE_12,
+                           { [] { return IsAdult && IronBoots && CanSurviveUnderwaterFor(24); } }),
+            LocationAccess(ZF_UNDERWATER_GREEN_RUPEE_13,
+                           { [] { return IsAdult && IronBoots && CanSurviveUnderwaterFor(24); } }),
+            LocationAccess(ZF_UNDERWATER_GREEN_RUPEE_14,
+                           { [] { return IsAdult && IronBoots && CanSurviveUnderwaterFor(24); } }),
+            LocationAccess(ZF_UNDERWATER_GREEN_RUPEE_15,
+                           { [] { return IsAdult && IronBoots && CanSurviveUnderwaterFor(24); } }),
+            LocationAccess(ZF_UNDERWATER_GREEN_RUPEE_16,
+                           { [] { return IsAdult && IronBoots && CanSurviveUnderwaterFor(24); } }),
+            LocationAccess(ZF_UNDERWATER_GREEN_RUPEE_17,
+                           { [] { return IsAdult && IronBoots && CanSurviveUnderwaterFor(24); } }),
+            LocationAccess(ZF_UNDERWATER_GREEN_RUPEE_18,
+                           { [] { return IsAdult && IronBoots && CanSurviveUnderwaterFor(24); } }),
+
             LocationAccess(ZF_FAIRY_GOSSIP_STONE, { [] { return true; } }),
             LocationAccess(ZF_JABU_GOSSIP_STONE, { [] { return true; } }),
         },

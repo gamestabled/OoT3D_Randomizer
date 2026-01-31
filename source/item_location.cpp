@@ -443,15 +443,15 @@ void LocationTable_Init() {
     locationTable[BOTTOM_OF_THE_WELL_MQ_EAST_INNER_ROOM_FREESTANDING_KEY]      = ItemLocation::Collectable(0x08, 0x01, "Bottom of the Well MQ East Inner Room Freestanding Key",BOTTOM_OF_THE_WELL_MQ_EAST_INNER_ROOM_FREESTANDING_KEY, BOTTOM_OF_THE_WELL_SMALL_KEY, {Category::cBottomOfTheWell, Category::cVanillaSmallKey},                                                           SpoilerCollectionCheckGroup::GROUP_DUNGEON_BOTTOM_OF_THE_WELL);
 
     // Ice Cavern Vanilla
-    locationTable[ICE_CAVERN_MAP_CHEST]                                        = ItemLocation::Chest      (0x09, 0x00, "Ice Cavern Map Chest",                                  ICE_CAVERN_MAP_CHEST,            ICE_CAVERN_MAP,     {Category::cIceCavern, Category::cVanillaMap,},                                                                                                      SpoilerCollectionCheckGroup::GROUP_DUNGEON_ICE_CAVERN);
-    locationTable[ICE_CAVERN_COMPASS_CHEST]                                    = ItemLocation::Chest      (0x09, 0x01, "Ice Cavern Compass Chest",                              ICE_CAVERN_COMPASS_CHEST,        ICE_CAVERN_COMPASS, {Category::cIceCavern, Category::cVanillaCompass,},                                                                                                  SpoilerCollectionCheckGroup::GROUP_DUNGEON_ICE_CAVERN);
-    locationTable[ICE_CAVERN_IRON_BOOTS_CHEST]                                 = ItemLocation::Chest      (0x09, 0x02, "Ice Cavern Iron Boots Chest",                           ICE_CAVERN_IRON_BOOTS_CHEST,     IRON_BOOTS,         {Category::cIceCavern,},                                                                                                                             SpoilerCollectionCheckGroup::GROUP_DUNGEON_ICE_CAVERN);
-    locationTable[ICE_CAVERN_FREESTANDING_POH]                                 = ItemLocation::Collectable(0x09, 0x01, "Ice Cavern Freestanding PoH",                           ICE_CAVERN_FREESTANDING_POH,     PIECE_OF_HEART,     {Category::cIceCavern,},                                                                                                                             SpoilerCollectionCheckGroup::GROUP_DUNGEON_ICE_CAVERN);
+    locationTable[ICE_CAVERN_MAP_CHEST]                                        = ItemLocation::Chest      (0x09, 0x00, "Ice Cavern Map Chest",                                  ICE_CAVERN_MAP_CHEST,                                   ICE_CAVERN_MAP,               {Category::cIceCavern, Category::cVanillaMap,},                                                                     SpoilerCollectionCheckGroup::GROUP_DUNGEON_ICE_CAVERN);
+    locationTable[ICE_CAVERN_COMPASS_CHEST]                                    = ItemLocation::Chest      (0x09, 0x01, "Ice Cavern Compass Chest",                              ICE_CAVERN_COMPASS_CHEST,                               ICE_CAVERN_COMPASS,           {Category::cIceCavern, Category::cVanillaCompass,},                                                                 SpoilerCollectionCheckGroup::GROUP_DUNGEON_ICE_CAVERN);
+    locationTable[ICE_CAVERN_IRON_BOOTS_CHEST]                                 = ItemLocation::Chest      (0x09, 0x02, "Ice Cavern Iron Boots Chest",                           ICE_CAVERN_IRON_BOOTS_CHEST,                            IRON_BOOTS,                   {Category::cIceCavern,},                                                                                            SpoilerCollectionCheckGroup::GROUP_DUNGEON_ICE_CAVERN);
+    locationTable[ICE_CAVERN_FREESTANDING_POH]                                 = ItemLocation::Collectable(0x09, 0x01, "Ice Cavern Freestanding PoH",                           ICE_CAVERN_FREESTANDING_POH,                            PIECE_OF_HEART,               {Category::cIceCavern,},                                                                                            SpoilerCollectionCheckGroup::GROUP_DUNGEON_ICE_CAVERN);
     // Ice Cavern MQ
-    locationTable[ICE_CAVERN_MQ_IRON_BOOTS_CHEST]                              = ItemLocation::Chest      (0x09, 0x02, "Ice Cavern MQ Iron Boots Chest",                        ICE_CAVERN_MQ_IRON_BOOTS_CHEST,  IRON_BOOTS,         {Category::cIceCavern,},                                                                                                                             SpoilerCollectionCheckGroup::GROUP_DUNGEON_ICE_CAVERN);
-    locationTable[ICE_CAVERN_MQ_COMPASS_CHEST]                                 = ItemLocation::Chest      (0x09, 0x00, "Ice Cavern MQ Compass Chest",                           ICE_CAVERN_MQ_COMPASS_CHEST,     ICE_CAVERN_COMPASS, {Category::cIceCavern, Category::cVanillaCompass,},                                                                                                  SpoilerCollectionCheckGroup::GROUP_DUNGEON_ICE_CAVERN);
-    locationTable[ICE_CAVERN_MQ_MAP_CHEST]                                     = ItemLocation::Chest      (0x09, 0x01, "Ice Cavern MQ Map Chest",                               ICE_CAVERN_MQ_MAP_CHEST,         ICE_CAVERN_MAP,     {Category::cIceCavern, Category::cVanillaMap,},                                                                                                      SpoilerCollectionCheckGroup::GROUP_DUNGEON_ICE_CAVERN);
-    locationTable[ICE_CAVERN_MQ_FREESTANDING_POH]                              = ItemLocation::Collectable(0x09, 0x01, "Ice Cavern MQ Freestanding PoH",                        ICE_CAVERN_MQ_FREESTANDING_POH,  PIECE_OF_HEART,     {Category::cIceCavern,},                                                                                                                             SpoilerCollectionCheckGroup::GROUP_DUNGEON_ICE_CAVERN);
+    locationTable[ICE_CAVERN_MQ_IRON_BOOTS_CHEST]                              = ItemLocation::Chest      (0x09, 0x02, "Ice Cavern MQ Iron Boots Chest",                        ICE_CAVERN_MQ_IRON_BOOTS_CHEST,                         IRON_BOOTS,                   {Category::cIceCavern,},                                                                                            SpoilerCollectionCheckGroup::GROUP_DUNGEON_ICE_CAVERN);
+    locationTable[ICE_CAVERN_MQ_COMPASS_CHEST]                                 = ItemLocation::Chest      (0x09, 0x00, "Ice Cavern MQ Compass Chest",                           ICE_CAVERN_MQ_COMPASS_CHEST,                            ICE_CAVERN_COMPASS,           {Category::cIceCavern, Category::cVanillaCompass,},                                                                 SpoilerCollectionCheckGroup::GROUP_DUNGEON_ICE_CAVERN);
+    locationTable[ICE_CAVERN_MQ_MAP_CHEST]                                     = ItemLocation::Chest      (0x09, 0x01, "Ice Cavern MQ Map Chest",                               ICE_CAVERN_MQ_MAP_CHEST,                                ICE_CAVERN_MAP,               {Category::cIceCavern, Category::cVanillaMap,},                                                                     SpoilerCollectionCheckGroup::GROUP_DUNGEON_ICE_CAVERN);
+    locationTable[ICE_CAVERN_MQ_FREESTANDING_POH]                              = ItemLocation::Collectable(0x09, 0x01, "Ice Cavern MQ Freestanding PoH",                        ICE_CAVERN_MQ_FREESTANDING_POH,                         PIECE_OF_HEART,               {Category::cIceCavern,},                                                                                            SpoilerCollectionCheckGroup::GROUP_DUNGEON_ICE_CAVERN);
 
     // Gerudo Training Ground Vanilla
     locationTable[GERUDO_TRAINING_GROUNDS_LOBBY_LEFT_CHEST]                    = ItemLocation::Chest      (0x0B, 0x13, "Gerudo Training Grounds Lobby Left Chest",              GERUDO_TRAINING_GROUNDS_LOBBY_LEFT_CHEST,                   BLUE_RUPEE,                        {Category::cGerudoTrainingGrounds,},                                                                       SpoilerCollectionCheckGroup::GROUP_GERUDO_TRAINING_GROUND);
@@ -873,6 +873,125 @@ void LocationTable_Init() {
     locationTable[GC_SHOP_ITEM_8]                                = ItemLocation::Base(0x2E, 0x37, "GC Shop Item 8",                                    GC_SHOP_ITEM_8,              BUY_HEART,                 {Category::cGoronCity, Category::cShop},                                                                          SpoilerCollectionCheck::ShopItem(0x2E, 7),               SpoilerCollectionCheckGroup::GROUP_GORON_CITY);
 
     /*-------------------------------
+        --- FREE STANDING RUPEES ---
+      -------------------------------*/
+    locationTable[KF_END_OF_BRIDGE_BLUE_RUPEE]                                 = ItemLocation::Collectable(0x55, 0x11, "KF End of Bridge Blue Rupee",                        KF_END_OF_BRIDGE_BLUE_RUPEE,                            BLUE_RUPEE,     {Category::cKokiriForest, Category::cForest, Category::cFreestandingRupee},                                                          SpoilerCollectionCheckGroup::GROUP_KOKIRI_FOREST);
+    locationTable[KF_BEHIND_MIDOS_HOUSE_BLUE_RUPEE]                            = ItemLocation::Collectable(0x55, 0x12, "KF Behind Mido's house Blue Rupee",                  KF_BEHIND_MIDOS_HOUSE_BLUE_RUPEE,                       BLUE_RUPEE,     {Category::cKokiriForest, Category::cForest, Category::cFreestandingRupee},                                                          SpoilerCollectionCheckGroup::GROUP_KOKIRI_FOREST);
+    locationTable[KF_BOULDER_MAZE_BLUE_RUPEE_1]                                = ItemLocation::Collectable(0x55, 0x0F, "KF Boulder Maze Blue Rupee 1",                       KF_BOULDER_MAZE_BLUE_RUPEE_1,                           BLUE_RUPEE,     {Category::cKokiriForest, Category::cForest, Category::cFreestandingRupee},                                                          SpoilerCollectionCheckGroup::GROUP_KOKIRI_FOREST);
+    locationTable[KF_BOULDER_MAZE_BLUE_RUPEE_2]                                = ItemLocation::Collectable(0x55, 0x0E, "KF Boulder Maze Blue Rupee 2",                       KF_BOULDER_MAZE_BLUE_RUPEE_2,                           BLUE_RUPEE,     {Category::cKokiriForest, Category::cForest, Category::cFreestandingRupee},                                                          SpoilerCollectionCheckGroup::GROUP_KOKIRI_FOREST);
+    locationTable[KF_NEAR_RAMP_GREEN_RUPEE_1]                                  = ItemLocation::Collectable(0x55, 0x24, "KF Near Ramp Green Rupee 1",                         KF_NEAR_RAMP_GREEN_RUPEE_1,                             GREEN_RUPEE,    {Category::cKokiriForest, Category::cForest, Category::cFreestandingRupee},                                                          SpoilerCollectionCheckGroup::GROUP_KOKIRI_FOREST);
+    locationTable[KF_NEAR_RAMP_GREEN_RUPEE_2]                                  = ItemLocation::Collectable(0x55, 0x27, "KF Near Ramp Green Rupee 2",                         KF_NEAR_RAMP_GREEN_RUPEE_2,                             GREEN_RUPEE,    {Category::cKokiriForest, Category::cForest, Category::cFreestandingRupee},                                                          SpoilerCollectionCheckGroup::GROUP_KOKIRI_FOREST);
+    locationTable[KF_NEAR_MIDOS_HOUSE_GREEN_RUPEE_1]                           = ItemLocation::Collectable(0x55, 0x25, "KF Near Mido's House Green Rupee 1",                 KF_NEAR_MIDOS_HOUSE_GREEN_RUPEE_1,                      GREEN_RUPEE,    {Category::cKokiriForest, Category::cForest, Category::cFreestandingRupee},                                                          SpoilerCollectionCheckGroup::GROUP_KOKIRI_FOREST);
+    locationTable[KF_NEAR_MIDOS_HOUSE_GREEN_RUPEE_2]                           = ItemLocation::Collectable(0x55, 0x26, "KF Near Mido's House Green Rupee 2",                 KF_NEAR_MIDOS_HOUSE_GREEN_RUPEE_2,                      GREEN_RUPEE,    {Category::cKokiriForest, Category::cForest, Category::cFreestandingRupee},                                                          SpoilerCollectionCheckGroup::GROUP_KOKIRI_FOREST);
+    locationTable[KF_RUPEE_CIRCLE_GREEN_RUPEE_1]                               = ItemLocation::Collectable(0x55, 0x40, "KF Rupee circle Green Rupee 1",                      KF_RUPEE_CIRCLE_GREEN_RUPEE_1,                          GREEN_RUPEE,    {Category::cKokiriForest, Category::cForest, Category::cFreestandingRupee},                                                          SpoilerCollectionCheckGroup::GROUP_KOKIRI_FOREST);
+    locationTable[KF_RUPEE_CIRCLE_GREEN_RUPEE_2]                               = ItemLocation::Collectable(0x55, 0x41, "KF Rupee circle Green Rupee 2",                      KF_RUPEE_CIRCLE_GREEN_RUPEE_2,                          GREEN_RUPEE,    {Category::cKokiriForest, Category::cForest, Category::cFreestandingRupee},                                                          SpoilerCollectionCheckGroup::GROUP_KOKIRI_FOREST);
+    locationTable[KF_RUPEE_CIRCLE_GREEN_RUPEE_3]                               = ItemLocation::Collectable(0x55, 0x42, "KF Rupee circle Green Rupee 3",                      KF_RUPEE_CIRCLE_GREEN_RUPEE_3,                          GREEN_RUPEE,    {Category::cKokiriForest, Category::cForest, Category::cFreestandingRupee},                                                          SpoilerCollectionCheckGroup::GROUP_KOKIRI_FOREST);
+    locationTable[KF_RUPEE_CIRCLE_GREEN_RUPEE_4]                               = ItemLocation::Collectable(0x55, 0x43, "KF Rupee circle Green Rupee 4",                      KF_RUPEE_CIRCLE_GREEN_RUPEE_4,                          GREEN_RUPEE,    {Category::cKokiriForest, Category::cForest, Category::cFreestandingRupee},                                                          SpoilerCollectionCheckGroup::GROUP_KOKIRI_FOREST);
+    locationTable[KF_RUPEE_CIRCLE_GREEN_RUPEE_5]                               = ItemLocation::Collectable(0x55, 0x44, "KF Rupee circle Green Rupee 5",                      KF_RUPEE_CIRCLE_GREEN_RUPEE_5,                          GREEN_RUPEE,    {Category::cKokiriForest, Category::cForest, Category::cFreestandingRupee},                                                          SpoilerCollectionCheckGroup::GROUP_KOKIRI_FOREST);
+    locationTable[KF_RUPEE_CIRCLE_GREEN_RUPEE_6]                               = ItemLocation::Collectable(0x55, 0x45, "KF Rupee circle Green Rupee 6",                      KF_RUPEE_CIRCLE_GREEN_RUPEE_6,                          GREEN_RUPEE,    {Category::cKokiriForest, Category::cForest, Category::cFreestandingRupee},                                                          SpoilerCollectionCheckGroup::GROUP_KOKIRI_FOREST);
+    locationTable[KF_RUPEE_CIRCLE_RED_RUPEE]                                   = ItemLocation::Collectable(0x55, 0x46, "KF Rupee circle Red Rupee",                          KF_RUPEE_CIRCLE_RED_RUPEE,                              RED_RUPEE,      {Category::cKokiriForest, Category::cForest, Category::cFreestandingRupee},                                                          SpoilerCollectionCheckGroup::GROUP_KOKIRI_FOREST);
+
+    locationTable[LW_IN_BOULDER_BLUE_RUPEE]                                    = ItemLocation::Collectable(0x5B, 0x13, "LW in boulder blue rupee",                           LW_IN_BOULDER_BLUE_RUPEE,                               BLUE_RUPEE,     {Category::cLostWoods, Category::cForest, Category::cFreestandingRupee},                                                             SpoilerCollectionCheckGroup::GROUP_LOST_WOODS);
+    locationTable[LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_1]                  = ItemLocation::Collectable(0x5B, 0x34, "LW in water near ZR Shortcut Green Rupee 1",         LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_1,             GREEN_RUPEE,    {Category::cLostWoods, Category::cForest, Category::cFreestandingRupee},                                                             SpoilerCollectionCheckGroup::GROUP_LOST_WOODS);
+    locationTable[LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_2]                  = ItemLocation::Collectable(0x5B, 0x35, "LW in water near ZR Shortcut Green Rupee 2",         LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_2,             GREEN_RUPEE,    {Category::cLostWoods, Category::cForest, Category::cFreestandingRupee},                                                             SpoilerCollectionCheckGroup::GROUP_LOST_WOODS);
+    locationTable[LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_3]                  = ItemLocation::Collectable(0x5B, 0x36, "LW in water near ZR Shortcut Green Rupee 3",         LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_3,             GREEN_RUPEE,    {Category::cLostWoods, Category::cForest, Category::cFreestandingRupee},                                                             SpoilerCollectionCheckGroup::GROUP_LOST_WOODS);
+    locationTable[LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_4]                  = ItemLocation::Collectable(0x5B, 0x37, "LW in water near ZR Shortcut Green Rupee 4",         LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_4,             GREEN_RUPEE,    {Category::cLostWoods, Category::cForest, Category::cFreestandingRupee},                                                             SpoilerCollectionCheckGroup::GROUP_LOST_WOODS);
+    locationTable[LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_5]                  = ItemLocation::Collectable(0x5B, 0x39, "LW in water near ZR Shortcut Green Rupee 5",         LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_5,             GREEN_RUPEE,    {Category::cLostWoods, Category::cForest, Category::cFreestandingRupee},                                                             SpoilerCollectionCheckGroup::GROUP_LOST_WOODS);
+    locationTable[LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_6]                  = ItemLocation::Collectable(0x5B, 0x3A, "LW in water near ZR Shortcut Green Rupee 6",         LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_6,             GREEN_RUPEE,    {Category::cLostWoods, Category::cForest, Category::cFreestandingRupee},                                                             SpoilerCollectionCheckGroup::GROUP_LOST_WOODS);
+    locationTable[LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_7]                  = ItemLocation::Collectable(0x5B, 0x3B, "LW in water near ZR Shortcut Green Rupee 7",         LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_7,             GREEN_RUPEE,    {Category::cLostWoods, Category::cForest, Category::cFreestandingRupee},                                                             SpoilerCollectionCheckGroup::GROUP_LOST_WOODS);
+    locationTable[LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_8]                  = ItemLocation::Collectable(0x5B, 0x3C, "LW in water near ZR Shortcut Green Rupee 8",         LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_8,             GREEN_RUPEE,    {Category::cLostWoods, Category::cForest, Category::cFreestandingRupee},                                                             SpoilerCollectionCheckGroup::GROUP_LOST_WOODS);
+
+    locationTable[LH_UNDER_WATER_GREEN_RUPEE_1]                                = ItemLocation::Collectable(0x57, 0x20, "LH Under water green rupee 1",                       LH_UNDER_WATER_GREEN_RUPEE_1,                           GREEN_RUPEE,    {Category::cLakeHylia, Category::cFreestandingRupee},                                                                                SpoilerCollectionCheckGroup::GROUP_LAKE_HYLIA);
+    locationTable[LH_UNDER_WATER_GREEN_RUPEE_2]                                = ItemLocation::Collectable(0x57, 0x21, "LH Under water green rupee 2",                       LH_UNDER_WATER_GREEN_RUPEE_2,                           GREEN_RUPEE,    {Category::cLakeHylia, Category::cFreestandingRupee},                                                                                SpoilerCollectionCheckGroup::GROUP_LAKE_HYLIA);
+    locationTable[LH_UNDER_WATER_GREEN_RUPEE_3]                                = ItemLocation::Collectable(0x57, 0x22, "LH Under water green rupee 3",                       LH_UNDER_WATER_GREEN_RUPEE_3,                           GREEN_RUPEE,    {Category::cLakeHylia, Category::cFreestandingRupee},                                                                                SpoilerCollectionCheckGroup::GROUP_LAKE_HYLIA);
+    locationTable[LH_LAB_DIVE_RED_RUPEE_1]                                     = ItemLocation::Collectable(0x38, 0x01, "LH Lab Dive Red rupee 1",                            LH_LAB_DIVE_RED_RUPEE_1,                                RED_RUPEE,      {Category::cLakeHylia, Category::cFreestandingRupee},                                                                                SpoilerCollectionCheckGroup::GROUP_LAKE_HYLIA);
+    locationTable[LH_LAB_DIVE_RED_RUPEE_2]                                     = ItemLocation::Collectable(0x38, 0x02, "LH Lab Dive Red rupee 2",                            LH_LAB_DIVE_RED_RUPEE_2,                                RED_RUPEE,      {Category::cLakeHylia, Category::cFreestandingRupee},                                                                                SpoilerCollectionCheckGroup::GROUP_LAKE_HYLIA);
+    locationTable[LH_LAB_DIVE_RED_RUPEE_3]                                     = ItemLocation::Collectable(0x38, 0x03, "LH Lab Dive Red rupee 3",                            LH_LAB_DIVE_RED_RUPEE_3,                                RED_RUPEE,      {Category::cLakeHylia, Category::cFreestandingRupee},                                                                                SpoilerCollectionCheckGroup::GROUP_LAKE_HYLIA);
+
+    locationTable[GV_OCTOROCK_GROTTO_BLUE_RUPEE_1]                             = ItemLocation::Collectable(0x3E, 0x38, "GV Octorock Grotto Blue Rupee 1",                    GV_OCTOROCK_GROTTO_BLUE_RUPEE_1,                        BLUE_RUPEE,     {Category::cGerudoValley, Category::cGerudo, Category::cFreestandingRupee, Category::cGrotto},                                       SpoilerCollectionCheckGroup::GROUP_GERUDO_VALLEY);
+    locationTable[GV_OCTOROCK_GROTTO_BLUE_RUPEE_2]                             = ItemLocation::Collectable(0x3E, 0x39, "GV Octorock Grotto Blue Rupee 2",                    GV_OCTOROCK_GROTTO_BLUE_RUPEE_2,                        BLUE_RUPEE,     {Category::cGerudoValley, Category::cGerudo, Category::cFreestandingRupee, Category::cGrotto},                                       SpoilerCollectionCheckGroup::GROUP_GERUDO_VALLEY);
+    locationTable[GV_OCTOROCK_GROTTO_BLUE_RUPEE_3]                             = ItemLocation::Collectable(0x3E, 0x3A, "GV Octorock Grotto Blue Rupee 3",                    GV_OCTOROCK_GROTTO_BLUE_RUPEE_3,                        BLUE_RUPEE,     {Category::cGerudoValley, Category::cGerudo, Category::cFreestandingRupee, Category::cGrotto},                                       SpoilerCollectionCheckGroup::GROUP_GERUDO_VALLEY);
+    locationTable[GV_OCTOROCK_GROTTO_GREEN_RUPEE_1]                            = ItemLocation::Collectable(0x3E, 0x3B, "GV Octorock Grotto Green Rupee 1",                   GV_OCTOROCK_GROTTO_GREEN_RUPEE_1,                       GREEN_RUPEE,    {Category::cGerudoValley, Category::cGerudo, Category::cFreestandingRupee, Category::cGrotto},                                       SpoilerCollectionCheckGroup::GROUP_GERUDO_VALLEY);
+    locationTable[GV_OCTOROCK_GROTTO_GREEN_RUPEE_2]                            = ItemLocation::Collectable(0x3E, 0x3C, "GV Octorock Grotto Green Rupee 2",                   GV_OCTOROCK_GROTTO_GREEN_RUPEE_2,                       GREEN_RUPEE,    {Category::cGerudoValley, Category::cGerudo, Category::cFreestandingRupee, Category::cGrotto},                                       SpoilerCollectionCheckGroup::GROUP_GERUDO_VALLEY);
+    locationTable[GV_OCTOROCK_GROTTO_GREEN_RUPEE_3]                            = ItemLocation::Collectable(0x3E, 0x3D, "GV Octorock Grotto Green Rupee 3",                   GV_OCTOROCK_GROTTO_GREEN_RUPEE_3,                       GREEN_RUPEE,    {Category::cGerudoValley, Category::cGerudo, Category::cFreestandingRupee, Category::cGrotto},                                       SpoilerCollectionCheckGroup::GROUP_GERUDO_VALLEY);
+    locationTable[GV_OCTOROCK_GROTTO_GREEN_RUPEE_4]                            = ItemLocation::Collectable(0x3E, 0x3E, "GV Octorock Grotto Green Rupee 4",                   GV_OCTOROCK_GROTTO_GREEN_RUPEE_4,                       GREEN_RUPEE,    {Category::cGerudoValley, Category::cGerudo, Category::cFreestandingRupee, Category::cGrotto},                                       SpoilerCollectionCheckGroup::GROUP_GERUDO_VALLEY);
+    locationTable[GV_OCTOROCK_GROTTO_RED_RUPEE]                                = ItemLocation::Collectable(0x3E, 0x3F, "GV Octorock Grotto Red Rupee",                       GV_OCTOROCK_GROTTO_RED_RUPEE,                           RED_RUPEE,      {Category::cGerudoValley, Category::cGerudo, Category::cFreestandingRupee, Category::cGrotto},                                       SpoilerCollectionCheckGroup::GROUP_GERUDO_VALLEY);
+
+    locationTable[DMT_ROCK_BLUE_RUPEE]                                         = ItemLocation::Collectable(0x60, 0x07, "DMT Rock Blue Rupee",                                DMT_ROCK_BLUE_RUPEE,                                    BLUE_RUPEE,     {Category::cDeathMountainTrail, Category::cFreestandingRupee,},                                                                      SpoilerCollectionCheckGroup::GROUP_DEATH_MOUNTAIN_TRAIL);
+    locationTable[DMT_ROCK_RED_RUPEE]                                          = ItemLocation::Collectable(0x60, 0x0A, "DMT Rock Red Rupee",                                 DMT_ROCK_RED_RUPEE,                                     RED_RUPEE,      {Category::cDeathMountainTrail, Category::cFreestandingRupee,},                                                                      SpoilerCollectionCheckGroup::GROUP_DEATH_MOUNTAIN_TRAIL);
+    locationTable[DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_1]                   = ItemLocation::Collectable(0x3E, 0x40, "DMT Cow Grotto rupee circle Green Rupee 1",          DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_1,              GREEN_RUPEE,    {Category::cDeathMountainTrail, Category::cFreestandingRupee, Category::cGrotto},                                                    SpoilerCollectionCheckGroup::GROUP_DEATH_MOUNTAIN_TRAIL);
+    locationTable[DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_2]                   = ItemLocation::Collectable(0x3E, 0x41, "DMT Cow Grotto rupee circle Green Rupee 2",          DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_2,              GREEN_RUPEE,    {Category::cDeathMountainTrail, Category::cFreestandingRupee, Category::cGrotto},                                                    SpoilerCollectionCheckGroup::GROUP_DEATH_MOUNTAIN_TRAIL);
+    locationTable[DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_3]                   = ItemLocation::Collectable(0x3E, 0x42, "DMT Cow Grotto rupee circle Green Rupee 3",          DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_3,              GREEN_RUPEE,    {Category::cDeathMountainTrail, Category::cFreestandingRupee, Category::cGrotto},                                                    SpoilerCollectionCheckGroup::GROUP_DEATH_MOUNTAIN_TRAIL);
+    locationTable[DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_4]                   = ItemLocation::Collectable(0x3E, 0x43, "DMT Cow Grotto rupee circle Green Rupee 4",          DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_4,              GREEN_RUPEE,    {Category::cDeathMountainTrail, Category::cFreestandingRupee, Category::cGrotto},                                                    SpoilerCollectionCheckGroup::GROUP_DEATH_MOUNTAIN_TRAIL);
+    locationTable[DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_5]                   = ItemLocation::Collectable(0x3E, 0x44, "DMT Cow Grotto rupee circle Green Rupee 5",          DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_5,              GREEN_RUPEE,    {Category::cDeathMountainTrail, Category::cFreestandingRupee, Category::cGrotto},                                                    SpoilerCollectionCheckGroup::GROUP_DEATH_MOUNTAIN_TRAIL);
+    locationTable[DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_6]                   = ItemLocation::Collectable(0x3E, 0x45, "DMT Cow Grotto rupee circle Green Rupee 6",          DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_6,              GREEN_RUPEE,    {Category::cDeathMountainTrail, Category::cFreestandingRupee, Category::cGrotto},                                                    SpoilerCollectionCheckGroup::GROUP_DEATH_MOUNTAIN_TRAIL);
+    locationTable[DMT_COW_GROTTO_RUPEE_CIRCLE_RED_RUPEE]                       = ItemLocation::Collectable(0x3E, 0x46, "DMT Cow Grotto rupee circle Red Rupee",              DMT_COW_GROTTO_RUPEE_CIRCLE_RED_RUPEE,                  RED_RUPEE,      {Category::cDeathMountainTrail, Category::cFreestandingRupee, Category::cGrotto},                                                    SpoilerCollectionCheckGroup::GROUP_DEATH_MOUNTAIN_TRAIL);
+
+    locationTable[DMC_LOWER_RED_RUPEE_1]                                       = ItemLocation::Collectable(0x61, 0x20, "DMC Lower Red Rupee 1",                              DMC_LOWER_RED_RUPEE_1,                                  RED_RUPEE,      {Category::cDeathMountainCrater, Category::cDeathMountain, Category::cFreestandingRupee,},                                           SpoilerCollectionCheckGroup::GROUP_DEATH_MOUNTAIN_CRATER);
+    locationTable[DMC_LOWER_RED_RUPEE_2]                                       = ItemLocation::Collectable(0x61, 0x21, "DMC Lower Red Rupee 2",                              DMC_LOWER_RED_RUPEE_2,                                  RED_RUPEE,      {Category::cDeathMountainCrater, Category::cDeathMountain, Category::cFreestandingRupee,},                                           SpoilerCollectionCheckGroup::GROUP_DEATH_MOUNTAIN_CRATER);
+    locationTable[DMC_LOWER_BLUE_RUPEE_1]                                      = ItemLocation::Collectable(0x61, 0x22, "DMC Lower Blue Rupee 1",                             DMC_LOWER_BLUE_RUPEE_1,                                 BLUE_RUPEE,     {Category::cDeathMountainCrater, Category::cDeathMountain, Category::cFreestandingRupee,},                                           SpoilerCollectionCheckGroup::GROUP_DEATH_MOUNTAIN_CRATER);
+    locationTable[DMC_LOWER_BLUE_RUPEE_2]                                      = ItemLocation::Collectable(0x61, 0x23, "DMC Lower Blue Rupee 2",                             DMC_LOWER_BLUE_RUPEE_2,                                 BLUE_RUPEE,     {Category::cDeathMountainCrater, Category::cDeathMountain, Category::cFreestandingRupee,},                                           SpoilerCollectionCheckGroup::GROUP_DEATH_MOUNTAIN_CRATER);
+    locationTable[DMC_LOWER_BLUE_RUPEE_3]                                      = ItemLocation::Collectable(0x61, 0x24, "DMC Lower Blue Rupee 3",                             DMC_LOWER_BLUE_RUPEE_3,                                 BLUE_RUPEE,     {Category::cDeathMountainCrater, Category::cDeathMountain, Category::cFreestandingRupee,},                                           SpoilerCollectionCheckGroup::GROUP_DEATH_MOUNTAIN_CRATER);
+    locationTable[DMC_LOWER_BLUE_RUPEE_4]                                      = ItemLocation::Collectable(0x61, 0x25, "DMC Lower Blue Rupee 4",                             DMC_LOWER_BLUE_RUPEE_4,                                 BLUE_RUPEE,     {Category::cDeathMountainCrater, Category::cDeathMountain, Category::cFreestandingRupee,},                                           SpoilerCollectionCheckGroup::GROUP_DEATH_MOUNTAIN_CRATER);
+    locationTable[DMC_LOWER_BLUE_RUPEE_5]                                      = ItemLocation::Collectable(0x61, 0x26, "DMC Lower Blue Rupee 5",                             DMC_LOWER_BLUE_RUPEE_5,                                 BLUE_RUPEE,     {Category::cDeathMountainCrater, Category::cDeathMountain, Category::cFreestandingRupee,},                                           SpoilerCollectionCheckGroup::GROUP_DEATH_MOUNTAIN_CRATER);
+    locationTable[DMC_LOWER_BLUE_RUPEE_6]                                      = ItemLocation::Collectable(0x61, 0x27, "DMC Lower Blue Rupee 6",                             DMC_LOWER_BLUE_RUPEE_6,                                 BLUE_RUPEE,     {Category::cDeathMountainCrater, Category::cDeathMountain, Category::cFreestandingRupee,},                                           SpoilerCollectionCheckGroup::GROUP_DEATH_MOUNTAIN_CRATER);
+    locationTable[DMC_SCARE_CROW_RUPEE_CIRCLE_GREEN_RUPEE_1]                   = ItemLocation::Collectable(0x61, 0x40, "DMC Scare crow rupee circle Green Rupee 1",          DMC_SCARE_CROW_RUPEE_CIRCLE_GREEN_RUPEE_1,              GREEN_RUPEE,    {Category::cDeathMountainCrater, Category::cDeathMountain, Category::cFreestandingRupee,},                                           SpoilerCollectionCheckGroup::GROUP_DEATH_MOUNTAIN_CRATER);
+    locationTable[DMC_SCARE_CROW_RUPEE_CIRCLE_GREEN_RUPEE_2]                   = ItemLocation::Collectable(0x61, 0x41, "DMC Scare crow rupee circle Green Rupee 2",          DMC_SCARE_CROW_RUPEE_CIRCLE_GREEN_RUPEE_2,              GREEN_RUPEE,    {Category::cDeathMountainCrater, Category::cDeathMountain, Category::cFreestandingRupee,},                                           SpoilerCollectionCheckGroup::GROUP_DEATH_MOUNTAIN_CRATER);
+    locationTable[DMC_SCARE_CROW_RUPEE_CIRCLE_GREEN_RUPEE_3]                   = ItemLocation::Collectable(0x61, 0x42, "DMC Scare crow rupee circle Green Rupee 3",          DMC_SCARE_CROW_RUPEE_CIRCLE_GREEN_RUPEE_3,              GREEN_RUPEE,    {Category::cDeathMountainCrater, Category::cDeathMountain, Category::cFreestandingRupee,},                                           SpoilerCollectionCheckGroup::GROUP_DEATH_MOUNTAIN_CRATER);
+    locationTable[DMC_SCARE_CROW_RUPEE_CIRCLE_GREEN_RUPEE_4]                   = ItemLocation::Collectable(0x61, 0x43, "DMC Scare crow rupee circle Green Rupee 4",          DMC_SCARE_CROW_RUPEE_CIRCLE_GREEN_RUPEE_4,              GREEN_RUPEE,    {Category::cDeathMountainCrater, Category::cDeathMountain, Category::cFreestandingRupee,},                                           SpoilerCollectionCheckGroup::GROUP_DEATH_MOUNTAIN_CRATER);
+    locationTable[DMC_SCARE_CROW_RUPEE_CIRCLE_GREEN_RUPEE_5]                   = ItemLocation::Collectable(0x61, 0x44, "DMC Scare crow rupee circle Green Rupee 5",          DMC_SCARE_CROW_RUPEE_CIRCLE_GREEN_RUPEE_5,              GREEN_RUPEE,    {Category::cDeathMountainCrater, Category::cDeathMountain, Category::cFreestandingRupee,},                                           SpoilerCollectionCheckGroup::GROUP_DEATH_MOUNTAIN_CRATER);
+    locationTable[DMC_SCARE_CROW_RUPEE_CIRCLE_GREEN_RUPEE_6]                   = ItemLocation::Collectable(0x61, 0x45, "DMC Scare crow rupee circle Green Rupee 6",          DMC_SCARE_CROW_RUPEE_CIRCLE_GREEN_RUPEE_6,              GREEN_RUPEE,    {Category::cDeathMountainCrater, Category::cDeathMountain, Category::cFreestandingRupee,},                                           SpoilerCollectionCheckGroup::GROUP_DEATH_MOUNTAIN_CRATER);
+    locationTable[DMC_SCARE_CROW_RUPEE_CIRCLE_RED_RUPEE]                       = ItemLocation::Collectable(0x61, 0x46, "DMC Scare crow rupee circle Red Rupee",              DMC_SCARE_CROW_RUPEE_CIRCLE_RED_RUPEE,                  RED_RUPEE,      {Category::cDeathMountainCrater, Category::cDeathMountain, Category::cFreestandingRupee,},                                           SpoilerCollectionCheckGroup::GROUP_DEATH_MOUNTAIN_CRATER);
+
+    locationTable[ZR_WATERFALL_RED_RUPEE_1]                                    = ItemLocation::Collectable(0x54, 0x20, "ZR Waterfall Red Rupee 1",                           ZR_WATERFALL_RED_RUPEE_1,                               RED_RUPEE,      {Category::cZorasRiver, Category::cFreestandingRupee},                                                                               SpoilerCollectionCheckGroup::GROUP_ZORAS_RIVER);
+    locationTable[ZR_WATERFALL_RED_RUPEE_2]                                    = ItemLocation::Collectable(0x54, 0x21, "ZR Waterfall Red Rupee 2",                           ZR_WATERFALL_RED_RUPEE_2,                               RED_RUPEE,      {Category::cZorasRiver, Category::cFreestandingRupee},                                                                               SpoilerCollectionCheckGroup::GROUP_ZORAS_RIVER);
+    locationTable[ZR_WATERFALL_RED_RUPEE_3]                                    = ItemLocation::Collectable(0x54, 0x22, "ZR Waterfall Red Rupee 3",                           ZR_WATERFALL_RED_RUPEE_3,                               RED_RUPEE,      {Category::cZorasRiver, Category::cFreestandingRupee},                                                                               SpoilerCollectionCheckGroup::GROUP_ZORAS_RIVER);
+    locationTable[ZR_WATERFALL_RED_RUPEE_4]                                    = ItemLocation::Collectable(0x54, 0x23, "ZR Waterfall Red Rupee 4",                           ZR_WATERFALL_RED_RUPEE_4,                               RED_RUPEE,      {Category::cZorasRiver, Category::cFreestandingRupee},                                                                               SpoilerCollectionCheckGroup::GROUP_ZORAS_RIVER);
+
+    locationTable[ZF_UNDERWATER_GREEN_RUPEE_1]                                 = ItemLocation::Collectable(0x59, 0x20, "ZF Underwater Green Rupee 1",                        ZF_UNDERWATER_GREEN_RUPEE_1,                            GREEN_RUPEE,    {Category::cZorasFountain, Category::cFreestandingRupee},                                                                            SpoilerCollectionCheckGroup::GROUP_ZORAS_FOUNTAIN);
+    locationTable[ZF_UNDERWATER_GREEN_RUPEE_2]                                 = ItemLocation::Collectable(0x59, 0x21, "ZF Underwater Green Rupee 2",                        ZF_UNDERWATER_GREEN_RUPEE_2,                            GREEN_RUPEE,    {Category::cZorasFountain, Category::cFreestandingRupee},                                                                            SpoilerCollectionCheckGroup::GROUP_ZORAS_FOUNTAIN);
+    locationTable[ZF_UNDERWATER_GREEN_RUPEE_3]                                 = ItemLocation::Collectable(0x59, 0x22, "ZF Underwater Green Rupee 3",                        ZF_UNDERWATER_GREEN_RUPEE_3,                            GREEN_RUPEE,    {Category::cZorasFountain, Category::cFreestandingRupee},                                                                            SpoilerCollectionCheckGroup::GROUP_ZORAS_FOUNTAIN);
+    locationTable[ZF_UNDERWATER_GREEN_RUPEE_4]                                 = ItemLocation::Collectable(0x59, 0x23, "ZF Underwater Green Rupee 4",                        ZF_UNDERWATER_GREEN_RUPEE_4,                            GREEN_RUPEE,    {Category::cZorasFountain, Category::cFreestandingRupee},                                                                            SpoilerCollectionCheckGroup::GROUP_ZORAS_FOUNTAIN);
+    locationTable[ZF_UNDERWATER_GREEN_RUPEE_5]                                 = ItemLocation::Collectable(0x59, 0x24, "ZF Underwater Green Rupee 5",                        ZF_UNDERWATER_GREEN_RUPEE_5,                            GREEN_RUPEE,    {Category::cZorasFountain, Category::cFreestandingRupee},                                                                            SpoilerCollectionCheckGroup::GROUP_ZORAS_FOUNTAIN);
+    locationTable[ZF_UNDERWATER_GREEN_RUPEE_6]                                 = ItemLocation::Collectable(0x59, 0x25, "ZF Underwater Green Rupee 6",                        ZF_UNDERWATER_GREEN_RUPEE_6,                            GREEN_RUPEE,    {Category::cZorasFountain, Category::cFreestandingRupee},                                                                            SpoilerCollectionCheckGroup::GROUP_ZORAS_FOUNTAIN);
+    locationTable[ZF_UNDERWATER_GREEN_RUPEE_7]                                 = ItemLocation::Collectable(0x59, 0x26, "ZF Underwater Green Rupee 7",                        ZF_UNDERWATER_GREEN_RUPEE_7,                            GREEN_RUPEE,    {Category::cZorasFountain, Category::cFreestandingRupee},                                                                            SpoilerCollectionCheckGroup::GROUP_ZORAS_FOUNTAIN);
+    locationTable[ZF_UNDERWATER_GREEN_RUPEE_8]                                 = ItemLocation::Collectable(0x59, 0x27, "ZF Underwater Green Rupee 8",                        ZF_UNDERWATER_GREEN_RUPEE_8,                            GREEN_RUPEE,    {Category::cZorasFountain, Category::cFreestandingRupee},                                                                            SpoilerCollectionCheckGroup::GROUP_ZORAS_FOUNTAIN);
+    locationTable[ZF_UNDERWATER_GREEN_RUPEE_9]                                 = ItemLocation::Collectable(0x59, 0x28, "ZF Underwater Green Rupee 9",                        ZF_UNDERWATER_GREEN_RUPEE_9,                            GREEN_RUPEE,    {Category::cZorasFountain, Category::cFreestandingRupee},                                                                            SpoilerCollectionCheckGroup::GROUP_ZORAS_FOUNTAIN);
+    locationTable[ZF_UNDERWATER_GREEN_RUPEE_10]                                = ItemLocation::Collectable(0x59, 0x29, "ZF Underwater Green Rupee 10",                       ZF_UNDERWATER_GREEN_RUPEE_10,                           GREEN_RUPEE,    {Category::cZorasFountain, Category::cFreestandingRupee},                                                                            SpoilerCollectionCheckGroup::GROUP_ZORAS_FOUNTAIN);
+    locationTable[ZF_UNDERWATER_GREEN_RUPEE_11]                                = ItemLocation::Collectable(0x59, 0x2A, "ZF Underwater Green Rupee 11",                       ZF_UNDERWATER_GREEN_RUPEE_11,                           GREEN_RUPEE,    {Category::cZorasFountain, Category::cFreestandingRupee},                                                                            SpoilerCollectionCheckGroup::GROUP_ZORAS_FOUNTAIN);
+    locationTable[ZF_UNDERWATER_GREEN_RUPEE_12]                                = ItemLocation::Collectable(0x59, 0x2B, "ZF Underwater Green Rupee 12",                       ZF_UNDERWATER_GREEN_RUPEE_12,                           GREEN_RUPEE,    {Category::cZorasFountain, Category::cFreestandingRupee},                                                                            SpoilerCollectionCheckGroup::GROUP_ZORAS_FOUNTAIN);
+    locationTable[ZF_UNDERWATER_GREEN_RUPEE_13]                                = ItemLocation::Collectable(0x59, 0x2C, "ZF Underwater Green Rupee 13",                       ZF_UNDERWATER_GREEN_RUPEE_13,                           GREEN_RUPEE,    {Category::cZorasFountain, Category::cFreestandingRupee},                                                                            SpoilerCollectionCheckGroup::GROUP_ZORAS_FOUNTAIN);
+    locationTable[ZF_UNDERWATER_GREEN_RUPEE_14]                                = ItemLocation::Collectable(0x59, 0x2D, "ZF Underwater Green Rupee 14",                       ZF_UNDERWATER_GREEN_RUPEE_14,                           GREEN_RUPEE,    {Category::cZorasFountain, Category::cFreestandingRupee},                                                                            SpoilerCollectionCheckGroup::GROUP_ZORAS_FOUNTAIN);
+    locationTable[ZF_UNDERWATER_GREEN_RUPEE_15]                                = ItemLocation::Collectable(0x59, 0x2E, "ZF Underwater Green Rupee 15",                       ZF_UNDERWATER_GREEN_RUPEE_15,                           GREEN_RUPEE,    {Category::cZorasFountain, Category::cFreestandingRupee},                                                                            SpoilerCollectionCheckGroup::GROUP_ZORAS_FOUNTAIN);
+    locationTable[ZF_UNDERWATER_GREEN_RUPEE_16]                                = ItemLocation::Collectable(0x59, 0x2F, "ZF Underwater Green Rupee 16",                       ZF_UNDERWATER_GREEN_RUPEE_16,                           GREEN_RUPEE,    {Category::cZorasFountain, Category::cFreestandingRupee},                                                                            SpoilerCollectionCheckGroup::GROUP_ZORAS_FOUNTAIN);
+    locationTable[ZF_UNDERWATER_GREEN_RUPEE_17]                                = ItemLocation::Collectable(0x59, 0x30, "ZF Underwater Green Rupee 17",                       ZF_UNDERWATER_GREEN_RUPEE_17,                           GREEN_RUPEE,    {Category::cZorasFountain, Category::cFreestandingRupee},                                                                            SpoilerCollectionCheckGroup::GROUP_ZORAS_FOUNTAIN);
+    locationTable[ZF_UNDERWATER_GREEN_RUPEE_18]                                = ItemLocation::Collectable(0x59, 0x31, "ZF Underwater Green Rupee 18",                       ZF_UNDERWATER_GREEN_RUPEE_18,                           GREEN_RUPEE,    {Category::cZorasFountain, Category::cFreestandingRupee},                                                                            SpoilerCollectionCheckGroup::GROUP_ZORAS_FOUNTAIN);
+
+    locationTable[GRAVEYARD_DAMPE_RACE_GREEN_RUPEE_1]                          = ItemLocation::Collectable(0x48, 0x38, "GY Dampe Race Green Rupee 1",                        GRAVEYARD_DAMPE_RACE_GREEN_RUPEE_1,                     GREEN_RUPEE,    {Category::cGraveyard, Category::cKakariko, Category::cMinigame, Category::cFreestandingRupee},                                      SpoilerCollectionCheckGroup::GROUP_GRAVEYARD);
+    locationTable[GRAVEYARD_DAMPE_RACE_GREEN_RUPEE_2]                          = ItemLocation::Collectable(0x48, 0x39, "GY Dampe Race Green Rupee 2",                        GRAVEYARD_DAMPE_RACE_GREEN_RUPEE_2,                     GREEN_RUPEE,    {Category::cGraveyard, Category::cKakariko, Category::cMinigame, Category::cFreestandingRupee},                                      SpoilerCollectionCheckGroup::GROUP_GRAVEYARD);
+    locationTable[GRAVEYARD_DAMPE_RACE_GREEN_RUPEE_3]                          = ItemLocation::Collectable(0x48, 0x3A, "GY Dampe Race Green Rupee 3",                        GRAVEYARD_DAMPE_RACE_GREEN_RUPEE_3,                     GREEN_RUPEE,    {Category::cGraveyard, Category::cKakariko, Category::cMinigame, Category::cFreestandingRupee},                                      SpoilerCollectionCheckGroup::GROUP_GRAVEYARD);
+    locationTable[GRAVEYARD_DAMPE_RACE_GREEN_RUPEE_4]                          = ItemLocation::Collectable(0x48, 0x3B, "GY Dampe Race Green Rupee 4",                        GRAVEYARD_DAMPE_RACE_GREEN_RUPEE_4,                     GREEN_RUPEE,    {Category::cGraveyard, Category::cKakariko, Category::cMinigame, Category::cFreestandingRupee},                                      SpoilerCollectionCheckGroup::GROUP_GRAVEYARD);
+    locationTable[GRAVEYARD_DAMPE_RACE_GREEN_RUPEE_5]                          = ItemLocation::Collectable(0x48, 0x3C, "GY Dampe Race Green Rupee 5",                        GRAVEYARD_DAMPE_RACE_GREEN_RUPEE_5,                     GREEN_RUPEE,    {Category::cGraveyard, Category::cKakariko, Category::cMinigame, Category::cFreestandingRupee},                                      SpoilerCollectionCheckGroup::GROUP_GRAVEYARD);
+    locationTable[GRAVEYARD_DAMPE_RACE_GREEN_RUPEE_6]                          = ItemLocation::Collectable(0x48, 0x3D, "GY Dampe Race Green Rupee 6",                        GRAVEYARD_DAMPE_RACE_GREEN_RUPEE_6,                     GREEN_RUPEE,    {Category::cGraveyard, Category::cKakariko, Category::cMinigame, Category::cFreestandingRupee},                                      SpoilerCollectionCheckGroup::GROUP_GRAVEYARD);
+    locationTable[GRAVEYARD_DAMPE_RACE_GREEN_RUPEE_7]                          = ItemLocation::Collectable(0x48, 0x3E, "GY Dampe Race Green Rupee 7",                        GRAVEYARD_DAMPE_RACE_GREEN_RUPEE_7,                     GREEN_RUPEE,    {Category::cGraveyard, Category::cKakariko, Category::cMinigame, Category::cFreestandingRupee},                                      SpoilerCollectionCheckGroup::GROUP_GRAVEYARD);
+    locationTable[GRAVEYARD_DAMPE_RACE_GREEN_RUPEE_8]                          = ItemLocation::Collectable(0x48, 0x3F, "GY Dampe Race Green Rupee 8",                        GRAVEYARD_DAMPE_RACE_GREEN_RUPEE_8,                     GREEN_RUPEE,    {Category::cGraveyard, Category::cKakariko, Category::cMinigame, Category::cFreestandingRupee},                                      SpoilerCollectionCheckGroup::GROUP_GRAVEYARD);
+
+    locationTable[ICE_CAVERN_RED_ICE_BLUE_RUPEE]                               = ItemLocation::Collectable(0x09, 0x21, "Ice Cavern Red Ice Blue Rupee",                      ICE_CAVERN_RED_ICE_BLUE_RUPEE,                          BLUE_RUPEE,     {Category::cIceCavern, Category::cFreestandingRupee},                                                                                SpoilerCollectionCheckGroup::GROUP_DUNGEON_ICE_CAVERN);
+    locationTable[ICE_CAVERN_PUSH_BLOCK_ROOM_RED_RUPEE_1]                      = ItemLocation::Collectable(0x09, 0x2E, "Ice Cavern Block Room Red Rupee 1",                  ICE_CAVERN_PUSH_BLOCK_ROOM_RED_RUPEE_1,                 RED_RUPEE,      {Category::cIceCavern, Category::cFreestandingRupee},                                                                                SpoilerCollectionCheckGroup::GROUP_DUNGEON_ICE_CAVERN);
+    locationTable[ICE_CAVERN_PUSH_BLOCK_ROOM_RED_RUPEE_2]                      = ItemLocation::Collectable(0x09, 0x2F, "Ice Cavern Block Room Red Rupee 2",                  ICE_CAVERN_PUSH_BLOCK_ROOM_RED_RUPEE_2,                 RED_RUPEE,      {Category::cIceCavern, Category::cFreestandingRupee},                                                                                SpoilerCollectionCheckGroup::GROUP_DUNGEON_ICE_CAVERN);
+    locationTable[ICE_CAVERN_PUSH_BLOCK_ROOM_RED_RUPEE_3]                      = ItemLocation::Collectable(0x09, 0x30, "Ice Cavern Block Room Red Rupee 3",                  ICE_CAVERN_PUSH_BLOCK_ROOM_RED_RUPEE_3,                 RED_RUPEE,      {Category::cIceCavern, Category::cFreestandingRupee},                                                                                SpoilerCollectionCheckGroup::GROUP_DUNGEON_ICE_CAVERN);
+
+    locationTable[BOTTOM_OF_THE_WELL_CENTER_ROOM_PIT_FALL_BLUE_RUPEE_1]        = ItemLocation::Collectable(0x08, 0x02, "Bottom of the Well Center Pit fall Blue Rupee 1",    BOTTOM_OF_THE_WELL_CENTER_ROOM_PIT_FALL_BLUE_RUPEE_1,   BLUE_RUPEE,     {Category::cBottomOfTheWell, Category::cFreestandingRupee},                                                                          SpoilerCollectionCheckGroup::GROUP_DUNGEON_BOTTOM_OF_THE_WELL);
+    locationTable[BOTTOM_OF_THE_WELL_CENTER_ROOM_PIT_FALL_BLUE_RUPEE_2]        = ItemLocation::Collectable(0x08, 0x03, "Bottom of the Well Center Pit fall Blue Rupee 2",    BOTTOM_OF_THE_WELL_CENTER_ROOM_PIT_FALL_BLUE_RUPEE_2,   BLUE_RUPEE,     {Category::cBottomOfTheWell, Category::cFreestandingRupee},                                                                          SpoilerCollectionCheckGroup::GROUP_DUNGEON_BOTTOM_OF_THE_WELL);
+    locationTable[BOTTOM_OF_THE_WELL_CENTER_ROOM_PIT_FALL_BLUE_RUPEE_3]        = ItemLocation::Collectable(0x08, 0x04, "Bottom of the Well Center Pit fall Blue Rupee 3",    BOTTOM_OF_THE_WELL_CENTER_ROOM_PIT_FALL_BLUE_RUPEE_3,   BLUE_RUPEE,     {Category::cBottomOfTheWell, Category::cFreestandingRupee},                                                                          SpoilerCollectionCheckGroup::GROUP_DUNGEON_BOTTOM_OF_THE_WELL);
+    locationTable[BOTTOM_OF_THE_WELL_CENTER_ROOM_PIT_FALL_BLUE_RUPEE_4]        = ItemLocation::Collectable(0x08, 0x05, "Bottom of the Well Center Pit fall Blue Rupee 4",    BOTTOM_OF_THE_WELL_CENTER_ROOM_PIT_FALL_BLUE_RUPEE_4,   BLUE_RUPEE,     {Category::cBottomOfTheWell, Category::cFreestandingRupee},                                                                          SpoilerCollectionCheckGroup::GROUP_DUNGEON_BOTTOM_OF_THE_WELL);
+    locationTable[BOTTOM_OF_THE_WELL_CENTER_ROOM_PIT_FALL_BLUE_RUPEE_5]        = ItemLocation::Collectable(0x08, 0x06, "Bottom of the Well Center Pit fall Blue Rupee 5",    BOTTOM_OF_THE_WELL_CENTER_ROOM_PIT_FALL_BLUE_RUPEE_5,   BLUE_RUPEE,     {Category::cBottomOfTheWell, Category::cFreestandingRupee},                                                                          SpoilerCollectionCheckGroup::GROUP_DUNGEON_BOTTOM_OF_THE_WELL);
+
+    locationTable[JABU_JABUS_BELLY_MQ_NEAR_COW_BOTTOM_GREEN_RUPEE]             = ItemLocation::Collectable(0x02, 0x01, "Jabu Jabus Belly MQ Near Cow Bottom Green Rupee",    JABU_JABUS_BELLY_MQ_NEAR_COW_BOTTOM_GREEN_RUPEE,        GREEN_RUPEE,    {Category::cJabuJabusBelly, Category::cFreestandingRupee},                                                                           SpoilerCollectionCheckGroup::GROUP_DUNGEON_JABUJABUS_BELLY);
+    locationTable[JABU_JABUS_BELLY_MQ_NEAR_COW_MIDDLE_GREEN_RUPEE]             = ItemLocation::Collectable(0x02, 0x02, "Jabu Jabus Belly MQ Near Cow Middle Green Rupee",    JABU_JABUS_BELLY_MQ_NEAR_COW_MIDDLE_GREEN_RUPEE,        GREEN_RUPEE,    {Category::cJabuJabusBelly, Category::cFreestandingRupee},                                                                           SpoilerCollectionCheckGroup::GROUP_DUNGEON_JABUJABUS_BELLY);
+    locationTable[JABU_JABUS_BELLY_MQ_NEAR_COW_TOP_GREEN_RUPEE]                = ItemLocation::Collectable(0x02, 0x03, "Jabu Jabus Belly MQ Near Cow Top Green Rupee",       JABU_JABUS_BELLY_MQ_NEAR_COW_TOP_GREEN_RUPEE,           GREEN_RUPEE,    {Category::cJabuJabusBelly, Category::cFreestandingRupee},                                                                           SpoilerCollectionCheckGroup::GROUP_DUNGEON_JABUJABUS_BELLY);
+
+    /*-------------------------------
           --- GOSSIP STONES ---
       -------------------------------*/
     // These are not actual locations, but are filler spots used for hint reachability. - OoT Randomizer
@@ -1080,6 +1199,21 @@ std::vector<LocationKey> overworldLocations = {
   KF_MIDOS_BOTTOM_RIGHT_CHEST,
   KF_STORMS_GROTTO_CHEST,
   KF_LINKS_HOUSE_COW,
+  KF_END_OF_BRIDGE_BLUE_RUPEE,
+  KF_BEHIND_MIDOS_HOUSE_BLUE_RUPEE,
+  KF_BOULDER_MAZE_BLUE_RUPEE_1,
+  KF_BOULDER_MAZE_BLUE_RUPEE_2,
+  KF_NEAR_RAMP_GREEN_RUPEE_1,
+  KF_NEAR_RAMP_GREEN_RUPEE_2,
+  KF_NEAR_MIDOS_HOUSE_GREEN_RUPEE_1,
+  KF_NEAR_MIDOS_HOUSE_GREEN_RUPEE_2,
+  KF_RUPEE_CIRCLE_GREEN_RUPEE_1,
+  KF_RUPEE_CIRCLE_GREEN_RUPEE_2,
+  KF_RUPEE_CIRCLE_GREEN_RUPEE_3,
+  KF_RUPEE_CIRCLE_GREEN_RUPEE_4,
+  KF_RUPEE_CIRCLE_GREEN_RUPEE_5,
+  KF_RUPEE_CIRCLE_GREEN_RUPEE_6,
+  KF_RUPEE_CIRCLE_RED_RUPEE,
 
   // Shop
   KF_SHOP_ITEM_1,
@@ -1101,6 +1235,15 @@ std::vector<LocationKey> overworldLocations = {
   LW_DEKU_SCRUB_NEAR_DEKU_THEATER_RIGHT,
   LW_DEKU_SCRUB_NEAR_DEKU_THEATER_LEFT,
   LW_DEKU_SCRUB_NEAR_BRIDGE,
+  LW_IN_BOULDER_BLUE_RUPEE,
+  LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_1,
+  LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_2,
+  LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_3,
+  LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_4,
+  LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_5,
+  LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_6,
+  LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_7,
+  LW_IN_WATER_NEAR_ZR_SHORTCUT_GREEN_RUPEE_8,
   LW_NEAR_SHORTCUTS_GROTTO_CHEST,
   LW_DEKU_SCRUB_GROTTO_REAR,
   LW_DEKU_SCRUB_GROTTO_FRONT,
@@ -1132,6 +1275,12 @@ std::vector<LocationKey> overworldLocations = {
   LH_UNDERWATER_ITEM,
   LH_SUN,
   LH_FREESTANDING_POH,
+  LH_UNDER_WATER_GREEN_RUPEE_1,
+  LH_UNDER_WATER_GREEN_RUPEE_2,
+  LH_UNDER_WATER_GREEN_RUPEE_3,
+  LH_LAB_DIVE_RED_RUPEE_1,
+  LH_LAB_DIVE_RED_RUPEE_2,
+  LH_LAB_DIVE_RED_RUPEE_3,
   LH_DEKU_SCRUB_GROTTO_LEFT,
   LH_DEKU_SCRUB_GROTTO_RIGHT,
   LH_DEKU_SCRUB_GROTTO_CENTER,
@@ -1144,6 +1293,14 @@ std::vector<LocationKey> overworldLocations = {
   GV_DEKU_SCRUB_GROTTO_REAR,
   GV_DEKU_SCRUB_GROTTO_FRONT,
   GV_COW,
+  GV_OCTOROCK_GROTTO_GREEN_RUPEE_1,
+  GV_OCTOROCK_GROTTO_GREEN_RUPEE_2,
+  GV_OCTOROCK_GROTTO_GREEN_RUPEE_3,
+  GV_OCTOROCK_GROTTO_GREEN_RUPEE_4,
+  GV_OCTOROCK_GROTTO_BLUE_RUPEE_1,
+  GV_OCTOROCK_GROTTO_BLUE_RUPEE_2,
+  GV_OCTOROCK_GROTTO_BLUE_RUPEE_3,
+  GV_OCTOROCK_GROTTO_RED_RUPEE,
 
   // Gerudo Fortress
   GF_CHEST,
@@ -1266,6 +1423,14 @@ std::vector<LocationKey> overworldLocations = {
   GRAVEYARD_FREESTANDING_POH,
   GRAVEYARD_DAMPE_RACE_FREESTANDING_POH,
   GRAVEYARD_DAMPE_GRAVEDIGGING_TOUR,
+  GRAVEYARD_DAMPE_RACE_GREEN_RUPEE_1,
+  GRAVEYARD_DAMPE_RACE_GREEN_RUPEE_2,
+  GRAVEYARD_DAMPE_RACE_GREEN_RUPEE_3,
+  GRAVEYARD_DAMPE_RACE_GREEN_RUPEE_4,
+  GRAVEYARD_DAMPE_RACE_GREEN_RUPEE_5,
+  GRAVEYARD_DAMPE_RACE_GREEN_RUPEE_6,
+  GRAVEYARD_DAMPE_RACE_GREEN_RUPEE_7,
+  GRAVEYARD_DAMPE_RACE_GREEN_RUPEE_8,
 
   // Death Mountain Trail
   DMT_CHEST,
@@ -1276,6 +1441,15 @@ std::vector<LocationKey> overworldLocations = {
   DMT_GREAT_FAIRY_REWARD,
   DMT_FREESTANDING_POH,
   DMT_COW_GROTTO_COW,
+  DMT_ROCK_BLUE_RUPEE,
+  DMT_ROCK_RED_RUPEE,
+  DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_1,
+  DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_2,
+  DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_3,
+  DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_4,
+  DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_5,
+  DMT_COW_GROTTO_RUPEE_CIRCLE_GREEN_RUPEE_6,
+  DMT_COW_GROTTO_RUPEE_CIRCLE_RED_RUPEE,
 
   // Goron City
   GC_MAZE_LEFT_CHEST,
@@ -1310,6 +1484,21 @@ std::vector<LocationKey> overworldLocations = {
   DMC_DEKU_SCRUB_GROTTO_LEFT,
   DMC_DEKU_SCRUB_GROTTO_RIGHT,
   DMC_DEKU_SCRUB_GROTTO_CENTER,
+  DMC_LOWER_RED_RUPEE_1,
+  DMC_LOWER_RED_RUPEE_2,
+  DMC_LOWER_BLUE_RUPEE_1,
+  DMC_LOWER_BLUE_RUPEE_2,
+  DMC_LOWER_BLUE_RUPEE_3,
+  DMC_LOWER_BLUE_RUPEE_4,
+  DMC_LOWER_BLUE_RUPEE_5,
+  DMC_LOWER_BLUE_RUPEE_6,
+  DMC_SCARE_CROW_RUPEE_CIRCLE_GREEN_RUPEE_1,
+  DMC_SCARE_CROW_RUPEE_CIRCLE_GREEN_RUPEE_2,
+  DMC_SCARE_CROW_RUPEE_CIRCLE_GREEN_RUPEE_3,
+  DMC_SCARE_CROW_RUPEE_CIRCLE_GREEN_RUPEE_4,
+  DMC_SCARE_CROW_RUPEE_CIRCLE_GREEN_RUPEE_5,
+  DMC_SCARE_CROW_RUPEE_CIRCLE_GREEN_RUPEE_6,
+  DMC_SCARE_CROW_RUPEE_CIRCLE_RED_RUPEE,
 
   // Zoras River
   ZR_OPEN_GROTTO_CHEST,
@@ -1325,6 +1514,10 @@ std::vector<LocationKey> overworldLocations = {
   ZR_NEAR_DOMAIN_FREESTANDING_POH,
   ZR_DEKU_SCRUB_GROTTO_REAR,
   ZR_DEKU_SCRUB_GROTTO_FRONT,
+  ZR_WATERFALL_RED_RUPEE_1,
+  ZR_WATERFALL_RED_RUPEE_2,
+  ZR_WATERFALL_RED_RUPEE_3,
+  ZR_WATERFALL_RED_RUPEE_4,
 
   // Zoras Domain
   ZD_CHEST,
@@ -1346,6 +1539,24 @@ std::vector<LocationKey> overworldLocations = {
   ZF_ICEBERG_FREESTANDING_POH,
   ZF_BOTTOM_FREESTANDING_POH,
   ZF_GREAT_FAIRY_REWARD,
+  ZF_UNDERWATER_GREEN_RUPEE_1,
+  ZF_UNDERWATER_GREEN_RUPEE_2,
+  ZF_UNDERWATER_GREEN_RUPEE_3,
+  ZF_UNDERWATER_GREEN_RUPEE_4,
+  ZF_UNDERWATER_GREEN_RUPEE_5,
+  ZF_UNDERWATER_GREEN_RUPEE_6,
+  ZF_UNDERWATER_GREEN_RUPEE_7,
+  ZF_UNDERWATER_GREEN_RUPEE_8,
+  ZF_UNDERWATER_GREEN_RUPEE_9,
+  ZF_UNDERWATER_GREEN_RUPEE_10,
+  ZF_UNDERWATER_GREEN_RUPEE_11,
+  ZF_UNDERWATER_GREEN_RUPEE_12,
+  ZF_UNDERWATER_GREEN_RUPEE_13,
+  ZF_UNDERWATER_GREEN_RUPEE_14,
+  ZF_UNDERWATER_GREEN_RUPEE_15,
+  ZF_UNDERWATER_GREEN_RUPEE_16,
+  ZF_UNDERWATER_GREEN_RUPEE_17,
+  ZF_UNDERWATER_GREEN_RUPEE_18,
 
   // Lon Lon Ranch
   SONG_FROM_MALON,

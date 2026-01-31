@@ -83,6 +83,7 @@
 #include "stalfos.h"
 #include "bubble.h"
 #include "ganondorf.h"
+#include "obj_mure3.h"
 
 #define OBJECT_GI_KEY 170
 #define OBJECT_GI_BOSSKEY 185
@@ -129,10 +130,11 @@ void Actor_Init() {
 
     gActorOverlayTable[0xF].initInfo->update = (ActorFunc)BgYdanSp_rUpdate;
 
-    gActorOverlayTable[0x15].initInfo->init    = EnItem00_rInit;
-    gActorOverlayTable[0x15].initInfo->destroy = EnItem00_rDestroy;
-    gActorOverlayTable[0x15].initInfo->update  = EnItem00_rUpdate;
-    gActorOverlayTable[0x15].initInfo->draw    = EnItem00_rDraw;
+    gActorOverlayTable[0x15].initInfo->init         = EnItem00_rInit;
+    gActorOverlayTable[0x15].initInfo->destroy      = EnItem00_rDestroy;
+    gActorOverlayTable[0x15].initInfo->update       = EnItem00_rUpdate;
+    gActorOverlayTable[0x15].initInfo->draw         = EnItem00_rDraw;
+    gActorOverlayTable[0x15].initInfo->instanceSize = sizeof(EnItem00);
 
     gActorOverlayTable[0x1D].initInfo->update = EnPeehat_rUpdate;
 
@@ -315,6 +317,8 @@ void Actor_Init() {
 
     gActorOverlayTable[0x1A3].initInfo->update = EnDntNomal_rUpdate;
 
+    gActorOverlayTable[0x1AB].initInfo->update = ObjMure3_rUpdate;
+
     gActorOverlayTable[0x1B0].initInfo->update = EnSkb_rUpdate;
 
     gActorOverlayTable[0x1B9].initInfo->init = EnGs_rInit;
@@ -377,6 +381,14 @@ u8 ActorSetup_OverrideEntry(ActorEntry* actorEntry, s32 actorEntryIndex) {
     // Alternate Gold Skulltula Locations
     if (actorEntry->id == 0x95 && (actorEntry->params & 0xE000) && Gs_HasAltLoc(actorEntry, GS_PPT_ACTORENTRY, TRUE)) {
         return TRUE;
+    }
+
+    if (actorEntry->id == ACTOR_EN_ITEM00) {
+        // Mark as spawned by scene layer.
+        // All vanilla actor entries for EnItem00 have Z rotation set to 0,
+        // so we can use it as a custom flag.
+        actorEntry->rot.z = -1;
+        return FALSE;
     }
 
     return Enemizer_OverrideActorEntry(actorEntry, actorEntryIndex);
