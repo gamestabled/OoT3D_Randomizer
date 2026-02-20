@@ -35,7 +35,7 @@ void SaveFile_SetRupeeSanityFlag(s16 sceneNum, u16 collectibleFlag);
 u8 SaveFile_GetRupeeSanityFlag(s16 sceneNum, u16 collectibleFlag);
 
 // Increment the version number whenever the ExtSaveData structure is changed
-#define EXTSAVEDATA_VERSION 17
+#define EXTSAVEDATA_VERSION 18
 
 typedef struct ExtInf {
     u32 rupeesanityFlags[SCENE_MAX];
