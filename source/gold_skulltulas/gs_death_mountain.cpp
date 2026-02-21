@@ -298,7 +298,7 @@ void GsTable_Init_DeathMountain() {
             DMC_UPPER_LOCAL,
             GsScene{ 0x61 },
             Room{ 1 },
-            { [] { return IsChild && CanSurviveHeatFor(8, 24) && CanChildAttack; } },
+            { [] { return IsChild && CanSurviveHeatFor(8, 24) && CanChildAttack && CanBreakCrate; } },
         },
         {
             // https://noclip.website/#oot3d/spot17;ShareData=AUFyuUi+-FUMXB)9MV(y=GY[ARBWLdUqoxlUYej?V|L=ZUNl?!9e:uhUh}L)V[

@@ -2556,3 +2556,8 @@ Item00GiveAutomaticItemDrop_patch:
 .global Item00GiveCollectedItemDrop_patch
 Item00GiveCollectedItemDrop_patch:
     bl hook_Item00GiveCollectedItemDrop
+
+.section .patch_PlayerBonk
+.global PlayerBonk_patch
+PlayerBonk_patch:
+    bl hook_PlayerBonk

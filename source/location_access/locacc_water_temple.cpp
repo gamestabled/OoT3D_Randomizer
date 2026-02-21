@@ -733,23 +733,25 @@ void AreaTable_Init_WaterTemple() {
                          } }),
             });
 
-        areaTable[WATER_TEMPLE_MQ_BASEMENT_GATED_AREAS] = Area(
-            "Water Temple MQ Basement Gated Areas", "Water Temple", WATER_TEMPLE, NO_DAY_NIGHT_CYCLE, {},
-            {
-                // Locations
-                LocationAccess(WATER_TEMPLE_MQ_FREESTANDING_KEY,
-                               { [] { return HoverBoots || CanUse(SCARECROW) || LogicWaterNorthBasementLedgeJump; } }),
-                LocationAccess(WATER_TEMPLE_MQ_GS_TRIPLE_WALL_TORCH,
-                               { [] { return CanUse(FIRE_ARROWS) && (HoverBoots || CanUse(SCARECROW)); } }),
-                LocationAccess(WATER_TEMPLE_MQ_GS_FREESTANDING_KEY_AREA, { [] {
-                                   return SmallKeys(WATER_TEMPLE, 2) &&
-                                          (HoverBoots || CanUse(SCARECROW) || LogicWaterNorthBasementLedgeJump) &&
-                                          CanJumpslash;
-                               } }),
-                // Trick: LogicWaterMQLockedGS || (SmallKeys(WATER_TEMPLE, 2) && (HoverBoots || CanUse(SCARECROW) ||
-                // LogicWaterNorthBasementLedgeJump))
-            },
-            {});
+        areaTable[WATER_TEMPLE_MQ_BASEMENT_GATED_AREAS] =
+            Area("Water Temple MQ Basement Gated Areas", "Water Temple", WATER_TEMPLE, NO_DAY_NIGHT_CYCLE, {},
+                 {
+                     // Locations
+                     LocationAccess(WATER_TEMPLE_MQ_FREESTANDING_KEY, { [] {
+                                        return CanBreakCrate &&
+                                               (HoverBoots || CanUse(SCARECROW) || LogicWaterNorthBasementLedgeJump);
+                                    } }),
+                     LocationAccess(WATER_TEMPLE_MQ_GS_TRIPLE_WALL_TORCH,
+                                    { [] { return CanUse(FIRE_ARROWS) && (HoverBoots || CanUse(SCARECROW)); } }),
+                     LocationAccess(WATER_TEMPLE_MQ_GS_FREESTANDING_KEY_AREA, { [] {
+                                        return SmallKeys(WATER_TEMPLE, 2) &&
+                                               (HoverBoots || CanUse(SCARECROW) || LogicWaterNorthBasementLedgeJump) &&
+                                               CanJumpslash;
+                                    } }),
+                     // Trick: LogicWaterMQLockedGS || (SmallKeys(WATER_TEMPLE, 2) && (HoverBoots || CanUse(SCARECROW)
+                     // || LogicWaterNorthBasementLedgeJump))
+                 },
+                 {});
     }
 
     /*---------------------------

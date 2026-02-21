@@ -39,7 +39,7 @@ void GsTable_Init_GerudoValley() {
                   { -765, 31, 155 },
                   { 0, 0, 0 },
               },
-              { [] { return IsChild && CanGetNightTimeGS && CanChildAttack; } } },
+              { [] { return IsChild && CanGetNightTimeGS && CanChildAttack && CanBreakCrate; } } },
             // https://noclip.website/#oot3d/spot09;ShareData=AVNR290gLQUEJICUdZ~p+5!r66Ure}Uk)RF9Q!3M+?Le291Vh_9fxud9i!xWV[
             { GV_CRATE_LEDGE,
               "On wall above the ledge.",
@@ -319,7 +319,8 @@ void GsTable_Init_GerudoValley() {
                   { 0, 0, 0 },
               },
               { [] {
-                  return IsAdult && CanGetNightTimeGS && (CanUse(SCARECROW) || CanUse(HOVER_BOOTS)) && CanUse(HOOKSHOT);
+                  return IsAdult && CanGetNightTimeGS && CanBreakCrate && (CanUse(SCARECROW) || CanUse(HOVER_BOOTS)) &&
+                         CanUse(HOOKSHOT);
               } } },
             // https://noclip.website/#oot3d/spot12;ShareData=AY9W19QF329Mf$DUhXRy=F~hMRr2F1Uk(JTUL)i^V$OQr9op,1T,Kau9gO3d=a
             { GERUDO_FORTRESS,
@@ -405,7 +406,7 @@ void GsTable_Init_GerudoValley() {
                   { -1530, 80, -970 },
                   { 0, 0, 0 },
               },
-              { [] { return CanGetNightTimeGS && (CanChildAttack || CanAdultAttack); } } },
+              { [] { return CanGetNightTimeGS && CanBreakCrate && (CanChildAttack || CanAdultAttack); } } },
             // https://noclip.website/#oot3d/spot13;ShareData=AXPkEUPe;_9T[Q|9ncqKWa@W~RVGa{Uo4X$9JKdN+};0;Ukz(CT27QDT{3F8WP
             { WASTELAND_NEAR_FORTRESS,
               "High up on left pole near beginning.",

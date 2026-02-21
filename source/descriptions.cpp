@@ -921,6 +921,14 @@ string_view damageMultiDesc           = "Changes the amount of damage taken.\n" 
                                         "\n"                                               //
                                         "If set to OHKO, Link will die in one hit.";       //
 /*------------------------------                                                           //
+|          BONK DAMAGE         |                                                           //
+------------------------------*/                                                           //
+string_view bonkDamageDesc            = "Choose how many Hearts of damage you'll take when\n"
+                                        "hitting a wall or object during a roll.\n\n"      //
+                                        "Damage is unaffected by the damage multiplier\n"  //
+                                        "setting, but it will respect Nayru's Love and\n"  //
+                                        "Double Defense.";                                 //
+/*------------------------------                                                           //
 |          PERMADEATH          |                                                           //
 ------------------------------*/                                                           //
 string_view permadeathDesc            = "Dying deletes your save file and kicks you back\n"//

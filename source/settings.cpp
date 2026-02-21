@@ -463,6 +463,7 @@ std::vector<Option *> itemPoolOptions = {
 Option FastBunnyHood       = Option::Bool("Fast Bunny Hood",        {"Off", "On"},                                                          {fastBunnyHoodDesc});
 Option KeepFWWarpPoint     = Option::Bool("Keep FW Warp Point",     {"Off", "On"},                                                          {keepFWWarpPointDesc});
 Option DamageMultiplier    = Option::U8  ("Damage Multiplier",      {"x1/2", "x1", "x2", "x4", "x8", "x16", "OHKO"},                        {damageMultiDesc},                                                                                                OptionCategory::Setting,    DAMAGEMULTIPLIER_DEFAULT);
+Option BonkDamage          = Option::U8  ("Bonk Damage",            {"0", "1/4", "1/2", "1", "2", "4", "OHKO"},                             {bonkDamageDesc});
 Option Permadeath          = Option::Bool("Permadeath",             {"Off", "On"},                                                          {permadeathDesc});
 Option GloomMode           = Option::U8  ("Gloom Mode",             {"Off", "Death", "Damage", "Collision", "Empty"},                       {gloomModeOffDesc, gloomModeDeathDesc, gloomModeDamageDesc, gloomModeCollisionDesc, gloomModeEmptyDesc});
 Option RandomTrapDmg       = Option::U8  ("Random Trap Damage",     {"Off", "Basic", "Advanced"},                                           {randomTrapDmgDesc, basicTrapDmgDesc, advancedTrapDmgDesc},                                                       OptionCategory::Setting,    RANDOMTRAPS_BASIC);
@@ -483,6 +484,7 @@ std::vector<Option*> gameplayOptions = {
     &FastBunnyHood,
     &KeepFWWarpPoint,
     &DamageMultiplier,
+    &BonkDamage,
     &Permadeath,
     &GloomMode,
     &RandomTrapDmg,
@@ -1568,6 +1570,7 @@ SettingsContext FillContext() {
     ctx.compassesShowWotH   = CompassesShowWotH.Value<u8>();
     ctx.mapsShowDungeonMode = MapsShowDungeonMode.Value<u8>();
     ctx.damageMultiplier    = DamageMultiplier.Value<u8>();
+    ctx.bonkDamage          = BonkDamage.Value<u8>();
     ctx.permadeath          = (Permadeath) ? 1 : 0;
     ctx.gloomMode           = GloomMode.Value<u8>();
     ctx.startingTime        = StartingTime.Value<u8>();

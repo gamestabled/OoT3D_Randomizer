@@ -185,7 +185,7 @@ void GsTable_Init_Kakariko() {
                   { -620, 220, -502 },
                   { 0, 13000, 16383 },
               },
-              {} },
+              { [] { return CanBreakCrate; } } },
             // https://noclip.website/#oot3d/spot01;ShareData=AW6?kUHJeF9cH;bUf|e;WI5I4RHq*|UdC)RUP19JVwlh29tZr98!ID/US|5S+5
             { KAK_BACKYARD,
               "On back door to (adult) Potion Shop.",
@@ -224,7 +224,7 @@ void GsTable_Init_Kakariko() {
             KAKARIKO_VILLAGE,
             GsScene{ 0x52 },
             Room{ 0 },
-            { [] { return IsChild && CanGetNightTimeGS; } },
+            { [] { return IsChild && CanGetNightTimeGS && CanBreakCrate; } },
         },
         {
             // https://noclip.website/#oot3d/spot01;ShareData=AJ3g{9Cl:@9frO*Um9$MV*{nMQ]kghUvKz&UOTnmWH6v]9mSZsTrpTS8[)}DVt
@@ -256,7 +256,7 @@ void GsTable_Init_Kakariko() {
                   { -50, 0, -55 },
                   { 0, 0, 0 },
               },
-              {} },
+              { [] { return CanBreakCrate; } } },
             // https://noclip.website/#oot3d/kakusiana;ShareData=AR$j3UlUA/8MbZ}8(:/GWFuyCQ7n[3Ua?WJ9S$/bVYFKQT&^m(UARs;UpAFV+5
             { KAK_REDEAD_GROTTO,
               "High on wall between redeads.",

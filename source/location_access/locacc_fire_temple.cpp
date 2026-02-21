@@ -677,7 +677,7 @@ void AreaTable_Init_FireTemple() {
                                } }),
                 LocationAccess(FIRE_TEMPLE_MQ_NEAR_BOSS_CHEST, { [] {
                                    return IsAdult && CanSurviveHeatFor(24) &&
-                                          (CanUse(HOVER_BOOTS) || CanUse(HOOKSHOT)) &&
+                                          (CanUse(HOVER_BOOTS) || CanUse(HOOKSHOT)) && CanBreakCrate &&
                                           (CanUse(FIRE_ARROWS) ||
                                            (CanUse(DINS_FIRE) &&
                                             ((DamageMultiplier.IsNot(DAMAGEMULTIPLIER_OHKO) &&

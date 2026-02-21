@@ -662,7 +662,9 @@ void AreaTable_Init_DodongosCavern() {
                                   return DodongosCavernClear ||
                                          (Here(DODONGOS_CAVERN_BOSS_ROOM,
                                                [] { return HasExplosives || (CanUse(MEGATON_HAMMER) && CanShield); }) &&
-                                          SoulDodongo && (Bombs || GoronBracelet) && CanJumpslash);
+                                          SoulDodongo &&
+                                          (((Bombs || GoronBracelet) && CanJumpslash) ||
+                                           BonkDamage.Value<u8>() >= BONKDAMAGE_ONE));
                               },
                                /*Glitched*/
                                [] {
@@ -671,7 +673,9 @@ void AreaTable_Init_DodongosCavern() {
                                                    return HasExplosives || (CanUse(MEGATON_HAMMER) && CanShield) ||
                                                           (GlitchBlueFireWall && BlueFire);
                                                }) &&
-                                          SoulDodongo && (HasExplosives || GoronBracelet) && CanJumpslash;
+                                          SoulDodongo &&
+                                          (((HasExplosives || GoronBracelet) && CanJumpslash) ||
+                                           BonkDamage.Value<u8>() >= BONKDAMAGE_ONE);
                                } }),
              },
              {

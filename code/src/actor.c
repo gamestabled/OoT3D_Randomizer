@@ -140,6 +140,8 @@ void Actor_Init() {
 
     gActorOverlayTable[0x25].initInfo->update = EnZf_rUpdate;
 
+    gActorOverlayTable[0x27].initInfo->update = BossDodongo_rUpdate;
+
     gActorOverlayTable[0x2E].initInfo->init   = DoorShutter_rInit;
     gActorOverlayTable[0x2E].initInfo->update = (ActorFunc)DoorShutter_rUpdate;
 
