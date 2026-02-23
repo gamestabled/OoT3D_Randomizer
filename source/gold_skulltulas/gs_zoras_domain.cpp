@@ -68,7 +68,7 @@ void GsTable_Init_ZorasDomain() {
             ZR_FRONT,
             GsScene{ 0x54 },
             Room{ 0 },
-            { [] { return IsChild && CanChildAttack; } },
+            { [] { return IsChild && CanChildAttack && CanBreakCrate; } },
         },
         {
             // https://noclip.website/#oot3d/spot03;ShareData=ARBe?Uj}i6Ukk489wHzP=S6_05y:6^Ue=o$Ub?4^V~TB-Uov1S9WVdkUAsD^+d
@@ -350,7 +350,7 @@ void GsTable_Init_ZorasDomain() {
             ZORAS_FOUNTAIN,
             GsScene{ 0x59 },
             Room{ 0 },
-            { [] { return IsChild; } },
+            { [] { return IsChild && CanBreakCrate; } },
         },
         {
             // https://noclip.website/#oot3d/spot08;ShareData=AZh!$TssBD8-=aa9n;[}V]MzfRPo,JUla[88*eOVVkPoHUXUyIS,BO~TfYZ)Vt

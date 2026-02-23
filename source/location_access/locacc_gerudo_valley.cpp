@@ -88,7 +88,7 @@ void AreaTable_Init_GerudoValley() {
     areaTable[GV_CRATE_LEDGE] = Area("GV Crate Ledge", "Gerudo Valley", GERUDO_VALLEY, DAY_NIGHT_CYCLE, {},
                                      {
                                          // Locations
-                                         LocationAccess(GV_CRATE_FREESTANDING_POH, { [] { return true; } }),
+                                         LocationAccess(GV_CRATE_FREESTANDING_POH, { [] { return CanBreakCrate; } }),
                                      },
                                      {
                                          // Exits

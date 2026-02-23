@@ -259,4 +259,31 @@ void Player_OnHit(void) {
 
 void Player_OnBonk(void) {
     gExtSaveData.bonkCount++;
+
+    static const s8 bonkDamageValues[] = {
+        [BONKDAMAGE_NONE]    = 0x00, //
+        [BONKDAMAGE_QUARTER] = 0x04, //
+        [BONKDAMAGE_HALF]    = 0x08, //
+        [BONKDAMAGE_ONE]     = 0x10, //
+        [BONKDAMAGE_TWO]     = 0x20, //
+        [BONKDAMAGE_FOUR]    = 0x40, //
+    };
+
+    s16 damage;
+    if (gSaveContext.nayrusLoveTimer > 0) {
+        damage = 0;
+    } else if (gSettingsContext.bonkDamage == BONKDAMAGE_OHKO) {
+        damage = gSaveContext.health;
+    } else {
+        damage = bonkDamageValues[gSettingsContext.bonkDamage];
+
+        if (gSaveContext.doubleDefense) {
+            damage /= 2;
+        }
+    }
+
+    gSaveContext.health -= damage;
+    if (gSaveContext.health < 0) {
+        gSaveContext.health = 0;
+    }
 }
