@@ -20,6 +20,11 @@ void EnIk_rInit(Actor* thisx, GlobalContext* globalCtx) {
     EnIk_Init(thisx, globalCtx);
 
     if (Enemizer_IsEnemyRandomized(ENEMY_IRON_KNUCKLE)) {
+        if (Flags_GetClear(globalCtx, globalCtx->roomNum)) {
+            Actor_Kill(thisx);
+            return;
+        }
+
         // Wake up immediately
         this->skelAnime.playSpeed = 1.0f;
         // Override update here because it's also set in EnIk_Init
