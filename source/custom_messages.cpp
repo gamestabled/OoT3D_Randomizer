@@ -1099,25 +1099,34 @@ void CreateAlwaysIncludedMessages() {
         Text happyMsg = Text{
             // english
             "Thank you, @...&I've been keeping watch over you all this time...^"
-            "...specifically, you took #11111111#&to bring down Ganondorf.^"
-            "You have discovered #222222# of all items scattered throughout Hyrule.^"
-            "You saved your progress #333# times.",
+            "...specifically, you took #hh:mm:ss#&to bring down Ganondorf.^"
+            "You have discovered #100.0p# of all items scattered throughout Hyrule.^"
+            "You saved your progress #999# times.",
             // french
-            "TO DO",
+            "Merci, @...&Je t'ai observé tout ce temps...^"
+            "...au total, tu as pris #hh:mm:ss#&pour vaincre Ganondorf.^"
+            "Tu as découvert #100.0p# des objets éparpillés dans Hyrule.^"
+            "Tu as sauvegardé ta progression #999# fois.",
             // spanish
-            "TO DO",
+            "Gracias, @...&He velado por ti durante todo este tiempo...^"
+            "...especificamente, tardaste #hh:mm:ss#&en derrotar a Ganondorf.^"
+            "Has descubierto el #100.0p# de todos los objetos dispersos por Hyrule.^"
+            "Has guardado partida #999# veces.",
             // italian
             "Grazie, @...&Ti ho osservato tutto questo tempo...^"
-            "...per essere precisi, ci hai messo #11111111#&per sconfiggere Ganondorf.^"
-            "Hai scoperto il #222222# di tutti gli oggetti sparpagliati per Hyrule.^"
-            "Hai salvato i tuoi progressi #333# volte.",
+            "...per essere precisi, ci hai messo #hh:mm:ss#&per sconfiggere Ganondorf.^"
+            "Hai scoperto il #100.0p# di tutti gli oggetti sparpagliati per Hyrule.^"
+            "Hai salvato i tuoi progressi #999# volte.",
             // german
-            "TO DO",
+            "Danke, @...&Ich habe dich die ganze Zeit über beobachtet...^"
+            "Du hast genau #hh:mm:ss# gebraucht,&um Ganondorf zu besiegen.^"
+            "Du hast #100.0p# aller Items entdeckt, die in Hyrule verteilt wurden.^"
+            "Du hast deinen Spielstand #999# mal gespeichert.",
         };
         happyMsg = AddColorsAndFormat(happyMsg, { QM_RED, QM_RED, QM_RED });
-        happyMsg.Replace("11111111", FINAL_TIME());
-        happyMsg.Replace("222222", CHECK_PERCENTAGE());
-        happyMsg.Replace("333", SAVE_COUNT());
+        happyMsg.Replace("hh:mm:ss", FINAL_TIME());
+        happyMsg.Replace("100.0p", CHECK_PERCENTAGE());
+        happyMsg.Replace("999", SAVE_COUNT());
         CreateMessageFromTextObject(0x706F, 0, 2, 3, happyMsg);
 
         Text sadMsg = Text{
@@ -1125,14 +1134,17 @@ void CreateAlwaysIncludedMessages() {
             "You've also received #111# hits, for a total of #2222# hearts of damage, "
             "and you've been knocked out #333# times.",
             // french
-            "TO DO",
+            "Tu as aussi été blessé #111# fois, pour un total de #2222# cœurs de dégâts, "
+            "et a été abattu #333# fois.",
             // spanish
-            "TO DO",
+            "También has recibido #111# golpes, por un total de #2222# corazones de daño, "
+            "y has sido noqueado #333# veces.",
             // italian
-            "Hai anche subito #111# colpi, per un totale di #2222# cuori di danno, "
+            "Sei anche stato colpito #111# volte, per un totale di #2222# cuori di danno, "
             "e sei stato messo al tappeto #333# volte.",
             // german
-            "TO DO",
+            "Außerdem hast du #111# mal Schaden genommen, zusammen #2222# Herzen an Schaden "
+            "und du wurdest #333# mal besiegt.",
         };
         sadMsg = AddColorsAndFormat(sadMsg, { QM_RED, QM_RED, QM_RED });
         sadMsg.Replace("111", HIT_COUNT());
@@ -1142,10 +1154,10 @@ void CreateAlwaysIncludedMessages() {
 
         Text linkMsg = Text{
             /*english*/ "...oh, and you've bonked #111# times.",
-            /*french */ "TO DO",
-            /*spanish*/ "TO DO",
+            /*french */ "...oh, et tu t'es cogné #111# fois.",
+            /*spanish*/ "...oh, mas has bonqueado #111# veces.",
             /*italian*/ "...oh, e sei andato a sbattere #111# volte.",
-            /*german */ "TO DO",
+            /*german */ "...oh, und du bist #111# mal gegen eine Wand gerollt.",
         };
         linkMsg = AddColorsAndFormat(linkMsg, { QM_RED });
         linkMsg.Replace("111", BONK_COUNT());
