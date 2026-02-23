@@ -326,6 +326,8 @@ extern bool NeedNayrusLove;
 extern bool CanSurviveDamage;
 extern bool CanTakeDamage;
 extern bool CanTakeDamageTwice;
+extern bool CanBonk;
+extern bool CanBreakCrate;
 // extern bool CanPlantBean;
 extern bool CanOpenBombGrotto;
 extern bool CanOpenStormGrotto;

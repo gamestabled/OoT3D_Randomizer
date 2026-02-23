@@ -346,6 +346,16 @@ typedef enum {
 } DamageMultiplierSetting;
 
 typedef enum {
+    BONKDAMAGE_NONE,
+    BONKDAMAGE_QUARTER,
+    BONKDAMAGE_HALF,
+    BONKDAMAGE_ONE,
+    BONKDAMAGE_TWO,
+    BONKDAMAGE_FOUR,
+    BONKDAMAGE_OHKO,
+} BonkDamageSetting;
+
+typedef enum {
     GLOOMMODE_OFF,
     GLOOMMODE_DEATH,
     GLOOMMODE_DAMAGE,
@@ -598,6 +608,7 @@ typedef struct {
     u8 fastBunnyHood;
 
     u8 damageMultiplier;
+    u8 bonkDamage;
     u8 permadeath;
     u8 gloomMode;
     u8 startingTime;

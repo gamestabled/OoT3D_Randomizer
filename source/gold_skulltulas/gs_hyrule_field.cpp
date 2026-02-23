@@ -161,7 +161,10 @@ void GsTable_Init_HyruleField() {
                   { -370, -10, -103 },
                   { 0, 0, 0 },
               },
-              { [] { return IsChild && (CanUse(KOKIRI_SWORD) || CanUse(MASTER_SWORD) || CanUse(BIGGORON_SWORD)); } } },
+              { [] {
+                  return IsChild && CanBreakCrate &&
+                         (CanUse(KOKIRI_SWORD) || CanUse(MASTER_SWORD) || CanUse(BIGGORON_SWORD));
+              } } },
         });
 
     gsTable[LLR_GS_RAIN_SHED] = new GoldSkulltulaData( //
@@ -259,7 +262,7 @@ void GsTable_Init_HyruleField() {
             LON_LON_RANCH,
             GsScene{ 0x63 },
             Room{ 0 },
-            { [] { return IsChild; } },
+            { [] { return IsChild && CanBreakCrate; } },
         },
         {
             // https://noclip.website/#oot3d/spot20;ShareData=AHn)a95d3PS-;Xc8gn$yV(O+RRe(Z,UldSTUI!84V4*0rTVPLFUBi819g{4W+C
@@ -281,7 +284,7 @@ void GsTable_Init_HyruleField() {
                   { 1161, 0, -2370 },
                   { 0, 0, 0 },
               },
-              { [] { return IsChild && CanGetNightTimeGS; } } },
+              { [] { return IsChild && CanGetNightTimeGS && CanBreakCrate; } } },
             // https://noclip.website/#oot3d/spot20;ShareData=AFumC97I=DTM;qNTy8|G+8uj+Q)EBKUkrdx9Jx3[VZIC*85vv69KhgO9o6*g+^
             { LON_LON_RANCH,
               "Up on wooden gate to horse area.",
@@ -424,7 +427,7 @@ void GsTable_Init_HyruleField() {
             LH_LAB,
             GsScene{ 0x38 },
             Room{ 0 },
-            { [] { return CanUse(IRON_BOOTS) && CanUse(HOOKSHOT); },
+            { [] { return CanUse(IRON_BOOTS) && CanUse(HOOKSHOT) && CanBonk; },
               /*Glitched*/
               [] {
                   return (CanDoGlitch(GlitchType::RestrictedItems, GlitchDifficulty::NOVICE) && HasBombchus &&

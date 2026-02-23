@@ -99,7 +99,7 @@ void GsTable_Init_CastleTown() {
             HYRULE_CASTLE_GROUNDS,
             GsScene{ 0x5F },
             Room{ 0 },
-            { [] { return IsChild && CanChildAttack; } },
+            { [] { return IsChild && CanChildAttack && CanBreakCrate; } },
         },
         {
             // https://noclip.website/#oot3d/spot15;ShareData=AG_=,9kia&UsUwHUDPaKV|wj4Q7NK!UtL:J9h:d/V&},79p3+K96!ie9Ig-$WP
@@ -169,7 +169,7 @@ void GsTable_Init_CastleTown() {
             MARKET_GUARD_HOUSE,
             GsScene{ 0x4D },
             Room{ 0 },
-            { [] { return IsChild; } },
+            { [] { return IsChild && CanBreakCrate; } },
         },
         {
             // https://noclip.website/#oot3d/market_night;ShareData=AT$t@9S(U2UC0hzUhi]H+93No6YS(:UmOkH9N]H:V9cY792]kG8!,(59W|XYVS

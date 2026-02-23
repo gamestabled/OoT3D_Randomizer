@@ -262,7 +262,7 @@ void GsTable_Init_DekuTree() {
             DEKU_TREE_MQ_LOBBY,
             GsScene{ 0x0 },
             Room{ 0 },
-            { [] { return CanAdultAttack || CanChildAttack; } },
+            { [] { return CanBreakCrate && (CanAdultAttack || CanChildAttack); } },
         },
         {
             // https://noclip.website/#oot3d/ydan_dd;ShareData=AAgxKUvUc|9L&zZ9WSlu++SyvQ@A4YUhx_?95blPV{fV}USD2EUocYmUen6CVt

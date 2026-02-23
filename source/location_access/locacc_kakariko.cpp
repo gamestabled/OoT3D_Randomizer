@@ -23,7 +23,8 @@ void AreaTable_Init_Kakariko() {
             // Locations
             LocationAccess(SHEIK_IN_KAKARIKO,
                            { [] { return IsAdult && ForestMedallion && FireMedallion && WaterMedallion; } }),
-            LocationAccess(KAK_ANJU_AS_CHILD, { [] { return IsChild && AtDay; } }),
+            LocationAccess(KAK_ANJU_AS_CHILD,
+                           { [] { return IsChild && AtDay && (CanBreakCrate || NumRequiredCuccos.Value<u8>() < 7); } }),
             LocationAccess(KAK_ANJU_AS_ADULT, { [] { return IsAdult && AtDay; } }),
             LocationAccess(KAK_TRADE_POCKET_CUCCO,
                            { [] { return IsAdult && AtDay && PocketEgg && WakeUpAdultTalon; } }),
@@ -358,7 +359,8 @@ void AreaTable_Init_Kakariko() {
             // Locations
             LocationAccess(GRAVEYARD_FREESTANDING_POH,
                            { [] {
-                                return (IsAdult && CanPlantBean(THE_GRAVEYARD)) || CanUse(LONGSHOT) ||
+                                return (CanBreakCrate &&
+                                        ((IsAdult && CanPlantBean(THE_GRAVEYARD)) || CanUse(LONGSHOT))) ||
                                        (LogicGraveyardPoH && CanUse(BOOMERANG));
                             },
                              /*Glitched*/

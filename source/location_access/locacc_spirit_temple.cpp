@@ -425,8 +425,10 @@ void AreaTable_Init_SpiritTemple() {
                      // Locations
                      LocationAccess(SPIRIT_TEMPLE_MQ_CHILD_CLIMB_SOUTH_CHEST,
                                     { [] { return SmallKeys(SPIRIT_TEMPLE, 7); } }),
-                     LocationAccess(SPIRIT_TEMPLE_MQ_STATUE_ROOM_LULLABY_CHEST,
-                                    { [] { return CanPlay(ZeldasLullaby) && (CanJumpslash || CanUse(HOVER_BOOTS)); } }),
+                     LocationAccess(SPIRIT_TEMPLE_MQ_STATUE_ROOM_LULLABY_CHEST, { [] {
+                                        return CanPlay(ZeldasLullaby) && CanBreakCrate &&
+                                               (CanJumpslash || CanUse(HOVER_BOOTS));
+                                    } }),
                      LocationAccess(SPIRIT_TEMPLE_MQ_STATUE_ROOM_INVISIBLE_CHEST,
                                     { [] { return (LogicLensSpiritMQ || CanUse(LENS_OF_TRUTH)); } }),
                      LocationAccess(SPIRIT_TEMPLE_MQ_BEAMOS_ROOM_CHEST, { [] { return SmallKeys(SPIRIT_TEMPLE, 5); } }),
