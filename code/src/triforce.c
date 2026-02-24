@@ -1,6 +1,7 @@
 #include "triforce.h"
 #include "item_override.h"
 #include "common.h"
+#include "savefile.h"
 
 #define TEXT_STATE_DONE 6
 
@@ -13,6 +14,8 @@ void Triforce_HandleCreditsWarp(void) {
         (TriforceWarpStatus == TRIFORCEWARP_WHEN_PLAYER_READY && IsInGame() && !gIsBottomScreenDimmed &&
          PauseContext_GetState() == 0 && gGlobalContext->sceneLoadFlag == 0 && !isItemOverrideActive &&
          gGlobalContext->csCtx.state == 0 && !ItemOverride_IsAPendingOverride())) {
+        // Set final time for Zelda's text
+        gFinalPlaytimeSeconds = gExtSaveData.playtimeSeconds;
         // Save progress
         SaveGame(gGlobalContext, FALSE);
         // Warp to Ganon sealing cutscene

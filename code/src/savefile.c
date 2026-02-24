@@ -858,6 +858,7 @@ void SaveFile_AfterLoadGame(void) {
 }
 
 void SaveFile_OnGameOver(void) {
+    gExtSaveData.deathCount++;
     Gloom_OnDeath();
     Permadeath_DeleteSave();
 }

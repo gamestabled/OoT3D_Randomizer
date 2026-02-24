@@ -100,6 +100,10 @@ SECTIONS
 		*(.patch_KingZoraDontStartTimer)
 	}
 
+	.patch_GanonFinalBlow 0x13B684 : {
+		*(.patch_GanonFinalBlow)
+	}
+
 	.patch_StalchildDespawn_13DB68 0x13DB68 : {
 		*(.patch_StalchildDespawn_13DB68)
 	}

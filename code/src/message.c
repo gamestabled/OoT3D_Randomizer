@@ -2,10 +2,18 @@
 #include "message.h"
 #include "savefile.h"
 #include "settings.h"
+#include "spoiler_data.h"
 #include "3ds/util/utf.h"
 #include "lib/printf.h"
 #include <stddef.h>
 #include <string.h>
+
+// These are used for dynamic strings to insert into messages via custom text control codes
+#define MAX_DYNAMIC_STRING_SIZE 10 // Max length of each custom string
+#define MAX_DYNAMIC_STRING_COUNT 5 // Max count of custom strings in a single text box
+static s16 sDynamicStringIdx = 0;
+static u16 sDynamicStringArray[MAX_DYNAMIC_STRING_COUNT][MAX_DYNAMIC_STRING_SIZE];
+u32 gFinalPlaytimeSeconds;
 
 // These consts are filled in by the app
 volatile const u32 numCustomMessageEntries;
@@ -42,10 +50,8 @@ const char* Message_GetCustomText(void* param_1, u32 offset) {
     return (offset > 0x500000) ? (char*)offset : Message_GetText(param_1, offset);
 }
 
-#define MESSAGE_MAX_CUSTOM_STRING_SIZE 10
 u32 Message_HandleTextControlCode(TextControlCode ctrl, void* textObj, UnkTextControlData* data) {
-    static u16 utf16Str[MESSAGE_MAX_CUSTOM_STRING_SIZE] = { 0 };
-    char str[MESSAGE_MAX_CUSTOM_STRING_SIZE];
+    char str[MAX_DYNAMIC_STRING_SIZE];
 
     // Make text skippable or instant depending on setting.
     if ((ctrl == TEXT_CTRL_UNSKIPPABLE && gSettingsContext.quickText >= QUICKTEXT_SKIPPABLE) ||
@@ -55,13 +61,61 @@ u32 Message_HandleTextControlCode(TextControlCode ctrl, void* textObj, UnkTextCo
 
     // When a custom control code is found, copy what FUN_0040b7d8 does to insert the player name,
     // but instead insert a custom string.
-    if (ctrl == TEXT_CTRL_TRIFORCE_PIECE_COUNT) {
-        snprintf_(str, MESSAGE_MAX_CUSTOM_STRING_SIZE, "%d", gExtSaveData.triforcePieces);
-        utf8_to_utf16(utf16Str, (u8*)str, strlen(str));
+    if (ctrl > TEXT_CTRL_0x2F) {
+        switch (ctrl) {
+            case TEXT_CTRL_TRIFORCE_PIECE_COUNT:
+                snprintf(str, MAX_DYNAMIC_STRING_SIZE, "%d", gExtSaveData.triforcePieces);
+                break;
+            case TEXT_CTRL_FINAL_TIME:
+                u32 hours   = gFinalPlaytimeSeconds / 3600;
+                u32 minutes = (gFinalPlaytimeSeconds / 60) % 60;
+                u32 seconds = gFinalPlaytimeSeconds % 60;
+                snprintf(str, MAX_DYNAMIC_STRING_SIZE, "%02u:%02u:%02u", hours, minutes, seconds);
+                break;
+            case TEXT_CTRL_CHECK_PERCENTAGE:
+                // Calculate percentage of revealed items in the tracker (instead of collected items, as that percentage
+                // already appears in the tracker menu).
+                u16 revealedItems = 0;
+                for (u32 locIndex = 0; locIndex < gSpoilerData.ItemLocationsCount; locIndex++) {
+                    if (SpoilerData_GetIsItemLocationCollected(locIndex) ||
+                        SpoilerData_GetIsItemLocationRevealed(locIndex)) {
+                        revealedItems++;
+                    }
+                }
+                f32 revealedPercentage = ((f32)revealedItems / (f32)gSpoilerData.ItemLocationsCount) * 100.0f;
+                snprintf(str, MAX_DYNAMIC_STRING_SIZE, "%5.1f%%", revealedPercentage);
+                break;
+            case TEXT_CTRL_SAVE_COUNT:
+                snprintf(str, MAX_DYNAMIC_STRING_SIZE, "%d", gSaveContext.saveCount);
+                break;
+            case TEXT_CTRL_DEATH_COUNT:
+                snprintf(str, MAX_DYNAMIC_STRING_SIZE, "%d", gExtSaveData.deathCount);
+                break;
+            case TEXT_CTRL_HIT_COUNT:
+                snprintf(str, MAX_DYNAMIC_STRING_SIZE, "%d", gExtSaveData.hitCount);
+                break;
+            case TEXT_CTRL_DAMAGE_RECEIVED:
+                s32 fullHearts    = gExtSaveData.damageReceived / 0x10;
+                s32 quarterHearts = (gExtSaveData.damageReceived % 0x10) / 4;
+                if (quarterHearts == 0) {
+                    snprintf(str, MAX_DYNAMIC_STRING_SIZE, "%d", fullHearts);
+                } else {
+                    // \xC2\xBC is UTF8 for "Fraction One Quarter"
+                    snprintf(str, MAX_DYNAMIC_STRING_SIZE, "%d \xC2%c", fullHearts, '\xBC' + quarterHearts - 1);
+                }
+                break;
+            case TEXT_CTRL_BONK_COUNT:
+                snprintf(str, MAX_DYNAMIC_STRING_SIZE, "%d", gExtSaveData.bonkCount);
+                break;
+            default:
+                break;
+        }
+        u16* utf16Str = sDynamicStringArray[sDynamicStringIdx++];
+        u32 utf16Len  = utf8_to_utf16(utf16Str, (u8*)str, MAX_DYNAMIC_STRING_SIZE);
         Message_UnkControlCodeHandler(textObj, &data);
         data->unk_05         = 0;
         data->stringToInsert = utf16Str;
-        data->stringLength   = strlen(str);
+        data->stringLength   = utf16Len;
         return 1;
     }
 
@@ -69,6 +123,11 @@ u32 Message_HandleTextControlCode(TextControlCode ctrl, void* textObj, UnkTextCo
 }
 
 char* Message_rCheckForControlCodes(void* unkStruct, char* nextChars, void* textObj, u32 charIdx) {
+    // Reset sDynamicStringIdx when parsing a new text box
+    if (charIdx == 0) {
+        sDynamicStringIdx = 0;
+    }
+
     // Set instant text when parsing the first character of the text or immediately after a box break.
     if (gSettingsContext.quickText >= QUICKTEXT_INSTANT &&
         (charIdx == 0 || (charIdx >= 2 && nextChars[-2] == '\x7F' && nextChars[-1] == TEXT_CTRL_WAIT_FOR_INPUT))) {
