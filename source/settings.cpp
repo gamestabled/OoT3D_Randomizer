@@ -469,6 +469,8 @@ Option GloomMode           = Option::U8  ("Gloom Mode",             {"Off", "Dea
 Option RandomTrapDmg       = Option::U8  ("Random Trap Damage",     {"Off", "Basic", "Advanced"},                                           {randomTrapDmgDesc, basicTrapDmgDesc, advancedTrapDmgDesc},                                                       OptionCategory::Setting,    RANDOMTRAPS_BASIC);
 Option FireTrap            = Option::Bool(2, "Fire Trap",           {"Off", "On"},                                                          {fireTrapDesc},                                                                                                   OptionCategory::Setting,    ON);
 Option AntiFairyTrap       = Option::Bool(2, "Anti-Fairy Trap",     {"Off", "On"},                                                          {antiFairyTrapDesc},                                                                                              OptionCategory::Setting,    ON);
+Option RupoorTrap          = Option::Bool(2, "Rupoor Trap",         {"Off", "On"},                                                          {rupoorTrapDesc},                                                                                                 OptionCategory::Setting,    ON);
+Option RupoorTrapSeverity  = Option::U8  (4, "Severity",               {"10", "Random Ratio",  "Bankruptcy"},                                  {rupoorTrapSeverityDesc},                                                                                         OptionCategory::Setting,    RUPOORTRAPSEVERITY_TEN);
 Option CurseTraps          = Option::Bool(2, "Curse Traps",         {"Off", "On"},                                                          {curseTrapsDesc},                                                                                                 OptionCategory::Setting);
 Option ScreenTraps         = Option::Bool(4, "Screen Traps",        {"Off", "On"},                                                          {screenTrapsDesc},                                                                                                OptionCategory::Setting);
 Option ExtraArrowEffects   = Option::Bool("Extra Arrow Effects",    {"Off", "On"},                                                          {extraArrowEffectsDesc});
@@ -490,6 +492,8 @@ std::vector<Option*> gameplayOptions = {
     &RandomTrapDmg,
     &FireTrap,
     &AntiFairyTrap,
+    &RupoorTrap,
+    &RupoorTrapSeverity,
     &CurseTraps,
     &ScreenTraps,
     &ExtraArrowEffects,
@@ -1584,6 +1588,8 @@ SettingsContext FillContext() {
     ctx.randomTrapDmg       = RandomTrapDmg.Value<u8>();
     ctx.fireTrap            = (FireTrap) ? 1 : 0;
     ctx.antiFairyTrap       = (AntiFairyTrap) ? 1 : 0;
+    ctx.rupoorTrap          = (RupoorTrap) ? 1 : 0;
+    ctx.rupoorTrapSeverity  = RupoorTrapSeverity.Value<u8>();
     ctx.curseTraps          = (CurseTraps) ? 1 : 0;
     ctx.screenTraps         = (ScreenTraps) ? 1 : 0;
     ctx.extraArrowEffects   = (ExtraArrowEffects) ? 1 : 0;
@@ -2485,12 +2491,21 @@ void ForceChange(u32 kDown, Option* currentSetting) {
     if (RandomTrapDmg.Is(RANDOMTRAPS_ADVANCED)) {
         FireTrap.Unhide();
         AntiFairyTrap.Unhide();
+        RupoorTrap.Unhide();
         CurseTraps.Unhide();
     } else {
         FireTrap.Hide();
         AntiFairyTrap.Hide();
+        RupoorTrap.Hide();
         CurseTraps.Hide();
         CurseTraps.SetSelectedIndex(0);
+    }
+
+    if (RupoorTrap) {
+        RupoorTrapSeverity.Unhide();
+    } else {
+        RupoorTrapSeverity.Hide();
+        RupoorTrapSeverity.SetSelectedIndex(0);
     }
 
     if (CurseTraps) {

@@ -387,6 +387,12 @@ typedef enum {
 } RandomTrapDamageSetting;
 
 typedef enum {
+    RUPOORTRAPSEVERITY_TEN,
+    RUPOORTRAPSEVERITY_RANDOMRATIO,
+    RUPOORTRAPSEVERITY_BANKRUPTCY,
+} RupoorTrapSeveritySetting;
+
+typedef enum {
     HYPERACTORS_OFF,
     HYPERACTORS_ON,
     HYPERACTORS_CHOOSE,
@@ -632,6 +638,8 @@ typedef struct {
     u8 randomTrapDmg;
     u8 fireTrap;
     u8 antiFairyTrap;
+    u8 rupoorTrap;
+    u8 rupoorTrapSeverity;
     u8 curseTraps;
     u8 screenTraps;
     u8 extraArrowEffects;

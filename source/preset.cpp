@@ -518,6 +518,8 @@ PremadePreset presetFullChaos = { "Full Chaos",
                                       { &Settings::RandomTrapDmg, RANDOMTRAPS_ADVANCED },
                                       { &Settings::FireTrap, ON },
                                       { &Settings::AntiFairyTrap, ON },
+                                      { &Settings::RupoorTrap, ON },
+                                      { &Settings::RupoorTrapSeverity, RUPOORTRAPSEVERITY_BANKRUPTCY },
                                       { &Settings::CurseTraps, ON },
                                       { &Settings::HyperActors, HYPERACTORS_ON },
                                       // Item Pool Settings

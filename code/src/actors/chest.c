@@ -252,6 +252,26 @@ u8 Chest_OverrideIceSmoke(Actor* thisx) {
                                              thisx->world.pos.y, thisx->world.pos.z, 0, 0, 0, 0x5, FALSE);
                 PLAYER->actor.home.pos.y = -5000; // Make Link airborne for a frame to cancel the get item event
                 break;
+            case ICETRAP_RUPOOR:
+                int rupeesToDeduct;
+                switch (gSettingsContext.rupoorTrapSeverity) {
+                    case RUPOORTRAPSEVERITY_TEN:
+                        rupeesToDeduct = 10;
+                        break;
+                    case RUPOORTRAPSEVERITY_RANDOMRATIO:
+                        static const u16 maxRupees[] = { 99, 200, 500, 999 };
+                        u8 walletLevel               = (gSaveContext.upgrades >> 12) & 0x3;
+                        u16 walletMax                = maxRupees[walletLevel];
+                        int percentToDeduct          = 5 + pRandInt % 60; // Random betwen 5% and 65%
+                        rupeesToDeduct               = (walletMax * percentToDeduct) / 100;
+                        break;
+                    case RUPOORTRAPSEVERITY_BANKRUPTCY:
+                        rupeesToDeduct = 999;
+                        break;
+                }
+                Rupees_ChangeBy(-rupeesToDeduct);
+                PLAYER->actor.home.pos.y = -5000; // Make Link airborne for a frame to cancel the get item event
+                break;
             case ICETRAP_RUPPY:
                 Actor_Spawn(&gGlobalContext->actorCtx, gGlobalContext, 0x131, thisx->world.pos.x,
                             thisx->world.pos.y + 30, thisx->world.pos.z, 0, 0, 0, 0x2, FALSE);
