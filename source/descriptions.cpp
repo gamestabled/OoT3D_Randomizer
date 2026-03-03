@@ -1363,6 +1363,8 @@ string_view antiFairyTrapDesc         = "This dangerous fairy will inflict up to
                                         "of damage, but it usually doesn't kill you if you\n"
                                         "have less than that.";                            //
                                                                                            //
+string_view rupoorTrapDesc            = "This rupee will make you poor instead of rich";   //
+string_view rupoorTrapSeverityDesc    = "Rupees lost when getting a rupoor";               //
 string_view curseTrapsDesc            = "Some traps will apply status effects for 1 minute.";
 string_view screenTrapsDesc           = "Extra curses are added that rotate the screen.";  //
                                                                                            //

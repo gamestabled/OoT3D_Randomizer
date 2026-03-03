@@ -496,6 +496,8 @@ extern Option ArrowSwitchButton;
 extern Option RandomTrapDmg;
 extern Option FireTrap;
 extern Option AntiFairyTrap;
+extern Option RupoorTrap;
+extern Option RupoorTrapSeverity;
 extern Option CurseTraps;
 extern Option ScreenTraps;
 extern Option ExtraArrowEffects;

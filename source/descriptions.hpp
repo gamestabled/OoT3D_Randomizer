@@ -430,6 +430,8 @@ extern string_view basicTrapDmgDesc;
 extern string_view advancedTrapDmgDesc;
 extern string_view fireTrapDesc;
 extern string_view antiFairyTrapDesc;
+extern string_view rupoorTrapDesc;
+extern string_view rupoorTrapSeverityDesc;
 extern string_view curseTrapsDesc;
 extern string_view screenTrapsDesc;
 extern string_view extraArrowEffectsDesc;
