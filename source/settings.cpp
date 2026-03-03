@@ -2497,6 +2497,7 @@ void ForceChange(u32 kDown, Option* currentSetting) {
         FireTrap.Hide();
         AntiFairyTrap.Hide();
         RupoorTrap.Hide();
+        RupoorTrap.SetSelectedIndex(0);
         CurseTraps.Hide();
         CurseTraps.SetSelectedIndex(0);
     }
