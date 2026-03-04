@@ -30,12 +30,9 @@ static Actor* rDummyActor                    = NULL;
 static ItemOverride rActiveItemOverride = { 0 };
 DrawItemTableEntry rActiveDrawItem      = { 0 };
 ItemRow* rActiveItemRow                 = NULL;
-u32 isItemOverrideActive                = FALSE;
-// Split active_item_row into variables for convenience in ASM
-u32 rActiveItemActionId  = 0;
-u32 rActiveItemTextId    = 0;
-u32 rActiveItemObjectId  = 0;
-u32 rActiveItemChestType = 0;
+u8 isItemOverrideActive                 = FALSE;
+u8 rActiveItemChestType                 = 0;
+static u16 rActiveItemObjectId          = 0;
 
 static u8 rSatisfiedPendingFrames      = 0;
 static u8 rSatisfiedPendingFramesWater = 0;
@@ -220,8 +217,6 @@ static void ItemOverride_Activate(ItemOverride override) {
     isItemOverrideActive = TRUE;
     rActiveItemOverride  = override;
     rActiveItemRow       = itemRow;
-    rActiveItemActionId  = itemRow->actionId;
-    rActiveItemTextId    = itemRow->textId;
     rActiveItemChestType = itemRow->chestType;
 
     ItemRow* drawItemRow = looksLikeItemId ? ItemTable_GetItemRow(looksLikeItemId) : itemRow;
@@ -232,7 +227,7 @@ static void ItemOverride_Activate(ItemOverride override) {
              .objectModelIdx2 = drawItemRow->objectModelIdx2,
              .cmabIndex2      = drawItemRow->cmabIndex2,
     };
-    rActiveItemObjectId = rActiveDrawItem.objectId;
+    rActiveItemObjectId = drawItemRow->objectId;
 }
 
 static void ItemOverride_Clear(void) {
@@ -240,8 +235,6 @@ static void ItemOverride_Clear(void) {
     rActiveItemOverride  = (ItemOverride){ 0 };
     rActiveDrawItem      = (DrawItemTableEntry){ 0 };
     rActiveItemRow       = NULL;
-    rActiveItemActionId  = 0;
-    rActiveItemTextId    = 0;
     rActiveItemObjectId  = 0;
     rActiveItemChestType = 0;
 }
@@ -338,12 +331,11 @@ static void ItemOverride_AfterKeyReceived(ItemOverride_Key key) {
 }
 
 static void ItemOverride_PopIceTrap(void) {
-    ItemOverride_Key key     = rPendingOverrideQueue[0].key;
-    ItemOverride_Value value = rPendingOverrideQueue[0].value;
-    if (value.itemId == 0x7C) {
-        IceTrap_Push(key.all);
+    ItemOverride* override = &rPendingOverrideQueue[0];
+    if (override->value.itemId == GI_ICE_TRAP) {
+        IceTrap_Push();
         ItemOverride_PopPendingOverride();
-        ItemOverride_AfterKeyReceived(key);
+        ItemOverride_AfterKeyReceived(override->key);
     }
 }
 
@@ -432,6 +424,7 @@ void ItemOverride_Update(void) {
     CustomModel_Update();
     u8 readyStatus = ItemOverride_PlayerIsReady();
     if (readyStatus) {
+        IceTrap_UpdateOverride(&rPendingOverrideQueue[0], FALSE);
         if (readyStatus == READY_ON_LAND) { // Ice traps effects only work on land
             ItemOverride_PopIceTrap();
         }
@@ -487,6 +480,7 @@ void ItemOverride_GetItem(Actor* fromActor, Player* player, s8 incomingItemId) {
         }
     }
 
+    IceTrap_UpdateOverride(&override, fromActor->id == ACTOR_CHEST);
     ItemOverride_Activate(override);
     s8 baseItemId = rActiveItemRow->baseItemId;
 
@@ -497,9 +491,6 @@ void ItemOverride_GetItem(Actor* fromActor, Player* player, s8 incomingItemId) {
             baseItemId = 0x7C;
         }
         fromActor->params = (fromActor->params & 0xF01F) | (baseItemId << 5);
-    } else if (override.value.itemId == 0x7C) {
-        rActiveItemRow->effectArg1 = override.key.all >> 16;
-        rActiveItemRow->effectArg2 = override.key.all & 0xFFFF;
     }
 
     player->getItemId = incomingNegative ? -baseItemId : baseItemId;
@@ -524,6 +515,8 @@ void ItemOverride_GetItemTextAndItemID(Actor* actor) {
 
 void ItemOverride_GetSkulltulaToken(Actor* tokenActor) {
     ItemOverride override = ItemOverride_Lookup(tokenActor, 0, 0);
+    IceTrap_UpdateOverride(&override, FALSE);
+
     u16 itemId;
     if (override.key.all == 0) {
         // Give a skulltula token if there is no override
@@ -534,10 +527,6 @@ void ItemOverride_GetSkulltulaToken(Actor* tokenActor) {
 
     u16 resolvedItemId = ItemTable_ResolveUpgrades(itemId);
     ItemRow* itemRow   = ItemTable_GetItemRow(resolvedItemId);
-    if (override.value.itemId == 0x7C) {
-        itemRow->effectArg1 = override.key.all >> 16;
-        itemRow->effectArg2 = override.key.all & 0xFFFF;
-    }
 
     ItemTable_CallEffect(itemRow);
 
@@ -576,6 +565,8 @@ u8 ItemOverride_GetItemDrop(EnItem00* this) {
     if (override.key.all == 0) {
         return FALSE; // No override, proceed with Item_Give.
     }
+
+    IceTrap_UpdateOverride(&override, FALSE);
 
     u16 resolvedItemId = ItemTable_ResolveUpgrades(override.value.itemId);
     ItemRow* itemRow   = ItemTable_GetItemRow(resolvedItemId);

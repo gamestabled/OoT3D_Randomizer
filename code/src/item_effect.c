@@ -1,4 +1,5 @@
 #include "item_effect.h"
+#include "icetrap.h"
 #include "settings.h"
 #include "z3D/z3D.h"
 #include "savefile.h"
@@ -127,7 +128,7 @@ void ItemEffect_GiveSong(SaveContext* saveCtx, s16 questBit, s16 arg2) {
 }
 
 void ItemEffect_IceTrap(SaveContext* saveCtx, s16 arg1, s16 arg2) {
-    IceTrap_Push((u16)arg1 << 16 | (u16)arg2);
+    IceTrap_Push();
 }
 
 void ItemEffect_GiveMasterSword(SaveContext* saveCtx, s16 arg1, s16 arg2) {

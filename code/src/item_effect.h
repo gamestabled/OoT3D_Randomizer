@@ -1,8 +1,6 @@
 #ifndef _ITEM_EFFECT_H_
 #define _ITEM_EFFECT_H_
 
-#include "icetrap.h"
-
 #include "z3D/z3D.h"
 
 void ItemEffect_None(SaveContext* saveCtx, s16 arg1, s16 arg2);

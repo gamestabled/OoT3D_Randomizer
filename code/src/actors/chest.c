@@ -202,14 +202,11 @@ u8 Chest_OverrideIceSmoke(Actor* thisx) {
         return vanillaIceTrap();
     }
 
-    if (possibleChestTrapsAmount == 0)
-        IceTrap_InitTypes();
-
     if (thisx != sLastTrapChest && thisx->xzDistToPlayer < 50.0f) {
         sLastTrapChest = thisx;
-        u32 pRandInt = dizzyCurseSeed = Hash(thisx->params);
+        u32 pRandInt = dizzyCurseSeed = IceTrap_ActiveHash;
 
-        u8 trapType = possibleChestTraps[pRandInt % possibleChestTrapsAmount];
+        u8 trapType = IceTrap_GetType(pRandInt, TRUE);
 
         // Curses
         if (trapType >= ICETRAP_CURSE_SHIELD) {
