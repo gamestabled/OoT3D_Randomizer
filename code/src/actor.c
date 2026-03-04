@@ -85,15 +85,6 @@
 #include "ganondorf.h"
 #include "obj_mure3.h"
 
-#define OBJECT_GI_KEY 170
-#define OBJECT_GI_BOSSKEY 185
-#define OBJECT_GI_HEARTS 189
-#define OBJECT_GI_OCARINA 222
-#define OBJECT_GI_OCARINA_0 270
-#define OBJECT_GI_SHOP_FAIRY 375
-#define OBJECT_GI_SOLD_OUT 328
-#define OBJECT_TRIFORCE 149
-
 typedef void (*TitleCard_Update_proc)(GlobalContext* globalCtx, TitleCardContext* titleCtx);
 #define TitleCard_Update ((TitleCard_Update_proc)GAME_ADDR(0x47953C))
 
@@ -334,37 +325,33 @@ void Actor_Init() {
 
     gActorOverlayTable[0x1D2].initInfo->update = (ActorFunc)ObjHamishi_rUpdate;
 
-    // Define object 4 to be by default the same as object 189
-    strncpy(gObjectTable[OBJECT_CUSTOM_DOUBLE_DEFENSE].filename, gObjectTable[OBJECT_GI_HEARTS].filename, 0x40);
+    // Define custom object IDs to be by default the same as the base objects they're based on
+    const struct {
+        u16 customObjId;
+        u16 baseObjId;
+    } customObjectInit[] = {
+        { OBJECT_CUSTOM_DOUBLE_DEFENSE, OBJECT_GI_HEARTS }, //
+        { OBJECT_CUSTOM_CHILD_SONGS, OBJECT_GI_OCARINA_FAIRY },
+        { OBJECT_CUSTOM_ADULT_SONGS, OBJECT_GI_OCARINA_TIME },
+        { OBJECT_CUSTOM_SMALL_KEY_FOREST, OBJECT_GI_KEY },
+        { OBJECT_CUSTOM_SMALL_KEY_FIRE, OBJECT_GI_KEY },
+        { OBJECT_CUSTOM_SMALL_KEY_WATER, OBJECT_GI_KEY },
+        { OBJECT_CUSTOM_SMALL_KEY_SHADOW, OBJECT_GI_KEY },
+        { OBJECT_CUSTOM_SMALL_KEY_BOTW, OBJECT_GI_KEY },
+        { OBJECT_CUSTOM_SMALL_KEY_SPIRIT, OBJECT_GI_KEY },
+        { OBJECT_CUSTOM_SMALL_KEY_FORTRESS, OBJECT_GI_KEY },
+        { OBJECT_CUSTOM_SMALL_KEY_GTG, OBJECT_GI_KEY },
+        { OBJECT_CUSTOM_SMALL_KEY_GANON, OBJECT_GI_KEY },
+        { OBJECT_CUSTOM_BOSS_KEYS, OBJECT_GI_BOSSKEY },
+        { OBJECT_CUSTOM_ENEMY_SOUL, OBJECT_GI_SHOP_FAIRY },
+        { OBJECT_CUSTOM_OCARINA_BUTTON, OBJECT_GI_SOLD_OUT },
+        { OBJECT_CUSTOM_TRIFORCE_PIECE, OBJECT_TRIFORCE },
+    };
 
-    // Define object 5 to be by default the same as object 270
-    strncpy(gObjectTable[OBJECT_CUSTOM_CHILD_SONGS].filename, gObjectTable[OBJECT_GI_OCARINA_0].filename, 0x40);
-
-    // Define object 16 to be by default the same as object 222
-    strncpy(gObjectTable[OBJECT_CUSTOM_ADULT_SONGS].filename, gObjectTable[OBJECT_GI_OCARINA].filename, 0x40);
-
-    // Define all the small key objects to be by default the same as object 170
-    strncpy(gObjectTable[OBJECT_CUSTOM_SMALL_KEY_FOREST].filename, gObjectTable[OBJECT_GI_KEY].filename, 0x40);
-    strncpy(gObjectTable[OBJECT_CUSTOM_SMALL_KEY_FIRE].filename, gObjectTable[OBJECT_GI_KEY].filename, 0x40);
-    strncpy(gObjectTable[OBJECT_CUSTOM_SMALL_KEY_WATER].filename, gObjectTable[OBJECT_GI_KEY].filename, 0x40);
-    strncpy(gObjectTable[OBJECT_CUSTOM_SMALL_KEY_SHADOW].filename, gObjectTable[OBJECT_GI_KEY].filename, 0x40);
-    strncpy(gObjectTable[OBJECT_CUSTOM_SMALL_KEY_BOTW].filename, gObjectTable[OBJECT_GI_KEY].filename, 0x40);
-    strncpy(gObjectTable[OBJECT_CUSTOM_SMALL_KEY_SPIRIT].filename, gObjectTable[OBJECT_GI_KEY].filename, 0x40);
-    strncpy(gObjectTable[OBJECT_CUSTOM_SMALL_KEY_FORTRESS].filename, gObjectTable[OBJECT_GI_KEY].filename, 0x40);
-    strncpy(gObjectTable[OBJECT_CUSTOM_SMALL_KEY_GTG].filename, gObjectTable[OBJECT_GI_KEY].filename, 0x40);
-    strncpy(gObjectTable[OBJECT_CUSTOM_SMALL_KEY_GANON].filename, gObjectTable[OBJECT_GI_KEY].filename, 0x40);
-
-    // Define object 128 to be by default the same as object 185
-    strncpy(gObjectTable[OBJECT_CUSTOM_BOSS_KEYS].filename, gObjectTable[OBJECT_GI_BOSSKEY].filename, 0x40);
-
-    // Define object 228 to be by default the same as object 375
-    strncpy(gObjectTable[OBJECT_CUSTOM_ENEMY_SOUL].filename, gObjectTable[OBJECT_GI_SHOP_FAIRY].filename, 0x40);
-
-    // Define object 291 to be by default the same as object 328
-    strncpy(gObjectTable[OBJECT_CUSTOM_OCARINA_BUTTON].filename, gObjectTable[OBJECT_GI_SOLD_OUT].filename, 0x40);
-
-    // Define object 366 to be by default the same as object 149
-    strncpy(gObjectTable[OBJECT_CUSTOM_TRIFORCE_PIECE].filename, gObjectTable[OBJECT_TRIFORCE].filename, 0x40);
+    for (size_t i = 0; i < ARRAY_SIZE(customObjectInit); i++) {
+        strncpy(gObjectTable[customObjectInit[i].customObjId].filename,
+                gObjectTable[customObjectInit[i].baseObjId].filename, 0x40);
+    }
 }
 
 void TitleCard_rUpdate(GlobalContext* globalCtx, TitleCardContext* titleCtx) {

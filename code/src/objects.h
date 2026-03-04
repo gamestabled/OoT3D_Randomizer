@@ -3,6 +3,35 @@
 
 #include "z3D/z3D.h"
 
+typedef enum ObjectId {
+    OBJECT_CUSTOM_DOUBLE_DEFENSE     = 0x0004,
+    OBJECT_CUSTOM_CHILD_SONGS        = 0x0005,
+    OBJECT_CUSTOM_ADULT_SONGS        = 0x0010,
+    OBJECT_CUSTOM_SMALL_KEY_FOREST   = 0x0011,
+    OBJECT_CUSTOM_SMALL_KEY_FIRE     = 0x003A,
+    OBJECT_CUSTOM_SMALL_KEY_WATER    = 0x0078,
+    OBJECT_CUSTOM_SMALL_KEY_SHADOW   = 0x0079,
+    OBJECT_CUSTOM_SMALL_KEY_BOTW     = 0x007A,
+    OBJECT_CUSTOM_SMALL_KEY_SPIRIT   = 0x007B,
+    OBJECT_CUSTOM_SMALL_KEY_FORTRESS = 0x007D,
+    OBJECT_CUSTOM_SMALL_KEY_GTG      = 0x007E,
+    OBJECT_CUSTOM_SMALL_KEY_GANON    = 0x007F,
+    OBJECT_CUSTOM_BOSS_KEYS          = 0x0080,
+    OBJECT_TRIFORCE                  = 0x0095,
+    OBJECT_GI_KEY                    = 0x00AA,
+    OBJECT_CUSTOM_GENERAL_ASSETS     = 0x00B6,
+    OBJECT_GI_BOSSKEY                = 0x00B9,
+    OBJECT_GI_HEARTS                 = 0x00BD,
+    OBJECT_GI_OCARINA_TIME           = 0x00DE,
+    OBJECT_CUSTOM_ENEMY_SOUL         = 0x00E4,
+    OBJECT_GI_OCARINA_FAIRY          = 0x010E,
+    OBJECT_CUSTOM_OCARINA_BUTTON     = 0x0123,
+    OBJECT_GI_SOLD_OUT               = 0x0148,
+    OBJECT_CUSTOM_TRIFORCE_PIECE     = 0x016E,
+    OBJECT_GI_SHOP_FAIRY             = 0x0177,
+    OBJECT_ID_MAX                    = 0x01A1,
+} ObjectId;
+
 typedef s32 (*Object_proc)(ObjectContext* objectCtx, s16 objectId);
 
 #define Object_Spawn ((Object_proc)GAME_ADDR(0x32E21C))
