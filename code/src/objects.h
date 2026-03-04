@@ -17,6 +17,7 @@ typedef enum ObjectId {
     OBJECT_CUSTOM_SMALL_KEY_GTG      = 0x007E,
     OBJECT_CUSTOM_SMALL_KEY_GANON    = 0x007F,
     OBJECT_CUSTOM_BOSS_KEYS          = 0x0080,
+    OBJECT_CUSTOM_RUPOOR             = 0x0083,
     OBJECT_TRIFORCE                  = 0x0095,
     OBJECT_GI_KEY                    = 0x00AA,
     OBJECT_CUSTOM_GENERAL_ASSETS     = 0x00B6,
@@ -29,6 +30,7 @@ typedef enum ObjectId {
     OBJECT_GI_SOLD_OUT               = 0x0148,
     OBJECT_CUSTOM_TRIFORCE_PIECE     = 0x016E,
     OBJECT_GI_SHOP_FAIRY             = 0x0177,
+    OBJECT_GI_RUPEE                  = 0x017F,
     OBJECT_ID_MAX                    = 0x01A1,
 } ObjectId;
 
@@ -65,6 +67,8 @@ s32 Object_FindSlotOrSpawn(s16 objectId);
 s32 Object_IsLoaded(ObjectContext* objectCtx, s16 slot);
 // Get the CMAB manager from this object, loading it if it's not present.
 void* Object_GetCMABByIndex(s16 objectId, u32 objectAnimIdx);
+// Check if this object id is for a rupee model.
+u8 Object_IsRupeeObject(u16 objectId);
 
 // Update the extended object context.
 void ExtendedObject_UpdateEntries(void);

@@ -694,7 +694,8 @@ s16 ItemOverride_OverrideGiDrawIdPlusOne(s16 originalDrawItemID) {
         return originalDrawItemID;
     }
 
-    if (rActiveItemObjectId == 0x017F) { // Set the mesh for rupees
+    if (Object_IsRupeeObject(rActiveItemObjectId)) {
+        // Set the mesh for rupees
         return rActiveItemRow->special + 1;
     }
 

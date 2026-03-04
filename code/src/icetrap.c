@@ -108,9 +108,11 @@ u32 IceTrap_GetType(u32 hash, u8 isFromChest) {
 void IceTrap_UpdateOverride(ItemOverride* override, u8 isFromChest) {
     if (override->value.itemId == GI_ICE_TRAP) {
         IceTrap_ActiveHash = Hash(override->key.all);
-        // if (IceTrap_GetType(IceTrap_ActiveHash, isFromChest) == TODO) {
-        // ...update override as needed
-        // }
+        if (IceTrap_GetType(IceTrap_ActiveHash, isFromChest) == ICETRAP_RUPOOR) {
+            // If the trap's effect is a rupoor, give it as an actual item.
+            override->value.itemId          = GI_RUPOOR;
+            override->value.looksLikeItemId = 0;
+        }
     }
 }
 

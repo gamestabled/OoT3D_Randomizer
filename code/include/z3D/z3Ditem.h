@@ -490,6 +490,7 @@ typedef enum {
     /* 0x111 */ GI_OCARINA_BUTTON_Y,
     /* 0x112 */ GI_OCARINA_BUTTON_A,
 
+    /* 0x113 */ GI_RUPOOR,
 } GetItemID;
 
 typedef enum {
