@@ -131,27 +131,6 @@ void IceTrap_Give(void) {
                 trapType = ICETRAP_SCALE; // if the curse can't trigger, use a scale trap
         }
 
-        if (trapType == ICETRAP_RUPOOR) {
-            int rupeesToDeduct;
-            switch (gSettingsContext.rupoorTrapSeverity) {
-                case RUPOORTRAPSEVERITY_TEN:
-                    rupeesToDeduct = 10;
-                    break;
-                case RUPOORTRAPSEVERITY_RANDOMRATIO:
-                    static const u16 maxRupees[] = { 99, 200, 500, 999 };
-                    u8 walletLevel               = (gSaveContext.upgrades >> 12) & 0x3;
-                    u16 walletMax                = maxRupees[walletLevel];
-                    int percentToDeduct          = 5 + pRandInt % 60; // Random betwen 5% and 65%
-                    rupeesToDeduct               = (walletMax * percentToDeduct) / 100;
-                    break;
-                case RUPOORTRAPSEVERITY_BANKRUPTCY:
-                    rupeesToDeduct = 999;
-                    break;
-            }
-            Rupees_ChangeBy(-rupeesToDeduct);
-            return;
-        }
-
         modifyScale = (trapType == ICETRAP_SCALE);
 
         PLAYER->stateFlags1 &= ~0xC00;
