@@ -445,7 +445,6 @@ typedef struct {
 } CamColChk; // size = 0x28
 
 #define OBJECT_SLOT_MAX 19
-#define OBJECT_ID_MAX 417
 
 typedef struct ZARInfo {
     /* 0x00 */ void* buf;

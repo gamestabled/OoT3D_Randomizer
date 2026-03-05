@@ -1,4 +1,5 @@
 #include "item_effect.h"
+#include "icetrap.h"
 #include "settings.h"
 #include "z3D/z3D.h"
 #include "savefile.h"
@@ -127,7 +128,7 @@ void ItemEffect_GiveSong(SaveContext* saveCtx, s16 questBit, s16 arg2) {
 }
 
 void ItemEffect_IceTrap(SaveContext* saveCtx, s16 arg1, s16 arg2) {
-    IceTrap_Push((u16)arg1 << 16 | (u16)arg2);
+    IceTrap_Push();
 }
 
 void ItemEffect_GiveMasterSword(SaveContext* saveCtx, s16 arg1, s16 arg2) {
@@ -426,4 +427,24 @@ void ItemEffect_EnemySoul(SaveContext* saveCtx, s16 soulId, s16 arg2) {
 
 void ItemEffect_OcarinaNote(SaveContext* saveCtx, s16 buttonId, s16 arg2) {
     OcarinaNotes_RegisterButtonOwned(buttonId);
+}
+
+void ItemEffect_Rupoor(SaveContext* saveCtx, s16 arg1, s16 arg2) {
+    s32 rupeesToDeduct;
+    switch (gSettingsContext.rupoorTrapSeverity) {
+        case RUPOORTRAPSEVERITY_TEN:
+            rupeesToDeduct = 10;
+            break;
+        case RUPOORTRAPSEVERITY_RANDOMRATIO:
+            static const u16 maxRupees[] = { 99, 200, 500, 999 };
+            u8 walletLevel               = (gSaveContext.upgrades >> 12) & 0x3;
+            u16 walletMax                = maxRupees[walletLevel];
+            s32 percentToDeduct          = 5 + IceTrap_ActiveHash % 60; // Random betwen 5% and 65%
+            rupeesToDeduct               = (walletMax * percentToDeduct) / 100;
+            break;
+        case RUPOORTRAPSEVERITY_BANKRUPTCY:
+            rupeesToDeduct = 999;
+            break;
+    }
+    Rupees_ChangeBy(-rupeesToDeduct);
 }

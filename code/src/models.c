@@ -38,7 +38,8 @@ void Model_Init(Model* model, GlobalContext* globalCtx) {
     model->saModel =
         SkeletonAnimationModel_Spawn(model->actor, globalCtx, model->itemRow->objectId, model->itemRow->objectModelIdx);
 
-    if (model->itemRow->objectId == 0x017F) { // Set the mesh for rupees
+    if (Object_IsRupeeObject(model->itemRow->objectId)) {
+        // Set the mesh for rupees
         SkeletonAnimationModel_SetMesh(model->saModel, model->itemRow->special);
     }
 

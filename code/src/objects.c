@@ -137,3 +137,7 @@ void* Object_GetCMABByIndex(s16 objectId, u32 objectAnimIdx) {
     ObjectEntry* obj = Object_FindEntryOrSpawn(objectId);
     return ZAR_GetCMABByIndex(&obj->zarInfo, objectAnimIdx);
 }
+
+u8 Object_IsRupeeObject(u16 objectId) {
+    return objectId == OBJECT_GI_RUPEE || objectId == OBJECT_CUSTOM_RUPOOR;
+}

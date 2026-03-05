@@ -3,8 +3,8 @@
 
 #include "../include/z3D/z3D.h"
 
-extern u32 isItemOverrideActive;
-extern u32 rActiveItemChestType;
+extern u8 isItemOverrideActive;
+extern u8 rActiveItemChestType;
 
 void ItemOverride_Init(void);
 void ItemOverride_Update(void);

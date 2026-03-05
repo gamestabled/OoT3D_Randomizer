@@ -179,7 +179,8 @@ void ShopsanityItem_ResetModels(ShopsanityItem* shopItem, GlobalContext* globalC
     CustomModels_EditItemCMB(obj->zarInfo.buf, objectId, special);
 
     item->model = SkeletonAnimationModel_Spawn(&item->actor, globalCtx, objectId, objModelIdx);
-    if (objectId == 0x017F) { // Set the mesh for rupees
+    if (Object_IsRupeeObject(objectId)) {
+        // Set the mesh for rupees
         SkeletonAnimationModel_SetMesh(item->model, special);
     }
 
