@@ -13,6 +13,9 @@
 #define DELETE_CUSTOM_PRESET 7
 #define POST_GENERATE 8
 #define RESET_TO_DEFAULTS 9
+#define LOAD_COSMETIC_PRESET 10
+#define SAVE_COSMETIC_PRESET 11
+#define DELETE_COSMETIC_PRESET 12
 
 #define MAX_SUBMENUS_ON_SCREEN 27
 #define MAX_SUBMENU_SETTINGS_ON_SCREEN 13
@@ -32,12 +35,17 @@
 #define CYAN "\x1b[36m"
 #define WHITE "\x1b[37m"
 
+typedef enum {
+    SETTINGS,
+    COSMETICS
+} PresetType;
+
 class Menu;
 
 void ModeChangeInit();
 void UpdateOptionSubMenu(u32 kDown, u32 kHeld);
 void UpdatePremadePresetsMenu(u32 kDown);
-void UpdateCustomPresetsMenu(u32 kDown);
+void UpdateCustomPresetsMenu(u32 kDown, PresetType presetType = SETTINGS);
 void UpdateResetToDefaultsMenu(u32 kdown);
 void UpdateGenerateMenu(u32 kDown);
 void GoToMenu(Menu* newMenu);
@@ -45,7 +53,7 @@ void PrintMainMenu();
 void PrintOptionSubMenu();
 void PrintSubMenu();
 void PrintPremadePresetsMenu(u32 kDown);
-void PrintCustomPresetsMenu();
+void PrintCustomPresetsMenu(PresetType presetType = SETTINGS);
 void PrintResetToDefaultsMenu();
 void PrintGenerateMenu();
 void ClearDescription();
