@@ -1651,6 +1651,14 @@ std::vector<LocationKey> childOnlyHotLocations = {
     DMC_DEKU_SCRUB,
     DMC_GS_CRATE,
     DMC_GS_BEAN_PATCH,
+    DMC_LOWER_RED_RUPEE_1,
+    DMC_LOWER_RED_RUPEE_2,
+    DMC_LOWER_BLUE_RUPEE_1,
+    DMC_LOWER_BLUE_RUPEE_2,
+    DMC_LOWER_BLUE_RUPEE_3,
+    DMC_LOWER_BLUE_RUPEE_4,
+    DMC_LOWER_BLUE_RUPEE_5,
+    DMC_LOWER_BLUE_RUPEE_6,
 };
 // clang-format on
 
