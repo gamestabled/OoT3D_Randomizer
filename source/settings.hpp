@@ -335,7 +335,7 @@ namespace Settings {
 void UpdateSettings();
 SettingsContext FillContext();
 void InitSettings();
-void SetDefaultSettings();
+void SetDefaultSettings(bool forCosmetics = false);
 void ResolveExcludedLocationConflicts();
 void RandomizeAllSettings(const bool selectOptions = false);
 void ForceChange(u32 kDown, Option* currentSetting);

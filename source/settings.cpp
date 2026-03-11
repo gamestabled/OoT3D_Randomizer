@@ -1829,17 +1829,16 @@ void InitSettings() {
 }
 
 // Set default settings for all settings
-void SetDefaultSettings() {
+void SetDefaultSettings(bool forCosmetics) {
     std::function<void(std::vector<Menu*>*)> setAllOptionsToDefault = [&](std::vector<Menu*>* menuPtr) {
         for (auto menu : *menuPtr) {
             if (menu->mode == SUB_MENU) {
                 setAllOptionsToDefault(menu->itemsList);
             } else if (menu->mode == OPTION_MENU) {
                 for (auto option : *menu->settingsList) {
-                    if (option->IsCategory(OptionCategory::Cosmetic)) {
-                        continue;
+                    if (forCosmetics == option->IsCategory(OptionCategory::Cosmetic)) {
+                        option->SetToDefault();
                     }
-                    option->SetToDefault();
                 }
             }
         }

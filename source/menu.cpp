@@ -390,7 +390,7 @@ void UpdateCustomPresetsMenu(u32 kDown, PresetType presetType) {
     // clear any potential message
     ClearDescription();
     if (kDown & KEY_A && currentMenu->mode == LOAD && !entries.empty()) {
-        Settings::SetDefaultSettings();
+        Settings::SetDefaultSettings(presetType == COSMETICS);
         if (LoadPreset(entries[currentMenu->menuIdx], category)) {
             Settings::ResolveExcludedLocationConflicts();
             for (Menu* menu : Settings::GetAllOptionMenus()) {
