@@ -35,17 +35,17 @@
 #define CYAN "\x1b[36m"
 #define WHITE "\x1b[37m"
 
-typedef enum {
+enum class PresetType {
     SETTINGS,
-    COSMETICS
-} PresetType;
+    COSMETICS,
+};
 
 class Menu;
 
 void ModeChangeInit();
 void UpdateOptionSubMenu(u32 kDown, u32 kHeld);
 void UpdatePremadePresetsMenu(u32 kDown);
-void UpdateCustomPresetsMenu(u32 kDown, PresetType presetType = SETTINGS);
+void UpdateCustomPresetsMenu(u32 kDown, PresetType presetType = PresetType::SETTINGS);
 void UpdateResetToDefaultsMenu(u32 kdown);
 void UpdateGenerateMenu(u32 kDown);
 void GoToMenu(Menu* newMenu);
@@ -53,7 +53,7 @@ void PrintMainMenu();
 void PrintOptionSubMenu();
 void PrintSubMenu();
 void PrintPremadePresetsMenu(u32 kDown);
-void PrintCustomPresetsMenu(PresetType presetType = SETTINGS);
+void PrintCustomPresetsMenu(PresetType presetType = PresetType::SETTINGS);
 void PrintResetToDefaultsMenu();
 void PrintGenerateMenu();
 void ClearDescription();

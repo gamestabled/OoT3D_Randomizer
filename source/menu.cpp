@@ -287,11 +287,11 @@ void MenuUpdate(u32 kDown, bool updatedByHeld, u32 kHeld) {
         UpdateCustomPresetsMenu(kDown);
         PrintCustomPresetsMenu();
     } else if (currentMenu->mode == LOAD_COSMETIC_PRESET) {
-        UpdateCustomPresetsMenu(kDown, COSMETICS);
-        PrintCustomPresetsMenu(COSMETICS);
+        UpdateCustomPresetsMenu(kDown, PresetType::COSMETICS);
+        PrintCustomPresetsMenu(PresetType::COSMETICS);
     } else if (currentMenu->mode == DELETE_COSMETIC_PRESET) {
-        UpdateCustomPresetsMenu(kDown, COSMETICS);
-        PrintCustomPresetsMenu(COSMETICS);
+        UpdateCustomPresetsMenu(kDown, PresetType::COSMETICS);
+        PrintCustomPresetsMenu(PresetType::COSMETICS);
     } else if (currentMenu->mode == RESET_TO_DEFAULTS) {
         UpdateResetToDefaultsMenu(kDown);
         PrintResetToDefaultsMenu();
@@ -381,16 +381,16 @@ void UpdatePremadePresetsMenu(u32 kDown) {
 }
 
 void UpdateCustomPresetsMenu(u32 kDown, PresetType presetType) {
-    const u8 LOAD                     = presetType == SETTINGS ? LOAD_CUSTOM_PRESET : LOAD_COSMETIC_PRESET;
-    const u8 DELETE                   = presetType == SETTINGS ? DELETE_CUSTOM_PRESET : DELETE_COSMETIC_PRESET;
-    std::vector<std::string>& entries = presetType == SETTINGS ? presetEntries : cosmeticPresetEntries;
-    OptionCategory category           = presetType == SETTINGS ? OptionCategory::Setting : OptionCategory::Cosmetic;
+    const u8 LOAD                     = presetType == PresetType::SETTINGS ? LOAD_CUSTOM_PRESET : LOAD_COSMETIC_PRESET;
+    const u8 DELETE                   = presetType == PresetType::SETTINGS ? DELETE_CUSTOM_PRESET : DELETE_COSMETIC_PRESET;
+    std::vector<std::string>& entries = presetType == PresetType::SETTINGS ? presetEntries : cosmeticPresetEntries;
+    OptionCategory category           = presetType == PresetType::SETTINGS ? OptionCategory::Setting : OptionCategory::Cosmetic;
 
     consoleSelect(&topScreen);
     // clear any potential message
     ClearDescription();
     if (kDown & KEY_A && currentMenu->mode == LOAD && !entries.empty()) {
-        Settings::SetDefaultSettings(presetType == COSMETICS);
+        Settings::SetDefaultSettings(presetType == PresetType::COSMETICS);
         if (LoadPreset(entries[currentMenu->menuIdx], category)) {
             Settings::ResolveExcludedLocationConflicts();
             for (Menu* menu : Settings::GetAllOptionMenus()) {
@@ -632,9 +632,9 @@ void PrintPremadePresetsMenu(u32 kDown) {
 }
 
 void PrintCustomPresetsMenu(PresetType presetType) {
-    const u8 LOAD                     = presetType == SETTINGS ? LOAD_CUSTOM_PRESET : LOAD_COSMETIC_PRESET;
-    const u8 DELETE                   = presetType == SETTINGS ? DELETE_CUSTOM_PRESET : DELETE_COSMETIC_PRESET;
-    std::vector<std::string>& entries = presetType == SETTINGS ? presetEntries : cosmeticPresetEntries;
+    const u8 LOAD                     = presetType == PresetType::SETTINGS ? LOAD_CUSTOM_PRESET : LOAD_COSMETIC_PRESET;
+    const u8 DELETE                   = presetType == PresetType::SETTINGS ? DELETE_CUSTOM_PRESET : DELETE_COSMETIC_PRESET;
+    std::vector<std::string>& entries = presetType == PresetType::SETTINGS ? presetEntries : cosmeticPresetEntries;
 
     consoleSelect(&bottomScreen);
     if (entries.empty()) {
