@@ -840,8 +840,10 @@ extern std::array<u32, 9> rDungeonRewardOverrides;
 extern u8 PlayOption;
 extern u8 Region;
 
-extern Menu loadCustomPreset;
-extern Menu deleteCustomPreset;
+extern Menu loadCustomRandomizationPreset;
+extern Menu deleteCustomRandomizationPreset;
+extern Menu loadCustomCosmeticPreset;
+extern Menu deleteCustomCosmeticPreset;
 
 extern std::vector<std::vector<Option*>> excludeLocationsOptionsVector;
 extern std::vector<Menu*> excludeLocationsMenus;

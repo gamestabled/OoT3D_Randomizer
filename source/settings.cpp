@@ -1373,24 +1373,38 @@ std::vector<Menu*> personalizationOptions = {
     &audio,
 };
 
-Menu loadPremadePreset      = Menu::Action("Load Premade Preset",        LOAD_PREMADE_PRESET);
-Menu loadCustomPreset       = Menu::Action("Load Custom Preset",         LOAD_CUSTOM_PRESET);
-Menu saveCustomPreset       = Menu::Action("Save Custom Preset",         SAVE_CUSTOM_PRESET);
-Menu deleteCustomPreset     = Menu::Action("Delete Custom Preset",       DELETE_CUSTOM_PRESET);
-Menu loadCosmeticPreset     = Menu::Action("Load Cosmetic Preset",       LOAD_COSMETIC_PRESET);
-Menu saveCosmeticPreset     = Menu::Action("Save Cosmetic Preset",       SAVE_COSMETIC_PRESET);
-Menu deleteCosmeticPreset   = Menu::Action("Delete Cosmetic Preset",     DELETE_COSMETIC_PRESET);
-Menu resetToDefaultSettings = Menu::Action("Reset to Default Settings",  RESET_TO_DEFAULTS, menuResetToDefaultsDesc);
+Menu loadPremadeRandomizationPreset      = Menu::Action("Load Premade Preset",        LOAD_PREMADE_RANDOMIZATION_PRESET);
+Menu loadCustomRandomizationPreset       = Menu::Action("Load Custom Preset",         LOAD_CUSTOM_RANDOMIZATION_PRESET);
+Menu saveCustomRandomizationPreset       = Menu::Action("Save Custom Preset",         SAVE_CUSTOM_RANDOMIZATION_PRESET);
+Menu deleteCustomRandomizationPreset     = Menu::Action("Delete Custom Preset",       DELETE_CUSTOM_RANDOMIZATION_PRESET);
+Menu resetToDefaultRandomizationSettings = Menu::Action("Reset to Default Settings",  RESET_TO_DEFAULT_RANDOMIZATION_SETTINGS);
+
+std::vector<Menu*> randomizationPresetItems = {
+    &loadPremadeRandomizationPreset,
+    &loadCustomRandomizationPreset,
+    &saveCustomRandomizationPreset,
+    &deleteCustomRandomizationPreset,
+    &resetToDefaultRandomizationSettings,
+};
+
+Menu loadCustomCosmeticPreset           = Menu::Action("Load Custom Preset",         LOAD_CUSTOM_COSMETIC_PRESET);
+Menu saveCustomCosmeticPreset           = Menu::Action("Save Custom Preset",         SAVE_CUSTOM_COSMETIC_PRESET);
+Menu deleteCustomCosmeticPreset         = Menu::Action("Delete Custom Preset",       DELETE_CUSTOM_COSMETIC_PRESET);
+Menu resetToDefaultCosmetics            = Menu::Action("Reset to Default Settings",  RESET_TO_DEFAULT_COSMETICS);
+
+std::vector<Menu*> cosmeticPresetItems = {
+    &loadCustomCosmeticPreset,
+    &saveCustomCosmeticPreset,
+    &deleteCustomCosmeticPreset,
+    &resetToDefaultCosmetics,
+};
+
+Menu randomizationSettingsPresets  = Menu::SubMenu("Randomization Settings Presets", &randomizationPresetItems);
+Menu cosmeticSettingsPresets       = Menu::SubMenu("Cosmetic Settings Presets",      &cosmeticPresetItems);
 
 std::vector<Menu *> settingsPresetItems = {
-    &loadPremadePreset,
-    &loadCustomPreset,
-    &saveCustomPreset,
-    &deleteCustomPreset,
-    &loadCosmeticPreset,
-    &saveCosmeticPreset,
-    &deleteCosmeticPreset,
-    &resetToDefaultSettings,
+    &randomizationSettingsPresets,
+    &cosmeticSettingsPresets,
 };
 
 // Detailed Logic Options Submenu
