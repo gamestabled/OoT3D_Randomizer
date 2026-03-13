@@ -5,6 +5,7 @@
 #include "common.h"
 #include "input.h"
 #include "player.h"
+#include "item_override.h"
 
 #define TimerFrameCounter *(s16*)GAME_ADDR(0x539D8A) // Used to decrease the timer every 30 frames
 #define ControlStick_X *(float*)GAME_ADDR(0x5655C0)
@@ -14,9 +15,8 @@ static u8 pendingFreezes = 0;
 static u8 cooldown       = 0;
 static u8 modifyScale    = 0;
 
-static u32 source[16];
-
 s8 IceTrap_ActiveCurse         = -1;
+u32 IceTrap_ActiveHash         = 0;
 static s16 previousTimer1Value = 0;
 static s16 previousTimer2Value = 60;
 u32 dizzyCurseSeed             = 0;
@@ -28,14 +28,14 @@ const f32 SCALE_TRAP[] = { 1.000f, 0.971f, 0.966f, 0.969f, 0.982f, 1.003f, 1.027
                            1.040f, 1.006f, 0.963f, 0.921f, 0.892f, 0.888f, 0.914f, 0.969f, 1.045f, 1.124f,
                            1.185f, 1.207f, 1.177f, 1.090f, 0.960f, 0.814f, 0.690f, 0.625f, 0.652f, 0.782f };
 
-u32 possibleChestTraps[20]         = { ICETRAP_KNOCKDOWN, ICETRAP_ZELDA2_KNOCKBACK, ICETRAP_VANILLA,
-                                       ICETRAP_SHOCK,     ICETRAP_BOMB_SIMPLE,      ICETRAP_BOMB_KNOCKDOWN };
-u32 possibleChestTrapsAmount       = 0;
-static u32 possibleItemTraps[20]   = { ICETRAP_KNOCKDOWN, ICETRAP_ZELDA2_KNOCKBACK, ICETRAP_VANILLA, ICETRAP_SHOCK,
-                                       ICETRAP_SCALE };
-static u32 possibleItemTrapsAmount = 0;
+static u32 possibleChestTraps[20]   = { ICETRAP_KNOCKDOWN, ICETRAP_ZELDA2_KNOCKBACK, ICETRAP_VANILLA,
+                                        ICETRAP_SHOCK,     ICETRAP_BOMB_SIMPLE,      ICETRAP_BOMB_KNOCKDOWN };
+static u32 possibleChestTrapsAmount = 0;
+static u32 possibleItemTraps[20]    = { ICETRAP_KNOCKDOWN, ICETRAP_ZELDA2_KNOCKBACK, ICETRAP_VANILLA, ICETRAP_SHOCK,
+                                        ICETRAP_SCALE };
+static u32 possibleItemTrapsAmount  = 0;
 
-void IceTrap_InitTypes(void) {
+void IceTrap_Init(void) {
     possibleChestTrapsAmount = 6;
     possibleItemTrapsAmount  = 5;
 
@@ -80,8 +80,8 @@ u32 IceTrap_IsPending(void) {
     return pendingFreezes > 0;
 }
 
-void IceTrap_Push(u32 key) {
-    source[pendingFreezes++] = key;
+void IceTrap_Push(void) {
+    pendingFreezes++;
 }
 
 void LinkDamageNoKnockback(void) {
@@ -96,49 +96,39 @@ void LinkDamageNoKnockback(void) {
     LinkDamage(gGlobalContext, PLAYER, 0, 0.0f, 0.0f, 0, 20);
 }
 
-void IceTrap_Give(void) {
-    if (possibleItemTrapsAmount == 0)
-        IceTrap_InitTypes();
+u32 IceTrap_GetType(u32 hash, u8 isFromChest) {
+    if (gSettingsContext.randomTrapDmg == RANDOMTRAPS_OFF) {
+        return ICETRAP_VANILLA;
+    }
 
-    if (cooldown == 0 && pendingFreezes) {
-        u32 pRandInt = dizzyCurseSeed = Hash(source[0]);
+    return isFromChest ? possibleChestTraps[hash % possibleChestTrapsAmount]
+                       : possibleItemTraps[hash % possibleItemTrapsAmount];
+}
 
-        u8 trapType = ICETRAP_VANILLA; // Default to ice trap
-        if (gSettingsContext.randomTrapDmg != RANDOMTRAPS_OFF) {
-            trapType = possibleItemTraps[pRandInt % possibleItemTrapsAmount];
+void IceTrap_UpdateOverride(ItemOverride* override, u8 isFromChest) {
+    if (override->value.itemId == GI_ICE_TRAP) {
+        IceTrap_ActiveHash = Hash(override->key.all);
+        if (IceTrap_GetType(IceTrap_ActiveHash, isFromChest) == ICETRAP_RUPOOR) {
+            // If the trap's effect is a rupoor, give it as an actual item.
+            override->value.itemId          = GI_RUPOOR;
+            override->value.looksLikeItemId = 0;
         }
+    }
+}
+
+void IceTrap_Give(void) {
+    if (cooldown == 0 && pendingFreezes) {
+        u32 pRandInt = dizzyCurseSeed = IceTrap_ActiveHash;
+
+        u8 trapType = IceTrap_GetType(pRandInt, FALSE);
 
         pendingFreezes--;
-        for (int i = 0; i < 15; i++) {
-            source[i] = source[i + 1];
-        }
 
         if (trapType >= ICETRAP_CURSE_SHIELD) {
             if (IceTrap_ActivateCurseTrap(trapType))
                 return;
             else
                 trapType = ICETRAP_SCALE; // if the curse can't trigger, use a scale trap
-        }
-
-        if (trapType == ICETRAP_RUPOOR) {
-            int rupeesToDeduct;
-            switch (gSettingsContext.rupoorTrapSeverity) {
-                case RUPOORTRAPSEVERITY_TEN:
-                    rupeesToDeduct = 10;
-                    break;
-                case RUPOORTRAPSEVERITY_RANDOMRATIO:
-                    static const u16 maxRupees[] = { 99, 200, 500, 999 };
-                    u8 walletLevel               = (gSaveContext.upgrades >> 12) & 0x3;
-                    u16 walletMax                = maxRupees[walletLevel];
-                    int percentToDeduct          = 5 + pRandInt % 60; // Random betwen 5% and 65%
-                    rupeesToDeduct               = (walletMax * percentToDeduct) / 100;
-                    break;
-                case RUPOORTRAPSEVERITY_BANKRUPTCY:
-                    rupeesToDeduct = 999;
-                    break;
-            }
-            Rupees_ChangeBy(-rupeesToDeduct);
-            return;
         }
 
         modifyScale = (trapType == ICETRAP_SCALE);

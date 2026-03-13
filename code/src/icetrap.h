@@ -5,16 +5,19 @@
 
 #define CURSETRAP_TEXT_BASE_INDEX 0x8FF0
 
+struct ItemOverride;
+
 extern s8 IceTrap_ActiveCurse;
-extern u32 possibleChestTraps[20];
-extern u32 possibleChestTrapsAmount;
+extern u32 IceTrap_ActiveHash;
 extern u32 dizzyCurseSeed;
 
-void IceTrap_Push(u32 key);
+void IceTrap_Push(void);
+u32 IceTrap_GetType(u32 hash, u8 isFromChest);
+void IceTrap_UpdateOverride(struct ItemOverride* override, u8 isFromChest);
 void IceTrap_Give(void);
 u32 IceTrap_IsPending(void);
 void IceTrap_Update(void);
-void IceTrap_InitTypes(void);
+void IceTrap_Init(void);
 u8 IceTrap_ActivateCurseTrap(u8 curseType);
 void IceTrap_DispelCurses(void);
 u16 IceTrap_CamRoll(u16 roll);

@@ -1,8 +1,6 @@
 #ifndef _ITEM_EFFECT_H_
 #define _ITEM_EFFECT_H_
 
-#include "icetrap.h"
-
 #include "z3D/z3D.h"
 
 void ItemEffect_None(SaveContext* saveCtx, s16 arg1, s16 arg2);
@@ -39,4 +37,5 @@ void ItemEffect_GiveWeirdEgg(SaveContext* saveCtx, s16 arg1, s16 arg2);
 void ItemEffect_ShardOfAgony(SaveContext* saveCtx, s16 arg1, s16 arg2);
 void ItemEffect_EnemySoul(SaveContext* saveCtx, s16 soulId, s16 arg2);
 void ItemEffect_OcarinaNote(SaveContext* saveCtx, s16 buttonId, s16 arg2);
+void ItemEffect_Rupoor(SaveContext* saveCtx, s16 arg1, s16 arg2);
 #endif //_ITEM_EFFECT_H_

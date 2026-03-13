@@ -601,7 +601,7 @@ void CreateAlwaysIncludedMessages() {
             NEWLINE() + "Hehehe..." + WAIT_FOR_INPUT() + NEWLINE() + UNSKIPPABLE() +
             "Na, da will ich mal nicht so sein..." + NEWLINE() + "Nimm das hier!" + MESSAGE_END());
     // Ice Trap
-    CreateMessage(0x9002, 0, 2, 3,
+    CreateMessage(0x9001, 0, 2, 3,
                   UNSKIPPABLE() + INSTANT_TEXT_ON() + CENTER_TEXT() + COLOR(QM_RED) + "FOOL!" + COLOR(QM_WHITE) +
                       INSTANT_TEXT_OFF() + MESSAGE_END(),
                   UNSKIPPABLE() + INSTANT_TEXT_ON() + CENTER_TEXT() + COLOR(QM_RED) + "IDIOT!" + COLOR(QM_WHITE) +
@@ -612,6 +612,17 @@ void CreateAlwaysIncludedMessages() {
                       INSTANT_TEXT_OFF() + MESSAGE_END(),
                   UNSKIPPABLE() + INSTANT_TEXT_ON() + CENTER_TEXT() + COLOR(QM_RED) + "NARR!" + COLOR(QM_WHITE) +
                       INSTANT_TEXT_OFF() + MESSAGE_END());
+    // Rupoor
+    {
+        Text rupoorMsg = Text{
+            /*english*/ "You got a #Rupoor#!&You lost some rupees.",
+            /*french */ "Vous obtenez un #roupir#!&Vous perdez des rubis.",
+            /*spanish*/ "¡Has obtenido una #Rupobre#!&Significa que has perdido unas rupias.",
+            /*italian*/ "Hai ottenuto una #Baba Rupia#!&Hai perso delle rupie.",
+            /*german */ "Du hast eine #Rubinfalle# gefunden!&Du hast einige Rubine verloren.",
+        };
+        CreateMessageFromTextObject(0x9002, 0, 2, 3, AddColorsAndFormat(rupoorMsg, { QM_RED }));
+    }
     // Curse Traps
     u32 curseIdxOffset = 0;
     CreateMessage(CURSETRAP_TEXT_BASE_INDEX + curseIdxOffset++, 0, 2, 3,

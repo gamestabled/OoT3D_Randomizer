@@ -267,6 +267,15 @@ static void CustomModel_EditTriforce(void* triforceCMB) {
     EDIT_BYTE(0x3FD, 0x00);
 }
 
+static void CustomModel_EditRupeeToRupoor(void* rupeeCMB) {
+    const u32 textureDataOffset = 0x5380;
+    const u32 blueRupeeTexOff   = textureDataOffset + 0x180;
+    const u32 blueRupeeTexLen   = 0x80;
+
+    // Set color of all pixels to 0 (black)
+    memset(((char*)rupeeCMB) + blueRupeeTexOff, 0, blueRupeeTexLen);
+}
+
 void CustomModel_Update(void) {
     // Make sure custom_assets is loaded
     Object_FindEntryOrSpawn(OBJECT_CUSTOM_GENERAL_ASSETS);
@@ -315,6 +324,10 @@ void CustomModels_EditItemCMB(void* ZARBuf, u16 objectId, s8 special) {
         case OBJECT_CUSTOM_TRIFORCE_PIECE:
             cmb = ((char*)ZARBuf) + 0xF0;
             CustomModel_EditTriforce(cmb);
+            break;
+        case OBJECT_CUSTOM_RUPOOR:
+            cmb = ((char*)ZARBuf) + 0x74;
+            CustomModel_EditRupeeToRupoor(cmb);
             break;
     }
 }

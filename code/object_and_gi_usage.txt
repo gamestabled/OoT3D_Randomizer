@@ -12,6 +12,7 @@ The following custom objectIds are currently being used:
 126: GTG Small Key
 127: Ganon Small Key
 128: Boss Keys
+131: Rupoor
 228: Enemy Souls
 291: Ocarina Note Buttons
 366: Triforce Piece

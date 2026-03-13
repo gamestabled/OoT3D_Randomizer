@@ -162,7 +162,7 @@ static ItemRow rItemTable[] = {
     [GI_NUT_UPGRADE_30]     = ITEM_ROW(0x53, CHEST_JUNK,      0x41, 0x00A7,   0x00BB, 0x00, 0xFF, 0xFF, 0xFF,   0xFF, ItemUpgrade_None, ItemEffect_GiveUpgrade, 2, 7), // Deku Nut Upgrade (30)
     [GI_NUT_UPGRADE_40]     = ITEM_ROW(0x53, CHEST_JUNK,      0x41, 0x00A8,   0x00BB, 0x00, 0xFF, 0xFF, 0xFF,   0xFF, ItemUpgrade_None, ItemEffect_GiveUpgrade, 3, 7), // Deku Nut Upgrade (40)
     [GI_BULLET_BAG_50]      = ITEM_ROW(0x53, CHEST_MAJOR,     0x41, 0x006C,   0x017B, 0x02, 0xFF, 0xFF, 0xFF,   0xFF, ItemUpgrade_None, ItemEffect_GiveUpgrade, 3, 5), // Bullet Bag (50)
-    [GI_ICE_TRAP]           = ITEM_ROW(0x53, CHEST_MAJOR,     0x41, 0x9002,   0x0000, 0x00, 0xFF, 0xFF, 0xFF,   0xFF, ItemUpgrade_None, ItemEffect_IceTrap, -1, -1), // Ice Trap
+    [GI_ICE_TRAP]           = ITEM_ROW(0x53, CHEST_MAJOR,     0x41, 0x9001,   0x0000, 0x00, 0xFF, 0xFF, 0xFF,   0xFF, ItemUpgrade_None, ItemEffect_IceTrap, -1, -1), // Ice Trap
 
     [GI_SWORD_MASTER]       = ITEM_ROW(0x53, CHEST_MAJOR,     0x3C, 0x9309,   0x0195, 0x00, 0xFF, 0xFF, 0xFF,   0xFF, ItemUpgrade_None, ItemEffect_GiveMasterSword, -1, -1), // Master Sword
 
@@ -329,6 +329,8 @@ static ItemRow rItemTable[] = {
     [GI_OCARINA_BUTTON_X]   = ITEM_ROW(0x53, CHEST_MAJOR,     0x41, 0x93F2,   0x0123, 0x00, 0xFF, 0xFF, 0xFF,   0x02, ItemUpgrade_None, ItemEffect_OcarinaNote, OCARINA_BUTTON_X, -1), // Ocarina Note Button X
     [GI_OCARINA_BUTTON_Y]   = ITEM_ROW(0x53, CHEST_MAJOR,     0x41, 0x93F3,   0x0123, 0x00, 0xFF, 0xFF, 0xFF,   0x03, ItemUpgrade_None, ItemEffect_OcarinaNote, OCARINA_BUTTON_Y, -1), // Ocarina Note Button Y
     [GI_OCARINA_BUTTON_A]   = ITEM_ROW(0x53, CHEST_MAJOR,     0x41, 0x93F4,   0x0123, 0x00, 0xFF, 0xFF, 0xFF,   0x04, ItemUpgrade_None, ItemEffect_OcarinaNote, OCARINA_BUTTON_A, -1), // Ocarina Note Button A
+
+    [GI_RUPOOR]             = ITEM_ROW(0x53, CHEST_MAJOR,     0x41, 0x9002,   0x0083, 0x00, 0xFF, 0xFF, 0xFF,   0x6D, ItemUpgrade_None, ItemEffect_Rupoor, -1, -1), // Rupoor
 };
 // clang-format on
 

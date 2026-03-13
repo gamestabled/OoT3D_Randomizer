@@ -202,14 +202,11 @@ u8 Chest_OverrideIceSmoke(Actor* thisx) {
         return vanillaIceTrap();
     }
 
-    if (possibleChestTrapsAmount == 0)
-        IceTrap_InitTypes();
-
     if (thisx != sLastTrapChest && thisx->xzDistToPlayer < 50.0f) {
         sLastTrapChest = thisx;
-        u32 pRandInt = dizzyCurseSeed = Hash(thisx->params);
+        u32 pRandInt = dizzyCurseSeed = IceTrap_ActiveHash;
 
-        u8 trapType = possibleChestTraps[pRandInt % possibleChestTrapsAmount];
+        u8 trapType = IceTrap_GetType(pRandInt, TRUE);
 
         // Curses
         if (trapType >= ICETRAP_CURSE_SHIELD) {
@@ -250,26 +247,6 @@ u8 Chest_OverrideIceSmoke(Actor* thisx) {
             case ICETRAP_ANTIFAIRY:
                 sFairy = (EnElf*)Actor_Spawn(&gGlobalContext->actorCtx, gGlobalContext, 0x18, thisx->world.pos.x,
                                              thisx->world.pos.y, thisx->world.pos.z, 0, 0, 0, 0x5, FALSE);
-                PLAYER->actor.home.pos.y = -5000; // Make Link airborne for a frame to cancel the get item event
-                break;
-            case ICETRAP_RUPOOR:
-                int rupeesToDeduct;
-                switch (gSettingsContext.rupoorTrapSeverity) {
-                    case RUPOORTRAPSEVERITY_TEN:
-                        rupeesToDeduct = 10;
-                        break;
-                    case RUPOORTRAPSEVERITY_RANDOMRATIO:
-                        static const u16 maxRupees[] = { 99, 200, 500, 999 };
-                        u8 walletLevel               = (gSaveContext.upgrades >> 12) & 0x3;
-                        u16 walletMax                = maxRupees[walletLevel];
-                        int percentToDeduct          = 5 + pRandInt % 60; // Random betwen 5% and 65%
-                        rupeesToDeduct               = (walletMax * percentToDeduct) / 100;
-                        break;
-                    case RUPOORTRAPSEVERITY_BANKRUPTCY:
-                        rupeesToDeduct = 999;
-                        break;
-                }
-                Rupees_ChangeBy(-rupeesToDeduct);
                 PLAYER->actor.home.pos.y = -5000; // Make Link airborne for a frame to cancel the get item event
                 break;
             case ICETRAP_RUPPY:
