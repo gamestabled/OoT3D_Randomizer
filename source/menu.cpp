@@ -395,7 +395,7 @@ void UpdateCustomPresetsMenu(u32 kDown, PresetType presetType) {
     const u8 LOAD =
         presetType == PresetType::RANDOMIZATION ? LOAD_CUSTOM_RANDOMIZATION_PRESET : LOAD_CUSTOM_COSMETIC_PRESET;
     const u8 DELETE =
-        presetType == PresetType::RANDOMIZATION ? DELETE_CUSTOM_RANDOMIZATION_PRESET : LOAD_CUSTOM_COSMETIC_PRESET;
+        presetType == PresetType::RANDOMIZATION ? DELETE_CUSTOM_RANDOMIZATION_PRESET : DELETE_CUSTOM_COSMETIC_PRESET;
     std::vector<std::string>& entries = presetType == PresetType::RANDOMIZATION ? presetEntries : cosmeticPresetEntries;
     OptionCategory category =
         presetType == PresetType::RANDOMIZATION ? OptionCategory::Setting : OptionCategory::Cosmetic;
