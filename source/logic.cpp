@@ -694,15 +694,16 @@ bool CanDoGlitch(GlitchType glitch, GlitchDifficulty difficulty) {
             if (!GlitchEnabled(GlitchHookshotJump_Bonk, difficulty)) {
                 return false;
             }
-            return IsAdult && Hookshot; // Child hookshot jumps are tiny so these stay as adult only until I check
+            // Child hookshot jumps are tiny so these stay as adult only.
+            return IsAdult && Hookshot && CanBonk;
 
         // Hookshot Jump: Boots
         case GlitchType::HookshotJump_Boots:
             if (!GlitchEnabled(GlitchHookshotJump_Boots, difficulty)) {
                 return false;
             }
-            return IsAdult && Hookshot &&
-                   HasBoots; // Child hookshot jumps are tiny so these stay as adult only until I check
+            // Child hookshot jumps are tiny so these stay as adult only.
+            return IsAdult && Hookshot && HasBoots;
 
         // Cutscene Dives
         case GlitchType::CutsceneDive:
