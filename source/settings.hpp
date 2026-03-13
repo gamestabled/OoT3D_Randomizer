@@ -335,7 +335,7 @@ namespace Settings {
 void UpdateSettings();
 SettingsContext FillContext();
 void InitSettings();
-void SetDefaultSettings();
+void SetDefaultSettings(bool forCosmetics = false);
 void ResolveExcludedLocationConflicts();
 void RandomizeAllSettings(const bool selectOptions = false);
 void ForceChange(u32 kDown, Option* currentSetting);
@@ -840,8 +840,10 @@ extern std::array<u32, 9> rDungeonRewardOverrides;
 extern u8 PlayOption;
 extern u8 Region;
 
-extern Menu loadCustomPreset;
-extern Menu deleteCustomPreset;
+extern Menu loadCustomRandomizationPreset;
+extern Menu deleteCustomRandomizationPreset;
+extern Menu loadCustomCosmeticPreset;
+extern Menu deleteCustomCosmeticPreset;
 
 extern std::vector<std::vector<Option*>> excludeLocationsOptionsVector;
 extern std::vector<Menu*> excludeLocationsMenus;

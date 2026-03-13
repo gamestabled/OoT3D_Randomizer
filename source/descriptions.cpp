@@ -13,7 +13,6 @@ string_view menuPersonalizationDesc   = "These options do not affect seed genera
 string_view menuIngameDefaultsDesc    = "These options decide what the ingame options are\n"
                                         "set to when creating a save file. The new ingame\n"
                                         "options can be changed in the Custom Info Menu."; //
-string_view menuResetToDefaultsDesc   = "Does not affect personalization settings.";       //
 
 /*------------------------------
 |      PRESET DESCRIPTIONS     |                            *SCREEN WIDTH*
