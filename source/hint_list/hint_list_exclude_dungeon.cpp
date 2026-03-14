@@ -205,7 +205,7 @@ void HintTable_Init_Exclude_Dungeon() {
 
     hintTable[DODONGOS_CAVERN_GS_SIDE_ROOM_NEAR_LOWER_LIZALFOS] = HintText::Exclude({
                        // obscure text
-                       Text{"a #spider among bats# in Dodongo's Cavern holds", /*french*/"une #Skulltula entourée de Saigneurs dans la caverne Dodongo# a", /*spanish*/"una #Skulltula rodeada de murciélagos# de la Cueva de los Dodongos otorga", /*italian*/"un #ragno in mezzo ai pipistrelli# nella caverna dei Dodongo nasconde", /*german*/"in einer, #von Fledermäusen umgebenen Spinne# in Dodongos Höhle, |wäre|wären|"},
+                       Text{"a #spider among bats# in Dodongo's Cavern holds", /*french*/"une #Skulltula entourée de chauve-souris dans la caverne Dodongo# a", /*spanish*/"una #Skulltula rodeada de murciélagos# de la Cueva de los Dodongos otorga", /*italian*/"un #ragno in mezzo ai pipistrelli# nella caverna dei Dodongo nasconde", /*german*/"in einer, #von Fledermäusen umgebenen Spinne# in Dodongos Höhle, |wäre|wären|"},
     });
 
     hintTable[DODONGOS_CAVERN_MQ_GS_SCRUB_ROOM] = HintText::Exclude({
@@ -338,18 +338,18 @@ void HintTable_Init_Exclude_Dungeon() {
 
     hintTable[JABU_JABUS_BELLY_MQ_BOOMERANG_ROOM_SMALL_CHEST] = HintText::Exclude({
                        // obscure text
-                       Text{"a school of #stingers swallowed by a deity# guard", /*french*/"les #raies avallées par le gardien# protègent", /*spanish*/"unos #stingers engullidos por cierta deidad# guardan", /*italian*/"una divinità ha inghiottito #un banco di trigoni volanti# con", /*german*/"nahe eines #verschluckten Fischschwarms#, |wäre|wären|"},
+                       Text{"a school of #stingers swallowed by a deity# guard", /*french*/"les #raies avalées par le gardien# protègent", /*spanish*/"unos #stingers engullidos por cierta deidad# guardan", /*italian*/"una divinità ha inghiottito #un banco di trigoni volanti# con", /*german*/"nahe eines #verschluckten Fischschwarms#, |wäre|wären|"},
                      }, {},
                        // clear text
-                       Text{"a school of #stingers swallowed by Jabu-Jabu# guard", /*french*/"les #raies avallées par Jabu-Jabu# protègent", /*spanish*/"unos #stingers engullidos por Jabu-Jabu# guardan", /*italian*/"#un banco di trigoni volanti# nella pancia di Jabu Jabu protegge", /*german*/"nahe #Fischen in Jabu-Jabus Bauch#, |wäre|wären|"}
+                       Text{"a school of #stingers swallowed by Jabu-Jabu# guard", /*french*/"les #raies avalées par Jabu-Jabu# protègent", /*spanish*/"unos #stingers engullidos por Jabu-Jabu# guardan", /*italian*/"#un banco di trigoni volanti# nella pancia di Jabu Jabu protegge", /*german*/"nahe #Fischen in Jabu-Jabus Bauch#, |wäre|wären|"}
     );
 
     hintTable[JABU_JABUS_BELLY_MQ_BOOMERANG_CHEST] = HintText::Exclude({
                        // obscure text
-                       Text{"a school of #stingers swallowed by a deity# guard", /*french*/"les #raies avallées par le gardien# protègent", /*spanish*/"unos #stingers engullidos por cierta deidad# guardan", /*italian*/"una divinità ha inghiottito #un banco di trigoni volanti# con", /*german*/"nahe eines #verschluckten Fischschwarms#, |wäre|wären|"},
+                       Text{"a school of #stingers swallowed by a deity# guard", /*french*/"les #raies avalées par le gardien# protègent", /*spanish*/"unos #stingers engullidos por cierta deidad# guardan", /*italian*/"una divinità ha inghiottito #un banco di trigoni volanti# con", /*german*/"nahe eines #verschluckten Fischschwarms#, |wäre|wären|"},
                      }, {},
                        // clear text
-                       Text{"a school of #stingers swallowed by Jabu-Jabu# guard", /*french*/"les #raies avallées par Jabu-Jabu# protègent", /*spanish*/"unos #stingers engullidos por Jabu-Jabu# guardan", /*italian*/"#un banco di trigoni volanti# nella pancia di Jabu Jabu protegge", /*german*/"nahe #Fischen in Jabu-Jabus Bauch#, |wäre|wären|"}
+                       Text{"a school of #stingers swallowed by Jabu-Jabu# guard", /*french*/"les #raies avalées par Jabu-Jabu# protègent", /*spanish*/"unos #stingers engullidos por Jabu-Jabu# guardan", /*italian*/"#un banco di trigoni volanti# nella pancia di Jabu Jabu protegge", /*german*/"nahe #Fischen in Jabu-Jabus Bauch#, |wäre|wären|"}
     );
 
     hintTable[JABU_JABUS_BELLY_MQ_NEAR_COW_BOTTOM_GREEN_RUPEE] = HintText::Exclude({
@@ -816,7 +816,7 @@ void HintTable_Init_Exclude_Dungeon() {
     ---------------------------*/
     hintTable[WATER_TEMPLE_MAP_CHEST] = HintText::Exclude({
                        // obscure text
-                       Text{"#rolling spikes# in the Water Temple surround", /*french*/"des #Spikes# dans le temple de l'eau entourent", /*spanish*/"unas #rodantes púas# del Templo del Agua guardan", /*italian*/"dei #ricci di ferro# nel Santuario dell'Acqua proteggono", /*german*/"nahe #rollender Stacheln# des Wassertempels, |wäre|wären|"},
+                       Text{"#rolling spikes# in the Water Temple surround", /*french*/"des #Hérissons métalliques# dans le temple de l'eau entourent", /*spanish*/"unas #rodantes púas# del Templo del Agua guardan", /*European*/"#rolling spikes# in the Water Temple surround", /*french*/"des #Spikes# dans le temple de l'eau entourent", /*spanish*/"unas #rodantes púas# del Templo del Agua guardan", /*italian*/"dei #ricci di ferro# nel Santuario dell'Acqua proteggono", /*german*/"nahe #rollender Stacheln# des Wassertempels, |wäre|wären|"},
     });
 
     hintTable[WATER_TEMPLE_COMPASS_CHEST] = HintText::Exclude({
@@ -855,7 +855,7 @@ void HintTable_Init_Exclude_Dungeon() {
                        Text{"a #dark reflection# of yourself guards", /*french*/"son #propre reflet# cache",    /*spanish*/"el #oscuro reflejo de ti mismo# guarda", /*italian*/"la #tua ombra# difende",         /*german*/"nahe eines #dunklen Spiegelbilds#, |wäre|wären|"},
                      }, {},
                        // clear text
-                       Text{"#Dark @# guards", /*french*/"l'#Ombre de @# protège", /*spanish*/"#@ Oscuro# guarda", /*italian*/"#@ oscuro# protegge", /*german*/"nahe #dem schwarzen @#, |wäre|wären|"}
+                       Text{"#Dark @# guards", /*french*/"#@ noir# protège", /*spanish*/"#@ Oscuro# guarda", /*italian*/"#@ oscuro# protegge", /*german*/"nahe #dem schwarzen @#, |wäre|wären|"}
     );
 
     hintTable[WATER_TEMPLE_MQ_CENTRAL_PILLAR_CHEST] = HintText::Exclude({
@@ -1112,7 +1112,7 @@ void HintTable_Init_Exclude_Dungeon() {
                        Text{"the #Sorceress Sisters# hold", /*french*/"#les sorcières jumelles# possède", /*spanish*/"las #hermanas hechiceras# portan", /*italian*/"le #sorelle megere# possiedono", /*german*/"nahe der #höllischen Hexenarmada#, |wäre|wären|"},
                      }, {},
                        // clear text
-                       Text{"#Twinrova# holds", /*french*/"#Twinrova# possède", /*spanish*/"#Birova# porta", /*italian*/"#Duerova# possiede", /*german*/"nahe #Twinrova#, |wäre|wären|"}
+                       Text{"#Twinrova# holds", /*french*/"#Birova# possède", /*spanish*/"#Birova# porta", /*European*/"#Twinrova# holds", /*french*/"#Twinrova# possède", /*spanish*/"#Birova# porta", /*italian*/"#Duerova# possiede", /*german*/"nahe #Twinrova#, |wäre|wären|"}
     );
 
     hintTable[SPIRIT_TEMPLE_GS_HALL_AFTER_SUN_BLOCK_ROOM] = HintText::Exclude({
@@ -1173,7 +1173,7 @@ void HintTable_Init_Exclude_Dungeon() {
                        Text{"a #nether dweller in the Shadow Temple# holds", /*french*/"le #spectre du temple de l'ombre# a", /*spanish*/"un #temido morador del Templo de las Sombras# guarda", /*italian*/"un #tipo manesco nel Santuario dell'Ombra# possiede", /*german*/"nahe dem #unterirdischen Bewohner des Schattentempels#, |wäre|wären|"},
                      }, {},
                        // clear text
-                       Text{"#Dead Hand in the Shadow Temple# holds", /*french*/"le #Poigneur dans le temple de l'ombre# cache", /*spanish*/"la #Mano Muerta del Templo de las Sombras# guarda", /*italian*/"lo #Smaniosso nel Santuario dell'Ombra# possiede", /*german*/"nahe dem #Hirnsauger des Schattentempels#, |wäre|wären|"}
+                       Text{"#Dead Hand in the Shadow Temple# holds", /*french*/"le #Main mortelle dans le temple de l'ombre# cache", /*spanish*/"la #Mano Muerta del Templo de las Sombras# guarda", /*European*/"#Dead Hand in the Shadow Temple# holds", /*french*/"le #Poigneur dans le temple de l'ombre# cache", /*spanish*/"la #Mano Muerta del Templo de las Sombras# guarda", /*italian*/"lo #Smaniosso nel Santuario dell'Ombra# possiede", /*german*/"nahe dem #Hirnsauger des Schattentempels#, |wäre|wären|"}
     );
 
     hintTable[SHADOW_TEMPLE_COMPASS_CHEST] = HintText::Exclude({

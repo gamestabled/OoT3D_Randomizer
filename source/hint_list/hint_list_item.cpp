@@ -24,7 +24,7 @@ void HintTable_Init_Item() {
                        Text{"a sword", /*french*/"une épée", /*spanish*/"una espada", /*italian*/"una spada", /*german*/"ein Schwert"},
                      },
                        // clear text
-                       Text{"the Master Sword", /*french*/"l'épée de légende", /*spanish*/"la Espada Maestra", /*italian*/"la spada suprema", /*german*/"das Master-Schwert"}
+                       Text{"the Master Sword", /*french*/"l'épée maîtresse", /*spanish*/"la Espada Maestra", /*European*/"the Master Sword", /*french*/"l'épée de légende", /*spanish*/"la Espada Maestra", /*italian*/"la spada suprema", /*german*/"das Master-Schwert"}
     );
 
     hintTable[GIANTS_KNIFE] = HintText::Item({
@@ -48,7 +48,7 @@ void HintTable_Init_Item() {
                        Text{"a sword", /*french*/"une épée", /*spanish*/"una espada", /*italian*/"una spada", /*german*/"ein Schwert"},
                      },
                        // clear text
-                       Text{"the Biggoron Sword", /*french*/"l'épée de Grogoron", /*spanish*/"la Espada de Biggoron", /*italian*/"la spada di Grande Goron", /*german*/"das Biggoron-Schwert"}
+                       Text{"the Biggoron Sword", /*french*/"l'épée de Grogoron", /*spanish*/"la Espada de Biggoron", /*European*/"the Biggoron Sword", /*french*/"l'épée de Biggoron", /*spanish*/"la Espada de Biggoron", /*italian*/"la spada di Grande Goron", /*german*/"das Biggoron-Schwert"}
     );
 
     hintTable[DEKU_SHIELD] = HintText::Item({
@@ -190,7 +190,7 @@ void HintTable_Init_Item() {
                        Text{"a secret-finding tool", /*french*/"un cherche-secrets", /*spanish*/"un instrumento para hallar objetos", /*italian*/"uno strumento Sheikah", /*german*/"ein Geheimnisfinder-Apparat"},
                      },
                        // clear text
-                       Text{"the Lens of Truth", /*french*/"le monocle de Vérité", /*spanish*/"la Lupa de la Verdad", /*italian*/"la lente della verità", /*german*/"das Auge der Wahrheit"}
+                       Text{"the Lens of Truth", /*french*/"la loupe de vérité", /*spanish*/"la Lupa de la Verdad", /*European*/"the Lens of Truth", /*french*/"le monocle de vérité", /*spanish*/"la Lupa de la Verdad", /*italian*/"la lente della verità", /*german*/"das Auge der Wahrheit"}
     );
 
     hintTable[MEGATON_HAMMER] = HintText::Item({
@@ -216,7 +216,7 @@ void HintTable_Init_Item() {
                        Text{"a secret-finding tool",              /*french*/"un cherche-secrets",                  /*spanish*/"un instrumento para hallar objetos", /*italian*/"uno strumento Sheikah",    /*german*/"ein Geheimnisfinder-Apparat"},
                      },
                        // clear text
-                       Text{"the Shard of Agony", /*french*/"le fragment de souffrance", /*spanish*/"la Piedra de la Agonía", /*italian*/"il cristallo sonoro", /*german*/"der Stein des Wissens"}
+                       Text{"the Shard of Agony", /*french*/"le fragment de souffrance", /*spanish*/"la Piedra de la Agonía", /*European*/"the Shard of Agony", /*french*/"la pierre de souffrance", /*spanish*/"la Piedra de la Agonía", /*italian*/"il cristallo sonoro", /*german*/"der Stein des Wissens"}
     );
 
     hintTable[DINS_FIRE] = HintText::Item({
@@ -358,7 +358,7 @@ void HintTable_Init_Item() {
                        Text{"something sometimes buried", /*french*/"une chose parfois enterrée",   /*spanish*/"algo a veces enterrado",       /*italian*/"qualcosa a volte sotterrato",  /*german*/"etwas manchmal Vergrabenes"},
                      },
                        // clear text
-                       Text{"a Gold Skulltula Token", /*french*/"un jeton de Skulltula d'or", /*spanish*/"un símbolo de skulltula dorada", /*italian*/"un teschio d'oro", /*german*/"ein Skulltula-Symbol"}
+                       Text{"a Gold Skulltula Token", /*french*/"un jeton de Skulltula d'or", /*spanish*/"un símbolo de skulltula dorada", /*European*/"a Gold Skulltula Token", /*french*/"un crâne d'or", /*spanish*/"un símbolo de skulltula dorada", /*italian*/"un teschio d'oro", /*german*/"ein Skulltula-Symbol"}
     );
 
     hintTable[POCKET_EGG] = HintText::Item({
@@ -383,7 +383,7 @@ void HintTable_Init_Item() {
                        Text{"a trade quest item", /*french*/"un objet de quête d'échanges", /*spanish*/"un objeto de una misión secundaria", /*italian*/"un oggetto da scambiare", /*german*/"ein Gegenstand zum Tauschen"},
                      },
                        // clear text
-                       Text{"the Pocket Cucco", /*french*/"le Cocotte de poche", /*spanish*/"el cuco de bolsillo", /*italian*/"il coccò tascabile", /*german*/"Kiki"}
+                       Text{"the Pocket Cucco", /*french*/"la poulette de poche", /*spanish*/"el cuco de bolsillo", /*European*/"the Pocket Cucco", /*french*/"la cocotte de poche", /*spanish*/"el cuco de bolsillo", /*italian*/"il coccò tascabile", /*german*/"Kiki"}
     );
 
     hintTable[COJIRO] = HintText::Item({
@@ -394,7 +394,7 @@ void HintTable_Init_Item() {
                        Text{"a trade quest item", /*french*/"un objet de quête d'échanges", /*spanish*/"un objeto de una misión secundaria", /*italian*/"un oggetto da scambiare", /*german*/"ein Gegenstand zum Tauschen"},
                      },
                        // clear text
-                       Text{"Cojiro", /*french*/"le p'tit poulet", /*spanish*/"a Cojiro", /*italian*/"Coblù", /*german*/"Henni"}
+                       Text{"Cojiro", /*french*/"P'tit Poulet", /*spanish*/"a Cojiro", /*italian*/"Coblù", /*german*/"Henni"}
     );
 
     hintTable[ODD_MUSHROOM] = HintText::Item({
@@ -405,7 +405,7 @@ void HintTable_Init_Item() {
                        Text{"a trade quest item", /*french*/"un objet de quête d'échanges", /*spanish*/"un objeto de una misión secundaria", /*italian*/"un oggetto da scambiare", /*german*/"ein Gegenstand zum Tauschen"},
                      },
                        // clear text
-                       Text{"an Odd Mushroom", /*french*/"un champignon suspect", /*spanish*/"un champiñón extraño", /*italian*/"un fungo strano", /*german*/"ein Schimmelpilz"}
+                       Text{"an Odd Mushroom", /*french*/"un champignon étrange", /*spanish*/"un champiñón extraño", /*European*/"an Odd Mushroom", /*french*/"un champignon suspect", /*spanish*/"un champiñón extraño", /*italian*/"un fungo strano", /*german*/"ein Schimmelpilz"}
     );
 
     hintTable[ODD_POULTICE] = HintText::Item({
@@ -418,7 +418,7 @@ void HintTable_Init_Item() {
                        Text{"a trade quest item",               /*french*/"un objet de quête d'échanges", /*spanish*/"un objeto de una misión secundaria", /*italian*/"un oggetto da scambiare", /*german*/"ein Gegenstand zum Tauschen"},
                      },
                        // clear text
-                       Text{"an Odd Poultice", /*french*/"une mixture suspecte", /*spanish*/"una medicina rara", /*italian*/"una medicina strana", /*german*/"eine Moderpackung"}
+                       Text{"an Odd Poultice", /*french*/"une mixture étrange", /*spanish*/"una medicina rara", /*European*/"an Odd Poultice", /*french*/"une mixture suspecte", /*spanish*/"una medicina rara", /*italian*/"una medicina strana", /*german*/"eine Moderpackung"}
     );
 
     hintTable[POACHERS_SAW] = HintText::Item({
@@ -441,7 +441,7 @@ void HintTable_Init_Item() {
                        Text{"a sword",            /*french*/"une épée",                     /*spanish*/"una espada",                         /*italian*/"una spada",               /*german*/"ein Schwert"},
                      },
                        // clear text
-                       Text{"the Broken Goron's Sword", /*french*/"l'épée brisée de Goron", /*spanish*/"la espada goron rota", /*italian*/"la spada rotta dei Goron", /*german*/"das zerbrochene Goronen-Schwert"}
+                       Text{"the Broken Goron's Sword", /*french*/"l'épée Goron brisée", /*spanish*/"la espada goron rota", /*italian*/"la spada rotta dei Goron", /*german*/"das zerbrochene Goronen-Schwert"}
     );
 
     hintTable[PRESCRIPTION] = HintText::Item({
@@ -475,7 +475,7 @@ void HintTable_Init_Item() {
                        Text{"a trade quest item", /*french*/"un objet de quête d'échanges", /*spanish*/"un objeto de una misión secundaria", /*italian*/"un oggetto da scambiare", /*german*/"ein Gegenstand zum Tauschen"},
                      },
                        // clear text
-                       Text{"the Eyedrops", /*french*/"une phiole de super gouttes", /*spanish*/"las supergotas oculares", /*italian*/"il miglior collirio del mondo", /*german*/"die Augentropfen"}
+                       Text{"the Eyedrops", /*french*/"une fiole de supergouttes", /*spanish*/"las supergotas oculares", /*European*/"the Eyedrops", /*french*/"une fiole de super gouttes", /*spanish*/"las supergotas oculares", /*italian*/"il miglior collirio del mondo", /*german*/"die Augentropfen"}
     );
 
     hintTable[CLAIM_CHECK] = HintText::Item({
@@ -642,7 +642,7 @@ void HintTable_Init_Item() {
                        Text{"explosives",                         /*french*/"un paquet d'explosifs",               /*spanish*/"un montón de explosivos",          /*italian*/"un pacchetto di esplosivi", /*german*/"Sprengstoff"},
                      },
                        // clear text
-                       Text{"Bombchus", /*french*/"un paquet de Bombchus", /*spanish*/"unos bombchus", /*italian*/"alcune radiomine$", /*german*/"Krabbelminen$"}
+                       Text{"Bombchus", /*french*/"un paquet de Bombchus", /*spanish*/"unos bombchus", /*European*/"Bombchus", /*french*/"un paquet de missiles teigneux", /*spanish*/"unos bombchus", /*italian*/"alcune radiomine$", /*german*/"Krabbelminen$"}
     );
 
     hintTable[PROGRESSIVE_GORONSWORD] = HintText::Item({
@@ -777,7 +777,7 @@ void HintTable_Init_Item() {
                        Text{"a bottle", /*french*/"un flacon", /*spanish*/"una botella", /*italian*/"un'ampolla", /*german*/"eine Flasche"},
                      },
                        // clear text
-                       Text{"a Poe Bottle", /*french*/"un Esprit en flacon", /*spanish*/"un Poe en una botella", /*italian*/"un Poo in un'ampolla", /*german*/"eine Flasche (Irrlicht)"}
+                       Text{"a Poe Bottle", /*french*/"un esprit en flacon", /*spanish*/"un Poe en una botella", /*European*/"a Poe Bottle", /*french*/"un spectre en flacon", /*spanish*/"un Poe en una botella", /*italian*/"un Poo in un'ampolla", /*german*/"eine Flasche (Irrlicht)"}
     );
 
     hintTable[BOTTLE_WITH_BIG_POE] = HintText::Item({
@@ -789,7 +789,7 @@ void HintTable_Init_Item() {
                        Text{"a bottle", /*french*/"un flacon", /*spanish*/"una botella", /*italian*/"un'ampolla", /*german*/"eine Flasche"},
                      },
                        // clear text
-                       Text{"a Big Poe Bottle", /*french*/"une Ame en flacon", /*spanish*/"un Gran Poe en una botella", /*italian*/"un Grande Poo in un'ampolla", /*german*/"eine Flasche (Nachtschwärmer)"}
+                       Text{"a Big Poe Bottle", /*french*/"un grand esprit en flacon", /*spanish*/"un Gran Poe en una botella", /*European*/"a Big Poe Bottle", /*french*/"une âme en flacon", /*spanish*/"un Gran Poe en una botella", /*italian*/"un Grande Poo in un'ampolla", /*german*/"eine Flasche (Nachtschwärmer)"}
     );
 
     hintTable[RUTOS_LETTER] = HintText::Item({
@@ -1667,7 +1667,7 @@ void HintTable_Init_Item() {
                        Text{"some rupees", /*french*/"une quantité de rubis", /*spanish*/"una cantidad de rupias", /*italian*/"un po' di rupie$", /*german*/"ein paar Rubine$"},
                      },
                        // clear text
-                       Text{"a Purple Rupee", /*french*/"un rubis pourpre", /*spanish*/"una rupia morada", /*italian*/"una rupia viola", /*german*/"ein violetter Rubin"}
+                       Text{"a Purple Rupee", /*french*/"un rubis mauve", /*spanish*/"una rupia morada", /*European*/"a Purple Rupee", /*french*/"un rubis pourpre", /*spanish*/"una rupia morada", /*italian*/"una rupia viola", /*german*/"ein violetter Rubin"}
     );
 
     hintTable[HUGE_RUPEE] = HintText::Item({
@@ -1706,7 +1706,7 @@ void HintTable_Init_Item() {
                        Text{"something heart-shaped", /*french*/"une chose en forme de cœur", /*spanish*/"algo con forma de corazón", /*italian*/"qualcosa a forma di cuore", /*german*/"etwas herzförmiges"},
                      },
                        // clear text
-                       Text{"a Heart Container", /*french*/"un cœur d'énergie", /*spanish*/"un contenedor de corazón", /*italian*/"un portacuori", /*german*/"ein Herzcontainer"}
+                       Text{"a Heart Container", /*french*/"un réceptacle de cœur", /*spanish*/"un contenedor de corazón", /*italian*/"un portacuori", /*german*/"ein Herzcontainer"}
     );
 
     hintTable[ICE_TRAP] = HintText::Item({
@@ -1776,7 +1776,7 @@ void HintTable_Init_Item() {
                        Text{"explosives",                         /*french*/"un paquet d'explosifs",               /*spanish*/"un montón de explosivos",          /*italian*/"un pacchetto di esplosivi", /*german*/"Sprengstoff"},
                      },
                        // clear text
-                       Text{"Bombchus (5 pieces)", /*french*/"une demi-dizaine de Bombchus", /*spanish*/"unos (5) bombchus", /*italian*/"5 radiomine$", /*german*/"Krabbelminen (5 Stück)$"}
+                       Text{"Bombchus (5 pieces)", /*french*/"une demi-dizaine de Bombchus", /*spanish*/"unos (5) bombchus", /*European*/"Bombchus (5 pieces)", /*french*/"une demi-dizaine de missiles teigneux", /*spanish*/"unos (5) bombchus", /*italian*/"5 radiomine$", /*german*/"Krabbelminen (5 Stück)$"}
     );
 
     hintTable[BOMBCHU_10] = HintText::Item({
@@ -1791,7 +1791,7 @@ void HintTable_Init_Item() {
                        Text{"explosives",                         /*french*/"un paquet d'explosifs",               /*spanish*/"un montón de explosivos",          /*italian*/"un pacchetto di esplosivi", /*german*/"Sprengstoff"},
                      },
                        // clear text
-                       Text{"Bombchus (10 pieces)", /*french*/"une dizaine de Bombchus", /*spanish*/"unos (10) bombchus", /*italian*/"10 radiomine$", /*german*/"Krabbelminen (10 Stück)$"}
+                       Text{"Bombchus (10 pieces)", /*french*/"une dizaine de Bombchus", /*spanish*/"unos (10) bombchus", /*European*/"Bombchus (10 pieces)", /*french*/"une dizaine de missiles teigneux", /*spanish*/"unos (10) bombchus", /*italian*/"10 radiomine$", /*german*/"Krabbelminen (10 Stück)$"}
     );
 
     hintTable[BOMBCHU_20] = HintText::Item({
@@ -1806,7 +1806,7 @@ void HintTable_Init_Item() {
                        Text{"explosives",                         /*french*/"un paquet d'explosifs",               /*spanish*/"un montón de explosivos",          /*italian*/"un pacchetto di esplosivi", /*german*/"Sprengstoff"},
                      },
                        // clear text
-                       Text{"Bombchus (20 pieces)", /*french*/"une vingtaine de Bombchus", /*spanish*/"unos (20) bombchus", /*italian*/"20 radiomine$", /*german*/"Krabbelminen (20 Stück)$"}
+                       Text{"Bombchus (20 pieces)", /*french*/"une vingtaine de Bombchus", /*spanish*/"unos (20) bombchus", /*European*/"Bombchus (20 pieces)", /*french*/"une vingtaine de missiles teigneux", /*spanish*/"unos (20) bombchus", /*italian*/"20 radiomine$", /*german*/"Krabbelminen (20 Stück)$"}
     );
 
     //    BOMBCHU_DROP
@@ -1977,7 +1977,7 @@ void HintTable_Init_Item() {
 
     hintTable[SOUL_ITEM_KEESE] = HintText::Item({
                        // obscure text
-                       Text{"the Keese Soul", /*french*/"l'Essence de Saigneur", /*spanish*/"el alma de Keese", /*italian*/"l'anima di Pipistrello", /*german*/"die Seele von Flederbeißern"},
+                       Text{"the Keese Soul", /*french*/"l'Essence de chauve-souris", /*spanish*/"el alma de Keese", /*italian*/"l'anima di Pipistrello", /*german*/"die Seele von Flederbeißern"},
                      }, {
                        // ambiguous text
                        Text{"a Soul", /*french*/"une Essence", /*spanish*/"un alma", /*italian*/"un'anima", /*german*/"eine Seele"},
@@ -2004,7 +2004,7 @@ void HintTable_Init_Item() {
 
     hintTable[SOUL_ITEM_PEAHAT] = HintText::Item({
                        // obscure text
-                       Text{"the Peahat Soul", /*french*/"l'Essence de Peahat", /*spanish*/"el alma de Peahat", /*italian*/"l'anima di Bulbocottero", /*german*/"die Seele von Killeranas"},
+                       Text{"the Peahat Soul", /*french*/"l'Essence de Poislico", /*spanish*/"el alma de Peahat", /*European*/"the Peahat Soul", /*french*/"l'Essence de Peahat", /*spanish*/"el alma de Peahat", /*italian*/"l'anima di Bulbocottero", /*german*/"die Seele von Killeranas"},
                      }, {
                        // ambiguous text
                        Text{"a Soul", /*french*/"une Essence", /*spanish*/"un alma", /*italian*/"un'anima", /*german*/"eine Seele"},
@@ -2040,7 +2040,7 @@ void HintTable_Init_Item() {
 
     hintTable[SOUL_ITEM_TAILPASARAN] = HintText::Item({
                        // obscure text
-                       Text{"the Tailpasaran Soul", /*french*/"l'Essence de Tailpasaran", /*spanish*/"el alma de Tailpasaran", /*italian*/"l'anima di Trivolt", /*german*/"die Seele von Zangengreifern"},
+                       Text{"the Tailpasaran Soul", /*french*/"l'Essence de Téniachoc", /*spanish*/"el alma de Tailpasaran", /*European*/"the Tailpasaran Soul", /*french*/"l'Essence de Tailpasaran", /*spanish*/"el alma de Tailpasaran", /*italian*/"l'anima di Trivolt", /*german*/"die Seele von Zangengreifern"},
                      }, {
                        // ambiguous text
                        Text{"a Soul", /*french*/"une Essence", /*spanish*/"un alma", /*italian*/"un'anima", /*german*/"eine Seele"},
@@ -2094,7 +2094,7 @@ void HintTable_Init_Item() {
 
     hintTable[SOUL_ITEM_DEKU_BABA] = HintText::Item({
                        // obscure text
-                       Text{"the Deku Baba Soul", /*french*/"l'Essence de Mojo Baba", /*spanish*/"el alma de Baba Deku", /*italian*/"l'anima di Deku Baba", /*german*/"die Seele von Dekuranhas"},
+                       Text{"the Deku Baba Soul", /*french*/"l'Essence de Baba Mojo", /*spanish*/"el alma de Baba Deku", /*italian*/"l'anima di Deku Baba", /*german*/"die Seele von Dekuranhas"},
                      }, {
                        // ambiguous text
                        Text{"a Soul", /*french*/"une Essence", /*spanish*/"un alma", /*italian*/"un'anima", /*german*/"eine Seele"},
@@ -2130,7 +2130,7 @@ void HintTable_Init_Item() {
 
     hintTable[SOUL_ITEM_WALLMASTER] = HintText::Item({
                        // obscure text
-                       Text{"the Wallmaster and Floormaster Soul", /*french*/"les Essences de Clapoir et de Grossbaffe", /*spanish*/"el alma de Wallmaster y Floormaster", /*italian*/"l'anima di Mano Diabolica e Mano Rapace", /*german*/"die Seele von Todesgrapschern und Terrorgrapschern"},
+                       Text{"the Wallmaster and Floormaster Soul", /*french*/"les Essences de Main du mal et de Grossbaffe", /*spanish*/"el alma de Wallmaster y Floormaster", /*European*/"the Wallmaster and Floormaster Soul", /*french*/"les Essences de La Main et de Grossbaffe", /*spanish*/"el alma de Wallmaster y Floormaster", /*italian*/"l'anima di Mano Diabolica e Mano Rapace", /*german*/"die Seele von Todesgrapschern und Terrorgrapschern"},
                      }, {
                        // ambiguous text
                        Text{"a Soul", /*french*/"une Essence", /*spanish*/"un alma", /*italian*/"un'anima", /*german*/"eine Seele"},
@@ -2139,7 +2139,7 @@ void HintTable_Init_Item() {
 
     hintTable[SOUL_ITEM_REDEAD_GIBDO] = HintText::Item({
                        // obscure text
-                       Text{"the ReDead and Gibdo Soul", /*french*/"les Essences d'Effroi et de Gibdo", /*spanish*/"el alma de ReDead y Gibdo", /*italian*/"l'anima di Zombie e Ghibdo", /*german*/"die Seele von Zombies und Wickel-Zombies"},
+                       Text{"the ReDead and Gibdo Soul", /*french*/"les Essences de Remort et de Gibdo", /*spanish*/"el alma de ReDead y Gibdo", /*European*/"the ReDead and Gibdo Soul", /*french*/"les Essences d'Effroi et de Gibdo", /*spanish*/"el alma de ReDead y Gibdo", /*italian*/"l'anima di Zombie e Ghibdo", /*german*/"die Seele von Zombies und Wickel-Zombies"},
                      }, {
                        // ambiguous text
                        Text{"a Soul", /*french*/"une Essence", /*spanish*/"un alma", /*italian*/"un'anima", /*german*/"eine Seele"},
@@ -2157,7 +2157,7 @@ void HintTable_Init_Item() {
 
     hintTable[SOUL_ITEM_LIKE_LIKE] = HintText::Item({
                        // obscure text
-                       Text{"the Like Like Soul", /*french*/"l'Essence de Pudding", /*spanish*/"el alma de Like Like", /*italian*/"l'anima di Like Like", /*german*/"die Seele von Raubschleimen"},
+                       Text{"the Like Like Soul", /*french*/"l'Essence de Like Like", /*spanish*/"el alma de Like Like", /*italian*/"l'anima di Like Like", /*german*/"die Seele von Raubschleimen"},
                      }, {
                        // ambiguous text
                        Text{"a Soul", /*french*/"une Essence", /*spanish*/"un alma", /*italian*/"un'anima", /*german*/"eine Seele"},
@@ -2184,7 +2184,7 @@ void HintTable_Init_Item() {
 
     hintTable[SOUL_ITEM_SPIKE] = HintText::Item({
                        // obscure text
-                       Text{"the Spike Soul", /*french*/"l'Essence de Spike", /*spanish*/"el alma de Erizo Metálico", /*italian*/"l'anima di Riccio di Ferro", /*german*/"die Seele von Stachelsteinen"},
+                       Text{"the Spike Soul", /*french*/"l'Essence de Hérisson métallique", /*spanish*/"el alma de Erizo Metálico", /*European*/"the Spike Soul", /*french*/"l'Essence de Spike", /*spanish*/"el alma de Erizo Metálico", /*italian*/"l'anima di Riccio di Ferro", /*german*/"die Seele von Stachelsteinen"},
                      }, {
                        // ambiguous text
                        Text{"a Soul", /*french*/"une Essence", /*spanish*/"un alma", /*italian*/"un'anima", /*german*/"eine Seele"},
@@ -2202,7 +2202,7 @@ void HintTable_Init_Item() {
 
     hintTable[SOUL_ITEM_FREEZARD] = HintText::Item({
                        // obscure text
-                       Text{"the Freezard Soul", /*french*/"l'Essence de Mr. Freezzard", /*spanish*/"el alma de Freezard", /*italian*/"l'anima di Freezard", /*german*/"die Seele von Frostechsen"},
+                       Text{"the Freezard Soul", /*french*/"l'Essence de Glazzard", /*spanish*/"el alma de Freezard", /*European*/"the Freezard Soul", /*french*/"l'Essence de Freezard", /*spanish*/"el alma de Freezard", /*italian*/"l'anima di Freezard", /*german*/"die Seele von Frostechsen"},
                      }, {
                        // ambiguous text
                        Text{"a Soul", /*french*/"une Essence", /*spanish*/"un alma", /*italian*/"un'anima", /*german*/"eine Seele"},
@@ -2220,7 +2220,7 @@ void HintTable_Init_Item() {
 
     hintTable[SOUL_ITEM_WOLFOS] = HintText::Item({
                        // obscure text
-                       Text{"the Wolfos Soul", /*french*/"l'Essence de Lobo", /*spanish*/"el alma de Wolfos", /*italian*/"l'anima di Lupo", /*german*/"die Seele von Wolfos"},
+                       Text{"the Wolfos Soul", /*french*/"l'Essence de Loufos", /*spanish*/"el alma de Wolfos", /*European*/"the Wolfos Soul", /*french*/"l'Essence de Wolfos", /*spanish*/"el alma de Wolfos", /*italian*/"l'anima di Lupo", /*german*/"die Seele von Wolfos"},
                      }, {
                        // ambiguous text
                        Text{"a Soul", /*french*/"une Essence", /*spanish*/"un alma", /*italian*/"un'anima", /*german*/"eine Seele"},
@@ -2265,7 +2265,7 @@ void HintTable_Init_Item() {
 
     hintTable[SOUL_ITEM_DARK_LINK] = HintText::Item({
                        // obscure text
-                       Text{"the Dark @ Soul", /*french*/"l'Essence de l'ombre de @", /*spanish*/"el alma de @ Oscuro", /*italian*/"l'anima di @ Oscuro", /*german*/"die Seele von schwarzen @"},
+                       Text{"the Dark @ Soul", /*french*/"l'Essence de @ noir", /*spanish*/"el alma de @ Oscuro", /*italian*/"l'anima di @ Oscuro", /*german*/"die Seele von schwarzen @"},
                      }, {
                        // ambiguous text
                        Text{"a Soul", /*french*/"une Essence", /*spanish*/"un alma", /*italian*/"un'anima", /*german*/"eine Seele"},
@@ -2283,7 +2283,7 @@ void HintTable_Init_Item() {
 
     hintTable[SOUL_ITEM_DEAD_HAND] = HintText::Item({
                        // obscure text
-                       Text{"the Dead Hand Soul", /*french*/"l'Essence de Poigneur", /*spanish*/"el alma de Mano Muerta", /*italian*/"l'anima di Smaniosso", /*german*/"die Seele von Hirnsaugern"},
+                       Text{"the Dead Hand Soul", /*french*/"l'Essence de Main mortelle", /*spanish*/"el alma de Mano Muerta", /*European*/"the Dead Hand Soul", /*french*/"l'Essence de Poigneur", /*spanish*/"el alma de Mano Muerta", /*italian*/"l'anima di Smaniosso", /*german*/"die Seele von Hirnsaugern"},
                      }, {
                        // ambiguous text
                        Text{"a Soul", /*french*/"une Essence", /*spanish*/"un alma", /*italian*/"un'anima", /*german*/"eine Seele"},
@@ -2292,7 +2292,7 @@ void HintTable_Init_Item() {
 
     hintTable[SOUL_ITEM_GERUDO] = HintText::Item({
                        // obscure text
-                       Text{"the Gerudo and Iron Knuckle Soul", /*french*/"l'Essence de Voleuse Gerudo et de Hache-Viande", /*spanish*/"el alma de Gerudo y Nudillo de hierro", /*italian*/"l'anima di Gerudo e Guerriero d'acciaio", /*german*/"die Seele von Gerudos und Eisenprinzen"},
+                       Text{"the Gerudo and Iron Knuckle Soul", /*french*/"l'Essence de Voleuse Gerudo et de Poing de fer", /*spanish*/"el alma de Gerudo y Nudillo de hierro", /*European*/"the Gerudo and Iron Knuckle Soul", /*french*/"l'Essence de Voleuse Gerudo et de Hache-Viande", /*spanish*/"el alma de Gerudo y Nudillo de hierro", /*italian*/"l'anima di Gerudo e Guerriero d'acciaio", /*german*/"die Seele von Gerudos und Eisenprinzen"},
                      }, {
                        // ambiguous text
                        Text{"a Soul", /*french*/"une Essence", /*spanish*/"un alma", /*italian*/"un'anima", /*german*/"eine Seele"},
