@@ -72,7 +72,7 @@ void HintTable_Init() {
 
     hintTable[SONG_FROM_COMPOSERS_GRAVE] = HintText::Sometimes({
                        // obscure text
-                       Text{"#ReDead in the Composers' Grave# guard", /*french*/"les #Remorts du tombeau des compositeurs# protègent", /*spanish*/"los #ReDeads del Panteón Real# guardan",  /*italian*/"gli #zombie nella tomba della famiglia reale# proteggono", /*german*/"#nahe Zombies im Königsgrab#, |wäre|wären|"},
+                       Text{"#ReDead in the Composers' Grave# guard", /*french*/"les #Remorts du tombeau des compositeurs# protègent", /*spanish*/"los #ReDeads del Panteón Real# guardan",  /*European*/"#ReDead in the Composers' Grave# guard", /*french*/"les #effrois du tombeau des compositeurs# protègent", /*spanish*/"los #ReDeads del Panteón Real# guardan",  /*italian*/"gli #zombie nella tomba della famiglia reale# proteggono", /*german*/"#nahe Zombies im Königsgrab#, |wäre|wären|"},
                        Text{"the #Composer Brothers wrote#",          /*french*/"le #trésor des compositeurs# est",                    /*spanish*/"los #hermanos compositores escribieron#", /*italian*/"i #fratelli Mortaldi scrissero#",                          /*german*/"das, von den #Gebrüder Brahmstein komponierte Lied#, |wäre|wären|"},
     });
 
@@ -112,7 +112,7 @@ void HintTable_Init() {
                        Text{"#ghost hunters# will be rewarded with", /*french*/"#les chasseurs de fantômes# sont récompensés avec", /*spanish*/"los #cazafantasmas# son premiados con", /*italian*/"gli #acchiappafantasmi# saranno ricompensati con", /*german*/"das Kopfgeld der #Geisterjäger#, |wäre|wären|"},
                      }, {},
                        // clear text
-                       Text{"catching #Big Poes# leads to", /*french*/"#d'attraper des fantômes# donne", /*spanish*/"hacerte con #Grandes Poes# conduce a", /*italian*/"chi cattura #Grandi Poo# viene ripagato con", /*german*/"bei #gefangenen Nachtschwärmern#, |wäre|wären|"}
+                       Text{"catching #Big Poes# leads to", /*french*/"#attraper des fantômes# donne", /*spanish*/"hacerte con #Grandes Poes# conduce a", /*italian*/"chi cattura #Grandi Poo# viene ripagato con", /*german*/"bei #gefangenen Nachtschwärmern#, |wäre|wären|"}
     );
 
     hintTable[DEKU_THEATER_SKULL_MASK] = HintText::Sometimes({
@@ -135,17 +135,17 @@ void HintTable_Init() {
 
     hintTable[DMT_TRADE_BROKEN_SWORD] = HintText::Sometimes({
                        // obscure text
-                       Text{"a #blinded Biggoron# entrusts", /*french*/"un #Grogoron aveuglé# confie", /*spanish*/"un #miope Biggoron# otorga", /*italian*/"un #Grande Goron accecato# consegna", /*german*/"bei einem #erblindeten Goronen#, |wäre|wären|"},
+                       Text{"a #blinded Biggoron# entrusts", /*french*/"un #Grogoron aveuglé# confie", /*spanish*/"un #miope Biggoron# otorga", /*European*/"a #blinded Biggoron# entrusts", /*french*/"un #Biggoron aveuglé# confie", /*spanish*/"un #miope Biggoron# otorga", /*italian*/"un #Grande Goron accecato# consegna", /*german*/"bei einem #erblindeten Goronen#, |wäre|wären|"},
     });
 
     hintTable[DMT_TRADE_EYEDROPS] = HintText::Sometimes({
                        // obscure text
-                       Text{"while you wait, #Biggoron# gives", /*french*/"pendant que tu attends, #Grogoron# donne", /*spanish*/"#Biggoron# está a la espera de otorgar", /*italian*/"#Grande Goron# paga il suo oculista con", /*german*/"#Biggorons# Entschädigung fürs Warten, |wäre|wären|"},
+                       Text{"while you wait, #Biggoron# gives", /*french*/"pendant que tu attends, #Grogoron# donne", /*spanish*/"#Biggoron# está a la espera de otorgar", /*European*/"while you wait, #Biggoron# gives", /*french*/"pendant que tu attends, #Biggoron# donne", /*spanish*/"#Biggoron# está a la espera de otorgar", /*italian*/"#Grande Goron# paga il suo oculista con", /*german*/"#Biggorons# Entschädigung fürs Warten, |wäre|wären|"},
     });
 
     hintTable[DMT_TRADE_CLAIM_CHECK] = HintText::Sometimes({
                        // obscure text
-                       Text{"#Biggoron# crafts", /*french*/"#Grogoron# fabrique", /*spanish*/"#Biggoron# forja", /*italian*/"#Grande Goron# forgia", /*german*/"#Biggorons# Meisterwerk, |wäre|wären|"},
+                       Text{"#Biggoron# crafts", /*french*/"#Grogoron# fabrique", /*spanish*/"#Biggoron# forja", /*European*/"#Biggoron# crafts", /*french*/"#Biggoron# fabrique", /*spanish*/"#Biggoron# forja", /*italian*/"#Grande Goron# forgia", /*german*/"#Biggorons# Meisterwerk, |wäre|wären|"},
     });
 
     hintTable[KAK_50_GOLD_SKULLTULA_REWARD] = HintText::Sometimes({
@@ -194,17 +194,17 @@ void HintTable_Init() {
                        Text{"#chucking chickens# gifts",    /*french*/"#lancer des poulets# donne", /*spanish*/"#reunir a unos emplumados# premia", /*italian*/"#lanciare pollame# procura",     /*german*/"nach einer #Huhneinzäunung#, |wäre|wären|"},
                      }, {},
                        // clear text
-                       Text{"#collecting cuccos# rewards", /*french*/"#rapporter les Cocottes# donne", /*spanish*/"#hacerte con todos los cucos# premia", /*italian*/"#ritrovare coccò# procura", /*german*/"Anjus Belohnung fürs #Einfangen ihrer Hühner#, |wäre|wären|"}
+                       Text{"#collecting cuccos# rewards", /*french*/"#rapporter les poulettes# donne", /*spanish*/"#hacerte con todos los cucos# premia", /*European*/"#collecting cuccos# rewards", /*french*/"#rapporter les Cocottes# donne", /*spanish*/"#hacerte con todos los cucos# premia", /*italian*/"#ritrovare coccò# procura", /*german*/"Anjus Belohnung fürs #Einfangen ihrer Hühner#, |wäre|wären|"}
     );
 
     hintTable[KAK_TRADE_POCKET_CUCCO] = HintText::Sometimes({
                        // obscure text
-                       Text{"an adult's #happy Cucco# awards", /*french*/"un adulte avec une #poulette joyeuse# obtient", /*spanish*/"un #alegre cuco# en la madurez otorga", /*italian*/"un adulto con un #coccò felice# otterrà", /*german*/"ein Geschenk #glücklicher Hühner#, |wäre|wären|"},
+                       Text{"an adult's #happy Cucco# awards", /*french*/"un adulte avec une #poulette joyeuse# obtient", /*spanish*/"un #alegre cuco# en la madurez otorga", /*European*/"an adult's #happy Cucco# awards", /*french*/"un adulte avec une #cocotte joyeuse# obtient", /*spanish*/"un #alegre cuco# en la madurez otorga", /*italian*/"un adulto con un #coccò felice# otterrà", /*german*/"ein Geschenk #glücklicher Hühner#, |wäre|wären|"},
     });
 
     hintTable[KAK_TRADE_ODD_MUSHROOM] = HintText::Sometimes({
                        // obscure text
-                       Text{"the #potion shop lady# entrusts", /*french*/"la #gribiche du magasin de potion# confie", /*spanish*/"la #señora de la tienda de pociones# otorga", /*italian*/"la #vecchietta del negozio di pozioni# consegna", /*german*/"#Omas Allerlei#, |wäre|wären|"},
+                       Text{"the #potion shop lady# entrusts", /*french*/"la #gribiche du magasin de potion# confie", /*spanish*/"la #señora de la tienda de pociones# otorga", /*European*/"the #potion shop lady# entrusts", /*french*/"la #vieille mégère apothicaire# confie", /*spanish*/"la #señora de la tienda de pociones# otorga", /*italian*/"la #vecchietta del negozio di pozioni# consegna", /*german*/"#Omas Allerlei#, |wäre|wären|"},
     });
 
     hintTable[GC_DARUNIAS_JOY] = HintText::Sometimes({
@@ -222,7 +222,7 @@ void HintTable_Init() {
 
     hintTable[LW_TRADE_COJIRO] = HintText::Sometimes({
                        // obscure text
-                       Text{"returning a #special Cucco# awards", /*french*/"ramener une #poulette précieuse# donne", /*spanish*/"quien devuelva un #cuco especial# encontrará", /*italian*/"se restituisci un #coccò speciale# al suo proprietario riceverai", /*german*/"der Lohn fürs Überbringen eines #besonderen Huhns#, |wäre|wären|"},
+                       Text{"returning a #special Cucco# awards", /*french*/"ramener une #poulette précieuse# donne", /*spanish*/"quien devuelva un #cuco especial# encontrará", /*European*/"returning a #special Cucco# awards", /*french*/"ramener une #cocotte précieuse# donne", /*spanish*/"quien devuelva un #cuco especial# encontrará", /*italian*/"se restituisci un #coccò speciale# al suo proprietario riceverai", /*german*/"der Lohn fürs Überbringen eines #besonderen Huhns#, |wäre|wären|"},
     });
 
     hintTable[LW_TRADE_ODD_POULTICE] = HintText::Sometimes({
@@ -235,12 +235,12 @@ void HintTable_Init() {
                        Text{"staring into #the sun# grants", /*french*/"regarder #le soleil# donne", /*spanish*/"#mirar al sol# revela", /*italian*/"#guardare il sole# rivela", /*german*/"ein #Blick in die Sonne#, |wäre|wären|"},
                      }, {},
                        // clear text
-                       Text{"shooting #the sun# grants", /*french*/"tirer une flèche dans #sur le soleil# donne", /*spanish*/"#disparar al sol# revela", /*italian*/"scoccare #una freccia verso il sole# rivela", /*german*/"ein #sonniger Schuss#, |wäre|wären|"}
+                       Text{"shooting #the sun# grants", /*french*/"tirer une flèche #sur le soleil# donne", /*spanish*/"#disparar al sol# revela", /*italian*/"scoccare #una freccia verso il sole# rivela", /*german*/"ein #sonniger Schuss#, |wäre|wären|"}
     );
 
     hintTable[LH_TRADE_FROG] = HintText::Sometimes({
                        // obscure text
-                       Text{"#Lake Hylia's scientist# hurriedly entrusts", /*french*/"le #scientifique du lac# confie rapidement", /*spanish*/"el #científico del Lago Hylia# otorga con prisa", /*italian*/"#lo scienziato del Lago Hylia# produce", /*german*/"die Tauschware des #Forschers am Hylia-See#, |wäre|wären|"},
+                       Text{"#Lake Hylia's scientist# hurriedly entrusts", /*french*/"le #scientifique du lac# confie hâtivement", /*spanish*/"el #científico del Lago Hylia# otorga con prisa", /*italian*/"#lo scienziato del Lago Hylia# produce", /*german*/"die Tauschware des #Forschers am Hylia-See#, |wäre|wären|"},
     });
 
     hintTable[MARKET_TREASURE_CHEST_GAME_REWARD] = HintText::Sometimes({
@@ -390,7 +390,7 @@ void HintTable_Init() {
 
     hintTable[ZD_TRADE_PRESCRIPTION] = HintText::Sometimes({
                        // obscure text
-                       Text{"#King Zora# hurriedly entrusts", /*french*/"le #roi Zora# confie rapidement", /*spanish*/"el #Rey Zora# otorga con prisa", /*italian*/"#Re Zora# affida frettolosamente", /*german*/"#König Zoras# Tauschware, |wäre|wären|"},
+                       Text{"#King Zora# hurriedly entrusts", /*french*/"le #roi Zora# confie hâtivement", /*spanish*/"el #Rey Zora# otorga con prisa", /*italian*/"#Re Zora# affida frettolosamente", /*german*/"#König Zoras# Tauschware, |wäre|wären|"},
     });
 
     hintTable[DMC_DEKU_SCRUB] = HintText::Sometimes({
@@ -430,10 +430,10 @@ void HintTable_Init() {
 
     hintTable[JABU_JABUS_BELLY_BOOMERANG_CHEST] = HintText::Sometimes({
                        // obscure text
-                       Text{"a school of #stingers swallowed by a deity# guard", /*french*/"les #raies dans un gardien# protègent", /*spanish*/"unos de #stingers engullidos por cierta deidad# guardan", /*italian*/"una divinità ha inghiottito #un banco di trigoni volanti# con", /*german*/"nahe eines #verschluckten Fischschwarms#, |wäre|wären|"},
+                       Text{"a school of #stingers swallowed by a deity# guard", /*french*/"les #mantas dans un gardien# protègent", /*spanish*/"unos de #stingers engullidos por cierta deidad# guardan", /*italian*/"una divinità ha inghiottito #un banco di trigoni volanti# con", /*german*/"nahe eines #verschluckten Fischschwarms#, |wäre|wären|"},
                      }, {},
                        // clear text
-                       Text{"a school of #stingers swallowed by Jabu-Jabu# guard", /*french*/"les #raies dans Jabu-Jabu# protègent", /*spanish*/"unos #stingers engullidos por Jabu-Jabu# guardan", /*italian*/"#un banco di trigoni volanti# nella pancia di Jabu Jabu protegge", /*german*/"#nahe Fischen in Jabu-Jabus Bauch#, |wäre|wären|"}
+                       Text{"a school of #stingers swallowed by Jabu-Jabu# guard", /*french*/"les #mantas dans Jabu-Jabu# protègent", /*spanish*/"unos #stingers engullidos por Jabu-Jabu# guardan", /*italian*/"#un banco di trigoni volanti# nella pancia di Jabu Jabu protegge", /*german*/"#nahe Fischen in Jabu-Jabus Bauch#, |wäre|wären|"}
     );
 
     hintTable[JABU_JABUS_BELLY_MQ_GS_INVISIBLE_ENEMIES_ROOM] = HintText::Sometimes({
@@ -449,7 +449,7 @@ void HintTable_Init() {
                        Text{"a #cow swallowed by a deity# gifts", /*french*/"la #vache dans le gardien# donne", /*spanish*/"una #vaca engullida por cierta deidad# brinda", /*italian*/"una #mucca inghiottita da una divinità# dona", /*german*/"die Milch, einer #von einer Gottheit verschluckten Kuh#, |wäre|wären|"},
                      }, {},
                        // clear text
-                       Text{"a #cow swallowed by Jabu-Jabu# gifts", /*french*/"la #vache avallée par Jabu-Jabu# donne", /*spanish*/"una #vaca engullida por Jabu-Jabu# brinda", /*italian*/"una #mucca inghiottita da Jabu Jabu# dona", /*german*/"die Milch einer #Kuh in Jabu-Jabus Bauch#, |wäre|wären|"}
+                       Text{"a #cow swallowed by Jabu-Jabu# gifts", /*french*/"les #vaches avalées par Jabu-Jabu# donnent", /*spanish*/"una #vaca engullida por Jabu-Jabu# brinda", /*italian*/"una #mucca inghiottita da Jabu Jabu# dona", /*german*/"die Milch einer #Kuh in Jabu-Jabus Bauch#, |wäre|wären|"}
     );
 
     hintTable[FIRE_TEMPLE_SCARECROW_CHEST] = HintText::Sometimes({
@@ -513,7 +513,7 @@ void HintTable_Init() {
                        Text{"hidden in a #box under the lake# lies", /*french*/"dans une #boîte sous le lac# gît", /*spanish*/"en una #caja bajo el lago# yace", /*italian*/"in una #cassa sotto il lago# puoi trovare", /*german*/"in einer #Kiste am Grund des Sees#, |wäre|wären|"},
                      }, {},
                        // clear text
-                       Text{"hidden in a #box in the Water Temple# lies", /*french*/"dans une #boîte dans le temple de l'eau# gît", /*spanish*/"en una #caja del Templo del Agua# yace", /*italian*/"in una #cassa nel Santuario dell'Acqua# puoi trovare", /*german*/"in einer #Kiste des Wassertempels#, |wäre|wären|"}
+                       Text{"hidden in a #box in the Water Temple# lies", /*french*/"dans une #boîte du temple de l'eau# gît", /*spanish*/"en una #caja del Templo del Agua# yace", /*italian*/"in una #cassa nel Santuario dell'Acqua# puoi trovare", /*german*/"in einer #Kiste des Wassertempels#, |wäre|wären|"}
     );
 
     hintTable[WATER_TEMPLE_MQ_GS_FREESTANDING_KEY_AREA] = HintText::Sometimes({
@@ -560,7 +560,7 @@ void HintTable_Init() {
                        Text{"a #nether dweller in the well# holds", /*french*/"le #spectre qui réside dans le puits# a", /*spanish*/"el #temido morador del pozo# concede",       /*italian*/"un #tipo manesco sottoterra# possiede", /*german*/"nahe dem #unterirdischen Bewohner des Brunnens#, |wäre|wären|"},
                      }, {},
                        // clear text
-                       Text{"#Dead Hand in the well# holds", /*french*/"le #Poigneur dans le puits# cache", /*spanish*/"la #Mano Muerta del pozo# concede", /*italian*/"lo #Smaniosso nel pozzo# possiede", /*german*/"nahe dem #Todesgrapscher des Brunnens#, |wäre|wären|"}
+                       Text{"#Dead Hand in the well# holds", /*french*/"le #Main mortelle dans le fond du puits# cache", /*spanish*/"la #Mano Muerta del pozo# concede", /*European*/"#Dead Hand in the well# holds", /*french*/"le #Poigneur dans le puits# cache", /*spanish*/"la #Mano Muerta del pozo# concede", /*italian*/"lo #Smaniosso nel pozzo# possiede", /*german*/"nahe dem #Todesgrapscher des Brunnens#, |wäre|wären|"}
     );
 
     hintTable[BOTTOM_OF_THE_WELL_MQ_COMPASS_CHEST] = HintText::Sometimes({
@@ -569,7 +569,7 @@ void HintTable_Init() {
                        Text{"a #nether dweller in the well# holds", /*french*/"le #spectre qui réside dans le puits# a", /*spanish*/"el #temido morador del pozo# concede",       /*italian*/"un #tipo manesco sottoterra# possiede", /*german*/"nahe dem #unterirdischen Bewohner des Brunnens#, |wäre|wären|"},
                      }, {},
                        // clear text
-                       Text{"#Dead Hand in the well# holds", /*french*/"le #Poigneur dans le puits# cache", /*spanish*/"la #Mano Muerta del pozo# concede", /*italian*/"lo #Smaniosso nel pozzo# possiede", /*german*/"nahe dem #Todesgrapscher des Brunnens#, |wäre|wären|"}
+                       Text{"#Dead Hand in the well# holds", /*french*/"le #Main mortelle dans le fond du puits# cache", /*spanish*/"la #Mano Muerta del pozo# concede", /*European*/"#Dead Hand in the well# holds", /*french*/"le #Poigneur dans le puits# cache", /*spanish*/"la #Mano Muerta del pozo# concede", /*italian*/"lo #Smaniosso nel pozzo# possiede", /*german*/"nahe dem #Todesgrapscher des Brunnens#, |wäre|wären|"}
     );
 
     hintTable[SPIRIT_TEMPLE_SILVER_GAUNTLETS_CHEST] = HintText::Sometimes({
@@ -720,12 +720,12 @@ void HintTable_Init() {
 
     hintTable[THE_LOST_WOODS] = HintText::Exclude({
                      // obscure text
-                     Text{"the Lost Woods", /*french*/"la forêt des méandres", /*spanish*/"el Bosque Perdido", /*italian*/"il bosco perduto", /*german*/"in den Verlorenen Wäldern"},
+                     Text{"the Lost Woods", /*french*/"la forêt des méandres", /*spanish*/"el Bosque Perdido", /*European*/"the Lost Woods", /*french*/"les bois perdus", /*spanish*/"el Bosque Perdido", /*italian*/"il bosco perduto", /*german*/"in den Verlorenen Wäldern"},
     });
 
     hintTable[SACRED_FOREST_MEADOW] = HintText::Exclude({
                      // obscure text
-                     Text{"Sacred Forest Meadow", /*french*/"le bosquet sacré", /*spanish*/"la pradera sagrada del bosque", /*italian*/"la radura sacra", /*german*/"auf der Heiligen Lichtung"},
+                     Text{"Sacred Forest Meadow", /*french*/"la clairière sacrée de la forêt", /*spanish*/"la pradera sagrada del bosque", /*European*/"Sacred Forest Meadow", /*french*/"le bosquet sacré", /*spanish*/"la pradera sagrada del bosque", /*italian*/"la radura sacra", /*german*/"auf der Heiligen Lichtung"},
     });
 
     hintTable[HYRULE_FIELD] = HintText::Exclude({
@@ -800,7 +800,7 @@ void HintTable_Init() {
 
     hintTable[DEATH_MOUNTAIN_CRATER] = HintText::Exclude({
                      // obscure text
-                     Text{"Death Mountain Crater", /*french*/"le cratère du mont de la Mort", /*spanish*/"el cráter de la Montaña de la Muerte", /*italian*/"il cratere del Monte Morte", /*german*/"im Todeskrater"},
+                     Text{"Death Mountain Crater", /*french*/"le cratère du mont de la Mort", /*spanish*/"el cráter de la Montaña de la Muerte", /*European*/"Death Mountain Crater", /*french*/"le cratère du Mont du péril", /*spanish*/"el cráter de la Montaña de la Muerte", /*italian*/"il cratere del Monte Morte", /*german*/"im Todeskrater"},
     });
 
     hintTable[ZORAS_RIVER] = HintText::Exclude({
@@ -810,7 +810,7 @@ void HintTable_Init() {
 
     hintTable[ZORAS_DOMAIN] = HintText::Exclude({
                      // obscure text
-                     Text{"Zora's Domain", /*french*/"le domaine des Zoras", /*spanish*/"la Región de los Zora", /*italian*/"il villaggio degli Zora", /*german*/"in Zoras Reich"},
+                     Text{"Zora's Domain", /*french*/"le domaine des Zoras", /*spanish*/"la Región de los Zora", /*European*/"Zora's Domain", /*french*/"le domaine Zora", /*spanish*/"la Región de los Zora", /*italian*/"il villaggio degli Zora", /*german*/"in Zoras Reich"},
     });
 
     hintTable[ZORAS_FOUNTAIN] = HintText::Exclude({
@@ -905,7 +905,7 @@ void HintTable_Init() {
 
     hintTable[MARKET_BOMBCHU_SHOP] = HintText::Region({
                      // obscure text
-                     Text{"the #Bombchu Shop#", /*french*/"le #magasin de Bombchus#", /*spanish*/"la Tienda Bombchu", /*italian*/"il #negozio di radiomine#", /*german*/"im #Krabbelminenladen#"},
+                     Text{"the #Bombchu Shop#", /*french*/"le #magasin de Bombchus#", /*spanish*/"la Tienda Bombchu", /*European*/"the #Bombchu Shop#", /*french*/"la #boutique de missiles teigneux#", /*spanish*/"la Tienda Bombchu", /*italian*/"il #negozio di radiomine#", /*german*/"im #Krabbelminenladen#"},
     });
 
     hintTable[MARKET_MAN_IN_GREEN_HOUSE] = HintText::Region({
@@ -990,12 +990,12 @@ void HintTable_Init() {
 
     hintTable[KAK_POTION_SHOP_FRONT] = HintText::Region({
                      // obscure text
-                     Text{"the #Kakariko Potion Shop#", /*french*/"l'#apothicaire de Cocorico#", /*spanish*/"la tienda de pociones de Kakariko", /*italian*/"il #negozio di pozioni di Calbarico#", /*german*/"im #Magie-Laden von Kakariko#"},
+                     Text{"the #Kakariko Potion Shop#", /*french*/"la #boutique de potions de Cocorico#", /*spanish*/"la tienda de pociones de Kakariko", /*European*/"the #Kakariko Potion Shop#", /*french*/"l'#apothicaire de Cocorico#", /*spanish*/"la tienda de pociones de Kakariko", /*italian*/"il #negozio di pozioni di Calbarico#", /*german*/"im #Magie-Laden von Kakariko#"},
     });
 
     hintTable[KAK_POTION_SHOP_BACK] = HintText::Region({
                      // obscure text
-                     Text{"the #Kakariko Potion Shop#", /*french*/"l'#apothicaire de Cocorico#", /*spanish*/"la tienda de pociones de Kakariko", /*italian*/"il #negozio di pozioni di Calbarico#", /*german*/"im #Magie-Laden von Kakariko#"},
+                     Text{"the #Kakariko Potion Shop#", /*french*/"la #boutique de potions de Cocorico#", /*spanish*/"la tienda de pociones de Kakariko", /*European*/"the #Kakariko Potion Shop#", /*french*/"l'#apothicaire de Cocorico#", /*spanish*/"la tienda de pociones de Kakariko", /*italian*/"il #negozio di pozioni di Calbarico#", /*german*/"im #Magie-Laden von Kakariko#"},
     });
 
     hintTable[KAK_SHOOTING_GALLERY] = HintText::Region({
@@ -1040,7 +1040,7 @@ void HintTable_Init() {
 
     hintTable[GRAVEYARD_HEART_PIECE_GRAVE] = HintText::Region({
                      // obscure text
-                     Text{"a chest spawned by #Sun's Song#", /*french*/"le #tombeau avec un mort#", /*spanish*/"la #tumba de la Canción del Sol#", /*italian*/"una #tomba con uno zombie solitario#", /*german*/"in einem Grab mit #einem Zombie#"},
+                     Text{"a chest spawned by #Sun's Song#", /*french*/"le #coffre appelé par le Chant du soleil#", /*spanish*/"la #tumba de la Canción del Sol#", /*italian*/"una #tomba con uno zombie solitario#", /*german*/"in einem Grab mit #einem Zombie#"},
     });
 
     hintTable[GRAVEYARD_COMPOSERS_GRAVE] = HintText::Region({
@@ -1324,7 +1324,7 @@ void HintTable_Init() {
 
     hintTable[JUNK21] = HintText::Junk({
                      // obscure text
-                     Text{"I found you, faker!", /*french*/"Ah-ha! Je t'ai trouvé!", /*spanish*/"¡Ahí estás, impostor!", /*italian*/"Ti ho trovato, impostore!", /*german*/"Ich habe dich gefunden, Schwindler!"},
+                     Text{"I found you, faker!", /*french*/"Je t'ai retrouvé, imposteur!", /*spanish*/"¡Ahí estás, impostor!", /*italian*/"Ti ho trovato, impostore!", /*german*/"Ich habe dich gefunden, Schwindler!"},
     });
 
     hintTable[JUNK22] = HintText::Junk({
@@ -1424,7 +1424,7 @@ void HintTable_Init() {
 
     hintTable[JUNK41] = HintText::Junk({
                      // obscure text
-                     Text{"They say if you use Strength on the truck, you can find Mew.", /*french*/"Selon moi, #Mew# se trouve dessous le camion... Duh!", /*spanish*/"Según dicen, puedes hallar un Mew usando Fuerza contra el camión de Ciudad Carmín.", /*italian*/"Ho sentito dire che usando Forza sul camioncino, puoi trovare Mew.", /*german*/"Man erzählt sich, Mew wäre unter dem LKW bei der M.S. Anne zu finden. Man benötigt Stärke um ihn zu verschieben."},
+                     Text{"They say if you use Strength on the truck, you can find Mew.", /*french*/"Selon moi, #Mew# se trouve sous le camion... Duh!", /*spanish*/"Según dicen, puedes hallar un Mew usando Fuerza contra el camión de Ciudad Carmín.", /*italian*/"Ho sentito dire che usando Forza sul camioncino, puoi trovare Mew.", /*german*/"Man erzählt sich, Mew wäre unter dem LKW bei der M.S. Anne zu finden. Man benötigt Stärke um ihn zu verschieben."},
     });
 
     hintTable[JUNK42] = HintText::Junk({ // SFX: Gossip stone growing
@@ -1439,7 +1439,7 @@ void HintTable_Init() {
 
     hintTable[JUNK44] = HintText::Junk({
                      // obscure text
-                     Text{"They say all toasters toast toast.", /*french*/"Selon moi, les grille-pains grillent du pain.", /*spanish*/"Según dicen, todas las tostadoras tostan tostadas tostadas.", /*italian*/"Ho sentito dire che tutti i tostapane tostano pane.", /*german*/"Man erzählt sich, alle Toaster würden Toast toasten."},
+                     Text{"They say all toasters toast toast.", /*french*/"Selon moi, s'il y a trop de grille-pains, c'est grillé!", /*spanish*/"Según dicen, todas las tostadoras tostan tostadas tostadas.", /*italian*/"Ho sentito dire che tutti i tostapane tostano pane.", /*german*/"Man erzählt sich, alle Toaster würden Toast toasten."},
     });
 
     hintTable[JUNK45] = HintText::Junk({
@@ -1498,7 +1498,7 @@ void HintTable_Init() {
 
     hintTable[JUNK55] = HintText::Junk({ // SFX: Deku nut flash
                      // obscure text
-                     Text{"{11D}"} + Text{"They say that invisible ghosts can be exposed with Deku Nuts.", /*french*/"Selon moi, des fantômes invisibles apparaissent avec des noix Mojo.", /*spanish*/"Según dicen, puedes exponer a los espectros invisibles con nueces deku.", /*italian*/"Ho sentito dire che puoi far apparire i fantasmi invisibili usando noci Deku.", /*german*/"Man erzählt sich, unsichtbare Geister könnten mit Deku-Nüssen sichtbar gemacht werden."},
+                     Text{"{11D}"} + Text{"They say that invisible ghosts can be exposed with Deku Nuts.", /*french*/"Selon moi, les noix Mojo peuvent exposer les fantômes invisibles.", /*spanish*/"Según dicen, puedes exponer a los espectros invisibles con nueces deku.", /*italian*/"Ho sentito dire che puoi far apparire i fantasmi invisibili usando noci Deku.", /*german*/"Man erzählt sich, unsichtbare Geister könnten mit Deku-Nüssen sichtbar gemacht werden."},
     });
 
     hintTable[JUNK56] = HintText::Junk({
@@ -1588,7 +1588,7 @@ void HintTable_Init() {
 
     hintTable[JUNK73] = HintText::Junk({ // SFX: Equip Fire Arrow
                      // obscure text
-                     Text{"{4C3}"} + Text{"They say that the best weapon against Iron Knuckles is item 176.", /*french*/"Selon moi, les hache-viandes sont vulnérables contre l'objet 176.", /*spanish*/"Según dicen, la mejor arma para enfrentarse a los Nudillos de hierro es el objeto 176.", /*italian*/"Ho sentito dire che l'arma più forte contro i guerrieri d'acciaio è l'oggetto 176.", /*german*/"Man erzählt sich, die beste Waffe gegen Eisenprinzen, sei Gegenstand Nummer 176"},
+                     Text{"{4C3}"} + Text{"They say that the best weapon against Iron Knuckles is item 176.", /*french*/"Selon moi, les Poings de fer sont vulnérables contre l'objet 176.", /*spanish*/"Según dicen, la mejor arma para enfrentarse a los Nudillos de hierro es el objeto 176.", /*European*/"They say that the best weapon against Iron Knuckles is item 176.", /*french*/"Selon moi, les hache-viandes sont vulnérables contre l'objet 176.", /*spanish*/"Según dicen, la mejor arma para enfrentarse a los Nudillos de hierro es el objeto 176.", /*italian*/"Ho sentito dire che l'arma più forte contro i guerrieri d'acciaio è l'oggetto 176.", /*german*/"Man erzählt sich, die beste Waffe gegen Eisenprinzen, sei Gegenstand Nummer 176"},
     });
 
     hintTable[JUNK74] = HintText::Junk({

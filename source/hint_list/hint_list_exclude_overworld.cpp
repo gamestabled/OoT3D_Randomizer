@@ -579,7 +579,7 @@ void HintTable_Init_Exclude_Overworld() {
                        Text{"#puppy lovers# will find", /*french*/"les #amoureux canins# trouveront", /*spanish*/"los #amantes caninos# encontrarán", /*italian*/"i #cinofili# riceveranno", /*german*/"bei einer #Hundeliebhaberin#, |wäre|wären|"},
                      }, {},
                        //clear text
-                       Text{"#rescuing Richard the Dog# is rewarded with", /*french*/"#retrouver Kiki le chien# promet", /*spanish*/"#rescatar al perrito Ricardo# conduce a", /*italian*/"#salvare Richard il cane# viene ricompensato con", /*german*/"der Finderlohn des #Hundes Richard#, |wäre|wären|"}
+                       Text{"#rescuing Richard the Dog# is rewarded with", /*french*/"#retrouver Cachou le chien# promet", /*spanish*/"#rescatar al perrito Ricardo# conduce a", /*European*/"#rescuing Richard the Dog# is rewarded with", /*french*/"#retrouver Kiki le chien# promet", /*spanish*/"#rescatar al perrito Ricardo# conduce a", /*italian*/"#salvare Richard il cane# viene ricompensato con", /*german*/"der Finderlohn des #Hundes Richard#, |wäre|wären|"}
     );
 
     hintTable[LW_OCARINA_MEMORY_GAME] = HintText::Exclude({
@@ -588,7 +588,7 @@ void HintTable_Init_Exclude_Overworld() {
                        Text{"a #child sing-a-long# holds",             /*french*/"les #jeunes flûtistes# donnent",  /*spanish*/"#tocar junto a otros# otorga",      /*italian*/"#imitare melodie# procura",         /*german*/"bei einer #kindlichen Musikprobe#, |wäre|wären|"},
                      }, {},
                        //clear text
-                       Text{"#playing an Ocarina in Lost Woods# is rewarded with", /*french*/"#jouer l'ocarina dans la forêt des méandres# donne", /*spanish*/"#tocar la ocarina en el Bosque Perdido# otorga", /*italian*/"#suonare l'ocarina nel bosco perduto# procura", /*german*/"die Belohnung, fürs #Spielen der Okarina in den verlorenen Wäldern#, |wäre|wären|"}
+                       Text{"#playing an Ocarina in Lost Woods# is rewarded with", /*french*/"#jouer l'ocarina dans la forêt des méandres# donne", /*spanish*/"#tocar la ocarina en el Bosque Perdido# otorga", /*European*/"#playing an Ocarina in Lost Woods# is rewarded with", /*french*/"#jouer l'ocarina dans les Bois perdus# donne", /*spanish*/"#tocar la ocarina en el Bosque Perdido# otorga", /*italian*/"#suonare l'ocarina nel bosco perduto# procura", /*german*/"die Belohnung, fürs #Spielen der Okarina in den verlorenen Wäldern#, |wäre|wären|"}
     );
 
     hintTable[KAK_10_GOLD_SKULLTULA_REWARD] = HintText::Exclude({
@@ -686,12 +686,12 @@ void HintTable_Init_Exclude_Overworld() {
 
     hintTable[KAK_ANJU_AS_ADULT] = HintText::Exclude({
                        // obscure text
-                       Text{"a #chicken caretaker# offers adults", /*french*/"devenir un #éleveur de Cocottes# donne", /*spanish*/"una #cuidadora de emplumados# le ofrece a los mayores", /*italian*/"un'#allevatrice di polli# affida agli adulti", /*german*/"die Belohnung für #Hühnersitter#, |wäre|wären|"},
+                       Text{"a #chicken caretaker# offers adults", /*french*/"devenir un #éleveur de volaille# donne", /*spanish*/"una #cuidadora de emplumados# le ofrece a los mayores", /*italian*/"un'#allevatrice di polli# affida agli adulti", /*german*/"die Belohnung für #Hühnersitter#, |wäre|wären|"},
     });
 
     hintTable[LLR_TALONS_CHICKENS] = HintText::Exclude({
                        // obscure text
-                       Text{"#finding Super Cuccos# is rewarded with", /*french*/"#trouver des Super Cocottes# donne", /*spanish*/"#hallar los supercucos# conduce a", /*italian*/"il premio per chi trova #i super coccò# è", /*german*/"bei gefundenen #Super-Hühnern#, |wäre|wären|"},
+                       Text{"#finding Super Cuccos# is rewarded with", /*french*/"#trouver des superpoulettes# donne", /*spanish*/"#hallar los supercucos# conduce a", /*European*/"#finding Super Cuccos# is rewarded with", /*french*/"#trouver des Super Cocottes# donne", /*spanish*/"#hallar los supercucos# conduce a", /*italian*/"il premio per chi trova #i super coccò# è", /*german*/"bei gefundenen #Super-Hühnern#, |wäre|wären|"},
     });
 
     hintTable[GC_ROLLING_GORON_AS_CHILD] = HintText::Exclude({
@@ -772,7 +772,7 @@ void HintTable_Init_Exclude_Overworld() {
 
     hintTable[KAK_GRANNYS_SHOP] = HintText::Exclude({
                        // obscure text
-                       Text{"the #potion shop lady# sells", /*french*/"la #gribiche du magasin de potion# vend", /*spanish*/"la #señora de la tienda de pociones# vende", /*italian*/"la #vecchietta del negozio di pozioni# vende", /*german*/"#Omas Allerlei#, |wäre|wären|"},
+                       Text{"the #potion shop lady# sells", /*french*/"la #gribiche de la boutique de potions# vend", /*spanish*/"la #señora de la tienda de pociones# vende", /*italian*/"la #vecchietta del negozio di pozioni# vende", /*german*/"#Omas Allerlei#, |wäre|wären|"},
     });
 
     hintTable[KAK_IMPAS_HOUSE_FREESTANDING_POH] = HintText::Exclude({
