@@ -334,7 +334,7 @@ void CreateAlwaysIncludedMessages() {
             "These look like toy mice, but they're" + NEWLINE() + "actually self-propelled time bombs!" +
             INSTANT_TEXT_OFF() + SHOP_MESSAGE_BOX() + MESSAGE_END(),
         INSTANT_TEXT_ON() + COLOR(QM_RED) + "Missiles Teigneux (10): 99 rubis" + NEWLINE() + COLOR(QM_WHITE) +
-            "Profilées comme des souris mécanique," + NEWLINE() + "ces armes sont destructrices !!!" +
+            "Profilées comme des souris mécaniques," + NEWLINE() + "ces armes sont destructrices !!!" +
             INSTANT_TEXT_OFF() + SHOP_MESSAGE_BOX() + MESSAGE_END(),
         INSTANT_TEXT_ON() + COLOR(QM_RED) + "Bombchus (10): 99 rupias" + NEWLINE() + COLOR(QM_WHITE) +
             "Aunque parezcan ratoncitos de juguete," + NEWLINE() + "¡son bombas de relojería autopropulsadas!" +
@@ -933,6 +933,9 @@ void CreateAlwaysIncludedMessages() {
             name.NAenglish.length() <= 30 ? ": " : NEWLINE() + "                                        ",
             name.NAfrench.length() <= 30 ? ": " : NEWLINE() + "                                        ",
             name.NAspanish.length() <= 30 ? ": " : NEWLINE() + "                                        ",
+            name.EURenglish.length() <= 30 ? ": " : NEWLINE() + "                                        ",
+            name.EURfrench.length() <= 30 ? " : " : NEWLINE() + "                                        ",
+            name.EURspanish.length() <= 30 ? ": " : NEWLINE() + "                                        ",
             name.EURitalian.length() <= 30 ? " - " : NEWLINE() + "                                        ",
             name.EURgerman.length() <= 30 ? ": " : NEWLINE() + "                                        ",
         };

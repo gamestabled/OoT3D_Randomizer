@@ -446,10 +446,10 @@ void HintTable_Init() {
 
     hintTable[JABU_JABUS_BELLY_MQ_COW] = HintText::Sometimes({
                        // obscure text
-                       Text{"a #cow swallowed by a deity# gifts", /*french*/"la #vache dans le gardien# donne", /*spanish*/"una #vaca engullida por cierta deidad# brinda", /*italian*/"una #mucca inghiottita da una divinità# dona", /*german*/"die Milch, einer #von einer Gottheit verschluckten Kuh#, |wäre|wären|"},
+                       Text{"a #cow swallowed by a deity# gifts", /*french*/"une #vache dans le gardien# donne", /*spanish*/"una #vaca engullida por cierta deidad# brinda", /*italian*/"una #mucca inghiottita da una divinità# dona", /*german*/"die Milch, einer #von einer Gottheit verschluckten Kuh#, |wäre|wären|"},
                      }, {},
                        // clear text
-                       Text{"a #cow swallowed by Jabu-Jabu# gifts", /*french*/"les #vaches avalées par Jabu-Jabu# donnent", /*spanish*/"una #vaca engullida por Jabu-Jabu# brinda", /*italian*/"una #mucca inghiottita da Jabu Jabu# dona", /*german*/"die Milch einer #Kuh in Jabu-Jabus Bauch#, |wäre|wären|"}
+                       Text{"a #cow swallowed by Jabu-Jabu# gifts", /*french*/"une #vache avalée par Jabu-Jabu# donne", /*spanish*/"una #vaca engullida por Jabu-Jabu# brinda", /*italian*/"una #mucca inghiottita da Jabu Jabu# dona", /*german*/"die Milch einer #Kuh in Jabu-Jabus Bauch#, |wäre|wären|"}
     );
 
     hintTable[FIRE_TEMPLE_SCARECROW_CHEST] = HintText::Sometimes({

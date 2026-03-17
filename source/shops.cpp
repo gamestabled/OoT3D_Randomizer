@@ -941,8 +941,10 @@ void InitTrickNames() {
     };
     trickNameTable[GI_CUCCO] = {
         Text{"D.I.Y. Alarm Clock", "Réveille-matin improvisé", "Alarma emplumada", "Italiano", "Improvisierter Wecker"},
-        Text{"Kakariko Cucco", "Cocotte Cocorico", "Cuco de Kakariko", "Italiano", "Kakariko Huhn"},
-        Text{"Hatched Cucco", "Cocotte éclose", "Pollo", "Italiano", "Geschlüpftes Küken"}
+        Text{"Kakariko Cucco", "Poulette Cocorico", "Cuco de Kakariko",
+            "Kakariko Cucco", "Cocotte Cocorico", "Cuco de Kakariko", "Italiano", "Kakariko Huhn"},
+        Text{"Hatched Cucco", "Poulette éclose", "Pollo",
+            "Hatched Cucco", "Cocotte éclose", "Pollo", "Italiano", "Geschlüpftes Küken"}
     };
     trickNameTable[GI_MASK_KEATON] = {
         Text{"Kee... Something Mask", "Masque de Quiche",  "Máscara Kealgo",
