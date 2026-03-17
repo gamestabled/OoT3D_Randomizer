@@ -10,6 +10,7 @@
 #define ABS(x) ((x) >= 0 ? (x) : -(x))
 #define MIN(x, y) (x < y ? x : y)
 #define MAX(x, y) (x > y ? x : y)
+#define TMP_ZERO_BUF(size) ((char[size]){ 0 })
 
 #define TICKS_PER_SEC 268123480
 #define SEQ_AUDIO_BLANK 0x1000142

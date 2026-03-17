@@ -1070,6 +1070,18 @@ static void Gfx_ShowMenu(void) {
 }
 
 static void Gfx_ShowMultiplayerSyncMenu(void) {
+    enum ResultStatus {
+        NONE,
+        SUCCESS,
+        NOT_FOUND,
+        FAIL,
+    };
+
+    static u8 syncUpdateAttempts = 0;
+    static PacketMask prevNeededPackets;
+    u8 offsetY;
+    u8 result = NONE;
+
     Draw_ClearFramebuffer();
     if (!playingOnCitra) {
         Draw_FlushFramebuffer();
@@ -1085,60 +1097,56 @@ static void Gfx_ShowMultiplayerSyncMenu(void) {
 
         Multiplayer_Update(0);
 
-        u8 offsetY              = 1;
+        offsetY                 = 1;
         const char* titleString = mp_foundSyncer ? "Syncing..." : "Looking for syncer...";
         Draw_DrawString(SCREEN_BOT_WIDTH / 2 - (strlen(titleString) / 2) * SPACING_X, 16 + SPACING_Y * offsetY++,
                         COLOR_WHITE, titleString);
 
         if (mp_foundSyncer) {
             offsetY++;
-            static const char* syncPacketNames[] = { "Base Sync",          "Save Scene Flags 1", "Save Scene Flags 2",
-                                                     "Save Scene Flags 3", "Save Scene Flags 4", "Entrance Data" };
+            static const char* syncPacketNames[] = { "Base Sync", "Entrance Data" };
             static const u8 squareSize           = 9;
-            for (size_t i = 0; i < ARRAY_SIZE(mp_completeSyncs); i++) {
+            for (size_t i = 0; i < FULLSYNC_MAX; i++) {
+                const char* name;
+                u8 partIdx;
+                if (i >= FULLSYNC_EXTINF_FIRST) {
+                    name    = "Extra Data %d";
+                    partIdx = i - FULLSYNC_EXTINF_FIRST + 1;
+                } else if (i >= FULLSYNC_FLAGS_FIRST && i <= FULLSYNC_FLAGS_LAST) {
+                    name    = "Save Scene Flags %d";
+                    partIdx = i - FULLSYNC_FLAGS_FIRST + 1;
+                } else {
+                    name = syncPacketNames[i];
+                }
+
                 Draw_DrawRect(10, 16 + SPACING_Y * offsetY, squareSize, squareSize, COLOR_WHITE);
                 Draw_DrawRect(11, 17 + SPACING_Y * offsetY, squareSize - 2, squareSize - 2,
                               mp_completeSyncs[i] ? COLOR_GREEN : COLOR_BLACK);
-                Draw_DrawString(10 + SPACING_X * 2, 16 + SPACING_Y * offsetY++, COLOR_WHITE, syncPacketNames[i]);
+                Draw_DrawFormattedString(10 + SPACING_X * 2, 16 + SPACING_Y * offsetY++, COLOR_WHITE, name, partIdx);
             }
-            if (Multiplayer_GetNeededPacketsMask() != 0) {
-                Multiplayer_Send_FullSyncRequest(Multiplayer_GetNeededPacketsMask());
+            PacketMask neededPackets = Multiplayer_GetNeededPacketsMask();
+            if (memcmp(&neededPackets, TMP_ZERO_BUF(sizeof(PacketMask)), sizeof(PacketMask)) != 0) {
+                if (syncUpdateAttempts > 10) {
+                    result = FAIL;
+                    break;
+                } else if (memcmp(&neededPackets, &prevNeededPackets, sizeof(PacketMask)) != 0) {
+                    syncUpdateAttempts = 0;
+                }
+
+                syncUpdateAttempts++;
+                prevNeededPackets = neededPackets;
+                Multiplayer_Send_FullSyncRequest(neededPackets);
             } else {
                 // Syncing is done!
-                offsetY++;
-                const char* msgString = "Done!";
-                Draw_DrawString(SCREEN_BOT_WIDTH / 2 - (strlen(msgString) / 2) * SPACING_X, 16 + SPACING_Y * offsetY,
-                                COLOR_WHITE, msgString);
-                Draw_CopyBackBuffer();
-                svcSleepThread(1000 * 1000 * 1000LL);
-
-                Draw_ClearBackbuffer();
-                Draw_CopyBackBuffer();
-                if (!playingOnCitra) {
-                    Draw_FlushFramebuffer();
-                }
-                mp_isSyncing     = false;
-                mSaveContextInit = true;
+                result = SUCCESS;
                 break;
             }
         } else {
-            Multiplayer_Send_FullSyncRequest(0); // Send 0 to only ask for ping, to reduce chance of packet loss
+            Multiplayer_Send_FullSyncProviderRequest();
             static u8 syncerSearchTimer = 0;
             // Look for a syncer for 5 seconds
             if (syncerSearchTimer >= 5) {
-                Draw_ClearBackbuffer();
-                const char* msgString = "No syncer found.";
-                Draw_DrawString(SCREEN_BOT_WIDTH / 2 - (strlen(msgString) / 2) * SPACING_X, 10 + SPACING_Y * offsetY,
-                                COLOR_WHITE, msgString);
-                Draw_CopyBackBuffer();
-                svcSleepThread(1000 * 1000 * 1000LL);
-
-                Draw_ClearBackbuffer();
-                Draw_CopyBackBuffer();
-                if (!playingOnCitra) {
-                    Draw_FlushFramebuffer();
-                }
-                mp_isSyncing = false;
+                result = NOT_FOUND;
                 break;
             }
             syncerSearchTimer++;
@@ -1152,6 +1160,39 @@ static void Gfx_ShowMultiplayerSyncMenu(void) {
         svcSleepThread(1000 * 1000 * 1000LL);
 
     } while (true);
+
+    char* msgString;
+    switch (result) {
+        case SUCCESS:
+            msgString        = "Done!";
+            mSaveContextInit = true;
+            mp_isSyncing     = false;
+            break;
+        case NOT_FOUND:
+            msgString    = "No syncer found.";
+            mp_isSyncing = false;
+            Draw_ClearBackbuffer();
+            break;
+        case FAIL:
+            msgString       = "Sync failed, will retry...";
+            mp_fullSyncerID = 0;
+            mp_foundSyncer  = false;
+            memset(&mp_completeSyncs, 0, FULLSYNC_MAX);
+            break;
+    }
+    syncUpdateAttempts = 0;
+    memset(&prevNeededPackets, 0, sizeof(PacketMask));
+
+    Draw_DrawString(SCREEN_BOT_WIDTH / 2 - (strlen(msgString) / 2) * SPACING_X, //
+                    16 + SPACING_Y * offsetY, COLOR_WHITE, msgString);
+    Draw_CopyBackBuffer();
+    svcSleepThread(1000 * 1000 * 1000LL);
+
+    Draw_ClearBackbuffer();
+    Draw_CopyBackBuffer();
+    if (!playingOnCitra) {
+        Draw_FlushFramebuffer();
+    }
 }
 
 void Gfx_Init(void) {

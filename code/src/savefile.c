@@ -11,8 +11,9 @@
 #include "permadeath.h"
 #include "gloom.h"
 
-#define DECLARE_EXTSAVEDATA
 #include "savefile.h"
+
+ExtSaveData gExtSaveData;
 
 void SaveFile_Init(u32 fileBaseIndex) {
 #ifdef ENABLE_DEBUG
