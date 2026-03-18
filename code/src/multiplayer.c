@@ -1344,7 +1344,7 @@ void Multiplayer_Send_FullExtInfSync(u16 targetID, u8 partIdx) {
         return;
     }
     memset(mBuffer, 0, mBufSize);
-    u8 memSpacer = PrepareSharedProgressPacket(PACKET_FULLEXTINFSYNC);
+    u16 memSpacer = PrepareSharedProgressPacket(PACKET_FULLEXTINFSYNC);
 
     mBuffer[memSpacer++] = partIdx;
     size_t partSize;
@@ -1355,7 +1355,7 @@ void Multiplayer_Send_FullExtInfSync(u16 targetID, u8 partIdx) {
     }
 
     memcpy(&mBuffer[memSpacer], mSaveContext.extInf + EXTINF_SYNC_PART_SIZE * partIdx, partSize);
-    memSpacer += partSize;
+    memSpacer += partSize / 4 + 1;
 
     Multiplayer_SendPacket(memSpacer, targetID);
 }
@@ -1364,7 +1364,7 @@ void Multiplayer_Receive_FullExtInfSync(u16 senderID) {
     if (!IsInSameSyncGroup() || gSettingsContext.mp_SharedProgress == OFF) {
         return;
     }
-    u8 memSpacer = GetSharedProgressMemSpacerOffset();
+    u16 memSpacer = GetSharedProgressMemSpacerOffset();
 
     u8 partIdx = mBuffer[memSpacer++];
 
@@ -1380,7 +1380,7 @@ void Multiplayer_Receive_FullExtInfSync(u16 senderID) {
     }
 
     memcpy(mSaveContext.extInf + EXTINF_SYNC_PART_SIZE * partIdx, &mBuffer[memSpacer], partSize);
-    memSpacer += partSize;
+    memSpacer += partSize / 4 + 1;
 
     mp_completeSyncs[FULLSYNC_EXTINF_FIRST + partIdx] = true;
 }
