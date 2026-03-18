@@ -1125,7 +1125,7 @@ static void Gfx_ShowMultiplayerSyncMenu(void) {
                 Draw_DrawFormattedString(10 + SPACING_X * 2, 16 + SPACING_Y * offsetY++, COLOR_WHITE, name, partIdx);
             }
             PacketMask neededPackets = Multiplayer_GetNeededPacketsMask();
-            if (memcmp(&neededPackets, TMP_ZERO_BUF(sizeof(PacketMask)), sizeof(PacketMask)) != 0) {
+            if (memcmp(&neededPackets, TMP_ZEROED_BUFFER(sizeof(PacketMask)), sizeof(PacketMask)) != 0) {
                 if (syncUpdateAttempts > 10) {
                     result = FAIL;
                     break;
