@@ -32,19 +32,13 @@ constexpr std::array EnglishDungeonNames = {
 };
 
 constexpr std::array FrenchDungeonNames = {
-    "vénérable arbre Mojo",
-    "caverne Dodongo",
-    "ventre de Jabu-Jabu",
-    "temple de la forêt",
-    "temple du feu",
-    "temple de l'eau",
-    "temple de l'esprit",
-    "temple de l'ombre",
+    "vénérable arbre Mojo", "caverne Dodongo",
+    "ventre de Jabu-Jabu",  "temple de la forêt",
+    "temple du feu",        "temple de l'eau",
+    "temple de l'esprit",   "temple de l'ombre",
     "fond du puits", // Just "puits" in Europe
-    "caverne de glace",
-    "",
-    "gymnase Gerudo",
-    "forteresse Gerudo",
+    "caverne de glace",     "",
+    "gymnase Gerudo",       "forteresse Gerudo",
     "château de Ganon",
 };
 
@@ -272,8 +266,9 @@ void CreateAlwaysIncludedMessages() {
             COLOR(QM_GREEN) + "Comprar" + NEWLINE() + "No comprar" + COLOR(QM_WHITE) + MESSAGE_END(),
         INSTANT_TEXT_ON() + "Bombchu (10): 99 Rupees" + INSTANT_TEXT_OFF() + NEWLINE() + NEWLINE() + TWO_WAY_CHOICE() +
             COLOR(QM_GREEN) + "Buy" + NEWLINE() + "Don't buy" + COLOR(QM_WHITE) + MESSAGE_END(),
-        INSTANT_TEXT_ON() + "Missiles teigneux (10): 99 rubis" + INSTANT_TEXT_OFF() + NEWLINE() + NEWLINE() + TWO_WAY_CHOICE() +
-            COLOR(QM_GREEN) + "Acheter" + NEWLINE() + "Ne pas acheter" + COLOR(QM_WHITE) + MESSAGE_END(),
+        INSTANT_TEXT_ON() + "Missiles teigneux (10): 99 rubis" + INSTANT_TEXT_OFF() + NEWLINE() + NEWLINE() +
+            TWO_WAY_CHOICE() + COLOR(QM_GREEN) + "Acheter" + NEWLINE() + "Ne pas acheter" + COLOR(QM_WHITE) +
+            MESSAGE_END(),
         INSTANT_TEXT_ON() + "Bombchus (10): 99 rupias" + INSTANT_TEXT_OFF() + NEWLINE() + NEWLINE() + TWO_WAY_CHOICE() +
             COLOR(QM_GREEN) + "Comprar" + NEWLINE() + "No comprar" + COLOR(QM_WHITE) + MESSAGE_END(),
         INSTANT_TEXT_ON() + "10 radiomine - 99 rupie" + INSTANT_TEXT_OFF() + NEWLINE() + NEWLINE() + TWO_WAY_CHOICE() +
@@ -383,9 +378,8 @@ void CreateAlwaysIncludedMessages() {
             NEWLINE() + "Boss Key" + COLOR(QM_WHITE) + "!" + INSTANT_TEXT_OFF() + MESSAGE_END(),
         UNSKIPPABLE() + ITEM_OBTAINED(ITEM_KEY_BOSS) + INSTANT_TEXT_ON() + "Vous trouvez la " +
             COLOR(DungeonColors[DUNGEON_INSIDE_GANONS_CASTLE]) + "grande clé " + NEWLINE() +
-            FrenchDungeonArticles[DUNGEON_INSIDE_GANONS_CASTLE] +
-            FrenchDungeonNames[DUNGEON_INSIDE_GANONS_CASTLE] + COLOR(QM_WHITE) + "!" + INSTANT_TEXT_OFF() +
-            MESSAGE_END(),
+            FrenchDungeonArticles[DUNGEON_INSIDE_GANONS_CASTLE] + FrenchDungeonNames[DUNGEON_INSIDE_GANONS_CASTLE] +
+            COLOR(QM_WHITE) + "!" + INSTANT_TEXT_OFF() + MESSAGE_END(),
         UNSKIPPABLE() + ITEM_OBTAINED(ITEM_KEY_BOSS) + INSTANT_TEXT_ON() + "¡Tienes la " +
             COLOR(DungeonColors[DUNGEON_INSIDE_GANONS_CASTLE]) + "gran llave " +
             SpanishDungeonArticles[DUNGEON_INSIDE_GANONS_CASTLE] + NEWLINE() +
@@ -396,9 +390,8 @@ void CreateAlwaysIncludedMessages() {
             NEWLINE() + "Boss Key" + COLOR(QM_WHITE) + "!" + INSTANT_TEXT_OFF() + MESSAGE_END(),
         UNSKIPPABLE() + ITEM_OBTAINED(ITEM_KEY_BOSS) + INSTANT_TEXT_ON() + "Vous trouvez la " +
             COLOR(DungeonColors[DUNGEON_INSIDE_GANONS_CASTLE]) + "clé d'or " + NEWLINE() +
-            FrenchDungeonArticles[DUNGEON_INSIDE_GANONS_CASTLE] +
-            FrenchDungeonNames[DUNGEON_INSIDE_GANONS_CASTLE] + COLOR(QM_WHITE) + " !" + INSTANT_TEXT_OFF() +
-            MESSAGE_END(),
+            FrenchDungeonArticles[DUNGEON_INSIDE_GANONS_CASTLE] + FrenchDungeonNames[DUNGEON_INSIDE_GANONS_CASTLE] +
+            COLOR(QM_WHITE) + " !" + INSTANT_TEXT_OFF() + MESSAGE_END(),
         UNSKIPPABLE() + ITEM_OBTAINED(ITEM_KEY_BOSS) + INSTANT_TEXT_ON() + "¡Tienes la " +
             COLOR(DungeonColors[DUNGEON_INSIDE_GANONS_CASTLE]) + "gran llave " +
             SpanishDungeonArticles[DUNGEON_INSIDE_GANONS_CASTLE] + NEWLINE() +
@@ -1010,10 +1003,10 @@ void CreateAlwaysIncludedMessages() {
                       "Do not remove the Game Card" + NEWLINE() + CENTER_TEXT() + "or turn the power off." +
                       INSTANT_TEXT_OFF() + MESSAGE_END(),
                   UNSKIPPABLE() + INSTANT_TEXT_ON() + CENTER_TEXT() + "Vous avez regardé le générique en entier!" +
-                      NEWLINE() + CENTER_TEXT() + "Voici une récompense pour votre patience." + NEWLINE() + CENTER_TEXT() +
-                      "Débloquage de Master Quest et sauvegarde..." + NEWLINE() + NEWLINE() + CENTER_TEXT() + COLOR(QM_RED) +
-                      "N'éteignez pas la console et" + NEWLINE() + CENTER_TEXT() + "ne retirez pas la carte de jeu" +
-                      INSTANT_TEXT_OFF() + MESSAGE_END(),
+                      NEWLINE() + CENTER_TEXT() + "Voici une récompense pour votre patience." + NEWLINE() +
+                      CENTER_TEXT() + "Débloquage de Master Quest et sauvegarde..." + NEWLINE() + NEWLINE() +
+                      CENTER_TEXT() + COLOR(QM_RED) + "N'éteignez pas la console et" + NEWLINE() + CENTER_TEXT() +
+                      "ne retirez pas la carte de jeu" + INSTANT_TEXT_OFF() + MESSAGE_END(),
                   UNSKIPPABLE() + INSTANT_TEXT_ON() + CENTER_TEXT() + "Desbloqueando The Legend of Zelda" + NEWLINE() +
                       CENTER_TEXT() + "Ocarina of Time 3D Master Quest." + NEWLINE() + CENTER_TEXT() +
                       "Guardando. Espera un momento..." + NEWLINE() + NEWLINE() + CENTER_TEXT() + COLOR(QM_RED) +
@@ -1033,9 +1026,10 @@ void CreateAlwaysIncludedMessages() {
                   UNSKIPPABLE() + INSTANT_TEXT_ON() + CENTER_TEXT() + "Master Quest doesn't affect the Randomizer," +
                       NEWLINE() + CENTER_TEXT() + "so you can use 3 more save slots now." + NEWLINE() + NEWLINE() +
                       CENTER_TEXT() + "Thanks for playing!" + INSTANT_TEXT_OFF() + MESSAGE_END(),
-                  UNSKIPPABLE() + INSTANT_TEXT_ON() + CENTER_TEXT() + "Le randomizer désactive Master Quest," + NEWLINE() +
-                      CENTER_TEXT() + "mais vous pouvez utiliser ses trois emplacements" + NEWLINE() + CENTER_TEXT() +
-                      "de sauvegarde supplémentaires." + NEWLINE() + NEWLINE() + CENTER_TEXT() + "Merci d'avoir joué!" + INSTANT_TEXT_OFF() + MESSAGE_END(),
+                  UNSKIPPABLE() + INSTANT_TEXT_ON() + CENTER_TEXT() + "Le randomizer désactive Master Quest," +
+                      NEWLINE() + CENTER_TEXT() + "mais vous pouvez utiliser ses trois emplacements" + NEWLINE() +
+                      CENTER_TEXT() + "de sauvegarde supplémentaires." + NEWLINE() + NEWLINE() + CENTER_TEXT() +
+                      "Merci d'avoir joué!" + INSTANT_TEXT_OFF() + MESSAGE_END(),
                   UNSKIPPABLE() + INSTANT_TEXT_ON() + CENTER_TEXT() + "¡Ya puedes jugar The Legend of Zelda" +
                       NEWLINE() + CENTER_TEXT() + "Ocarina of Time 3D Master Quest!" + INSTANT_TEXT_OFF() +
                       MESSAGE_END(),
