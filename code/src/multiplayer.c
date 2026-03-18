@@ -1118,27 +1118,19 @@ void Multiplayer_Receive_FullSyncRequest(u16 senderID) {
     memcpy(&neededPackets, &mBuffer[memSpacer], sizeof(PacketMask));
     memSpacer += sizeof(neededPackets);
 
-    size_t maskSpacer = 0;
-    if (PacketMask_GetBit(&neededPackets, maskSpacer++)) {
+    if (PacketMask_GetBit(&neededPackets, FULLSYNC_BASE)) {
         Multiplayer_Send_BaseSync(senderID);
     }
-    if (PacketMask_GetBit(&neededPackets, maskSpacer++)) {
-        Multiplayer_Send_FullSceneFlagSync(senderID, 0);
-    }
-    if (PacketMask_GetBit(&neededPackets, maskSpacer++)) {
-        Multiplayer_Send_FullSceneFlagSync(senderID, 1);
-    }
-    if (PacketMask_GetBit(&neededPackets, maskSpacer++)) {
-        Multiplayer_Send_FullSceneFlagSync(senderID, 2);
-    }
-    if (PacketMask_GetBit(&neededPackets, maskSpacer++)) {
-        Multiplayer_Send_FullSceneFlagSync(senderID, 3);
-    }
-    if (PacketMask_GetBit(&neededPackets, maskSpacer++)) {
+    if (PacketMask_GetBit(&neededPackets, FULLSYNC_ENTRANCES)) {
         Multiplayer_Send_FullEntranceSync(senderID);
     }
+    for (size_t partIdx = 0; partIdx < 4; partIdx++) {
+        if (PacketMask_GetBit(&neededPackets, FULLSYNC_FLAGS_FIRST + partIdx)) {
+            Multiplayer_Send_FullSceneFlagSync(senderID, partIdx);
+        }
+    }
     for (size_t partIdx = 0; partIdx < EXTINF_SYNCS_COUNT; partIdx++) {
-        if (PacketMask_GetBit(&neededPackets, maskSpacer++)) {
+        if (PacketMask_GetBit(&neededPackets, FULLSYNC_EXTINF_FIRST + partIdx)) {
             Multiplayer_Send_FullExtInfSync(senderID, partIdx);
         }
     }
