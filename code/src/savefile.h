@@ -85,14 +85,7 @@ typedef struct {
     s8 option_FreeCamControl;
 } ExtSaveData;
 
-#ifdef DECLARE_EXTSAVEDATA
-    #define EXTERN
-#else
-    #define EXTERN extern
-#endif
-
-EXTERN ExtSaveData gExtSaveData;
-
+extern ExtSaveData gExtSaveData;
 extern u32 gFinalPlaytimeSeconds;
 
 #endif //_SAVEFILE_H_
