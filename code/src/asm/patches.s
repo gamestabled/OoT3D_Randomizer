@@ -1,292 +1,194 @@
 .arm
 
-.section .patch_loader
-.global loader_patch
-loader_patch:
+.macro PATCH name
+    .section .patch_\name
+    .global \name\()_patch
+\name\()_patch:
+.endm
+
+PATCH loader
     b hook_into_loader
 
-.section .patch_before_GlobalContext_Update
-.global before_GlobalContext_Update_patch
-before_GlobalContext_Update_patch:
+PATCH before_GlobalContext_Update
     bl hook_before_GlobalContext_Update
 
-.section .patch_after_GlobalContext_Update
-.global after_GlobalContext_Update_patch
-after_GlobalContext_Update_patch:
+PATCH after_GlobalContext_Update
     b hook_after_GlobalContext_Update
 
-.section .patch_Gfx_Update
-.global GfX_Update_patch
-GfX_Update_patch:
+PATCH Gfx_Update
     b hook_Gfx_Update
 
-.section .patch_IncomingGetItemID
-.global IncomingGetItemID_patch
-IncomingGetItemID_patch:
+PATCH IncomingGetItemID
     str r5,[r4,#0x2B0]
     bl hook_IncomingGetItemID
 
-.section .patch_SaveFile_Init
-.global SaveFile_Init_patch
-SaveFile_Init_patch:
+PATCH SaveFile_Init
     bl hook_SaveFile_Init
 
-.section .patch_OverrideOcarinaSongs
-.global OverrideOcarinaSongs_patch
-OverrideOcarinaSongs_patch:
+PATCH OverrideOcarinaSongs
     bl Cutscene_OverrideOcarinaSongs
 
-.section .patch_OverrideTextID
-.global OverrideTextID_patch
-OverrideTextID_patch:
+PATCH OverrideTextID
     b hook_OverrideTextID
 
-.section .patch_OverrideItemID
-.global OverrideItemID_patch
-OverrideItemID_patch:
+PATCH OverrideItemID
     b hook_OverrideItemID
 
-.section .patch_OverrideDrawItemOne
-.global OverrideDrawItemOne_patch
-OverrideDrawItemOne_patch:
+PATCH OverrideDrawItemOne
     b hook_OverrideDrawItemOne
 
-.section .patch_OverrideDrawItemTwo
-.global OverrideDrawItemTwo_patch
-OverrideDrawItemTwo_patch:
+PATCH OverrideDrawItemTwo
     bl hook_OverrideDrawItemTwo
 
-.section .patch_OverrideDrawItemThree
-.global OverrideDrawItemThree_patch
-OverrideDrawItemThree_patch:
+PATCH OverrideDrawItemThree
     bl hook_OverrideDrawItemThree
 
-.section .patch_OverrideGiDrawIdPlusOne_Ground
-.global OverrideGiDrawIdPlusOne_Ground_patch
-OverrideGiDrawIdPlusOne_Ground_patch:
+PATCH OverrideGiDrawIdPlusOne_Ground
     bl hook_OverrideGiDrawIdPlusOne
 
-.section .patch_OverrideGiDrawIdPlusOne_Water
-.global OverrideGiDrawIdPlusOne_Water_patch
-OverrideGiDrawIdPlusOne_Water_patch:
+PATCH OverrideGiDrawIdPlusOne_Water
     bl hook_OverrideGiDrawIdPlusOne
 
-.section .patch_EditDrawGetItemBeforeModelSpawn
-.global EditDrawGetItemBeforeModelSpawn_patch
-EditDrawGetItemBeforeModelSpawn_patch:
+PATCH EditDrawGetItemBeforeModelSpawn
     bl hook_EditDrawGetItemBeforeModelSpawn
 
-.section .patch_EditDrawGetItemAfterModelSpawn
-.global EditDrawGetItemAfterModelSpawn_patch
-EditDrawGetItemAfterModelSpawn_patch:
+PATCH EditDrawGetItemAfterModelSpawn
     bl hook_EditDrawDetItemAfterModelSpawn
 
-.section .patch_EditDrawGetItemAfterMatrixUpdate
-.global EditDrawGetItemAfterMatrixUpdate_patch
-EditDrawGetItemAfterMatrixUpdate_patch:
+PATCH EditDrawGetItemAfterMatrixUpdate
     bl hook_EditDrawGetItemAfterMatrixUpdate
 
-.section .patch_NoLensOfTruthNaviText
+PATCH NoLensOfTruthNaviText
     nop
 
-.section .patch_NoSilverGauntletsCutsceneWarp
+PATCH NoSilverGauntletsCutsceneWarp
     b 0x2BC350
 
-.section .patch_ChildShootingGallery
-.global ChildShootingGallery_patch
-ChildShootingGallery_patch:
+PATCH ChildShootingGallery
     mov r0,#0x60
     nop
 
-.section .patch_AdultShootingGallery
-.global AdultShootingGallery_patch
-AdultShootingGallery_patch:
+PATCH AdultShootingGallery
     nop
     mov r0,#0x30
     b 0x38AB78
 
-.section .patch_GerudoArcheryOne
-.global GerudoArcheryOne_patch
-GerudoArcheryOne_patch:
+PATCH GerudoArcheryOne
     mov r4,#0x30
     b 0x3AFA44
     nop
     nop
 
-.section .patch_GerudoArcheryTwo
-.global GerudoArcheryTwo_patch
-GerudoArcheryTwo_patch:
+PATCH GerudoArcheryTwo
     mov r5,#0x30
     b 0x3C2D90
     nop
     nop
 
-.section .patch_ScrubStickUpgradeOne
-.global ScrubStickUpgradeOne_patch
-ScrubStickUpgradeOne_patch:
+PATCH ScrubStickUpgradeOne
     nop
 
-.section .patch_ScrubNutUpgradeOne
-.global ScrubNutUpgradeOne_patch
-ScrubNutUpgradeOne_patch:
+PATCH ScrubNutUpgradeOne
     nop
 
-.section .patch_ScrubStickUpgradeTwo
-.global ScrubStickUpgradeTwo_patch
-ScrubStickUpgradeTwo_patch:
+PATCH ScrubStickUpgradeTwo
     nop
 
-.section .patch_ScrubNutUpgradeTwo
-.global ScrubNutUpgradeTwo_patch
-ScrubNutUpgradeTwo_patch:
+PATCH ScrubNutUpgradeTwo
     nop
 
-.section .patch_ChildRollingGoron
-.global ChildRollingGoron_patch
-ChildRollingGoron_patch:
+PATCH ChildRollingGoron
     mov r2,#0x34
     nop
 
-.section .patch_ChildRollingGoronDontCheckBombBag
-.global ChildRollingGoronDontCheckBombBag_patch
-ChildRollingGoronDontCheckBombBag_patch:
+PATCH ChildRollingGoronDontCheckBombBag
     nop
 
-.section .patch_AdultRollingGoronIgnoreMedallion
-.global AdultRollingGoronIgnoreMedallion_patch
-AdultRollingGoronIgnoreMedallion_patch:
+PATCH AdultRollingGoronIgnoreMedallion
     b 0x19546C
 
-.section .patch_AdultRollingGoronOne
-.global AdultRollingGoronOne_patch
-AdultRollingGoronOne_patch:
+PATCH AdultRollingGoronOne
     b 0x19549C
 
-.section .patch_AdultRollingGoronTwo
-.global AdultRollingGoronTwo_patch
-AdultRollingGoronTwo_patch:
+PATCH AdultRollingGoronTwo
     b hook_AdultRollingGoronTwo
 
-.section .patch_DaruniaCheckStrength
-.global DaruniaStrengthCheck_patch
-DaruniaStrengthCheck_patch:
+PATCH DaruniaCheckStrength
     b hook_DaruniaStrengthCheck
 
-.section .patch_LostWoodsShootingGame
-.global LostWoodsShootingGame_patch
-LostWoodsShootingGame_patch:
+PATCH LostWoodsShootingGame
     mov r2,#0x60
     nop
 
-.section .patch_LostWoodsShootingGameTwo
-.global LostWoodsShootingGameTwo_patch
-LostWoodsShootingGameTwo_patch:
+PATCH LostWoodsShootingGameTwo
     mov r2,#0x60
     nop
 
-.section .patch_SkulltulaRewardOne
-.global SkulltulaRewardOne_patch
-SkulltulaRewardOne_patch:
+PATCH SkulltulaRewardOne
     b 0x12CC9C
 
-.section .patch_SkulltulaRewardTwo
-.global SkulltulaRewardTwo_patch
-SkulltulaRewardTwo_patch:
+PATCH SkulltulaRewardTwo
     b 0x12CD6C
 
-.section .patch_KingZoraGiveTunic
-.global KingZoraGiveTunic_patch
-KingZoraGiveTunic_patch:
+PATCH KingZoraGiveTunic
     mov r0,#0x4000
     add r0,r0,#0x12
 
-.section .patch_KingZoraSecondTunic
-.global KingZoraSecondTunic_patch
-KingZoraSecondTunic_patch:
+PATCH KingZoraSecondTunic
     b 0x1B6A40
 
-.section .patch_KingZoraCheckMovedFlag
-.global KingZoraCheckMovedFlag_patch
-KingZoraCheckMovedFlag_patch:
+PATCH KingZoraCheckMovedFlag
     bl hook_KingZoraCheckMovedFlag
 
-.section .patch_KingZoraIgnoreSapphire
-.global KingZoraIgnoreSapphire_patch
-KingZoraIgnoreSapphire_patch:
+PATCH KingZoraIgnoreSapphire
     nop
     nop
 
-.section .patch_DampeRollHigh
-.global DampeRollHigh_patch
-DampeRollHigh_patch:
+PATCH DampeRollHigh
     mov r0,#0x3
     b 0x3C3458
 
-.section .patch_DampeCheckRewardFlag
-.global DampeCheckRewardFlag_patch
-DampeCheckRewardFlag_patch:
+PATCH DampeCheckRewardFlag
     cpyeq r0,r4
     bleq EnTk_SetRewardFlag
 
-.section .patch_DampeSetCollectibleFlag
+PATCH DampeSetCollectibleFlag
     .word 0x00000806
 
-.section .patch_DampeCheckCanDig1
-.global DampeCheckCanDig1_patch
-DampeCheckCanDig1_patch:
+PATCH DampeCheckCanDig1
     mov r0,#0x01
 
-.section .patch_DampeCheckCanDig2
-.global DampeCheckCanDig2_patch
-DampeCheckCanDig2_patch:
+PATCH DampeCheckCanDig2
     mov r0,#0x01
 
-.section .patch_TokenNoItemGive1
-.global TokenNoItemGive1_patch
-TokenNoItemGive1_patch:
+PATCH TokenNoItemGive1
     nop
 
-.section .patch_TokenNoItemGive2
-.global TokenNoItemGive2_patch
-TokenNoItemGive2_patch:
+PATCH TokenNoItemGive2
     nop
 
-.section .patch_GetToken1
-.global GetToken1_patch
-GetToken1_patch:
+PATCH GetToken1
     bl hook_GetToken
 
-.section .patch_GetToken2
-.global GetToken2_patch
-GetToken2_patch:
+PATCH GetToken2
     bl hook_GetToken
 
-.section .patch_GetCustomMessageEntryOne
-.global GetCustomMessageEntryOne_patch
-GetCustomMessageEntryOne_patch:
+PATCH GetCustomMessageEntryOne
     bl Message_GetCustomEntry
 
-.section .patch_GetCustomMessageEntryTwo
-.global GetCustomMessageEntryTwo_patch
-GetCustomMessageEntryTwo_patch:
+PATCH GetCustomMessageEntryTwo
     bl Message_GetCustomEntry
 
-.section .patch_GetCustomMessageTextOne
-.global GetCustomMessageTextOne_patch
-GetCustomMessageTextOne_patch:
+PATCH GetCustomMessageTextOne
     bl Message_GetCustomText
 
-.section .patch_GetCustomMessageTextTwo
-.global GetCustomMessageTextTwo_patch
-GetCustomMessageTextTwo_patch:
+PATCH GetCustomMessageTextTwo
     bl Message_GetCustomText
 
-.section .patch_FastChests
-.global FastChests_patch
-FastChests_patch:
+PATCH FastChests
     bl hook_FastChests
 
-.section .patch_FastChestsTwo
+PATCH FastChestsTwo
     bl hook_FastChests
     bne 0x3F10B0
     nop
@@ -298,16 +200,12 @@ FastChests_patch:
     nop
     nop
 
-.section .patch_DampeChest
-.global DampeChest_patch
-DampeChest_patch:
+PATCH DampeChest
     cpy r0,r4
     bl EnPoRelay_CheckChestFlag
     nop
 
-.section .patch_RainbowBridge
-.global RainbowBridge_patch
-RainbowBridge_patch:
+PATCH RainbowBridge
     push {r0-r12, lr}
     bl BgGjyoBridge_CheckCondition
     cmp r0,#0x0
@@ -315,82 +213,56 @@ RainbowBridge_patch:
     beq 0x3E7D70
     b 0x3E7D34
 
-.section .patch_ExtendedObjectClear
-.global ExtendedObjectClear_patch
-ExtendedObjectClear_patch:
+PATCH ExtendedObjectClear
     bl ExtendedObject_Clear
 
-.section .patch_SariasGift
-.global SariasGift_patch
-SariasGift_patch:
+PATCH SariasGift
     bl ItemOverride_GiveSariasGift
     nop
     nop
 
-.section .patch_DekuTheaterSkullMask
-.global DekuTheaterSkullMask_patch
-DekuTheaterSkullMask_patch:
+PATCH DekuTheaterSkullMask
     mov r0,#0x77
     nop
 
-.section .patch_DekuTheaterMaskOfTruth
-.global DekuTheaterMaskOfTruth_patch
-DekuTheaterMaskOfTruth_patch:
+PATCH DekuTheaterMaskOfTruth
     mov r0,#0x7A
     nop
 
-.section .patch_PoeCollectorCheckPoints
-.global PoeCollectorCheckPoints_patch
-PoeCollectorCheckPoints_patch:
+PATCH PoeCollectorCheckPoints
     bl hook_PoeCollectorCheckPoints
 
-.section .patch_LACSConditionOne
-.global LACSConditionOne_patch
-LACSConditionOne_patch:
+PATCH LACSConditionOne
     nop
 
-.section .patch_LACSConditionTwo
-.global LACSConditionTwo_patch
-LACSConditionTwo_patch:
+PATCH LACSConditionTwo
     bl Cutscene_OverrideLACS
     nop
     nop
     nop
     nop
 
-.section .patch_MinuetLocation
-.global MinuetLocation_patch
-MinuetLocation_patch:
+PATCH MinuetLocation
     bl Cutscene_OverrideMinuet
     b 0x26C47C
 
-.section .patch_BoleroLocation
-.global BoleroLocation_patch
-BoleroLocation_patch:
+PATCH BoleroLocation
     bl Cutscene_OverrideBolero
     b 0x26C47C
 
-.section .patch_SerenadeCheckChestFlag
-.global SerenadeCheckChestFlag_patch
-SerenadeCheckChestFlag_patch:
+PATCH SerenadeCheckChestFlag
     bl hook_SerenadeCheckChestFlag
 
-.section .patch_SerenadeLocation
-.global SerenadeLocation_patch
-SerenadeLocation_patch:
+PATCH SerenadeLocation
     bl Cutscene_OverrideSerenade
     b 0x2B25A8
 
-.section .patch_RequiemLocation
-.global RequiemLocation_patch
-RequiemLocation_patch:
+PATCH RequiemLocation
     nop
     nop
     bl Cutscene_OverrideRequiem
 
-.section .patch_NocturneLocation
-.global NocturneLocation_patch
-NocturneLocation_patch:
+PATCH NocturneLocation
     bl Cutscene_OverrideNocturne
 .if _EUR_==1
     b 0x44F1A0
@@ -398,750 +270,503 @@ NocturneLocation_patch:
     b 0x44F180
 .endif
 
-.section .patch_FreeScarecrow
-.global FreeScarecrow_patch
-FreeScarecrow_patch:
+PATCH FreeScarecrow
     bl hook_ScarecrowCheckToBeActivated
 
-.section .patch_MasterSwordAlwaysDrop
-.global MasterSwordAlwaysDrop_patch
-MasterSwordAlwaysDrop_patch:
+PATCH MasterSwordAlwaysDrop
     nop
 
-.section .patch_PreludeLocation
-.global PreludeLocation_patch
-PreludeLocation_patch:
+PATCH PreludeLocation
     bl Cutscene_OverridePrelude
     cmp r0,#0x0
     beq 0x18DAD0
     b 0x18DA38
 
-.section .patch_LullabyLocation
-.global LullabyLocation_patch
-LullabyLocation_patch:
+PATCH LullabyLocation
     bl Cutscene_OverrideLullaby
     b 0x3A0AC8
 
-.section .patch_EponasSongCheckFlag
-.global EponasSongCheckFlag_patch
-EponasSongCheckFlag_patch:
+PATCH EponasSongCheckFlag
     bl hook_EponasSongCheckFlag
 
-.section .patch_EponasSongCheckFlagTwo
-.global EponasSongCheckFlagTwo_patch
-EponasSongCheckFlagTwo_patch:
+PATCH EponasSongCheckFlagTwo
     bl hook_EponasSongCheckFlag
 
-.section .patch_EponasSongLocation
-.global EponasSongLocation_patch
-EponasSongLocation_patch:
+PATCH EponasSongLocation
     bl Cutscene_OverrideEponasSong
     b 0x3C61CC
 
-.section .patch_MalonNextAction
-.global MalonNextAction_patch
-MalonNextAction_patch:
+PATCH MalonNextAction
     .word 0x3D2A14
 
-.section .patch_SariasSongCheckFlag
-.global SariasSongCheckFlag_patch
-SariasSongCheckFlag_patch:
+PATCH SariasSongCheckFlag
     bl hook_SariasSongCheckFlag
 
-.section .patch_SariasSongItemGive
-.global SariasSongItemGive_patch
-SariasSongItemGive_patch:
+PATCH SariasSongItemGive
     nop
 
-.section .patch_SariasSongLocation
-.global SariasSongLocation_patch
-SariasSongLocation_patch:
+PATCH SariasSongLocation
     bl Cutscene_OverrideSariasSong
     b 0x12C92C
 
-.section .patch_SunsSongLocation
-.global SunsSongLocation_patch
-SunsSongLocation_patch:
+PATCH SunsSongLocation
     bl Cutscene_OverrideSunsSong
     b 0x2888F0
 
-.section .patch_SongOfTimeLocation
-.global SongOfTimeLocation_patch
-SongOfTimeLocation_patch:
+PATCH SongOfTimeLocation
     cpy r0,r5
     bl Cutscene_OverrideSongOfTime
     b 0x3C3780
 
-.section .patch_SongOfStormsLocation
-.global SongOfStormsLocation_patch
-SongOfStormsLocation_patch:
+PATCH SongOfStormsLocation
     bl Cutscene_OverrideSongOfStorms
     b 0x1427F8
 
-.section .patch_BiggoronDayCheck
-.global BiggoronDayCheck_patch
-BiggoronDayCheck_patch:
+PATCH BiggoronDayCheck
     mov r0,#0x3
 
-.section .patch_BiggoronGetTextId
-.global BiggoronGetTextId_patch
-BiggoronGetTextId_patch:
+PATCH BiggoronGetTextId
     bl EnGo2_rGetTextIdGoronDmtBiggoron
     b 0x195524
 
-.section .patch_BiggoronCheckBGSFlag
-.global BiggoronCheckBGSFlag_patch
-BiggoronCheckBGSFlag_patch:
+PATCH BiggoronCheckBGSFlag
     nop
     nop
     nop
 
-.section .patch_BiggoronDontSetBGSFlag
-.global BiggoronDontSetBGSFlag_patch
-BiggoronDontSetBGSFlag_patch:
+PATCH BiggoronDontSetBGSFlag
     nop
 
-.section .patch_BiggoronSetTextId
-.global BiggoronSetTextId_patch
-BiggoronSetTextId_patch:
+PATCH BiggoronSetTextId
     push {r0-r12, lr}
     cpy r0,r4
     bl EnGo2_rBiggoronSetTextId
     pop {r0-r12, lr}
     b 0x1D8B80
 
-.section .patch_BiggoronAfterGiveItem
-.global BiggoronAfterGiveItem_patch
-BiggoronAfterGiveItem_patch:
+PATCH BiggoronAfterGiveItem
     .word EnGo2_AfterGiveItem
 
-.section .patch_ItemEtceteraModelDraw
-.global ItemEtceteraModelDraw_patch
-ItemEtceteraModelDraw_patch:
+PATCH ItemEtceteraModelDraw
     bl hook_ItemEtceteraModelDraw
 
-.section .patch_KokiriCheckOpenForest
-.global Kokiri_CheckOpenForest_patch
-Kokiri_CheckOpenForest_patch:
+PATCH KokiriCheckOpenForest
     bl hook_KokiriCheckOpenForest
 
-.section .patch_BombchuBowlingStaticReward
-.global BombchuBowlingStaticReward_patch
-BombchuBowlingStaticReward_patch:
+PATCH BombchuBowlingStaticReward
     b 0x20618C
 
-.section .patch_ChildBlueWarpOverride
-.global ChildBlueWarpOverride_patch
-ChildBlueWarpOverride_patch:
+PATCH ChildBlueWarpOverride
     push {r0-r12, lr}
     bl Cutscene_BlueWarpOverride
     pop {r0-r12, lr}
     b 0x3F58A8
 
-.section .patch_RutoBlueWarpOverride
-.global RutoBlueWarpOverride_patch
-RutoBlueWarpOverride_patch:
+PATCH RutoBlueWarpOverride
     push {r0-r12, lr}
     bl Cutscene_BlueWarpOverride
     pop {r0-r12, lr}
     b 0x1A1944
 
-.section .patch_AdultBlueWarpOverride
-.global AdultBlueWarpOverride_patch
-AdultBlueWarpOverride_patch:
+PATCH AdultBlueWarpOverride
     push {r0-r12, lr}
     bl Cutscene_BlueWarpOverride
     pop {r0-r12, lr}
     b 0x1E4274
 
-.section .patch_EnExItemModelDraw
-.global EnExItemModelDraw_patch
-EnExItemModelDraw_patch:
+PATCH EnExItemModelDraw
     bl hook_EnExItemModelDraw
 
-.section .patch_DemoEffectMedallionDraw
-.global DemoEffectMedallionDraw_patch
-DemoEffectMedallionDraw_patch:
+PATCH DemoEffectMedallionDraw
     b hook_DemoEffectMedallionDraw
 
-.section .patch_DemoEffectStoneDraw
-.global DemoEffectStoneDraw_patch
-DemoEffectStoneDraw_patch:
+PATCH DemoEffectStoneDraw
     b hook_DemoEffectStoneDraw
 
-.section .patch_DekuSproutCheckForest
-.global DekuSproutCheckForest_patch
-DekuSproutCheckForest_patch:
+PATCH DekuSproutCheckForest
     ldr r0, [r0,#0xEF4]
     nop
     tst r0,#0x100
 
-.section .patch_EnKoInitCheckForest_165834
-.global EnKoInitCheckForest_165834_patch
-EnKoInitCheckForest_165834_patch:
+PATCH EnKoInitCheckForest_165834
     bl hook_EnKoInitCheckForest
     nop
     nop
 
-.section .patch_EnKoInitCheckForest_165878
-.global EnKoInitCheckForest_165878_patch
-EnKoInitCheckForest_165878_patch:
+PATCH EnKoInitCheckForest_165878
     bl hook_EnKoInitCheckForest
     nop
     nop
 
-.section .patch_EnKoInitCheckForest_1658C0
-.global EnKoInitCheckForest_1658C0_patch
-EnKoInitCheckForest_1658C0_patch:
+PATCH EnKoInitCheckForest_1658C0
     bl hook_EnKoInitCheckForest
     nop
     nop
 
-.section .patch_EnKoInitCheckForest_1658F0
-.global EnKoInitCheckForest_1658F0_patch
-EnKoInitCheckForest_1658F0_patch:
+PATCH EnKoInitCheckForest_1658F0
     bl hook_EnKoInitCheckForest
     nop
     nop
 
-.section .patch_FireArrowCheckChestFlagOne
-.global FireArrowCheckChestFlagOne_patch
-FireArrowCheckChestFlagOne_patch:
+PATCH FireArrowCheckChestFlagOne
     bl hook_FireArrowCheckChestFlag
 
-.section .patch_FireArrowCheckChestFlagTwo
-.global FireArrowCheckChestFlagTwo_patch
-FireArrowCheckChestFlagTwo_patch:
+PATCH FireArrowCheckChestFlagTwo
     bl hook_FireArrowCheckChestFlag
 
-.section .patch_FireArrowRequirement
-.global FireArrowRequirement_patch
-FireArrowRequirement_patch:
+PATCH FireArrowRequirement
     ldr r2, [r1,#0xEF4]
     nop
     tst r2,#0x400
 
-.section .patch_BusinessScrubCheckFlags
-.global BusinessScrubCheckFlags_patch
-BusinessScrubCheckFlags_patch:
+PATCH BusinessScrubCheckFlags
     cpy r0,r4
     bl EnShopnnuts_rCheckFlags
     cmp r0,#0x0
 
-.section .patch_BusinessScrubTable
-.global BusinessScrubTable_patch
-.global rScrubTable
-BusinessScrubTable_patch:
+PATCH BusinessScrubTable
     .word rScrubTable
 
-.section .patch_KakarikoGateCheck
-.global KakarikoGateCheck_patch
-KakarikoGateCheck_patch:
+PATCH KakarikoGateCheck
     bl hook_KakarikoGateCheck
 
-.section .patch_FairyReward
-.global FairyReward_patch
-FairyReward_patch:
+PATCH FairyReward
     cpy r0,r4
     bl Cutscene_OverrideFairyReward
     b 0x3E75F8
 
-.section .patch_PoeCollectorGetFirstTextbox
-.global PoeCollectorGetFirstTextbox_patch
-PoeCollectorGetFirstTextbox_patch:
+PATCH PoeCollectorGetFirstTextbox
     bl hook_PoeCollectorGetFirstTextbox
 
-.section .patch_OcarinaMinigameRewardsOrder
-.global OcarinaMinigameRewardsOrder_patch
-OcarinaMinigameRewardsOrder_patch:
+PATCH OcarinaMinigameRewardsOrder
     .word 0x76
     .word 0x4D
     .word 0x4E
 
-.section .patch_OcarinaMinigameEndAfterWin
-.global OcarinaMinigameEndAfterWin_patch
-OcarinaMinigameEndAfterWin_patch:
+PATCH OcarinaMinigameEndAfterWin
     nop
 
-.section .patch_ISGPutaway
-.global ISGPutaway_patch
-ISGPutaway_patch:
+PATCH ISGPutaway
     bl hook_RestoreISG
 
-.section .patch_ISGCrouchStab
-.global ISGCrouchStab_patch
-ISGCrouchStab_patch:
+PATCH ISGCrouchStab
     bl hook_RestoreISG
 
-.section .patch_ApplyDamageMultiplier
-.global ApplyDamageMultiplier_patch
-ApplyDamageMultiplier_patch:
+PATCH ApplyDamageMultiplier
     bl hook_ApplyDamageMultiplier
 
-.section .patch_SceneInitAfterCopyScenes
-.global SceneInitAfterCopyScenes_patch
-SceneInitAfterCopyScenes_patch:
+PATCH SceneInitAfterCopyScenes
     b hook_SceneInitAfterCopyScenes
 
-.section .patch_StoreChildBButtonEquip
-.global StoreChildBButtonEquip_patch
-StoreChildBButtonEquip_patch:
+PATCH StoreChildBButtonEquip
     b hook_StoreChildBButtonEquip
 
-.section .patch_AlwaysRestoreChildEquips
-.global AlwaysRestoreChildEquips_patch
-AlwaysRestoreChildEquips_patch:
+PATCH AlwaysRestoreChildEquips
     nop
 
-.section .patch_ChildDontEquipSwordSlotByDefault
-.global ChildDontEquipSwordSlotByDefault_patch
-ChildDontEquipSwordSlotByDefault_patch:
+PATCH ChildDontEquipSwordSlotByDefault
     push {r1-r12, lr}
     bl SaveFile_RestoreChildEquips
     pop {r1-r12, lr}
     nop
 
-.section .patch_LullabyCheckFlag
-.global LullabyCheckFlag_patch
-LullabyCheckFlag_patch:
+PATCH LullabyCheckFlag
     bl hook_LullabyCheckFlag
 
-.section .patch_FishingIgnoreTempBOne
-.global FishingIgnoreTempBOne_patch
-FishingIgnoreTempBOne_patch:
+PATCH FishingIgnoreTempBOne
     b hook_FishingIgnoreTempBOne
 
-.section .patch_FishingIgnoreTempBTwo
-.global FishingIgnoreTempBTwo_patch
-FishingIgnoreTempBTwo_patch:
+PATCH FishingIgnoreTempBTwo
     b hook_FishingIgnoreTempBTwo
 
-.section .patch_ItemGiveBombchuDropOne
-.global ItemGiveBombchuDropOne_patch
-ItemGiveBombchuDropOne_patch:
+PATCH ItemGiveBombchuDropOne
     mov r1,#0x96
 
-.section .patch_ItemGiveBombchuDropTwo
-.global ItemGiveBombchuDropTwo_patch
-ItemGiveBombchuDropTwo_patch:
+PATCH ItemGiveBombchuDropTwo
     mov r1,#0x96
 
-.section .patch_ConvertBombDropOne
-.global ConvertBombDropOne_patch
-ConvertBombDropOne_patch:
+PATCH ConvertBombDropOne
     b hook_ConvertBombDropOne
 
-.section .patch_ConvertBombDropTwo
-.global ConvertBombDropTwo_patch
-ConvertBombDropTwo_patch:
+PATCH ConvertBombDropTwo
     b hook_ConvertBombDropTwo
 
-.section .patch_BeanDaddyModifyBeansBought
-.global BeanDaddyModifyBeansBought_patch
-BeanDaddyModifyBeansBought_patch:
+PATCH BeanDaddyModifyBeansBought
     bl hook_BeanDaddyModifyBeansBought
 
-.section .patch_BeanDaddyModifyPrice
-.global BeanDaddyModifyPrice_patch
-BeanDaddyModifyPrice_patch:
+PATCH BeanDaddyModifyPrice
     bl hook_BeanDaddyModifyPrice
 
-.section .patch_BeanDaddyPurchase
-.global BeanDaddyPurchase_patch
-BeanDaddyTakeRupees_patch:
+PATCH BeanDaddyPurchase
     bl EnMs_Purchase
 
-.section .patch_CheckGerudoToken_18B368
-.global CheckGerudoToken_18B368_patch
-CheckGerudoToken_18B368_patch:
+PATCH CheckGerudoToken_18B368
     push {r1-r12, lr}
     bl SaveFile_CheckGerudoToken
     pop {r1-r12, lr}
     cmp r0,#0x0
 
-.section .patch_CheckGerudoToken_18B3A0
-.global CheckGerudoToken_18B3A0_patch
-CheckGerudoToken_18B3A0_patch:
+PATCH CheckGerudoToken_18B3A0
     push {r1-r12, lr}
     bl SaveFile_CheckGerudoToken
     pop {r1-r12, lr}
     cmp r0,#0x0
 
-.section .patch_CheckGerudoToken_18B3C0
-.global CheckGerudoToken_18B3C0_patch
-CheckGerudoToken_18B3C0_patch:
+PATCH CheckGerudoToken_18B3C0
     push {r1-r12, lr}
     bl SaveFile_CheckGerudoToken
     pop {r1-r12, lr}
     cmp r0,#0x0
 
-.section .patch_CheckGerudoToken_18B448
-.global CheckGerudoToken_18B448_patch
-CheckGerudoToken_18B448_patch:
+PATCH CheckGerudoToken_18B448
     push {r1-r12, lr}
     bl SaveFile_CheckGerudoToken
     pop {r1-r12, lr}
     cmp r0,#0x0
 
-.section .patch_CheckGerudoToken_18B6F4
-.global CheckGerudoToken_18B6F4_patch
-CheckGerudoToken_18B6F4_patch:
+PATCH CheckGerudoToken_18B6F4
     bl hook_CheckGerudoToken
     cmp r0,#0x1
 
-.section .patch_CheckGerudoToken_18B710
-.global CheckGerudoToken_18B710_patch
-CheckGerudoToken_18B710_patch:
+PATCH CheckGerudoToken_18B710
     bl hook_CheckGerudoToken
     cmp r0,#0x1
 
-.section .patch_CheckGerudoToken_1D7AD4
-.global CheckGerudoToken_1D7AD4_patch
-CheckGerudoToken_1D7AD4_patch:
+PATCH CheckGerudoToken_1D7AD4
     bl hook_CheckGerudoToken
     cmp r0,#0x1
 
-.section .patch_CheckGerudoToken_269884
-.global CheckGerudoToken_269884_patch
-CheckGerudoToken_269884_patch:
+PATCH CheckGerudoToken_269884
     bl hook_CheckGerudoToken
     cmp r0,#0x1
 
-.section .patch_MovableBlockSpeed
+PATCH MovableBlockSpeed
     .word 0x40800000
 
-.section .patch_MovableBlockCooldownTimer
-.global MovableBlockCooldownTimer_patch
-MovableBlockCooldownTimer_patch:
+PATCH MovableBlockCooldownTimer
     mov r0,#0x1
 
-.section .patch_MilkCrateSpeed
+PATCH MilkCrateSpeed
     .word 0x40800000
 
-.section .patch_MilkCrateCooldownTimer
-.global MilkCrateCooldownTimer_patch
-MilkCrateCooldownTimer_patch:
+PATCH MilkCrateCooldownTimer
     mov r0,#0x1
 
-.section .patch_AmyBlockSpeed
+PATCH AmyBlockSpeed
     .word 0x40800000
 
-.section .patch_AmyBlockCooldownTimer
-.global AmyBlockCooldownTimer_patch
-AmyBlockCooldownTimer_patch:
+PATCH AmyBlockCooldownTimer
     mov r1,#0x1
 
-.section .patch_FireBlockSpeed
+PATCH FireBlockSpeed
     .word 0x3DCCCCCD
 
-.section .patch_ArmosPushSpeed
+PATCH ArmosPushSpeed
     .word 0x3F800000
 
-.section .patch_ArmosCooldownTimer
+PATCH ArmosCooldownTimer
     mov r0,#0xC
 
-.section .patch_ForestTempleBasementPuzzleDelay
-.global ForestTempleBasementPuzzleDelay_patch
-ForestTempleBasementPuzzleDelay_patch:
+PATCH ForestTempleBasementPuzzleDelay
     cmp r0,#0x1
 
-.section .patch_CowBottleCheck
-.global CowBottleCheck_patch
-CowBottleCheck_patch:
+PATCH CowBottleCheck
     bl hook_CowBottleCheck
 
-.section .patch_CowItemOverride
-.global CowItemOverride_patch
-CowItemOverride_patch:
+PATCH CowItemOverride
     b hook_CowItemOverride
 
-.section .patch_AnjuCheckCuccoAmount
-.global AnjuCheckCuccoAmount_patch
-AnjuCheckCuccoAmount_patch:
+PATCH AnjuCheckCuccoAmount
     b hook_AnjuCheckCuccoAmount
 
-.section .patch_FrogReward
-.global FrogReward_patch
-FrogReward_patch:
+PATCH FrogReward
     b hook_FrogReward
 
-.section .patch_FrogRewardPurple
-.global FrogRewardPurple_patch
-FrogRewardPurple_patch:
+PATCH FrogRewardPurple
     beq hook_FrogReward
 
-.section .patch_CanPlayBombchuBowlingOne
-.global CanPlayBombchuBowlingOne_patch
-CanPlayBombchuBowlingOne_patch:
+PATCH CanPlayBombchuBowlingOne
     bl hook_CanPlayBombchuBowling
 
-.section .patch_CanPlayBombchuBowlingTwo
-.global CanPlayBombchuBowlingTwo_patch
-CanPlayBombchuBowlingTwo_patch:
+PATCH CanPlayBombchuBowlingTwo
     bl hook_CanPlayBombchuBowling
 
-.section .patch_BombchuBowlingAlwaysFirstPrize
-.global BombchuBowlingAlwaysFirstPrize_patch
-BombchuBowlingAlwaysFirstPrize_patch:
+PATCH BombchuBowlingAlwaysFirstPrize
     mov r0,#0x0
 
-.section .patch_BombchuBowlingPrizeOrder
-.global BombchuBowlingPrizeOrder_patch
-BombchuBowlingPrizeOrder_patch:
+PATCH BombchuBowlingPrizeOrder
     .word 0x0021CAFC
     .word 0x0021CB0C
     .word 0x0021CAF4
 
-.section .patch_CourtyardCheckForVisitedZeldaOne
-.global CourtyardCheckForVisitedZeldaOne_patch
-CourtyardCheckForVisitedZeldaOne_patch:
+PATCH CourtyardCheckForVisitedZeldaOne
     ldreqh r0,[r0,#0xF4]
 
-.section .patch_CourtyardCheckForVisitedZeldaTwo
-.global CourtyardCheckForVisitedZeldaTwo_patch
-CourtyardCheckForVisitedZeldaTwo_patch:
+PATCH CourtyardCheckForVisitedZeldaTwo
     ldreqh r0,[r0,#0xF4]
 
-.section .patch_ImpaInCourtyardCheckForVisitedZelda
-.global ImpaInCourtyardCheckForVisitedZelda_patch
-ImpaInCourtyardCheckForVisitedZelda_patch:
+PATCH ImpaInCourtyardCheckForVisitedZelda
     ldrh r2,[r1,#0xF4]
 
-.section .patch_LikeLikeNeverEatTunic
-.global LikeLikeNeverEatTunic_patch
-LikeLikeNeverEatTunic_patch:
+PATCH LikeLikeNeverEatTunic
     b 0x355C48
 
-.section .patch_SwapFaroresWind
-.global SwapFaroresWind_patch
-SwapFaroresWind_patch:
+PATCH SwapFaroresWind
     bl SaveFile_SwapFaroresWind
     nop
 
-.section .patch_BombchuShopAlwaysOpen
-.global BombchuShopAlwaysOpen_patch
-BombchuShopAlwaysOpen_patch:
+PATCH BombchuShopAlwaysOpen
     nop
 
-.section .patch_BombchuCheapestPriceOne
+PATCH BombchuCheapestPriceOne
     .word 0x0063FFFF
 
-.section .patch_BombchuCheapestPriceTwo
+PATCH BombchuCheapestPriceTwo
     .word 0x0063FFFF
 
-.section .patch_BombchuCheapestPriceThree
+PATCH BombchuCheapestPriceThree
     .word 0x0063FFFF
 
-.section .patch_BombchuCheapestPriceFour
+PATCH BombchuCheapestPriceFour
     .word 0x0063FFFF
 
-.section .patch_BombchuPurchaseableCheck
-.global BombchuPurchaseableCheck_patch
-BombchuPurchaseableCheck_patch:
+PATCH BombchuPurchaseableCheck
     bl Shop_CheckCanBuyBombchus
     nop
     nop
     nop
 
-.section .patch_BombPurchaseableCheck
-.global BombPurchaseableCheck_patch
-BombPurchaseableCheck_patch:
+PATCH BombPurchaseableCheck
     nop
 
-.section .patch_BombchuShopInfinitePurchases
-.global BombchuShopInfinitePurchases_patch
-BombchuShopInfinitePurchases_patch:
+PATCH BombchuShopInfinitePurchases
     b hook_BombchuShopInfinitePurchases
 
-.section .patch_GanonBattleDeathWarp
-.global GanonBattleDeathWarp_patch
-GanonBattleDeathWarp_patch:
+PATCH GanonBattleDeathWarp
     bl Entrance_DeathInGanonBattle
 
-.section .patch_SlidingDoorDestroyCustomModels
-.global SlidingDoorDestroyCustomModels_patch
-SlidingDoorDestroyCustomModels_patch:
+PATCH SlidingDoorDestroyCustomModels
     bl hook_SlidingDoorDestroyCustomModels
 
-.section .patch_HandleDoorDestroyCustomModels
-.global HandleDoorDestroyCustomModels_patch
-HandleDoorDestroyCustomModels_patch:
+PATCH HandleDoorDestroyCustomModels
     bl hook_HandleDoorDestroyCustomModels
 
-.section .patch_DoorOfTimeOpenCutscene
-.global DoorOfTimeOpenCutscene_patch
-DoorOfTimeOpenCutscene_patch:
+PATCH DoorOfTimeOpenCutscene
     add r0,r6,#0x100
     ldrh r0,[r0,#0x4]
     cmp r0,#0x43
 
-.section .patch_DungeonCheckJabuMQBox
-.global DungeonCheckJabuMQBox_patch
-DungeonCheckJabuMQBox_patch:
+PATCH DungeonCheckJabuMQBox
     bl hook_DungeonCheckJabuMQBox
     nop
 
-.section .patch_JabuSwitchRutoCheck
-.global JabuSwitchRutoCheck_patch
-JabuSwitchRutoCheck_patch:
+PATCH JabuSwitchRutoCheck
     bl hook_JabuSwitchRutoCheck
 
-.section .patch_JabuBoxCheckRuto
-.global JabuBoxCheckRuto_patch
-JabuBoxCheckRuto_patch:
+PATCH JabuBoxCheckRuto
     bl hook_JabuBoxCheckRuto
 
-.section .patch_TalonGetCastleTextbox
-.global TalonGetCastleTextbox_patch
-TalonGetCastleTextbox_patch:
+PATCH TalonGetCastleTextbox
     bl hook_TalonGetCastleTextbox
 
-.section .patch_MidoCheckSpawn
-.global MidoCheckSpawn_patch
-MidoCheckSpawn_patch:
+PATCH MidoCheckSpawn
     bl hook_MidoCheckSpawn
     beq 0x1661B8
     b 0x1661A8
 
-.section .patch_MidoForestDialog
-.global MidoForestDialog_patch
-MidoForestDialog_patch:
+PATCH MidoForestDialog
     nop
     nop
     nop
     nop
     bl hook_MidoForestDialog
 
-.section .patch_MidoCheckDekuTreeClearOne
-.global MidoCheckDekuTreeClearOne_patch
-MidoCheckDekuTreeClearOne_patch:
+PATCH MidoCheckDekuTreeClearOne
     nop
     nop
     bl hook_CheckDekuTreeClear
 
-.section .patch_MidoCheckDekuTreeClearTwo
-.global MidoCheckDekuTreeClearTwo_patch
-MidoCheckDekuTreeClearTwo_patch:
+PATCH MidoCheckDekuTreeClearTwo
     nop
     nop
     bl hook_CheckDekuTreeClear
 
-.section .patch_MidoCheckDekuTreeClearThree
-.global MidoCheckDekuTreeClearThree_patch
-MidoCheckDekuTreeClearThree_patch:
+PATCH MidoCheckDekuTreeClearThree
     nop
     nop
     bl hook_CheckDekuTreeClear
 
-.section .patch_MidoCheckDekuTreeClearFour
-.global MidoCheckDekuTreeClearFour_patch
-MidoCheckDekuTreeClearFour_patch:
+PATCH MidoCheckDekuTreeClearFour
     nop
     nop
     bl hook_CheckDekuTreeClear
 
-.section .patch_CorrectCompassChests
-.global CorrectCompassChests_patch
-CorrectCompassChests_patch:
+PATCH CorrectCompassChests
     bl hook_CheckCurrentDungeonMode
 
-.section .patch_CorrectCompassChestsTwo
-.global CorrectCompassChestsTwo_patch
-CorrectCompassChestsTwo_patch:
+PATCH CorrectCompassChestsTwo
     bl hook_CheckCurrentDungeonMode
 
-.section .patch_FishingNewRecord
-.global FishingNewRecord_patch
-FishingNewRecord_patch:
+PATCH FishingNewRecord
     mov r0,#0x0
     cmp r0,#0x1
 
-.section .patch_FishingSizeIgnoreChild
-.global FishingSizeIgnoreChild_patch
-FishingSizeIgnoreChild_patch:
+PATCH FishingSizeIgnoreChild
     nop
 
-.section .patch_FishingSizeIgnoreAdult
-.global FishingSizeIgnoreAdult_patch
-FishingSizeIgnoreAdult_patch:
+PATCH FishingSizeIgnoreAdult
     nop
 
-.section .patch_TycoonWalletSize
+PATCH TycoonWalletSize
     .word 0x03E701F4
 
-.section .patch_ReadGossipStoneHints
-.global ReadGossipStoneHints_patch
-ReadGossipStoneHints_patch:
+PATCH ReadGossipStoneHints
     bl hook_CanReadHints
     nop
     nop
     nop
     nop
 
-.section .patch_GossipStoneAddSariaHint
-.global GossipStoneAddSariaHint_patch
-GossipStoneAddSariaHint_patch:
+PATCH GossipStoneAddSariaHint
     bl hook_GossipStoneAddSariaHint
 
-.section .patch_GoronShopPurchaseableCheck
-.global GoronShopPurchaseableCheck_patch
-GoronShopPurchaseableCheck_patch:
+PATCH GoronShopPurchaseableCheck
     nop
 
-.section .patch_PlayerEditAndRetrieveCMB
-.global PlayerEditAndRetrieveCMB_patch
-PlayerEditAndRetrieveCMB_patch:
+PATCH PlayerEditAndRetrieveCMB
     bl Player_EditAndRetrieveCMB
 
-.section .patch_PlayerGetCustomTunicCMAB
-.global PlayerGetCustomTunicCMAB_patch
-PlayerGetCustomTunicCMAB_patch:
+PATCH PlayerGetCustomTunicCMAB
     bl Player_GetCustomTunicCMAB
 
-.section .patch_SetChildCustomTunic
-.global SetChildCustomTunic_patch
-SetChildCustomTunic_patch:
+PATCH SetChildCustomTunic
     bne hook_SetChildCustomTunic
 
-.section .patch_FastOwlCutscenes
-.global FastOwlCutscenes_patch
-FastOwlCutscenes_patch:
+PATCH FastOwlCutscenes
     bl hook_FastOwlCutscenes
 
-.section .patch_ShopItemDontSetAnimSpeedOne
+PATCH ShopItemDontSetAnimSpeedOne
     nop
 
-.section .patch_ShopItemDontSetAnimSpeedTwo
+PATCH ShopItemDontSetAnimSpeedTwo
     nop
 
-.section .patch_BugsRecatchable
-.global BugsRecatchable_patch
-BugsRecatchable_patch:
+PATCH BugsRecatchable
     nop
 
-.section .patch_SkipDaruniaDanceOne
-.global SkipDaruniaDanceOne_patch
-SkipDaruniaDanceOne_patch:
+PATCH SkipDaruniaDanceOne
     nop
 
-.section .patch_SkipDaruniaDanceTwo
-.global SkipDaruniaDanceTwo_patch
-SkipDaruniaDanceTwo_patch:
+PATCH SkipDaruniaDanceTwo
     nop
 
-.section .patch_SkipDaruniaDanceThree
-.global SkipDaruniaDanceThree_patch
-SkipDaruniaDanceThree_patch:
+PATCH SkipDaruniaDanceThree
     nop
 
-.section .patch_ShortenRainbowBridgeCS
-.global ShortenRainbowBridgeCS_patch
-ShortenRainbowBridgeCS_patch:
+PATCH ShortenRainbowBridgeCS
     bl hook_ShortenRainbowBridgeCS
 
-.section .patch_RemoveWaterfallCS
-.global RemoveWaterfallCS_patch
-RemoveWaterfallCS_patch:
+PATCH RemoveWaterfallCS
     nop
     cpy r0,r10
     add r1,r10,#0x800
@@ -1149,39 +774,25 @@ RemoveWaterfallCS_patch:
     ldr r2,[r6,#0x1A4]
     bl 0x36B940
 
-.section .patch_OwlMagicCheck
-.global OwlMagicCheck_patch
-OwlMagicCheck_patch:
+PATCH OwlMagicCheck
     mov r0,#0x1
 
-.section .patch_ChestIceSmoke
-.global ChestIceSmoke_patch
-ChestIceSmoke_patch:
+PATCH ChestIceSmoke
     b hook_Chest_OverrideIceSmoke
 
-.section .patch_EnableFW
-.global EnableFW_patch
-EnableFW_patch:
+PATCH EnableFW
     bl hook_EnableFW
 
-.section .patch_FWKeepWarpPoint
-.global FWKeepWarpPoint_patch
-FWKeepWarpPoint_patch:
+PATCH FWKeepWarpPoint
     blmi hook_FWUnset
 
-.section .patch_FWLoadSet
-.global FWLoadSet_patch
-FWLoadSet_patch:
+PATCH FWLoadSet
     ldr r2,[r1,#-0x668]
 
-.section .patch_FWGetSet
-.global FWGetSet_patch
-FWGetSet_patch:
+PATCH FWGetSet
     b hook_FWGetSet
 
-.section .patch_SetSavewarpEntrance
-.global SetSavewarpEntrance_patch
-SetSavewarpEntrance_patch:
+PATCH SetSavewarpEntrance
     bl hook_SetSavewarpEntrance
 .if _EUR_==1
     b  0x44FD00
@@ -1189,9 +800,7 @@ SetSavewarpEntrance_patch:
     b  0x44FCE0
 .endif
 
-.section .patch_SetGameOverEntrance
-.global SetGameOverEntrance_patch
-SetGameOverEntrance_patch:
+PATCH SetGameOverEntrance
     bl hook_SetGameOverEntrance
 .if _EUR_==1
     b  0x458EE8
@@ -1199,785 +808,491 @@ SetGameOverEntrance_patch:
     b  0x458EC8
 .endif
 
-.section .patch_SetGameOverRespawnFlag
-.global SetGameOverRespawnFlag_patch
-SetGameOverRespawnFlag_patch:
+PATCH SetGameOverRespawnFlag
     bl hook_SetGameOverRespawnFlag
 
-.section .patch_SetSunsSongRespawnFlag
-.global SetSunsSongRespawnFlag_patch
-SetSunsSongRespawnFlag_patch:
+PATCH SetSunsSongRespawnFlag
     bl hook_SetSunsSongRespawnFlag
 
-.section .patch_SunsSongEndCloseTextbox
-.global SunsSongsEndCloseTextbox_patch
-SunsSongsEndCloseTextbox_patch:
+PATCH SunsSongEndCloseTextbox
     beq hook_SunsSongEndCloseTextbox
 
-.section .patch_SetSpecialVoidOutRespawnFlag
-.global SetSpecialVoidOutRespawnFlag_patch
-SetSpecialVoidOutRespawnFlag_patch:
+PATCH SetSpecialVoidOutRespawnFlag
     bl hook_SetSpecialVoidOutRespawnFlag
 
-.section .patch_SariasSongHintsOne
-.global SariasSongHintsOne_patch
-SariasSongHintsOne_patch:
+PATCH SariasSongHintsOne
     bl Hints_GetNextSariasSongHint
 
-.section .patch_SariasSongHintsTwo
-.global SariasSongHintsTwo_patch
-SariasSongHintsTwo_patch:
+PATCH SariasSongHintsTwo
     bl Hints_GetNextSariasSongHint
 
-.section .patch_ActorUpdate
-.global ActorUpdate_patch
-ActorUpdate_patch:
+PATCH ActorUpdate
     bl hook_ActorUpdate
 
-.section .patch_TitleCardUpdate
-.global TitleCardUpdate_patch
-TitleCardUpdate_patch:
+PATCH TitleCardUpdate
     bl TitleCard_rUpdate
 
-.section .patch_NoHealFromHealthUpgrades
-.global NoHealFromHealthUpgrades_patch
-NoHealFromHealthUpgrades_patch:
+PATCH NoHealFromHealthUpgrades
     bl hook_NoHealFromHealthUpgrades
 
-.section .patch_NoHealFromBombchuBowlingPrize
-.global NoHealFromBombchuBowlingPrize_patch
-NoHealFromBombchuBowlingPrize_patch:
+PATCH NoHealFromBombchuBowlingPrize
     bl hook_NoHealFromBombchuBowlingPrize
 
-.section .patch_FairyPickupHealAmount
-.global FairyPickupHealAmount_patch
-FairyPickupHealAmount_patch:
+PATCH FairyPickupHealAmount
     bl hook_FairyPickupHealAmount
 
-.section .patch_FairyReviveHealAmount
-.global FairyReviveHealAmount_patch
-FairyReviveHealAmount_patch:
+PATCH FairyReviveHealAmount
     bl hook_FairyReviveHealAmount
 
-.section .patch_FairyUseHealAmount
-.global FairyUseHealAmount_patch
-FairyUseHealAmount_patch:
+PATCH FairyUseHealAmount
     bl hook_FairyUseHealAmount
 
-.section .patch_MedigoronCheckFlagOne
-.global MedigoronCheckFlagOne_patch
-MedigoronCheckFlagOne_patch:
+PATCH MedigoronCheckFlagOne
     b hook_MedigoronCheckFlagOne
 
-.section .patch_MedigoronCheckFlagTwo
-.global MedigoronCheckFlagTwo_patch
-MedigoronCheckFlagTwo_patch:
+PATCH MedigoronCheckFlagTwo
     b hook_MedigoronCheckFlagTwo
 
-.section .patch_MedigoronSetRewardFlag
-.global MedigoronSetRewardFlag_patch
-MedigoronSetRewardFlag_patch:
+PATCH MedigoronSetRewardFlag
     b hook_MedigoronSetRewardFlag
 
-.section .patch_MedigoronGetCustomText
-.global MedigoronGetCustomText_patch
-MedigoronGetCustomText_patch:
+PATCH MedigoronGetCustomText
     b hook_MedigoronGetCustomText
     nop
 
-.section .patch_MedigoronItemOverrideOne
-.global MedigoronItemOverrideOne_patch
-MedigoronItemOverrideOne_patch:
+PATCH MedigoronItemOverrideOne
     b hook_MedigoronItemOverrideOne
 
-.section .patch_MedigoronItemOverrideTwo
-.global MedigoronItemOverrideTwo_patch
-MedigoronItemOverrideTwo_patch:
+PATCH MedigoronItemOverrideTwo
     b hook_MedigoronItemOverrideTwo
 
-.section .patch_CarpetSalesmanCheckFlagOne
-.global CarpetSalesmanCheckFlagOne_patch
-CarpetSalesmanCheckFlagOne_patch:
+PATCH CarpetSalesmanCheckFlagOne
     bl hook_CarpetSalesmanCheckFlagOne
 
-.section .patch_CarpetSalesmanCheckFlagTwo
-.global CarpetSalesmanCheckFlagTwo_patch
-CarpetSalesmanCheckFlagTwo_patch:
+PATCH CarpetSalesmanCheckFlagTwo
     bl hook_CarpetSalesmanCheckFlagTwo
 
-.section .patch_CarpetSalesmanSetFlag
-.global CarpetSalesmanSetFlag_patch
-CarpetSalesmanSetFlag_patch:
+PATCH CarpetSalesmanSetFlag
     bl hook_CarpetSalesmanSetFlag
 
-.section .patch_DoorOfTimeCheck
-.global DoorOfTimeCheck_patch
-DoorOfTimeCheck_patch:
+PATCH DoorOfTimeCheck
     bl hook_DoorOfTimeCheck
 
-.section .patch_SongOfTimeJingle
-.global SongOfTimeJingle_patch
-SongOfTimeJingle_patch:
+PATCH SongOfTimeJingle
     bl hook_SongOfTimeJingle
 
-.section .patch_GKSetDurability
-.global GKSetDurability_patch
-GKSetDurability_patch:
+PATCH GKSetDurability
     b hook_GKSetDurability
 
-.section .patch_TurboTextAdvance
-.global TurboTextAdvance_patch
-TurboTextAdvance_patch:
+PATCH TurboTextAdvance
     bl hook_TurboTextAdvance
 
-.section .patch_TurboTextClose
-.global TurboTextClose_patch
-TurboTextClose_patch:
+PATCH TurboTextClose
     bl hook_TurboTextClose
 
-.section .patch_TurboTextSignalNPC
-.global TurboTextSignalNPC_patch
-TurboTextSignalNPC_patch:
+PATCH TurboTextSignalNPC
     bl hook_TurboTextSignalNPC
 
-.section .patch_SkipSongReplays_TimeBlocksFix
-.global SkipSongReplays_TimeBlocksFix_patch
-SkipSongReplays_TimeBlocksFix_patch:
+PATCH SkipSongReplays_TimeBlocksFix
     b hook_SkipSongReplays_TimeBlocksFix
 
-.section .patch_ItemsMenuNumSprites
-.global ItemsMenuNumSprites_patch
-ItemsMenuNumSprites_patch:
+PATCH ItemsMenuNumSprites
     mov r1,#0x19
 
-.section .patch_ItemsMenuDraw
-.global ItemsMenuDraw_patch
-ItemsMenuDraw_patch:
+PATCH ItemsMenuDraw
     bl hook_ItemsMenuDraw
 
-.section .patch_GearMenuEmptySlot
-.global GearMenuEmptySlot_patch
-GearMenuEmptySlot_patch:
+PATCH GearMenuEmptySlot
     b hook_GearMenuEmptySlot
 
-.section .patch_PreSwapBuffers
-.global PreSwapBuffers_patch
-PreSwapBuffers_patch:
+PATCH PreSwapBuffers
     bl hook_Draw_PreSwapBuffers
 
-.section .patch_SleepQueryCallback
-.global SleepQueryCallback_patch
-SleepQueryCallback_patch:
+PATCH SleepQueryCallback
     b hook_Gfx_SleepQueryCallback
 
-.section .patch_AwakeCallback
-.global AwakeCallback_patch
-AwakeCallback_patch:
+PATCH AwakeCallback
     b hook_Gfx_AwakeCallback
 
-.section .patch_AnjuGiveCojiro
-.global AnjuGiveCojiro_patch
-AnjuGiveCojiro_patch:
+PATCH AnjuGiveCojiro
     .word EnNiwLady_rGiveCojiro
 
-.section .patch_GrogCheckForShouldDespawn
-.global GrogCheckForShouldDespawn_patch
-GrogCheckForShouldDespawn_patch:
+PATCH GrogCheckForShouldDespawn
     push {r0-r12, lr}
     cpy r0,r4
     bl EnHs_CheckForShouldDespawn
     pop {r0-r12, lr}
     nop
 
-.section .patch_GrogSetTradedCojiroFlag
-.global GrogSetTradedCojiroFlag_patch
-GrogSetTradedCojiroFlag_patch:
+PATCH GrogSetTradedCojiroFlag
     .word EnHs_SetTradedCojiroFlag
 
-.section .patch_CheckFadoCanSpawnInLostWoods
-.global CheckFadoCanSpawnInLostWoods_patch
-CheckFadoCanSpawnInLostWoods_patch:
+PATCH CheckFadoCanSpawnInLostWoods
     push {r1-r12, lr}
     bl EnKo_CheckFadoCanSpawnInLostWoods
     pop {r1-r12, lr}
 
-.section .patch_CarpenterBossSetTradedSawFlag
-.global CarpenterBossSetTradedSawFlag_patch
-CarpenterBossSetTradedSawFlag_patch:
+PATCH CarpenterBossSetTradedSawFlag
     bl hook_CarpenterBossSetTradedSawFlag
 
-.section .patch_CarpenterBossDontNullExchangeItem
-.global CarpenterBossDontNullExchangeItem_patch
-CarpenterBossDontNullExchangeItem_patch:
+PATCH CarpenterBossDontNullExchangeItem
     nop
 
-.section .patch_LabScientistDontStartTimerAndSetFlag
-.global LabScientistDontStartTimerAndSetFlag_patch
-LabScientistDontStartTimerAndSetFlag_patch:
+PATCH LabScientistDontStartTimerAndSetFlag
     nop
     push {r0-r12, lr}
     bl EnMk_SetTradedEyeballFrogFlag
     pop {r0-r12, lr}
     nop
 
-.section .patch_LabScientistIgnoreEyedropsInInventory
-.global LabScientistIgnoreEyedropsInInventory_patch
-LabScientistIgnoreEyedropsInInventory_patch:
+PATCH LabScientistIgnoreEyedropsInInventory
     b 0x3F0B5C
 
-.section .patch_KingZoraDontStartTimer
-.global KingZoraDontStartTimer_patch
-KingZoraDontStartTimer_patch:
+PATCH KingZoraDontStartTimer
     nop
     nop
     nop
     nop
     nop
 
-.section .patch_KingZoraSetTradedPrescriptionFlag
-.global KingZoraSetTradedPrescriptionFlag_patch
-KingZoraSetTradedPrescriptionFlag_patch:
+PATCH KingZoraSetTradedPrescriptionFlag
     beq hook_KingZoraSetTradedPrescriptionFlag
 
-.section .patch_CheckForWeirdEggHatchGameplayInit
-.global CheckForWeirdEggHatchGameplayInit_patch
-CheckForWeirdEggHatchGameplayInit_patch:
+PATCH CheckForWeirdEggHatchGameplayInit
     bl SaveFile_CheckForWeirdEggHatch
 
-.section .patch_CheckForPocketCuccoHatchGameplayInit
-.global CheckForPocketCuccoHatchGameplayInit_patch
-CheckForPocketCuccoHatchGameplayInit_patch:
+PATCH CheckForPocketCuccoHatchGameplayInit
     bl SaveFile_CheckForPocketCuccoHatch
 
-.section .patch_CheckForWeirdEggHatchKankyo
-.global CheckForWeirdEggHatchKankyo_patch
-CheckForWeirdEggHatchKankyo_patch:
+PATCH CheckForWeirdEggHatchKankyo
     bl SaveFile_CheckForWeirdEggHatch
 
-.section .patch_CheckForPocketCuccoHatchKankyo
-.global CheckForPocketCuccoHatchKankyo_patch
-CheckForPocketCuccoHatchKankyo_patch:
+PATCH CheckForPocketCuccoHatchKankyo
     bl SaveFile_CheckForPocketCuccoHatch
 
-.section .patch_SkipSongReplays_WarpBlocksFix
-.global SkipSongReplays_WarpBlocksFix_patch
-SkipSongReplays_WarpBlocksFix_patch:
+PATCH SkipSongReplays_WarpBlocksFix
     b hook_SkipSongReplays_WarpBlocksFix
 
-.section .patch_PlaySound
-.global PlaySound_patch
-PlaySound_patch:
+PATCH PlaySound
     b hook_PlaySound
 
-.section .patch_SetBGMEntrance
-.global SetBGMEntrance_patch
-SetBGMEntrance_patch:
+PATCH SetBGMEntrance
     b hook_SetBGMEntrance
 
-.section .patch_SetBGMDayNight
-.global SetBGMDayNight_patch
-SetBGMDayNight_patch:
+PATCH SetBGMDayNight
     b hook_SetBGMDayNight
 
-.section .patch_SetBGMEvent
-.global SetBGMEvent_patch
-SetBGMEvent_patch:
+PATCH SetBGMEvent
     b hook_SetBGMEvent
 
-.section .patch_SetSFX
-.global SetSFX_patch
-SetSFX_patch:
+PATCH SetSFX
     b hook_SetSFX
 
-.section .patch_GiantsKnifeWithoutKokiriSword
-.global GiantsKnifeWithoutKokiriSword_patch
-GiantsKnifeWithoutKokiriSword_patch:
+PATCH GiantsKnifeWithoutKokiriSword
     cmp r3,#0x8
     blt 0x376C54
 
-.section .patch_SkipTimeTravelCutsceneOne
-.global SkipTimeTravelCutsceneOne_patch
-SkipTimeTravelCutsceneOne_patch:
+PATCH SkipTimeTravelCutsceneOne
     b hook_SkipTimeTravelCutsceneOne
 
-.section .patch_SkipTimeTravelCutsceneTwo
-.global SkipTimeTravelCutsceneTwo_patch
-SkipTimeTravelCutsceneTwo_patch:
+PATCH SkipTimeTravelCutsceneTwo
     bl hook_SkipTimeTravelCutsceneTwo
 
-.section .patch_SwapAgeIgnoreSceneSetup
-.global SwapAgeIgnoreSceneSetup_patch
-SwapAgeIgnoreSceneSetup_patch:
+PATCH SwapAgeIgnoreSceneSetup
     nop
 
-.section .patch_SkipMasterSwordFanfare
-.global SkipMasterSwordFanfare_patch
-SkipMasterSwordFanfare_patch:
+PATCH SkipMasterSwordFanfare
     bl hook_SkipMasterSwordFanfare
 
-.section .patch_GameOverDontSpoilTradeItems
-.global GameOverDontSpoilTradeItems_patch
-GameOverDontSpoilTradeItems_patch:
+PATCH GameOverDontSpoilTradeItems
 .if _EUR_==1
     b 0x458CC0
 .else
     b 0x458CA0
 .endif
 
-.section .patch_InterfaceDrawDontSpoilTradeItems
-.global InterfaceDrawDontSpoilTradeItems_patch
-InterfaceDrawDontSpoilTradeItems_patch:
+PATCH InterfaceDrawDontSpoilTradeItems
 .if _EUR_==1
     b 0x45A230
 .else
     b 0x45A210
 .endif
 
-.section .patch_OpenSaveDontSpoilTradeItems
-.global OpenSaveDontSpoilTradeItems_patch
-OpenSaveDontSpoilTradeItems_patch:
+PATCH OpenSaveDontSpoilTradeItems
 .if _EUR_==1
     b 0x44FED8
 .else
     b 0x44FEB8
 .endif
 
-.section .patch_EnteredLocation
-.global EnteredLocation_patch
-EnteredLocation_patch:
+PATCH EnteredLocation
     bl hook_EnteredLocation
 
-.section .patch_LostWoodsBridgeMusic
-.global LostWoodsBridgeMusic_patch
-LostWoodsBridgeMusic_patch:
+PATCH LostWoodsBridgeMusic
     bl hook_LostWoodsBridgeMusic
 
-.section .patch_BeforeLoadGame
-.global BeforeLoadGame_patch
-BeforeLoadGame_patch:
+PATCH BeforeLoadGame
     b hook_BeforeLoadGame
 
-.section .patch_AfterLoadGame
-.global AfterLoadGame_patch
-AfterLoadGame_patch:
+PATCH AfterLoadGame
     b hook_AfterLoadGame
 
-.section .patch_FileSelect_CopyFile
-.global FileSelect_CopyFile_patch
-FileSelect_CopyFile_patch:
+PATCH FileSelect_CopyFile
     bl hook_FileSelect_CopyFile
 
-.section .patch_SaveGame
-.global .SaveGame_patch
-SaveGame_patch:
+PATCH SaveGame
     b hook_SaveGame
 
-.section .patch_DontSetMotionSetting
-.global .DontSetMotionSetting_patch
-DontSetMotionSetting_patch:
+PATCH DontSetMotionSetting
     nop
 
-.section .patch_SaveMenuIgnoreOpen
-.global SaveMenuIgnoreOpen_patch
-SaveMenuIgnoreOpen_patch:
+PATCH SaveMenuIgnoreOpen
     bl hook_SaveMenuIgnoreOpen
 
-.section .patch_GameOverStart
-.global GameOverStart_patch
-GameOverStart_patch:
+PATCH GameOverStart
     bl hook_GameOverStart
 
-.section .patch_PermadeathSkipMenu
-.global PermadeathSkipMenu_patch
-PermadeathSkipMenu_patch:
+PATCH PermadeathSkipMenu
     bl hook_PermadeathSkipMenu
 
-.section .patch_PermadeathForceQuit
-.global PermadeathForceQuit_patch
-PermadeathForceQuit_patch:
+PATCH PermadeathForceQuit
     bl hook_PermadeathForceQuit
 
-.section .patch_OverrideFogDuringGameplayInit
-.global OverrideFogDuringGameplayInit_patch
-OverrideFogDuringGameplayInit_patch:
+PATCH OverrideFogDuringGameplayInit
     bl hook_OverrideFogDuringGameplayInit
 
-.section .patch_KotakeDontPlayBattleMusic
-.global KotakeDontPlayBattleMusic_patch
-KotakeDontPlayBattleMusic_patch:
+PATCH KotakeDontPlayBattleMusic
     nop
 
-.section .patch_SkipTwinrovaQuarrelCutsceneOne
-.global SkipTwinrovaQuarrelCutsceneOne_patch
-SkipTwinrovaQuarrelCutsceneOne_patch:
+PATCH SkipTwinrovaQuarrelCutsceneOne
     sub r1,r1,#0x500
 
-.section .patch_SkipTwinrovaQuarrelCutsceneTwo
-.global SkipTwinrovaQuarrelCutsceneTwo_patch
-SkipTwinrovaQuarrelCutsceneTwo_patch:
+PATCH SkipTwinrovaQuarrelCutsceneTwo
     bl hook_SkipTwinrovaQuarrelCutscene
 
-.section .patch_FixItemsMenuSlotDuplication
-.global FixItemsMenuSlotDuplication_patch
-FixItemsMenuSlotDuplication_patch:
+PATCH FixItemsMenuSlotDuplication
     b hook_FixItemsMenuSlotDuplication
 
-.section .patch_PlayEntranceCutscene
-.global PlayEntranceCutscene_patch
-PlayEntranceCutscene_patch:
+PATCH PlayEntranceCutscene
     b hook_PlayEntranceCutscene
 
-.section .patch_SkipJabuOpeningCutscene
-.global SkipJabuOpeningCutscene_patch
-SkipJabuOpeningCutscene_patch:
+PATCH SkipJabuOpeningCutscene
     bl hook_SkipJabuOpeningCutscene
 
-.section .patch_MultiplyPlayerSpeed
-.global MultiplyPlayerSpeed_patch
-MultiplyPlayerSpeed_patch:
+PATCH MultiplyPlayerSpeed
     bl hook_MultiplyPlayerSpeed
 
-.section .patch_RunAnimationSpeed
-.global RunAnimationSpeed_patch
-RunAnimationSpeed_patch:
+PATCH RunAnimationSpeed
     bl hook_RunAnimationSpeed
 
-.section .patch_NaviNotifications
-.global NaviNotifications_patch
-NaviNotifications_patch:
+PATCH NaviNotifications
     bl hook_NaviNotifications
 
-.section .patch_ChestMinigame_RewardChestVisibility
-.global ChestMinigame_RewardChestVisibility_patch
-ChestMinigame_RewardChestVisibility_patch:
+PATCH ChestMinigame_RewardChestVisibility
     .word 0x00000EC0
     .word 0x00000EA0
 
-.section .patch_ChestMinigame_KeyChestVisibility
-.global ChestMinigame_KeyChestVisibility_patch
-ChestMinigame_KeyChestVisibility_patch:
+PATCH ChestMinigame_KeyChestVisibility
     bl hook_ChestMinigame_KeyChestVisibility
 
-.section .patch_ChestMinigame_DontOpenChestsOnInit
-.global ChestMinigame_DontOpenChestsOnInit_patch
-ChestMinigame_DontOpenChestsOnInit_patch:
+PATCH ChestMinigame_DontOpenChestsOnInit
     bl hook_ChestMinigame_DontOpenChestsOnInit
 
-.section .patch_GameplayDestroy
-.global GameplayDestroy_patch
-GameplayDestroy_patch:
+PATCH GameplayDestroy
     bl hook_GameplayDestroy
 
-.section .patch_SceneExitOverride
-.global SceneExitOverride_patch
-SceneExitOverride_patch:
+PATCH SceneExitOverride
     bl hook_SceneExitOverride
 
-.section .patch_SceneExitDynamicOverride
-.global SceneExitDynamicOverride_patch
-SceneExitDynamicOverride_patch:
+PATCH SceneExitDynamicOverride
     bl hook_SceneExitDynamicOverride
 
-.section .patch_OverrideGrottoActorEntrance
-.global OverrideGrottoActorEntrance_patch
-OverrideGrottoActorEntrance_patch:
+PATCH OverrideGrottoActorEntrance
     b hook_OverrideGrottoActorEntrance
 
-.section .patch_ReturnFW
-.global ReturnFW_patch
-ReturnFW_patch:
+PATCH ReturnFW
     bl hook_ReturnFW
 
-.section .patch_WarpSongEntranceOverride
-.global WarpSongEntranceOverride_patch
-WarpSongEntranceOverride_patch:
+PATCH WarpSongEntranceOverride
     bl hook_WarpSongEntranceOverride
 
-.section .patch_DMTOwlEntranceOverride
-.global DMTOwlEntranceOverride_patch
-DMTOwlEntranceOverride_patch:
+PATCH DMTOwlEntranceOverride
     b hook_OwlEntranceOverride
 
-.section .patch_LHOwlEntranceOverride
-.global LHOwlEntranceOverride_patch
-LHOwlEntranceOverride_patch:
+PATCH LHOwlEntranceOverride
     b hook_OwlEntranceOverride
 
-.section .patch_SavewarpSetRespawnFlag
-.global SavewarpSetRespawnFlag_patch
-SavewarpSetRespawnFlag_patch:
+PATCH SavewarpSetRespawnFlag
     bl hook_SavewarpSetRespawnFlag
 
-.section .patch_AdultItemsCMABsAsChild
-.global AdultItemsCMABsAsChild_patch
-AdultItemsCMABsAsChild_patch:
+PATCH AdultItemsCMABsAsChild
     bl hook_AdultItemsCMABsAsChild
 
-.section .patch_Model_EnableMeshGroupByIndex
-.global Model_EnableMeshGroupByIndex_patch
-Model_EnableMeshGroupByIndex_patch:
+PATCH Model_EnableMeshGroupByIndex
     b hook_Model_EnableMeshGroupByIndex
 
-.section .patch_NockArrow
-.global NockArrow_patch
-NockArrow_patch:
+PATCH NockArrow
     bl hook_ArrowsOrSeeds
 
-.section .patch_DecreaseArrowCount
-.global DecreaseArrowCount_patch
-DecreaseArrowCount_patch:
+PATCH DecreaseArrowCount
     bl hook_ArrowsOrSeeds
 
-.section .patch_HookshotDrawChain
-.global HookshotDrawChain_patch
-HookshotDrawChain_patch:
+PATCH HookshotDrawChain
     b hook_HookshotDrawChain
 
-.section .patch_HookshotRotation
-.global HookshotRotation_patch
-HookshotRotation_patch:
+PATCH HookshotRotation
     bl hook_HookshotRotation
 
-.section .patch_LinkReflection
-.global LinkReflection_patch
-LinkReflection_patch:
+PATCH LinkReflection
     b hook_LinkReflection
 
-.section .patch_ChildCanOpenBowSubMenu
-.global ChildCanOpenBowSubMenu_patch
-ChildCanOpenBowSubMenu_patch:
+PATCH ChildCanOpenBowSubMenu
     b hook_ChildCanOpenBowSubMenu
 
-.section .patch_RedBoulderExplode
-.global RedBoulderExplode_patch
-RedBoulderExplode_patch:
+PATCH RedBoulderExplode
     b hook_RedBoulderExplode
 
-.section .patch_Multiplayer_UpdatePrevActorFlags
-.global Multiplayer_UpdatePrevActorFlags_patch
-Multiplayer_UpdatePrevActorFlags_patch:
+PATCH Multiplayer_UpdatePrevActorFlags
     bl hook_Multiplayer_UpdatePrevActorFlags
 
-.section .patch_Multiplayer_OnLoadFile
-.global Multiplayer_OnLoadFile_patch
-Multiplayer_OnLoadFile_patch:
+PATCH Multiplayer_OnLoadFile
     b hook_Multiplayer_OnLoadFile
 
-.section .patch_SendDroppedBottleContents
-.global SendDroppedBottleContents_patch
-SendDroppedBottleContents_patch:
+PATCH SendDroppedBottleContents
     bl hook_SendDroppedBottleContents
 
-.section .patch_IgnoreMaskReaction
-.global IgnoreMaskReaction_patch
-IgnoreMaskReaction_patch:
+PATCH IgnoreMaskReaction
     b hook_IgnoreMaskReaction
 
-.section .patch_MasterQuestGoldSkulltulaCheck
-.global MasterQuestGoldSkulltulaCheck_patch
-MasterQuestGoldSkulltulaCheck_patch:
+PATCH MasterQuestGoldSkulltulaCheck
     b hook_MasterQuestGoldSkulltulaCheck
 
-.section .patch_WaterSpoutMasterQuestCheck
-.global WaterSpoutMasterQuestCheck_patch
-WaterSpoutMasterQuestCheck_patch:
+PATCH WaterSpoutMasterQuestCheck
     bl hook_WaterSpoutMasterQuestCheck
 
-.section .patch_PierreSoftlockFixOne
-.global PierreSoftlockFixOne_patch
-PierreSoftlockFixOne_patch:
+PATCH PierreSoftlockFixOne
     pop {r3-r7,lr}
     bx lr
 
-.section .patch_PierreSoftlockFixTwo
-.global PierreSoftlockFixTwo_patch
-PierreSoftlockFixTwo_patch:
+PATCH PierreSoftlockFixTwo
     bl hook_PierreSoftlockFixTwo
 
-.section .patch_PierreSoftlockFixThree
-.global PierreSoftlockFixThree_patch
-PierreSoftlockFixThree_patch:
+PATCH PierreSoftlockFixThree
     nop
     nop
     nop
     nop
 
-.section .patch_StoreTargetActorType
-.global StoreTargetActorType_patch
-StoreTargetActorType_patch:
+PATCH StoreTargetActorType
     bl hook_StoreTargetActorType
 
-.section .patch_SwordTrailDurationGrezzoFix
-.global SwordTrailDurationGrezzoFix_patch
-SwordTrailDurationGrezzoPatch_patch:
+PATCH SwordTrailDurationGrezzoFix
     nop
 
-.section .patch_ForceTrailEffectUpdate
-.global ForceTrailEffectUpdate_patch
-ForceTrailEffectUpdate_patch:
+PATCH ForceTrailEffectUpdate
     blne hook_ForceTrailEffectUpdate
 
-.section .patch_RainbowSwordTrail
-.global RainbowSwordTrail_patch
-RainbowSwordTrail_patch:
+PATCH RainbowSwordTrail
     bl hook_RainbowSwordTrail
 
-.section .patch_BoomerangTrailEffect
-.global BoomerangTrailEffect_patch
-BoomerangTrailEffect_patch:
+PATCH BoomerangTrailEffect
     bl hook_BoomerangTrailEffect
 
-.section .patch_RainbowChuTrailOne
-.global RainbowChuTrailOne_patch
-RainbowChuTrailOne_patch:
+PATCH RainbowChuTrailOne
     bl hook_RainbowChuTrail
 
-.section .patch_RainbowChuTrailTwo
-.global RainbowChuTrailTwo_patch
-RainbowChuTrailTwo_patch:
+PATCH RainbowChuTrailTwo
     bl hook_RainbowChuTrail
 
-.section .patch_FWandWarpSongTimerDepletion
-.global FWandWarpSongTimerDepletion_patch
-FWandWarpSongTimerDepletion_patch:
+PATCH FWandWarpSongTimerDepletion
     push {lr}
     bl hook_FWandWarpSongTimerDepletion
     pop {lr}
 
-.section .patch_TimerExpiration
-.global TimerExpiration_patch
-TimerExpiration_patch:
+PATCH TimerExpiration
     bl hook_TimerExpiration
 
-.section .patch_Timer2TickSound
-.global Timer2TickSound_patch
-Timer2TickSound_patch:
+PATCH Timer2TickSound
     bl hook_Timer2TickSound
 
-.section .patch_CurseTrapDizzyStick
-.global CurseTrapDizzyStick_patch
-CurseTrapDizzyStick_patch:
+PATCH CurseTrapDizzyStick
     bl hook_CurseTrapDizzyStick
 
-.section .patch_CurseTrapDizzyButtons
-.global CurseTrapDizzyButtons_patch
-CurseTrapDizzyButtons_patch:
+PATCH CurseTrapDizzyButtons
     b hook_CurseTrapDizzyButtons
 
-.section .patch_CrouchStabHitbox
-.global CrouchStabHitbox_patch
-CrouchStabHitbox_patch:
+PATCH CrouchStabHitbox
     bl hook_CrouchStabHitbox
 
-.section .patch_MasterSwordTimerCheck
-.global MasterSwordTimerCheck_patch
-MasterSwordTimerCheck_patch:
+PATCH MasterSwordTimerCheck
     nop
 
-.section .patch_BossChallenge_Enter
-.global BossChallenge_Enter_patch
-BossChallenge_Enter_patch:
+PATCH BossChallenge_Enter
     bl hook_BossChallenge_Enter
 
-.section .patch_BossChallenge_ExitMenu
-.global BossChallenge_ExitMenu_patch
-BossChallenge_ExitMenu_patch:
+PATCH BossChallenge_ExitMenu
     bl hook_BossChallenge_ExitMenu
 
-.section .patch_TruthSpinnerSpeed
-.global TruthSpinnerSpeed_patch
-TruthSpinnerSpeed_patch:
+PATCH TruthSpinnerSpeed
     cmp r2,#0x20
     strh r2,[r4,#0xC4]
     movgt r2,#0x20
 
-.section .patch_LostWoodsTargetCutscene
-.global LostWoodsTargetCutscene_patch
-LostWoodsTargetCutscene_patch:
+PATCH LostWoodsTargetCutscene
     nop
 
-.section .patch_LostWoodsTargetTimer
-.global LostWoodsTargetTimer_patch
-LostWoodsTargetTimer_patch:
+PATCH LostWoodsTargetTimer
     mov r0,#0x1
 
-.section .patch_GrannyTextID
-.global GrannyTextID_patch
-GrannyTextID_patch:
+PATCH GrannyTextID
     bl hook_GrannyTextID
 
-.section .patch_GrannyBottleCheck
-.global GrannyBottleCheck_patch
-GrannyBottleCheck_patch:
+PATCH GrannyBottleCheck
     bl hook_GrannyBottleCheck
 
-.section .patch_GrannyItemOverrideOne
-.global GrannyItemOverrideOne_patch
-GrannyItemOverrideOne_patch:
+PATCH GrannyItemOverrideOne
     bl hook_GrannyItemOverride
 
-.section .patch_GrannyItemOverrideTwo
-.global GrannyItemOverrideTwo_patch
-GrannyItemOverrideTwo_patch:
+PATCH GrannyItemOverrideTwo
     b hook_GrannyItemOverride
 
-.section .patch_GrannySetRewardFlag
-.global GrannySetRewardFlag_patch
-GrannySetRewardFlag_patch:
+PATCH GrannySetRewardFlag
     bl hook_GrannySetRewardFlag
 
-.section .patch_BecomeAdult
-.global BecomeAdult_patch
-BecomeAdult_patch:
+PATCH BecomeAdult
     push {lr}
     bl hook_BecomeAdult
     pop {lr}
 
-.section .patch_PickUpMasterSword
-.global PickUpMasterSword_patch
-PickUpMasterSword_patch:
+PATCH PickUpMasterSword
     bl Pedestal_PickUpMasterSword
 
-.section .patch_SaveFileSwordless
-.global SaveFileSwordless_patch
-SaveFileSwordless_patch:
+PATCH SaveFileSwordless
     push {lr}
     bl hook_HandleBButton
     pop {lr}
 
-.section .patch_LoadFileSwordless
-.global LoadFileSwordless_patch
-LoadFileSwordless_patch:
+PATCH LoadFileSwordless
     bl hook_LoadFileSwordless
 
-.section .patch_DeathHandleBButton
-.global DeathHandleBButton_patch
-DeathHandleBButton_patch:
+PATCH DeathHandleBButton
     push {lr}
     bl hook_HandleBButton
     pop {lr}
 
-.section .patch_GanonCSEquipMS
-.global GanonCSEquipMS_patch
-GanonCSEquipMS_patch:
+PATCH GanonCSEquipMS
     bl Ganon_CSEquipMS
     nop
     nop
     nop
 
-.section .patch_GanonRestoreMSOnDeath
-.global GanonRestoreMSOnDeath_patch
-GanonRestoreMSOnDeath_patch:
+PATCH GanonRestoreMSOnDeath
     bl hook_GanonRestoreMSOnDeath
 
-.section .patch_GanonGiveMSMidFight
-.global GanonGiveMSMidFight_patch
-GanonGiveMSMidFight_patch:
+PATCH GanonGiveMSMidFight
     bl Ganon_GiveMSMidFight
 
-.section .patch_GiveItemMasterSword
-.global GiveItemMasterSword_patch
-GiveItemMasterSword_patch:
+PATCH GiveItemMasterSword
     push {r0-r12,lr}
     bl ItemEffect_EquipMasterSword
     pop {r0-r12,lr}
@@ -1986,583 +1301,359 @@ GiveItemMasterSword_patch:
     nop
     nop
 
-.section .patch_CriticalHealthCheckOne
-.global CriticalHealthCheckOne_Patch
-CriticalHealthCheckOne_patch:
+PATCH CriticalHealthCheckOne
     bl hook_CriticalHealthCheck
     nop
     nop
     nop
     nop
 
-.section .patch_CriticalHealthCheckTwo
-.global CriticalHealthCheckTwo_patch
-CriticalHealthCheckTwo_patch:
+PATCH CriticalHealthCheckTwo
     bl hook_CriticalHealthCheck
     nop
     nop
     nop
     nop
 
-.section .patch_CriticalHealthCheckThree
-.global CriticalHealthCheckThree_patch
-CriticalHealthCheckThree_patch:
+PATCH CriticalHealthCheckThree
     push {lr}
     bl hook_CriticalHealthCheck
     pop {lr}
     nop
     nop
 
-.section .patch_InitSceneMirrorWorld
-.global InitSceneMirrorWorld_patch
-InitSceneMirrorWorld_patch:
+PATCH InitSceneMirrorWorld
     bl hook_InitSceneMirrorWorld
 
-.section .patch_InitSceneEntranceOverride
-.global InitSceneEntranceOverride_patch
-InitSceneEntranceOverride_patch:
+PATCH InitSceneEntranceOverride
     bl hook_InitSceneEntranceOverride
 
-.section .patch_CollisionATvsAC
-.global CollisionATvsAC_patch
-CollisionATvsAC_patch:
+PATCH CollisionATvsAC
     bl hook_CollisionATvsAC
 
-.section .patch_CollisionCheck_SetAC_Once
-.global CollisionCheck_SetAC_Once_patch
-CollisionCheck_SetAC_Once_patch:
+PATCH CollisionCheck_SetAC_Once
     bl hook_CollisionCheck_SetAll_Once
 
-.section .patch_CollisionCheck_SetAT_Once
-.global CollisionCheck_SetAT_Once_patch
-CollisionCheck_SetAT_Once_patch:
+PATCH CollisionCheck_SetAT_Once
     bl hook_CollisionCheck_SetAll_Once
 
-.section .patch_CollisionCheck_SetOC_Once
-.global CollisionCheck_SetOC_Once_patch
-CollisionCheck_SetOC_Once_patch:
+PATCH CollisionCheck_SetOC_Once
     bl hook_CollisionCheck_SetAll_Once
 
-.section .patch_GanonDrawMasterSword
-.global GanonDrawMasterSword_patch
-GanonDrawMasterSword_patch:
+PATCH GanonDrawMasterSword
     bl hook_GanonDrawMasterSword
 
-.section .patch_SetFWPlayerParams
-.global SetFWPlayerParams_patch
-SetFWPlayerParams_patch:
+PATCH SetFWPlayerParams
     bl hook_SetFWPlayerParams
 
-.section .patch_AboutToPickUpActor
-.global AboutToPickUpActor_patch
-AboutToPickUpActor_patch:
+PATCH AboutToPickUpActor
     bl hook_AboutToPickUpActor
 
-.section .patch_TargetReticleColor
-.global TargetReticleColor_patch
-TargetReticleColor_patch:
+PATCH TargetReticleColor
     bl hook_TargetReticleColor
 
-.section .patch_TargetPointerColor
-.global TargetPointerColor_patch
-TargetPointerColor_patch:
+PATCH TargetPointerColor
     bl hook_TargetPointerColor
 
-.section .patch_ShadowShip_CSTimer
-.global ShadowShip_CSTimer_patch
-ShadowShip_CSTimer_patch:
+PATCH ShadowShip_CSTimer
     .word 0xC3
 
-.section .patch_ShadowShip_Speed
-.global ShadowShip_Speed_patch
-ShadowShip_Speed_patch:
+PATCH ShadowShip_Speed
     bl hook_ShadowShip_Speed
 
-.section .patch_MaskSalesmanCheckNoMaskOne
-.global MaskSalesmanCheckNoMaskOne_patch
-MaskSalesmanCheckNoMaskOne_patch:
+PATCH MaskSalesmanCheckNoMaskOne
     push {r0,r1,r4-r12,lr}
     bl SaveFile_MaskSlotValue
 
-.section .patch_MaskSalesmanCheckNoMaskTwo
-.global MaskSalesmanCheckNoMaskTwo_patch
-MaskSalesmanCheckNoMaskTwo_patch:
+PATCH MaskSalesmanCheckNoMaskTwo
     cpy r2,r0
     pop {r0,r1,r4-r12,lr}
 
-.section .patch_MaskSalesmanBorrowMask
-.global MaskSalesmanBorrowMask_patch
-MaskSalesmanBorrowMask_patch:
+PATCH MaskSalesmanBorrowMask
     bl hook_MaskSalesmanBorrowMask
 
-.section .patch_MaskSalesmanGiveMaskOfTruth
-.global MaskSalesmanGiveMaskOfTruth_patch
-MaskSalesmanGiveMaskOfTruth_patch:
+PATCH MaskSalesmanGiveMaskOfTruth
     bl hook_MaskSalesmanGiveMaskOfTruth
 
-.section .patch_OoBBombchuOne
-.global OoBBombchuOne_patch
-OoBBombchuOne_patch:
+PATCH OoBBombchuOne
     bl hook_OoBBombchuOne
 
-.section .patch_OoBBombchuTwo
-.global OoBBombchuTwo_patch
-OoBBombchuTwo_patch:
+PATCH OoBBombchuTwo
     bl hook_OoBBombchuTwo
 
-.section .patch_OoBBombchuThree
-.global OoBBombchuThree_patch
-OoBBombchuThree_patch:
+PATCH OoBBombchuThree
     bl hook_OoBBombchuThree
 
-.section .patch_CamRoll
-.global CamRoll_patch
-CamRoll_patch:
+PATCH CamRoll
     bl hook_CamRoll
 
-.section .patch_CamUpdate
-.global CamUpdate_patch
-CamUpdate_patch:
+PATCH CamUpdate
     bl hook_CamUpdate
 
-.section .patch_Sheik_GetTextID
-.global Sheik_GetTextID_patch
-Sheik_GetTextID_patch:
+PATCH Sheik_GetTextID
     b hook_Sheik_GetTextID
 
-.section .patch_OnActorSetup_SceneChange
-.global OnActorSetup_SceneChange_patch
-OnActorSetup_SceneChange_patch:
+PATCH OnActorSetup_SceneChange
     bl hook_OnActorSetup_SceneChange
 
-.section .patch_AfterActorSetup_SceneChange
-.global AfterActorSetup_SceneChange_patch
-AfterActorSetup_SceneChange_patch:
+PATCH AfterActorSetup_SceneChange
     b hook_AfterActorSetup_SceneChange
 
-.section .patch_OnActorSetup_RoomChange
-.global OnActorSetup_RoomChange_patch
-OnActorSetup_RoomChange_patch:
+PATCH OnActorSetup_RoomChange
     bl hook_OnActorSetup_RoomChange
 
-.section .patch_AfterActorSetup_RoomChange
-.global AfterActorSetup_RoomChange_patch
-AfterActorSetup_RoomChange_patch:
+PATCH AfterActorSetup_RoomChange
     b hook_AfterActorSetup_RoomChange
 
-.section .patch_RandomGsLoc_CustomTangibilityCheck
-.global RandomGsLoc_CustomTangibilityCheck_patch
-RandomGsLoc_CustomTangibilityCheck_patch:
+PATCH RandomGsLoc_CustomTangibilityCheck
     b hook_RandomGsLoc_CustomTangibilityCheck
 
-.section .patch_RandomGsLoc_CustomTokenSpawnOffset
-.global RandomGsLoc_CustomTokenSpawnOffset_patch
-RandomGsLoc_CustomTokenSpawnOffset_patch:
+PATCH RandomGsLoc_CustomTokenSpawnOffset
     bl hook_RandomGsLoc_CustomTokenSpawnOffset
 
-.section .patch_RandomGsLoc_BlockSpawn_Crate
-.global RandomGsLoc_BlockSpawn_Crate_patch
-RandomGsLoc_BlockSpawn_Crate_patch:
+PATCH RandomGsLoc_BlockSpawn_Crate
     bl hook_RandomGsLoc_BlockSpawn_Crate
 
-.section .patch_RandomGsLoc_BlockSpawn_Tree
-.global RandomGsLoc_BlockSpawn_Tree_patch
-RandomGsLoc_BlockSpawn_Tree_patch:
+PATCH RandomGsLoc_BlockSpawn_Tree
     bl hook_RandomGsLoc_BlockSpawn_Tree
 
-.section .patch_RandomGsLoc_BlockSpawn_Soil
-.global RandomGsLoc_BlockSpawn_Soil_patch
-RandomGsLoc_BlockSpawn_Soil_patch:
+PATCH RandomGsLoc_BlockSpawn_Soil
     bl hook_RandomGsLoc_BlockSpawn_Soil
 
-.section .patch_RandomGsLoc_SkipSoilJingle
-.global RandomGsLoc_SkipSoilJingle_patch
-RandomGsLoc_SkipSoilJingle_patch:
+PATCH RandomGsLoc_SkipSoilJingle
     bl hook_RandomGsLoc_SkipSoilJingle
 
-.section .patch_ActorDraw
-.global ActorDraw_patch
-ActorDraw_patch:
+PATCH ActorDraw
     bl hook_ActorDraw
 
-.section .patch_FlyingPotCollision
-.global FlyingPotCollision_patch
-FlyingPotCollision_patch:
+PATCH FlyingPotCollision
     bl hook_FlyingPotCollision
 
-.section .patch_FlyingTileCollision
-.global FlyingTileCollision_patch
-FlyingTileCollision_patch:
+PATCH FlyingTileCollision
     bl hook_FlyingTileCollision
 
-.section .patch_ShabomAfterDamagePlayer
-.global ShabomAfterDamagePlayer_patch
-ShabomAfterDamagePlayer_patch:
+PATCH ShabomAfterDamagePlayer
     bl hook_ShabomAfterDamagePlayer
 
-.section .patch_DodongoAfterSwallowBomb
-.global DodongoAfterSwallowBomb_patch
-DodongoAfterSwallowBomb_patch:
+PATCH DodongoAfterSwallowBomb
     bl hook_DodongoAfterSwallowBomb
 
-.section .patch_BabyDodongoAfterSwallowBomb
-.global BabyDodongoAfterSwallowBomb_patch
-BabyDodongoAfterSwallowBomb_patch:
+PATCH BabyDodongoAfterSwallowBomb
     bl hook_BabyDodongoAfterSwallowBomb
 
-.section .patch_OcarinaNoteButtonsDraw
-.global OcarinaNoteButtonsDraw_patch
-OcarinaNoteButtonsDraw_patch:
+PATCH OcarinaNoteButtonsDraw
     push {lr}
     bl hook_OcarinaNoteButtonsDraw
     pop {lr}
 
-.section .patch_OcarinaNoteButtonsPress
-.global OcarinaNoteButtonsPress_patch
-OcarinaNoteButtonsPress_patch:
+PATCH OcarinaNoteButtonsPress
     bl hook_OcarinaNoteButtonsPress
 
-.section .patch_HandleTextControlCode
-.global HandleTextControlCode_patch
-HandleTextControlCode_patch:
+PATCH HandleTextControlCode
     bl hook_HandleTextControlCode
 
-.section .patch_CheckForTextControlCode
-.global CheckForTextControlCode_patch
-CheckForTextControlCode_patch:
+PATCH CheckForTextControlCode
     bl hook_CheckForTextControlCode
 
-.section .patch_PlayInit
-.global PlayInit_patch
-PlayInit_patch:
+PATCH PlayInit
     bl hook_PlayInit
 
-.section .patch_TitleLinkObject
-.global TitleLinkObject_patch
-TitleLinkObject_patch:
+PATCH TitleLinkObject
     .word 0xFFFF0014
 
-.section .patch_ExtendObjectGetSlot
-.global ExtendObjectGetSlot_patch
-ExtendObjectGetSlot_patch:
+PATCH ExtendObjectGetSlot
     b hook_ExtendObjectGetSlot
 
-.section .patch_OverrideObjectIsLoaded
-.global OverrideObjectIsLoaded_patch
-OverrideObjectIsLoaded_patch:
+PATCH OverrideObjectIsLoaded
     b hook_OverrideObjectIsLoaded
 
-.section .patch_Cutscene_CheckObjectLoaded
-.global Cutscene_CheckObjectLoaded_patch
-Cutscene_CheckObjectLoaded_patch:
+PATCH Cutscene_CheckObjectLoaded
     bl hook_OverrideObjectIsLoadedForCutscenes
 
-.section .patch_AfterObjectListCommand
-.global AfterObjectListCommand_patch
-AfterObjectListCommand_patch:
+PATCH AfterObjectListCommand
     bl hook_AfterObjectListCommand
 
-.section .patch_GetObjectEntry_33AB24
-.global GetObjectEntry_33AB24_patch
-GetObjectEntry_33AB24_patch:
+PATCH GetObjectEntry_33AB24
     bl hook_GetObjectEntry_33AB24
 
-.section .patch_GetObjectEntry_353CE4
-.global GetObjectEntry_353CE4_patch
-GetObjectEntry_353CE4_patch:
+PATCH GetObjectEntry_353CE4
     bl hook_GetObjectEntry_Generic
 
-.section .patch_GetObjectEntry_36A96C
-.global GetObjectEntry_36A96C_patch
-GetObjectEntry_36A96C_patch:
+PATCH GetObjectEntry_36A96C
     bl hook_GetObjectEntry_Generic
 
-.section .patch_GetObjectEntry_372F7C
-.global GetObjectEntry_372F7C_patch
-GetObjectEntry_372F7C_patch:
+PATCH GetObjectEntry_372F7C
     bl hook_GetObjectEntry_Generic
 
-.section .patch_GetObjectEntry_EnSiInit
-.global GetObjectEntry_EnSiInit_patch
-GetObjectEntry_EnSiInit_patch:
+PATCH GetObjectEntry_EnSiInit
     bl hook_GetObjectEntry_Generic
 
-.section .patch_GetObjectEntry_EnXcInit
-.global GetObjectEntry_EnXcInit_patch
-GetObjectEntry_EnXcInit_patch:
+PATCH GetObjectEntry_EnXcInit
     bl hook_GetObjectEntry_Generic
 
-.section .patch_GetObjectEntry_ObjSwitchInit
-.global GetObjectEntry_ObjSwitchInit_patch
-GetObjectEntry_ObjSwitchInit_patch:
+PATCH GetObjectEntry_ObjSwitchInit
     bl hook_GetObjectEntry_Generic
 
-.section .patch_GetObjectEntry_34FE68
-.global GetObjectEntry_34FE68_patch
-GetObjectEntry_34FE68_patch:
+PATCH GetObjectEntry_34FE68
     bl hook_GetObjectEntry_Generic
 
-.section .patch_GetObjectEntry_352F28
-.global GetObjectEntry_352F28_patch
-GetObjectEntry_352F28_patch:
+PATCH GetObjectEntry_352F28
     bl hook_GetObjectEntry_Generic
 
-.section .patch_GetObjectEntry_33A950
-.global GetObjectEntry_33A950_patch
-GetObjectEntry_33A950_patch:
+PATCH GetObjectEntry_33A950
     bl hook_GetObjectEntry_Generic
 
-.section .patch_GetObjectEntry_EnTiteInit
-.global GetObjectEntry_EnTiteInit_patch
-GetObjectEntry_EnTiteInit_patch:
+PATCH GetObjectEntry_EnTiteInit
     bl hook_GetObjectEntry_Generic
 
-.section .patch_GetObjectEntry_339DFC
-.global GetObjectEntry_339DFC_patch
-GetObjectEntry_339DFC_patch:
+PATCH GetObjectEntry_339DFC
     bl hook_GetObjectEntry_Generic
 
-.section .patch_GetObjectEntry_EnGomaInit_One
-.global GetObjectEntry_EnGomaInit_One_patch
-GetObjectEntry_EnGomaInit_One_patch:
+PATCH GetObjectEntry_EnGomaInit_One
     bl hook_GetObjectEntry_Generic
 
-.section .patch_GetObjectEntry_EnGomaInit_Two
-.global GetObjectEntry_EnGomaInit_Two_patch
-GetObjectEntry_EnGomaInit_Two_patch:
+PATCH GetObjectEntry_EnGomaInit_Two
     bl hook_GetObjectEntry_Generic
 
-.section .patch_GetObjectEntry_EnRdInit_One
-.global GetObjectEntry_EnRdInit_One_patch
-GetObjectEntry_EnRdInit_One_patch:
+PATCH GetObjectEntry_EnRdInit_One
     bl hook_GetObjectEntry_Generic
 
-.section .patch_GetObjectEntry_EnRdInit_Two
-.global GetObjectEntry_EnRdInit_Two_patch
-GetObjectEntry_EnRdInit_Two_patch:
+PATCH GetObjectEntry_EnRdInit_Two
     bl hook_GetObjectEntry_Generic
 
-.section .patch_GetObjectEntry_34F270
-.global GetObjectEntry_34F270_patch
-GetObjectEntry_34F270_patch:
+PATCH GetObjectEntry_34F270
     b hook_GetObjectEntry_34F270
 
-.section .patch_GetObjectEntry_1F85B0
-.global GetObjectEntry_1F85B0_patch
-GetObjectEntry_1F85B0_patch:
+PATCH GetObjectEntry_1F85B0
     bl hook_GetObjectEntry_Generic
 
-.section .patch_GetObjectEntry_164BC8
-.global GetObjectEntry_164BC8_patch
-GetObjectEntry_164BC8_patch:
+PATCH GetObjectEntry_164BC8
     bl hook_GetObjectEntry_Generic
 
-.section .patch_GetObjectEntry_EnDekunutsInit
-.global GetObjectEntry_EnDekunutsInit_patch
-GetObjectEntry_EnDekunutsInit_patch:
+PATCH GetObjectEntry_EnDekunutsInit
     bl hook_GetObjectEntry_Generic
 
-.section .patch_GetObjectEntry_EnNutsballInit
-.global GetObjectEntry_EnNutsballInit_patch
-GetObjectEntry_EnNutsballInit_patch:
+PATCH GetObjectEntry_EnNutsballInit
     bl hook_GetObjectEntry_Generic
 
-.section .patch_GetObjectEntry_EnHintnutsInit
-.global GetObjectEntry_EnHintnutsInit_patch
-GetObjectEntry_EnHintnutsInit_patch:
+PATCH GetObjectEntry_EnHintnutsInit
     bl hook_GetObjectEntry_Generic
 
-.section .patch_AltHeadersCommand
-.global AltHeadersCommand_patch
-AltHeadersCommand_patch:
+PATCH AltHeadersCommand
     bl hook_AltHeadersCommand
 
-.section .patch_GohmaLarvaDeathSignalParent
-.global GohmaLarvaDeathSignalParent_patch
-GohmaLarvaDeathSignalParent_patch:
+PATCH GohmaLarvaDeathSignalParent
     bl hook_GohmaLarvaDeathSignalParent
 
-.section .patch_GohmaEggDeathSignalParent
-.global GohmaEggDeathSignalParent_patch
-GohmaEggDeathSignalParent_patch:
+PATCH GohmaEggDeathSignalParent
     bl hook_GohmaEggDeathSignalParent
 
-.section .patch_StalchildDespawn_13DB68
-.global StalchildDespawn_13DB68_patch
-StalchildDespawn_13DB68_patch:
+PATCH StalchildDespawn_13DB68
     bl hook_StalchildDespawn_13DB68
 
-.section .patch_StalchildDespawn_366338
-.global StalchildDespawn_366338_patch
-StalchildDespawn_366338_patch:
+PATCH StalchildDespawn_366338
     bl hook_StalchildDespawn_366338
 
-.section .patch_SkullwalltulaAttack_35F834
-.global SkullwalltulaAttack_35F834_patch
-SkullwalltulaAttack_35F834_patch:
+PATCH SkullwalltulaAttack_35F834
     bl hook_SkullwalltulaAttack_35F834
 
-.section .patch_SkullwalltulaAttack_35F328
-.global SkullwalltulaAttack_35F328_patch
-SkullwalltulaAttack_35F328_patch:
+PATCH SkullwalltulaAttack_35F328
     bl hook_SkullwalltulaAttack_35F328
 
-.section .patch_SkullwalltulaTargetRotation
-.global SkullwalltulaTargetRotation_patch
-SkullwalltulaTargetRotation_patch:
+PATCH SkullwalltulaTargetRotation
     bl hook_SkullwalltulaTargetRotation
 
-.section .patch_AnubisFlameCircleCheck
-.global AnubisFlameCircleCheck_patch
-AnubisFlameCircleCheck_patch:
+PATCH AnubisFlameCircleCheck
     @ check alpha instead of timer
     ldrb r1,[r1,#0xAB]
 
-.section .patch_SkullKidPoacherSawCheck
-.global SkullKidPoacherSawCheck_patch
-SkullKidPoacherSawCheck_patch:
+PATCH SkullKidPoacherSawCheck
     bl hook_SkullKidPoacherSawCheck
 
-.section .patch_LeeverSandCheck_Init
-.global LeeverSandCheck_Init_patch
-LeeverSandCheck_Init_patch:
+PATCH LeeverSandCheck_Init
     bl hook_LeeverSandCheck
 
-.section .patch_LeeverSandCheck_Small
-.global LeeverSandCheck_Small_patch
-LeeverSandCheck_Small_patch:
+PATCH LeeverSandCheck_Small
     bl hook_LeeverSandCheck
 
-.section .patch_LeeverSandCheck_Big
-.global LeeverSandCheck_Big_patch
-LeeverSandCheck_Big_patch:
+PATCH LeeverSandCheck_Big
     bl hook_LeeverSandCheck
 
-.section .patch_LeeverAfterSink
-.global LeeverAfterSink_patch
-LeeverAfterSink_patch:
+PATCH LeeverAfterSink
     blt hook_LeeverAfterSink
 
-.section .patch_LeeverAfterDie
-.global LeeverAfterDie_patch
-LeeverAfterDie_patch:
+PATCH LeeverAfterDie
     bl hook_LeeverAfterDie
 
-.section .patch_LeeverDontChangeCategory
-.global LeeverDontChangeCategory_patch
-LeeverDontChangeCategory_patch:
+PATCH LeeverDontChangeCategory
     @ Big Leevers change category from Misc to Enemy in OoT.
     @ But in OoT3D they're already in the Enemy category
     @ from the start, so changing it is useless and can
     @ trigger room clears during Enemy Randomizer.
     nop
 
-.section .patch_FlyingPotDontChangeCategory
-.global FlyingPotDontChangeCategory_patch
-FlyingPotDontChangeCategory_patch:
+PATCH FlyingPotDontChangeCategory
     nop
 
-.section .patch_PlayerCheckVoidOut
-.global PlayerCheckVoidOut_patch
-PlayerCheckVoidOut_patch:
+PATCH PlayerCheckVoidOut
     bl hook_PlayerCheckVoidOut
 
-.section .patch_EnBlkobj_SpawnDarkLink
-.global EnBlkobj_SpawnDarkLink_patch
-EnBlkobj_SpawnDarkLink_patch:
+PATCH EnBlkobj_SpawnDarkLink
     bl hook_EnBlkobj_SpawnDarkLink
 
-.section .patch_EnBlkobj_FindDarkLink
-.global EnBlkobj_FindDarkLink_patch
-EnBlkobj_FindDarkLink_patch:
+PATCH EnBlkobj_FindDarkLink
     bl hook_EnBlkobj_FindDarkLink
 
-.section .patch_EnEncount1_SpawnStalchildWolfos
-.global EnEncount1_SpawnStalchildWolfos_patch
-EnEncount1_SpawnStalchildWolfos_patch:
+PATCH EnEncount1_SpawnStalchildWolfos
     bl hook_EnEncount1_SpawnStalchildWolfos
 
-.section .patch_EnEncount1_SpawnLeever
-.global EnEncount1_SpawnLeever_patch
-EnEncount1_SpawnLeever_patch:
+PATCH EnEncount1_SpawnLeever
     bl hook_EnEncount1_SpawnLeever
 
-.section .patch_EnEncount1_SetLeeverAimType
-.global EnEncount1_SetLeeverAimType_patch
-EnEncount1_SetLeeverAimType_patch:
+PATCH EnEncount1_SetLeeverAimType
     bl hook_EnEncount1_SetLeeverAimType
 
-.section .patch_DarkLinkPlayerRecoil
-.global DarkLinkPlayerRecoil_patch
-DarkLinkPlayerRecoil_patch:
+PATCH DarkLinkPlayerRecoil
     bl hook_DarkLinkPlayerRecoil
 
-.section .patch_BabyDodongoWallCheck
-.global BabyDodongoWallCheck_patch
-BabyDodongoWallCheck_patch:
+PATCH BabyDodongoWallCheck
     bl hook_BabyDodongoWallCheck
 
-.section .patch_PeahatLarvaGroundCheck
-.global PeahatLarvaGroundCheck_patch
-PeahatLarvaGroundCheck_patch:
+PATCH PeahatLarvaGroundCheck
     bl hook_PeahatLarvaGroundCheck
 
-.section .patch_RedeadCanFreezePlayer
-.global RedeadCanFreezePlayer_patch
-RedeadCanFreezePlayer_patch:
+PATCH RedeadCanFreezePlayer
     bl hook_RedeadCanFreezePlayer
 
-.section .patch_DeadHandHandCanGrabPlayer
-.global DeadHandHandCanGrabPlayer_patch
-DeadHandHandCanGrabPlayer_patch:
+PATCH DeadHandHandCanGrabPlayer
     bl hook_DeadHandHandCanGrabPlayer
 
-.section .patch_GerudoBattleMusic
-.global GerudoBattleMusic_patch
-GerudoBattleMusic_patch:
+PATCH GerudoBattleMusic
     bl hook_GerudoBattleMusic
 
-.section .patch_FixActorKillLoop
-.global FixActorKillLoop_patch
-FixActorKillLoop_patch:
+PATCH FixActorKillLoop
     bl hook_FixActorKillLoop
 
-.section .patch_AfterInvalidatingRoomObjects
-.global AfterInvalidatingRoomObjects_patch
-AfterInvalidatingRoomObjects_patch:
+PATCH AfterInvalidatingRoomObjects
     bl hook_AfterInvalidatingRoomObjects
 
-.section .patch_DrawHeartIcon
-.global DrawHeartIcon_patch
-DrawHeartIcon_patch:
+PATCH DrawHeartIcon
     bl hook_DrawHeartIcon
 
-.section .patch_OcarinaNoteSound_Player
-.global OcarinaNoteSound_Player_patch
-OcarinaNoteSound_Player_patch:
+PATCH OcarinaNoteSound_Player
     b hook_OcarinaNoteSound_Player
 
-.section .patch_OcarinaNoteSound_Npc
-.global OcarinaNoteSound_Npc_patch
-OcarinaNoteSound_Npc_patch:
+PATCH OcarinaNoteSound_Npc
     bl hook_OcarinaNoteSound_Npc
 
-.section .patch_Item00GiveAutomaticItemDrop
-.global Item00GiveAutomaticItemDrop_patch
-Item00GiveAutomaticItemDrop_patch:
+PATCH Item00GiveAutomaticItemDrop
     bl hook_Item00GiveAutomaticItemDrop
 
-.section .patch_Item00GiveCollectedItemDrop
-.global Item00GiveCollectedItemDrop_patch
-Item00GiveCollectedItemDrop_patch:
+PATCH Item00GiveCollectedItemDrop
     bl hook_Item00GiveCollectedItemDrop
 
-.section .patch_GanonFinalBlow
-.global GanonFinalBlow_patch
-GanonFinalBlow_patch:
+PATCH GanonFinalBlow
     bl hook_GanonFinalBlow
 
-.section .patch_PlayerBonk
-.global PlayerBonk_patch
-PlayerBonk_patch:
+PATCH PlayerBonk
     bl hook_PlayerBonk

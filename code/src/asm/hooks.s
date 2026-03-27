@@ -2,9 +2,13 @@
 .text
 .syntax unified
 
+.macro HOOK name
+    .global hook_\name
+hook_\name:
+.endm
+
 .section .loader
-.global hook_into_loader
-hook_into_loader:
+HOOK into_loader
     push {r0-r12, lr}
     bl loader_main
     pop {r0-r12, lr}
@@ -13,53 +17,46 @@ hook_into_loader:
 
 .section .text.randomizer_hooks
 
-.global hook_before_GlobalContext_Update
-hook_before_GlobalContext_Update:
+HOOK before_GlobalContext_Update
     push {r0-r12, lr}
     bl before_GlobalContext_Update
     pop {r0-r12, lr}
     cpy r7,r0
     bx lr
 
-.global hook_after_GlobalContext_Update
-hook_after_GlobalContext_Update:
+HOOK after_GlobalContext_Update
     push {r0-r12, lr}
     bl after_GlobalContext_Update
     pop {r0-r12, lr}
     b 0x2E25F0
 
-.global hook_Gfx_Update
-hook_Gfx_Update:
+HOOK Gfx_Update
     push {r0-r12, lr}
     bl Gfx_Update
     pop {r0-r12, lr}
     pop {r4-r8, pc}
 
-.global hook_Draw_PreSwapBuffers
-hook_Draw_PreSwapBuffers:
+HOOK Draw_PreSwapBuffers
     push {r0-r12, lr}
     bl Draw_PreSwapBuffers
     pop {r0-r12, lr}
     bx lr
 
-.global hook_Gfx_SleepQueryCallback
-hook_Gfx_SleepQueryCallback:
+HOOK Gfx_SleepQueryCallback
     push {r0-r12, lr}
     bl Gfx_SleepQueryCallback
     pop {r0-r12, lr}
     add r0,r0,#0x9C
     b 0x3FD6C8
 
-.global hook_Gfx_AwakeCallback
-hook_Gfx_AwakeCallback:
+HOOK Gfx_AwakeCallback
     push {r0-r12, lr}
     bl Gfx_AwakeCallback
     pop {r0-r12, lr}
     add r0,r0,#0x9C
     b 0x3FD440
 
-.global hook_IncomingGetItemID
-hook_IncomingGetItemID:
+HOOK IncomingGetItemID
     push {r0-r12, lr}
     cpy r0,r5
     cpy r1,r6
@@ -68,8 +65,7 @@ hook_IncomingGetItemID:
     pop {r0-r12, lr}
     bx lr
 
-.global hook_SaveFile_Init
-hook_SaveFile_Init:
+HOOK SaveFile_Init
     push {r0-r12, lr}
     mov r0, r5
     bl SaveFile_Init
@@ -81,8 +77,7 @@ hook_SaveFile_Init:
 .rActiveItemRow_addr:
     .word rActiveItemRow
 
-.global hook_OverrideTextID
-hook_OverrideTextID:
+HOOK OverrideTextID
     ldr r1,.rActiveItemRow_addr
     ldr r1,[r1]
     cmp r1,#0x0
@@ -92,8 +87,7 @@ noOverrideTextID:
     ldrb r1,[r6,#0x4]
     b 0x2BC1C8
 
-.global hook_OverrideItemID
-hook_OverrideItemID:
+HOOK OverrideItemID
     ldr r1,.rActiveItemRow_addr
     ldr r1,[r1]
     cmp r1,#0x0
@@ -107,24 +101,21 @@ noOverrideItemID:
     ldrb r1,[r6,#0x0]
     b 0x2BC1D4
 
-.global hook_OverrideDrawItemOne
-hook_OverrideDrawItemOne:
+HOOK OverrideDrawItemOne
     push {r1-r12, lr}
     bl ItemOverride_GetDrawItem
     pop {r1-r12, lr}
     ldrh r0,[r0]
     bx lr
 
-.global hook_OverrideDrawItemTwo
-hook_OverrideDrawItemTwo:
+HOOK OverrideDrawItemTwo
     add r0,r1,r0,lsl #0x1
     push {r1-r12, lr}
     bl ItemOverride_GetDrawItem
     pop {r1-r12, lr}
     bx lr
 
-.global hook_OverrideDrawItemThree
-hook_OverrideDrawItemThree:
+HOOK OverrideDrawItemThree
     add r5,r0,r1,lsl #0x1
     push {r0-r4,r6-r12, lr}
     cpy r0,r5
@@ -133,32 +124,28 @@ hook_OverrideDrawItemThree:
     pop {r0-r4,r6-r12, lr}
     bx lr
 
-.global hook_OverrideGiDrawIdPlusOne
-hook_OverrideGiDrawIdPlusOne:
+HOOK OverrideGiDrawIdPlusOne
     push {r1-r12, lr}
     bl ItemOverride_OverrideGiDrawIdPlusOne
     pop {r1-r12, lr}
     strh r0,[r6,#0x4e]
     bx lr
 
-.global hook_EditDrawGetItemBeforeModelSpawn
-hook_EditDrawGetItemBeforeModelSpawn:
+HOOK EditDrawGetItemBeforeModelSpawn
     push {r0-r12, lr}
     bl ItemOverride_EditDrawGetItemBeforeModelSpawn
     pop {r0-r12, lr}
     mov r7,#0x0
     bx lr
 
-.global hook_EditDrawDetItemAfterModelSpawn
-hook_EditDrawDetItemAfterModelSpawn:
+HOOK EditDrawDetItemAfterModelSpawn
     push {r0-r12, lr}
     bl ItemOverride_EditDrawGetItemAfterModelSpawn
     pop {r0-r12, lr}
     str r0,[r6,#0x78]
     bx lr
 
-.global hook_EditDrawGetItemAfterMatrixUpdate
-hook_EditDrawGetItemAfterMatrixUpdate:
+HOOK EditDrawGetItemAfterMatrixUpdate
     push {r0-r12, lr}
     cpy r0,r1 @ SkeletonAnimationModel
     bl ItemOverride_EditDrawGetItemAfterMatrixUpdate
@@ -168,38 +155,33 @@ hook_EditDrawGetItemAfterMatrixUpdate:
 # TODO: Text ID in game gets messed up,
 # Gives the "What's that?" text instead of
 # the text about moving the statue
-.global hook_AdultRollingGoronTwo
-hook_AdultRollingGoronTwo:
+HOOK AdultRollingGoronTwo
     mov r0,#0x3000
     add r0,r0,#0x38
     b 0x1954B0
 
-.global hook_DaruniaStrengthCheck
-hook_DaruniaStrengthCheck:
+HOOK DaruniaStrengthCheck
     push {r0-r12, lr}
     bl EnDu_CheckRewardFlag
     cmp r0,#0x1
     pop {r0-r12, lr}
     b 0x1E48A0
 
-.global hook_GetToken
-hook_GetToken:
+HOOK GetToken
     push {r0-r12, lr}
     cpy r0,r4
     bl ItemOverride_GetSkulltulaToken
     pop {r0-r12, lr}
     bx lr
 
-.global hook_PoeCollectorCheckPoints
-hook_PoeCollectorCheckPoints:
+HOOK PoeCollectorCheckPoints
     push {r0-r12, lr}
     bl EnGb_CheckPoints
     cmp r0,#0x1
     pop {r0-r12, lr}
     bx lr
 
-.global hook_ItemEtceteraModelDraw
-hook_ItemEtceteraModelDraw:
+HOOK ItemEtceteraModelDraw
     push {r0-r12, lr}
     bl Model_DrawByActor
     cmp r0,#0x1
@@ -208,16 +190,14 @@ hook_ItemEtceteraModelDraw:
     cpy r4,r0
     bx lr
 
-.global hook_KokiriCheckOpenForest
-hook_KokiriCheckOpenForest:
+HOOK KokiriCheckOpenForest
     push {r0-r12, lr}
     bl EnKo_CheckOpenForest
     cmp r0,#0x0
     pop {r0-r12, lr}
     bx lr
 
-.global hook_EnExItemModelDraw
-hook_EnExItemModelDraw:
+HOOK EnExItemModelDraw
     push {r0-r12, lr}
     mov r0,r4
     bl Model_DrawByActor
@@ -227,8 +207,7 @@ hook_EnExItemModelDraw:
     add r1,r4,#0x148
     bx lr
 
-.global hook_DemoEffectMedallionDraw
-hook_DemoEffectMedallionDraw:
+HOOK DemoEffectMedallionDraw
     push {r0-r12, lr}
     mov r0,r4
     bl Model_DrawByActor
@@ -238,8 +217,7 @@ hook_DemoEffectMedallionDraw:
     ldr r0,[r4,#0x2A8]
     b 0x372150
 
-.global hook_DemoEffectStoneDraw
-hook_DemoEffectStoneDraw:
+HOOK DemoEffectStoneDraw
     push {r0-r12, lr}
     mov r0,r4
     bl Model_DrawByActor
@@ -249,24 +227,21 @@ hook_DemoEffectStoneDraw:
     ldr r0,[r4,#0x2A8]
     b 0x1D20A0
 
-.global hook_EnKoInitCheckForest
-hook_EnKoInitCheckForest:
+HOOK EnKoInitCheckForest
     push {r1-r12, lr}
     bl EnKo_CheckForestTempleBeat
     tst r0,#0x1
     pop {r1-r12, lr}
     bx lr
 
-.global hook_FireArrowCheckChestFlag
-hook_FireArrowCheckChestFlag:
+HOOK FireArrowCheckChestFlag
     push {r0-r12, lr}
     bl ShotSun_CheckChestFlag
     cmp r0,#0x0
     pop {r0-r12, lr}
     bx lr
 
-.global hook_SerenadeCheckChestFlag
-hook_SerenadeCheckChestFlag:
+HOOK SerenadeCheckChestFlag
     push {r0-r12, lr}
     bl Cutscene_SerenadeCheckChestFlag
     cmp r0,#0x0
@@ -274,62 +249,54 @@ hook_SerenadeCheckChestFlag:
     cpy r0,r5
     bx lr
 
-.global hook_ScarecrowCheckToBeActivated
-hook_ScarecrowCheckToBeActivated:
+HOOK ScarecrowCheckToBeActivated
     push {r0-r12, lr}
     bl Scarecrow_CheckToBeActivated
     cmp r0,#0x1
     pop {r0-r12, lr}
     bx lr
 
-.global hook_EponasSongCheckFlag
-hook_EponasSongCheckFlag:
+HOOK EponasSongCheckFlag
     push {r0-r12, lr}
     bl Cutscene_CheckEponasSongFlag
     cmp r0,#0x0
     pop {r0-r12, lr}
     bx lr
 
-.global hook_SariasSongCheckFlag
-hook_SariasSongCheckFlag:
+HOOK SariasSongCheckFlag
     push {r0-r12, lr}
     bl Cutscene_CheckSariasSongFlag
     cmp r0,#0x0
     pop {r0-r12, lr}
     bx lr
 
-.global hook_PoeCollectorGetFirstTextbox
-hook_PoeCollectorGetFirstTextbox:
+HOOK PoeCollectorGetFirstTextbox
     push {r1-r12, lr}
     bl EnGb_GetFirstTextbox
     pop {r1-r12, lr}
     bx lr
 
-.global hook_ApplyDamageMultiplier
-hook_ApplyDamageMultiplier:
+HOOK ApplyDamageMultiplier
     push {r0-r3, r5-r12, lr}
     bl Settings_ApplyDamageMultiplier
     cpy r4,r0
     pop {r0-r3, r5-r12, lr}
     bx lr
 
-.global hook_ActorUpdate
-hook_ActorUpdate:
+HOOK ActorUpdate
     push {r0-r12, lr}
     bl Actor_rUpdate
     pop {r0-r12, lr}
     bx lr
 
-.global hook_SceneInitAfterCopyScenes
-hook_SceneInitAfterCopyScenes:
+HOOK SceneInitAfterCopyScenes
     push {r0-r12, lr}
     bl 0x371738
     bl Scene_Init
     pop {r0-r12, lr}
     bx lr
 
-.global hook_StoreChildBButtonEquip
-hook_StoreChildBButtonEquip:
+HOOK StoreChildBButtonEquip
     push {r0-r12, lr}
     bl SaveFile_SaveChildBButton
     pop {r0-r12, lr}
@@ -339,16 +306,14 @@ hook_StoreChildBButtonEquip:
     b 0x45F210
 .endif
 
-.global hook_LullabyCheckFlag
-hook_LullabyCheckFlag:
+HOOK LullabyCheckFlag
     push {r0-r12, lr}
     bl Cutscene_CheckLullabyFlag
     cmp r0,#0x0
     pop {r0-r12, lr}
     bx lr
 
-.global hook_FishingIgnoreTempBOne
-hook_FishingIgnoreTempBOne:
+HOOK FishingIgnoreTempBOne
     bne 0x2C3A14
     push {r0-r12, lr}
     bl isFishing
@@ -358,8 +323,7 @@ hook_FishingIgnoreTempBOne:
     moveq r0,#89
     b 0x2C3A14
 
-.global hook_FishingIgnoreTempBTwo
-hook_FishingIgnoreTempBTwo:
+HOOK FishingIgnoreTempBTwo
     blt 0x34CFD0
     push {r0-r12, lr}
     bl isFishing
@@ -369,16 +333,14 @@ hook_FishingIgnoreTempBTwo:
     ldrb r1,[r4,#0x80]
     b 0x34CFD0
 
-.global hook_ConvertBombDropOne
-hook_ConvertBombDropOne:
+HOOK ConvertBombDropOne
     push {r1-r12, lr}
     bl Item_ConvertBombDrop
     pop {r1-r12, lr}
     cpy r12,r0
     b 0x35E474
 
-.global hook_ConvertBombDropTwo
-hook_ConvertBombDropTwo:
+HOOK ConvertBombDropTwo
     push {r1-r12, lr}
     cpy r0,r6
     bl Item_ConvertBombDrop
@@ -386,16 +348,14 @@ hook_ConvertBombDropTwo:
     cpy r6,r0
     b 0x3747B0
 
-.global hook_BeanDaddyModifyBeansBought
-hook_BeanDaddyModifyBeansBought:
+HOOK BeanDaddyModifyBeansBought
     push {r1-r12, lr}
     bl EnMs_ModifyBeansBought
     pop {r1-r12, lr}
     cmp r0,#0xa
     bx lr
 
-.global hook_BeanDaddyModifyPrice
-hook_BeanDaddyModifyPrice:
+HOOK BeanDaddyModifyPrice
     push {r0,r2-r12, lr}
     cpy r0,r1
     bl EnMs_ModifyPrice
@@ -404,31 +364,27 @@ hook_BeanDaddyModifyPrice:
     cmp r0,r1
     bx lr
 
-.global hook_CheckGerudoToken
-hook_CheckGerudoToken:
+HOOK CheckGerudoToken
     push {r1-r12, lr}
     bl SaveFile_CheckGerudoToken
     pop {r1-r12, lr}
     bx lr
 
-.global hook_CowBottleCheck
-hook_CowBottleCheck:
+HOOK CowBottleCheck
     push {r1-r12, lr}
     cpy r0,r4
     bl EnCow_BottleCheck
     pop {r1-r12, lr}
     bx lr
 
-.global hook_CowItemOverride
-hook_CowItemOverride:
+HOOK CowItemOverride
     push {r0-r1, r3-r12, lr}
     bl EnCow_ItemOverride
     cpy r2,r0
     pop {r0-r1, r3-r12, lr}
     b 0x3EE37C
 
-.global hook_AnjuCheckCuccoAmount
-hook_AnjuCheckCuccoAmount:
+HOOK AnjuCheckCuccoAmount
     push {r1-r12, lr}
     bl EnNiwLady_CheckCuccoAmount
     pop {r1-r12, lr}
@@ -436,31 +392,27 @@ hook_AnjuCheckCuccoAmount:
     cpylt r8,r0
     b 0x179424
 
-.global hook_KingZoraCheckMovedFlag
-hook_KingZoraCheckMovedFlag:
+HOOK KingZoraCheckMovedFlag
     push {r1-r12, lr}
     bl EnKz_CheckMovedFlag
     pop {r1-r12, lr}
     cmp r0,#0x0
     bx lr
 
-.global hook_FrogReward
-hook_FrogReward:
+HOOK FrogReward
     push {r0-r12, lr}
     bl EnFr_rSetReward
     pop {r0-r12, lr}
     b 0x389930
 
-.global hook_CanPlayBombchuBowling
-hook_CanPlayBombchuBowling:
+HOOK CanPlayBombchuBowling
     push {r0-r12, lr}
     bl EnBomBowlMan_CheckExplosives
     cmp r0,#0x0
     pop {r0-r12, lr}
     bx lr
 
-.global hook_SlidingDoorDestroyCustomModels
-hook_SlidingDoorDestroyCustomModels:
+HOOK SlidingDoorDestroyCustomModels
     push {r0-r12, lr}
     cpy r0,r4
     bl Door_CheckToDeleteCustomModels
@@ -468,8 +420,7 @@ hook_SlidingDoorDestroyCustomModels:
     mov r0,#0x0
     bx lr
 
-.global hook_HandleDoorDestroyCustomModels
-hook_HandleDoorDestroyCustomModels:
+HOOK HandleDoorDestroyCustomModels
     push {r0-r12, lr}
     cpy r0,r4
     bl Door_CheckToDeleteCustomModels
@@ -477,62 +428,54 @@ hook_HandleDoorDestroyCustomModels:
     str r0,[r4,#0x3E4]
     bx lr
 
-.global hook_TalonGetCastleTextbox
-hook_TalonGetCastleTextbox:
+HOOK TalonGetCastleTextbox
     push {r0, r2-r12, lr}
     bl EnTa_GetCastleTextbox
     mov r1, r0
     pop {r0, r2-r12, lr}
     bx lr
 
-.global hook_MidoCheckSpawn
-hook_MidoCheckSpawn:
+HOOK MidoCheckSpawn
     push {r0-r12, lr}
     bl EnMd_ShouldSpawn
     cmp r0,#0x1
     pop {r0-r12, lr}
     bx lr
 
-.global hook_MidoForestDialog
-hook_MidoForestDialog:
+HOOK MidoForestDialog
     push {r1-r12, lr}
     bl EnMd_GetTextKokiriForest
     pop {r1-r12, lr}
     bx lr
 
-.global hook_CheckDekuTreeClear
-hook_CheckDekuTreeClear:
+HOOK CheckDekuTreeClear
     push {r0-r12, lr}
     bl Dungeon_CheckDekuTreeClear
     tst r0,#0x1
     pop {r0-r12, lr}
     bx lr
 
-.global hook_CheckCurrentDungeonMode
-hook_CheckCurrentDungeonMode:
+HOOK CheckCurrentDungeonMode
     push {r0-r12, lr}
     bl Dungeon_GetCurrentDungeonMode
     cmp r0,#0x1
     pop {r0-r12, lr}
     bx lr
 
-.global hook_DungeonCheckJabuMQBox
-hook_DungeonCheckJabuMQBox:
+HOOK DungeonCheckJabuMQBox
     push {r0-r12, lr}
     bl Dungeon_GetCurrentDungeonMode
     cmp r0,#0x0
     pop {r0-r12, lr}
     bx lr
 
-.global hook_JabuSwitchRutoCheck
-hook_JabuSwitchRutoCheck:
+HOOK JabuSwitchRutoCheck
     cmp r0,#0xA1
     bxeq lr
     cmp r0,#0x110
     bx lr
 
-.global hook_JabuBoxCheckRuto
-hook_JabuBoxCheckRuto:
+HOOK JabuBoxCheckRuto
     tst r0,#0x80
     push {r0-r12, lr}
     bleq ObjKibako_CheckRuto
@@ -540,8 +483,7 @@ hook_JabuBoxCheckRuto:
     pop {r0-r12, lr}
     bx lr
 
-.global hook_CanReadHints
-hook_CanReadHints:
+HOOK CanReadHints
     push {r0-r12, lr}
     bl Hints_CanReadHints
     cmp r0,#0x1
@@ -567,8 +509,7 @@ hook_CanReadHints:
     add r0,r0,#0x400
     bx lr
 
-.global hook_GossipStoneAddSariaHint
-hook_GossipStoneAddSariaHint:
+HOOK GossipStoneAddSariaHint
     ldrh r0,[r5,#0x16]
     push {r0-r12, lr}
     add r0,r0,#0x600
@@ -576,39 +517,34 @@ hook_GossipStoneAddSariaHint:
     pop {r0-r12, lr}
     bx lr
 
-.global hook_FastChests
-hook_FastChests:
+HOOK FastChests
     push {r0-r12, lr}
     bl Chest_OverrideAnimation
     cmp r0,#0x1
     pop {r0-r12, lr}
     bx lr
 
-.global hook_FastOwlCutscenes
-hook_FastOwlCutscenes:
+HOOK FastOwlCutscenes
     push {r0-r12, lr}
     bl EnOwl_FastCutscene
     pop {r0-r12, lr}
     mov r1,#0xa
     bx lr
 
-.global hook_SetChildCustomTunic
-hook_SetChildCustomTunic:
+HOOK SetChildCustomTunic
     push {r0-r12, lr}
     bl Player_SetChildCustomTunicCMAB
     pop {r0-r12, lr}
     b 0x191E60
 
-.global hook_ShortenRainbowBridgeCS
-hook_ShortenRainbowBridgeCS:
+HOOK ShortenRainbowBridgeCS
     push {r0-r12, lr}
     bl ShortenRainbowBridgeCS
     pop {r0-r12, lr}
     cpy r4,r0
     bx lr
 
-.global hook_Chest_OverrideIceSmoke
-hook_Chest_OverrideIceSmoke:
+HOOK Chest_OverrideIceSmoke
     push {r0-r12, lr}
     mov r0,r4
     bl Chest_OverrideIceSmoke
@@ -618,16 +554,14 @@ hook_Chest_OverrideIceSmoke:
     bne 0x1D5E64
     b 0x1D5E60
 
-.global hook_EnableFW
-hook_EnableFW:
+HOOK EnableFW
     push {r0-r12, lr}
     bl EnableFW
     pop {r0-r12, lr}
     add sp,sp,#0x14
     bx lr
 
-.global hook_FWUnset
-hook_FWUnset:
+HOOK FWUnset
     push {r0-r12, lr}
     bl MagicWind_Unset
     mov r0,#-0x1
@@ -635,8 +569,7 @@ hook_FWUnset:
     pop {r0-r12, lr}
     bx lr
 
-.global hook_FWGetSet
-hook_FWGetSet:
+HOOK FWGetSet
     push {r0-r12, lr}
     bl MagicWind_CheckSet
     cmp r0,#0x1
@@ -644,38 +577,33 @@ hook_FWGetSet:
     beq 0x351A64
     b 0x3519D0
 
-.global hook_SetSavewarpEntrance
-hook_SetSavewarpEntrance:
+HOOK SetSavewarpEntrance
     push {r0-r12, lr}
     bl Entrance_SetSavewarpEntrance
     pop {r0-r12, lr}
     bx lr
 
-.global hook_SetGameOverEntrance
-hook_SetGameOverEntrance:
+HOOK SetGameOverEntrance
     push {r0-r12, lr}
     bl Entrance_SetGameOverEntrance
     pop {r0-r12, lr}
     bx lr
 
-.global hook_SetGameOverRespawnFlag
-hook_SetGameOverRespawnFlag:
+HOOK SetGameOverRespawnFlag
     push {r0-r12, lr}
     bl Grotto_ForceGrottoReturn
     pop {r0-r12, lr}
     cmp r8,#0x3
     bx lr
 
-.global hook_SetSunsSongRespawnFlag
-hook_SetSunsSongRespawnFlag:
+HOOK SetSunsSongRespawnFlag
     push {r0-r12, lr}
     bl Grotto_ForceGrottoReturn
     pop {r0-r12, lr}
     cpy r0,r6
     bx lr
 
-.global hook_SunsSongEndCloseTextbox
-hook_SunsSongEndCloseTextbox:
+HOOK SunsSongEndCloseTextbox
     push {r0-r12, lr}
     bl Settings_SunsSongEndCloseTextbox
     pop {r0-r12, lr}
@@ -685,51 +613,44 @@ hook_SunsSongEndCloseTextbox:
     b 0x45B518
 .endif
 
-.global hook_SetSpecialVoidOutRespawnFlag
-hook_SetSpecialVoidOutRespawnFlag:
+HOOK SetSpecialVoidOutRespawnFlag
     push {r0-r12, lr}
     bl Grotto_ForceRegularVoidOut
     pop {r0-r12, lr}
     mov r1,#0x104
     bx lr
 
-.global hook_NoHealFromHealthUpgrades
-hook_NoHealFromHealthUpgrades:
+HOOK NoHealFromHealthUpgrades
     push {r1-r12, lr}
     bl NoHealFromHealthUpgrades
     pop {r1-r12, lr}
     bx lr
 
-.global hook_NoHealFromBombchuBowlingPrize
-hook_NoHealFromBombchuBowlingPrize:
+HOOK NoHealFromBombchuBowlingPrize
     push {r1-r12, lr}
     bl NoHealFromBombchuBowlingPrize
     pop {r1-r12, lr}
     bx lr
 
-.global hook_FairyPickupHealAmount
-hook_FairyPickupHealAmount:
+HOOK FairyPickupHealAmount
     push {r0-r12, lr}
     bl FairyPickupHealAmount
     pop {r0-r12, lr}
     bx lr
 
-.global hook_FairyReviveHealAmount
-hook_FairyReviveHealAmount:
+HOOK FairyReviveHealAmount
     push {r1-r12, lr}
     bl FairyReviveHealAmount
     pop {r1-r12, lr}
     bx lr
 
-.global hook_FairyUseHealAmount
-hook_FairyUseHealAmount:
+HOOK FairyUseHealAmount
     push {r1-r12, lr}
     bl FairyUseHealAmount
     pop {r1-r12, lr}
     bx lr
 
-.global hook_MedigoronCheckFlagOne
-hook_MedigoronCheckFlagOne:
+HOOK MedigoronCheckFlagOne
     push {r0-r12, lr}
     bl EnGm_CheckRewardFlag
     cmp r0,#1
@@ -739,8 +660,7 @@ hook_MedigoronCheckFlagOne:
     tst r12,r3
     b 0x130250
 
-.global hook_MedigoronCheckFlagTwo
-hook_MedigoronCheckFlagTwo:
+HOOK MedigoronCheckFlagTwo
     bne childLink
     push {r0-r12, lr}
     bl EnGm_CheckRewardFlag
@@ -751,32 +671,28 @@ hook_MedigoronCheckFlagTwo:
 childLink:
     b 0x1302F0
 
-.global hook_MedigoronSetRewardFlag
-hook_MedigoronSetRewardFlag:
+HOOK MedigoronSetRewardFlag
     mvn r0,#0xc7
     push {r0-r12, lr}
     bl EnGm_SetRewardFlag
     pop {r0-r12, lr}
     b 0x16C91C
 
-.global hook_MedigoronItemOverrideOne
-hook_MedigoronItemOverrideOne:
+HOOK MedigoronItemOverrideOne
     push {r0-r1, r3-r12, lr}
     bl EnGm_ItemOverride
     cpy r2,r0
     pop {r0-r1, r3-r12, lr}
     b 0x14D960
 
-.global hook_MedigoronItemOverrideTwo
-hook_MedigoronItemOverrideTwo:
+HOOK MedigoronItemOverrideTwo
     push {r0-r1, r3-r12, lr}
     bl EnGm_ItemOverride
     cpy r2,r0
     pop {r0-r1, r3-r12, lr}
     b 0x16C9C0
 
-.global hook_MedigoronGetCustomText
-hook_MedigoronGetCustomText:
+HOOK MedigoronGetCustomText
     push {r0-r12, lr}
     bl EnGm_UseCustomText
     cmp r0,#1
@@ -787,8 +703,7 @@ hook_MedigoronGetCustomText:
     addne r2,r2,#0x4F
     b 0x130260
 
-.global hook_CarpetSalesmanCheckFlagOne
-hook_CarpetSalesmanCheckFlagOne:
+HOOK CarpetSalesmanCheckFlagOne
     push {r0-r12, lr}
     bl EnJs_CheckRewardFlag
     cmp r0,#1
@@ -796,8 +711,7 @@ hook_CarpetSalesmanCheckFlagOne:
     cmpne r0,#0
     bx lr
 
-.global hook_CarpetSalesmanCheckFlagTwo
-hook_CarpetSalesmanCheckFlagTwo:
+HOOK CarpetSalesmanCheckFlagTwo
     push {r0-r12, lr}
     bl EnJs_CheckRewardFlag
     cmp r0,#1
@@ -806,24 +720,21 @@ hook_CarpetSalesmanCheckFlagTwo:
     strh r1,[r0,r4]
     bx lr
 
-.global hook_CarpetSalesmanSetFlag
-hook_CarpetSalesmanSetFlag:
+HOOK CarpetSalesmanSetFlag
     push {r0-r12, lr}
     bl EnJs_SetRewardFlag
     pop {r0-r12, lr}
     mvn r0,#0xC7
     bx lr
 
-.global hook_KakarikoGateCheck
-hook_KakarikoGateCheck:
+HOOK KakarikoGateCheck
     push {r0-r12, lr}
     bl KakGate_CheckToFixBug
     cmp r0,#0x1
     pop {r0-r12, lr}
     bx lr
 
-.global hook_DoorOfTimeCheck
-hook_DoorOfTimeCheck:
+HOOK DoorOfTimeCheck
     cmp r0,#0x4
     bne 0x274B70
     push {r0-r12, lr}
@@ -832,8 +743,7 @@ hook_DoorOfTimeCheck:
     pop {r0-r12, lr}
     bx lr
 
-.global hook_SongOfTimeJingle
-hook_SongOfTimeJingle:
+HOOK SongOfTimeJingle
     mov r1,#0x0
     push {r0-r12, lr}
     bl DoorOfTime_RequirementCheck
@@ -842,16 +752,14 @@ hook_SongOfTimeJingle:
     addne r0,r0,#0x4
     bx lr
 
-.global hook_GKSetDurability
-hook_GKSetDurability:
+HOOK GKSetDurability
     push {r0-r12, lr}
     bl GK_SetDurability
     strh r0,[r8,#0x4a]
     pop {r0-r12, lr}
     b 0x376BE0
 
-.global hook_TurboTextAdvance
-hook_TurboTextAdvance:
+HOOK TurboTextAdvance
     push {r0-r12, lr}
     bl Settings_IsTurboText
     cmp r0,#0x0
@@ -859,15 +767,13 @@ hook_TurboTextAdvance:
     cmpeq r0,#0x0
     bx lr
 
-.global hook_ItemsMenuDraw
-hook_ItemsMenuDraw:
+HOOK ItemsMenuDraw
     push {r0-r12, lr}
     bl ItemsMenu_Draw
     pop {r0-r12, lr}
     b 0x2F8160
 
-.global hook_GearMenuEmptySlot
-hook_GearMenuEmptySlot:
+HOOK GearMenuEmptySlot
     push {r0,r2-r12, lr}
     bl   GearMenu_GetRewardHint
     cpy  r1,r0
@@ -877,24 +783,21 @@ hook_GearMenuEmptySlot:
     mov  r2,#0x1
     b    0x2E9A3C @ print reward hint
 
-.global hook_PlaySound
-hook_PlaySound:
+HOOK PlaySound
     push {r1-r12, lr}
     bl SetBGM
     pop {r1-r12, lr}
     push {r3-r7, lr}
     b 0x35C52C
 
-.global hook_SetBGMEntrance
-hook_SetBGMEntrance:
+HOOK SetBGMEntrance
     push {r1-r12, lr}
     bl SetBGM
     pop {r1-r12, lr}
     push {r4-r6, lr}
     b 0x33104C
 
-.global hook_SetBGMDayNight
-hook_SetBGMDayNight:
+HOOK SetBGMDayNight
     push {r1-r12, lr}
     bl SetBGM
     pop {r1-r12, lr}
@@ -905,8 +808,7 @@ hook_SetBGMDayNight:
     b 0x483C8C
 .endif
 
-.global hook_SetBGMEvent
-hook_SetBGMEvent:
+HOOK SetBGMEvent
     push {r0, r2-r12, lr}
     cpy r0,r1
     bl SetBGM
@@ -915,16 +817,14 @@ hook_SetBGMEvent:
     push {r4-r11, lr}
     b 0x36EC44
 
-.global hook_SetSFX
-hook_SetSFX:
+HOOK SetSFX
     push {r1-r12, lr}
     bl SetSFX
     pop {r1-r12, lr}
     push {r0-r11, lr}
     b 0x375480
 
-.global hook_TurboTextClose
-hook_TurboTextClose:
+HOOK TurboTextClose
     push {r0-r12, lr}
     bl Settings_IsTurboText
     cmp r0,#0x0
@@ -932,8 +832,7 @@ hook_TurboTextClose:
     cmpeq r0,#0x0
     bx lr
 
-.global hook_TurboTextSignalNPC
-hook_TurboTextSignalNPC:
+HOOK TurboTextSignalNPC
     movne r4,#0x1
     push {r0-r12, lr}
     bl Settings_IsTurboText
@@ -946,8 +845,7 @@ hook_TurboTextSignalNPC:
     movne r4,#0x1
     bx lr
 
-.global hook_SkipSongReplays_TimeBlocksFix
-hook_SkipSongReplays_TimeBlocksFix:
+HOOK SkipSongReplays_TimeBlocksFix
     bne 0x208008
     push  {r0-r12, lr}
     bl Settings_GetSongReplaysOption
@@ -958,8 +856,7 @@ hook_SkipSongReplays_TimeBlocksFix:
     cmp r0,r0
     b 0x208008
 
-.global hook_SkipSongReplays_WarpBlocksFix
-hook_SkipSongReplays_WarpBlocksFix:
+HOOK SkipSongReplays_WarpBlocksFix
     bne 0x20806C
     push  {r0-r12, lr}
     bl Settings_GetSongReplaysOption
@@ -970,39 +867,34 @@ hook_SkipSongReplays_WarpBlocksFix:
     cmp r0,r0
     b 0x20806C
 
-.global hook_CarpenterBossSetTradedSawFlag
-hook_CarpenterBossSetTradedSawFlag:
+HOOK CarpenterBossSetTradedSawFlag
     push {r0-r12, lr}
     bl EnToryo_SetTradedSawFlag
     pop {r0-r12, lr}
     str r0,[r4,#0xB10]
     bx lr
 
-.global hook_KingZoraSetTradedPrescriptionFlag
-hook_KingZoraSetTradedPrescriptionFlag:
+HOOK KingZoraSetTradedPrescriptionFlag
     push {r0-r12, lr}
     bl EnKz_SetTradedPrescriptionFlag
     pop {r0-r12, lr}
     mov r2,#0x24
     b 0x1C52A4
 
-.global hook_SkipTimeTravelCutsceneOne
-hook_SkipTimeTravelCutsceneOne:
+HOOK SkipTimeTravelCutsceneOne
     push {r0-r12, lr}
     bl TimeTravelAdvanceCutsceneTimer
     pop {r0-r12, lr}
     ldmia sp!,{r4,r5,r6,pc}
 
-.global hook_SkipTimeTravelCutsceneTwo
-hook_SkipTimeTravelCutsceneTwo:
+HOOK SkipTimeTravelCutsceneTwo
     push {r0-r12, lr}
     bl SetTimeTraveled
     pop {r0-r12, lr}
     mov r1,#0x324
     bx lr
 
-.global hook_SkipMasterSwordFanfare
-hook_SkipMasterSwordFanfare:
+HOOK SkipMasterSwordFanfare
     push {r0-r12, lr}
     bl ShouldSkipMasterSwordCutscene
     cmp r0,#0x1
@@ -1011,24 +903,21 @@ hook_SkipMasterSwordFanfare:
     mov r1,#0x0
     bx lr
 
-.global hook_EnteredLocation
-hook_EnteredLocation:
+HOOK EnteredLocation
     cpy r4,r0
     push {r0-r12, lr}
     bl Entrance_EnteredLocation
     pop {r0-r12, lr}
     bx lr
 
-.global hook_LostWoodsBridgeMusic
-hook_LostWoodsBridgeMusic:
+HOOK LostWoodsBridgeMusic
     push {r0-r12, lr}
     bl Entrance_IsLostWoodsBridge
     cmp r0,#0x1
     pop {r0-r12, lr}
     bx lr
 
-.global hook_BeforeLoadGame
-hook_BeforeLoadGame:
+HOOK BeforeLoadGame
     add r0, r4, r5
     push {r0-r12, lr}
     bl SaveFile_BeforeLoadGame
@@ -1039,23 +928,20 @@ hook_BeforeLoadGame:
     b 0x447384
 .endif
 
-.global hook_AfterLoadGame
-hook_AfterLoadGame:
+HOOK AfterLoadGame
     push {r0-r12, lr}
     bl SaveFile_AfterLoadGame
     pop {r0-r12, lr}
     pop {r4-r6, pc}
 
-.global hook_FileSelect_CopyFile
-hook_FileSelect_CopyFile:
+HOOK FileSelect_CopyFile
     push {r0-r12, lr}
     bl SaveFile_BeforeCopy
     pop {r0-r12, lr}
     sub sp,sp,#0x240
     bx lr
 
-.global hook_SaveGame
-hook_SaveGame:
+HOOK SaveGame
     cmp r5, #0
     beq .notSaving
     push {r0-r12, lr}
@@ -1067,8 +953,7 @@ hook_SaveGame:
     push {r4-r9, lr}
     b 0x2fbfac
 
-.global hook_SaveMenuIgnoreOpen
-hook_SaveMenuIgnoreOpen:
+HOOK SaveMenuIgnoreOpen
     push {r0-r12, lr}
     bl SaveMenu_IgnoreOpen
     cmp r0,#0x1
@@ -1080,15 +965,13 @@ hook_SaveMenuIgnoreOpen:
 .endif
     bx lr
 
-.global hook_GameOverStart
-hook_GameOverStart:
+HOOK GameOverStart
     push {r0-r12, lr}
     bl SaveFile_OnGameOver
     pop {r0-r12, lr}
     bx lr
 
-.global hook_PermadeathSkipMenu
-hook_PermadeathSkipMenu:
+HOOK PermadeathSkipMenu
     push {r0-r12, lr}
     bl Permadeath_GetOption
     cmp r0,#0x0
@@ -1097,8 +980,7 @@ hook_PermadeathSkipMenu:
     moveq r0,#0x2
     bx lr
 
-.global hook_PermadeathForceQuit
-hook_PermadeathForceQuit:
+HOOK PermadeathForceQuit
     ldrbeq r8,[r11,#0x9]
     bxne lr
     push {r0-r12, lr}
@@ -1112,21 +994,18 @@ hook_PermadeathForceQuit:
 .endif
     bxeq lr
 
-.global hook_OverrideFogDuringGameplayInit
-hook_OverrideFogDuringGameplayInit:
+HOOK OverrideFogDuringGameplayInit
     push {r0-r12, lr}
     bl Fog_OverrideState
     pop {r0-r12, lr}
     bx lr
 
-.global hook_SkipTwinrovaQuarrelCutscene
-hook_SkipTwinrovaQuarrelCutscene:
+HOOK SkipTwinrovaQuarrelCutscene
     mov r0,#0x500
     add r0,r0,#0x9
     bx lr
 
-.global hook_FixItemsMenuSlotDuplication
-hook_FixItemsMenuSlotDuplication:
+HOOK FixItemsMenuSlotDuplication
     mov r4,#0xFF
     mov lr,#0xFF
     add r10,r10,#0x1
@@ -1136,8 +1015,7 @@ hook_FixItemsMenuSlotDuplication:
     b 0x456B94
 .endif
 
-.global hook_PlayEntranceCutscene
-hook_PlayEntranceCutscene:
+HOOK PlayEntranceCutscene
 .if _EUR_==1
     bgt 0x44F0C4
 .else
@@ -1156,16 +1034,14 @@ hook_PlayEntranceCutscene:
     b 0x44F06C
 .endif
 
-.global hook_SkipJabuOpeningCutscene
-hook_SkipJabuOpeningCutscene:
+HOOK SkipJabuOpeningCutscene
     ldrh r0,[r0,#0x0]
     push {r0-r12, lr}
     bl Jabu_SkipOpeningCutscene
     pop {r0-r12, lr}
     bx lr
 
-.global hook_MultiplyPlayerSpeed
-hook_MultiplyPlayerSpeed:
+HOOK MultiplyPlayerSpeed
     vldr.32 s0,[r6,#0x21C]
     push {r0-r12, lr}
     bl Player_GetSpeedMultiplier
@@ -1174,8 +1050,7 @@ hook_MultiplyPlayerSpeed:
     vmul.f32 s0,s1
     bx lr
 
-.global hook_RunAnimationSpeed
-hook_RunAnimationSpeed:
+HOOK RunAnimationSpeed
     vldr.32 s17,[r5,#0x21C]
     push {r0-r12, lr}
     bl Player_GetSpeedMultiplier
@@ -1184,8 +1059,7 @@ hook_RunAnimationSpeed:
     vmul.f32 s17,s1
     bx lr
 
-.global hook_NaviNotifications
-hook_NaviNotifications:
+HOOK NaviNotifications
     push {r0-r12, lr}
     bl Navi_GetNotificationOption
     cmp r0,#0x1
@@ -1198,8 +1072,7 @@ hook_NaviNotifications:
     ldr r0,[r0,#0x4C]
     bx lr
 
-.global hook_ChestMinigame_KeyChestVisibility
-hook_ChestMinigame_KeyChestVisibility:
+HOOK ChestMinigame_KeyChestVisibility
     push {r0-r12, lr}
     bl Settings_GetChestMinigameOption
     cmp r0,#0x0
@@ -1208,8 +1081,7 @@ hook_ChestMinigame_KeyChestVisibility:
     orreq r10,r7,#0x4000
     bx lr
 
-.global hook_ChestMinigame_DontOpenChestsOnInit
-hook_ChestMinigame_DontOpenChestsOnInit:
+HOOK ChestMinigame_DontOpenChestsOnInit
     cmp r0,#0x0
     bxeq lr
     push {r0-r12, lr}
@@ -1219,16 +1091,14 @@ hook_ChestMinigame_DontOpenChestsOnInit:
     pop {r0-r12, lr}
     bx lr
 
-.global hook_GameplayDestroy
-hook_GameplayDestroy:
+HOOK GameplayDestroy
     cpy r4,r0
     push {r0-r12, lr}
     bl Entrance_CheckEpona
     pop {r0-r12, lr}
     bx lr
 
-.global hook_SceneExitOverride
-hook_SceneExitOverride:
+HOOK SceneExitOverride
     ldrsh r9, [r1,r0]
     push {r0-r8, r10-r12, lr}
     cpy r0, r9
@@ -1237,31 +1107,27 @@ hook_SceneExitOverride:
     pop {r0-r8, r10-r12, lr}
     bx lr
 
-.global hook_SceneExitDynamicOverride
-hook_SceneExitDynamicOverride:
+HOOK SceneExitDynamicOverride
     push {r0-r12, lr}
     bl Entrance_OverrideDynamicExit
     pop {r0-r12, lr}
     bx lr
 
-.global hook_OverrideGrottoActorEntrance
-hook_OverrideGrottoActorEntrance:
+HOOK OverrideGrottoActorEntrance
     push {r0-r12, lr}
     cpy r0, r4
     bl Grotto_OverrideActorEntrance
     pop {r0-r12, lr}
     b 0x3F22C4
 
-.global hook_ReturnFW
-hook_ReturnFW:
+HOOK ReturnFW
     push {r0-r12, lr}
     bl Grotto_SetupReturnInfoOnFWReturn
     pop {r0-r12, lr}
     add sp,sp,#0x8
     bx lr
 
-.global hook_WarpSongEntranceOverride
-hook_WarpSongEntranceOverride:
+HOOK WarpSongEntranceOverride
     push {r0-r1, r3-r12, lr}
     cpy r0, r2
     bl Entrance_OverrideNextIndex
@@ -1270,8 +1136,7 @@ hook_WarpSongEntranceOverride:
     strh r2,[r1,#0x1c]
     bx lr
 
-.global hook_OwlEntranceOverride
-hook_OwlEntranceOverride:
+HOOK OwlEntranceOverride
     push {r0, r2-r12, lr}
     cpy r0, r1
     bl Entrance_OverrideNextIndex
@@ -1279,40 +1144,35 @@ hook_OwlEntranceOverride:
     pop {r0, r2-r12, lr}
     b 0x3716F0
 
-.global hook_SavewarpSetRespawnFlag
-hook_SavewarpSetRespawnFlag:
+HOOK SavewarpSetRespawnFlag
     push {r0-r12, lr}
     bl Grotto_ForceGrottoReturnOnSpecialEntrance
     pop {r0-r12, lr}
     mov r0,#0xFF
     bx lr
 
-.global hook_AdultItemsCMABsAsChild
-hook_AdultItemsCMABsAsChild:
+HOOK AdultItemsCMABsAsChild
     push {r0-r12, lr}
     bl Player_ShouldApplyAdultItemsCMABs
     cmp r0,#0x1
     pop {r0-r12, lr}
     bx lr
 
-.global hook_Model_EnableMeshGroupByIndex
-hook_Model_EnableMeshGroupByIndex:
+HOOK Model_EnableMeshGroupByIndex
     push {r0,r2-r12,lr}
     bl Model_OverrideMesh
     cpy r1,r0
     pop {r0,r2-r12,lr}
     b 0x4C8B8C
 
-.global hook_ArrowsOrSeeds
-hook_ArrowsOrSeeds:
+HOOK ArrowsOrSeeds
     push {r0-r12, lr}
     bl Player_ShouldUseSlingshot
     cmp r0,#0x0
     pop {r0-r12, lr}
     bx lr
 
-.global hook_HookshotDrawChain
-hook_HookshotDrawChain:
+HOOK HookshotDrawChain
     push {r0-r12, lr}
     bl Player_IsAdult
     cmp r0,#0x0
@@ -1321,16 +1181,14 @@ hook_HookshotDrawChain:
     ldr r0,[r4,#0x290]
     b 0x2202A4
 
-.global hook_HookshotRotation
-hook_HookshotRotation:
+HOOK HookshotRotation
     push {r0-r12, lr}
     bl Hookshot_GetZRotation
     vmov.f32 s0,r0
     pop {r0-r12, lr}
     bx lr
 
-.global hook_LinkReflection
-hook_LinkReflection:
+HOOK LinkReflection
     push {r0-r12, lr}
     bl Player_IsAdult
     cmp r0,#0x1
@@ -1338,8 +1196,7 @@ hook_LinkReflection:
     streq r1,[r0,#0x714]
     bx lr
 
-.global hook_ChildCanOpenBowSubMenu
-hook_ChildCanOpenBowSubMenu:
+HOOK ChildCanOpenBowSubMenu
     push {r0-r12, lr}
     bl Settings_BowAsChild
     cmp r0,#0x1
@@ -1348,8 +1205,7 @@ hook_ChildCanOpenBowSubMenu:
     cmp r12,#0x0
     b 0x2EB2DC
 
-.global hook_RedBoulderExplode
-hook_RedBoulderExplode:
+HOOK RedBoulderExplode
     ldrb r0,[r5,#0x1B5]
     push {r0-r12, lr}
     cpy r0,r5
@@ -1359,15 +1215,13 @@ hook_RedBoulderExplode:
     bge 0x26FE9C
     b 0x26FE80
 
-.global hook_Multiplayer_UpdatePrevActorFlags
-hook_Multiplayer_UpdatePrevActorFlags:
+HOOK Multiplayer_UpdatePrevActorFlags
     str r0,[r5,#0x1b8]
     push {r0-r12, lr}
     bl Multiplayer_Sync_UpdatePrevActorFlags
     pop {r0-r12, pc}
 
-.global hook_Multiplayer_OnLoadFile
-hook_Multiplayer_OnLoadFile:
+HOOK Multiplayer_OnLoadFile
     strh r6,[r0,#0x4C]
     push {r0-r12, lr}
     bl Multiplayer_OnFileLoad
@@ -1378,8 +1232,7 @@ hook_Multiplayer_OnLoadFile:
     b 0x449F00
 .endif
 
-.global hook_SendDroppedBottleContents
-hook_SendDroppedBottleContents:
+HOOK SendDroppedBottleContents
     add r0,r0,#0x8C
     push {r0-r12, lr}
     cpy r0,r2
@@ -1390,8 +1243,7 @@ hook_SendDroppedBottleContents:
     pop {r0-r12, lr}
     bx lr
 
-.global hook_IgnoreMaskReaction
-hook_IgnoreMaskReaction:
+HOOK IgnoreMaskReaction
     ldrh r0,[r0,#0x0]
     push {r0-r12, lr}
     cpy r0,r4
@@ -1401,23 +1253,20 @@ hook_IgnoreMaskReaction:
     moveq r0,#0x0
     b 0x36BBC8
 
-.global hook_MasterQuestGoldSkulltulaCheck
-hook_MasterQuestGoldSkulltulaCheck:
+HOOK MasterQuestGoldSkulltulaCheck
     push {r0-r5,r7-r12, lr}
     bl Settings_IsMasterQuestDungeon
     cpy r6,r0
     pop {r0-r5,r7-r12, lr}
     b 0x3415CC
 
-.global hook_WaterSpoutMasterQuestCheck
-hook_WaterSpoutMasterQuestCheck:
+HOOK WaterSpoutMasterQuestCheck
     push {r1-r12, lr}
     bl Settings_IsMasterQuestDungeon
     pop {r1-r12, lr}
     bx lr
 
-.global hook_PierreSoftlockFixTwo
-hook_PierreSoftlockFixTwo:
+HOOK PierreSoftlockFixTwo
     cpy r6,r1
     push {r0-r12, lr}
     mov r2,#0x1
@@ -1427,8 +1276,7 @@ hook_PierreSoftlockFixTwo:
     pop {r0-r12, lr}
     bx lr
 
-.global hook_StoreTargetActorType
-hook_StoreTargetActorType:
+HOOK StoreTargetActorType
     push {r0-r12, lr}
     cpy r0,r6
     bl Fairy_StoreTargetActorType
@@ -1436,8 +1284,7 @@ hook_StoreTargetActorType:
     cmp r5,#0x0
     bx lr
 
-.global hook_ForceTrailEffectUpdate
-hook_ForceTrailEffectUpdate:
+HOOK ForceTrailEffectUpdate
     push {r1-r12, lr}
     cpy r0,r4
     bl forceTrailEffectUpdate
@@ -1445,16 +1292,14 @@ hook_ForceTrailEffectUpdate:
     cmp r0,#0x10
     bx lr
 
-.global hook_RainbowSwordTrail
-hook_RainbowSwordTrail:
+HOOK RainbowSwordTrail
     push {r0-r12, lr}
     bl updateSwordTrailColors
     pop {r0-r12, lr}
     add r8,r7,#0x100
     bx lr
 
-.global hook_BoomerangTrailEffect
-hook_BoomerangTrailEffect:
+HOOK BoomerangTrailEffect
     push {r0-r12, lr}
     bl updateBoomerangTrailEffect
     cmp r0,#0x1
@@ -1463,8 +1308,7 @@ hook_BoomerangTrailEffect:
     strb r4,[r0,#0x282]
     bx lr
 
-.global hook_RainbowChuTrail
-hook_RainbowChuTrail:
+HOOK RainbowChuTrail
     push {r0-r12, lr}
     bl updateChuTrailColors
     cmp r0,#0x1
@@ -1473,8 +1317,7 @@ hook_RainbowChuTrail:
     strb r7,[r0,#0x282]
     bx lr
 
-.global hook_TimerExpiration
-hook_TimerExpiration:
+HOOK TimerExpiration
     mov r0,#0x5
     push {r0-r12,lr}
     bl IceTrap_IsCurseActive
@@ -1486,8 +1329,7 @@ hook_TimerExpiration:
     strh r0,[r4,#0x62]
     bx lr
 
-.global hook_FWandWarpSongTimerDepletion
-hook_FWandWarpSongTimerDepletion:
+HOOK FWandWarpSongTimerDepletion
     moveq r1,#0x1
     movne r1,#0xEF
     push {r0-r12,lr}
@@ -1498,8 +1340,7 @@ hook_FWandWarpSongTimerDepletion:
     strh r1,[r0,#0x64]
     bx lr
 
-.global hook_Timer2TickSound
-hook_Timer2TickSound:
+HOOK Timer2TickSound
     push {r0-r12,lr}
     bl IceTrap_IsCurseActive
     cmp r0,#0x1
@@ -1508,15 +1349,13 @@ hook_Timer2TickSound:
     cmp r0,#0x3C
     bx lr
 
-.global hook_CurseTrapDizzyStick
-hook_CurseTrapDizzyStick:
+HOOK CurseTrapDizzyStick
     push {r0-r12,lr}
     bl IceTrap_ReverseStick
     pop {r0-r12,lr}
     b 0x2FF258
 
-.global hook_CurseTrapDizzyButtons
-hook_CurseTrapDizzyButtons:
+HOOK CurseTrapDizzyButtons
     push {r0,r3-r12,lr}
     # R1 and R2 contain button status fields
     # Apply the curse effect to both
@@ -1537,8 +1376,7 @@ hook_CurseTrapDizzyButtons:
     b 0x41ABE0
 .endif
 
-.global hook_CrouchStabHitbox
-hook_CrouchStabHitbox:
+HOOK CrouchStabHitbox
     push {r0-r12,lr}
     bl IceTrap_IsSlashHitboxDisabled
     cmp r0,#0x0
@@ -1547,16 +1385,14 @@ hook_CrouchStabHitbox:
     strb r10,[r6,#0x227]
     bx lr
 
-.global hook_BossChallenge_Enter
-hook_BossChallenge_Enter:
+HOOK BossChallenge_Enter
     push {r0-r12,lr}
     bl BossChallenge_Enter
     pop {r0-r12,lr}
     cpy r4,r0
     bx lr
 
-.global hook_BossChallenge_ExitMenu
-hook_BossChallenge_ExitMenu:
+HOOK BossChallenge_ExitMenu
     push {r0-r12,lr}
     cpy r0,r8
     bl BossChallenge_ExitMenu
@@ -1564,8 +1400,7 @@ hook_BossChallenge_ExitMenu:
     cmp r8,#0x0
     bx lr
 
-.global hook_RestoreISG
-hook_RestoreISG:
+HOOK RestoreISG
     push {lr}
     push {r0-r12}
     bl Settings_IsIsgEnabled
@@ -1575,15 +1410,13 @@ hook_RestoreISG:
     pop {lr}
     bx lr
 
-.global hook_GrannyTextID
-hook_GrannyTextID:
+HOOK GrannyTextID
     push {r1-r12,lr}
     bl EnDs_GetTextID
     pop {r1-r12,lr}
     bx lr
 
-.global hook_GrannyBottleCheck
-hook_GrannyBottleCheck:
+HOOK GrannyBottleCheck
     push {r0-r12,lr}
     bl EnDs_ShouldIgnoreBottle
     cmp r0,#0x0
@@ -1591,24 +1424,21 @@ hook_GrannyBottleCheck:
     beq 0x377A04 @Check for bottle
     bx lr
 
-.global hook_GrannyItemOverride
-hook_GrannyItemOverride:
+HOOK GrannyItemOverride
     push {r0,r1,r3-r12,lr}
     bl EnDs_ItemOverride
     cpy r2,r0
     pop {r0,r1,r3-r12,lr}
     b 0x3724DC @GiveItem
 
-.global hook_GrannySetRewardFlag
-hook_GrannySetRewardFlag:
+HOOK GrannySetRewardFlag
     push {r0-r12,lr}
     bl EnDs_SetRewardFlag
     pop {r0-r12,lr}
     mov r0,#0x0
     bx lr
 
-.global hook_BecomeAdult
-hook_BecomeAdult:
+HOOK BecomeAdult
     strh r3,[r2,#0x5e]
     push {r0-r12,lr}
     bl SaveFile_BecomeAdult
@@ -1617,8 +1447,7 @@ hook_BecomeAdult:
     ldrb r3,[r2,#0x60]
     bx lr
 
-.global hook_SwordlessPatchCheck
-hook_SwordlessPatchCheck:
+HOOK SwordlessPatchCheck
     cmp r1,#0x0
     bxne lr
     push {r0-r12,lr}
@@ -1627,16 +1456,14 @@ hook_SwordlessPatchCheck:
     pop {r0-r12,lr}
     bx lr
 
-.global hook_HandleBButton
-hook_HandleBButton:
+HOOK HandleBButton
     cmp r0,#0x3B
     cmpne r0,#0x3C
     cmpne r0,#0x3D
     cmpne r0,#0xFE
     bx lr
 
-.global hook_LoadFileSwordless
-hook_LoadFileSwordless:
+HOOK LoadFileSwordless
     push {lr}
     push {r0-r12}
     bl SaveFile_LoadFileSwordless
@@ -1645,8 +1472,7 @@ hook_LoadFileSwordless:
     pop {lr}
     bx lr
 
-.global hook_GanonRestoreMSOnDeath
-hook_GanonRestoreMSOnDeath:
+HOOK GanonRestoreMSOnDeath
     tst r0,r1
     bxne lr
     push {r0-r12,lr}
@@ -1655,8 +1481,7 @@ hook_GanonRestoreMSOnDeath:
     pop {r0-r12,lr}
     bx lr
 
-.global hook_CriticalHealthCheck
-hook_CriticalHealthCheck:
+HOOK CriticalHealthCheck
     cmp r0,#0x10
     movle r0,#0x00
     bxle lr
@@ -1667,24 +1492,21 @@ hook_CriticalHealthCheck:
     movle r0,#0x18
     bx lr
 
-.global hook_InitSceneMirrorWorld
-hook_InitSceneMirrorWorld:
+HOOK InitSceneMirrorWorld
     push {r0-r12,lr}
     bl Entrance_UpdateMQFlag
     pop {r0-r12,lr}
     cpy r4,r0
     bx lr
 
-.global hook_InitSceneEntranceOverride
-hook_InitSceneEntranceOverride:
+HOOK InitSceneEntranceOverride
     push {r0-r12,lr}
     bl Entrance_OverrideSpawnScene
     pop {r0-r12,lr}
     mov r0, #0x14
     bx lr
 
-.global hook_CollisionATvsAC
-hook_CollisionATvsAC:
+HOOK CollisionATvsAC
     ldr r12,[sp,#0x18]
     push {r0-r12,lr}
     cpy r0,r1  @ AT collider
@@ -1695,8 +1517,7 @@ hook_CollisionATvsAC:
     bxeq lr
     b 0x3192E4
 
-.global hook_CollisionCheck_SetAll_Once
-hook_CollisionCheck_SetAll_Once:
+HOOK CollisionCheck_SetAll_Once
     cpy r5,r2
     push {r0-r12,lr}
     bl HyperActors_GetExtraUpdate
@@ -1705,8 +1526,7 @@ hook_CollisionCheck_SetAll_Once:
     addeq lr,#0x8
     bx lr
 
-.global hook_GanonDrawMasterSword
-hook_GanonDrawMasterSword:
+HOOK GanonDrawMasterSword
     ldrh r0,[r4,#0x2E]
     push {r0-r12,lr}
     bl SaveFile_SwordlessPatchesEnabled
@@ -1716,16 +1536,14 @@ hook_GanonDrawMasterSword:
     strb r10,[r4,#0x0] @ delete MS effect
     bx lr
 
-.global hook_SetFWPlayerParams
-hook_SetFWPlayerParams:
+HOOK SetFWPlayerParams
     push {r0-r9,r11-r12,lr}
     bl Grotto_ChooseFWPlayerParams
     mov r10,r0
     pop {r0-r9,r11-r12,lr}
     bx lr
 
-.global hook_AboutToPickUpActor
-hook_AboutToPickUpActor:
+HOOK AboutToPickUpActor
     ldrh r0,[r7]
     push {r0-r12,lr}
     mov r0,r7
@@ -1735,8 +1553,7 @@ hook_AboutToPickUpActor:
     subeq lr,lr,#0x8
     bx lr
 
-.global hook_TargetReticleColor
-hook_TargetReticleColor:
+HOOK TargetReticleColor
     mov r4,#0x0
     push {r0-r12,lr}
     cpy r0,r6 @ Target Context
@@ -1750,8 +1567,7 @@ hook_TargetReticleColor:
     b 0x47B2E8
 .endif
 
-.global hook_TargetPointerColor
-hook_TargetPointerColor:
+HOOK TargetPointerColor
     ldr r0,[r6,#0x120]
     push {r0-r12,lr}
     cpy r0,r6 @ Target Context
@@ -1766,8 +1582,7 @@ hook_TargetPointerColor:
     b 0x47BB30
 .endif
 
-.global hook_ShadowShip_Speed
-hook_ShadowShip_Speed:
+HOOK ShadowShip_Speed
     add r0,r4,#0x6C
     push {r0-r12,lr}
     vpush {s0-s1}
@@ -1783,8 +1598,7 @@ hook_ShadowShip_Speed:
     vmul.f32 s0,s2
     bx lr
 
-.global hook_MaskSalesmanBorrowMask
-hook_MaskSalesmanBorrowMask:
+HOOK MaskSalesmanBorrowMask
     ldrsh r1,[r6,#0x1C]
     push {r0-r12,lr}
     cpy r0,r1
@@ -1792,8 +1606,7 @@ hook_MaskSalesmanBorrowMask:
     pop {r0-r12,lr}
     bx lr
 
-.global hook_MaskSalesmanGiveMaskOfTruth
-hook_MaskSalesmanGiveMaskOfTruth:
+HOOK MaskSalesmanGiveMaskOfTruth
     orr r1,r1,#0x400
     push {r0-r12,lr}
     mov r0,#0x22 @ Mask of Truth SI id
@@ -1801,29 +1614,25 @@ hook_MaskSalesmanGiveMaskOfTruth:
     pop {r0-r12,lr}
     bx lr
 
-.global hook_OoBBombchuOne
-hook_OoBBombchuOne:
+HOOK OoBBombchuOne
     cmp r5,#0x0
     bxeq lr
     ldrsh r0,[r5,#0xA]
     bx lr
 
-.global hook_OoBBombchuTwo
-hook_OoBBombchuTwo:
+HOOK OoBBombchuTwo
     cmp r5,#0x0
     bxeq lr
     ldrsh r0,[r5,#0xC]
     bx lr
 
-.global hook_OoBBombchuThree
-hook_OoBBombchuThree:
+HOOK OoBBombchuThree
     cmp r5,#0x0
     bxeq lr
     ldrsh r0,[r5,#0xE]
     bx lr
 
-.global hook_BombchuShopInfinitePurchases
-hook_BombchuShopInfinitePurchases:
+HOOK BombchuShopInfinitePurchases
     ldrsh r3,[r1,#0x1C]
     push {r0-r12,lr}
     bl Settings_IsLogicVanilla
@@ -1832,8 +1641,7 @@ hook_BombchuShopInfinitePurchases:
     movne r3,#0x0 @ Skip setting itemGetInf flag
     b 0x188D40
 
-.global hook_CamRoll
-hook_CamRoll:
+HOOK CamRoll
     push {r0,lr}
     mov r0,#0x0
     strh r0,[r5,#0xA2]
@@ -1846,8 +1654,7 @@ hook_CamRoll:
     pop {r0,lr}
     bx lr
 
-.global hook_CamUpdate
-hook_CamUpdate:
+HOOK CamUpdate
     push {r0-r12,lr}
     cpy r0,r1
     bl Camera_FreeCamEnabled
@@ -1858,8 +1665,7 @@ hook_CamUpdate:
     bl Camera_FreeCamUpdate
     ldmia sp!,{r4-r11,pc}
 
-.global hook_Sheik_GetTextID
-hook_Sheik_GetTextID:
+HOOK Sheik_GetTextID
     push {r0, r2-r12, lr}
     cpy r0,r4
     bl Sheik_GetTextID
@@ -1867,8 +1673,7 @@ hook_Sheik_GetTextID:
     pop {r0, r2-r12, lr}
     b 0x2A4B4C
 
-.global hook_OnActorSetup_SceneChange
-hook_OnActorSetup_SceneChange:
+HOOK OnActorSetup_SceneChange
     cpy r4,r5
     push {r0-r12, lr}
     cpy r0,r5
@@ -1886,8 +1691,7 @@ hook_OnActorSetup_SceneChange:
     b 0x4522A4
 .endif
 
-.global hook_AfterActorSetup_SceneChange
-hook_AfterActorSetup_SceneChange:
+HOOK AfterActorSetup_SceneChange
     strb r0,[r7,#0xC03]
     push {r0-r12, lr}
     bl ActorSetup_Extra
@@ -1898,8 +1702,7 @@ hook_AfterActorSetup_SceneChange:
     b 0x4522BC
 .endif
 
-.global hook_OnActorSetup_RoomChange
-hook_OnActorSetup_RoomChange:
+HOOK OnActorSetup_RoomChange
     cpy r4,r6
     push {r0-r12, lr}
     cpy r0,r6
@@ -1917,8 +1720,7 @@ hook_OnActorSetup_RoomChange:
     b 0x461424
 .endif
 
-.global hook_AfterActorSetup_RoomChange
-hook_AfterActorSetup_RoomChange:
+HOOK AfterActorSetup_RoomChange
     strb r10,[r8,#0xC03]
     push {r0-r12, lr}
     bl ActorSetup_Extra
@@ -1929,8 +1731,7 @@ hook_AfterActorSetup_RoomChange:
     b 0x461438
 .endif
 
-.global hook_RandomGsLoc_CustomTangibilityCheck
-hook_RandomGsLoc_CustomTangibilityCheck:
+HOOK RandomGsLoc_CustomTangibilityCheck
     sub sp,sp,#0x18
     push {r0-r12, lr}
     mov r1,#0x1
@@ -1949,8 +1750,7 @@ hook_RandomGsLoc_CustomTangibilityCheck:
     # Return false
     b 0x341BEC
 
-.global hook_RandomGsLoc_CustomTokenSpawnOffset
-hook_RandomGsLoc_CustomTokenSpawnOffset:
+HOOK RandomGsLoc_CustomTokenSpawnOffset
     vadd.f32 s0,s3,s0
     push {r0-r12, lr}
     cpy r0,r4
@@ -1969,8 +1769,7 @@ hook_RandomGsLoc_CustomTokenSpawnOffset:
     pop {r0-r12, lr}
     bx lr
 
-.global hook_RandomGsLoc_BlockSpawn_Crate
-hook_RandomGsLoc_BlockSpawn_Crate:
+HOOK RandomGsLoc_BlockSpawn_Crate
     push {r0-r12, lr}
     cpy r0,r4
     mov r1,#0x2
@@ -1984,8 +1783,7 @@ hook_RandomGsLoc_BlockSpawn_Crate:
     orr r0,r2,#0x8000
     bx lr
 
-.global hook_RandomGsLoc_BlockSpawn_Tree
-hook_RandomGsLoc_BlockSpawn_Tree:
+HOOK RandomGsLoc_BlockSpawn_Tree
     push {r0-r12, lr}
     cpy r0,r4
     mov r1,#0x3
@@ -1999,8 +1797,7 @@ hook_RandomGsLoc_BlockSpawn_Tree:
     orr r0,r0,#0xE000
     bx lr
 
-.global hook_RandomGsLoc_BlockSpawn_Soil
-hook_RandomGsLoc_BlockSpawn_Soil:
+HOOK RandomGsLoc_BlockSpawn_Soil
     push {r0-r12, lr}
     cpy r0,r4
     mov r1,#0x4
@@ -2014,8 +1811,7 @@ hook_RandomGsLoc_BlockSpawn_Soil:
     ldrh r0,[r4,#0x1C]
     bx lr
 
-.global hook_RandomGsLoc_SkipSoilJingle
-hook_RandomGsLoc_SkipSoilJingle:
+HOOK RandomGsLoc_SkipSoilJingle
     push {r0-r12, lr}
     mov r1,#0x4
     mov r2,#0x1
@@ -2028,15 +1824,13 @@ hook_RandomGsLoc_SkipSoilJingle:
     ldrsh r0,[r0,#0x1C]
     bx lr
 
-.global hook_ActorDraw
-hook_ActorDraw:
+HOOK ActorDraw
     push {r0-r12, lr}
     bl Actor_rDraw
     pop {r0-r12, lr}
     bx lr
 
-.global hook_FlyingPotCollision
-hook_FlyingPotCollision:
+HOOK FlyingPotCollision
     strh r0,[r4,#0xBE]
     push {r0-r12, lr}
     cpy r0,r4 @ Actor
@@ -2046,8 +1840,7 @@ hook_FlyingPotCollision:
     bne 0x11DEE4 @ Skip collision checks and return
     bx lr
 
-.global hook_FlyingTileCollision
-hook_FlyingTileCollision:
+HOOK FlyingTileCollision
     cpy r0,r5
     push {r0-r12, lr}
     cpy r0,r4 @ Actor
@@ -2057,8 +1850,7 @@ hook_FlyingTileCollision:
     addne lr,lr,#0x8 @ Skip setting actionFunc
     bx lr
 
-.global hook_ShabomAfterDamagePlayer
-hook_ShabomAfterDamagePlayer:
+HOOK ShabomAfterDamagePlayer
     push {r0-r12, lr}
     bl Shabom_CheckEnemySoul
     cmp r0,#0x0
@@ -2067,8 +1859,7 @@ hook_ShabomAfterDamagePlayer:
     strh r10,[r5,#0x80]
     bx lr
 
-.global hook_DodongoAfterSwallowBomb
-hook_DodongoAfterSwallowBomb:
+HOOK DodongoAfterSwallowBomb
     mov r1,#0xA
     push {r0-r12, lr}
     cpy r0,r4 @ Actor
@@ -2078,8 +1869,7 @@ hook_DodongoAfterSwallowBomb:
     bne 0x11E4F4
     bx lr
 
-.global hook_BabyDodongoAfterSwallowBomb
-hook_BabyDodongoAfterSwallowBomb:
+HOOK BabyDodongoAfterSwallowBomb
     mov r3,#0x8
     push {r0-r12, lr}
     cpy r0,r4 @ Actor
@@ -2089,8 +1879,7 @@ hook_BabyDodongoAfterSwallowBomb:
     bne 0x1C4370
     bx lr
 
-.global hook_OcarinaNoteButtonsDraw
-hook_OcarinaNoteButtonsDraw:
+HOOK OcarinaNoteButtonsDraw
     push {r0-r12, lr}
     bl OcarinaNotes_MoveButtons
     pop {r0-r12, lr}
@@ -2099,16 +1888,14 @@ hook_OcarinaNoteButtonsDraw:
     mov r3,r3,lsl #0x1 @ original code
     bx lr
 
-.global hook_OcarinaNoteButtonsPress
-hook_OcarinaNoteButtonsPress:
+HOOK OcarinaNoteButtonsPress
     cpy r0,r6
     push {r1-r12, lr}
     bl OcarinaNotes_HandleInputs
     pop {r1-r12, lr}
     bx lr
 
-.global hook_HandleTextControlCode
-hook_HandleTextControlCode:
+HOOK HandleTextControlCode
     ldrb r0,[r6,#0x4] @ Control Code identifier
     push {r0-r12, lr}
     cpy r1,r5 @ Text Object
@@ -2119,8 +1906,7 @@ hook_HandleTextControlCode:
     bxeq lr    @ Not a custom control char, resume base game code
     b 0x2E0ED4 @ Handled custom control char, skip base game code
 
-.global hook_CheckForTextControlCode
-hook_CheckForTextControlCode:
+HOOK CheckForTextControlCode
     push {r1-r12, lr}
     cpy r2,r5 @ Text Object
     cpy r3,r9 @ Char Index (loop counter)
@@ -2128,24 +1914,21 @@ hook_CheckForTextControlCode:
     pop {r1-r12, lr}
     bx lr
 
-.global hook_PlayInit
-hook_PlayInit:
+HOOK PlayInit
     push {r0-r12, lr}
     bl before_Play_Init
     pop {r0-r12, lr}
     cpy r5,r0
     bx lr
 
-.global hook_GetObjectEntry_Generic
-hook_GetObjectEntry_Generic:
+HOOK GetObjectEntry_Generic
     push {r1-r12, lr}
     @ r0 = slot
     bl Object_GetEntry
     pop {r1-r12, lr}
     bx lr
 
-.global hook_GetObjectEntry_33AB24
-hook_GetObjectEntry_33AB24:
+HOOK GetObjectEntry_33AB24
     push {r1-r12, lr}
     ldr r0,[r4,#0x4]
     ldr r0,[r0,r5,lsl #0x3] @ objectId
@@ -2153,48 +1936,42 @@ hook_GetObjectEntry_33AB24:
     pop {r1-r12, lr}
     bx lr
 
-.global hook_ExtendObjectGetSlot
-hook_ExtendObjectGetSlot:
+HOOK ExtendObjectGetSlot
     push {r1-r12, lr}
     cpy r0,r1 @ objectId
     bl ExtendedObject_GetSlot
     pop {r1-r12, lr}
     bx lr
 
-.global hook_OverrideObjectIsLoaded
-hook_OverrideObjectIsLoaded:
+HOOK OverrideObjectIsLoaded
     push {r1-r12, lr}
     @ r0,r1 = ObjectContext,slot
     bl Object_IsLoaded
     pop {r1-r12, lr}
     bx lr
 
-.global hook_OverrideObjectIsLoadedForCutscenes
-hook_OverrideObjectIsLoadedForCutscenes:
+HOOK OverrideObjectIsLoadedForCutscenes
     push {r1-r12, lr}
     @ r0,r1 = ObjectContext,slot
     bl Object_IsLoaded_ForCutscenes
     pop {r1-r12, lr}
     bx lr
 
-.global hook_AfterObjectListCommand
-hook_AfterObjectListCommand:
+HOOK AfterObjectListCommand
     push {r0-r12, lr}
     bl ExtendedObject_AfterObjectListCommand
     pop {r0-r12, lr}
     mov r0,#0x1
     bx lr
 
-.global hook_GetObjectEntry_34F270
-hook_GetObjectEntry_34F270:
+HOOK GetObjectEntry_34F270
     push {r1-r12, lr}
     @ r0 = slot
     bl Object_GetEntry
     pop {r1-r12, lr}
     b 0x34F274
 
-.global hook_AltHeadersCommand
-hook_AltHeadersCommand:
+HOOK AltHeadersCommand
     add r2,r7,r1
     push {r0-r12, lr}
     cpy r0,r2 @ alt headers pointers list
@@ -2202,8 +1979,7 @@ hook_AltHeadersCommand:
     pop {r0-r12, lr}
     bx lr
 
-.global hook_GohmaLarvaDeathSignalParent
-hook_GohmaLarvaDeathSignalParent:
+HOOK GohmaLarvaDeathSignalParent
     ldr r1,[r4,#0x124]
     @ if parent pointer is null, skip
     @ setting childrenGohmaState
@@ -2211,8 +1987,7 @@ hook_GohmaLarvaDeathSignalParent:
     addeq lr,lr,#0x10
     bx lr
 
-.global hook_GohmaEggDeathSignalParent
-hook_GohmaEggDeathSignalParent:
+HOOK GohmaEggDeathSignalParent
     ldr r0,[r4,#0x124]
     @ if parent pointer is null, skip
     @ setting childrenGohmaState
@@ -2220,8 +1995,7 @@ hook_GohmaEggDeathSignalParent:
     addeq lr,lr,#0x10
     bx lr
 
-.global hook_StalchildDespawn_13DB68
-hook_StalchildDespawn_13DB68:
+HOOK StalchildDespawn_13DB68
     push {r0-r12, lr}
     cpy r0,r4 @ actor
     bl Stalchild_CanDespawn
@@ -2232,8 +2006,7 @@ hook_StalchildDespawn_13DB68:
     cmp r0,r1 @ base game code
     bx lr
 
-.global hook_StalchildDespawn_366338
-hook_StalchildDespawn_366338:
+HOOK StalchildDespawn_366338
     cmp r0,#0x0
     bxne lr @ doesn't despawn
     push {r0-r12, lr}
@@ -2243,13 +2016,11 @@ hook_StalchildDespawn_366338:
     pop {r0-r12, lr}
     bx lr
 
-.global hook_SkullwalltulaAttack_35F834
-hook_SkullwalltulaAttack_35F834:
+HOOK SkullwalltulaAttack_35F834
     cpy r5,r0
     b SkullwalltulaAttack
 
-.global hook_SkullwalltulaAttack_35F328
-hook_SkullwalltulaAttack_35F328:
+HOOK SkullwalltulaAttack_35F328
     cpy r4,r0
 SkullwalltulaAttack:
     push {r0-r12, lr}
@@ -2262,8 +2033,7 @@ SkullwalltulaAttack:
     moveq r0,#0x0 @ don't attack
     pop {r4-r7,pc} @ return and skip vanilla checks
 
-.global hook_SkullwalltulaTargetRotation
-hook_SkullwalltulaTargetRotation:
+HOOK SkullwalltulaTargetRotation
     sxth r0,r0
     push {r1-r12, lr}
     cpy r1,r4 @ actor
@@ -2271,8 +2041,7 @@ hook_SkullwalltulaTargetRotation:
     pop {r1-r12, lr}
     bx lr
 
-.global hook_SkullKidPoacherSawCheck
-hook_SkullKidPoacherSawCheck:
+HOOK SkullKidPoacherSawCheck
     cmp r1,#0x32
     bxge lr @ higher than poacher's saw, resume vanilla code
     push {r0-r12, lr}
@@ -2282,8 +2051,7 @@ hook_SkullKidPoacherSawCheck:
     pop {r0-r12, lr}
     bx lr
 
-.global hook_LeeverSandCheck
-hook_LeeverSandCheck:
+HOOK LeeverSandCheck
     cmpne r0,#0x7
     bxeq lr
     push {r0-r12, lr}
@@ -2293,16 +2061,14 @@ hook_LeeverSandCheck:
     pop {r0-r12, lr}
     bx lr
 
-.global hook_LeeverAfterSink
-hook_LeeverAfterSink:
+HOOK LeeverAfterSink
     push {r0-r12, lr}
     @ r0 = actor
     bl Leever_AfterSink
     pop {r0-r12, lr}
     bx lr
 
-.global hook_LeeverAfterDie
-hook_LeeverAfterDie:
+HOOK LeeverAfterDie
     push {r0-r12, lr}
     cpy r0,r4 @ actor
     bl Leever_AfterDie
@@ -2310,31 +2076,27 @@ hook_LeeverAfterDie:
     cmp r0,#0x0
     bx lr
 
-.global hook_PlayerCheckVoidOut
-hook_PlayerCheckVoidOut:
+HOOK PlayerCheckVoidOut
     ldrb r0,[r4,#0x2]  @ actor->type
     cmp r0,#0x2        @ ACTORTYPE_PLAYER
     addne lr,lr,#0x17C @ Dark Link, skip void out (USA: 0x132CE4)
     cmpeq r8,#0x0      @ Normal Player, continue as normal
     bx lr
 
-.global hook_EnBlkobj_SpawnDarkLink
-hook_EnBlkobj_SpawnDarkLink:
+HOOK EnBlkobj_SpawnDarkLink
     push {r1-r12, lr}
     cpy r0,r4 @ EnBlkobj actor
     bl DarkLink_Spawn
     pop {r1-r12, lr}
     bx lr
 
-.global hook_EnBlkobj_FindDarkLink
-hook_EnBlkobj_FindDarkLink:
+HOOK EnBlkobj_FindDarkLink
     push {r1-r12, lr}
     bl DarkLink_IsAlive
     pop {r1-r12, lr}
     bx lr
 
-.global hook_EnEncount1_SpawnStalchildWolfos
-hook_EnEncount1_SpawnStalchildWolfos:
+HOOK EnEncount1_SpawnStalchildWolfos
     cpy r1,r9
     push {r0-r12, lr}
     cpy r0,r9       @ this EnEncount1
@@ -2344,8 +2106,7 @@ hook_EnEncount1_SpawnStalchildWolfos:
     pop {r0-r12, lr}
     bx lr
 
-.global hook_EnEncount1_SpawnLeever
-hook_EnEncount1_SpawnLeever:
+HOOK EnEncount1_SpawnLeever
     push {r0-r12, lr}
     cpy r0,r5       @ this EnEncount1
     add r1,sp,#0xC  @ actorId (r3)
@@ -2355,8 +2116,7 @@ hook_EnEncount1_SpawnLeever:
     str r8,[sp,#0xC]
     bx lr
 
-.global hook_EnEncount1_SetLeeverAimType
-hook_EnEncount1_SetLeeverAimType:
+HOOK EnEncount1_SetLeeverAimType
     push {r0}
     ldrh r0,[r7] @ actor->id
     cmp r0,#0x1C @ Leever actor id
@@ -2364,8 +2124,7 @@ hook_EnEncount1_SetLeeverAimType:
     strheq r0,[r1,r7] @ Set aimType only if actor is Leever
     bx lr
 
-.global hook_DarkLinkPlayerRecoil
-hook_DarkLinkPlayerRecoil:
+HOOK DarkLinkPlayerRecoil
     cmp r1,r6
     bxne lr @ not recoiling
     push {r0-r12, lr}
@@ -2374,8 +2133,7 @@ hook_DarkLinkPlayerRecoil:
     pop {r0-r12, lr}
     bx lr
 
-.global hook_BabyDodongoWallCheck
-hook_BabyDodongoWallCheck:
+HOOK BabyDodongoWallCheck
     tst r0,#0x8
     bxeq lr @ no wall detected, return
     push {r0-r12, lr}
@@ -2386,8 +2144,7 @@ hook_BabyDodongoWallCheck:
     pop {r0-r12, lr}
     bx lr
 
-.global hook_PeahatLarvaGroundCheck
-hook_PeahatLarvaGroundCheck:
+HOOK PeahatLarvaGroundCheck
     tsteq r1,#0x1
     bxeq lr @ did not hit ground
     push {r0-r12, lr}
@@ -2398,8 +2155,7 @@ hook_PeahatLarvaGroundCheck:
     @ Prevent death when hitting ground without soul.
     bx lr
 
-.global hook_RedeadCanFreezePlayer
-hook_RedeadCanFreezePlayer:
+HOOK RedeadCanFreezePlayer
     cmp r1,r0
     bxgt lr @ far away, resume vanilla checks
     ldr r0,const_RedeadMaxYDist
@@ -2411,8 +2167,7 @@ hook_RedeadCanFreezePlayer:
 const_RedeadMaxYDist:
     .float 200.0
 
-.global hook_DeadHandHandCanGrabPlayer
-hook_DeadHandHandCanGrabPlayer:
+HOOK DeadHandHandCanGrabPlayer
     cmp r0,r1
     bxgt lr @ far away, resume vanilla checks
     vpush {s0}
@@ -2426,8 +2181,7 @@ hook_DeadHandHandCanGrabPlayer:
 const_DeadHandHandMaxYDist:
     .float 100.0
 
-.global hook_GerudoBattleMusic
-hook_GerudoBattleMusic:
+HOOK GerudoBattleMusic
     push {r0-r12, lr}
     bl GerudoFighter_IsRandomized
     cmp r0,#0x0
@@ -2439,8 +2193,7 @@ hook_GerudoBattleMusic:
 @ certain conditions will get killed on every frame and never deleted.
 @ Fig's explanation from OoT Discord: https://discord.com/channels/82938430371139584/82991320754294784/1002187734946947113
 @ With Enemy Randomizer, these "zombie" enemy actors can prevent a room from being cleared.
-.global hook_FixActorKillLoop
-hook_FixActorKillLoop:
+HOOK FixActorKillLoop
     bxne lr @ object is loaded, continue without killing actor
     push {r0-r12, lr}
     @ check if actor is already killed so that it doesn't get
@@ -2451,16 +2204,14 @@ hook_FixActorKillLoop:
     pop {r0-r12, lr}
     bx lr
 
-.global hook_AfterInvalidatingRoomObjects
-hook_AfterInvalidatingRoomObjects:
+HOOK AfterInvalidatingRoomObjects
     push {r0-r12, lr}
     bl ExtendedObject_InvalidateRoomObjects
     pop {r0-r12, lr}
     ldr r0,[sp,#0x18]
     bx lr
 
-.global hook_DrawHeartIcon
-hook_DrawHeartIcon:
+HOOK DrawHeartIcon
     push {r0-r12, lr}
     cpy r0,r1 @ heart icon index
     bl Gloom_ShouldDrawHeartBorder
@@ -2468,8 +2219,7 @@ hook_DrawHeartIcon:
     pop {r0-r12, lr}
     bx lr
 
-.global hook_OcarinaNoteSound_Player
-hook_OcarinaNoteSound_Player:
+HOOK OcarinaNoteSound_Player
     push {r0,r2,r3,lr}
     bl 0x2CFE00 @ original instruction, sets vibrato
     mov r0,#0x0 @ default ocarina instrument
@@ -2478,8 +2228,7 @@ hook_OcarinaNoteSound_Player:
     pop {r0,r2,r3,lr}
     b 0x2CFD24 @ set instrument
 
-.global hook_OcarinaNoteSound_Npc
-hook_OcarinaNoteSound_Npc:
+HOOK OcarinaNoteSound_Npc
     and r1,r0,#0xFF @ instrument
     push {r0, r2-r12, lr}
     cpy r0,r1
@@ -2488,8 +2237,7 @@ hook_OcarinaNoteSound_Npc:
     pop {r0, r2-r12, lr}
     bx lr
 
-.global hook_Item00GiveAutomaticItemDrop
-hook_Item00GiveAutomaticItemDrop:
+HOOK Item00GiveAutomaticItemDrop
     ldrsh r0,[r4,#0x1c]
     push {r0-r12, lr}
     cpy r0,r4 @ actor
@@ -2499,8 +2247,7 @@ hook_Item00GiveAutomaticItemDrop:
     addne lr,lr,#0x8 @ Item overridden, skip Item_Give
     bx lr
 
-.global hook_Item00GiveCollectedItemDrop
-hook_Item00GiveCollectedItemDrop:
+HOOK Item00GiveCollectedItemDrop
     ldrsh r0,[r5,#0x1c]
     push {r0-r12, lr}
     cpy r0,r5 @ actor
@@ -2510,16 +2257,14 @@ hook_Item00GiveCollectedItemDrop:
     addne lr,lr,#0x8 @ Item overridden, skip Item_Give
     bx lr
 
-.global hook_GanonFinalBlow
-hook_GanonFinalBlow:
+HOOK GanonFinalBlow
     push {r0-r12, lr}
     bl Ganon_OnFinalBlow
     pop {r0-r12, lr}
     mov r1,#0x1
     bx lr
 
-.global hook_PlayerBonk
-hook_PlayerBonk:
+HOOK PlayerBonk
     strh r8,[r7,#0x38]
     push {r0-r12, lr}
     bl Player_OnBonk
