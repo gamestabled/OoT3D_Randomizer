@@ -6,11 +6,6 @@
 #include "z3D/actors/z_bg_dy_yoseizo.h"
 #include <stddef.h>
 
-// Patched over call to Item_Give
-void Cutscene_OverrideOcarinaSongs(GlobalContext* GlobalContext, ItemID songId) {
-    ItemOverride_PushDelayedOverride(songId - ITEM_SONG_MINUET + 0x20); // TODO remove the hardcoded constant?
-}
-
 u32 LACS_ConditionVanilla(void) {
     return ((gSaveContext.questItems & 0x8) && (gSaveContext.questItems & 0x10));
 }

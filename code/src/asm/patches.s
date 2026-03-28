@@ -25,9 +25,6 @@ PATCH IncomingGetItemID
 PATCH SaveFile_Init
     bl hook_SaveFile_Init
 
-PATCH OverrideOcarinaSongs
-    bl Cutscene_OverrideOcarinaSongs
-
 PATCH OverrideTextID
     b hook_OverrideTextID
 

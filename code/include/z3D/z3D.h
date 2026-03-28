@@ -4,7 +4,6 @@
 #include <sys/cdefs.h>
 #include "z3Dactor.h"
 #include "z3Dvec.h"
-// #include "z3Dequipment.h"
 #include "z3Dcutscene.h"
 #include "z3Ditem.h"
 #include "z3Dmath.h"
