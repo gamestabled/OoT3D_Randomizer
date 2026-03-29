@@ -2,6 +2,20 @@ import json
 import os
 import sys
 
+HEADER = """// File generated automically. Do not edit. Edit item_table.jsonc instead."
+
+#include "../item_list.hpp"
+#include "../logic.hpp"
+
+using namespace Logic;
+
+// clang-format off
+void ItemTable_Init() {
+"""
+
+FOOTER = "};\n"
+
+# Parses a jsonc file ignoring all comments
 def load_json_with_comments(path):
     with open(path, encoding="utf-8") as f:
         lines = []
@@ -17,12 +31,7 @@ out_path = os.path.join(output_dir, "generated_item_table.cpp")
 data = load_json_with_comments("data/item_table.jsonc")
 
 with open(out_path, "w", encoding="utf-8") as out:
-    out.write('// File generated automically. Do not edit. Edit item_table.jsonc instead."\n\n')
-    out.write('#include "../item_list.hpp"\n')
-    out.write('#include "../logic.hpp"\n\n')
-    out.write("using namespace Logic;\n\n")
-    out.write("// clang-format off\n")
-    out.write("void ItemTable_Init() {\n")
+    out.write(HEADER)
 
     for key, value in data.items():
         if len(value) == 6:
@@ -59,4 +68,4 @@ with open(out_path, "w", encoding="utf-8") as out:
                 f'{logic_ptr}, {hint}, {price}, Text{{{text_str}}});\n'
             )
 
-    out.write("};\n")
+    out.write(FOOTER)
