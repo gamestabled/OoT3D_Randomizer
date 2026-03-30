@@ -10,8 +10,10 @@ TOPDIR ?= $(CURDIR)
 include $(DEVKITARM)/3ds_rules
 
 # Generate data-driven source files before SOURCES is evaluated
+# probably gonna refactor to just make one call to a "master" script later once there are more
 ifneq ($(MAKECMDGOALS),clean)
 $(shell python3 ./tools/gen_item_table.py source/generated/)
+$(shell python3 ./tools/gen_location_table.py source/generated/)
 endif
 
 #---------------------------------------------------------------------------------
