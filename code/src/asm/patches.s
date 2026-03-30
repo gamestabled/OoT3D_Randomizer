@@ -261,11 +261,7 @@ PATCH RequiemLocation
 
 PATCH NocturneLocation
     bl Cutscene_OverrideNocturne
-.if _EUR_==1
-    b 0x44F1A0
-.else
-    b 0x44F180
-.endif
+    b ret_NocturneLocation
 
 PATCH FreeScarecrow
     bl hook_ScarecrowCheckToBeActivated
@@ -791,19 +787,11 @@ PATCH FWGetSet
 
 PATCH SetSavewarpEntrance
     bl hook_SetSavewarpEntrance
-.if _EUR_==1
-    b  0x44FD00
-.else
-    b  0x44FCE0
-.endif
+    b ret_SetSavewarpEntrance
 
 PATCH SetGameOverEntrance
     bl hook_SetGameOverEntrance
-.if _EUR_==1
-    b  0x458EE8
-.else
-    b  0x458EC8
-.endif
+    b ret_SetGameOverEntrance
 
 PATCH SetGameOverRespawnFlag
     bl hook_SetGameOverRespawnFlag
@@ -1002,25 +990,13 @@ PATCH SkipMasterSwordFanfare
     bl hook_SkipMasterSwordFanfare
 
 PATCH GameOverDontSpoilTradeItems
-.if _EUR_==1
-    b 0x458CC0
-.else
-    b 0x458CA0
-.endif
+    b ret_GameOverDontSpoilTradeItems
 
 PATCH InterfaceDrawDontSpoilTradeItems
-.if _EUR_==1
-    b 0x45A230
-.else
-    b 0x45A210
-.endif
+    b ret_InterfaceDrawDontSpoilTradeItems
 
 PATCH OpenSaveDontSpoilTradeItems
-.if _EUR_==1
-    b 0x44FED8
-.else
-    b 0x44FEB8
-.endif
+    b ret_OpenSaveDontSpoilTradeItems
 
 PATCH EnteredLocation
     bl hook_EnteredLocation
@@ -1071,7 +1047,7 @@ PATCH FixItemsMenuSlotDuplication
     b hook_FixItemsMenuSlotDuplication
 
 PATCH PlayEntranceCutscene
-    b hook_PlayEntranceCutscene
+    bl hook_PlayEntranceCutscene
 
 PATCH SkipJabuOpeningCutscene
     bl hook_SkipJabuOpeningCutscene
@@ -1153,7 +1129,7 @@ PATCH Multiplayer_UpdatePrevActorFlags
     bl hook_Multiplayer_UpdatePrevActorFlags
 
 PATCH Multiplayer_OnLoadFile
-    b hook_Multiplayer_OnLoadFile
+    bl hook_Multiplayer_OnLoadFile
 
 PATCH SendDroppedBottleContents
     bl hook_SendDroppedBottleContents
@@ -1216,7 +1192,7 @@ PATCH CurseTrapDizzyStick
     bl hook_CurseTrapDizzyStick
 
 PATCH CurseTrapDizzyButtons
-    b hook_CurseTrapDizzyButtons
+    bl hook_CurseTrapDizzyButtons
 
 PATCH CrouchStabHitbox
     bl hook_CrouchStabHitbox
@@ -1394,13 +1370,13 @@ PATCH OnActorSetup_SceneChange
     bl hook_OnActorSetup_SceneChange
 
 PATCH AfterActorSetup_SceneChange
-    b hook_AfterActorSetup_SceneChange
+    bl hook_AfterActorSetup_SceneChange
 
 PATCH OnActorSetup_RoomChange
     bl hook_OnActorSetup_RoomChange
 
 PATCH AfterActorSetup_RoomChange
-    b hook_AfterActorSetup_RoomChange
+    bl hook_AfterActorSetup_RoomChange
 
 PATCH RandomGsLoc_CustomTangibilityCheck
     b hook_RandomGsLoc_CustomTangibilityCheck

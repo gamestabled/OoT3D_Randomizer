@@ -4,8 +4,7 @@ import subprocess
 import sys
 
 elf = sys.argv[1]
-region = sys.argv[2]
-debug = int(sys.argv[3])
+debug = int(sys.argv[2])
 result = subprocess.run([os.environ["DEVKITARM"] + r'/bin/arm-none-eabi-objdump', '--section-headers', elf], stdout=subprocess.PIPE)
 lines = str(result.stdout).split('\\n')
 sectionsInfo = [line.split()[1:6] for line in lines if line.split() and line.split()[0].isdigit()]
@@ -33,7 +32,7 @@ with open(elf, 'rb') as e:
             offset += 65535
             size -= 65535
 
-        patch =  e.read(size)
+        patch = e.read(size)
         if len(patch) != 0:
             if (debug):
                 print('{:0X}'.format(vaddr), '{:0X}'.format(vaddr + size), name)
@@ -42,7 +41,5 @@ with open(elf, 'rb') as e:
             ips += patch
 ips += b'EOF'
 
-basecodeFile = "basecode_" + region + ".ips"
-with open(basecodeFile, 'wb') as patchFile:
+with open('basecode.ips', 'wb') as patchFile:
     patchFile.write(ips)
-    print("created " + basecodeFile + "\n")

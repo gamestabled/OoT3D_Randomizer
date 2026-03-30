@@ -1,7 +1,7 @@
 #include "stalfos.h"
 #include "settings.h"
 
-#define EnTest_Update ((ActorFunc)GAME_ADDR(0x12E2D0))
+void EnTest_Update(Actor* thisx, GlobalContext* globalCtx);
 
 void EnTest_rUpdate(Actor* thisx, GlobalContext* globalCtx) {
     EnTest_Update(thisx, globalCtx);

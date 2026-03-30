@@ -3,10 +3,14 @@
 
 #include "z3D/z3D.h"
 
-typedef struct {
+struct ObjBean;
+
+typedef void (*ObjBeanActionFunc)(struct ObjBean* this, GlobalContext* globalCtx);
+
+typedef struct ObjBean {
     Actor base;
     char dyna[24];
-    void* action_fn;
+    ObjBeanActionFunc action_fn;
     char collider[88];
     char unk_218[16];
     s16 timer;
@@ -19,8 +23,8 @@ typedef struct {
 extern PosRot lastBeanPlant_Home;
 extern s16 lastBeanPlant_Params;
 
-void ObjBean_rInit(ObjBean* thisx, GlobalContext* globalCtx);
-void ObjBean_rUpdate(ObjBean* thisx, GlobalContext* globalCtx);
-void ObjBean_StartGrowth(ObjBean* thisx);
+void ObjBean_rInit(Actor* thisx, GlobalContext* globalCtx);
+void ObjBean_rUpdate(Actor* thisx, GlobalContext* globalCtx);
+void ObjBean_StartGrowth(ObjBean* this);
 
 #endif //_BEAN_PLANT_H_

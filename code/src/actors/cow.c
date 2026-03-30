@@ -3,9 +3,8 @@
 #include "entrance.h"
 #include "cow.h"
 
-#define EnCow_Init ((ActorFunc)GAME_ADDR(0x189FD4))
-
-#define EnCow_Destroy ((ActorFunc)GAME_ADDR(0x18A3E4))
+void EnCow_Init(Actor* thisx, GlobalContext* globalCtx);
+void EnCow_Destroy(Actor* thisx, GlobalContext* globalCtx);
 
 static s32 sNumCows = 0;
 

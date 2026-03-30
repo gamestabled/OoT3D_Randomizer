@@ -16,45 +16,51 @@ void Door_CheckToDeleteCustomModels(Actor* door) {
     }
 }
 
-// EnDoor
+/*------------------------------
+|           EN_DOOR            |
+------------------------------*/
 
-#define EnDoor_Update ((ActorFunc)GAME_ADDR(0x1F53C8))
+void EnDoor_Update(Actor* thisx, GlobalContext* globalCtx);
 
-#define EnDoor_Idle (void*)GAME_ADDR(0x3F1B28)
-#define EnDoor_Open (void*)GAME_ADDR(0x3EC04C)
-void EnDoor_Unlocking(EnDoor* thisx, GlobalContext* globalCtx);
+void EnDoor_Idle(EnDoor* this, GlobalContext* globalCtx);
+void EnDoor_Open(EnDoor* this, GlobalContext* globalCtx);
+void EnDoor_Unlocking(EnDoor* this, GlobalContext* globalCtx);
 
-void EnDoor_rUpdate(EnDoor* thisx, GlobalContext* globalCtx) {
-    void* prev_action_fn = thisx->action_fn;
+void EnDoor_rUpdate(Actor* thisx, GlobalContext* globalCtx) {
+    EnDoor* this = (EnDoor*)thisx;
 
-    EnDoor_Update((Actor*)thisx, globalCtx);
+    EnDoorActionFunc prev_action_fn = this->action_fn;
 
-    if (thisx->lock_timer != 0 && prev_action_fn == EnDoor_Idle && thisx->action_fn == EnDoor_Open) {
-        Multiplayer_Send_UnlockedDoor(thisx->base.params & 0x3F);
-        Multiplayer_Send_ActorUpdate((Actor*)thisx, NULL, 0);
+    EnDoor_Update(thisx, globalCtx);
+
+    if (this->lock_timer != 0 && prev_action_fn == EnDoor_Idle && this->action_fn == EnDoor_Open) {
+        Multiplayer_Send_UnlockedDoor(this->base.params & 0x3F);
+        Multiplayer_Send_ActorUpdate(thisx, NULL, 0);
     }
 }
 
-void EnDoor_Unlock(EnDoor* thisx) {
-    if (thisx->action_fn != EnDoor_Idle) {
+void EnDoor_Unlock(EnDoor* this) {
+    if (this->action_fn != EnDoor_Idle) {
         return;
     }
-    thisx->action_fn = &EnDoor_Unlocking;
-    PlaySFX(0x10001D3, &thisx->base.world.pos, 4, (f32*)GAME_ADDR(0x54AC20), (f32*)GAME_ADDR(0x54AC20),
-            (s8*)GAME_ADDR(0x54AC24)); // NA_SE_EV_CHAIN_KEY_UNLOCK
+    this->action_fn = &EnDoor_Unlocking;
+    PlaySFX(0x10001D3, &this->base.world.pos, 4, &gSfxDefaultFreqAndVolScale, &gSfxDefaultFreqAndVolScale,
+            &gSfxDefaultReverb); // NA_SE_EV_CHAIN_KEY_UNLOCK
 }
 
-void EnDoor_Unlocking(EnDoor* thisx, GlobalContext* globalCtx) {
-    if (thisx->lock_timer > 0) {
-        thisx->lock_timer--;
+void EnDoor_Unlocking(EnDoor* this, GlobalContext* globalCtx) {
+    if (this->lock_timer > 0) {
+        this->lock_timer--;
         return;
     }
-    thisx->action_fn = EnDoor_Idle;
+    this->action_fn = EnDoor_Idle;
 }
 
-// DoorShutter
+/*------------------------------
+|         DOOR_SHUTTER         |
+------------------------------*/
 
-#define DoorShutter_Init ((ActorFunc)GAME_ADDR(0x2453E0))
+void DoorShutter_Init(Actor* thisx, GlobalContext* globalCtx);
 
 void DoorShutter_rInit(Actor* thisx, GlobalContext* globalCtx) {
     // In Treasure Chest Shop when its chests are shuffled,
@@ -71,74 +77,79 @@ void DoorShutter_rInit(Actor* thisx, GlobalContext* globalCtx) {
     DoorShutter_Init(thisx, globalCtx);
 }
 
-#define DoorShutter_Update_addr
-#define DoorShutter_Update ((ActorFunc)GAME_ADDR(0x27E6E0))
+void DoorShutter_Update(Actor* thisx, GlobalContext* globalCtx);
 
-#define DoorShutter_SlidingDoor_Idle (void*)GAME_ADDR(0x3F4A3C)
-#define DoorShutter_SlidingDoor_Open (void*)GAME_ADDR(0x3EEE7C)
-void DoorShutter_Unlocking(DoorShutter* thisx, GlobalContext* globalCtx);
+void DoorShutter_SlidingDoor_Idle(DoorShutter* this, GlobalContext* globalCtx);
+void DoorShutter_SlidingDoor_Open(DoorShutter* this, GlobalContext* globalCtx);
+void DoorShutter_Unlocking(DoorShutter* this, GlobalContext* globalCtx);
 
-void DoorShutter_rUpdate(DoorShutter* thisx, GlobalContext* globalCtx) {
-    void* prev_action_fn = thisx->action_fn;
+void DoorShutter_rUpdate(Actor* thisx, GlobalContext* globalCtx) {
+    DoorShutter* this = (DoorShutter*)thisx;
 
-    DoorShutter_Update((Actor*)thisx, globalCtx);
+    DoorShutterActionFunc prev_action_fn = this->action_fn;
+
+    DoorShutter_Update(thisx, globalCtx);
 
     // Don't sync chest minigame doors when the setting is off
     if (globalCtx->sceneNum == 16 && gSettingsContext.shuffleChestMinigame == SHUFFLECHESTMINIGAME_OFF) {
         return;
     }
 
-    if (thisx->lock_timer != 0 && prev_action_fn == DoorShutter_SlidingDoor_Idle &&
-        thisx->action_fn == DoorShutter_SlidingDoor_Open) {
-        if (thisx->door_type_maybe != 5) {
-            Multiplayer_Send_UnlockedDoor(thisx->base.params & 0x3F);
+    if (this->lock_timer != 0 && prev_action_fn == DoorShutter_SlidingDoor_Idle &&
+        this->action_fn == DoorShutter_SlidingDoor_Open) {
+        if (this->door_type_maybe != 5) {
+            Multiplayer_Send_UnlockedDoor(thisx->params & 0x3F);
         }
-        Multiplayer_Send_ActorUpdate((Actor*)thisx, NULL, 0);
+        Multiplayer_Send_ActorUpdate(thisx, NULL, 0);
     }
 }
 
-void DoorShutter_Unlock(DoorShutter* thisx) {
-    if (thisx->action_fn != DoorShutter_SlidingDoor_Idle) {
+void DoorShutter_Unlock(DoorShutter* this) {
+    if (this->action_fn != DoorShutter_SlidingDoor_Idle) {
         return;
     }
-    thisx->action_fn = &DoorShutter_Unlocking;
+    this->action_fn = &DoorShutter_Unlocking;
     //                         NA_SE_EV_CHAIN_KEY_UNLOCK : NA_SE_EV_CHAIN_KEY_UNLOCK_B
-    u32 sfx_id = thisx->door_type_maybe != 5 ? 0x10001D3 : 0x1000200;
-    PlaySFX(sfx_id, &thisx->base.world.pos, 4, (f32*)GAME_ADDR(0x54AC20), (f32*)GAME_ADDR(0x54AC20),
-            (s8*)GAME_ADDR(0x54AC24));
+    u32 sfx_id = this->door_type_maybe != 5 ? 0x10001D3 : 0x1000200;
+    PlaySFX(sfx_id, &this->base.world.pos, 4, &gSfxDefaultFreqAndVolScale, &gSfxDefaultFreqAndVolScale,
+            &gSfxDefaultReverb);
 }
 
-void DoorShutter_Unlocking(DoorShutter* thisx, GlobalContext* globalCtx) {
-    if (thisx->lock_timer > 0) {
-        thisx->lock_timer--;
+void DoorShutter_Unlocking(DoorShutter* this, GlobalContext* globalCtx) {
+    if (this->lock_timer > 0) {
+        this->lock_timer--;
         return;
     }
-    thisx->action_fn = DoorShutter_SlidingDoor_Idle;
+    this->action_fn = DoorShutter_SlidingDoor_Idle;
 }
 
-// DoorGerudo
+/*------------------------------
+|         DOOR_GERUDO          |
+------------------------------*/
 
-#define DoorGerudo_Update ((ActorFunc)GAME_ADDR(0x263118))
+void DoorGerudo_Update(Actor* thisx, GlobalContext* globalCtx);
 
-#define DoorGerudo_Idle (void*)GAME_ADDR(0x3F3FA0)
-#define DoorGerudo_Unlocking (void*)GAME_ADDR(0x3EEE38)
+void DoorGerudo_Idle(DoorGerudo* this, GlobalContext* globalCtx);
+void DoorGerudo_Unlocking(DoorGerudo* this, GlobalContext* globalCtx);
 
-void DoorGerudo_rUpdate(DoorGerudo* thisx, GlobalContext* globalCtx) {
-    void* prev_action_fn = thisx->action_fn;
+void DoorGerudo_rUpdate(Actor* thisx, GlobalContext* globalCtx) {
+    DoorGerudo* this = (DoorGerudo*)thisx;
 
-    DoorGerudo_Update((Actor*)thisx, globalCtx);
+    DoorGerudoActionFunc prev_action_fn = this->action_fn;
 
-    if (thisx->lock_timer != 0 && prev_action_fn == DoorGerudo_Idle && thisx->action_fn == DoorGerudo_Unlocking) {
-        Multiplayer_Send_UnlockedDoor(thisx->base.params & 0x3F);
-        Multiplayer_Send_ActorUpdate((Actor*)thisx, NULL, 0);
+    DoorGerudo_Update(thisx, globalCtx);
+
+    if (this->lock_timer != 0 && prev_action_fn == DoorGerudo_Idle && this->action_fn == DoorGerudo_Unlocking) {
+        Multiplayer_Send_UnlockedDoor(thisx->params & 0x3F);
+        Multiplayer_Send_ActorUpdate(thisx, NULL, 0);
     }
 }
 
-void DoorGerudo_Unlock(DoorGerudo* thisx) {
-    if (thisx->action_fn != DoorGerudo_Idle || thisx->lock_timer == 0) {
+void DoorGerudo_Unlock(DoorGerudo* this) {
+    if (this->action_fn != DoorGerudo_Idle || this->lock_timer == 0) {
         return;
     }
-    thisx->action_fn = DoorGerudo_Unlocking;
-    PlaySFX(0x10001D3, &thisx->base.world.pos, 4, (f32*)GAME_ADDR(0x54AC20), (f32*)GAME_ADDR(0x54AC20),
-            (s8*)GAME_ADDR(0x54AC24)); // NA_SE_EV_CHAIN_KEY_UNLOCK
+    this->action_fn = DoorGerudo_Unlocking;
+    PlaySFX(0x10001D3, &this->base.world.pos, 4, &gSfxDefaultFreqAndVolScale, &gSfxDefaultFreqAndVolScale,
+            &gSfxDefaultReverb); // NA_SE_EV_CHAIN_KEY_UNLOCK
 }

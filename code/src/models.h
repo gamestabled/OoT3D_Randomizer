@@ -23,14 +23,9 @@ void Model_DestroyAll(void);
 s32 Model_DrawByActor(Actor* actor);
 void Model_SetAnim(SkeletonAnimationModel* model, s16 objectId, u32 objectAnimIdx);
 
-typedef SkeletonAnimationModel* (*SkeletonAnimationModel_Spawn_proc)(Actor* actor, GlobalContext* globalCtx, s16 objId,
-                                                                     s32 objModelIdX);
-#define SkeletonAnimationModel_Spawn ((SkeletonAnimationModel_Spawn_proc)GAME_ADDR(0x36A924))
-
-typedef void (*SkeletonAnimationModel_SetMesh_proc)(SkeletonAnimationModel* glModel, s32 mesh);
-#define SkeletonAnimationModel_SetMesh ((SkeletonAnimationModel_SetMesh_proc)GAME_ADDR(0x369178))
-
-typedef void (*DeleteModel_At_proc)(SkeletonAnimationModel** model);
-#define DeleteModel_At ((DeleteModel_At_proc)GAME_ADDR(0x357248))
+SkeletonAnimationModel* SkeletonAnimationModel_Spawn(Actor* actor, GlobalContext* globalCtx, s16 objId,
+                                                     s32 objModelIdX);
+void SkeletonAnimationModel_SetMesh(SkeletonAnimationModel* glModel, s32 mesh);
+void DeleteModel_At(SkeletonAnimationModel** model);
 
 #endif //_MODELS_H_

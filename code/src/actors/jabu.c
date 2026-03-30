@@ -3,7 +3,7 @@
 #include "entrance.h"
 #include "grotto.h"
 
-#define BgBdanSwitch_Init ((ActorFunc)GAME_ADDR(0x276508))
+void BgBdanSwitch_Init(Actor* thisx, GlobalContext* globalCtx);
 
 void Jabu_SkipOpeningCutscene(void) {
     gGlobalContext->nextEntranceIndex = Entrance_OverrideNextIndex(0x0028);

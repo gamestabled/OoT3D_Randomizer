@@ -27,7 +27,7 @@ include $(DEVKITARM)/3ds_rules
 #     - icon.png
 #     - <libctru folder>/default_icon.png
 #---------------------------------------------------------------------------------
-TARGET		:=	$(notdir $(CURDIR))
+# TARGET	Defined below
 BUILD		:=	build
 SOURCES		:=	$(sort $(dir $(wildcard src/*/ src/)))
 DATA		:=	data
@@ -38,51 +38,43 @@ INCLUDES    +=  assets
 #---------------------------------------------------------------------------------
 # options for code generation
 #---------------------------------------------------------------------------------
-USA         := USA
-EUR         := EUR
-JP          := JP
-REGION      := USA
-
-VERFLAGS := -D USA=$(USA) -D EUR=$(EUR) -D JP=$(JP) -D REGION=$(REGION)
 
 ARCH	:=	-march=armv6k -mtune=mpcore -mfloat-abi=softfp -mtp=soft -mfpu=vfpv2
 
 CFLAGS	:=	-g -Wall -mword-relocations -D DEBUG \
 			-fomit-frame-pointer -ffunction-sections \
-			$(ARCH)
+			-fdiagnostics-color=always $(ARCH)
 
-CFLAGS	+=	$(INCLUDE) -DARM11 -D_3DS $(VERFLAGS)
+CFLAGS	+=	$(INCLUDE) -DARM11 -D_3DS
 
 CXXFLAGS	:= $(CFLAGS) -fno-rtti -fno-exceptions -std=gnu++11
 
 LINK_SCRIPT	:= oot.ld
 
-LDFLAGS	=	-g $(ARCH) -Wl,-Map,$(notdir $*.map) -T $(TOPDIR)/$(LINK_SCRIPT) $(VERFLAGS) -lgcc
+LDFLAGS	=	-g $(ARCH) -Wl,-Map,$(notdir $*.map) -T $(TOPDIR)/$(LINK_SCRIPT) -lgcc
 
-ifeq ($(USA), $(REGION))
-  ASFLAGS += -D _USA_=1 -D _EUR_=0 -D _JP_=0
-  CFLAGS += -g -DVersion_USA
-  BUILD  := build_usa
-  TARGET := code_usa
-else
-ifeq ($(EUR), $(REGION))
-  LDFLAGS += -Wl,--defsym,_EUR_=1
-  ASFLAGS += -D _USA_=0 -D _EUR_=1 -D _JP_=0
-  CFLAGS += -g -DVersion_EUR
-  BUILD  := build_eur
-  TARGET := code_eur
-ifeq ($(JP), $(REGION))
-  ASFLAGS += -D _USA_=0 -D _EUR_=0 -D _JP_=1
-  CFLAGS += -g -DVersion_JP
-  BUILD  := build_jp
-  TARGET := code_jp
-endif
-endif
-endif
-
-ASFLAGS	+=	-g $(ARCH) $(VERFLAGS)
+ASFLAGS	+=	-g $(ARCH)
 
 LIBS	:=	-lgcc
+
+
+# Region selection
+REGION	?= USA
+
+VALID_REGIONS	:=	USA EUR
+
+ifeq ($(filter $(REGION),$(VALID_REGIONS)),)
+	$(error "Invalid region: $(REGION)")
+endif
+
+UNSELECTED_REGIONS	:=	$(subst $(REGION),,$(VALID_REGIONS))
+
+# Define region for the Linker Script
+LDFLAGS +=	-Wl,--defsym,_LD_$(REGION)=1 $(foreach region,$(UNSELECTED_REGIONS),-Wl,--defsym,_LD_$(region)=0)
+
+# Define target filename with region name
+TARGET		:=	basecode_$(REGION)
+
 
 # Debug-specific flags
 debug ?= 0
@@ -158,21 +150,21 @@ else
 endif
 
 
-.PHONY: $(BUILD) clean all
+.PHONY: base_patch clean
 
 #---------------------------------------------------------------------------------
-all: $(BUILD)
-
-$(BUILD):
-	@[ -d $@ ] || mkdir -p $@
+base_patch:
+	@[ -d $(BUILD) ] || mkdir -p $(BUILD)
 	@$(MAKE) --no-print-directory -C $(BUILD) -f $(CURDIR)/Makefile
-	@python3 --version &> /dev/null && _python_="python3" || _python_="python"; \
-		eval $$_python_ patch.py $(OUTPUT).elf $(REGION) $(debug);
+	@py patch.py $(OUTPUT).elf $(debug);
+	@mv basecode.ips $(TARGET).ips
+	@printf "Created $(TARGET).ips\n\n"
 
 #---------------------------------------------------------------------------------
 clean:
-	@echo clean ...
-	@rm -fr build build_eur build_usa *.elf ../source/patch_symbols*
+	@printf "Cleaning..."
+	@rm -fr build* *.elf
+	@printf " Done\n"
 
 
 #---------------------------------------------------------------------------------

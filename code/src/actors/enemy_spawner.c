@@ -6,8 +6,8 @@
 #include "gohma.h"
 #include "dodongos.h"
 
-#define EnEncount1_Init ((ActorFunc)GAME_ADDR(0x229994))
-#define EnEncount1_Update ((ActorFunc)GAME_ADDR(0x2682D0))
+void EnEncount1_Init(Actor* thisx, GlobalContext* globalCtx);
+void EnEncount1_Update(Actor* thisx, GlobalContext* globalCtx);
 
 void EnemySpawner_OverrideSpawnedActor(EnEncount1* this, s16* actorId, s16* params) {
     if (gSettingsContext.enemizer == OFF || this->rSpawnedActorId == 0) {

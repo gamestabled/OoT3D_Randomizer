@@ -29,6 +29,7 @@ enum ActorId {
     ACTOR_DEKU_BABA          = 0x055,
     ACTOR_MAD_SCRUB          = 0x060,
     ACTOR_BARI               = 0x063,
+    ACTOR_HOOKSHOT           = 0x066,
     ACTOR_BUBBLE             = 0x069,
     ACTOR_FLYING_FLOOR_TILE  = 0x06B,
     ACTOR_BEAMOS             = 0x08A,

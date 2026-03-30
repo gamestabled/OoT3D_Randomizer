@@ -101,15 +101,15 @@ typedef struct {
     /* 0x7 */ u8 bFlat4Flag;
 } OcarinaNote; // size = 0x8
 
-#define OcarinaUIStruct (*((void**)GAME_ADDR(0x5093EC)))
+extern void* OcarinaUIStruct;
 
 // sequence of notes to check when a song has been played
-#define gOcarinaSongButtons ((OcarinaSongButtonSequence*)GAME_ADDR(0x54C222))
+extern OcarinaSongButtonSequence gOcarinaSongButtons[];
 // sequence of note data used for the playbacks (2D array of 20 notes for each song)
-#define sOcarinaSongNotes ((OcarinaNote(*)[20])GAME_ADDR(0x54B5F2))
+extern OcarinaNote gOcarinaSongNotes[][20];
 // sequence of notes to display on the ocarina song list menu (array of pointers to arrays)
-#define gOcarinaMenuSongNoteSequences ((u32**)GAME_ADDR(0x4D541C))
-#define gOcarinaMenuSongLengths ((u32*)GAME_ADDR(0x4D53C8))
+extern u32* gOcarinaMenuSongNoteSequences[];
+extern u32 gOcarinaMenuSongLengths[];
 
 void OcarinaNotes_Init(void);
 s32 OcarinaNotes_IsButtonOwned(OcarinaNoteButton button);

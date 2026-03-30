@@ -3,14 +3,14 @@
 
 #include "gerudos.h"
 
-#define EnGe1_Init ((ActorFunc)GAME_ADDR(0x18B218))
-#define EnGe1_Update ((ActorFunc)GAME_ADDR(0x1D742C))
+void EnGe1_Init(Actor* thisx, GlobalContext* globalCtx);
+void EnGe1_Update(Actor* thisx, GlobalContext* globalCtx);
 
-#define EnGe1_TalkAfterGame_Archery ((ActorFunc)GAME_ADDR(0x12A5C8))
+void EnGe1_TalkAfterGame_Archery(Actor* thisx, GlobalContext* globalCtx);
 
-#define EnGeldB_Init ((ActorFunc)GAME_ADDR(0x1D7BD8))
-#define EnGeldB_Update ((ActorFunc)GAME_ADDR(0x14A04C))
-#define EnGeldB_Draw ((ActorFunc)GAME_ADDR(0x1B2B00))
+void EnGeldB_Init(Actor* thisx, GlobalContext* globalCtx);
+void EnGeldB_Update(Actor* thisx, GlobalContext* globalCtx);
+void EnGeldB_Draw(Actor* thisx, GlobalContext* globalCtx);
 
 void EnGe1_rInit(Actor* thisx, GlobalContext* globalCtx) {
     EnGe1* self = (EnGe1*)thisx;

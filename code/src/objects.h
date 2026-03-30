@@ -34,28 +34,14 @@ typedef enum ObjectId {
     OBJECT_ID_MAX                    = 0x01A1,
 } ObjectId;
 
-typedef s32 (*Object_proc)(ObjectContext* objectCtx, s16 objectId);
-
-#define Object_Spawn ((Object_proc)GAME_ADDR(0x32E21C))
-
-#define Object_GetSlot ((Object_proc)GAME_ADDR(0x363C10))
-
-typedef void (*Object_UpdateEntries_proc)(ObjectContext* objectCtx);
-#define Object_UpdateEntries ((Object_UpdateEntries_proc)GAME_ADDR(0x2E4EA0))
-
-typedef void (*Object_Clear_proc)(GlobalContext* globalCtx, ObjectContext* objectCtx);
-#define Object_Clear ((Object_Clear_proc)GAME_ADDR(0x45FDA0))
-
-typedef void* (*ZAR_Get_proc)(ZARInfo* zarInfo, u32 index);
-#define ZAR_GetCMBByIndex ((ZAR_Get_proc)GAME_ADDR(0x358EF8))
-
-#define ZAR_GetCMABByIndex ((ZAR_Get_proc)GAME_ADDR(0x372F0C))
-
-typedef void (*ZAR_Destroy_proc)(ZARInfo*);
-#define ZAR_Destroy ((ZAR_Destroy_proc)GAME_ADDR(0x2F70C4))
-
-typedef void (*TexAnim_Spawn_proc)(void*, void*);
-#define TexAnim_Spawn ((TexAnim_Spawn_proc)GAME_ADDR(0x372D94))
+s32 Object_Spawn(ObjectContext* objectCtx, s16 objectId);
+s32 Object_GetSlot(ObjectContext* objectCtx, s16 objectId);
+void Object_UpdateEntries(ObjectContext* objectCtx);
+void Object_Clear(GlobalContext* globalCtx, ObjectContext* objectCtx);
+void* ZAR_GetCMBByIndex(ZARInfo* zarInfo, u32 index);
+void* ZAR_GetCMABByIndex(ZARInfo* zarInfo, u32 index);
+void ZAR_Destroy(ZARInfo* zarInfo);
+void TexAnim_Spawn(void*, void*);
 
 // Get an object entry given the slot.
 ObjectEntry* Object_GetEntry(s16 slot);

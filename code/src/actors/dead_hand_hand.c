@@ -1,7 +1,7 @@
 #include "dead_hand_hand.h"
 #include "settings.h"
 
-#define EnDha_Update ((ActorFunc)GAME_ADDR(0x113050))
+void EnDha_Update(Actor* thisx, GlobalContext* globalCtx);
 
 void EnDha_rUpdate(Actor* thisx, GlobalContext* globalCtx) {
     EnDha_Update(thisx, globalCtx);

@@ -3,7 +3,7 @@
 #include "objects.h"
 #include "title_screen.h"
 
-#define EnMag_Init ((ActorFunc)GAME_ADDR(0x18CBB8))
+void EnMag_Init(Actor* thisx, GlobalContext* globalCtx);
 
 u8 missingRomfsAlert = 0;
 s16 romfsAlertFrames = 0;

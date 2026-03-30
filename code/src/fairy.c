@@ -5,7 +5,7 @@
 #include "common.h"
 #include "colors.h"
 
-#define NAVI_COLORS_ARRAY ((Color_RGBA8*)GAME_ADDR(0x50C998))
+extern Color_RGBA8 NaviColorsArray[];
 
 #define NAVI_CYCLE_FRAMES_OUTER 18
 #define NAVI_CYCLE_FRAMES_INNER 21
@@ -101,7 +101,7 @@ s32 Fairy_SetTargetPointerColor(TargetContext* targetCtx, Actor* targetActor) {
     }
 
     void** cmabManager = ZAR_GetCMABByIndex(targetCtx->zarInfo, 37); // mark_model_white.cmab as base for all colors
-    Fairy_ApplyColorToTargetCMAB(*cmabManager, NAVI_COLORS_ARRAY[targetActor->type * 2]); // get inner color
+    Fairy_ApplyColorToTargetCMAB(*cmabManager, NaviColorsArray[targetActor->type * 2]); // get inner color
     staticRainbowPointerCMAB = Fairy_IsNaviInnerRainbowForActorType(targetActor->type) ? *cmabManager : 0;
 
     TexAnim_Spawn(targetCtx->visibleTargetIndicators.pointer->unk_0C, cmabManager);
@@ -117,7 +117,7 @@ s32 Fairy_SetTargetReticleColor(TargetContext* targetCtx) {
     }
 
     void** cmabManager = ZAR_GetCMABByIndex(targetCtx->zarInfo, 41); // target_model_white.cmab as base for all colors
-    Fairy_ApplyColorToTargetCMAB(*cmabManager, NAVI_COLORS_ARRAY[targetCtx->reticleActorType * 2]); // get inner color
+    Fairy_ApplyColorToTargetCMAB(*cmabManager, NaviColorsArray[targetCtx->reticleActorType * 2]); // get inner color
     staticRainbowReticleCMAB = Fairy_IsNaviInnerRainbowForActorType(targetCtx->reticleActorType) ? *cmabManager : 0;
 
     for (s32 i = 0; i < 4; i++) {

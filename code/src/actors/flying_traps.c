@@ -4,11 +4,11 @@
 #include "settings.h"
 #include "common.h"
 
-#define EnYukabyun_Update ((ActorFunc)GAME_ADDR(0x26E628))
+void EnYukabyun_Update(Actor* thisx, GlobalContext* globalCtx);
 
-#define EnYukabyun_Levitate ((EnYukabyun_ActionFunc)GAME_ADDR(0x3B9E3C))
-#define EnYukabyun_Wait ((EnYukabyun_ActionFunc)GAME_ADDR(0x3E6880))
-#define EnTuboTrap_WaitForProximity ((EnTuboTrap_ActionFunc)GAME_ADDR(0x3E6F88))
+void EnYukabyun_Levitate(EnYukabyun* this, GlobalContext* globalCtx);
+void EnYukabyun_Wait(EnYukabyun* this, GlobalContext* globalCtx);
+void EnTuboTrap_WaitForProximity(EnTuboTrap* this, GlobalContext* globalCtx);
 
 s32 FlyingTraps_Tile_OnImpact(EnYukabyun* this) {
     if (!EnemySouls_CheckSoulForActor(&this->base)) {

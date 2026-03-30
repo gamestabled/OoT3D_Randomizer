@@ -3,10 +3,14 @@
 
 #include "z3D/z3D.h"
 
-typedef struct {
+struct BgYdanSp;
+
+typedef void (*BgYdanSpActionFunc)(struct BgYdanSp* this, GlobalContext* globalCtx);
+
+typedef struct BgYdanSp {
     Actor base;
     char dyna[24];
-    void* action_fn;
+    BgYdanSpActionFunc action_fn;
     char unk_1C0[36];
     f32 some_float;
     char unk_1E8[222];
@@ -15,10 +19,10 @@ typedef struct {
 
 typedef struct {
     Vec3f homePos;
-    void* action_fn;
+    BgYdanSpActionFunc action_fn;
 } BgYdanSp_SendData;
 
-void BgYdanSp_rUpdate(BgYdanSp* thisx, GlobalContext* globalCtx);
-void BgYdanSp_SetActionFn(BgYdanSp* thisx, void* new_action_fn);
+void BgYdanSp_rUpdate(Actor* thisx, GlobalContext* globalCtx);
+void BgYdanSp_SetActionFn(BgYdanSp* this, BgYdanSpActionFunc new_action_fn);
 
 #endif //_WEB_H_

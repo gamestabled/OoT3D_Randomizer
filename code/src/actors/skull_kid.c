@@ -3,7 +3,7 @@
 #include "enemy_souls.h"
 #include "enemizer.h"
 
-#define EnSkj_Update ((ActorFunc)GAME_ADDR(0x1DE890))
+void EnSkj_Update(Actor* thisx, GlobalContext* globalCtx);
 
 void EnSkj_rUpdate(Actor* thisx, GlobalContext* globalCtx) {
     EnSkj* this = (EnSkj*)thisx;

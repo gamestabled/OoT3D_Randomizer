@@ -1,10 +1,10 @@
 #include "poe.h"
 #include "settings.h"
 
-#define EnPoh_Init ((ActorFunc)GAME_ADDR(0x18DF00))
-#define EnPoh_Update ((ActorFunc)GAME_ADDR(0x24D368))
-#define EnPoh_UpdateLiving ((ActorFunc)GAME_ADDR(0x1DD974))
-#define EnPoh_UpdateDead ((ActorFunc)GAME_ADDR(0x282E88))
+void EnPoh_Init(Actor* thisx, GlobalContext* globalCtx);
+void EnPoh_Update(Actor* thisx, GlobalContext* globalCtx);
+void EnPoh_UpdateLiving(Actor* thisx, GlobalContext* globalCtx);
+void EnPoh_UpdateDead(Actor* thisx, GlobalContext* globalCtx);
 
 /**
  * Composer Brothers set some flags when they spawn and when the player talks to them.

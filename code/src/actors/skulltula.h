@@ -12,11 +12,15 @@
 #define GS_ARRAY_INDEX(params) ((params & 0x1F00) >> 8)
 #define GS_BIT_FLAG(params) (params & 0xFF)
 
-typedef struct {
+struct EnSw;
+
+typedef void (*EnSwActionFunc)(struct EnSw*, GlobalContext* globalCtx);
+
+typedef struct EnSw {
     /* 0x000 */ Actor base;
     /* 0x1A4 */ SkelAnime anime;
     /* 0x228 */ char unk_228[0x478];
-    /* 0x6A0 */ void* action_fn;
+    /* 0x6A0 */ EnSwActionFunc action_fn;
     /* 0x6A4 */ char collider[0x20];
     /* 0x6C4 */ char jnt_sph_element[0x50];
     /* 0x714 */ char unk_714[0x2E];
@@ -44,7 +48,7 @@ _Static_assert(sizeof(EnSw) == 0x830, "EnSw size");
 
 void EnSw_rInit(Actor* thisx, GlobalContext* globalCtx);
 void EnSw_rUpdate(Actor* thisx, GlobalContext* globalCtx);
-void EnSw_Kill(EnSw* thisx, GlobalContext* globalCtx);
+void EnSw_Kill(EnSw*, GlobalContext* globalCtx);
 
 typedef enum {
     GS_PPT_ACTORENTRY,

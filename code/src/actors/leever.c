@@ -1,8 +1,8 @@
 #include "leever.h"
 #include "settings.h"
 
-#define EnReeba_SetupSurface ((EnReebaActionFunc)GAME_ADDR(0x181394))
-#define EnReeba_Die ((EnReebaActionFunc)GAME_ADDR(0x3D4CB0))
+void EnReeba_SetupSurface(EnReeba* this, GlobalContext* globalCtx);
+void EnReeba_Die(EnReeba* this, GlobalContext* globalCtx);
 
 s32 Leever_ShouldSurviveOutsideSand(Actor* actor) {
     return Enemizer_IsEnemyRandomized(ENEMY_LEEVER) &&

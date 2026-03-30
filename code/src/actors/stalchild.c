@@ -2,7 +2,7 @@
 #include "settings.h"
 #include "enemy_souls.h"
 
-#define EnSkb_Update ((ActorFunc)GAME_ADDR(0x1DE320))
+void EnSkb_Update(Actor* thisx, GlobalContext* globalCtx);
 
 s32 Stalchild_CanDespawn(Actor* stalchild) {
     return !Enemizer_IsEnemyRandomized(ENEMY_STALCHILD) ||

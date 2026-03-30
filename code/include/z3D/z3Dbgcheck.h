@@ -152,19 +152,13 @@ typedef struct CollisionContext {
     /* 0x0050 */ DynaCollisionContext dyna;
 } CollisionContext; // size = 0x15F4
 
-typedef s32 (*WaterBox_GetSurfaceImpl_proc)(struct GlobalContext* globalCtx, CollisionContext* colCtx, f32 x, f32 z,
-                                            f32* ySurface, void** outWaterBox) __attribute__((pcs("aapcs-vfp")));
 // Returns true if point is within the xz boundaries of an active water box, else false
-#define WaterBox_GetSurfaceImpl ((WaterBox_GetSurfaceImpl_proc)GAME_ADDR(0x35E8A0))
-
-typedef f32 (*BgCheck_RaycastDown1_proc)(CollisionContext* colCtx, CollisionPoly* outGroundPoly, Vec3f* pos)
-    __attribute__((pcs("aapcs-vfp")));
+s32 WaterBox_GetSurfaceImpl(struct GlobalContext* globalCtx, CollisionContext* colCtx, f32 x, f32 z, f32* ySurface,
+                            void** outWaterBox) __attribute__((pcs("aapcs-vfp")));
 // Returns the yIntersect of the nearest poly found directly below `pos`, or BGCHECK_Y_MIN if no floor detected
-#define BgCheck_RaycastDown1 ((BgCheck_RaycastDown1_proc)GAME_ADDR(0x257054))
-
-typedef s32 (*BgCheck_EntityLineTest1_proc)(CollisionContext* colCtx, Vec3f* posA, Vec3f* posB, Vec3f* posResult,
-                                            CollisionPoly** outPoly, s32 chkWall, s32 chkFloor, s32 chkCeil,
-                                            s32 chkOneFace, s32* bgId);
-#define BgCheck_EntityLineTest1 ((BgCheck_EntityLineTest1_proc)GAME_ADDR(0x369F9C))
+f32 BgCheck_RaycastDown1(CollisionContext* colCtx, CollisionPoly* outGroundPoly, Vec3f* pos)
+    __attribute__((pcs("aapcs-vfp")));
+s32 BgCheck_EntityLineTest1(CollisionContext* colCtx, Vec3f* posA, Vec3f* posB, Vec3f* posResult,
+                            CollisionPoly** outPoly, s32 chkWall, s32 chkFloor, s32 chkCeil, s32 chkOneFace, s32* bgId);
 
 #endif //_Z3DBGCHECK_H

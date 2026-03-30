@@ -2,11 +2,10 @@
 #include "settings.h"
 #include "chest_minigame.h"
 
-#define EnTakaraMan_Init ((ActorFunc)GAME_ADDR(0x26DEB8))
+void EnTakaraMan_Init(Actor* thisx, GlobalContext* globalCtx);
+void EnChanger_Init(Actor* thisx, GlobalContext* globalCtx);
 
-#define EnChanger_Init ((ActorFunc)GAME_ADDR(0x20EC50))
-
-#define sLoserGetItemIds ((s32*)GAME_ADDR(0x521774))
+extern s32 EnChanger_LoserGetItemIds[];
 
 void EnTakaraMan_rInit(Actor* thisx, GlobalContext* globalCtx) {
     if (gSettingsContext.shuffleChestMinigame) {
@@ -18,12 +17,12 @@ void EnTakaraMan_rInit(Actor* thisx, GlobalContext* globalCtx) {
 
 void EnChanger_rInit(Actor* thisx, GlobalContext* globalCtx) {
     if (gSettingsContext.shuffleChestMinigame) { // Set loser chests to be Ice Traps
-        sLoserGetItemIds[0] = 0;
-        sLoserGetItemIds[1] = 0x7C;
-        sLoserGetItemIds[2] = 0x7C;
-        sLoserGetItemIds[3] = 0x7C;
-        sLoserGetItemIds[4] = 0x7C;
-        sLoserGetItemIds[5] = 0x7C;
+        EnChanger_LoserGetItemIds[0] = 0;
+        EnChanger_LoserGetItemIds[1] = 0x7C;
+        EnChanger_LoserGetItemIds[2] = 0x7C;
+        EnChanger_LoserGetItemIds[3] = 0x7C;
+        EnChanger_LoserGetItemIds[4] = 0x7C;
+        EnChanger_LoserGetItemIds[5] = 0x7C;
     }
     EnChanger_Init(thisx, globalCtx);
 

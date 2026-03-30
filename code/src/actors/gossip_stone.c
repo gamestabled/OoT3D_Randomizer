@@ -1,7 +1,7 @@
 #include "gossip_stone.h"
 #include "z3D/z3D.h"
 
-#define EnGs_Init ((ActorFunc)GAME_ADDR(0x16461C))
+void EnGs_Init(Actor* thisx, GlobalContext* globalCtx);
 
 void EnGs_rInit(Actor* thisx, GlobalContext* globalCtx) {
 

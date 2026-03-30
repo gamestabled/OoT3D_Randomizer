@@ -2,9 +2,8 @@
 #include "settings.h"
 #include "multiplayer.h"
 
-#define EnDns_Update ((ActorFunc)GAME_ADDR(0x1D67CC))
-
-#define EnShopnuts_Init ((ActorFunc)GAME_ADDR(0x22ED2C))
+void EnDns_Update(Actor* thisx, GlobalContext* globalCtx);
+void EnShopnuts_Init(Actor* thisx, GlobalContext* globalCtx);
 
 u32 EnDns_rPurchaseableCheck(EnDns* scrub);
 void EnDns_rSetRupeesAndFlags(EnDns* scrub);
@@ -25,7 +24,7 @@ static const DnsItemEntry Scrub_A = { 40, 1, 0x79, EnDns_rPurchaseableCheck, EnD
 const DnsItemEntry* rScrubTable[] = { &Scrub_0, &Scrub_1, &Scrub_2, &Scrub_3, &Scrub_4, &Scrub_5,
                                       &Scrub_6, &Scrub_7, &Scrub_8, &Scrub_9, &Scrub_A };
 
-#define VanillaScrubTable ((DnsItemEntry**)GAME_ADDR(0x522384))
+extern DnsItemEntry* VanillaScrubTable[];
 
 s16 rScrubRandomItemPrices[11] = { 0 };
 
@@ -102,20 +101,19 @@ void EnShopnuts_rInit(Actor* thisx, GlobalContext* globalCtx) {
     EnShopnuts_Init(&scrub->actor, globalCtx);
 }
 
-#define EnDns_Talk (void*)GAME_ADDR(0x161960)
-#define FUN_00161828 (void*)GAME_ADDR(0x161828)
-#define FUN_003CE92C (void*)GAME_ADDR(0x3CE92C)
-#define FUN_00100434 (void*)GAME_ADDR(0x100434)
-#define EnDns_SetupBurrow (void*)GAME_ADDR(0x3C3C04)
-#define EnDns_Burrow (void*)GAME_ADDR(0x3CEA64)
+void EnDns_Talk(EnDns* this, GlobalContext* globalCtx);
+void FUN_00161828(EnDns* this, GlobalContext* globalCtx);
+void FUN_003CE92C(EnDns* this, GlobalContext* globalCtx);
+void FUN_00100434(EnDns* this, GlobalContext* globalCtx);
+void EnDns_SetupBurrow(EnDns* this, GlobalContext* globalCtx);
+void EnDns_Burrow(EnDns* this, GlobalContext* globalCtx);
 
-typedef u32 (*EnDns_ChangeAnim_proc)(EnDns* globalCtx, u8 arg1);
-#define EnDns_ChangeAnim ((EnDns_ChangeAnim_proc)GAME_ADDR(0x37693C))
+u32 EnDns_ChangeAnim(EnDns* globalCtx, u8 arg1);
 
 void EnDns_rUpdate(Actor* thisx, GlobalContext* globalCtx) {
     EnDns* scrub = (EnDns*)thisx;
 
-    void* prev_action_fn = scrub->action_fn;
+    EnDnsActionFunc prev_action_fn = scrub->action_fn;
 
     EnDns_Update(&scrub->actor, globalCtx);
 
@@ -131,14 +129,14 @@ void EnDns_rUpdate(Actor* thisx, GlobalContext* globalCtx) {
     }
 }
 
-void EnDns_StartBurrow(EnDns* thisx) {
-    if (thisx->action_fn == FUN_00161828 || thisx->action_fn == FUN_003CE92C || thisx->action_fn == FUN_00100434 ||
-        thisx->action_fn == EnDns_SetupBurrow || thisx->action_fn == EnDns_Burrow) {
+void EnDns_StartBurrow(EnDns* this) {
+    if (this->action_fn == FUN_00161828 || this->action_fn == FUN_003CE92C || this->action_fn == FUN_00100434 ||
+        this->action_fn == EnDns_SetupBurrow || this->action_fn == EnDns_Burrow) {
         return;
     }
-    thisx->drop_collectible  = 0;
-    thisx->maintain_collider = 0;
-    thisx->actor.flags &= ~(0x1);
-    EnDns_ChangeAnim(thisx, 1);
-    thisx->action_fn = EnDns_SetupBurrow;
+    this->drop_collectible  = 0;
+    this->maintain_collider = 0;
+    this->actor.flags &= ~(0x1);
+    EnDns_ChangeAnim(this, 1);
+    this->action_fn = EnDns_SetupBurrow;
 }

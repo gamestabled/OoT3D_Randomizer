@@ -3,9 +3,13 @@
 
 #include "z3D/z3D.h"
 
-typedef struct {
+struct EnDntNomal;
+
+typedef void (*EnDntNomalActionFunc)(struct EnDntNomal* this, GlobalContext* globalCtx);
+
+typedef struct EnDntNomal {
     /* 0x000 */ Actor base;
-    /* 0x1A4 */ ActorFunc actionFunc;
+    /* 0x1A4 */ EnDntNomalActionFunc actionFunc;
     /* 0x1A8 */ char unk_1A8[0x40];
     /* 0x1E8 */ s16 timer1;
     /* 0x1EA */ s16 timer2;

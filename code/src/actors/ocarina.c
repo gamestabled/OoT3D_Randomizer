@@ -2,11 +2,9 @@
 #include "z3D/actors/z_item_ocarina.h"
 #include "models.h"
 
-#define ItemOcarina_Init ((ActorFunc)GAME_ADDR(0x253818))
-
-#define ItemOcarina_Destroy ((ActorFunc)GAME_ADDR(0x253A1C))
-
-#define ItemOcarina_Draw ((ActorFunc)GAME_ADDR(0x285D48))
+void ItemOcarina_Init(Actor* thisx, GlobalContext* globalCtx);
+void ItemOcarina_Destroy(Actor* thisx, GlobalContext* globalCtx);
+void ItemOcarina_Draw(Actor* thisx, GlobalContext* globalCtx);
 
 #define THIS ((ItemOcarina*)thisx)
 

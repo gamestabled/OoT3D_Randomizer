@@ -2,12 +2,12 @@
 #include "settings.h"
 #include "bgm.h"
 
-#define EnFd_Update ((ActorFunc)GAME_ADDR(0x1B004C))
+void EnFd_Update(Actor* thisx, GlobalContext* globalCtx);
 
-#define EnFd_Reappear ((EnFdActionFunc)GAME_ADDR(0x117D98))
-#define EnFd_JumpToGround ((EnFdActionFunc)GAME_ADDR(0x3ACD84))
+void EnFd_Reappear(EnFd* this, GlobalContext* globalCtx);
+void EnFd_JumpToGround(EnFd* this, GlobalContext* globalCtx);
 
-#define EnFdFire_Disappear ((EnFdFireActionFunc)GAME_ADDR(0x3ABFB8))
+void EnFdFire_Disappear(EnFdFire* this, GlobalContext* globalCtx);
 
 void EnFd_rUpdate(Actor* thisx, GlobalContext* globalCtx) {
     EnFd* this = (EnFd*)thisx;

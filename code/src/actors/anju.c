@@ -3,6 +3,8 @@
 
 #include "anju.h"
 
+void FUN_2389EC(EnNiwLady* self, GlobalContext* globalCtx);
+
 u32 EnNiwLady_CheckCuccoAmount(u32 cuccosInPen) {
     return cuccosInPen - gSettingsContext.numRequiredCuccos + 7;
 }
@@ -10,7 +12,7 @@ u32 EnNiwLady_CheckCuccoAmount(u32 cuccosInPen) {
 void EnNiwLady_rGiveCojiro(EnNiwLady* self, GlobalContext* globalCtx) {
     if (Actor_HasParent(&self->actor, globalCtx)) {
         gSaveContext.itemGetInf[2] |= 0x4000;
-        self->actionFunc = (EnNiwLady_ActionFunc)GAME_ADDR(0x2389EC);
+        self->actionFunc = FUN_2389EC;
     } else {
         GiveItem(&self->actor, globalCtx, GI_COJIRO, 200.0f, 100.0f);
     }

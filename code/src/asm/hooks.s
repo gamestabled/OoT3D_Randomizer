@@ -300,11 +300,7 @@ HOOK StoreChildBButtonEquip
     push {r0-r12, lr}
     bl SaveFile_SaveChildBButton
     pop {r0-r12, lr}
-.if _EUR_==1
-    b 0x45F230
-.else
-    b 0x45F210
-.endif
+    b ret_StoreChildBButtonEquip
 
 HOOK LullabyCheckFlag
     push {r0-r12, lr}
@@ -607,11 +603,7 @@ HOOK SunsSongEndCloseTextbox
     push {r0-r12, lr}
     bl Settings_SunsSongEndCloseTextbox
     pop {r0-r12, lr}
-.if _EUR_==1
-    b 0x45B538
-.else
-    b 0x45B518
-.endif
+    b ret_SunsSongEndCloseTextbox
 
 HOOK SetSpecialVoidOutRespawnFlag
     push {r0-r12, lr}
@@ -802,11 +794,7 @@ HOOK SetBGMDayNight
     bl SetBGM
     pop {r1-r12, lr}
     push {r4-r6, lr}
-.if _EUR_==1
-    b 0x483CAC
-.else
-    b 0x483C8C
-.endif
+    b ret_SetBGMDayNight
 
 HOOK SetBGMEvent
     push {r0, r2-r12, lr}
@@ -922,11 +910,7 @@ HOOK BeforeLoadGame
     push {r0-r12, lr}
     bl SaveFile_BeforeLoadGame
     pop {r0-r12, lr}
-.if _EUR_==1
-    b 0x4473A4
-.else
-    b 0x447384
-.endif
+    b ret_BeforeLoadGame
 
 HOOK AfterLoadGame
     push {r0-r12, lr}
@@ -958,11 +942,7 @@ HOOK SaveMenuIgnoreOpen
     bl SaveMenu_IgnoreOpen
     cmp r0,#0x1
     pop {r0-r12, lr}
-.if _EUR_==1
-    beq 0x42F294
-.else
-    beq 0x42F270
-.endif
+    addeq lr,lr,0xC
     bx lr
 
 HOOK GameOverStart
@@ -987,12 +967,8 @@ HOOK PermadeathForceQuit
     bl Permadeath_GetOption
     cmp r0,#0x0
     pop {r0-r12, lr}
-.if _EUR_==1
-    bne 0x459014
-.else
-    bne 0x458FF4
-.endif
-    bxeq lr
+    bne ret_PermadeathForceQuit
+    bx lr
 
 HOOK OverrideFogDuringGameplayInit
     push {r0-r12, lr}
@@ -1009,30 +985,18 @@ HOOK FixItemsMenuSlotDuplication
     mov r4,#0xFF
     mov lr,#0xFF
     add r10,r10,#0x1
-.if _EUR_==1
-    b 0x456BB4
-.else
-    b 0x456B94
-.endif
+    b ret_FixItemsMenuSlotDuplication
 
 HOOK PlayEntranceCutscene
-.if _EUR_==1
-    bgt 0x44F0C4
-.else
-    bgt 0x44F0A4
-.endif
     push {r0-r12, lr}
-    ldrb r0,[r5,#0x3]
+    @ r0=flag
     bl EntranceCutscene_ShouldPlay
+    eor r0,r0,#0x1 @ flip condition
     cmp r0,#0x0
     pop {r0-r12, lr}
-.if _EUR_==1
-    beq 0x44F0C4
-    b 0x44F08C
-.else
-    beq 0x44F0A4
-    b 0x44F06C
-.endif
+    addne lr,lr,#0xC @ skip cutscene
+    bxne lr
+    b EventCheck @ original instruction
 
 HOOK SkipJabuOpeningCutscene
     ldrh r0,[r0,#0x0]
@@ -1226,11 +1190,7 @@ HOOK Multiplayer_OnLoadFile
     push {r0-r12, lr}
     bl Multiplayer_OnFileLoad
     pop {r0-r12, lr}
-.if _EUR_==1
-    b 0x449F20
-.else
-    b 0x449F00
-.endif
+    bx lr
 
 HOOK SendDroppedBottleContents
     add r0,r0,#0x8C
@@ -1356,25 +1316,16 @@ HOOK CurseTrapDizzyStick
     b 0x2FF258
 
 HOOK CurseTrapDizzyButtons
-    push {r0,r3-r12,lr}
-    # R1 and R2 contain button status fields
-    # Apply the curse effect to both
-    push {r2}
-    cpy r0,r1
+    add r4,r5,#0x4
+    push {r0-r12,lr}
+    @ [R4+0] and [R4+4] contain button status fields
+    @ Apply the curse effect to both
+    add r0,r4,#0x0
     bl IceTrap_RandomizeButtons
-    pop {r2}
-    push {r0}
-    cpy r0,r2
+    add r0,r4,#0x4
     bl IceTrap_RandomizeButtons
-    cpy r2,r0
-    pop {r1}
-    pop {r0,r3-r12,lr}
-    stmia r0,{r1,r2,r3,r5,r6,r7,r8,r9,r10,r11,r12,lr}
-.if _EUR_==1
-    b 0x41AC04
-.else
-    b 0x41ABE0
-.endif
+    pop {r0-r12,lr}
+    bx lr
 
 HOOK CrouchStabHitbox
     push {r0-r12,lr}
@@ -1560,12 +1511,8 @@ HOOK TargetReticleColor
     bl Fairy_SetTargetReticleColor
     cmp r0,#0x0
     pop {r0-r12,lr}
-    bxeq lr    @ no custom Navi colors, return to original code
-.if _EUR_==1   @ colors applied, skip original code
-    b 0x47B308
-.else
-    b 0x47B2E8
-.endif
+    bxeq lr @ no custom Navi colors, return to original code
+    b ret_TargetReticleColor @ colors applied, skip original code
 
 HOOK TargetPointerColor
     ldr r0,[r6,#0x120]
@@ -1575,12 +1522,8 @@ HOOK TargetPointerColor
     bl Fairy_SetTargetPointerColor
     cmp r0,#0x0
     pop {r0-r12,lr}
-    bxeq lr    @ no custom Navi colors, return to original code
-.if _EUR_==1   @ colors applied, skip original code
-    b 0x47BB50
-.else
-    b 0x47BB30
-.endif
+    bxeq lr @ no custom Navi colors, return to original code
+    b ret_TargetPointerColor @ colors applied, skip original code
 
 HOOK ShadowShip_Speed
     add r0,r4,#0x6C
@@ -1685,22 +1628,14 @@ HOOK OnActorSetup_SceneChange
     bxne lr
     # Iterate actor entry pointer and skip
     add r5,#0x10
-.if _EUR_==1
-    b 0x4522C4
-.else
-    b 0x4522A4
-.endif
+    b ret_OnActorSetup_SceneChange
 
 HOOK AfterActorSetup_SceneChange
     strb r0,[r7,#0xC03]
     push {r0-r12, lr}
     bl ActorSetup_Extra
     pop {r0-r12, lr}
-.if _EUR_==1
-    b 0x4522DC
-.else
-    b 0x4522BC
-.endif
+    bx lr
 
 HOOK OnActorSetup_RoomChange
     cpy r4,r6
@@ -1714,22 +1649,14 @@ HOOK OnActorSetup_RoomChange
     bxne lr
     # Iterate actor entry pointer and skip
     add r6,#0x10
-.if _EUR_==1
-    b 0x461444
-.else
-    b 0x461424
-.endif
+    b ret_OnActorSetup_RoomChange
 
 HOOK AfterActorSetup_RoomChange
     strb r10,[r8,#0xC03]
     push {r0-r12, lr}
     bl ActorSetup_Extra
     pop {r0-r12, lr}
-.if _EUR_==1
-    b 0x461458
-.else
-    b 0x461438
-.endif
+    bx lr
 
 HOOK RandomGsLoc_CustomTangibilityCheck
     sub sp,sp,#0x18

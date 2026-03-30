@@ -339,7 +339,7 @@ typedef struct Player {
 } Player; // total size (from init vars): 2A4C
 _Static_assert(sizeof(Player) == 0x2A4C, "Player size");
 
-#define sFloorType (*(s32*)GAME_ADDR(0x53A0A4))
+extern s32 sFloorType;
 
 typedef enum {
     /* 0x00 */ ACTORTYPE_SWITCH,
@@ -365,33 +365,20 @@ typedef struct ActorHeapNode {
     struct ActorHeapNode* prev;
 } ActorHeapNode;
 
+extern ActorOverlay gActorOverlayTable[];
+
 void Actor_Kill(Actor* actor);
-#define gActorOverlayTable ((ActorOverlay*)GAME_ADDR(0x50CD84))
 
-typedef u32 (*Actor_HasParent_proc)(Actor* actor, struct GlobalContext* globalCtx);
-#define Actor_HasParent ((Actor_HasParent_proc)GAME_ADDR(0x371E40))
-
-typedef f32 (*Actor_WorldDistXYZToActor_proc)(Actor* a, Actor* b) __attribute__((pcs("aapcs-vfp")));
-#define Actor_WorldDistXYZToActor ((Actor_WorldDistXYZToActor_proc)GAME_ADDR(0x3306C4))
-
-typedef void (*ActorShape_Init_proc)(ActorShape* shape, f32 yOffset, void* shadowDrawFunc, f32 shadowScale)
+u32 Actor_HasParent(Actor* actor, struct GlobalContext* globalCtx);
+f32 Actor_WorldDistXYZToActor(Actor* a, Actor* b) __attribute__((pcs("aapcs-vfp")));
+void ActorShape_Init(ActorShape* shape, f32 yOffset, void* shadowDrawFunc, f32 shadowScale)
     __attribute__((pcs("aapcs-vfp")));
-#define ActorShape_Init ((ActorShape_Init_proc)GAME_ADDR(0x372D4C))
-
-typedef void (*Actor_SetFeetPos_proc)(Actor* actor, nn_math_MTX34* mtx, int param_3, int param_4, Vec3f* param_5,
-                                      int param_6, Vec3f* param_7);
-#define Actor_SetFeetPos ((Actor_SetFeetPos_proc)GAME_ADDR(0x34CBB4))
-
-typedef void (*Actor_UpdateBgCheckInfo_proc)(struct GlobalContext* globalCtx, Actor* actor, f32 wallCheckHeight,
-                                             f32 wallCheckRadius, f32 ceilingCheckHeight, s32 flags)
-    __attribute__((pcs("aapcs-vfp")));
-#define Actor_UpdateBgCheckInfo ((Actor_UpdateBgCheckInfo_proc)GAME_ADDR(0x376340))
-
-typedef s32 (*Player_InCsMode_proc)(struct GlobalContext* globalCtx);
-#define Player_InCsMode ((Player_InCsMode_proc)GAME_ADDR(0x36A7A0))
-
-typedef Actor* (*Actor_FindNearby_proc)(struct GlobalContext* globalCtx, Actor* ref_actor, s16 actorId,
-                                        u8 actor_category, f32 range);
-#define Actor_FindNearby ((Actor_FindNearby_proc)GAME_ADDR(0x369334))
+void Actor_SetFeetPos(Actor* actor, nn_math_MTX34* mtx, int param_3, int param_4, Vec3f* param_5, int param_6,
+                      Vec3f* param_7);
+void Actor_UpdateBgCheckInfo(struct GlobalContext* globalCtx, Actor* actor, f32 wallCheckHeight, f32 wallCheckRadius,
+                             f32 ceilingCheckHeight, s32 flags) __attribute__((pcs("aapcs-vfp")));
+s32 Player_InCsMode(struct GlobalContext* globalCtx);
+Actor* Actor_FindNearby(struct GlobalContext* globalCtx, Actor* ref_actor, s16 actorId, u8 actor_category, f32 range);
+void ActorShadow_DrawFeet(Actor* actor, void* lights, struct GlobalContext* globalCtx);
 
 #endif
