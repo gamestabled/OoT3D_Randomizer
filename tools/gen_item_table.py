@@ -3,7 +3,6 @@ import os
 import sys
 
 HEADER = """// File generated automically. Do not edit. Edit item_table.jsonc instead."
-
 #include "../item_list.hpp"
 #include "../logic.hpp"
 
@@ -85,6 +84,8 @@ def load_json_with_comments(path):
     cleaned = strip_comments(raw)
     return json.loads(cleaned)
 
+################## MAIN ####################
+
 output_dir = sys.argv[1] if len(sys.argv) > 1 else "source/generated/"
 os.makedirs(output_dir, exist_ok=True)
 out_path = os.path.join(output_dir, "generated_item_table.cpp")
@@ -93,18 +94,18 @@ data = load_json_with_comments("data/item_table.jsonc")
 with open(out_path, "w", encoding="utf-8") as out:
     out.write(HEADER)
 
-    for key, value in data.items():
-        if len(value) == 6:
-            item_type, get_id, item_class, logic, hint, names = value
-            price = None
-        elif len(value) == 7:
-            item_type, get_id, item_class, logic, hint, price, names = value
-        else:
-            raise ValueError(f"{key} has invalid field count: {len(value)}")
+    for key, line_data in data.items():
+        item_type = line_data.get("ItemType", "ITEMTYPE_ITEM")
+        get_item_id = line_data.get("GetItemID", "GI_RUPEE_GREEN")
+        item_class = line_data.get("ItemClass", "ITEMCLASS_NONE")
+        logic_ptr = line_data.get("LogicVar", "noVariable")
+        hint_key = line_data.get("HintKey", "NONE")
 
-        logic_ptr = f"&{logic}"
+        price = line_data.get("price", None)
 
-        text = [
+        names = line_data.get("Name", {})
+
+        name_text = [
             names.get("NAenglish_", ""),
             names.get("NAfrench_", ""),
             names.get("NAspanish_", ""),
@@ -115,17 +116,17 @@ with open(out_path, "w", encoding="utf-8") as out:
             names.get("EURgerman_", ""),
         ]
 
-        text_str = ', '.join(f'"{t}"' for t in text)
+        text_str = ', '.join(f'"{t}"' for t in name_text)
 
         if price is None:
             out.write(
-                f'    itemTable[{key}] = Item({item_type}, {get_id}, {item_class}, '
-                f'{logic_ptr}, {hint}, Text{{{text_str}}});\n'
+                f'    itemTable[{key}] = Item({item_type}, {get_item_id}, {item_class}, '
+                f'&{logic_ptr}, {hint_key}, Text{{{text_str}}});\n'
             )
         else:
             out.write(
-                f'    itemTable[{key}] = Item({item_type}, {get_id}, {item_class}, '
-                f'{logic_ptr}, {hint}, {price}, Text{{{text_str}}});\n'
+                f'    itemTable[{key}] = Item({item_type}, {get_item_id}, {item_class}, '
+                f'&{logic_ptr}, {hint_key}, {price}, Text{{{text_str}}});\n'
             )
 
     out.write(FOOTER)

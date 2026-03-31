@@ -81,128 +81,6 @@ def load_json_with_comments(path):
     cleaned = strip_comments(raw)
     return json.loads(cleaned)
 
-def format_categories(cat_list):
-    cat_str = ", ".join(f"Category::{c}" for c in cat_list) + ","
-    return cat_str[:-1] # remove trailing comma
-
-def parse_entry(key, value):
-    if len(value) < 4:
-        raise ValueError(f"{key} is too short")
-
-    loc_type = value[0]
-
-    # Hints
-    if loc_type == "HintStone" or loc_type == "OtherHint":
-        scene = value[1]
-        flag  = value[2]
-        name     = value[3]
-
-        return {
-            "constructor": "Hint",
-            "scene": scene,
-            "flag": flag,
-            "name": name
-        }
-
-    # GS Tokens
-    if loc_type == "GSToken":
-        scene = value[1]
-        flag  = value[2]
-        name     = value[3]
-        hintKey  = value[4]
-        vanillaItem = None
-        categories = value[5]
-
-        remaining = value[6:]
-
-        check = None
-        group = None
-
-        for r in remaining:
-            if isinstance(r, str) and ")" in r:
-                check = r
-            else:
-                group = r
-
-        return {
-            "constructor": "Normal",
-            "loc_type": loc_type,
-            "scene": scene,
-            "flag": flag,
-            "name": name,
-            "hintKey": hintKey,
-            "vanillaItem": vanillaItem,
-            "categories": categories,
-            "check": check,
-            "group": group
-        }
-
-    # Everything else
-    if len(value) < 7:
-        raise ValueError(f"{key} is missing required fields")
-
-    scene = value[1]
-    flag  = value[2]
-    name     = value[3]
-    hintKey  = value[4]
-    vanillaItem = value[5]
-    categories = value[6]
-
-    remaining = value[7:]
-
-    check = None
-    group = None
-
-    for r in remaining:
-        if isinstance(r, str) and ")" in r:
-            check = r
-        else:
-            group = r
-
-    return {
-        "constructor": "Normal",
-        "loc_type": loc_type,
-        "scene": scene,
-        "flag": flag,
-        "name": name,
-        "hintKey": hintKey,
-        "vanillaItem": vanillaItem,
-        "categories": categories,
-        "check": check,
-        "group": group
-    }
-
-
-def generate_cpp_line(key, e):
-    # Gosip stones have a different constructor
-    if e["constructor"] == "Hint":
-        return (
-            f'locationTable[{key}] = ItemLocation::HintStone('
-            f'{e["scene"]}, {e["flag"]}, "{e["name"]}", {{}});'
-        )
-
-    cat_str = format_categories(e["categories"])
-
-    line = (
-        f'locationTable[{key}] = ItemLocation::{e["loc_type"]}'
-        f'({e["scene"]}, {e["flag"]}, "{e["name"]}", {e["hintKey"]}'
-    )
-
-    if e["vanillaItem"]:
-        line += f', {e["vanillaItem"]}'
-    
-    line += f', {{{cat_str}}}'
-
-    if e["check"]:
-        line += f', SpoilerCollectionCheck::{e["check"]}'
-
-    if e["group"]:
-        line += f', SpoilerCollectionCheckGroup::{e["group"]}'
-
-    line += ");"
-
-    return line
-
 ################## MAIN ####################
 
 output_dir = sys.argv[1] if len(sys.argv) > 1 else "source/generated/"
@@ -213,8 +91,38 @@ data = load_json_with_comments("data/location_table.jsonc")
 with open(out_path, "w", encoding="utf-8") as out:
     out.write(HEADER)
 
-    for key, value in data.items():
-        entry = parse_entry(key, value)
-        out.write("    " + generate_cpp_line(key, entry) + "\n")
+    for key, line_data in data.items():
+        location_type = line_data.get("type", "Base")
+        scene = line_data.get("scene", "0xFF")
+        flag = line_data.get("flag", "0xFF")
+        name = line_data.get("name", "Invalid Location")
+        hint_key = line_data.get("HintKey", None)
+        vanilla_item = line_data.get("vanillaItem", None)
+        categories = line_data.get("categories", [])
+        check = line_data.get("SpoilerCollectionCheck", None)
+        group = line_data.get("SpoilerCollectionCheckGroup", None)
+
+        cat_str = ', '.join(f"Category::{t}" for t in categories)
+
+        line = (
+            f'locationTable[{key}] = ItemLocation::{location_type}'
+            f'({scene}, {flag}, "{name}", '
+        )
+
+        if hint_key:
+            line += f'{hint_key}, '
+
+        if vanilla_item:
+            line += f'{vanilla_item}, '
+        
+        line += f'{{{cat_str}}}'
+
+        if check:
+            line += f', SpoilerCollectionCheck::{check}'
+        
+        if group:
+            line += f', SpoilerCollectionCheckGroup::{group}'
+        
+        out.write(f"    {line});\n")
 
     out.write(FOOTER)
