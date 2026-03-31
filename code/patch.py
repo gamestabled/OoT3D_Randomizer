@@ -54,6 +54,9 @@ sz = lambda size: struct.pack(">H", size)
 ips = b'PATCH'
 with open(elf, 'rb') as e:
     for name, vaddr, offset, size in sections:
+        # Skip useless sections
+        if not name.startswith('.patch') and not name in ['.text', '.loader']:
+            continue
 
         e.seek(offset, 0)
         while size > 65535:
