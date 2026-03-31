@@ -14,6 +14,7 @@ include $(DEVKITARM)/3ds_rules
 ifneq ($(MAKECMDGOALS),clean)
 $(shell python3 ./tools/gen_item_table.py source/generated/)
 $(shell python3 ./tools/gen_location_table.py source/generated/)
+$(shell python3 ./tools/gen_description_table.py source/generated/)
 endif
 
 #---------------------------------------------------------------------------------
