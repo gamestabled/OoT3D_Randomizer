@@ -7,7 +7,7 @@
 .endm
 
 PATCH loader
-    b hook_into_loader
+    bl hook_into_loader
 
 PATCH before_GlobalContext_Update
     bl hook_before_GlobalContext_Update
@@ -958,8 +958,8 @@ PATCH CheckForPocketCuccoHatchKankyo
 PATCH SkipSongReplays_WarpBlocksFix
     b hook_SkipSongReplays_WarpBlocksFix
 
-PATCH PlaySound
-    b hook_PlaySound
+PATCH Audio_PlayFanfare
+    b hook_Audio_PlayFanfare
 
 PATCH SetBGMEntrance
     b hook_SetBGMEntrance

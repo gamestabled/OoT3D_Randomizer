@@ -21,8 +21,8 @@ void BgSpot02Objects_rUpdate(Actor* thisx, GlobalContext* globalCtx) {
 }
 
 void BgSpot02Objects_ExplodeGrave(BgSpot02Objects* this) {
-    PlaySFX(0x1000219, &this->base.world.pos, 4, &gSfxDefaultFreqAndVolScale, &gSfxDefaultFreqAndVolScale,
-            &gSfxDefaultReverb); // NA_SE_EV_GRAVE_EXPLOSION
+    Audio_PlaySfxGeneral(0x1000219, &this->base.world.pos, 4, &gSfxDefaultFreqAndVolScale, &gSfxDefaultFreqAndVolScale,
+                         &gSfxDefaultReverb); // NA_SE_EV_GRAVE_EXPLOSION
     this->timer     = 38;
     this->action_fn = BgSpot02Objects_Explode;
 }

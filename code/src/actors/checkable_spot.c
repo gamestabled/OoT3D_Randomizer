@@ -6,11 +6,11 @@
 void EnWonderTalk_Update(Actor* thisx, GlobalContext* globalCtx);
 void EnWonderTalk2_Update(Actor* thisx, GlobalContext* globalCtx);
 
-void FUN_2065E0(EnWonderTalk* this, GlobalContext* globalCtx);
+void EnWonderTalk_Action_2065E0(EnWonderTalk* this, GlobalContext* globalCtx);
 
 void EnWonderTalk_rUpdate(Actor* thisx, GlobalContext* globalCtx) {
     EnWonderTalk* this = (EnWonderTalk*)thisx;
-    if (this->actionFunc == FUN_2065E0 && thisx->params == 0x0FFF) { // reading ToT altar
+    if (this->actionFunc == EnWonderTalk_Action_2065E0 && thisx->params == 0x0FFF) { // reading ToT altar
         gExtSaveData.extInf.totAltarFlags |= (1 << gSaveContext.linkAge);
     }
     EnWonderTalk_Update(thisx, globalCtx);

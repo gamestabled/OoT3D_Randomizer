@@ -110,7 +110,7 @@ void Actor_SetModelMatrixWrapper(Actor* actor, nn_math_MTX34* mtx) {
                  "mov r0,r1\n" // mtx
                  "mov r1,r2\n" // shape
                  "push {r0-r12, lr}\n"
-                 "bl 0x3679D0\n"
+                 "bl Actor_SetModelMatrix\n"
                  "pop {r0-r12, lr}\n"
                  "pop {r0-r12, lr}\n");
 }

@@ -255,6 +255,10 @@ typedef struct DynaPolyActor {
     /* 0x1BA */ s16 unk_1BA;
 } DynaPolyActor; // size = 0x1BC
 
+struct Player;
+
+typedef void (*PlayerActionFunc)(struct Player*, struct GlobalContext*);
+
 typedef struct Player {
     /* 0x0000 */ Actor actor;
     /* 0x01A4 */ s8 currentTunic;
@@ -301,7 +305,7 @@ typedef struct Player {
     /* 0x1568 */ ColliderQuad shieldQuad;
     /* 0x15E8 */ Collider unkMeleeWeaponCollider;
     /* 0x1600 */ char unk_1600[0x108];
-    /* 0x1708 */ void* stateFuncPtr;
+    /* 0x1708 */ PlayerActionFunc actionFunc;
     /* 0x170C */ char unk_170C[0x0004];
     /* 0x1710 */ u32 stateFlags1;
     /* 0x1714 */ u32 stateFlags2;

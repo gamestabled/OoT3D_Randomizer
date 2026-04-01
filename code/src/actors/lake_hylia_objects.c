@@ -57,7 +57,7 @@ void BgSpot06Objects_rUpdate(Actor* thisx, GlobalContext* globalCtx) {
     if (globalCtx->actorCtx.flags.tempSwch & (0x40 << 24)) {                   // switch pressed
         if (thisx->params == 0x0002 && gSaveContext.eventChkInf[6] & 0x0200) { // if water is raised, lower it
             waterMovement = -1;
-            PlaySound(0x100025B);
+            Audio_PlayFanfare(0x100025B);
             gSaveContext.eventChkInf[6] &= ~0x0200;
             // TODO: remove this warp when the water will properly move
             globalCtx->nextEntranceIndex = 0x0604;
@@ -67,7 +67,7 @@ void BgSpot06Objects_rUpdate(Actor* thisx, GlobalContext* globalCtx) {
     } else {
         if (thisx->params == 0x0002 && !(gSaveContext.eventChkInf[6] & 0x0200)) {
             waterMovement = 1;
-            PlaySound(0x100025B);
+            Audio_PlayFanfare(0x100025B);
             gSaveContext.eventChkInf[6] |= 0x0200;
             // TODO: remove this warp when the water will properly move
             globalCtx->nextEntranceIndex = 0x0604;

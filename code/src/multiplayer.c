@@ -1000,8 +1000,8 @@ void Multiplayer_Receive_LinkSFX(u16 senderID) {
     }
 
     mp_duplicateSendProtection = true;
-    PlaySFX(mBuffer[1], &ghostDataPtr->position, 4, &gSfxDefaultFreqAndVolScale, &gSfxDefaultFreqAndVolScale,
-            &gSfxDefaultReverb);
+    Audio_PlaySfxGeneral(mBuffer[1], &ghostDataPtr->position, 4, &gSfxDefaultFreqAndVolScale,
+                         &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
 }
 
 // Shared Progress

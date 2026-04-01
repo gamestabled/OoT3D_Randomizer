@@ -19,6 +19,8 @@ void PlayerActor_Update(Actor* thisx, GlobalContext* globalCtx);
 void PlayerActor_Destroy(Actor* thisx, GlobalContext* globalCtx);
 void PlayerActor_Draw(Actor* thisx, GlobalContext* globalCtx);
 
+void Player_Action_Running(Player* player, GlobalContext* globalCtx);
+
 extern struct Unknown PlayerDListGroup_EmptySheathAdult;
 extern struct Unknown PlayerDListGroup_EmptySheathChildWithHylianShield;
 
@@ -165,10 +167,9 @@ void PlayerActor_rDraw(Actor* thisx, GlobalContext* globalCtx) {
 }
 
 f32 Player_GetSpeedMultiplier(void) {
-    void FUN_4BA378(Player * player, GlobalContext * globalCtx);
     f32 speedMultiplier = 1;
 
-    if (gSettingsContext.fastBunnyHood && PLAYER->currentMask == 4 && PLAYER->stateFuncPtr == FUN_4BA378) {
+    if (gSettingsContext.fastBunnyHood && PLAYER->currentMask == 4 && PLAYER->actionFunc == Player_Action_Running) {
         speedMultiplier *= 1.5;
     }
 

@@ -7,7 +7,8 @@ SECTIONS
 
 	. = 0x100000 + _LD_OFF;
 	.patch_loader 0x100000 + _LD_OFF : { *(.patch_loader) }
-	FUN_00100434 = 0x100434 + _LD_OFF;
+	nninitRegion = 0x100028 + _LD_OFF;
+	EnDns_SetupBurrow = 0x100434 + _LD_OFF;
 	EnBb_Update = 0x1005EC + _LD_OFF;
 	EnIk_UpdateEnemy = 0x1008B4 + _LD_OFF;
 	EnZf_Update = 0x101C48 + _LD_OFF;
@@ -65,7 +66,7 @@ SECTIONS
 	ObjBean_UnplantedWait = 0x15E154 + _LD_OFF;
 	.patch_GrannyBottleCheck 0x161044 + _LD_OFF : { *(.patch_GrannyBottleCheck) }
 	.patch_GrannyItemOverrideOne 0x161094 + _LD_OFF : { *(.patch_GrannyItemOverrideOne) }
-	FUN_00161828 = 0x161828 + _LD_OFF;
+	EnDns_SetupSale = 0x161828 + _LD_OFF;
 	.patch_ScrubStickUpgradeOne 0x161898 + _LD_OFF : { *(.patch_ScrubStickUpgradeOne) }
 	.patch_ScrubNutUpgradeOne 0x1618EC + _LD_OFF : { *(.patch_ScrubNutUpgradeOne) }
 	EnDns_Talk = 0x161960 + _LD_OFF;
@@ -237,7 +238,7 @@ SECTIONS
 	Fishing_UpdateFish = 0x1F9ACC + _LD_OFF;
 	BgSpot02Objects_Explode = 0x205EDC + _LD_OFF;
 	.patch_BombchuBowlingStaticReward 0x206150 + _LD_OFF : { *(.patch_BombchuBowlingStaticReward) }
-	FUN_2065E0 = 0x2065E0 + _LD_OFF;
+	EnWonderTalk_Action_2065E0 = 0x2065E0 + _LD_OFF;
 	.patch_SkipSongReplays_TimeBlocksFix 0x208004 + _LD_OFF : { *(.patch_SkipSongReplays_TimeBlocksFix) }
 	.patch_SkipSongReplays_WarpBlocksFix 0x208068 + _LD_OFF : { *(.patch_SkipSongReplays_WarpBlocksFix) }
 	EnChanger_Init = 0x20EC50 + _LD_OFF;
@@ -289,7 +290,7 @@ SECTIONS
 	.patch_DarkLinkPlayerRecoil 0x22F838 + _LD_OFF : { *(.patch_DarkLinkPlayerRecoil) }
 	ObjMure3_Update = 0x2318AC + _LD_OFF;
 	.patch_GanonCSEquipMS 0x2359A4 + _LD_OFF : { *(.patch_GanonCSEquipMS) }
-	FUN_2389EC = 0x2389EC + _LD_OFF;
+	EnNiwLady_Action_2389EC = 0x2389EC + _LD_OFF;
 	EnDntNomal_SetupTargetGivePrize = 0x2394CC + _LD_OFF;
 	BgTreemouth_Init = 0x2412B4 + _LD_OFF;
 	BgYdanSp_Update = 0x241EF8 + _LD_OFF;
@@ -479,8 +480,8 @@ SECTIONS
 	DeleteModel_At = 0x357248 + _LD_OFF;
 	ZAR_GetCMBByIndex = 0x358EF8 + _LD_OFF;
 	BossChallenge_IsActive = 0x35B164 + _LD_OFF;
-	.patch_PlaySound 0x35C528 + _LD_OFF : { *(.patch_PlaySound) }
-	PlaySound = 0x35C528 + _LD_OFF;
+	.patch_Audio_PlayFanfare 0x35C528 + _LD_OFF : { *(.patch_Audio_PlayFanfare) }
+	Audio_PlayFanfare = 0x35C528 + _LD_OFF;
 	LinkDamage = 0x35D304 + _LD_OFF;
 	FireDamage = 0x35D8D8 + _LD_OFF;
 	Player_InBlockingCsMode = 0x35DB20 + _LD_OFF;
@@ -530,7 +531,7 @@ SECTIONS
 	.patch_DemoEffectMedallionDraw 0x37214C + _LD_OFF : { *(.patch_DemoEffectMedallionDraw) }
 	SkeletonAnimationModel_Draw = 0x372170 + _LD_OFF;
 	SkeletonAnimationModel_MatrixCopy = 0x3721E0 + _LD_OFF;
-	GiveItem = 0x3724DC + _LD_OFF;
+	Actor_OfferGetItem = 0x3724DC + _LD_OFF;
 	.patch_IncomingGetItemID 0x3725AC + _LD_OFF : { *(.patch_IncomingGetItemID) }
 	Message_CloseTextbox = 0x3725E0 + _LD_OFF;
 	Model_EnableMeshGroupByIndex = 0x37266C + _LD_OFF;
@@ -548,9 +549,9 @@ SECTIONS
 	Actor_Spawn = 0x3738D0 + _LD_OFF;
 	.patch_ConvertBombDropTwo 0x3747A4 + _LD_OFF : { *(.patch_ConvertBombDropTwo) }
 	.patch_SetSFX 0x37547C + _LD_OFF : { *(.patch_SetSFX) }
-	PlaySFX = 0x37547C + _LD_OFF;
+	Audio_PlaySfxGeneral = 0x37547C + _LD_OFF;
 	Math_SmoothStepToS = 0x375A18 + _LD_OFF;
-	FUN_00375B70 = 0x375B70 + _LD_OFF;
+	Enemy_StartFinishingBlow = 0x375B70 + _LD_OFF;
 	Audio_PlayActorSfx2 = 0x375BCC + _LD_OFF;
 	Animation_Change = 0x375C08 + _LD_OFF;
 	Flags_SetSwitch = 0x375C10 + _LD_OFF;
@@ -623,16 +624,16 @@ SECTIONS
 	.patch_DampeCheckRewardFlag 0x3C3598 + _LD_OFF : { *(.patch_DampeCheckRewardFlag) }
 	.patch_DampeCheckCanDig2 0x3C35D0 + _LD_OFF : { *(.patch_DampeCheckCanDig2) }
 	.patch_SongOfTimeLocation 0x3C375C + _LD_OFF : { *(.patch_SongOfTimeLocation) }
-	EnDns_SetupBurrow = 0x3C3C04 + _LD_OFF;
+	EnDns_Burrow = 0x3C3C04 + _LD_OFF;
 	.patch_EponasSongLocation 0x3C6194 + _LD_OFF : { *(.patch_EponasSongLocation) }
 	.patch_MalonNextAction 0x3C6210 + _LD_OFF : { *(.patch_MalonNextAction) }
 	EnIshi_LiftedUp = 0x3CBAC4 + _LD_OFF;
 	EnSw_WalltulaIdle = 0x3CDAAC + _LD_OFF;
 	.patch_BombPurchaseableCheck 0x3CE800 + _LD_OFF : { *(.patch_BombPurchaseableCheck) }
-	FUN_003CE92C = 0x3CE92C + _LD_OFF;
+	EnDns_Sale = 0x3CE92C + _LD_OFF;
 	.patch_ScrubStickUpgradeTwo 0x3CE990 + _LD_OFF : { *(.patch_ScrubStickUpgradeTwo) }
 	.patch_ScrubNutUpgradeTwo 0x3CE9DC + _LD_OFF : { *(.patch_ScrubNutUpgradeTwo) }
-	EnDns_Burrow = 0x3CEA64 + _LD_OFF;
+	EnDns_PostBurrow = 0x3CEA64 + _LD_OFF;
 	EnSi_DestroyAfterText = 0x3D0544 + _LD_OFF;
 	EnDodojr_JumpAttackBounce = 0x3D069C + _LD_OFF;
 	.patch_GrannySetRewardFlag 0x3D0E34 + _LD_OFF : { *(.patch_GrannySetRewardFlag) }
@@ -807,7 +808,7 @@ SECTIONS
 
 	/* 0x4A5B00 */ _LD_OFF = _LD_EUR ? 0x0 : _LD_OFF;
 
-	FUN_4BA378 = 0x4BA378 + _LD_OFF;
+	Player_Action_Running = 0x4BA378 + _LD_OFF;
 	.patch_OverrideGiDrawIdPlusOne_Ground 0x4BC610 + _LD_OFF : { *(.patch_OverrideGiDrawIdPlusOne_Ground) }
 	.patch_OverrideGiDrawIdPlusOne_Water 0x4BD5DC + _LD_OFF : { *(.patch_OverrideGiDrawIdPlusOne_Water) }
 	PlayerActor_Draw = 0x4BF618 + _LD_OFF;

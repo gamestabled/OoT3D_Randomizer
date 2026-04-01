@@ -11,6 +11,8 @@ void EnSw_GoldSkulltulaDeath(EnSw* this, GlobalContext* globalCtx);
 void EnSw_WalltulaIdle(EnSw* this, GlobalContext* globalCtx);
 void EnSw_SetupGoingHome(EnSw* this, GlobalContext* globalCtx);
 
+void Enemy_StartFinishingBlow(GlobalContext* globalCtx, Actor* actor);
+
 #define Skullwalltula_IsCloseToPlayer(walltula) \
     (walltula->base.xzDistToPlayer < 250.0 && ABS(walltula->base.yDistToPlayer) < 50.0)
 
@@ -235,15 +237,13 @@ void EnSw_rUpdate(Actor* thisx, GlobalContext* globalCtx) {
     }
 }
 
-void FUN_00375B70(GlobalContext* globalCtx, Actor* actor);
-
 void EnSw_Kill(EnSw* this, GlobalContext* globalCtx) {
     if (this->action_fn == EnSw_GoldSkulltulaDeath || (this->base.params & 0x4000 && !gSaveContext.nightFlag)) {
         return;
     }
     // TODO: Fix spin speed
     this->unk_word2 = 24;
-    FUN_00375B70(globalCtx, &this->base); // Not needed?
+    Enemy_StartFinishingBlow(globalCtx, &this->base); // Not needed?
     this->base.colChkInfo.health = 0;
     // this->anime.play_speed = 8.0; // Doesn't seem to matter
     this->unk_float1       = 16.0;

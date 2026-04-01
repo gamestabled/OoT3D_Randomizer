@@ -724,7 +724,7 @@ void Rupees_ChangeBy(s16 rupeeChange);
 void LinkDamage(GlobalContext* globalCtx, Player* player, s32 arg2, f32 arg3, f32 arg4, s16 arg5, s32 arg6);
 u32 Inventory_HasEmptyBottle(void);
 // This function plays sound effects and music tracks, overlaid on top of the current BGM
-void PlaySound(u32);
+void Audio_PlayFanfare(u32);
 u32 Audio_GetActiveSeqId(u8 seqPlayerIndex);
 // Restores the original sequence to the main BGM player after a mini-boss battle or a minigame.
 void Audio_RestoreBGM(void);
@@ -738,12 +738,12 @@ void Actor_GetScreenPos(GlobalContext* globalCtx, Actor* actor, s16* outX, s16* 
 void Actor_KillAllWithMissingObject(GlobalContext* globalCtx, ActorContext* actorCtx);
 void FireDamage(Actor* player, GlobalContext* globalCtx, int flamesColor);
 void Flags_SetEnv(GlobalContext* globalCtx, s16 flag);
-void GiveItem(Actor* actor, GlobalContext* globalCtx, s32 getItemId, f32 xzRange, f32 yRange)
+void Actor_OfferGetItem(Actor* actor, GlobalContext* globalCtx, s32 getItemId, f32 xzRange, f32 yRange)
     __attribute__((pcs("aapcs-vfp")));
 void Message_CloseTextbox(GlobalContext* globalCtx);
 void SetupItemInWater(Player* player, GlobalContext* globalCtx);
 void Health_ChangeBy(GlobalContext* arg1, u32 arg2);
-void PlaySFX(u32 sfxId, Vec3f* pos, u32 token, f32* freqScale, f32* a4, s8* reverbAdd);
+void Audio_PlaySfxGeneral(u32 sfxId, Vec3f* pos, u32 token, f32* freqScale, f32* a4, s8* reverbAdd);
 void Flags_SetSwitch(GlobalContext* globalCtx, u32 flag);
 void Flags_UnsetSwitch(GlobalContext* globalCtx, u32 flag);
 u32 Flags_GetSwitch(GlobalContext* globalCtx, u32 flag);

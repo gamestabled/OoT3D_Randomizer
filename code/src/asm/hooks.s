@@ -12,8 +12,7 @@ HOOK into_loader
     push {r0-r12, lr}
     bl loader_main
     pop {r0-r12, lr}
-    bl 0x100028
-    b  0x100004
+    b nninitRegion
 
 .section .text.randomizer_hooks
 
@@ -775,7 +774,7 @@ HOOK GearMenuEmptySlot
     mov  r2,#0x1
     b    0x2E9A3C @ print reward hint
 
-HOOK PlaySound
+HOOK Audio_PlayFanfare
     push {r1-r12, lr}
     bl SetBGM
     pop {r1-r12, lr}
@@ -1106,7 +1105,7 @@ HOOK OwlEntranceOverride
     bl Entrance_OverrideNextIndex
     cpy r1, r0
     pop {r0, r2-r12, lr}
-    b 0x3716F0
+    b SetNextEntrance
 
 HOOK SavewarpSetRespawnFlag
     push {r0-r12, lr}
@@ -1380,7 +1379,7 @@ HOOK GrannyItemOverride
     bl EnDs_ItemOverride
     cpy r2,r0
     pop {r0,r1,r3-r12,lr}
-    b 0x3724DC @GiveItem
+    b Actor_OfferGetItem
 
 HOOK GrannySetRewardFlag
     push {r0-r12,lr}

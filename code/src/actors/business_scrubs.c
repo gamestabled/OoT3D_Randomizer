@@ -102,11 +102,11 @@ void EnShopnuts_rInit(Actor* thisx, GlobalContext* globalCtx) {
 }
 
 void EnDns_Talk(EnDns* this, GlobalContext* globalCtx);
-void FUN_00161828(EnDns* this, GlobalContext* globalCtx);
-void FUN_003CE92C(EnDns* this, GlobalContext* globalCtx);
-void FUN_00100434(EnDns* this, GlobalContext* globalCtx);
+void EnDns_SetupSale(EnDns* this, GlobalContext* globalCtx);
+void EnDns_Sale(EnDns* this, GlobalContext* globalCtx);
 void EnDns_SetupBurrow(EnDns* this, GlobalContext* globalCtx);
 void EnDns_Burrow(EnDns* this, GlobalContext* globalCtx);
+void EnDns_PostBurrow(EnDns* this, GlobalContext* globalCtx);
 
 u32 EnDns_ChangeAnim(EnDns* globalCtx, u8 arg1);
 
@@ -123,20 +123,20 @@ void EnDns_rUpdate(Actor* thisx, GlobalContext* globalCtx) {
         return;
     }
 
-    if (prev_action_fn == EnDns_Talk &&
-        (scrub->action_fn == FUN_00161828 || scrub->action_fn == FUN_003CE92C || scrub->action_fn == FUN_00100434)) {
+    if (prev_action_fn == EnDns_Talk && (scrub->action_fn == EnDns_SetupSale || scrub->action_fn == EnDns_Sale ||
+                                         scrub->action_fn == EnDns_SetupBurrow)) {
         Multiplayer_Send_ActorUpdate(thisx, NULL, 0);
     }
 }
 
 void EnDns_StartBurrow(EnDns* this) {
-    if (this->action_fn == FUN_00161828 || this->action_fn == FUN_003CE92C || this->action_fn == FUN_00100434 ||
-        this->action_fn == EnDns_SetupBurrow || this->action_fn == EnDns_Burrow) {
+    if (this->action_fn == EnDns_SetupSale || this->action_fn == EnDns_Sale || this->action_fn == EnDns_SetupBurrow ||
+        this->action_fn == EnDns_Burrow || this->action_fn == EnDns_PostBurrow) {
         return;
     }
     this->drop_collectible  = 0;
     this->maintain_collider = 0;
     this->actor.flags &= ~(0x1);
     EnDns_ChangeAnim(this, 1);
-    this->action_fn = EnDns_SetupBurrow;
+    this->action_fn = EnDns_Burrow;
 }

@@ -44,8 +44,8 @@ void EnDoor_Unlock(EnDoor* this) {
         return;
     }
     this->action_fn = &EnDoor_Unlocking;
-    PlaySFX(0x10001D3, &this->base.world.pos, 4, &gSfxDefaultFreqAndVolScale, &gSfxDefaultFreqAndVolScale,
-            &gSfxDefaultReverb); // NA_SE_EV_CHAIN_KEY_UNLOCK
+    Audio_PlaySfxGeneral(0x10001D3, &this->base.world.pos, 4, &gSfxDefaultFreqAndVolScale, &gSfxDefaultFreqAndVolScale,
+                         &gSfxDefaultReverb); // NA_SE_EV_CHAIN_KEY_UNLOCK
 }
 
 void EnDoor_Unlocking(EnDoor* this, GlobalContext* globalCtx) {
@@ -111,8 +111,8 @@ void DoorShutter_Unlock(DoorShutter* this) {
     this->action_fn = &DoorShutter_Unlocking;
     //                         NA_SE_EV_CHAIN_KEY_UNLOCK : NA_SE_EV_CHAIN_KEY_UNLOCK_B
     u32 sfx_id = this->door_type_maybe != 5 ? 0x10001D3 : 0x1000200;
-    PlaySFX(sfx_id, &this->base.world.pos, 4, &gSfxDefaultFreqAndVolScale, &gSfxDefaultFreqAndVolScale,
-            &gSfxDefaultReverb);
+    Audio_PlaySfxGeneral(sfx_id, &this->base.world.pos, 4, &gSfxDefaultFreqAndVolScale, &gSfxDefaultFreqAndVolScale,
+                         &gSfxDefaultReverb);
 }
 
 void DoorShutter_Unlocking(DoorShutter* this, GlobalContext* globalCtx) {
@@ -150,6 +150,6 @@ void DoorGerudo_Unlock(DoorGerudo* this) {
         return;
     }
     this->action_fn = DoorGerudo_Unlocking;
-    PlaySFX(0x10001D3, &this->base.world.pos, 4, &gSfxDefaultFreqAndVolScale, &gSfxDefaultFreqAndVolScale,
-            &gSfxDefaultReverb); // NA_SE_EV_CHAIN_KEY_UNLOCK
+    Audio_PlaySfxGeneral(0x10001D3, &this->base.world.pos, 4, &gSfxDefaultFreqAndVolScale, &gSfxDefaultFreqAndVolScale,
+                         &gSfxDefaultReverb); // NA_SE_EV_CHAIN_KEY_UNLOCK
 }
