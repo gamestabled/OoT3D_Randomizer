@@ -9,6 +9,9 @@ endif
 TOPDIR ?= $(CURDIR)
 include $(DEVKITARM)/3ds_rules
 
+# Detect Python command to use
+PYTHON := $(shell command -v python3 > /dev/null 2>&1 && echo python3 || echo python)
+
 #---------------------------------------------------------------------------------
 # TARGET is the name of the output
 # BUILD is the directory where object files & intermediate files will be placed
@@ -183,7 +186,7 @@ endif
 #---------------------------------------------------------------------------------
 app: create_basecode $(BUILD) $(GFXBUILD) $(DEPSDIR) $(ROMFS_T3XFILES) $(T3XHFILES)
 	@rm -fr $(TARGET).3dsx
-	@py generate_patch_symbols.py
+	@$(PYTHON) generate_patch_symbols.py
 	@$(MAKE) --no-print-directory -C $(BUILD) -f $(CURDIR)/Makefile
 
 create_basecode:

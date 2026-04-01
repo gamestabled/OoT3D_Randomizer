@@ -9,6 +9,9 @@ endif
 TOPDIR ?= $(CURDIR)
 include $(DEVKITARM)/3ds_rules
 
+# Detect Python command to use
+PYTHON := $(shell command -v python3 > /dev/null 2>&1 && echo python3 || echo python)
+
 #---------------------------------------------------------------------------------
 # TARGET is the name of the output
 # BUILD is the directory where object files & intermediate files will be placed
@@ -156,7 +159,7 @@ endif
 base_patch:
 	@[ -d $(BUILD) ] || mkdir -p $(BUILD)
 	@$(MAKE) --no-print-directory -C $(BUILD) -f $(CURDIR)/Makefile
-	@py patch.py $(OUTPUT).elf $(debug);
+	@$(PYTHON) patch.py $(OUTPUT).elf $(debug);
 	@mv basecode.ips $(TARGET).ips
 	@printf "Created $(TARGET).ips\n\n"
 
