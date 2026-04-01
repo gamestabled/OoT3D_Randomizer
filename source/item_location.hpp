@@ -468,7 +468,9 @@ class ItemOverride_Compare {
     }
 };
 
-void LocationTable_Init();
+extern void LocationTable_Init();
+
+extern std::array<ItemLocation, KEY_ENUM_MAX> locationTable;
 
 ItemLocation* Location(LocationKey locKey);
 
