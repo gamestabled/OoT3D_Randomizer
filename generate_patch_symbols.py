@@ -40,7 +40,7 @@ oldContent = cppFile.read_text() if cppFile.exists() else ''
 
 # If the CPP content doesn't change, don't rewrite the file so it won't be recompiled
 if newContent != oldContent:
-    cppFile.write_text(newContent, newline='\n')
+    cppFile.write_text(newContent)
     print(f'Wrote desired symbols to {CPP_FILE_PATH}')
 else:
     print(f'Patch symbols unchanged')
