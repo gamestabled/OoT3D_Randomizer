@@ -3,7 +3,7 @@
 #include "input.h"
 #include "savefile.h"
 #include "settings.h"
-#include "dungeon_rewards.h"
+#include "dungeon.h"
 #include "item_override.h"
 
 extern MenuSpriteManager* gItemsMenuSpritesManager;

@@ -1,0 +1,40 @@
+#pragma once
+#include "s_types.h"
+
+typedef struct EntranceOverride {
+    s16 index;
+    s16 destination;
+    s16 blueWarp;
+    s16 override;
+    s16 overrideDestination;
+} EntranceOverride;
+
+typedef enum SpoilerEntranceGroup {
+    ENTRANCE_GROUP_NO_GROUP,
+    ENTRANCE_GROUP_ONE_WAY,
+    ENTRANCE_GROUP_KOKIRI_FOREST,
+    ENTRANCE_GROUP_LOST_WOODS,
+    ENTRANCE_GROUP_SFM,
+    ENTRANCE_GROUP_KAKARIKO,
+    ENTRANCE_GROUP_GRAVEYARD,
+    ENTRANCE_GROUP_DEATH_MOUNTAIN_TRAIL,
+    ENTRANCE_GROUP_DEATH_MOUNTAIN_CRATER,
+    ENTRANCE_GROUP_GORON_CITY,
+    ENTRANCE_GROUP_ZORAS_RIVER,
+    ENTRANCE_GROUP_ZORAS_DOMAIN,
+    ENTRANCE_GROUP_ZORAS_FOUNTAIN,
+    ENTRANCE_GROUP_HYRULE_FIELD,
+    ENTRANCE_GROUP_LON_LON_RANCH,
+    ENTRANCE_GROUP_LAKE_HYLIA,
+    ENTRANCE_GROUP_GERUDO_VALLEY,
+    ENTRANCE_GROUP_HAUNTED_WASTELAND,
+    ENTRANCE_GROUP_MARKET,
+    ENTRANCE_GROUP_HYRULE_CASTLE,
+    SPOILER_ENTRANCE_GROUP_COUNT,
+} SpoilerEntranceGroup;
+
+typedef struct EntranceTrackingData {
+    u16 EntranceCount;
+    u16 GroupEntranceCounts[2][SPOILER_ENTRANCE_GROUP_COUNT];
+    u16 GroupOffsets[2][SPOILER_ENTRANCE_GROUP_COUNT];
+} EntranceTrackingData;

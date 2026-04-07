@@ -1,5 +1,8 @@
 #pragma once
 
+#include "s_item_override.h"
+#include "s_spoiler_data.h"
+
 #include <algorithm>
 #include <array>
 #include <cstdio>
@@ -8,12 +11,8 @@
 #include <string>
 #include <unistd.h>
 #include <vector>
-
 #include <3ds.h>
 
-#include "../code/include/z3D/z3D.h"
-#include "../code/src/item_override.h"
-#include "../code/src/spoiler_data.h"
 #include "category.hpp"
 #include "item_list.hpp"
 #include "hint_list.hpp"

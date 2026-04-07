@@ -1,7 +1,9 @@
 #ifndef _OCARINA_NOTES_H_
 #define _OCARINA_NOTES_H_
 
-#include "../include/z3D/z3D.h"
+#include "s_ocarina_notes.h"
+
+#include "z3D/z3D.h"
 
 // These values are one less than in OoT decomp
 typedef enum OcarinaInstrumentId {
@@ -13,15 +15,6 @@ typedef enum OcarinaInstrumentId {
     OCARINA_INSTRUMENT_FLUTE,       // Skull Kid
     OCARINA_INSTRUMENT_MAX,
 } OcarinaInstrumentId;
-
-typedef enum OcarinaNoteButton {
-    OCARINA_BUTTON_L,
-    OCARINA_BUTTON_R,
-    OCARINA_BUTTON_Y,
-    OCARINA_BUTTON_X,
-    OCARINA_BUTTON_A,
-    OCARINA_BUTTON_MAX,
-} OcarinaNoteButton;
 
 enum OcarinaSprites {
     OCS_L_BG_L = 0x3F,
@@ -70,27 +63,6 @@ enum OcarinaSprites {
     OCS_YELLOW_MARKER_4,
     OCS_YELLOW_MARKER_5,
 }; // max 0x6C
-
-typedef enum {
-    OCARINA_SONG_MINUET,
-    OCARINA_SONG_BOLERO,
-    OCARINA_SONG_SERENADE,
-    OCARINA_SONG_REQUIEM,
-    OCARINA_SONG_NOCTURNE,
-    OCARINA_SONG_PRELUDE,
-    OCARINA_SONG_SARIAS,
-    OCARINA_SONG_EPONAS,
-    OCARINA_SONG_LULLABY,
-    OCARINA_SONG_SUNS,
-    OCARINA_SONG_TIME,
-    OCARINA_SONG_STORMS,
-    OCARINA_SONG_MAX,
-} OcarinaSongId;
-
-typedef struct {
-    /* 0x0 */ u8 length;
-    /* 0x1 */ u8 buttons[8];
-} OcarinaSongButtonSequence; // size = 0x9
 
 typedef struct {
     /* 0x0 */ u8 pitch;   // number of semitones above middle C

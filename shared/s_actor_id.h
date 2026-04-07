@@ -1,5 +1,4 @@
-#ifndef _Z3DACTOR_ID_H_
-#define _Z3DACTOR_ID_H_
+#pragma once
 
 enum ActorId {
     ACTOR_STALFOS            = 0x002,
@@ -63,5 +62,3 @@ enum ActorId {
     ACTOR_GUAY               = 0x1C0,
     ACTOR_MAX                = 0x1DB,
 };
-
-#endif //_Z3DACTOR_ID_H_

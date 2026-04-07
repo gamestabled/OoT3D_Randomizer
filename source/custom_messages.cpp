@@ -1,10 +1,12 @@
+#include "s_message.h"
+#include "s_item.h"
+#include "s_dungeon.h"
+
 #include "custom_messages.hpp"
 #include "patch.hpp"
 #include "debug.hpp"
 #include "shops.hpp"
-#include "../code/src/message.h"
 #include "settings.hpp"
-#include "../code/src/icetrap.h"
 
 #include <array>
 #include <set>

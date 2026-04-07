@@ -1,5 +1,6 @@
 #include "deku_scrubs.h"
 #include "settings.h"
+#include "enemizer.h"
 
 void EnDntNomal_Update(Actor* thisx, GlobalContext* globalCtx);
 

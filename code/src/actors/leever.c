@@ -1,5 +1,6 @@
 #include "leever.h"
 #include "settings.h"
+#include "enemizer.h"
 
 void EnReeba_SetupSurface(EnReeba* this, GlobalContext* globalCtx);
 void EnReeba_Die(EnReeba* this, GlobalContext* globalCtx);

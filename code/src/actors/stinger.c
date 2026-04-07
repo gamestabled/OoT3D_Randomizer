@@ -1,5 +1,6 @@
 #include "stinger.h"
 #include "settings.h"
+#include "enemizer.h"
 #include "common.h"
 
 void EnEiyer_Update(Actor* thisx, GlobalContext* globalCtx);

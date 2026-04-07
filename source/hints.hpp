@@ -1,5 +1,7 @@
 #pragma once
 
+#include "s_settings.h"
+
 #include <3ds.h>
 #include <array>
 #include <string>
@@ -10,7 +12,6 @@
 #include "text.hpp"
 #include "random.hpp"
 #include "settings.hpp"
-#include "../code/src/settings.h"
 
 enum class HintType {
     Trial,

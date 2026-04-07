@@ -32,10 +32,9 @@ PYTHON := $(shell command -v python3 > /dev/null 2>&1 && echo python3 || echo py
 #---------------------------------------------------------------------------------
 # TARGET	Defined below
 BUILD		:=	build
-SOURCES		:=	$(sort $(dir $(wildcard src/*/ src/)))
+SOURCES		:=	$(sort $(dir $(wildcard src/*/ src/ ../shared/)))
 DATA		:=	data
 INCLUDES	:=	include $(SOURCES)
-INCLUDES    +=  assets
 #ROMFS		:=	romfs
 
 #---------------------------------------------------------------------------------

@@ -1,3 +1,5 @@
+#include "s_message.h"
+
 #include "icetrap.h"
 #include "objects.h"
 #include "z3D/z3D.h"

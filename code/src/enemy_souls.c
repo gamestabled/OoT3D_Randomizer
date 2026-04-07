@@ -1,4 +1,3 @@
-#define CREATE_SOULMENUNAMES
 #include "enemy_souls.h"
 #include "savefile.h"
 #include "settings.h"

@@ -4,7 +4,7 @@
 #define SMALL_ROCK 0
 #define LARGE_ROCK 1
 
-#include "../include/z3D/z3D.h"
+#include "z3D/z3D.h"
 
 struct EnIshi;
 

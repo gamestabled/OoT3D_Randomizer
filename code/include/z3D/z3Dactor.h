@@ -1,10 +1,12 @@
 #ifndef _Z3DACTOR_H_
 #define _Z3DACTOR_H_
 
-#include "z3Dvec.h"
+#include "s_types.h"
+#include "s_actor_id.h"
+
+#include "z3Dmath.h"
 #include "z3Dcollision_check.h"
 #include "z3Dbgcheck.h"
-#include "z3Dactor_id.h"
 
 struct Actor;
 struct GlobalContext;
@@ -33,11 +35,6 @@ struct ZARInfo;
 #define UPDBGCHECKINFO_FLAG_7 (1 << 7) // alternate wall check?
 
 #define ACTOR_FLAG_INSIDE_CULLING_VOLUME (1 << 6)
-
-typedef struct {
-    Vec3f pos;
-    Vec3s rot;
-} PosRot; // size = 0x14
 
 struct SkeletonAnimationModel;
 typedef void (*SkeletonAnimationModelFunc)(struct SkeletonAnimationModel*);

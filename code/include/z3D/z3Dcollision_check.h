@@ -1,7 +1,7 @@
 #ifndef _Z3DCOLLISION_CHECK_H_
 #define _Z3DCOLLISION_CHECK_H_
 
-#include "z3Dvec.h"
+#include "s_types.h"
 
 struct GlobalContext;
 struct CollisionCheckContext;

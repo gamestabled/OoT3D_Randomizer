@@ -1,3 +1,5 @@
+#include <sys/cdefs.h>
+
 #include "z3D/z3D.h"
 #include "common.h"
 #include "actor.h"
@@ -84,6 +86,12 @@
 #include "bubble.h"
 #include "ganondorf.h"
 #include "obj_mure3.h"
+
+void Actor_Kill(Actor* actor) {
+    actor->draw   = NULL;
+    actor->update = NULL;
+    actor->flags &= ~0x1;
+}
 
 void TitleCard_Update(GlobalContext* globalCtx, TitleCardContext* titleCtx);
 

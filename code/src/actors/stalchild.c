@@ -1,5 +1,6 @@
 #include "stalchild.h"
 #include "settings.h"
+#include "enemizer.h"
 #include "enemy_souls.h"
 
 void EnSkb_Update(Actor* thisx, GlobalContext* globalCtx);

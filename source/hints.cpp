@@ -1,5 +1,8 @@
-#include "hints.hpp"
+#include "s_dungeon.h"
+#include "s_item.h"
+#include "s_dungeon.h"
 
+#include "hints.hpp"
 #include "custom_messages.hpp"
 #include "dungeon.hpp"
 #include "item_location.hpp"
@@ -12,8 +15,6 @@
 #include "trial.hpp"
 #include "entrance.hpp"
 #include "settings.hpp"
-
-#include "../code/src/dungeon_rewards.h"
 
 using namespace CustomMessages;
 using namespace Logic;

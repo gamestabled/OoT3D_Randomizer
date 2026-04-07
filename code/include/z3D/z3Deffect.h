@@ -1,8 +1,8 @@
 #ifndef _Z3DEFFECT_H_
 #define _Z3DEFFECT_H_
 
-#include "z3Dvec.h"
-#include "z3Dcolor.h"
+#include "s_types.h"
+#include "s_colors.h"
 
 /* Effects */
 

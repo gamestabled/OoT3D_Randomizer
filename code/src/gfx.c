@@ -80,6 +80,26 @@ static s8 spoilerGroupDungeonIds[] = {
     DUNGEON_INSIDE_GANONS_CASTLE,
 };
 
+static const char* const DungeonNames[] = {
+    "Deku Tree",
+    "Dodongo's Cavern",
+    "Jabu-Jabu's Belly",
+    "Forest Temple",
+    "Fire Temple",
+    "Water Temple",
+    "Spirit Temple",
+    "Shadow Temple",
+    "Bottom of the Well",
+    "Ice Cavern",
+    "Ganon's Tower",
+    "Gerudo Training Grounds",
+    "Gerudo Fortress",
+    "Ganon's Castle",
+    "",
+    "",
+    "Treasure Chest Shop",
+};
+
 static char* spoilerCollectionGroupNames[] = {
     "All Item Locations", // All
     "Kokiri Forest",
