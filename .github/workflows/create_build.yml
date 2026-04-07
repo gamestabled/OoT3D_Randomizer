@@ -20,7 +20,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Project
-        uses: actions/checkout@v4.1.3
+        uses: actions/checkout@v6.0.2
         with:
           fetch-depth: 0
       - name: Get Last Nightly
@@ -29,7 +29,7 @@ jobs:
           echo "last_nightly=$(git describe --tags $(git rev-list --tags --max-count=1))" >> $GITHUB_ENV
       - name: Generate changelog
         id: changelog
-        uses: metcalfc/changelog-generator@v4.3.1
+        uses: metcalfc/changelog-generator@v4.7.0
         with:
           myToken: ${{ secrets.GITHUB_TOKEN }}
           base-ref: ${{ env.last_nightly }}
@@ -41,12 +41,14 @@ jobs:
     needs: get-changelog
     name: Build CIA and 3DSX Files
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     container:
       image: ghcr.io/z3dr/randotools:latest
 
     steps:
       - name: Checkout Project
-        uses: actions/checkout@v4.1.3
+        uses: actions/checkout@v6.0.2
 
       - name: Run Build Script
         env:
@@ -58,7 +60,7 @@ jobs:
 
       - if: ${{ github.event.inputs.build_type == 'Nightly' }}
         name: Create Pre-release
-        uses: ncipollo/release-action@v1.14.0
+        uses: ncipollo/release-action@v1.21.0
         with:
           token: "${{ secrets.GITHUB_TOKEN }}"
           artifacts: "OoT3D_Randomizer.cia,OoT3D_Randomizer.3dsx,cia.png,3dsx.png"
@@ -81,7 +83,7 @@ jobs:
 
       - if: ${{ github.event.inputs.build_type == 'Release' }}
         name: Create Release
-        uses: ncipollo/release-action@v1.14.0
+        uses: ncipollo/release-action@v1.21.0
         with:
           token: "${{ secrets.GITHUB_TOKEN }}"
           artifacts: "OoT3D_Randomizer.cia,OoT3D_Randomizer.3dsx,cia.png,3dsx.png"
