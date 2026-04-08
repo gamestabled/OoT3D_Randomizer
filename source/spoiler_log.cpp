@@ -13,6 +13,7 @@
 #include "gold_skulltulas.hpp"
 #include "enemizer.hpp"
 #include "ocarina_notes.hpp"
+#include "globals.hpp"
 
 #include <3ds.h>
 #include <cstdio>
@@ -848,7 +849,7 @@ bool SpoilerLog_Write() {
     auto rootNode = spoilerLog.NewElement("spoiler-log");
     spoilerLog.InsertEndChild(rootNode);
 
-    rootNode->SetAttribute("version", Settings::version.c_str());
+    rootNode->SetAttribute("version", RandomizerVersion.c_str());
     rootNode->SetAttribute("seed", Settings::seed.c_str());
     rootNode->SetAttribute("hash", GetRandomizerHashAsString().c_str());
     rootNode->SetAttribute("xmlns:h", "http://www.w3.org/1999/xhtml");
@@ -901,7 +902,7 @@ bool PlacementLog_Write() {
     auto rootNode = placementLog.NewElement("placement-log");
     placementLog.InsertEndChild(rootNode);
 
-    rootNode->SetAttribute("version", Settings::version.c_str());
+    rootNode->SetAttribute("version", RandomizerVersion.c_str());
     rootNode->SetAttribute("seed", Settings::seed.c_str());
     rootNode->SetAttribute("hash", GetRandomizerHashAsString().c_str());
 
