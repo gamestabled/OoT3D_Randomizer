@@ -1,6 +1,6 @@
 #include "dampe.h"
 
-#define EnTk_Update ((ActorFunc)GAME_ADDR(0x1BC088))
+void EnTk_Update(Actor* thisx, GlobalContext* globalCtx);
 
 void EnTk_rUpdate(Actor* thisx, GlobalContext* globalCtx) {
     // Custom collectible flag for the heart piece

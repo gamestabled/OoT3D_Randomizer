@@ -3,9 +3,9 @@
 
 #define CsTimer (gGlobalContext->csCtx.frames)
 
-#define BgSpot02Objects_Update ((ActorFunc)GAME_ADDR(0x3831AC))
+void BgSpot02Objects_Update(Actor* thisx, GlobalContext* globalCtx);
 
-#define BgSpot02Objects_Explode (void*)GAME_ADDR(0x205EDC)
+void BgSpot02Objects_Explode(BgSpot02Objects* this, GlobalContext* globalCtx);
 
 void BgSpot02Objects_rUpdate(Actor* thisx, GlobalContext* globalCtx) {
     BgSpot02Objects_Update(thisx, globalCtx);
@@ -20,9 +20,9 @@ void BgSpot02Objects_rUpdate(Actor* thisx, GlobalContext* globalCtx) {
     }
 }
 
-void BgSpot02Objects_ExplodeGrave(BgSpot02Objects* thisx) {
-    PlaySFX(0x1000219, &thisx->base.world.pos, 4, (f32*)GAME_ADDR(0x54AC20), (f32*)GAME_ADDR(0x54AC20),
-            (s8*)GAME_ADDR(0x54AC24)); // NA_SE_EV_GRAVE_EXPLOSION
-    thisx->timer     = 38;
-    thisx->action_fn = BgSpot02Objects_Explode;
+void BgSpot02Objects_ExplodeGrave(BgSpot02Objects* this) {
+    Audio_PlaySfxGeneral(0x1000219, &this->base.world.pos, 4, &gSfxDefaultFreqAndVolScale, &gSfxDefaultFreqAndVolScale,
+                         &gSfxDefaultReverb); // NA_SE_EV_GRAVE_EXPLOSION
+    this->timer     = 38;
+    this->action_fn = BgSpot02Objects_Explode;
 }

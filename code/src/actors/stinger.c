@@ -2,9 +2,9 @@
 #include "settings.h"
 #include "common.h"
 
-#define EnEiyer_Update ((ActorFunc)GAME_ADDR(0x20F700))
+void EnEiyer_Update(Actor* thisx, GlobalContext* globalCtx);
 
-#define EnEiyer_WanderUnderground ((EnEiyerActionFunc)GAME_ADDR(0x1CD1D4))
+void EnEiyer_WanderUnderground(EnEiyer* this, GlobalContext* globalCtx);
 
 void EnEiyer_rUpdate(Actor* thisx, GlobalContext* globalCtx) {
     EnEiyer* this = (EnEiyer*)thisx;

@@ -2,16 +2,7 @@
 #include "common.h"
 #include "settings.h"
 #include "enemizer.h"
-
-typedef struct {
-    Actor base;
-    char unk_1A4[60];
-    SkelAnime anime;
-    char unk_264[6636];
-    ActorFunc action_fn;
-} EnTest;
-
-#define EnTest_Wait ((ActorFunc)GAME_ADDR(0x39D8CC))
+#include "z3D/actors/z_en_test.h"
 
 u8 ShadowShip_HasActiveStalfos(void) {
     if (gEnemizerLocationFlags.shadowShipStalfos) {

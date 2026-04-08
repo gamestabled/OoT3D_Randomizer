@@ -3,8 +3,8 @@
 #include "enemizer.h"
 #include "common.h"
 
-#define EnTorch2_Init ((ActorFunc)GAME_ADDR(0x1F853C))
-#define EnTorch2_Update ((ActorFunc)GAME_ADDR(0x22F0C8))
+void EnTorch2_Init(Actor* thisx, GlobalContext* globalCtx);
+void EnTorch2_Update(Actor* thisx, GlobalContext* globalCtx);
 
 u8 sPlayerWeaponClanked = FALSE;
 

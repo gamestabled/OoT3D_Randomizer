@@ -4,19 +4,19 @@
 #include "icetrap.h"
 #include "savefile.h"
 
-#define OceffWipe_Update ((ActorFunc)GAME_ADDR(0x256158))
+void OceffWipe_Update(Actor* thisx, GlobalContext* globalCtx);
 
-#define OceffWipe2_Update ((ActorFunc)GAME_ADDR(0x2714B8))
+void OceffWipe2_Update(Actor* thisx, GlobalContext* globalCtx);
 
-#define OceffWipe3_Update ((ActorFunc)GAME_ADDR(0x27181C))
+void OceffWipe3_Update(Actor* thisx, GlobalContext* globalCtx);
 
-#define OceffWipe4_Update ((ActorFunc)GAME_ADDR(0x271C10))
+void OceffWipe4_Update(Actor* thisx, GlobalContext* globalCtx);
 
-#define OceffSpot_Update ((ActorFunc)GAME_ADDR(0x255BDC))
+void OceffSpot_Update(Actor* thisx, GlobalContext* globalCtx);
 
-#define OceffSpot_End ((ActorFunc)GAME_ADDR(0x10FBD0))
+void OceffSpot_End(Actor* thisx, GlobalContext* globalCtx);
 
-#define OceffStorm_Update ((ActorFunc)GAME_ADDR(0x27112C))
+void OceffStorm_Update(Actor* thisx, GlobalContext* globalCtx);
 
 // Zelda's Lullaby, Song of Time
 void OceffWipe_rUpdate(Actor* thisx, GlobalContext* globalCtx) {

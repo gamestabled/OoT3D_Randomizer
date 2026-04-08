@@ -3,13 +3,13 @@
 #include "enemy_souls.h"
 #include "settings.h"
 
-#define EnDodongo_Idle ((EnDodongoActionFunc)GAME_ADDR(0x3E4FE8))
+void EnDodongo_Idle(EnDodongo* this, GlobalContext* globalCtx);
 
-#define EnDodojr_Init ((ActorFunc)GAME_ADDR(0x1F51E8))
-#define EnDodojr_JumpAttackBounce ((EnDodojrActionFunc)GAME_ADDR(0x3D069C))
+void EnDodojr_Init(Actor* thisx, GlobalContext* globalCtx);
+void EnDodojr_JumpAttackBounce(EnDodojr* this, GlobalContext* globalCtx);
 
-#define BossDodongo_Update ((ActorFunc)GAME_ADDR(0x27BE30))
-#define BossDodongo_DeathCutscene ((BossDodongoActionFunc)GAME_ADDR(0x3DA7AC))
+void BossDodongo_Update(Actor* thisx, GlobalContext* globalCtx);
+void BossDodongo_DeathCutscene(BossDodongo* this, GlobalContext* globalCtx);
 
 static s16 BossDodongo_PrevNumWallCollisions = 0;
 

@@ -2,9 +2,8 @@
 #include "lake_hylia_objects.h"
 #include "objects.h"
 
-#define BgSpot06Objects_Update ((ActorFunc)GAME_ADDR(0x3833F8))
-
-#define BgSpot06Objects_Destroy ((ActorFunc)GAME_ADDR(0x2AD1E4))
+void BgSpot06Objects_Update(Actor* thisx, GlobalContext* globalCtx);
+void BgSpot06Objects_Destroy(Actor* thisx, GlobalContext* globalCtx);
 
 static u8 actionCounter = 0; // used to perform some actions on subsequent frames
 static s8 waterMovement = 0; // to be used when implementing moving water plane
@@ -58,7 +57,7 @@ void BgSpot06Objects_rUpdate(Actor* thisx, GlobalContext* globalCtx) {
     if (globalCtx->actorCtx.flags.tempSwch & (0x40 << 24)) {                   // switch pressed
         if (thisx->params == 0x0002 && gSaveContext.eventChkInf[6] & 0x0200) { // if water is raised, lower it
             waterMovement = -1;
-            PlaySound(0x100025B);
+            Audio_PlayFanfare(0x100025B);
             gSaveContext.eventChkInf[6] &= ~0x0200;
             // TODO: remove this warp when the water will properly move
             globalCtx->nextEntranceIndex = 0x0604;
@@ -68,7 +67,7 @@ void BgSpot06Objects_rUpdate(Actor* thisx, GlobalContext* globalCtx) {
     } else {
         if (thisx->params == 0x0002 && !(gSaveContext.eventChkInf[6] & 0x0200)) {
             waterMovement = 1;
-            PlaySound(0x100025B);
+            Audio_PlayFanfare(0x100025B);
             gSaveContext.eventChkInf[6] |= 0x0200;
             // TODO: remove this warp when the water will properly move
             globalCtx->nextEntranceIndex = 0x0604;

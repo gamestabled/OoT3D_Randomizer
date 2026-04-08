@@ -1,15 +1,15 @@
 #include "deku_scrubs.h"
 #include "settings.h"
 
-#define EnDntNomal_Update ((ActorFunc)GAME_ADDR(0x280510))
+void EnDntNomal_Update(Actor* thisx, GlobalContext* globalCtx);
 
-#define EnDntNomal_SetupTargetWalk ((ActorFunc)GAME_ADDR(0x21CED4))
-#define EnDntNomal_SetupTargetGivePrize ((ActorFunc)GAME_ADDR(0x2394CC))
-#define EnDntNomal_SetupTargetUnburrow ((ActorFunc)GAME_ADDR(0x21CCFC))
+void EnDntNomal_SetupTargetWalk(EnDntNomal* this, GlobalContext* globalCtx);
+void EnDntNomal_SetupTargetGivePrize(EnDntNomal* this, GlobalContext* globalCtx);
+void EnDntNomal_SetupTargetUnburrow(EnDntNomal* this, GlobalContext* globalCtx);
 
-#define EnHintnuts_Init ((ActorFunc)GAME_ADDR(0x22AB2C))
+void EnHintnuts_Init(Actor* thisx, GlobalContext* globalCtx);
 
-#define EnNutsball_Update ((ActorFunc)GAME_ADDR(0x26BD8C))
+void EnNutsball_Update(Actor* thisx, GlobalContext* globalCtx);
 
 #define NUTSBALL_TYPE_DEKUNUTS 0
 #define NUTSBALL_TYPE_HINTNUTS 1

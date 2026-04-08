@@ -2,9 +2,8 @@
 #include "z3D/actors/z_en_ex_item.h"
 #include "models.h"
 
-#define EnExItem_Init ((ActorFunc)GAME_ADDR(0x20FC50))
-
-#define EnExItem_Destroy ((ActorFunc)GAME_ADDR(0x20FDE0))
+void EnExItem_Init(Actor* thisx, GlobalContext* globalCtx);
+void EnExItem_Destroy(Actor* thisx, GlobalContext* globalCtx);
 
 #define THIS ((EnExItem*)thisx)
 

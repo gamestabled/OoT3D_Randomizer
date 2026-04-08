@@ -1,6 +1,5 @@
 #include "custom_messages.hpp"
-#include "patch_symbols_USA.hpp"
-#include "patch_symbols_EUR.hpp"
+#include "patch.hpp"
 #include "debug.hpp"
 #include "shops.hpp"
 #include "../code/src/message.h"
@@ -160,7 +159,7 @@ void CreateMessage(u32 textId, u32 unk_04, u32 textBoxType, u32 textBoxPosition,
             NAEnglishText += "\0"s;
         }
         messageData.seekg(0, messageData.end);
-        newEntry.info[ENGLISH_U].offset = (char*)((int)messageData.tellg()) + RCUSTOMMESSAGES_USA_ADDR;
+        newEntry.info[ENGLISH_U].offset = (char*)((int)messageData.tellg()) + gPatchSymbols.rCustomMessages;
         newEntry.info[ENGLISH_U].length = NAEnglishText.size();
         messageData << NAEnglishText;
 
@@ -168,7 +167,7 @@ void CreateMessage(u32 textId, u32 unk_04, u32 textBoxType, u32 textBoxPosition,
             NAFrenchText += "\0"s;
         }
         messageData.seekg(0, messageData.end);
-        newEntry.info[FRENCH_U].offset = (char*)((int)messageData.tellg()) + RCUSTOMMESSAGES_USA_ADDR;
+        newEntry.info[FRENCH_U].offset = (char*)((int)messageData.tellg()) + gPatchSymbols.rCustomMessages;
         newEntry.info[FRENCH_U].length = NAFrenchText.size();
         messageData << NAFrenchText;
 
@@ -176,7 +175,7 @@ void CreateMessage(u32 textId, u32 unk_04, u32 textBoxType, u32 textBoxPosition,
             NASpanishText += "\0"s;
         }
         messageData.seekg(0, messageData.end);
-        newEntry.info[SPANISH_U].offset = (char*)((int)messageData.tellg()) + RCUSTOMMESSAGES_USA_ADDR;
+        newEntry.info[SPANISH_U].offset = (char*)((int)messageData.tellg()) + gPatchSymbols.rCustomMessages;
         newEntry.info[SPANISH_U].length = NASpanishText.size();
         messageData << NASpanishText;
     } else if (Settings::Region == REGION_EUR) {
@@ -184,7 +183,7 @@ void CreateMessage(u32 textId, u32 unk_04, u32 textBoxType, u32 textBoxPosition,
             EUREnglishText += "\0"s;
         }
         messageData.seekg(0, messageData.end);
-        newEntry.info[ENGLISH_E].offset = (char*)((int)messageData.tellg()) + RCUSTOMMESSAGES_EUR_ADDR;
+        newEntry.info[ENGLISH_E].offset = (char*)((int)messageData.tellg()) + gPatchSymbols.rCustomMessages;
         newEntry.info[ENGLISH_E].length = EUREnglishText.size();
         messageData << EUREnglishText;
 
@@ -192,7 +191,7 @@ void CreateMessage(u32 textId, u32 unk_04, u32 textBoxType, u32 textBoxPosition,
             EURFrenchText += "\0"s;
         }
         messageData.seekg(0, messageData.end);
-        newEntry.info[FRENCH_E].offset = (char*)((int)messageData.tellg()) + RCUSTOMMESSAGES_EUR_ADDR;
+        newEntry.info[FRENCH_E].offset = (char*)((int)messageData.tellg()) + gPatchSymbols.rCustomMessages;
         newEntry.info[FRENCH_E].length = EURFrenchText.size();
         messageData << EURFrenchText;
 
@@ -200,7 +199,7 @@ void CreateMessage(u32 textId, u32 unk_04, u32 textBoxType, u32 textBoxPosition,
             EURSpanishText += "\0"s;
         }
         messageData.seekg(0, messageData.end);
-        newEntry.info[SPANISH_E].offset = (char*)((int)messageData.tellg()) + RCUSTOMMESSAGES_EUR_ADDR;
+        newEntry.info[SPANISH_E].offset = (char*)((int)messageData.tellg()) + gPatchSymbols.rCustomMessages;
         newEntry.info[SPANISH_E].length = EURSpanishText.size();
         messageData << EURSpanishText;
 
@@ -208,7 +207,7 @@ void CreateMessage(u32 textId, u32 unk_04, u32 textBoxType, u32 textBoxPosition,
             EURItalianText += "\0"s;
         }
         messageData.seekg(0, messageData.end);
-        newEntry.info[ITALIAN_E].offset = (char*)((int)messageData.tellg()) + RCUSTOMMESSAGES_EUR_ADDR;
+        newEntry.info[ITALIAN_E].offset = (char*)((int)messageData.tellg()) + gPatchSymbols.rCustomMessages;
         newEntry.info[ITALIAN_E].length = EURItalianText.size();
         messageData << EURItalianText;
 
@@ -216,7 +215,7 @@ void CreateMessage(u32 textId, u32 unk_04, u32 textBoxType, u32 textBoxPosition,
             EURGermanText += "\0"s;
         }
         messageData.seekg(0, messageData.end);
-        newEntry.info[GERMAN_E].offset = (char*)((int)messageData.tellg()) + RCUSTOMMESSAGES_EUR_ADDR;
+        newEntry.info[GERMAN_E].offset = (char*)((int)messageData.tellg()) + gPatchSymbols.rCustomMessages;
         newEntry.info[GERMAN_E].length = EURGermanText.size();
         messageData << EURGermanText;
     }

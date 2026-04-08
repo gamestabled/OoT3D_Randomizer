@@ -5,6 +5,8 @@
 
 struct EnDns;
 
+typedef void (*EnDnsActionFunc)(struct EnDns* this, GlobalContext* globalCtx);
+
 typedef u32 (*EnDnsPurchaseableCheck)(struct EnDns*);
 typedef void (*EnDnsSetRupeesAndFlags)(struct EnDns*);
 
@@ -18,7 +20,7 @@ typedef struct {
 
 typedef struct EnDns {
     /* 0x000 */ Actor actor;
-    /* 0x1A4 */ void* action_fn;
+    /* 0x1A4 */ EnDnsActionFunc action_fn;
     /* 0x1A8 */ char collider[0x58];
     /* 0x200 */ s16 dust_timer;
     /* 0x202 */ char unk_202;

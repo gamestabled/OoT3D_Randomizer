@@ -6,7 +6,7 @@
 #include "z3D/actors/z_en_shopnuts.h"
 
 void EnDns_rUpdate(Actor* thisx, GlobalContext* globalCtx);
-void EnDns_StartBurrow(EnDns* thisx);
+void EnDns_StartBurrow(EnDns* this);
 
 void EnShopnuts_rInit(Actor* thisx, GlobalContext* globalCtx);
 

@@ -6,7 +6,7 @@
 #define ACTOR_EN_ARROW 0x16
 #define ARROW_ICE 4
 
-#define BgIceShelter_Melt ((BgIceShelterActionFunc)GAME_ADDR(0x3F5F00))
+void BgIceShelter_Melt(BgIceShelter* this, GlobalContext* globalCtx);
 #define NA_SE_EV_ICE_MELT 0x10001F9
 
 void RedIce_CheckIceArrow(Collider* at, Collider* ac) {

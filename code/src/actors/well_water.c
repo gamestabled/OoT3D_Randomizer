@@ -2,7 +2,7 @@
 #include "settings.h"
 
 // This actor is the water that blocks getting into Bottom of the Well as child
-#define BgSpot01Idomizu_Init ((ActorFunc)GAME_ADDR(0x2AC704))
+void BgSpot01Idomizu_Init(Actor* thisx, GlobalContext* globalCtx);
 
 void BgSpot01Idomizu_rInit(Actor* thisx, GlobalContext* globalCtx) {
 

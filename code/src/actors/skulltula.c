@@ -4,12 +4,14 @@
 #include "common.h"
 #include "objects.h"
 
-#define EnSw_Init ((ActorFunc)GAME_ADDR(0x1691C8))
-#define EnSw_Update ((ActorFunc)GAME_ADDR(0x1BB110))
+void EnSw_Init(Actor* thisx, GlobalContext* globalCtx);
+void EnSw_Update(Actor* thisx, GlobalContext* globalCtx);
 
-#define EnSw_GoldSkulltulaDeath (void*)GAME_ADDR(0x3B91BC)
-#define EnSw_WalltulaIdle ((void*)GAME_ADDR(0x3CDAAC))
-#define EnSw_SetupGoingHome ((void*)GAME_ADDR(0x3C2A50))
+void EnSw_GoldSkulltulaDeath(EnSw* this, GlobalContext* globalCtx);
+void EnSw_WalltulaIdle(EnSw* this, GlobalContext* globalCtx);
+void EnSw_SetupGoingHome(EnSw* this, GlobalContext* globalCtx);
+
+void Enemy_StartFinishingBlow(GlobalContext* globalCtx, Actor* actor);
 
 #define Skullwalltula_IsCloseToPlayer(walltula) \
     (walltula->base.xzDistToPlayer < 250.0 && ABS(walltula->base.yDistToPlayer) < 50.0)
@@ -211,7 +213,7 @@ void EnSw_rUpdate(Actor* thisx, GlobalContext* globalCtx) {
         }
     }
 
-    void* prev_action_fn = this->action_fn;
+    EnSwActionFunc prev_action_fn = this->action_fn;
 
     // Fix rotation for the GS in the top room in Fire Temple MQ, which for some reason spawns upside down
     // if the MQ flag is not set and you enter the room from the door.
@@ -235,22 +237,19 @@ void EnSw_rUpdate(Actor* thisx, GlobalContext* globalCtx) {
     }
 }
 
-typedef void (*FUN_00375B70_proc)(GlobalContext* globalCtx, Actor* actor);
-#define FUN_00375B70 ((FUN_00375B70_proc)GAME_ADDR(0x375B70))
-
-void EnSw_Kill(EnSw* thisx, GlobalContext* globalCtx) {
-    if (thisx->action_fn == EnSw_GoldSkulltulaDeath || (thisx->base.params & 0x4000 && !gSaveContext.nightFlag)) {
+void EnSw_Kill(EnSw* this, GlobalContext* globalCtx) {
+    if (this->action_fn == EnSw_GoldSkulltulaDeath || (this->base.params & 0x4000 && !gSaveContext.nightFlag)) {
         return;
     }
     // TODO: Fix spin speed
-    thisx->unk_word2 = 24;
-    FUN_00375B70(globalCtx, &thisx->base); // Not needed?
-    thisx->base.colChkInfo.health = 0;
-    // thisx->anime.play_speed = 8.0; // Doesn't seem to matter
-    thisx->unk_float1       = 16.0;
-    thisx->deathTimer_maybe = 15;
-    thisx->unk_word1        = 1;
-    thisx->action_fn        = EnSw_GoldSkulltulaDeath;
+    this->unk_word2 = 24;
+    Enemy_StartFinishingBlow(globalCtx, &this->base); // Not needed?
+    this->base.colChkInfo.health = 0;
+    // this->anime.play_speed = 8.0; // Doesn't seem to matter
+    this->unk_float1       = 16.0;
+    this->deathTimer_maybe = 15;
+    this->unk_word1        = 1;
+    this->action_fn        = EnSw_GoldSkulltulaDeath;
 }
 
 // Return -1 to use vanilla check

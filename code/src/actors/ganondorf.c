@@ -1,7 +1,7 @@
 #include "z3D/z3D.h"
 #include "ganondorf.h"
 
-#define BossGanon_Update ((ActorFunc)GAME_ADDR(0x242A94))
+void BossGanon_Update(Actor* thisx, GlobalContext* globalCtx);
 
 void BossGanon_rUpdate(Actor* thisx, GlobalContext* globalCtx) {
     s16 prevHealthAccumulator = gSaveContext.healthAccumulator;

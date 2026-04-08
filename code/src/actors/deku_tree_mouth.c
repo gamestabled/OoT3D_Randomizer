@@ -2,7 +2,7 @@
 #include "settings.h"
 #include "z3D/z3D.h"
 
-#define BgTreemouth_Init ((ActorFunc)GAME_ADDR(0x2412B4))
+void BgTreemouth_Init(Actor* thisx, GlobalContext* globalCtx);
 
 void BgTreemouth_rInit(Actor* thisx, GlobalContext* globalCtx) {
 

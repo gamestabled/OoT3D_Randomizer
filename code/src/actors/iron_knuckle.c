@@ -1,8 +1,8 @@
 #include "iron_knuckle.h"
 #include "settings.h"
 
-#define EnIk_Init ((ActorFunc)GAME_ADDR(0x164B0C))
-#define EnIk_UpdateEnemy ((ActorFunc)GAME_ADDR(0x1008B4))
+void EnIk_Init(Actor* thisx, GlobalContext* globalCtx);
+void EnIk_UpdateEnemy(Actor* thisx, GlobalContext* globalCtx);
 
 void EnIk_Update_Randomized(Actor* thisx, GlobalContext* globalCtx) {
     EnIk_UpdateEnemy(thisx, globalCtx);

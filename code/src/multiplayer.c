@@ -1000,8 +1000,8 @@ void Multiplayer_Receive_LinkSFX(u16 senderID) {
     }
 
     mp_duplicateSendProtection = true;
-    PlaySFX(mBuffer[1], &ghostDataPtr->position, 4, (f32*)GAME_ADDR(0x54AC20), (f32*)GAME_ADDR(0x54AC20),
-            (s8*)GAME_ADDR(0x54AC24));
+    Audio_PlaySfxGeneral(mBuffer[1], &ghostDataPtr->position, 4, &gSfxDefaultFreqAndVolScale,
+                         &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
 }
 
 // Shared Progress

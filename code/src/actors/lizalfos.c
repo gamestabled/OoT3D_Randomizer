@@ -1,7 +1,7 @@
 #include "lizalfos.h"
 #include "settings.h"
 
-#define EnZf_Update ((ActorFunc)GAME_ADDR(0x101C48))
+void EnZf_Update(Actor* thisx, GlobalContext* globalCtx);
 
 void EnZf_rUpdate(Actor* thisx, GlobalContext* globalCtx) {
     EnZf* this = (EnZf*)thisx;

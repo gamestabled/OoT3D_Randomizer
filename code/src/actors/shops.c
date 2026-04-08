@@ -32,10 +32,10 @@ s32 Shop_CheckCanBuyBombchus(void) {
 
 s32 numShopItemsLoaded = 0; // Used to determine params. Reset this to 0 in ossan_destroy or smth
 
-#define EnGirlA_Init ((ActorFunc)GAME_ADDR(0x1D7F20))
-#define EnGirlA_Draw ((ActorFunc)GAME_ADDR(0x210188))
+void EnGirlA_Init(Actor* thisx, GlobalContext* globalCtx);
+void EnGirlA_Draw(Actor* thisx, GlobalContext* globalCtx);
 
-#define EnGirlA_InitializeItemAction ((EnGirlAActionFunc)GAME_ADDR(0x14D5C8))
+void EnGirlA_InitializeItemAction(EnGirlA* this, GlobalContext* globalCtx);
 
 void ShopsanityItem_Draw(Actor* itemx, GlobalContext* globalCtx);
 

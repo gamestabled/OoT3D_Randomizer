@@ -2,10 +2,10 @@
 #include "settings.h"
 #include "enemy_souls.h"
 
-#define EnPeehat_Update ((ActorFunc)GAME_ADDR(0x167644))
+void EnPeehat_Update(Actor* thisx, GlobalContext* globalCtx);
 
-#define EnPeehat_StateAttackRecoil ((EnPeehatActionFunc)GAME_ADDR(0x2B2CC0))
-#define EnPeehat_Larva_StateSeekPlayer ((EnPeehatActionFunc)GAME_ADDR(0x391588))
+void EnPeehat_StateAttackRecoil(EnPeehat* this, GlobalContext* globalCtx);
+void EnPeehat_Larva_StateSeekPlayer(EnPeehat* this, GlobalContext* globalCtx);
 
 #define STATE_SEEK_PLAYER 14
 

@@ -30,7 +30,7 @@ void OcarinaNotes_Init(void) {
         OcarinaSongButtonSequence songBtns = gOcarinaSongButtons[songId];
 
         // set playback data
-        OcarinaNote* songNotes = sOcarinaSongNotes[songId];
+        OcarinaNote* songNotes = gOcarinaSongNotes[songId];
         u32 noteIndex          = 0;
         for (u32 btnIndex = 0; btnIndex < songBtns.length; btnIndex++) {
             // set menu song override data

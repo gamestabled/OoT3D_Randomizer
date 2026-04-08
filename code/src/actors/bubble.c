@@ -2,9 +2,9 @@
 #include "enemizer.h"
 #include "common.h"
 
-#define EnBb_Init ((ActorFunc)GAME_ADDR(0x162328))
-#define EnBb_Update ((ActorFunc)GAME_ADDR(0x1005ec))
-#define EnBb_Destroy ((ActorFunc)GAME_ADDR(0x162C28))
+void EnBb_Init(Actor* thisx, GlobalContext* globalCtx);
+void EnBb_Update(Actor* thisx, GlobalContext* globalCtx);
+void EnBb_Destroy(Actor* thisx, GlobalContext* globalCtx);
 
 #define Bubble_GetType(actor) ((s16)(thisx->params | 0xFF00))
 

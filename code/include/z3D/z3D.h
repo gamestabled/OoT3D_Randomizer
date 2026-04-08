@@ -4,7 +4,6 @@
 #include <sys/cdefs.h>
 #include "z3Dactor.h"
 #include "z3Dvec.h"
-// #include "z3Dequipment.h"
 #include "z3Dcutscene.h"
 #include "z3Ditem.h"
 #include "z3Dmath.h"
@@ -14,16 +13,7 @@
 #include "z3Deffect.h"
 #include "z3Dcolor.h"
 
-// #include "hid.h"
-
-#ifdef Version_EUR
-    #define GAME_ADDR(addr)                                       \
-        ((addr >= 0x41A144 && addr <= 0x43668B)   ? (addr + 0x24) \
-         : (addr >= 0x436690 && addr <= 0x4A5ADF) ? (addr + 0x20) \
-                                                  : addr)
-#else
-    #define GAME_ADDR(addr) (addr)
-#endif
+#include "../../include/hid.h"
 
 #define TRUE 1
 #define FALSE 0
@@ -665,24 +655,27 @@ typedef struct MainClass {
 extern GlobalContext* gGlobalContext;
 extern const u32 ItemSlots[];
 extern const char DungeonNames[][25];
-#define gSaveContext (*(SaveContext*)GAME_ADDR(0x587958))
-#define gStaticContext (*(StaticContext*)0x08080010)
-#define gObjectTable ((ObjectFile*)GAME_ADDR(0x53CCF4))
-#define gEntranceTable ((EntranceInfo*)GAME_ADDR(0x543BB8))
-#define gItemUsabilityTable ((u8*)GAME_ADDR(0x506C58))
-#define gGearUsabilityTable ((u32*)GAME_ADDR(0x4D47C8))
-#define gDungeonSceneTable ((Scene*)GAME_ADDR(0x4DC400))
-#define gMQDungeonSceneTable ((Scene*)GAME_ADDR(0x4DCBA8))
-#define gSceneTable ((Scene*)GAME_ADDR(0x545484))
-#define gRandInt (*(u32*)GAME_ADDR(0x50C0C4))
-#define gRandFloat (*(f32*)GAME_ADDR(0x50C0C8))
-#define gDrawItemTable ((DrawItemTableEntry*)GAME_ADDR(0x4D88C8))
-#define gRestrictionFlags ((RestrictionFlags*)GAME_ADDR(0x539DC4))
-#define PLAYER ((Player*)gGlobalContext->actorCtx.actorList[ACTORTYPE_PLAYER].first)
-#define gMainClass ((MainClass*)GAME_ADDR(0x5BE5B8))
-#define gIsBottomScreenDimmed (*(s32*)GAME_ADDR(0x5043EC))
-#define sPrevMainBgmSeqId (*(s32*)GAME_ADDR(0x54ACB8))
 
+extern SaveContext gSaveContext;
+extern StaticContext gStaticContext;
+extern ObjectFile gObjectTable[];
+extern EntranceInfo gEntranceTable[];
+extern u8 gItemUsabilityTable[];
+extern u32 gGearUsabilityTable[];
+extern Scene gDungeonSceneTable[];
+extern Scene gMQDungeonSceneTable[];
+extern Scene gSceneTable[];
+extern u32 gRandInt;
+extern f32 gRandFloat;
+extern DrawItemTableEntry gDrawItemTable[];
+extern RestrictionFlags gRestrictionFlags[];
+extern MainClass gMainClass;
+extern s32 gIsBottomScreenDimmed;
+extern s32 sPrevMainBgmSeqId;
+extern f32 gSfxDefaultFreqAndVolScale;
+extern s8 gSfxDefaultReverb;
+
+#define PLAYER ((Player*)gGlobalContext->actorCtx.actorList[ACTORTYPE_PLAYER].first)
 #define GearSlot(X) (X - ITEM_SWORD_KOKIRI)
 
 typedef enum {
@@ -715,169 +708,71 @@ typedef enum {
 
 #define SCENE_LINK_HOUSE 52
 
-/* TODO: figure out what to do with this stuff */
-#define real_hid_addr 0x10002000
-#define real_hid (*(hid_mem_t*)real_hid_addr)
+extern hid_mem_t real_hid;
+extern u8 Z3D_TOP_SCREEN_LEFT_1[];
+extern u8 Z3D_TOP_SCREEN_LEFT_2[];
+extern u8 Z3D_TOP_SCREEN_RIGHT_1[];
+extern u8 Z3D_TOP_SCREEN_RIGHT_2[];
+extern u8 Z3D_BOTTOM_SCREEN_1[];
+extern u8 Z3D_BOTTOM_SCREEN_2[];
 
-#define Z3D_TOP_SCREEN_LEFT_1 0x14313890
-#define Z3D_TOP_SCREEN_LEFT_2 0x14359DA0
-#define Z3D_TOP_SCREEN_RIGHT_1 0x14410AD0
-#define Z3D_TOP_SCREEN_RIGHT_2 0x14456FE0
-#define Z3D_BOTTOM_SCREEN_1 0x143A02B0
-#define Z3D_BOTTOM_SCREEN_2 0x143D86C0
-
-typedef void (*Item_Give_proc)(GlobalContext* globalCtx, u8 item);
-#define Item_Give ((Item_Give_proc)GAME_ADDR(0x376A78))
-
-typedef void (*DisplayTextbox_proc)(GlobalContext* globalCtx, u16 textId, Actor* actor);
-#define DisplayTextbox ((DisplayTextbox_proc)GAME_ADDR(0x367C7C))
-
-typedef u32 (*EventCheck_proc)(u32 flag);
-#define EventCheck ((EventCheck_proc)GAME_ADDR(0x350CF4))
-
-typedef void (*EventSet_proc)(u32 flag);
-#define EventSet ((EventSet_proc)GAME_ADDR(0x34CBF8))
-
-typedef void (*Rupees_ChangeBy_proc)(s16 rupeeChange);
-#define Rupees_ChangeBy ((Rupees_ChangeBy_proc)GAME_ADDR(0x376A60))
-
-typedef void (*LinkDamage_proc)(GlobalContext* globalCtx, Player* player, s32 arg2, f32 arg3, f32 arg4, s16 arg5,
-                                s32 arg6);
-#define LinkDamage ((LinkDamage_proc)GAME_ADDR(0x35D304))
-
-typedef u32 (*Inventory_HasEmptyBottle_proc)(void);
-#define Inventory_HasEmptyBottle ((Inventory_HasEmptyBottle_proc)GAME_ADDR(0x377A04))
-
-typedef void (*PlaySound_proc)(u32);
+void Item_Give(GlobalContext* globalCtx, u8 item);
+void DisplayTextbox(GlobalContext* globalCtx, u16 textId, Actor* actor);
+u32 EventCheck(u32 flag);
+void EventSet(u32 flag);
+void Rupees_ChangeBy(s16 rupeeChange);
+void LinkDamage(GlobalContext* globalCtx, Player* player, s32 arg2, f32 arg3, f32 arg4, s16 arg5, s32 arg6);
+u32 Inventory_HasEmptyBottle(void);
 // This function plays sound effects and music tracks, overlaid on top of the current BGM
-#define PlaySound ((PlaySound_proc)GAME_ADDR(0x35C528))
-
-typedef u32 (*Audio_GetActiveSeqId_proc)(u8 seqPlayerIndex);
-#define Audio_GetActiveSeqId ((Audio_GetActiveSeqId_proc)GAME_ADDR(0x366684))
-
-typedef void (*Audio_RestoreBGM_proc)(void);
+void Audio_PlayFanfare(u32);
+u32 Audio_GetActiveSeqId(u8 seqPlayerIndex);
 // Restores the original sequence to the main BGM player after a mini-boss battle or a minigame.
-#define Audio_RestoreBGM ((Audio_RestoreBGM_proc)GAME_ADDR(0x34EC14))
-
-// Unknown function. Passing these arguments stops the BGM.
-#define Audio_StopBGM() (((void (*)(u32, u32))0x3655D0)(0, 0))
-
-typedef Actor* (*Actor_Spawn_proc)(ActorContext* actorCtx, GlobalContext* globalCtx, s16 actorId, float posX,
-                                   float posY, float posZ, s16 rotX, s16 rotY, s16 rotZ, s16 params,
-                                   s32 initImmediately) __attribute__((pcs("aapcs-vfp")));
-#define Actor_Spawn ((Actor_Spawn_proc)GAME_ADDR(0x3738D0))
-
-typedef Actor* (*Actor_Find_proc)(ActorContext* actorCtx, s16 actorId, u8 actorType);
-#define Actor_Find ((Actor_Find_proc)GAME_ADDR(0x372D64))
-
-typedef void (*Actor_GetScreenPos_proc)(GlobalContext* globalCtx, Actor* actor, s16* outX, s16* outY);
-#define Actor_GetScreenPos ((Actor_GetScreenPos_proc)GAME_ADDR(0x363A20))
-
-typedef void (*Actor_KillAllWithMissingObject_proc)(GlobalContext* globalCtx, ActorContext* actorCtx);
-#define Actor_KillAllWithMissingObject ((Actor_KillAllWithMissingObject_proc)GAME_ADDR(0x379C3C))
-
-typedef void (*FireDamage_proc)(Actor* player, GlobalContext* globalCtx, int flamesColor);
-#define FireDamage ((FireDamage_proc)GAME_ADDR(0x35D8D8))
-
-typedef void (*Flags_SetEnv_proc)(GlobalContext* globalCtx, s16 flag);
-#define Flags_SetEnv ((Flags_SetEnv_proc)GAME_ADDR(0x366704))
-
-typedef void (*GiveItem_proc)(Actor* actor, GlobalContext* globalCtx, s32 getItemId, f32 xzRange, f32 yRange)
+void Audio_RestoreBGM(void);
+// Unknown params. Passing (0, 0) stops the BGM.
+void Audio_SetBGM(u32, u32);
+#define Audio_StopBGM() Audio_SetBGM(0, 0)
+Actor* Actor_Spawn(ActorContext* actorCtx, GlobalContext* globalCtx, s16 actorId, float posX, float posY, float posZ,
+                   s16 rotX, s16 rotY, s16 rotZ, s16 params, s32 initImmediately) __attribute__((pcs("aapcs-vfp")));
+Actor* Actor_Find(ActorContext* actorCtx, s16 actorId, u8 actorType);
+void Actor_GetScreenPos(GlobalContext* globalCtx, Actor* actor, s16* outX, s16* outY);
+void Actor_KillAllWithMissingObject(GlobalContext* globalCtx, ActorContext* actorCtx);
+void FireDamage(Actor* player, GlobalContext* globalCtx, int flamesColor);
+void Flags_SetEnv(GlobalContext* globalCtx, s16 flag);
+void Actor_OfferGetItem(Actor* actor, GlobalContext* globalCtx, s32 getItemId, f32 xzRange, f32 yRange)
     __attribute__((pcs("aapcs-vfp")));
-#define GiveItem ((GiveItem_proc)GAME_ADDR(0x3724DC))
-
-typedef void (*Message_CloseTextbox_proc)(GlobalContext* globalCtx);
-#define Message_CloseTextbox ((Message_CloseTextbox_proc)GAME_ADDR(0x3725E0))
-
-typedef void (*SetupItemInWater_proc)(Player* player, GlobalContext* globalCtx);
-#define SetupItemInWater ((SetupItemInWater_proc)GAME_ADDR(0x354894))
-
-typedef void (*Health_ChangeBy_proc)(GlobalContext* arg1, u32 arg2);
-#define Health_ChangeBy ((Health_ChangeBy_proc)GAME_ADDR(0x352DBC))
-
-typedef void (*PlaySFX_proc)(u32 sfxId, Vec3f* pos, u32 token, f32* freqScale, f32* a4, s8* reverbAdd);
-#define PlaySFX ((PlaySFX_proc)GAME_ADDR(0x37547C))
-
-typedef void (*Flags_SetSwitch_proc)(GlobalContext* globalCtx, u32 flag);
-#define Flags_SetSwitch ((Flags_SetSwitch_proc)GAME_ADDR(0x375C10))
-
-typedef void (*Flags_UnsetSwitch_proc)(GlobalContext* globalCtx, u32 flag);
-#define Flags_UnsetSwitch ((Flags_UnsetSwitch_proc)GAME_ADDR(0x36BEAC))
-
-typedef u32 (*Flags_GetSwitch_proc)(GlobalContext* globalCtx, u32 flag);
-#define Flags_GetSwitch ((Flags_GetSwitch_proc)GAME_ADDR(0x36E864))
-
-typedef u32 (*Flags_GetCollectible_proc)(GlobalContext* globalCtx, u32 flag);
-#define Flags_GetCollectible ((Flags_GetCollectible_proc)GAME_ADDR(0x36405C))
-
-typedef u32 (*Flags_SetCollectible_proc)(GlobalContext* globalCtx, u32 flag);
-#define Flags_SetCollectible ((Flags_SetCollectible_proc)GAME_ADDR(0x3329D8))
-
-typedef u32 (*Flags_GetClear_proc)(GlobalContext* globalCtx, u32 flag);
-#define Flags_GetClear ((Flags_GetClear_proc)GAME_ADDR(0x36CF6C))
-
-typedef u32 (*Flags_SetClear_proc)(GlobalContext* globalCtx, u32 flag);
-#define Flags_SetClear ((Flags_SetClear_proc)GAME_ADDR(0x36EC14))
-
-typedef void (*Player_SetEquipmentData_proc)(GlobalContext* globalCtx, Player* player);
-#define Player_SetEquipmentData ((Player_SetEquipmentData_proc)GAME_ADDR(0x34913C))
-
-typedef s32 (*BossChallenge_IsActive_proc)(void);
-#define BossChallenge_IsActive ((BossChallenge_IsActive_proc)GAME_ADDR(0x35B164))
-
-typedef s32 (*Audio_PlayActorSfx2_proc)(Actor* actor, s32 sfxID);
-#define Audio_PlayActorSfx2 ((Audio_PlayActorSfx2_proc)GAME_ADDR(0x375BCC))
-
-typedef s32 (*Model_GetMeshGroupCount_proc)(SkeletonAnimationModel* skelAnimeModel);
-#define Model_GetMeshGroupCount ((Model_GetMeshGroupCount_proc)GAME_ADDR(0x2BB71C))
-
-typedef s32 (*Model_IsMeshGroupUsed_proc)(SkeletonAnimationModel* skelAnimeModel, s32 param);
-#define Model_IsMeshGroupUsed ((Model_IsMeshGroupUsed_proc)GAME_ADDR(0x4C6880))
-
-typedef void (*Model_EnableMeshGroupByIndex_proc)(SkeletonAnimationModel* skel, u32 index);
-#define Model_EnableMeshGroupByIndex ((Model_EnableMeshGroupByIndex_proc)GAME_ADDR(0x37266C))
-
-typedef void (*Model_DisableMeshGroupByIndex_proc)(SkeletonAnimationModel* skel, u32 index);
-#define Model_DisableMeshGroupByIndex ((Model_DisableMeshGroupByIndex_proc)GAME_ADDR(0x36932C))
-
-typedef s32 (*Player_InBlockingCsMode_proc)(GlobalContext* globalCtx, Player* player);
-#define Player_InBlockingCsMode ((Player_InBlockingCsMode_proc)GAME_ADDR(0x35DB20))
-
-typedef u32 (*PauseContext_GetState_proc)(void);
-#define PauseContext_GetState ((PauseContext_GetState_proc)GAME_ADDR(0x3695F8))
-
-typedef s32 (*Camera_CheckWater_proc)(Camera* camera);
-#define Camera_CheckWater ((Camera_CheckWater_proc)GAME_ADDR(0x2D06A0))
-
-typedef void (*Camera_UpdateInterface_proc)(u32 flags);
-#define Camera_UpdateInterface ((Camera_UpdateInterface_proc)GAME_ADDR(0x330D84))
-
-typedef f32 (*Camera_BGCheckInfo_proc)(Camera* camera, Vec3f* from, CamColChk* to);
-#define Camera_BGCheckInfo ((Camera_BGCheckInfo_proc)GAME_ADDR(0x3553FC))
-
-typedef s32 (*Quake_Update_proc)(Camera* camera, ShakeInfo* camShake);
-#define Quake_Update ((Quake_Update_proc)GAME_ADDR(0x4787C8))
-
-typedef s16 (*Camera_GetCamDataId_proc)(CollisionContext* colCtx, CollisionPoly* poly, s32 bgId);
-#define Camera_GetCamDataId ((Camera_GetCamDataId_proc)GAME_ADDR(0x47BFD8))
-
-typedef s32 (*Animation_GetLastFrame_proc)(SkelAnime* anime, s32 animation_index);
-#define Animation_GetLastFrame ((Animation_GetLastFrame_proc)GAME_ADDR(0x36AE14))
-
-typedef void (*Animation_Change_proc)(SkelAnime* anime, s32 animation_index, f32 play_speed, f32 start_frame,
-                                      f32 end_frame, f32 morph_frames, s32 mode) __attribute__((pcs("aapcs-vfp")));
-#define Animation_Change ((Animation_Change_proc)GAME_ADDR(0x375C08))
-
-typedef void (*EffectSsDeadDb_Spawn_proc)(GlobalContext* globalCtx, Vec3f* position, Vec3f* velocity,
-                                          Vec3f* acceleration, s16 scale, s16 scale_step, s16 prim_r, s16 prim_g,
-                                          s16 prim_b, s16 prim_a, s16 env_r, s16 env_g, s16 env_b, s16 unused,
-                                          s32 frame_duration, s16 play_sound);
-#define EffectSsDeadDb_Spawn ((EffectSsDeadDb_Spawn_proc)GAME_ADDR(0x3642F4))
-
-typedef void (*SaveGame_proc)(GlobalContext* globalCtx, u8 isSaveFileCreation);
-#define SaveGame ((SaveGame_proc)GAME_ADDR(0x2FDAC8))
-
-typedef s32 (*Message_GetState_proc)(void);
-#define Message_GetState ((Message_GetState_proc)GAME_ADDR(0x3769d8))
+void Message_CloseTextbox(GlobalContext* globalCtx);
+void SetupItemInWater(Player* player, GlobalContext* globalCtx);
+void Health_ChangeBy(GlobalContext* arg1, u32 arg2);
+void Audio_PlaySfxGeneral(u32 sfxId, Vec3f* pos, u32 token, f32* freqScale, f32* a4, s8* reverbAdd);
+void Flags_SetSwitch(GlobalContext* globalCtx, u32 flag);
+void Flags_UnsetSwitch(GlobalContext* globalCtx, u32 flag);
+u32 Flags_GetSwitch(GlobalContext* globalCtx, u32 flag);
+u32 Flags_GetCollectible(GlobalContext* globalCtx, u32 flag);
+u32 Flags_SetCollectible(GlobalContext* globalCtx, u32 flag);
+u32 Flags_GetClear(GlobalContext* globalCtx, u32 flag);
+u32 Flags_SetClear(GlobalContext* globalCtx, u32 flag);
+void Player_SetEquipmentData(GlobalContext* globalCtx, Player* player);
+s32 BossChallenge_IsActive(void);
+s32 Audio_PlayActorSfx2(Actor* actor, s32 sfxID);
+s32 Model_GetMeshGroupCount(SkeletonAnimationModel* skelAnimeModel);
+s32 Model_IsMeshGroupUsed(SkeletonAnimationModel* skelAnimeModel, s32 param);
+void Model_EnableMeshGroupByIndex(SkeletonAnimationModel* skel, u32 index);
+void Model_DisableMeshGroupByIndex(SkeletonAnimationModel* skel, u32 index);
+s32 Player_InBlockingCsMode(GlobalContext* globalCtx, Player* player);
+u32 PauseContext_GetState(void);
+s32 Camera_CheckWater(Camera* camera);
+void Camera_UpdateInterface(u32 flags);
+f32 Camera_BGCheckInfo(Camera* camera, Vec3f* from, CamColChk* to);
+s32 Quake_Update(Camera* camera, ShakeInfo* camShake);
+s16 Camera_GetCamDataId(CollisionContext* colCtx, CollisionPoly* poly, s32 bgId);
+s32 Animation_GetLastFrame(SkelAnime* anime, s32 animation_index);
+void Animation_Change(SkelAnime* anime, s32 animation_index, f32 play_speed, f32 start_frame, f32 end_frame,
+                      f32 morph_frames, s32 mode) __attribute__((pcs("aapcs-vfp")));
+void EffectSsDeadDb_Spawn(GlobalContext* globalCtx, Vec3f* position, Vec3f* velocity, Vec3f* acceleration, s16 scale,
+                          s16 scale_step, s16 prim_r, s16 prim_g, s16 prim_b, s16 prim_a, s16 env_r, s16 env_g,
+                          s16 env_b, s16 unused, s32 frame_duration, s16 play_sound);
+void SaveGame(GlobalContext* globalCtx, u8 isSaveFileCreation);
+s32 Message_GetState(void);
+void SetEventBGM(u32 seqPlayerIndex, u32 seqId);
 
 #endif //_Z3D_H_

@@ -3,11 +3,11 @@
 #include "settings.h"
 #include "common.h"
 
-#define EnMb_Init ((ActorFunc)GAME_ADDR(0x165BA4))
-#define EnMb_Update ((ActorFunc)GAME_ADDR(0x1B6D80))
+void EnMb_Init(Actor* thisx, GlobalContext* globalCtx);
+void EnMb_Update(Actor* thisx, GlobalContext* globalCtx);
 
-#define EnMb_ClubWaitPlayerNear ((EnMbActionFunc)GAME_ADDR(0x10B5D0))
-#define EnMb_ClubAttack ((EnMbActionFunc)GAME_ADDR(0x136C68))
+void EnMb_ClubWaitPlayerNear(EnMb* this, GlobalContext* globalCtx);
+void EnMb_ClubAttack(EnMb* this, GlobalContext* globalCtx);
 
 void EnMb_rInit(Actor* thisx, GlobalContext* globalCtx) {
     EnMb_Init(thisx, globalCtx);

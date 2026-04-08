@@ -1,7 +1,7 @@
 #include "pushblock.h"
 #include "multiplayer.h"
 
-#define ObjOshihiki_Update ((ActorFunc)GAME_ADDR(0x286520))
+void ObjOshihiki_Update(Actor* thisx, GlobalContext* globalCtx);
 
 void ObjOshihiki_rUpdate(Actor* thisx, GlobalContext* globalCtx) {
     Vec3f prevPos = thisx->world.pos;
@@ -14,7 +14,7 @@ void ObjOshihiki_rUpdate(Actor* thisx, GlobalContext* globalCtx) {
     }
 }
 
-#define BgSpot15Rrbox_Update ((ActorFunc)GAME_ADDR(0x2AD484))
+void BgSpot15Rrbox_Update(Actor* thisx, GlobalContext* globalCtx);
 
 void BgSpot15Rrbox_rUpdate(Actor* thisx, GlobalContext* globalCtx) {
     Vec3f prevPos = thisx->world.pos;

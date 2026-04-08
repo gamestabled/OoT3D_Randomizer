@@ -14,18 +14,15 @@
 #include "gloom.h"
 #include "savefile.h"
 
-#define PlayerActor_Init ((ActorFunc)GAME_ADDR(0x191844))
+void PlayerActor_Init(Actor* thisx, GlobalContext* globalCtx);
+void PlayerActor_Update(Actor* thisx, GlobalContext* globalCtx);
+void PlayerActor_Destroy(Actor* thisx, GlobalContext* globalCtx);
+void PlayerActor_Draw(Actor* thisx, GlobalContext* globalCtx);
 
-#define PlayerActor_Update ((ActorFunc)GAME_ADDR(0x1E1B54))
+void Player_Action_Running(Player* player, GlobalContext* globalCtx);
 
-#define PlayerActor_Destroy ((ActorFunc)GAME_ADDR(0x19262C))
-
-#define PlayerActor_Draw ((ActorFunc)GAME_ADDR(0x4BF618))
-
-#define Hookshot_ActorInit ((ActorInit*)GAME_ADDR(0x5108E8))
-
-#define PlayerDListGroup_EmptySheathAdult ((void*)GAME_ADDR(0x53C4D8))
-#define PlayerDListGroup_EmptySheathChildWithHylianShield ((void*)GAME_ADDR(0x53C4DC))
+extern struct Unknown PlayerDListGroup_EmptySheathAdult;
+extern struct Unknown PlayerDListGroup_EmptySheathChildWithHylianShield;
 
 #define OBJECT_LINK_OPENING 0x19F
 
@@ -91,7 +88,7 @@ void PlayerActor_rInit(Actor* thisx, GlobalContext* globalCtx) {
         PLAYER->currentMask = storedMask;
     }
     if (gSettingsContext.hookshotAsChild) {
-        Hookshot_ActorInit->objectId = (gSaveContext.linkAge == 1 ? 0x1 : 0x14);
+        gActorOverlayTable[ACTOR_HOOKSHOT].initInfo->objectId = (gSaveContext.linkAge == 1 ? 0x1 : 0x14);
     }
 
     sPrevHealth = gSaveContext.health;
@@ -158,9 +155,9 @@ void PlayerActor_rDraw(Actor* thisx, GlobalContext* globalCtx) {
     // For child, do this only with certain shields, because the game already handles the other cases.
     if (!(gSaveContext.equips.equipment & 0x000F)) {
         if (gSaveContext.linkAge == AGE_ADULT) {
-            PLAYER->sheathDLists = PlayerDListGroup_EmptySheathAdult;
+            PLAYER->sheathDLists = &PlayerDListGroup_EmptySheathAdult;
         } else if ((gSaveContext.equips.equipment & 0x00F0) >= 0x0020) { // Hylian or Mirror shield
-            PLAYER->sheathDLists = PlayerDListGroup_EmptySheathChildWithHylianShield;
+            PLAYER->sheathDLists = &PlayerDListGroup_EmptySheathChildWithHylianShield;
         }
     }
 
@@ -172,8 +169,7 @@ void PlayerActor_rDraw(Actor* thisx, GlobalContext* globalCtx) {
 f32 Player_GetSpeedMultiplier(void) {
     f32 speedMultiplier = 1;
 
-    if (gSettingsContext.fastBunnyHood && PLAYER->currentMask == 4 &&
-        PLAYER->stateFuncPtr == (void*)GAME_ADDR(0x4BA378)) {
+    if (gSettingsContext.fastBunnyHood && PLAYER->currentMask == 4 && PLAYER->actionFunc == Player_Action_Running) {
         speedMultiplier *= 1.5;
     }
 

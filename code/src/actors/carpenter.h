@@ -3,14 +3,18 @@
 
 #include "z3D/z3D.h"
 
-typedef struct {
+struct EnDaiku;
+
+typedef void (*EnDaikuActionFunc)(struct EnDaiku* this, GlobalContext* globalCtx);
+
+typedef struct EnDaiku {
     Actor base;
     SkelAnime anime;
     char unk_228[2080];
-    void* action_fn;
+    EnDaikuActionFunc action_fn;
 } EnDaiku;
 
-void EnDaiku_rUpdate(EnDaiku* thisx, GlobalContext* globalCtx);
-void EnDaiku_StartEscape(EnDaiku* thisx);
+void EnDaiku_rUpdate(Actor* thisx, GlobalContext* globalCtx);
+void EnDaiku_StartEscape(EnDaiku* this);
 
 #endif //_CARPENTER_H_

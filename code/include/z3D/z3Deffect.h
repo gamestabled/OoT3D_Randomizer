@@ -76,12 +76,10 @@ typedef struct EffectContext {
 } EffectContext;
 _Static_assert(sizeof(EffectContext) == 0xD250, "EffectContext size");
 
-#define gEffectContext (*(EffectContext*)GAME_ADDR(0x58B2E0))
+extern EffectContext gEffectContext;
 
-#define EffectBlure_Update ((void (*)(EffectBlure*))GAME_ADDR(0x227000))
-
-typedef void (*Effect_Delete_proc)(struct GlobalContext* globalCtx, s32 index);
-#define Effect_Delete ((Effect_Delete_proc)GAME_ADDR(0x34F0F4))
+void EffectBlure_Update(EffectBlure*);
+void Effect_Delete(struct GlobalContext* globalCtx, s32 index);
 
 /* Effect Soft Sprites */
 
@@ -151,9 +149,8 @@ typedef struct EffectSsInfo {
     // ...
 } EffectSsInfo;
 
-#define gEffectSsInfo (*(EffectSsInfo*)GAME_ADDR(0x598530))
+extern EffectSsInfo gEffectSsInfo;
 
-typedef void (*EffectSs_Delete_proc)(EffectSs* effectSs);
-#define EffectSs_Delete ((EffectSs_Delete_proc)GAME_ADDR(0x2D6A50))
+void EffectSs_Delete(EffectSs* effectSs);
 
 #endif //_Z3DEFFECT_H_

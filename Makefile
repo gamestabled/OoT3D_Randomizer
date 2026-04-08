@@ -9,6 +9,9 @@ endif
 TOPDIR ?= $(CURDIR)
 include $(DEVKITARM)/3ds_rules
 
+# Detect Python command to use
+PYTHON := $(shell command -v python3 > /dev/null 2>&1 && echo python3 || echo python)
+
 #---------------------------------------------------------------------------------
 # TARGET is the name of the output
 # BUILD is the directory where object files & intermediate files will be placed
@@ -51,7 +54,7 @@ ARCH	:=	-march=armv6k -mtune=mpcore -mfloat-abi=hard -mtp=soft
 
 CFLAGS	:=	-g -Wall -O2 -mword-relocations \
 			-fomit-frame-pointer -ffunction-sections \
-			$(ARCH)
+			-fdiagnostics-color=always $(ARCH)
 
 CFLAGS	+=	$(INCLUDE) -D__3DS__
 
@@ -62,8 +65,10 @@ LDFLAGS	=	-specs=3dsx.specs -g $(ARCH) -Wl,-Map,$(notdir $*.map)
 
 LIBS	:= -lctru -lm
 
-# Debug-specific flags
+# Auto-generated CPP file
+PATCH_SYMBOLS_FILE	:=	patch_symbols.cpp
 
+# Debug-specific flags
 debug ?= 0
 ifneq ($(debug), 0)
 	CFLAGS += -g -DENABLE_DEBUG
@@ -103,6 +108,10 @@ PICAFILES	:=	$(foreach dir,$(SOURCES),$(notdir $(wildcard $(dir)/*.v.pica)))
 SHLISTFILES	:=	$(foreach dir,$(SOURCES),$(notdir $(wildcard $(dir)/*.shlist)))
 GFXFILES	:=	$(foreach dir,$(GRAPHICS),$(notdir $(wildcard $(dir)/*.t3s)))
 BINFILES	:=	$(foreach dir,$(DATA),$(notdir $(wildcard $(dir)/*.*)))
+
+ifeq ($(filter $(PATCH_SYMBOLS_FILE),$(CPPFILES)),)
+	CPPFILES	+= $(PATCH_SYMBOLS_FILE)
+endif
 
 #---------------------------------------------------------------------------------
 # use CXX for linking C++ projects, CC for standard C
@@ -172,14 +181,13 @@ ifneq ($(ROMFS),)
 	export _3DSXFLAGS += --romfs=$(CURDIR)/$(ROMFS)
 endif
 
-.PHONY: all clean delete3DSX create_basecode
+.PHONY: app create_basecode clean
 
 #---------------------------------------------------------------------------------
-all: delete3DSX create_basecode $(BUILD) $(GFXBUILD) $(DEPSDIR) $(ROMFS_T3XFILES) $(T3XHFILES)
-	@$(MAKE) --no-print-directory -C $(BUILD) -f $(CURDIR)/Makefile
-
-delete3DSX:
+app: create_basecode $(BUILD) $(GFXBUILD) $(DEPSDIR) $(ROMFS_T3XFILES) $(T3XHFILES)
 	@rm -fr $(TARGET).3dsx
+	@$(PYTHON) generate_patch_symbols.py
+	@$(MAKE) --no-print-directory -C $(BUILD) -f $(CURDIR)/Makefile
 
 create_basecode:
 ifeq ($(app_only), 0)
@@ -206,7 +214,8 @@ endif
 clean:
 	@echo clean ...
 	@rm -fr $(BUILD) $(TARGET).3dsx $(OUTPUT).smdh $(TARGET).elf $(GFXBUILD) \
-		$(ROMFS)/basecode.ips $(ROMFS)/basecode_USA.ips $(ROMFS)/basecode_EUR.ips
+		$(ROMFS)/basecode.ips $(ROMFS)/basecode_USA.ips $(ROMFS)/basecode_EUR.ips \
+		source/patch_symbols*
 	$(MAKE) clean -C code
 
 #---------------------------------------------------------------------------------
