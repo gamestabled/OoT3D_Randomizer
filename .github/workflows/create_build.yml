@@ -1,5 +1,12 @@
 name: OoT3DR Builds
 
+env:
+  # These are used automatically by git
+  GIT_AUTHOR_NAME: ${{ github.actor }}
+  GIT_AUTHOR_EMAIL: ${{ github.actor_id }}+${{ github.actor }}@users.noreply.github.com
+  GIT_COMMITTER_NAME: GitHub Actions
+  GIT_COMMITTER_EMAIL: 41898282+github-actions[bot]@users.noreply.github.com
+
 on:
   workflow_dispatch:
     inputs:
@@ -103,6 +110,7 @@ jobs:
             ![3DSX Download](https://github.com/${{ github.repository }}/releases/download/${{ env.tag_name }}/3dsx.png)
 
   deploy-gist:
+    if: ${{ github.repository == 'gamestabled/OoT3D_Randomizer' }}
     needs: build-cia-3dsx
     runs-on: ubuntu-latest
     steps:
@@ -433,9 +441,16 @@ jobs:
           done
 
       - name: Deploy to Gist
-        uses: exuanbo/actions-deploy-gist@v1.1.4
-        with:
-          token: ${{ secrets.TOKEN }}
-          gist_id: fa5ea9b42b99377c63bede1cf8ddfdad
-          gist_file_name: OoT3DR.unistore
-          file_path: ./OoT3DR.unistore
+        env:
+          GIST_ID: fa5ea9b42b99377c63bede1cf8ddfdad
+          GIST_FILE_NAME: OoT3DR.unistore
+          GIST_ACCESS_TOKEN: ${{ secrets.TOKEN }}
+        run: |
+          git clone https://$GIST_ACCESS_TOKEN@gist.github.com/$GIST_ID.git gist
+          cp ./$GIST_FILE_NAME ./gist/
+          cd gist
+          git add --all
+          if ! git diff --cached --quiet; then
+            git commit -m "Update UniStore"
+            git push
+          fi
