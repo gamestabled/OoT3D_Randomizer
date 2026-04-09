@@ -1,5 +1,11 @@
-name: Code Linting On Push To Main and Development
+name: Code Linting
 
+env:
+  # These are used automatically by git
+  GIT_AUTHOR_NAME: ${{ github.actor }}
+  GIT_AUTHOR_EMAIL: ${{ github.actor_id }}+${{ github.actor }}@users.noreply.github.com
+  GIT_COMMITTER_NAME: GitHub Actions
+  GIT_COMMITTER_EMAIL: 41898282+github-actions[bot]@users.noreply.github.com
 
 on:
   workflow_dispatch:
@@ -9,8 +15,8 @@ on:
       - development
 
 jobs:
-  auto-formatter-on-main:
-    name: Auto Format Code and Commit If Any Changes
+  auto-formatter:
+    name: Auto Format Code
     runs-on: ubuntu-latest
 
     steps:
@@ -24,13 +30,10 @@ jobs:
         style: file
         inplace: True
 
-    - uses: EndBug/add-and-commit@v9.1.4
-      with:
-        committer_name: GitHub Actions
-        committer_email: 41898282+github-actions[bot]@users.noreply.github.com
-        message: |
-          Run automatic format script as code does not match clang format rules.
-
-          Developers please rebase to avoid merge conflicts!
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    - name: Add and commit
+      run: |
+        git add --all
+        if ! git diff --cached --quiet; then
+          git commit -m "Auto-format code to match clang rules"
+          git push
+        fi
