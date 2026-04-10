@@ -10,7 +10,7 @@
 #include "music.hpp"
 #include "sound_effects.hpp"
 #include "random.hpp"
-#include "randomizer.hpp"
+#include "globals.hpp"
 #include "descriptions.hpp"
 #include "trial.hpp"
 #include "keys.hpp"
@@ -25,7 +25,6 @@ using namespace SFX;
 
 namespace Settings {
 std::string seed;
-std::string version = RANDOMIZER_VERSION "-" COMMIT_NUMBER;
 std::array<u8, 5> hashIconIndexes;
 
 std::vector<std::string> NumOpts(int min, int max, int step = 1, std::string textBefore = {},

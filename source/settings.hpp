@@ -356,7 +356,6 @@ bool ValidateSettings();
 std::string TitleId();
 
 extern std::string seed;
-extern std::string version;
 extern std::array<u8, 5> hashIconIndexes;
 
 extern Option OpenForest;

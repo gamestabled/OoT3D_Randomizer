@@ -185,6 +185,7 @@ endif
 
 #---------------------------------------------------------------------------------
 app: create_basecode $(BUILD) $(GFXBUILD) $(DEPSDIR) $(ROMFS_T3XFILES) $(T3XHFILES)
+	@$(TOPDIR)/write_version.sh
 	@rm -fr $(TARGET).3dsx
 	@$(PYTHON) generate_patch_symbols.py
 	@$(MAKE) --no-print-directory -C $(BUILD) -f $(CURDIR)/Makefile

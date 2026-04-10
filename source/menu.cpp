@@ -11,8 +11,7 @@
 #include "menu.hpp"
 #include "patch.hpp"
 #include "preset.hpp"
-#include "randomizer.hpp"
-#include "settings.hpp"
+#include "globals.hpp"
 #include "spoiler_log.hpp"
 #include "location_access.hpp"
 #include "debug.hpp"
@@ -34,7 +33,7 @@ void PrintTopScreen() {
     consoleSelect(&topScreen);
     consoleClear();
     printf("\x1b[2;11H%sOcarina of Time 3D Randomizer%s", CYAN, RESET);
-    printf("\x1b[3;18H%s%s-%s%s", CYAN, RANDOMIZER_VERSION, COMMIT_NUMBER, RESET);
+    printf("\x1b[3;18H%s%s%s", CYAN, RandomizerVersion.c_str(), RESET);
     printf("\x1b[4;10HA/B/D-pad: Navigate Menu\n");
     printf("            Select: Exit to Homebrew Menu\n");
     printf("                 Y: New Random Seed\n");

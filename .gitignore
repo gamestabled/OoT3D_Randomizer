@@ -19,4 +19,5 @@ build/*
 *.ips
 *.zar
 source/patch_symbols*
+version.hpp
 .DS_Store
