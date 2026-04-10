@@ -2,6 +2,7 @@
 #include "flying_traps.h"
 #include "enemy_souls.h"
 #include "settings.h"
+#include "enemizer.h"
 #include "common.h"
 
 void EnYukabyun_Update(Actor* thisx, GlobalContext* globalCtx);

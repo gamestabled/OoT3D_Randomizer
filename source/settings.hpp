@@ -1,7 +1,8 @@
 #pragma once
 
-#include <3ds.h>
+#include "s_settings.h"
 
+#include <3ds.h>
 #include <array>
 #include <algorithm>
 #include <cstdlib>
@@ -11,7 +12,6 @@
 #include <variant>
 #include <vector>
 
-#include "../code/src/settings.h"
 #include "category.hpp"
 #include "cosmetics.hpp"
 #include "debug.hpp"

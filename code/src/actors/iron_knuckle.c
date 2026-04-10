@@ -1,5 +1,6 @@
 #include "iron_knuckle.h"
 #include "settings.h"
+#include "enemizer.h"
 
 void EnIk_Init(Actor* thisx, GlobalContext* globalCtx);
 void EnIk_UpdateEnemy(Actor* thisx, GlobalContext* globalCtx);

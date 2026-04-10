@@ -1,6 +1,7 @@
 #include "door.h"
 #include "models.h"
 #include "settings.h"
+#include "enemizer.h"
 #include "multiplayer.h"
 
 // Certain doors can cause a crash depending on a freestanding

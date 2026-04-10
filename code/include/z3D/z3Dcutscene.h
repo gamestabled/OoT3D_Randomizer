@@ -1,7 +1,7 @@
 #ifndef _Z3DCUTSCENE_H_
 #define _Z3DCUTSCENE_H_
 
-#include "z3Dvec.h"
+#include "s_types.h"
 
 typedef struct {
     /* 0x00 */ u16 action; // "dousa"

@@ -1,5 +1,4 @@
-#ifndef _Z3DSCENE_H_
-#define _Z3DSCENE_H_
+#pragma once
 
 typedef enum SceneId {
     /* 0x00 */ SCENE_DEKU_TREE,
@@ -112,5 +111,3 @@ typedef enum SceneId {
     /* 0x6B */ SCENE_HYRULE_FIELD_TITLE_SCREEN,
     /* 0x6C */ SCENE_MAX,
 } SceneId;
-
-#endif //_Z3DSCENE_H_

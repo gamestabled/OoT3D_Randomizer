@@ -1,10 +1,10 @@
 #pragma once
 
+#include "s_colors.h"
+
 #include <array>
 #include <string>
 #include <vector>
-
-#include "../code/include/z3D/z3Dcolor.h"
 
 namespace Cosmetics {
 constexpr std::string_view RANDOM_CHOICE_STR   = "Random Choice";

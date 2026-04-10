@@ -1,5 +1,6 @@
-#include "item_pool.hpp"
+#include "s_item.h"
 
+#include "item_pool.hpp"
 #include "dungeon.hpp"
 #include "fill.hpp"
 #include "item_list.hpp"

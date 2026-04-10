@@ -15,7 +15,7 @@ jobs:
     - name: Format Project
       uses: DoozyX/clang-format-lint-action@v0.15
       with:
-        source: "./code ./source"
+        source: "./code ./source ./shared"
         extensions: 'c,h,cpp,hpp'
         clangFormatVersion: 14
 

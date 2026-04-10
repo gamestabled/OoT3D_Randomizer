@@ -1,4 +1,6 @@
 // clang-format off
+#include "s_dungeon.h"
+
 #include "item_location.hpp"
 
 #include "dungeon.hpp"

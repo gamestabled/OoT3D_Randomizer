@@ -1,5 +1,6 @@
 #include "poe.h"
 #include "settings.h"
+#include "enemizer.h"
 
 void EnPoh_Init(Actor* thisx, GlobalContext* globalCtx);
 void EnPoh_Update(Actor* thisx, GlobalContext* globalCtx);

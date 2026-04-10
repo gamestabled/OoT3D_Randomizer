@@ -1,5 +1,6 @@
 #include "z3D/z3D.h"
 #include "settings.h"
+#include "enemizer.h"
 
 #include "gerudos.h"
 

@@ -1,6 +1,7 @@
 #include "skulltula.h"
 #include "multiplayer.h"
 #include "settings.h"
+#include "enemizer.h"
 #include "common.h"
 #include "objects.h"
 

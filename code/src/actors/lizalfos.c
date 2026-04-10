@@ -1,5 +1,6 @@
 #include "lizalfos.h"
 #include "settings.h"
+#include "enemizer.h"
 
 void EnZf_Update(Actor* thisx, GlobalContext* globalCtx);
 

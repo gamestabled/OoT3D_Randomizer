@@ -1,3 +1,5 @@
+#include "s_actor_id.h"
+
 #include "enemizer.hpp"
 #include "dungeon.hpp"
 #include "logic.hpp"

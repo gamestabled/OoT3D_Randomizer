@@ -1,12 +1,13 @@
 #pragma once
 
+#include "s_gold_skulltulas.h"
+
 #include <3ds.h>
 #include <vector>
 #include <string_view>
 #include <map>
 
 #include "location_access.hpp"
-#include "../code/src/actors/skulltula.h"
 
 namespace GoldSkulltulas {
 

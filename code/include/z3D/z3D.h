@@ -1,19 +1,20 @@
 #ifndef _Z3D_H_
 #define _Z3D_H_
 
+#include "s_types.h"
+#include "s_colors.h"
+#include "s_scene_id.h"
+#include "s_dungeon.h"
+
 #include <sys/cdefs.h>
 #include "z3Dactor.h"
-#include "z3Dvec.h"
 #include "z3Dcutscene.h"
 #include "z3Ditem.h"
 #include "z3Dmath.h"
 #include "z3Dbgcheck.h"
-#include "z3Dscene.h"
-#include "z3Dactor_id.h"
 #include "z3Deffect.h"
-#include "z3Dcolor.h"
 
-#include "../../include/hid.h"
+#include "hid.h"
 
 #define TRUE 1
 #define FALSE 0
@@ -653,8 +654,7 @@ typedef struct MainClass {
 } MainClass;
 
 extern GlobalContext* gGlobalContext;
-extern const u32 ItemSlots[];
-extern const char DungeonNames[][25];
+extern const u8 ItemSlots[];
 
 extern SaveContext gSaveContext;
 extern StaticContext gStaticContext;
@@ -677,34 +677,6 @@ extern s8 gSfxDefaultReverb;
 
 #define PLAYER ((Player*)gGlobalContext->actorCtx.actorList[ACTORTYPE_PLAYER].first)
 #define GearSlot(X) (X - ITEM_SWORD_KOKIRI)
-
-typedef enum {
-    DUNGEON_DEKU_TREE = 0,
-    DUNGEON_DODONGOS_CAVERN,
-    DUNGEON_JABUJABUS_BELLY,
-    DUNGEON_FOREST_TEMPLE,
-    DUNGEON_FIRE_TEMPLE,
-    DUNGEON_WATER_TEMPLE,
-    DUNGEON_SPIRIT_TEMPLE,
-    DUNGEON_SHADOW_TEMPLE,
-    DUNGEON_BOTTOM_OF_THE_WELL,
-    DUNGEON_ICE_CAVERN,
-    DUNGEON_GANONS_TOWER,
-    DUNGEON_GERUDO_TRAINING_GROUNDS,
-    DUNGEON_THIEVES_HIDEOUT,
-    DUNGEON_INSIDE_GANONS_CASTLE,
-    DUNGEON_GANONS_TOWER_COLLAPSING_INTERIOR,
-    DUNGEON_GANONS_CASTLE_COLLAPSING,
-    DUNGEON_TREASURE_CHEST_SHOP,
-    DUNGEON_DEKU_TREE_BOSS_ROOM,
-    DUNGEON_DODONGOS_CAVERN_BOSS_ROOM,
-    DUNGEON_JABUJABUS_BELLY_BOSS_ROOM,
-    DUNGEON_FOREST_TEMPLE_BOSS_ROOM,
-    DUNGEON_FIRE_TEMPLE_BOSS_ROOM,
-    DUNGEON_WATER_TEMPLE_BOSS_ROOM,
-    DUNGEON_SPIRIT_TEMPLE_BOSS_ROOM,
-    DUNGEON_SHADOW_TEMPLE_BOSS_ROOM,
-} DungeonId;
 
 #define SCENE_LINK_HOUSE 52
 

@@ -1,7 +1,7 @@
 #ifndef _COMMON_H_
 #define _COMMON_H_
 
-#include "../include/z3D/z3D.h"
+#include "z3D/z3D.h"
 
 #include <stdarg.h>
 

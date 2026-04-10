@@ -1,5 +1,6 @@
 #include "dead_hand_hand.h"
 #include "settings.h"
+#include "enemizer.h"
 
 void EnDha_Update(Actor* thisx, GlobalContext* globalCtx);
 

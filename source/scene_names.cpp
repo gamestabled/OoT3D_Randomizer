@@ -1,4 +1,4 @@
-#include "../code/include/z3D/z3Dscene.h"
+#include "s_scene_id.h"
 
 extern "C" {
 

@@ -1,7 +1,8 @@
-#include "settings.hpp"
+#include "s_enemy_souls.h"
 
 #include <unistd.h>
 
+#include "settings.hpp"
 #include "cosmetics.hpp"
 #include "dungeon.hpp"
 #include "fill.hpp"
@@ -15,9 +16,6 @@
 #include "keys.hpp"
 #include "gold_skulltulas.hpp"
 #include "enemizer.hpp"
-
-#define CREATE_SOULMENUNAMES
-#include "../code/src/enemy_souls.h"
 
 using namespace Cosmetics;
 using namespace Dungeon;

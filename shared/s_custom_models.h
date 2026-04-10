@@ -1,0 +1,17 @@
+#pragma once
+#include "s_types.h"
+
+typedef enum CustomGeneralAssetsTexAnims {
+    TEXANIM_COPY_NINTENDO,
+    TEXANIM_LINK_BODY,
+    TEXANIM_TITLE_LOGO_US,
+    TEXANIM_ADULT_SONG,
+    TEXANIM_CHILD_SONG,
+    TEXANIM_CHILD_LINK_BODY,
+    TEXANIM_BOSS_KEY,
+    TEXANIM_GOLD_CHEST,
+    TEXANIM_KEY_CHEST,
+    TEXANIM_HEART_CHEST,
+    TEXANIM_SKULL_CHEST,
+    TEXANIM_OCARINA_NOTE_BUTTON,
+} CustomGeneralAssetsTexAnims;

@@ -1,0 +1,62 @@
+#pragma once
+#include "s_types.h"
+
+typedef enum EnemySoulId {
+    SOUL_NONE = -1,
+    SOUL_POE,
+    SOUL_OCTOROK,
+    SOUL_KEESE,
+    SOUL_TEKTITE,
+    SOUL_LEEVER,
+    SOUL_PEAHAT,
+    SOUL_LIZALFOS,
+    SOUL_SHABOM,
+    SOUL_BIRI_BARI,
+    SOUL_TAILPASARAN,
+    SOUL_SKULLTULA,
+    SOUL_TORCH_SLUG,
+    SOUL_STINGER,
+    SOUL_MOBLIN,
+    SOUL_ARMOS,
+    SOUL_DEKU_BABA,
+    SOUL_BUBBLE,
+    SOUL_FLYING_TRAP,
+    SOUL_BEAMOS,
+    SOUL_WALLMASTER,
+    SOUL_REDEAD_GIBDO,
+    SOUL_SHELL_BLADE,
+    SOUL_LIKE_LIKE,
+    SOUL_TENTACLE,
+    SOUL_ANUBIS,
+    SOUL_SPIKE,
+    SOUL_SKULL_KID,
+    SOUL_FREEZARD,
+    SOUL_DEKU_SCRUB,
+    SOUL_WOLFOS,
+    SOUL_STALCHILD,
+    SOUL_GUAY,
+    SOUL_DOOR_MIMIC,
+    SOUL_STALFOS,
+    SOUL_DARK_LINK,
+    SOUL_FLARE_DANCER,
+    SOUL_DEAD_HAND,
+    SOUL_GERUDO,
+    SOUL_GOHMA,
+    SOUL_DODONGO,
+    SOUL_BARINADE,
+    SOUL_PHANTOM_GANON,
+    SOUL_VOLVAGIA,
+    SOUL_MORPHA,
+    SOUL_BONGO_BONGO,
+    SOUL_TWINROVA,
+    SOUL_GANON,
+    SOUL_MAX,
+} EnemySoulId;
+
+typedef struct SoulMenuInfo {
+    EnemySoulId soulId;
+    const char* name;
+    const char* altName;
+} SoulMenuInfo;
+
+extern SoulMenuInfo SoulMenuNames[SOUL_MAX];

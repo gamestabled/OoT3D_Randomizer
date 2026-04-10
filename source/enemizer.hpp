@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../code/src/enemizer.h"
+#include "s_enemizer.h"
 
 #include <string>
 #include <vector>

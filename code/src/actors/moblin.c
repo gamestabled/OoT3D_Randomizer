@@ -1,6 +1,7 @@
 #include "z3D/z3D.h"
 #include "moblin.h"
 #include "settings.h"
+#include "enemizer.h"
 #include "common.h"
 
 void EnMb_Init(Actor* thisx, GlobalContext* globalCtx);

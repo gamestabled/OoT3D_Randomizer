@@ -1,7 +1,9 @@
 #ifndef _SKULLTULA_H_
 #define _SKULLTULA_H_
 
-#include "../../code/include/z3D/z3D.h"
+#include "s_gold_skulltulas.h"
+
+#include "z3D/z3D.h"
 
 /* Bit usage of "params" for Gold Skulltula:
  *   0-7: Bit in gsFlags
@@ -14,7 +16,7 @@
 
 struct EnSw;
 
-typedef void (*EnSwActionFunc)(struct EnSw*, GlobalContext* globalCtx);
+typedef void (*EnSwActionFunc)(struct EnSw* this, GlobalContext* globalCtx);
 
 typedef struct EnSw {
     /* 0x000 */ Actor base;
@@ -48,7 +50,7 @@ _Static_assert(sizeof(EnSw) == 0x830, "EnSw size");
 
 void EnSw_rInit(Actor* thisx, GlobalContext* globalCtx);
 void EnSw_rUpdate(Actor* thisx, GlobalContext* globalCtx);
-void EnSw_Kill(EnSw*, GlobalContext* globalCtx);
+void EnSw_Kill(EnSw* this, GlobalContext* globalCtx);
 
 typedef enum {
     GS_PPT_ACTORENTRY,
@@ -60,26 +62,5 @@ typedef enum {
 
 u8 Gs_HasAltLoc(void* ptr, GsParamPointerType ppt, u8 adjustArrayIndex);
 void Gs_SpawnAltLocs(void);
-
-typedef enum {
-    GS_AGE_ADULT,
-    GS_AGE_CHILD,
-    GS_AGE_BOTH,
-} GsAgeCondition;
-
-typedef enum {
-    GS_TIME_ALWAYS,
-    GS_TIME_NIGHT,
-} GsTimeCondition;
-
-typedef struct {
-    u8 arrayIndex;
-    u8 bitFlag;
-    s16 scene;
-    s8 room;
-    GsAgeCondition ageCondition;
-    GsTimeCondition timeCondition;
-    PosRot posRot;
-} GsLocOverride;
 
 #endif //_SKULLTULA_H_

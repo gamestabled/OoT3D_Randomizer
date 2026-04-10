@@ -1,5 +1,7 @@
-#include "patch.hpp"
+#include "s_custom_models.h"
+#include "s_enemizer.h"
 
+#include "patch.hpp"
 #include "cosmetics.hpp"
 #include "custom_messages.hpp"
 #include "music.hpp"
@@ -19,9 +21,6 @@
 #include <memory>
 #include <string>
 #include <vector>
-
-#include "../code/src/custom_models.h"
-#include "../code/src/enemizer.h"
 
 // For specification on the IPS file format, visit: https://zerosoft.zophar.net/ips.php
 
