@@ -25,11 +25,8 @@ PATCH IncomingGetItemID
 PATCH SaveFile_Init
     bl hook_SaveFile_Init
 
-PATCH OverrideTextID
-    b hook_OverrideTextID
-
-PATCH OverrideItemID
-    b hook_OverrideItemID
+PATCH OverrideItemAndTextID
+    bl hook_OverrideItemAndTextID
 
 PATCH OverrideDrawItemOne
     b hook_OverrideDrawItemOne
@@ -967,11 +964,11 @@ PATCH SetBGMEntrance
 PATCH SetBGMDayNight
     b hook_SetBGMDayNight
 
-PATCH SetBGMEvent
-    b hook_SetBGMEvent
+PATCH Audio_PlaySequence
+    b hook_Audio_PlaySequence
 
-PATCH SetSFX
-    b hook_SetSFX
+PATCH Audio_PlaySfxGeneral
+    b hook_Audio_PlaySfxGeneral
 
 PATCH GiantsKnifeWithoutKokiriSword
     cmp r3,#0x8

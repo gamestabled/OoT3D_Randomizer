@@ -3,6 +3,8 @@
 #include "savefile.h"
 #include "common.h"
 
+u8 Bgm_FanfareModEnabled = FALSE;
+
 static u32 rBGMOverrides[128] = { 0 };
 
 u32 SetBGM(u32 original) {
@@ -25,4 +27,22 @@ u32 SetBGM(u32 original) {
     }
 
     return rBGMOverrides[i];
+}
+
+u32 Bgm_OverrideFanfare(u32 original) {
+    Bgm_FanfareModEnabled = FALSE;
+    return SetBGM(original);
+}
+
+void Bgm_ApplyFanfareMod(void) {
+    if (!Bgm_FanfareModEnabled) {
+        return;
+    }
+    if (gUnkSequencePlayerData[SEQ_PLAYER_FANFARE] == NULL) {
+        Bgm_FanfareModEnabled = FALSE;
+        return;
+    }
+
+    // Linearly decrease pitch
+    gUnkSequencePlayerData[SEQ_PLAYER_FANFARE]->freq -= 0.009;
 }

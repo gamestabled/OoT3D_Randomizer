@@ -221,7 +221,7 @@ u8 IceTrap_ActivateCurseTrap(u8 curseType) {
     gSaveContext.timer2Value = 60;
     TimerFrameCounter        = 30;
     DisplayTextbox(gGlobalContext, CURSETRAP_TEXT_BASE_INDEX + curseType - ICETRAP_CURSE_SHIELD, 0);
-    Audio_PlayFanfare(0x100035C); // Poe laugh SFX
+    Audio_PlayFanfare(NA_SE_EN_PO_LAUGH);
     IceTrap_ActiveCurse = (s8)curseType;
     return 1;
 }

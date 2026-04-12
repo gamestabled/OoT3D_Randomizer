@@ -1,10 +1,11 @@
 #ifndef _BGM_H_
 #define _BGM_H_
 
-#define BGM_BASE 0x1000585
-#define BGM_MINI_BOSS 0x10005A5
+#define BGM_BASE NA_BGM_FIELD
 #define BGM_COUNT 85
 
-u32 SetBGM(u32 original);
+extern u8 Bgm_FanfareModEnabled;
+
+void Bgm_ApplyFanfareMod(void);
 
 #endif // _BGM_H_

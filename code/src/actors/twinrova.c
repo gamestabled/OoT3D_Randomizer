@@ -6,8 +6,6 @@ void Boss_Tw_Update(Actor* thisx, GlobalContext* globalCtx);
 void Boss_Tw_Draw(Actor* thisx, GlobalContext* globalCtx);
 void Boss_Tw_Destroy(Actor* thisx, GlobalContext* globalCtx);
 
-#define BOSS_BATTLE_BGM 0x1000589
-
 static u8 fightStarted = 0;
 static u8 appeared     = 0;
 
@@ -27,7 +25,7 @@ void Boss_Tw_rUpdate(Actor* thisx, GlobalContext* globalCtx) {
 
     if (!fightStarted && pos.x > -100 && pos.x < 100 && pos.y > 200 && pos.z > -100 && pos.z < 100) {
         fightStarted = 1;
-        SetEventBGM(0, BOSS_BATTLE_BGM);
+        Audio_PlaySequence(SEQ_PLAYER_BGM_MAIN, NA_BGM_BOSS00);
     }
 
     if (fightStarted) {
