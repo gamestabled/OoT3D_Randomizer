@@ -3091,17 +3091,18 @@ static void UpdateCosmetics() {
     }
     // Ganon/dorf Blood
     switch (Settings::GanonBloodColor.Value<u8>()) {
-    case BLOODCOLOR_VANILLA:
-        finalGanonBloodColor = (Color_RGBA8){ 0, 120, 0, 255 };
-        break;
-    case BLOODCOLOR_ORIGINAL:
-        finalGanonBloodColor = (Color_RGBA8){ 120, 0, 0, 255 };
-        break;
-    case BLOODCOLOR_RANDOM:
-        finalGanonBloodColor = Cosmetics::HexStrToColorRGBA8(RandomColor());
-        break;
-    case BLOODCOLOR_CUSTOM:
-        finalGanonBloodColor = Cosmetics::HexStrToColorRGBA8(GetCustomColor(Settings::GanonBloodColor.GetSelectedOptionText()));
+        case BLOODCOLOR_VANILLA:
+            finalGanonBloodColor = (Color_RGBA8){ 0, 120, 0, 255 };
+            break;
+        case BLOODCOLOR_ORIGINAL:
+            finalGanonBloodColor = (Color_RGBA8){ 120, 0, 0, 255 };
+            break;
+        case BLOODCOLOR_RANDOM:
+            finalGanonBloodColor = Cosmetics::HexStrToColorRGBA8(RandomColor());
+            break;
+        case BLOODCOLOR_CUSTOM:
+            finalGanonBloodColor =
+                Cosmetics::HexStrToColorRGBA8(GetCustomColor(Settings::GanonBloodColor.GetSelectedOptionText()));
     }
 }
 

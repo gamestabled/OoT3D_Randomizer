@@ -4,7 +4,10 @@
 #include "objects.h"
 
 void initGanonBloodColors(void) {
-    typedef struct { Color_RGBA8 primary; Color_RGBA8 environ; } BloodCol;
+    typedef struct {
+        Color_RGBA8 primary;
+        Color_RGBA8 environ;
+    } BloodCol;
     extern BloodCol gGanondorfBlood, gGanonBlood;
     Color_RGBA8 col = gSettingsContext.ganonBloodColor;
     gGanondorfBlood = gGanonBlood = (BloodCol){ col, col };
