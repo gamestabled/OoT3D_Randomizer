@@ -72,33 +72,16 @@ HOOK SaveFile_Init
     strb r1,[r0,#0x35]
     bx lr
 
-.global rActiveItemRow
-.rActiveItemRow_addr:
-    .word rActiveItemRow
-
-HOOK OverrideTextID
-    ldr r1,.rActiveItemRow_addr
-    ldr r1,[r1]
-    cmp r1,#0x0
-    beq noOverrideTextID
-    b 0x2BC1D0
-noOverrideTextID:
-    ldrb r1,[r6,#0x4]
-    b 0x2BC1C8
-
-HOOK OverrideItemID
-    ldr r1,.rActiveItemRow_addr
-    ldr r1,[r1]
-    cmp r1,#0x0
-    beq noOverrideItemID
+HOOK OverrideItemAndTextID
+    cpy r0,r7 @ globalCtx
     push {r0-r12, lr}
-    cpy r0,r2
-    bl ItemOverride_GetItemTextAndItemID
+    cpy r1,r4 @ player
+    bl ItemOverride_GetOverheadItem
+    cmp r0,#0x0
     pop {r0-r12, lr}
-    b 0x2BC1DC
-noOverrideItemID:
-    ldrb r1,[r6,#0x0]
-    b 0x2BC1D4
+    bxlt lr @ resume vanilla code
+    beq 0x2BC1DC @ skip text and item
+    b 0x2BC354 @ skip text, item and fanfare
 
 HOOK OverrideDrawItemOne
     push {r1-r12, lr}
@@ -168,9 +151,11 @@ HOOK DaruniaStrengthCheck
 
 HOOK GetToken
     push {r0-r12, lr}
-    cpy r0,r4
+    cpy r0,r4 @ token actor
     bl ItemOverride_GetSkulltulaToken
+    cmp r0,#0x0
     pop {r0-r12, lr}
+    addne lr,lr,#0x20 @ skip playing fanfare
     bx lr
 
 HOOK PoeCollectorCheckPoints
@@ -776,7 +761,7 @@ HOOK GearMenuEmptySlot
 
 HOOK Audio_PlayFanfare
     push {r1-r12, lr}
-    bl SetBGM
+    bl Bgm_OverrideFanfare
     pop {r1-r12, lr}
     push {r3-r7, lr}
     b 0x35C52C
@@ -795,7 +780,7 @@ HOOK SetBGMDayNight
     push {r4-r6, lr}
     b ret_SetBGMDayNight
 
-HOOK SetBGMEvent
+HOOK Audio_PlaySequence
     push {r0, r2-r12, lr}
     cpy r0,r1
     bl SetBGM
@@ -804,7 +789,7 @@ HOOK SetBGMEvent
     push {r4-r11, lr}
     b 0x36EC44
 
-HOOK SetSFX
+HOOK Audio_PlaySfxGeneral
     push {r1-r12, lr}
     bl SetSFX
     pop {r1-r12, lr}

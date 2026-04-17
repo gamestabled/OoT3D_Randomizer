@@ -13,6 +13,7 @@
 #include "z3Dmath.h"
 #include "z3Dbgcheck.h"
 #include "z3Deffect.h"
+#include "z3Daudio.h"
 
 #include "hid.h"
 
@@ -671,9 +672,6 @@ extern DrawItemTableEntry gDrawItemTable[];
 extern RestrictionFlags gRestrictionFlags[];
 extern MainClass gMainClass;
 extern s32 gIsBottomScreenDimmed;
-extern s32 sPrevMainBgmSeqId;
-extern f32 gSfxDefaultFreqAndVolScale;
-extern s8 gSfxDefaultReverb;
 
 #define PLAYER ((Player*)gGlobalContext->actorCtx.actorList[ACTORTYPE_PLAYER].first)
 #define GearSlot(X) (X - ITEM_SWORD_KOKIRI)
@@ -695,14 +693,6 @@ void EventSet(u32 flag);
 void Rupees_ChangeBy(s16 rupeeChange);
 void LinkDamage(GlobalContext* globalCtx, Player* player, s32 arg2, f32 arg3, f32 arg4, s16 arg5, s32 arg6);
 u32 Inventory_HasEmptyBottle(void);
-// This function plays sound effects and music tracks, overlaid on top of the current BGM
-void Audio_PlayFanfare(u32);
-u32 Audio_GetActiveSeqId(u8 seqPlayerIndex);
-// Restores the original sequence to the main BGM player after a mini-boss battle or a minigame.
-void Audio_RestoreBGM(void);
-// Unknown params. Passing (0, 0) stops the BGM.
-void Audio_SetBGM(u32, u32);
-#define Audio_StopBGM() Audio_SetBGM(0, 0)
 Actor* Actor_Spawn(ActorContext* actorCtx, GlobalContext* globalCtx, s16 actorId, float posX, float posY, float posZ,
                    s16 rotX, s16 rotY, s16 rotZ, s16 params, s32 initImmediately) __attribute__((pcs("aapcs-vfp")));
 Actor* Actor_Find(ActorContext* actorCtx, s16 actorId, u8 actorType);
@@ -715,7 +705,6 @@ void Actor_OfferGetItem(Actor* actor, GlobalContext* globalCtx, s32 getItemId, f
 void Message_CloseTextbox(GlobalContext* globalCtx);
 void SetupItemInWater(Player* player, GlobalContext* globalCtx);
 void Health_ChangeBy(GlobalContext* arg1, u32 arg2);
-void Audio_PlaySfxGeneral(u32 sfxId, Vec3f* pos, u32 token, f32* freqScale, f32* a4, s8* reverbAdd);
 void Flags_SetSwitch(GlobalContext* globalCtx, u32 flag);
 void Flags_UnsetSwitch(GlobalContext* globalCtx, u32 flag);
 u32 Flags_GetSwitch(GlobalContext* globalCtx, u32 flag);
@@ -725,7 +714,7 @@ u32 Flags_GetClear(GlobalContext* globalCtx, u32 flag);
 u32 Flags_SetClear(GlobalContext* globalCtx, u32 flag);
 void Player_SetEquipmentData(GlobalContext* globalCtx, Player* player);
 s32 BossChallenge_IsActive(void);
-s32 Audio_PlayActorSfx2(Actor* actor, s32 sfxID);
+s32 Actor_PlaySfx(Actor* actor, s32 sfxID);
 s32 Model_GetMeshGroupCount(SkeletonAnimationModel* skelAnimeModel);
 s32 Model_IsMeshGroupUsed(SkeletonAnimationModel* skelAnimeModel, s32 param);
 void Model_EnableMeshGroupByIndex(SkeletonAnimationModel* skel, u32 index);
@@ -745,6 +734,5 @@ void EffectSsDeadDb_Spawn(GlobalContext* globalCtx, Vec3f* position, Vec3f* velo
                           s16 env_b, s16 unused, s32 frame_duration, s16 play_sound);
 void SaveGame(GlobalContext* globalCtx, u8 isSaveFileCreation);
 s32 Message_GetState(void);
-void SetEventBGM(u32 seqPlayerIndex, u32 seqId);
 
 #endif //_Z3D_H_

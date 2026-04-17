@@ -19,6 +19,7 @@
 #include "gloom.h"
 #include "ocarina_notes.h"
 #include "icetrap.h"
+#include "bgm.h"
 
 #include "z3D/z3D.h"
 #include "3ds/extdata.h"
@@ -67,6 +68,7 @@ void before_GlobalContext_Update(GlobalContext* globalCtx) {
     ItemEffect_RupeeAmmo(&gSaveContext);
     Triforce_HandleCreditsWarp();
     Enemizer_Update();
+    Bgm_ApplyFanfareMod();
 }
 
 void after_GlobalContext_Update() {

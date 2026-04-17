@@ -156,7 +156,7 @@ void EnBox_rUpdate(Actor* thisx, GlobalContext* globalCtx) {
         if (gSaveContext.doubleDefense) {
             healthDecrement /= 2;
         }
-        Audio_PlayFanfare(0x100035C); // Poe laugh SFX
+        Audio_PlayFanfare(NA_SE_EN_PO_LAUGH);
         sFairy = 0;
     }
 

@@ -13,7 +13,7 @@
 #define TMP_ZEROED_BUFFER(size) ((char[size]){ 0 })
 
 #define TICKS_PER_SEC 268123480
-#define SEQ_AUDIO_BLANK 0x1000142
+#define SEQ_AUDIO_BLANK NA_SE_IT_YOBI19
 
 extern u8 playingOnCitra;
 extern u32 rGameplayFrames; // globalCtx->gameplayFrames is not accurate, it doesn't increment on file 3

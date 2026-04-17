@@ -1,7 +1,8 @@
 #pragma once
 #include "s_types.h"
+#include "s_seq_id.h"
 
-#define SFX_BASE 0x1000001
+#define SFX_BASE NA_SE_PL_WALK_GROUND
 #define SFX_COUNT 1388
 
 typedef enum SeqType {

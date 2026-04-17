@@ -381,8 +381,7 @@ SECTIONS
 	EnPeehat_StateAttackRecoil = 0x2B2CC0 + _LD_OFF;
 	.patch_RainbowSwordTrail 0x2B9AD0 + _LD_OFF : { *(.patch_RainbowSwordTrail) }
 	Model_GetMeshGroupCount = 0x2BB71C + _LD_OFF;
-	.patch_OverrideTextID 0x2BC1C4 + _LD_OFF : { *(.patch_OverrideTextID) }
-	.patch_OverrideItemID 0x2BC1D0 + _LD_OFF : { *(.patch_OverrideItemID) }
+	.patch_OverrideItemAndTextID 0x2BC1C8 + _LD_OFF : { *(.patch_OverrideItemAndTextID) }
 	.patch_NoSilverGauntletsCutsceneWarp 0x2BC2A0 + _LD_OFF : { *(.patch_NoSilverGauntletsCutsceneWarp) }
 	.patch_RunAnimationSpeed 0x2BE70C + _LD_OFF : { *(.patch_RunAnimationSpeed) }
 	.patch_FishingIgnoreTempBOne 0x2C3A10 + _LD_OFF : { *(.patch_FishingIgnoreTempBOne) }
@@ -499,7 +498,7 @@ SECTIONS
 	.patch_ExtendObjectGetSlot 0x363CB4 + _LD_OFF : { *(.patch_ExtendObjectGetSlot) }
 	Flags_GetCollectible = 0x36405C + _LD_OFF;
 	EffectSsDeadDb_Spawn = 0x3642F4 + _LD_OFF;
-	Audio_SetBGM = 0x3655D0 + _LD_OFF;
+	Audio_StopSequence = 0x3655D0 + _LD_OFF;
 	.patch_StalchildDespawn_366338 0x366338 + _LD_OFF : { *(.patch_StalchildDespawn_366338) }
 	Audio_GetActiveSeqId = 0x366684 + _LD_OFF;
 	Flags_SetEnv = 0x366704 + _LD_OFF;
@@ -522,8 +521,8 @@ SECTIONS
 	Math_SmoothStepToF = 0x36E168 + _LD_OFF;
 	Flags_GetSwitch = 0x36E864 + _LD_OFF;
 	Flags_SetClear = 0x36EC14 + _LD_OFF;
-	.patch_SetBGMEvent 0x36EC40 + _LD_OFF : { *(.patch_SetBGMEvent) }
-	SetEventBGM = 0x36EC40 + _LD_OFF;
+	.patch_Audio_PlaySequence 0x36EC40 + _LD_OFF : { *(.patch_Audio_PlaySequence) }
+	Audio_PlaySequence = 0x36EC40 + _LD_OFF;
 	Player_GetMask = 0x36EF98 + _LD_OFF;
 	SetNextEntrance = 0x3716F0 + _LD_OFF;
 	Actor_HasParent = 0x371E40 + _LD_OFF;
@@ -548,11 +547,11 @@ SECTIONS
 	EnWonderTalk_Update = 0x3731F4 + _LD_OFF;
 	Actor_Spawn = 0x3738D0 + _LD_OFF;
 	.patch_ConvertBombDropTwo 0x3747A4 + _LD_OFF : { *(.patch_ConvertBombDropTwo) }
-	.patch_SetSFX 0x37547C + _LD_OFF : { *(.patch_SetSFX) }
+	.patch_Audio_PlaySfxGeneral 0x37547C + _LD_OFF : { *(.patch_Audio_PlaySfxGeneral) }
 	Audio_PlaySfxGeneral = 0x37547C + _LD_OFF;
 	Math_SmoothStepToS = 0x375A18 + _LD_OFF;
 	Enemy_StartFinishingBlow = 0x375B70 + _LD_OFF;
-	Audio_PlayActorSfx2 = 0x375BCC + _LD_OFF;
+	Actor_PlaySfx = 0x375BCC + _LD_OFF;
 	Animation_Change = 0x375C08 + _LD_OFF;
 	Flags_SetSwitch = 0x375C10 + _LD_OFF;
 	CollisionCheck_SetAC = 0x376168 + _LD_OFF;
@@ -882,6 +881,7 @@ SECTIONS
 	gSaveContext = 0x587958 + _LD_OFF;
 	gEffectContext = 0x58B2E0 + _LD_OFF;
 	gEffectSsInfo = 0x598530 + _LD_OFF;
+	gUnkSequencePlayerData = 0x5AF450 + _LD_OFF;
 	gMainClass = 0x5BE5B8 + _LD_OFF;
 
 	/* 0x005C6607: End of vanilla .bss section */

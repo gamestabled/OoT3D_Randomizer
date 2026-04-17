@@ -2,8 +2,9 @@
 
 #include <array>
 #include <vector>
-
 #include <3ds.h>
+
+#include "s_seq_id.h"
 
 namespace Music {
 
@@ -11,7 +12,7 @@ namespace Music {
 // Shuffles and replaces sequence indexes with a patch
 // Does not support custom music, but does not require the original archive to be provided
 
-const u32 BGM_BASE  = 0x1000585;
+const u32 BGM_BASE  = NA_BGM_FIELD;
 const int SEQ_COUNT = 85;
 
 enum SeqType {

@@ -527,7 +527,8 @@ static void Enemizer_HandleClearConditions(void) {
 static void Enemizer_HandleMiniBossBattleTheme(void) {
     // Always check if music should stop when loading another room, otherwise only check if player is not
     // in cutscene mode because Big Octo turns into a prop temporarily during its intro cutscene.
-    if (Audio_GetActiveSeqId(0) == BGM_MINI_BOSS && (sRoomLoadSignal || !Player_InCsMode(gGlobalContext))) {
+    if (Audio_GetActiveSeqId(SEQ_PLAYER_BGM_MAIN) == NA_BGM_MIDDLE_BOSS &&
+        (sRoomLoadSignal || !Player_InCsMode(gGlobalContext))) {
         u8 shouldKeepMiniBossBGM = FALSE;
         Actor* enemy             = gGlobalContext->actorCtx.actorList[ACTORTYPE_ENEMY].first;
         for (; enemy != NULL && !shouldKeepMiniBossBGM; enemy = enemy->next) {
@@ -556,7 +557,7 @@ static void Enemizer_HandleMiniBossBattleTheme(void) {
             if (sPrevMainBgmSeqId != -1) {
                 Audio_RestoreBGM();
             } else {
-                Audio_StopBGM();
+                Audio_StopSequence(SEQ_PLAYER_BGM_MAIN, 0);
             }
         }
     }
