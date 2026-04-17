@@ -3,6 +3,13 @@
 #include "colors.h"
 #include "objects.h"
 
+void initGanonBloodColors(void) {
+    typedef struct { Color_RGBA8 primary; Color_RGBA8 environ; } BloodCol;
+    extern BloodCol gGanondorfBlood, gGanonBlood;
+    Color_RGBA8 col = gSettingsContext.ganonBloodColor;
+    gGanondorfBlood = gGanonBlood = (BloodCol){ col, col };
+}
+
 // This function is called when a new effect element tries to spawn but there's no space left.
 // The vanilla game simply fails to spawn the new element, but with the randomizer extended duration setting,
 // it is best to clear the oldest element to make space instead.

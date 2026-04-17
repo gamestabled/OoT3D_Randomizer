@@ -3,6 +3,7 @@
 #include "actor.h"
 #include "input.h"
 #include "models.h"
+#include "effects.h"
 #include "entrance.h"
 #include "settings.h"
 #include "title_screen.h"
@@ -39,6 +40,7 @@ void Randomizer_Init() {
     IceTrap_Init();
     extDataInit();
     irrstInit();
+    initGanonBloodColors();
 
     s64 output = 0;
     svcGetSystemInfo(&output, 0x20000, 0);
