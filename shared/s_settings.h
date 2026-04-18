@@ -490,13 +490,6 @@ typedef enum TrailDuration {
     TRAILDURATION_LIGHTSABER,
 } TrailDuration;
 
-typedef enum BloodColor {
-    BLOODCOLOR_VANILLA,
-    BLOODCOLOR_ORIGINAL,
-    BLOODCOLOR_RANDOM,
-    BLOODCOLOR_CUSTOM,
-} BloodColor;
-
 typedef enum MirrorWorld {
     MIRRORWORLD_OFF,
     MIRRORWORLD_ON,

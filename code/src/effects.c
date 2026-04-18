@@ -3,7 +3,8 @@
 #include "colors.h"
 #include "objects.h"
 
-void initGanonBloodColors(void) {
+void Effects_Init(void) {
+    // Blood effect color for Ganondorf and Ganon defeat cutscenes
     typedef struct {
         Color_RGBA8 primary;
         Color_RGBA8 environ;

@@ -1235,6 +1235,26 @@ static std::vector<std::string> chuTrailDurationOptionNames = {
     "Hero's Path",
 };
 
+static std::vector<std::string> ganonBloodOptionNames = {
+    std::string(RANDOM_CHOICE_STR),
+    std::string(RANDOM_COLOR_STR),
+    std::string(CUSTOM_COLOR_STR),
+    "Vanilla Green",
+    "Original Red",
+    "White",
+    "Black",
+    "Red",
+    "Green",
+    "Blue",
+    "Yellow",
+    "Cyan",
+    "Magenta",
+    "Orange",
+    "Gold",
+    "Purple",
+    "Pink",
+};
+
 static std::vector<std::string_view> cosmeticDescriptions = {
     RANDOM_CHOICE_DESC,
     RANDOM_COLOR_DESC,
@@ -1268,7 +1288,7 @@ Option BoomerangTrailDuration     = Option::U8  (2, "Boomerang (Duration)",  tra
 Option BombchuTrailInnerColor     = Option::U8  (2, "Bombchu (Inner Color)", weaponTrailInnerOptionNames,   {RANDOM_CHOICE_DESC, RANDOM_COLOR_DESC, CUSTOM_COLOR_DESC, "Select the color for the center of the\nbombchu trail."},                                             OptionCategory::Cosmetic,                      5); // Red
 Option BombchuTrailOuterColor     = Option::U8  (2, "Bombchu (Outer Color)", weaponTrailOuterOptionNames,   {RANDOM_CHOICE_DESC, RANDOM_COLOR_DESC, CUSTOM_COLOR_DESC, "Select the color for the sides of the\nbombchu trail."},                                              OptionCategory::Cosmetic,    SAME_AS_INNER_TRAIL);
 Option BombchuTrailDuration       = Option::U8  (2, "Bombchu (Duration)",    chuTrailDurationOptionNames,   {"Select the duration for bombchu trails."},                                                                                                                      OptionCategory::Cosmetic,                      2); // Vanilla
-Option GanonBloodColor            = Option::U8  ("Ganon/dorf Blood Color",   {"Vanilla Green", "Original Red", std::string(RANDOM_COLOR_STR), std::string(CUSTOM_COLOR_STR),}, {"Select the color of Ganondorf and Ganon's blood."},                                          OptionCategory::Cosmetic);
+Option GanonBloodColor            = Option::U8  ("Ganon/dorf Blood Color",   ganonBloodOptionNames,         {RANDOM_CHOICE_DESC, RANDOM_COLOR_DESC, CUSTOM_COLOR_DESC, "Select the color of Ganondorf and Ganon's blood."},                                                   OptionCategory::Cosmetic,                      3); // Vanilla Green
 std::string finalChildTunicColor      = ChildTunicColor.GetSelectedOptionText();
 std::string finalKokiriTunicColor     = KokiriTunicColor.GetSelectedOptionText();
 std::string finalGoronTunicColor      = GoronTunicColor.GetSelectedOptionText();
@@ -3090,20 +3110,8 @@ static void UpdateCosmetics() {
         ChooseFinalColor(BombchuTrailOuterColor, finalChuTrailOuterColor, weaponTrailColors);
     }
     // Ganon/dorf Blood
-    switch (Settings::GanonBloodColor.Value<u8>()) {
-        case BLOODCOLOR_VANILLA:
-            finalGanonBloodColor = (Color_RGBA8){ 0, 120, 0, 255 };
-            break;
-        case BLOODCOLOR_ORIGINAL:
-            finalGanonBloodColor = (Color_RGBA8){ 120, 0, 0, 255 };
-            break;
-        case BLOODCOLOR_RANDOM:
-            finalGanonBloodColor = Cosmetics::HexStrToColorRGBA8(RandomColor());
-            break;
-        case BLOODCOLOR_CUSTOM:
-            finalGanonBloodColor =
-                Cosmetics::HexStrToColorRGBA8(GetCustomColor(Settings::GanonBloodColor.GetSelectedOptionText()));
-    }
+    ChooseFinalColor(GanonBloodColor, tempString, ganonBloodColors);
+    finalGanonBloodColor = Cosmetics::HexStrToColorRGBA8(tempString);
 }
 
 // Function to set flags depending on settings

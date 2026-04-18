@@ -40,7 +40,7 @@ void Randomizer_Init() {
     IceTrap_Init();
     extDataInit();
     irrstInit();
-    initGanonBloodColors();
+    Effects_Init();
 
     s64 output = 0;
     svcGetSystemInfo(&output, 0x20000, 0);

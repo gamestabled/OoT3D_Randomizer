@@ -3,7 +3,7 @@
 
 #include "z3D/z3D.h"
 
-void initGanonBloodColors(void);
+void Effects_Init(void);
 void EffectSs_ClearAllWithMissingObject(void);
 
 #endif //_EFFECTS_H_
