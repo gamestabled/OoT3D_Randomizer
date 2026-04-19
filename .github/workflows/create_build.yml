@@ -65,6 +65,11 @@ jobs:
           chmod +x linux_build_rando.sh write_version.sh
           ./linux_build_rando.sh
 
+      - name: Create QR codes
+        run: |
+          qrencode -ocia.png https://github.com/$GITHUB_REPOSITORY/releases/download/${{ env.tag_name }}/OoT3D_Randomizer.cia
+          qrencode -o3dsx.png https://github.com/$GITHUB_REPOSITORY/releases/download/${{ env.tag_name }}/OoT3D_Randomizer.3dsx
+
       - if: ${{ github.event.inputs.build_type == 'Nightly' }}
         name: Create Pre-release
         uses: ncipollo/release-action@v1.21.0
