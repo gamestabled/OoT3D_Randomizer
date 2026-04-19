@@ -850,6 +850,8 @@ SECTIONS
 	gRandFloat = 0x50C0C8 + _LD_OFF;
 	NaviColorsArray = 0x50C998 + _LD_OFF;
 	gActorOverlayTable = 0x50CD84 + _LD_OFF;
+	gGanondorfBlood = 0x514F78 + _LD_OFF;
+	gGanonBlood = 0x515194 + _LD_OFF;
 	EnChanger_LoserGetItemIds = 0x521774 + _LD_OFF;
 	VanillaScrubTable = 0x522384 + _LD_OFF;
 	EnGirlA_ShopItemEntries = 0x524F50 + _LD_OFF;

@@ -713,6 +713,7 @@ typedef struct SettingsContext {
     u8 rainbowChuTrailInnerColor;
     u8 rainbowChuTrailOuterColor;
     u8 bombchuTrailDuration;
+    Color_RGBA8 ganonBloodColor;
 
     u8 coloredKeys;
     u8 coloredBossKeys;
