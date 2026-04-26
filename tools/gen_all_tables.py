@@ -6,6 +6,7 @@ scripts_to_run = [
     "gen_description_table.py",
     "gen_item_table.py",
     "gen_location_table.py",
+    "gen_settings_table.py",
 ]
 
 for script in scripts_to_run:

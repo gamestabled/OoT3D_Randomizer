@@ -359,6 +359,48 @@ extern std::string seed;
 extern std::string version;
 extern std::array<u8, 5> hashIconIndexes;
 
+template <typename T, size_t N, typename Func>
+extern std::vector<Option*> mapArrayToOptions(const T (&array)[N], Func mapper);
+extern std::vector<std::string> NumOpts(int min, int max, int step = 1, std::string textBefore = {},
+                                        std::string textAfter = {});
+extern std::vector<std::string> MultiVecOpts(std::vector<std::vector<std::string>> optionsVector);
+extern Option LogicTrick(std::string setting, std::string_view description);
+extern std::vector<std::string> GlitchDifficultyOptions(u8 enabledDifficulties);
+
+extern u8 ResolvedStartingAge;
+extern std::vector<Option*> enemizerListOptions;
+extern u8 LACSCondition;
+extern bool HasNightStart;
+extern std::vector<std::string> bottleOptions;
+extern std::vector<std::string> gauntletOptions;
+extern std::vector<std::string> childTunicOptions;
+extern std::vector<std::string> tunicOptions;
+extern std::vector<std::string> naviOuterOptionNames;
+extern std::vector<std::string> naviInnerOptionNames;
+extern std::vector<std::string> weaponTrailOuterOptionNames;
+extern std::vector<std::string> weaponTrailInnerOptionNames;
+extern std::vector<std::string> trailDurationOptionNames;
+extern std::vector<std::string> chuTrailDurationOptionNames;
+extern std::vector<std::string_view> cosmeticDescriptions;
+
+/*
+// Function to make options vectors for Navi and Tunic colors without the "Same as ..." option
+inline std::vector<std::string> VectorCopyExceptLastElement(std::vector<std::string> vect) {
+    std::vector<std::string> copy(vect.begin(), std::prev(vect.end()));
+    return copy;
+}
+*/
+
+// Macros for cosmetic vector indices (computed at runtime initialization)
+#define RAINBOW_TUNIC (childTunicOptions.size() - 2)
+#define SAME_AS_KOKIRI (childTunicOptions.size() - 1)
+#define RAINBOW_NAVI (naviOuterOptionNames.size() - 2)
+#define SAME_AS_INNER_NAVI (naviOuterOptionNames.size() - 1)
+#define RAINBOW_TRAIL (weaponTrailOuterOptionNames.size() - 2)
+#define SAME_AS_INNER_TRAIL (weaponTrailOuterOptionNames.size() - 1)
+
+// Open Settings
+extern Option RandomizeOpen;
 extern Option OpenForest;
 extern Option OpenKakariko;
 extern Option OpenDoorOfTime;
@@ -375,8 +417,9 @@ extern Option BridgeHeartCount;
 extern Option RandomGanonsTrials;
 extern Option GanonsTrialsCount;
 
+// World Settings
+extern Option RandomizeWorld;
 extern Option StartingAge;
-extern u8 ResolvedStartingAge;
 extern Option ShuffleEntrances;
 extern Option ShuffleDungeonEntrances;
 extern Option ShuffleBossEntrances;
@@ -397,13 +440,26 @@ extern Option AmmoDrops;
 extern Option HeartDropRefill;
 extern Option MQDungeonCount;
 extern Option SetDungeonTypes;
+extern Option MQDeku;
+extern Option MQDodongo;
+extern Option MQJabu;
+extern Option MQForest;
+extern Option MQFire;
+extern Option MQWater;
+extern Option MQSpirit;
+extern Option MQShadow;
+extern Option MQBotW;
+extern Option MQIceCavern;
+extern Option MQGTG;
+extern Option MQCastle;
 extern Option TriforceHunt;
 extern Option TriforcePiecesTotal;
 extern Option TriforcePiecesRequired;
 extern Option Enemizer;
 extern Option EnemizerListToggle;
-extern std::vector<Option*> enemizerListOptions;
 
+// Shuffle Settings
+extern Option RandomizeShuffle;
 extern Option ShuffleRewards;
 extern Option LinksPocketItem;
 extern Option ShuffleSongs;
@@ -420,19 +476,20 @@ extern Option ShuffleZeldasLetter;
 extern Option ShuffleGerudoToken;
 extern Option ShuffleMagicBeans;
 extern Option ShuffleMerchants;
-extern Option ShuffleFrogSongRupees;
 extern Option ShuffleAdultTradeQuest;
 extern Option ShuffleChestMinigame;
+extern Option ShuffleFrogSongRupees;
 extern Option ShuffleEnemySouls;
 extern Option ShuffleOcarinaButtons;
 extern Option ShuffleRupees;
 
+// Shuffle Dungeon Items
+extern Option RandomizeDungeon;
 extern Option MapsAndCompasses;
 extern Option Keysanity;
 extern Option GerudoKeys;
 extern Option BossKeysanity;
 extern Option GanonsBossKey;
-extern u8 LACSCondition;
 extern Option LACSMedallionCount;
 extern Option LACSStoneCount;
 extern Option LACSRewardCount;
@@ -450,6 +507,7 @@ extern Option RingWell;
 extern Option RingGtg;
 extern Option RingCastle;
 
+// Timesaver Settings
 extern Option SkipChildStealth;
 extern Option SkipTowerEscape;
 extern Option SkipEponaRace;
@@ -462,14 +520,10 @@ extern Option NumRequiredCuccos;
 extern Option KingZoraSpeed;
 extern Option ExactZoraSpeed;
 extern Option CompleteMaskQuest;
-extern Option QuickText;
-extern Option SkipSongReplays;
-extern Option KeepFWWarpPoint;
-extern Option FastBunnyHood;
 
+// Misc Settings
 extern Option Racing;
 extern Option GossipStoneHints;
-extern Option ClearerHints;
 extern Option HintDistribution;
 extern Option BonusGossipHints;
 extern Option MiscHints;
@@ -478,40 +532,20 @@ extern Option GanonHints;
 extern Option DampeHint;
 extern Option SkulltulaHints;
 extern Option FishingHints;
+extern Option ClearerHints;
 extern Option CompassesShowReward;
 extern Option CompassesShowWotH;
 extern Option MapsShowDungeonMode;
-extern Option DamageMultiplier;
-extern Option BonkDamage;
-extern Option Permadeath;
-extern Option GloomMode;
 extern Option StartingTime;
 extern Option ChestAnimations;
 extern Option ChestAppearance;
 extern Option ChestAgony;
 extern Option GenerateSpoilerLog;
 extern Option IngameSpoilers;
-extern Option MenuOpeningButton;
-extern Option ArrowSwitchButton;
-extern Option RandomTrapDmg;
-extern Option FireTrap;
-extern Option AntiFairyTrap;
-extern Option RupoorTrap;
-extern Option RupoorTrapSeverity;
-extern Option CurseTraps;
-extern Option ScreenTraps;
-extern Option ExtraArrowEffects;
-extern Option HyperActors;
-extern Option HyperBosses;
-extern Option HyperMiddleBosses;
-extern Option HyperEnemies;
-extern Option FreeCamera;
-extern Option RandomGsLocations;
-extern Option GsLocGuaranteeNew;
-extern Option RandomSongNotes;
-extern bool HasNightStart;
 
+// Item Usability Settings
 extern Option FaroresWindAnywhere;
+extern Option AgeItemsToggle;
 extern Option AgeItemsInLogic;
 extern Option StickAsAdult;
 extern Option BoomerangAsAdult;
@@ -533,40 +567,63 @@ extern Option RestoreISG;
 extern Option GkDurability;
 extern Option RetroAmmo;
 
+// Item Pool Settings
 extern Option ItemPoolValue;
 extern Option IceTrapValue;
 extern Option RemoveDoubleDefense;
 extern Option ProgressiveGoronSword;
 
+// Gameplay Options
+extern Option FastBunnyHood;
+extern Option KeepFWWarpPoint;
+extern Option DamageMultiplier;
+extern Option BonkDamage;
+extern Option Permadeath;
+extern Option GloomMode;
+extern Option RandomTrapDmg;
+extern Option FireTrap;
+extern Option AntiFairyTrap;
+extern Option RupoorTrap;
+extern Option RupoorTrapSeverity;
+extern Option CurseTraps;
+extern Option ScreenTraps;
+extern Option ExtraArrowEffects;
+extern Option HyperActors;
+extern Option HyperBosses;
+extern Option HyperMiddleBosses;
+extern Option HyperEnemies;
+extern Option FreeCamera;
+extern Option RandomGsLocations;
+extern Option GsLocGuaranteeNew;
+extern Option RandomSongNotes;
+
 // Starting Inventory
-extern Option StartingConsumables;
-extern Option StartingMaxRupees;
 extern Option StartingStickCapacity;
 extern Option StartingNutCapacity;
+extern Option StartingSlingshot;
+extern Option StartingOcarina;
 extern Option StartingBombBag;
 extern Option StartingBombchus;
+extern Option StartingBoomerang;
+extern Option StartingHookshot;
 extern Option StartingBow;
 extern Option StartingFireArrows;
 extern Option StartingIceArrows;
 extern Option StartingLightArrows;
+extern Option StartingMegatonHammer;
+extern Option StartingIronBoots;
+extern Option StartingHoverBoots;
+extern Option StartingLensOfTruth;
 extern Option StartingDinsFire;
 extern Option StartingFaroresWind;
 extern Option StartingNayrusLove;
-extern Option StartingSlingshot;
-extern Option StartingBoomerang;
-extern Option StartingLensOfTruth;
 extern Option StartingMagicBean;
-extern Option StartingMegatonHammer;
-extern Option StartingHookshot;
-extern Option StartingIronBoots;
-extern Option StartingHoverBoots;
 extern Option StartingBottle1;
 extern Option StartingBottle2;
 extern Option StartingBottle3;
 extern Option StartingBottle4;
 extern Option StartingRutoBottle;
 extern Option StartingChildTrade;
-extern Option StartingOcarina;
 extern Option StartingZeldasLullaby;
 extern Option StartingEponasSong;
 extern Option StartingSariasSong;
@@ -587,36 +644,35 @@ extern Option StartingHylianShield;
 extern Option StartingMirrorShield;
 extern Option StartingGoronTunic;
 extern Option StartingZoraTunic;
-extern Option StartingMagicMeter;
 extern Option StartingStrength;
 extern Option StartingScale;
 extern Option StartingWallet;
 extern Option StartingShardOfAgony;
-extern Option StartingDoubleDefense;
 extern Option StartingHearts;
+extern Option StartingMagicMeter;
+extern Option StartingDoubleDefense;
 extern Option StartingKokiriEmerald;
 extern Option StartingGoronRuby;
 extern Option StartingZoraSapphire;
+extern Option StartingLightMedallion;
 extern Option StartingForestMedallion;
 extern Option StartingFireMedallion;
 extern Option StartingWaterMedallion;
 extern Option StartingSpiritMedallion;
 extern Option StartingShadowMedallion;
-extern Option StartingLightMedallion;
-extern Option StartingSkulltulaToken;
-
 extern Option StartingOcarinaButtonL;
 extern Option StartingOcarinaButtonR;
 extern Option StartingOcarinaButtonX;
 extern Option StartingOcarinaButtonY;
 extern Option StartingOcarinaButtonA;
-
-// Logic Settings
+extern Option StartingConsumables;
+extern Option StartingMaxRupees;
+extern Option StartingSkulltulaToken;
 extern Option Logic;
 extern Option LocationsReachable;
 extern Option NightGSExpectSuns;
 
-// Trick Settings
+// Detailed Logic Tricks
 extern Option ToggleAllTricks;
 extern Option LogicGrottosWithoutAgony;
 extern Option LogicVisibleCollision;
@@ -637,8 +693,8 @@ extern Option LogicManOnRoof;
 extern Option LogicWindmillPoHHookshot;
 extern Option LogicDMTBombable;
 extern Option LogicDMTSoilGS;
-extern Option LogicDMTSummitHover;
 extern Option LogicDMCPlatformJump;
+extern Option LogicDMTSummitHover;
 extern Option LogicLinkGoronDins;
 extern Option LogicGoronCityLeftMost;
 extern Option LogicGoronCityPot;
@@ -677,8 +733,8 @@ extern Option LogicWaterCrackedWallHovers;
 extern Option LogicWaterBossKeyRegion;
 extern Option LogicWaterBKJumpDive;
 extern Option LogicWaterNorthBasementLedgeJump;
-extern Option LogicWaterDragonJumpDive;
 extern Option LogicWaterDragonAdult;
+extern Option LogicWaterDragonJumpDive;
 extern Option LogicWaterRiverGS;
 extern Option LogicWaterFallingPlatformGS;
 extern Option LogicSpiritLowerAdultSwitch;
@@ -734,7 +790,6 @@ extern Option GlitchNaviDive_Stick;
 extern Option GlitchTripleSlashClip;
 extern Option GlitchLedgeClip;
 extern Option GlitchSeamWalk;
-// Misc Glitch Settings
 extern Option GlitchWWTEscape;
 extern Option GlitchGVTentAsChild;
 extern Option GlitchGFGuardSneak;
@@ -758,7 +813,12 @@ extern Option MP_SharedHealth;
 extern Option MP_SharedRupees;
 extern Option MP_SharedAmmo;
 
-// Ingame Default Settings
+// Preferences
+extern Option QuickText;
+extern Option MenuOpeningButton;
+extern Option ArrowSwitchButton;
+
+// Ingame Defaults
 extern Option ZTargeting;
 extern Option CameraControl;
 extern Option MotionControl;
@@ -766,6 +826,7 @@ extern Option TogglePlayMusic;
 extern Option TogglePlaySFX;
 extern Option NaviNotifications;
 extern Option IgnoreMaskReaction;
+extern Option SkipSongReplays;
 extern Option FreeCamControl;
 
 // Cosmetic Settings
@@ -786,15 +847,33 @@ extern Option NPCNaviOuterColor;
 extern Option EnemyNaviOuterColor;
 extern Option PropNaviOuterColor;
 extern Option CustomTrailEffects;
+extern Option ChosenSimpleMode;
 extern Option SwordTrailInnerColor;
 extern Option SwordTrailOuterColor;
 extern Option SwordTrailDuration;
 extern Option BoomerangTrailColor;
 extern Option BoomerangTrailDuration;
-extern Option ChosenSimpleMode;
 extern Option BombchuTrailInnerColor;
 extern Option BombchuTrailOuterColor;
 extern Option BombchuTrailDuration;
+extern Option ColoredKeys;
+extern Option ColoredBossKeys;
+extern Option MirrorWorldOpt;
+extern Option BetaSoldOut;
+extern Option SoullessEnemiesLook;
+
+// Audio Settings
+extern Option ShuffleMusic;
+extern Option ShuffleBGM;
+extern Option ShuffleMelodies;
+extern Option CustomMusic;
+extern Option CustomMusicOnly;
+extern Option ShuffleSFX;
+extern Option ShuffleSFXFootsteps;
+extern Option ShuffleSFXLinkVoice;
+extern Option ShuffleSFXCategorically;
+extern Option OcarinaNoteInstrument;
+
 extern std::string finalChildTunicColor;
 extern std::string finalKokiriTunicColor;
 extern std::string finalGoronTunicColor;
@@ -816,24 +895,6 @@ extern u8 boomerangTrailColorMode;
 extern std::string finalChuTrailInnerColor;
 extern std::string finalChuTrailOuterColor;
 
-extern Option ColoredKeys;
-extern Option ColoredBossKeys;
-extern Option MirrorWorld;
-extern Option BetaSoldOut;
-extern Option SoullessEnemiesLook;
-
-extern Option ShuffleMusic;
-extern Option ShuffleBGM;
-extern Option ShuffleMelodies;
-extern Option CustomMusic;
-extern Option CustomMusicOnly;
-extern Option ShuffleSFX;
-extern Option ShuffleSFXFootsteps;
-extern Option ShuffleSFXLinkVoice;
-extern Option ShuffleSFXCategorically;
-
-extern Option OcarinaNoteInstrument;
-
 extern u32 LinksPocketRewardBitMask;
 extern std::array<u32, 9> rDungeonRewardOverrides;
 
@@ -847,16 +908,34 @@ extern Menu deleteCustomCosmeticPreset;
 
 extern std::vector<std::vector<Option*>> excludeLocationsOptionsVector;
 extern std::vector<Menu*> excludeLocationsMenus;
+
+extern std::vector<Option*> openOptions;
+extern std::vector<Option*> dungeonOptions;
+extern std::vector<Option*> worldOptions;
+extern std::vector<Option*> shuffleOptions;
+extern std::vector<Option*> keyRingOptions;
+extern std::vector<Option*> shuffleDungeonItemOptions;
+extern std::vector<Option*> timesaverOptions;
+extern std::vector<Option*> miscOptions;
+extern std::vector<Option*> itemUsabilityOptions;
+extern std::vector<Option*> itemPoolOptions;
+extern std::vector<Option*> gameplayOptions;
 extern std::vector<Option*> startingItemsOptions;
 extern std::vector<Option*> startingSongsOptions;
 extern std::vector<Option*> startingEquipmentOptions;
 extern std::vector<Option*> startingStonesMedallionsOptions;
-extern std::vector<Option*> startingEnemySoulsOptions;
 extern std::vector<Option*> startingOcarinaButtonsOptions;
-extern std::vector<Option*> startingOtherOptions;
+extern std::vector<Option*> startingOthersOptions;
+extern std::vector<Option*> startingEnemySoulsOptions;
+extern std::vector<Option*> logicOptions;
 extern std::vector<Option*> trickOptions;
 extern std::vector<Option*> glitchCategories;
 extern std::vector<Option*> miscGlitches;
+extern std::vector<Option*> multiplayerOptions;
+extern std::vector<Option*> preferenceOptions;
+extern std::vector<Option*> ingameDefaultOptions;
+extern std::vector<Option*> cosmeticOptions;
+extern std::vector<Option*> audioOptions;
 
 extern std::vector<Menu*> startingInventoryOptions;
 extern std::vector<Menu*> detailedLogicOptions;
