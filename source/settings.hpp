@@ -360,10 +360,35 @@ extern std::string version;
 extern std::array<u8, 5> hashIconIndexes;
 
 template <typename T, size_t N, typename Func>
-extern std::vector<Option*> mapArrayToOptions(const T (&array)[N], Func mapper);
+std::vector<Option*> mapArrayToOptions(const T (&array)[N], Func mapper) {
+    static std::vector<Option> optionObjects;
+    optionObjects.reserve(N);
+    std::vector<Option*> optionPointers = {};
+    for (T elem : array) {
+        Option opt = mapper(elem);
+        optionObjects.push_back(std::move(opt));
+        optionPointers.push_back(&optionObjects.back());
+    }
+    return optionPointers;
+}
+
+inline std::vector<std::string> MultiVecOpts(std::vector<std::vector<std::string>> optionsVector) {
+    u32 totalSize = 0;
+    for (auto vector : optionsVector) {
+        totalSize += vector.size();
+    }
+    std::vector<std::string> options;
+    options.reserve(totalSize);
+    for (auto vector : optionsVector) {
+        for (auto op : vector) {
+            options.push_back(op);
+        }
+    }
+    return options;
+}
+
 extern std::vector<std::string> NumOpts(int min, int max, int step = 1, std::string textBefore = {},
                                         std::string textAfter = {});
-extern std::vector<std::string> MultiVecOpts(std::vector<std::vector<std::string>> optionsVector);
 extern Option LogicTrick(std::string setting, std::string_view description);
 extern std::vector<std::string> GlitchDifficultyOptions(u8 enabledDifficulties);
 

@@ -39,34 +39,6 @@ std::vector<std::string> NumOpts(int min, int max, int step, std::string textBef
     return options;
 }
 
-std::vector<std::string> MultiVecOpts(std::vector<std::vector<std::string>> optionsVector) {
-    u32 totalSize = 0;
-    for (auto vector : optionsVector) {
-        totalSize += vector.size();
-    }
-    std::vector<std::string> options;
-    options.reserve(totalSize);
-    for (auto vector : optionsVector) {
-        for (auto op : vector) {
-            options.push_back(op);
-        }
-    }
-    return options;
-}
-
-template <typename T, size_t N, typename Func>
-std::vector<Option*> mapArrayToOptions(const T (&array)[N], Func mapper) {
-    static std::vector<Option> optionObjects;
-    optionObjects.reserve(N);
-    std::vector<Option*> optionPointers = {};
-    for (T elem : array) {
-        Option opt = mapper(elem);
-        optionObjects.push_back(std::move(opt));
-        optionPointers.push_back(&optionObjects.back());
-    }
-    return optionPointers;
-}
-
 // clang-format off
 u8 ResolvedStartingAge;
 u8 MQSet;
