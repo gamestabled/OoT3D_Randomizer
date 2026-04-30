@@ -277,6 +277,10 @@ void WriteIngameSpoilerLog() {
             splrDatLoc->ItemLocations[spoilerItemIndex].CollectType = COLLECTTYPE_REPEATABLE;
             splrDatLoc->ItemLocations[spoilerItemIndex].RevealType  = REVEALTYPE_ALWAYS;
         }
+        else if(loc->IsCategory(Category::cFreestandingRupee) && Settings::ShuffleRupees.Value<bool>() == false){
+            splrDatLoc->ItemLocations[spoilerItemIndex].CollectType = COLLECTTYPE_REPEATABLE;
+            splrDatLoc->ItemLocations[spoilerItemIndex].RevealType  = REVEALTYPE_ALWAYS;
+        }
 
         auto checkGroup                                   = loc->GetCollectionCheckGroup();
         splrDatLoc->ItemLocations[spoilerItemIndex].Group = checkGroup;
