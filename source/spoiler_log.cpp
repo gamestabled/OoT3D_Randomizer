@@ -193,6 +193,9 @@ void WriteIngameSpoilerLog() {
                   loc->GetHintKey() != GF_NORTH_F1_CARPENTER)) {
             continue;
         }
+        else if(loc->IsCategory(Category::cFreestandingRupee) && Settings::ShuffleRupees.Value<bool>() == false){
+            continue;
+        }
 
         // Copy at most 51 chars from the name and location name to avoid issues with names that don't fit on screen
         // Only copy enough characters that can fit on the screen
