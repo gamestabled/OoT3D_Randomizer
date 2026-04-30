@@ -276,11 +276,11 @@ void WriteIngameSpoilerLog() {
                  Settings::Scrubsanity.Is(SCRUBSANITY_OFF)) {
             splrDatLoc->ItemLocations[spoilerItemIndex].CollectType = COLLECTTYPE_REPEATABLE;
             splrDatLoc->ItemLocations[spoilerItemIndex].RevealType  = REVEALTYPE_ALWAYS;
-        }
-        else if(loc->IsCategory(Category::cFreestandingRupee) && Settings::ShuffleRupees.Value<bool>() == false){
-            
-            splrDatLoc->ItemLocations[spoilerItemIndex].CollectType = loc->GetFlag() >= 0x20 ? COLLECTTYPE_REPEATABLE : COLLECTTYPE_NORMAL;
-            splrDatLoc->ItemLocations[spoilerItemIndex].RevealType  = REVEALTYPE_ALWAYS;
+        } else if (loc->IsCategory(Category::cFreestandingRupee) && Settings::ShuffleRupees.Value<bool>() == false) {
+
+            splrDatLoc->ItemLocations[spoilerItemIndex].CollectType =
+                loc->GetFlag() >= 0x20 ? COLLECTTYPE_REPEATABLE : COLLECTTYPE_NORMAL;
+            splrDatLoc->ItemLocations[spoilerItemIndex].RevealType = REVEALTYPE_ALWAYS;
         }
 
         auto checkGroup                                   = loc->GetCollectionCheckGroup();
