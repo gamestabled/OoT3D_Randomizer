@@ -1622,3 +1622,6 @@ PATCH GanonFinalBlow
 
 PATCH PlayerBonk
     bl hook_PlayerBonk
+
+PATCH SetupDoorShutter
+    bleq hook_SetupDoorShutter

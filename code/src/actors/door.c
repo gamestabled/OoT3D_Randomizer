@@ -2,6 +2,7 @@
 #include "models.h"
 #include "settings.h"
 #include "enemizer.h"
+#include "enemy_souls.h"
 #include "multiplayer.h"
 
 // Certain doors can cause a crash depending on a freestanding
@@ -80,14 +81,16 @@ void DoorShutter_rInit(Actor* thisx, GlobalContext* globalCtx) {
 
 void DoorShutter_Update(Actor* thisx, GlobalContext* globalCtx);
 
-void DoorShutter_SlidingDoor_Idle(DoorShutter* this, GlobalContext* globalCtx);
-void DoorShutter_SlidingDoor_Open(DoorShutter* this, GlobalContext* globalCtx);
+void DoorShutter_Idle(DoorShutter* this, GlobalContext* globalCtx);
+void DoorShutter_Open(DoorShutter* this, GlobalContext* globalCtx);
+void DoorShutter_Close(DoorShutter* this, GlobalContext* globalCtx);
+
 void DoorShutter_Unlocking(DoorShutter* this, GlobalContext* globalCtx);
 
 void DoorShutter_rUpdate(Actor* thisx, GlobalContext* globalCtx) {
     DoorShutter* this = (DoorShutter*)thisx;
 
-    DoorShutterActionFunc prev_action_fn = this->action_fn;
+    DoorShutterActionFunc prevActionFunc = this->actionFunc;
 
     DoorShutter_Update(thisx, globalCtx);
 
@@ -96,9 +99,8 @@ void DoorShutter_rUpdate(Actor* thisx, GlobalContext* globalCtx) {
         return;
     }
 
-    if (this->lock_timer != 0 && prev_action_fn == DoorShutter_SlidingDoor_Idle &&
-        this->action_fn == DoorShutter_SlidingDoor_Open) {
-        if (this->door_type_maybe != 5) {
+    if (this->unlockTimer != 0 && prevActionFunc == DoorShutter_Idle && this->actionFunc == DoorShutter_Open) {
+        if (this->doorType != 5) {
             Multiplayer_Send_UnlockedDoor(thisx->params & 0x3F);
         }
         Multiplayer_Send_ActorUpdate(thisx, NULL, 0);
@@ -106,22 +108,36 @@ void DoorShutter_rUpdate(Actor* thisx, GlobalContext* globalCtx) {
 }
 
 void DoorShutter_Unlock(DoorShutter* this) {
-    if (this->action_fn != DoorShutter_SlidingDoor_Idle) {
+    if (this->actionFunc != DoorShutter_Idle) {
         return;
     }
-    this->action_fn = &DoorShutter_Unlocking;
+    this->actionFunc = DoorShutter_Unlocking;
 
-    u32 sfx_id = this->door_type_maybe != 5 ? NA_SE_EV_CHAIN_KEY_UNLOCK : NA_SE_EV_CHAIN_KEY_UNLOCK_B;
-    Audio_PlaySfxGeneral(sfx_id, &this->base.world.pos, 4, &gSfxDefaultFreqAndVolScale, &gSfxDefaultFreqAndVolScale,
-                         &gSfxDefaultReverb);
+    u32 sfx_id = this->doorType != 5 ? NA_SE_EV_CHAIN_KEY_UNLOCK : NA_SE_EV_CHAIN_KEY_UNLOCK_B;
+    Audio_PlaySfxGeneral(sfx_id, &this->dyna.actor.world.pos, 4, &gSfxDefaultFreqAndVolScale,
+                         &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
 }
 
 void DoorShutter_Unlocking(DoorShutter* this, GlobalContext* globalCtx) {
-    if (this->lock_timer > 0) {
-        this->lock_timer--;
+    if (this->unlockTimer > 0) {
+        this->unlockTimer--;
         return;
     }
-    this->action_fn = DoorShutter_SlidingDoor_Idle;
+    this->actionFunc = DoorShutter_Idle;
+}
+
+u8 DoorShutter_CheckSoullessEnemies(DoorShutter* this) {
+    if (gSettingsContext.shuffleEnemySouls == SHUFFLEENEMYSOULS_ALL &&
+        (this->actionFunc == DoorShutter_Close || this->actionFunc == DoorShutter_Open)) {
+        Actor* enemy = gGlobalContext->actorCtx.actorList[ACTORTYPE_ENEMY].first;
+        for (; enemy != NULL; enemy = enemy->next) {
+            if (enemy->room == gGlobalContext->roomNum && !EnemySouls_CheckSoulForActor(enemy)) {
+                this->barsClosedAmount = 0.0;
+                return TRUE;
+            }
+        }
+    }
+    return FALSE;
 }
 
 /*------------------------------

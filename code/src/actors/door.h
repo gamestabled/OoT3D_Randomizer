@@ -31,15 +31,17 @@ struct DoorShutter;
 typedef void (*DoorShutterActionFunc)(struct DoorShutter* this, GlobalContext* globalCtx);
 
 typedef struct DoorShutter {
-    Actor base;
-    char dyna[24];
-    char unk_1BC[6];
-    s8 door_type_maybe;
-    char unk_1C3[3];
-    s8 lock_timer;
-    char unk_1C7[9];
-    DoorShutterActionFunc action_fn;
+    /* 0x000 */ DynaPolyActor dyna;
+    /* 0x1BC */ char unk_1BC[0x06];
+    /* 0x1C2 */ s8 doorType;
+    /* 0x1C3 */ char unk_1C3[0x03];
+    /* 0x1C6 */ s8 unlockTimer;
+    /* 0x1C7 */ char unk_1C7[0x05];
+    /* 0x1CC */ f32 barsClosedAmount;
+    /* 0x1D0 */ DoorShutterActionFunc actionFunc;
+    /* 0x1D4 */ char unk_1D4[0x4C];
 } DoorShutter;
+_Static_assert(sizeof(DoorShutter) == 0x220, "DoorShutter size");
 
 void DoorShutter_rInit(Actor* thisx, GlobalContext* globalCtx);
 void DoorShutter_rUpdate(Actor* thisx, GlobalContext* globalCtx);

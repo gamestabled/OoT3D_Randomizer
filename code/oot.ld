@@ -18,6 +18,7 @@ SECTIONS
 	.patch_ArmosPushSpeed 0x10B5C4 + _LD_OFF : { *(.patch_ArmosPushSpeed) }
 	EnMb_ClubWaitPlayerNear = 0x10B5D0 + _LD_OFF;
 	.patch_ShortenRainbowBridgeCS 0x10B904 + _LD_OFF : { *(.patch_ShortenRainbowBridgeCS) }
+	DoorShutter_Close = 0x10D030 + _LD_OFF;
 	.patch_GrannyTextID 0x10DCD0 + _LD_OFF : { *(.patch_GrannyTextID) }
 	OceffSpot_End = 0x10FBD0 + _LD_OFF;
 	ObjLift_Shake = 0x110E98 + _LD_OFF;
@@ -517,6 +518,7 @@ SECTIONS
 	.patch_IgnoreMaskReaction 0x36BBC4 + _LD_OFF : { *(.patch_IgnoreMaskReaction) }
 	Flags_UnsetSwitch = 0x36BEAC + _LD_OFF;
 	Matrix_Multiply = 0x36C174 + _LD_OFF;
+	.patch_SetupDoorShutter 0x36C3BC + _LD_OFF : { *(.patch_SetupDoorShutter) }
 	Flags_GetClear = 0x36CF6C + _LD_OFF;
 	Math_Vec3f_DistXZ = 0x36D260 + _LD_OFF;
 	Math_SmoothStepToF = 0x36E168 + _LD_OFF;
@@ -662,7 +664,7 @@ SECTIONS
 	EnDoor_Open = 0x3EC04C + _LD_OFF;
 	.patch_CowItemOverride 0x3EE378 + _LD_OFF : { *(.patch_CowItemOverride) }
 	DoorGerudo_Unlocking = 0x3EEE38 + _LD_OFF;
-	DoorShutter_SlidingDoor_Open = 0x3EEE7C + _LD_OFF;
+	DoorShutter_Open = 0x3EEE7C + _LD_OFF;
 	.patch_CowBottleCheck 0x3F065C + _LD_OFF : { *(.patch_CowBottleCheck) }
 	.patch_CarpetSalesmanCheckFlagOne 0x3F0A18 + _LD_OFF : { *(.patch_CarpetSalesmanCheckFlagOne) }
 	.patch_CarpetSalesmanCheckFlagTwo 0x3F0A64 + _LD_OFF : { *(.patch_CarpetSalesmanCheckFlagTwo) }
@@ -676,7 +678,7 @@ SECTIONS
 	.patch_FireArrowCheckChestFlagTwo 0x3F2448 + _LD_OFF : { *(.patch_FireArrowCheckChestFlagTwo) }
 	.patch_LinkReflection 0x3F2F0C + _LD_OFF : { *(.patch_LinkReflection) }
 	DoorGerudo_Idle = 0x3F3FA0 + _LD_OFF;
-	DoorShutter_SlidingDoor_Idle = 0x3F4A3C + _LD_OFF;
+	DoorShutter_Idle = 0x3F4A3C + _LD_OFF;
 	.patch_SlidingDoorDestroyCustomModels 0x3F4A70 + _LD_OFF : { *(.patch_SlidingDoorDestroyCustomModels) }
 	.patch_ChildBlueWarpOverride 0x3F5774 + _LD_OFF : { *(.patch_ChildBlueWarpOverride) }
 	BgIceShelter_Melt = 0x3F5F00 + _LD_OFF;
