@@ -490,6 +490,7 @@ SECTIONS
 	.patch_SkullwalltulaAttack_35F328 0x35F328 + _LD_OFF : { *(.patch_SkullwalltulaAttack_35F328) }
 	.patch_SkullwalltulaTargetRotation 0x35F828 + _LD_OFF : { *(.patch_SkullwalltulaTargetRotation) }
 	.patch_SkullwalltulaAttack_35F834 0x35F834 + _LD_OFF : { *(.patch_SkullwalltulaAttack_35F834) }
+	LinkAnimation_Change = 0x360190 + _LD_OFF;
 	LinkAnimation_PlayOnce = 0x3604F0 + _LD_OFF;
 	.patch_ISGCrouchStab 0x360690 + _LD_OFF : { *(.patch_ISGCrouchStab) }
 	.patch_ForceTrailEffectUpdate 0x362108 + _LD_OFF : { *(.patch_ForceTrailEffectUpdate) } /*EffectBlure_AddVertex*/
