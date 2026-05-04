@@ -192,7 +192,9 @@ void WriteIngameSpoilerLog() {
                  (Settings::GerudoFortress.Is(GERUDOFORTRESS_FAST) && loc->IsCategory(Category::cVanillaGFSmallKey) &&
                   loc->GetHintKey() != GF_NORTH_F1_CARPENTER)) {
             continue;
-        } else if (loc->IsCategory(Category::cFreestandingRupee) && !Settings::ShuffleRupees) {
+        }
+        // Freestanding Rupees
+        else if (loc->IsCategory(Category::cFreestandingRupee) && !Settings::ShuffleRupees) {
             continue;
         }
 
