@@ -836,7 +836,7 @@ void SaveFile_LoadFileSwordless(void) {
     if (gSaveContext.linkAge == 0) {
         // Push pedestal item if adult and haven't received yet
         if (gSettingsContext.shuffleMasterSword && !(gExtSaveData.extInf.masterSwordFlags & 2)) {
-            ItemOverride_PushDelayedOverride(0x00);
+            ItemOverride_PushDelayedOverride(DELOVR_MASTER_SWORD);
         }
 
         // Mark pedestal item collected

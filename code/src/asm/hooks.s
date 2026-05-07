@@ -2181,3 +2181,14 @@ HOOK PlayerBonk
     bl Player_OnBonk
     pop {r0-r12, lr}
     bx lr
+
+HOOK BusinessScrubCheckFlags
+    push {r0-r12, lr}
+    cpy r0,r4 @ scrub actor
+    bl EnShopnnuts_rCheckFlags
+    cmp r0,#0x0
+    pop {r0-r12, lr}
+    addeq lr,lr,#0x0C @  0: skip checks, don't kill actor
+    addgt lr,lr,#0x10 @  1: kill actor
+    cmplt r1,#0x2     @ -1: resume vanilla checks
+    bx lr

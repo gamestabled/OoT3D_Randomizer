@@ -183,6 +183,7 @@ class ItemLocation {
     void SetPlacedItem(const ItemKey item) {
         placedItem = item;
         SetPrice(ItemTable(placedItem).GetPrice());
+        overridden = true;
     }
 
     // Saves an item to be set as placedItem later
@@ -193,6 +194,8 @@ class ItemLocation {
     // Place the vanilla item in this location
     void PlaceVanillaItem() {
         placedItem = vanillaItem;
+        // Keep override only when it is required to give the vanilla item.
+        overridden = (type == ItemLocationType::Delayed || type == ItemLocationType::TempleReward);
     }
 
     void ApplyPlacedItemEffect() {
@@ -203,6 +206,7 @@ class ItemLocation {
     void SaveDelayedItem() {
         placedItem  = delayedItem;
         delayedItem = NONE;
+        overridden  = true;
     }
 
     u16 GetPrice() const {
@@ -270,14 +274,6 @@ class ItemLocation {
         hintedAt = true;
     }
 
-    bool IsHidden() const {
-        return hidden;
-    }
-
-    void SetHidden(const bool hidden_) {
-        hidden = hidden_;
-    }
-
     bool IsHintable() const {
         return isHintable;
     }
@@ -292,6 +288,10 @@ class ItemLocation {
 
     AreaKey GetParentRegionKey() const {
         return parentRegion;
+    }
+
+    bool IsOverridden() {
+        return overridden;
     }
 
     void AddExcludeOption() {
@@ -433,7 +433,7 @@ class ItemLocation {
         isHintable         = false;
         price              = 0;
         hasShopsanityPrice = false;
-        hidden             = false;
+        overridden         = false;
     }
 
   private:
@@ -457,7 +457,7 @@ class ItemLocation {
     bool isHintable         = false;
     AreaKey parentRegion    = NONE;
     bool hasShopsanityPrice = false;
-    bool hidden             = false;
+    bool overridden         = false;
 };
 
 class ItemOverride_Compare {
@@ -496,7 +496,7 @@ extern bool showItemProgress;
 extern u16 itemsPlaced;
 
 void GenerateLocationPool();
-void PlaceItemInLocation(LocationKey loc, ItemKey item, bool applyEffectImmediately = false, bool setHidden = false);
+void PlaceItemInLocation(LocationKey loc, ItemKey item, bool applyEffectImmediately = false);
 std::vector<LocationKey> GetLocations(const std::vector<LocationKey>& locationPool, Category categoryInclude,
                                       Category categoryExclude = Category::cNull);
 void LocationReset();
