@@ -284,6 +284,7 @@ SECTIONS
 	.patch_Item00GiveCollectedItemDrop 0x22B974 + _LD_OFF : { *(.patch_Item00GiveCollectedItemDrop) }
 	.patch_patch_ItemGiveBombchuDropTwo 0x22BAE4 + _LD_OFF : { *(.patch_ItemGiveBombchuDropTwo) }
 	.patch_GetObjectEntry_EnNutsballInit 0x22DEC4 + _LD_OFF : { *(.patch_GetObjectEntry_EnNutsballInit) }
+	EnPoRelay_Destroy = 0x22E438 + _LD_OFF;
 	EnShopnuts_Init = 0x22ED2C + _LD_OFF;
 	.patch_BusinessScrubCheckFlags 0x22EE64 + _LD_OFF : { *(.patch_BusinessScrubCheckFlags) }
 	EnTorch2_Update = 0x22F0C8 + _LD_OFF;
