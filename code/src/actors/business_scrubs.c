@@ -6,8 +6,8 @@
 void EnDns_Update(Actor* thisx, GlobalContext* globalCtx);
 void EnShopnuts_Init(Actor* thisx, GlobalContext* globalCtx);
 
-u32 EnDns_rCanBuy(EnDns* scrub);
-void EnDns_rPay(EnDns* scrub);
+static u32 EnDns_rCanBuy(EnDns* scrub);
+static void EnDns_rPay(EnDns* scrub);
 
 extern DnsItemEntry* EnDns_ItemEntries[];
 
@@ -22,7 +22,7 @@ void BusinessScrubs_Init(void) {
     }
 }
 
-u32 EnDns_rCanBuy(EnDns* scrub) {
+static u32 EnDns_rCanBuy(EnDns* scrub) {
     s16 price;
 
     if (gSettingsContext.scrubsanity == SCRUBSANITY_AFFORDABLE) {
@@ -39,7 +39,7 @@ u32 EnDns_rCanBuy(EnDns* scrub) {
     return DNS_CANBUY_RESULT_SUCCESS;
 }
 
-void EnDns_rPay(EnDns* scrub) {
+static void EnDns_rPay(EnDns* scrub) {
     u32 sceneNum = gGlobalContext->sceneNum;
     u32 bitMask  = (0x1 << (scrub->actor.params + 1));
 
