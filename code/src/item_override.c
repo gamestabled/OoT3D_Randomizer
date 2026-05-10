@@ -659,7 +659,7 @@ s32 ItemOverride_GiveSariasGift(void) {
     u32 receivedGift = EventCheck(0xC1);
     if (receivedGift == 0 &&
         Entrance_SceneAndSpawnAre(0x5B, 0x09)) { // Kokiri Forest -> LW Bridge, index 05E0 in the entrance table
-        ItemOverride_PushDelayedOverride(DELOVR_SARIA_GIFT);
+        ItemOverride_PushDelayedOverride(DLYOVR_SARIA_GIFT);
         EventSet(0xC1);
     }
 
@@ -670,7 +670,7 @@ s32 ItemOverride_GiveSariasGift(void) {
 // If we haven't obtained Zelda's Letter and are in the castle courtyard, push it
 void ItemOverride_CheckZeldasLetter() {
     if (!EventCheck(0x40) && gGlobalContext->sceneNum == SCENE_CASTLE_COURTYARD_ZELDA) {
-        ItemOverride_PushDelayedOverride(DELOVR_ZELDA_LETTER);
+        ItemOverride_PushDelayedOverride(DLYOVR_ZELDA_LETTER);
         EventSet(0x40);
     }
 }
