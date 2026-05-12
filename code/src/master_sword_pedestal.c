@@ -24,7 +24,7 @@ void SetTimeTraveled() {
 void Pedestal_PickUpMasterSword(void) {
     // Push pedestal item
     if (gSettingsContext.shuffleMasterSword && !(gExtSaveData.extInf.masterSwordFlags & 2)) {
-        ItemOverride_PushDelayedOverride(0x00);
+        ItemOverride_PushDelayedOverride(DLYOVR_MASTER_SWORD);
     }
 
     if (!SaveFile_SwordlessPatchesEnabled()) {

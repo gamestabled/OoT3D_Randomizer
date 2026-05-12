@@ -834,7 +834,7 @@ static void WriteAllLocations(tinyxml2::XMLDocument& spoilerLog, const bool coll
     auto parentNode = spoilerLog.NewElement("all-locations");
 
     for (const LocationKey key : allLocations) {
-        if (!Location(key)->IsHidden()) {
+        if (Location(key)->IsOverridden()) {
             WriteLocation(parentNode, key, true);
         }
     }

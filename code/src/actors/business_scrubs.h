@@ -5,6 +5,8 @@
 #include "z3D/actors/z_en_dns.h"
 #include "z3D/actors/z_en_shopnuts.h"
 
+void BusinessScrubs_Init(void);
+
 void EnDns_rUpdate(Actor* thisx, GlobalContext* globalCtx);
 void EnDns_StartBurrow(EnDns* this);
 
