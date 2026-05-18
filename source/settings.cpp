@@ -369,8 +369,9 @@ Option CompassesShowWotH   = Option::U8  ("Compasses Show WotH",    {"No", "Yes"
 Option MapsShowDungeonMode = Option::U8  ("Maps Show Dungeon Modes",{"No", "Yes"},                                                          {mapsShowDungeonModesDesc},                                                                                       OptionCategory::Setting,    ON);
 Option StartingTime        = Option::U8  ("Starting Time",          {"Day", "Night"},                                                       {startingTimeDesc});
 Option ChestAnimations     = Option::Bool("Chest Animations",       {"Always Fast", "Match Contents"},                                      {chestAnimDesc});
-Option ChestAppearance     = Option::U8  ("Chest Appearance Mod",   {"Vanilla", "Texture", "Size + Texture", "Classic CSMC"},             {chestVanillaDesc, chestTextureDesc, chestSizeTextureDesc, chestClassicDesc});
+Option ChestAppearance     = Option::U8  ("Chest Appearance Mod",   {"Vanilla", "Texture", "Size + Texture", "Classic CSMC"},               {chestVanillaDesc, chestTextureDesc, chestSizeTextureDesc, chestClassicDesc});
 Option ChestAgony          = Option::Bool(2, "Need Shard of Agony", {"No", "Yes"},                                                          {chestAgonyDesc});
+Option ExtraShields        = Option::U8  ("Keep Extra Shields",     {"Never (Vanilla)", "Only if random", "Always allowed"},                {extraShieldsDesc},                                                                                               OptionCategory::Setting,    EXTRASHIELDS_RANDOM_ONLY);
 Option GenerateSpoilerLog  = Option::Bool("Generate Spoiler Log",   {"No", "Yes"},                                                          {""},                                                                                                             OptionCategory::Setting,    ON);
 Option IngameSpoilers      = Option::Bool("Ingame Spoilers",        {"Hide", "Show"},                                                       {ingameSpoilersHideDesc, ingameSpoilersShowDesc });
 bool HasNightStart         = false;
@@ -393,6 +394,7 @@ std::vector<Option *> miscOptions = {
     &ChestAnimations,
     &ChestAppearance,
     &ChestAgony,
+    &ExtraShields,
     &GenerateSpoilerLog,
     &IngameSpoilers,
 };
@@ -1621,6 +1623,7 @@ SettingsContext FillContext() {
     ctx.chestAnimations     = (ChestAnimations) ? 1 : 0;
     ctx.chestAppearance     = ChestAppearance.Value<u8>();
     ctx.chestAgony          = (ChestAgony) ? 1 : 0;
+    ctx.extraShields        = ExtraShields.Value<u8>();
     ctx.generateSpoilerLog  = (GenerateSpoilerLog) ? 1 : 0;
     ctx.ingameSpoilers      = (IngameSpoilers) ? 1 : 0;
     ctx.menuOpeningButton   = MenuOpeningButton.Value<u8>();

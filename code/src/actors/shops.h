@@ -106,9 +106,9 @@ typedef struct EnGirlA {
     /* 0x1FC */ f32 unk_1FC;
 } EnGirlA; // size 0x200
 
-typedef enum {
-    CANBUY_RESULT_0,
-    CANBUY_RESULT_1,
+typedef enum EnGirlA_CanBuyResult {
+    CANBUY_RESULT_SUCCESS_FANFARE,
+    CANBUY_RESULT_SUCCESS,
     CANBUY_RESULT_CANT_GET_NOW,
     CANBUY_RESULT_NEED_BOTTLE,
     CANBUY_RESULT_NEED_RUPEES,

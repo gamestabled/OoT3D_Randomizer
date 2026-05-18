@@ -1176,6 +1176,52 @@ void CreateAlwaysIncludedMessages() {
         CreateMessageFromTextObject(0x40AE, 0, 2, 3, AddColorsAndFormat(aquariumText, {}));
     }
 
+    // Deku Shield and Hylian Shield inventory descriptions. Add counter to vanilla text.
+    if (Settings::ExtraShields.IsNot(EXTRASHIELDS_NEVER)) {
+        Text dekuShieldText = Text{
+            // english
+            "#Deku Shield (x11)#&--A child-sized wooden shield.&--It's light, but also flammable.",
+            // french
+            "#Bouclier Mojo (x11)#&--Un bouclier en bois pour enfants.&--Il est léger mais inflammable.",
+            // spanish
+            "#Escudo deku (x11)#&--Escudo de madera de pequeño tamaño.&--Es ligero, pero inflamable.",
+            // italian
+            "#Scudo Deku (x11)#&--Uno scudo di legno ideale per i ragazzi.&--È leggero ma è facilmente infiammabile.",
+            // german
+            "#Deku-Schild (x11)#&--Ein Holzschild, in der Größe passend für&--Kinder. Er ist leicht, und entflammbar..."
+        };
+        dekuShieldText = AddColorsAndFormat(dekuShieldText, { QM_LBLUE });
+        dekuShieldText.Replace("11", DEKU_SHIELD_COUNT());
+        dekuShieldText.Replace("--", HORIZONTAL_SPACE(0x10));
+        dekuShieldText.Replace(MESSAGE_END(), SHOP_MESSAGE_BOX());
+        dekuShieldText += MESSAGE_END();
+        CreateMessageFromTextObject(0x73E, 0, 2, 3, dekuShieldText);
+
+        Text hylianShieldText =
+            Text{ // english
+                  "#Hylian Shield (x11)#&--A big shield just like the Hylian Knights&--use. It's light, "
+                  "sturdy and can stand up to&--flame attacks.",
+                  // french
+                  "#Bouclier Hylien (x11)#&--Un bouclier digne des chevaliers d'Hyrule.&--Il est léger, robuste et "
+                  "résiste au feu.",
+                  // spanish
+                  "#Escudo hyliano (x11)#&--Escudo grande como los que usan los&--caballeros hylianos. Es ligero, "
+                  "sólido y&--resistente al fuego.",
+                  // italian
+                  "#Scudo Hylia (x11)#&--Un grande scudo, uguale a&--quello usato dai cavalieri Hylia.&--È leggero, "
+                  "robusto e resiste al fuoco.",
+                  // german
+                  "#Hylia-Schild (x11)#&--Ein großer Schild wie ihn die Hylia-Ritter&--tragen. Er ist leicht, robust "
+                  "und feuerfest."
+            };
+        hylianShieldText = AddColorsAndFormat(hylianShieldText, { QM_LBLUE });
+        hylianShieldText.Replace("11", HYLIAN_SHIELD_COUNT());
+        hylianShieldText.Replace("--", HORIZONTAL_SPACE(0x10));
+        hylianShieldText.Replace(MESSAGE_END(), SHOP_MESSAGE_BOX());
+        hylianShieldText += MESSAGE_END();
+        CreateMessageFromTextObject(0x73F, 0, 2, 3, hylianShieldText);
+    }
+
     // Zelda final dialog
     {
         Text happyMsg = Text{
@@ -1563,6 +1609,12 @@ std::string MQ_END() {
 // Custom control codes
 std::string TRIFORCE_PIECE_COUNT() {
     return { '\x7F', static_cast<char>(TEXT_CTRL_TRIFORCE_PIECE_COUNT) };
+}
+std::string DEKU_SHIELD_COUNT() {
+    return { '\x7F', static_cast<char>(TEXT_CTRL_DEKU_SHIELD_COUNT) };
+}
+std::string HYLIAN_SHIELD_COUNT() {
+    return { '\x7F', static_cast<char>(TEXT_CTRL_HYLIAN_SHIELD_COUNT) };
 }
 std::string FINAL_TIME() {
     return { '\x7F', static_cast<char>(TEXT_CTRL_FINAL_TIME) };

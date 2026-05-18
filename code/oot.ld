@@ -471,6 +471,7 @@ SECTIONS
 	Collider_SetCylinder = 0x353D24 + _LD_OFF;
 	Collider_InitCylinder = 0x353DD0 + _LD_OFF;
 	SetupItemInWater = 0x354894 + _LD_OFF;
+	.patch_GetQuickItem 0x354AB0 + _LD_OFF : { *(.patch_GetQuickItem) }
 	.patch_FastChests 0x354CD4 + _LD_OFF : { *(.patch_FastChests) }
 	.patch_AboutToPickUpActor 0x354DD8 + _LD_OFF : { *(.patch_AboutToPickUpActor) }
 	.patch_MasterSwordTimerCheck 0x354DFC + _LD_OFF : { *(.patch_MasterSwordTimerCheck) }
@@ -481,6 +482,7 @@ SECTIONS
 	BossChallenge_IsActive = 0x35B164 + _LD_OFF;
 	.patch_Audio_PlayFanfare 0x35C528 + _LD_OFF : { *(.patch_Audio_PlayFanfare) }
 	Audio_PlayFanfare = 0x35C528 + _LD_OFF;
+	.patch_DeleteEquipment 0x35D1F8 + _LD_OFF : { *(.patch_DeleteEquipment) }
 	LinkDamage = 0x35D304 + _LD_OFF;
 	FireDamage = 0x35D8D8 + _LD_OFF;
 	Player_InBlockingCsMode = 0x35DB20 + _LD_OFF;

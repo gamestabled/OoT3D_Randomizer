@@ -8,6 +8,7 @@ void EnShopnuts_Init(Actor* thisx, GlobalContext* globalCtx);
 
 static u32 EnDns_rCanBuy(EnDns* scrub);
 static void EnDns_rPay(EnDns* scrub);
+static u32 EnDns_rCanBuyExtraShield(EnDns* scrub);
 
 extern DnsItemEntry* EnDns_ItemEntries[];
 
@@ -19,6 +20,8 @@ void BusinessScrubs_Init(void) {
             EnDns_ItemEntries[scrubType]->canBuy  = EnDns_rCanBuy;
             EnDns_ItemEntries[scrubType]->payment = EnDns_rPay;
         }
+    } else if (gSettingsContext.extraShields == EXTRASHIELDS_ALWAYS) {
+        EnDns_ItemEntries[DNS_TYPE_DEKU_SHIELD]->canBuy = EnDns_rCanBuyExtraShield;
     }
 }
 
@@ -34,6 +37,14 @@ static u32 EnDns_rCanBuy(EnDns* scrub) {
     }
 
     if (gSaveContext.rupees < price) {
+        return DNS_CANBUY_RESULT_NEED_RUPEES;
+    }
+    return DNS_CANBUY_RESULT_SUCCESS;
+}
+
+static u32 EnDns_rCanBuyExtraShield(EnDns* scrub) {
+    // Allow buying Deku Shield even when already owned.
+    if (gSaveContext.rupees < scrub->dnsItemEntry->itemPrice) {
         return DNS_CANBUY_RESULT_NEED_RUPEES;
     }
     return DNS_CANBUY_RESULT_SUCCESS;

@@ -1832,6 +1832,24 @@ HOOK PlayInit
     cpy r5,r0
     bx lr
 
+HOOK DeleteEquipment
+    push {r0-r12, lr}
+    cpy r0,r1 @ equipment type
+    cpy r1,r4 @ equipment value
+    bl Equipment_OverrideDeletion
+    cmp r0,#0x0
+    pop {r0-r12, lr}
+    strheq r2,[r12,#0xB6]
+    bx lr
+
+HOOK GetQuickItem
+    ldrb r1,[r6,#0x0]
+    push {r0-r12, lr}
+    cpy r0,r1 @ item id
+    bl ItemOverride_GetQuickItem
+    pop {r0-r12, lr}
+    bx lr
+
 HOOK GetObjectEntry_Generic
     push {r1-r12, lr}
     @ r0 = slot
