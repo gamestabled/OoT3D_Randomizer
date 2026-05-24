@@ -379,6 +379,12 @@ typedef enum ChestAppearanceSetting {
     CHESTAPPEARANCE_CLASSIC,
 } ChestAppearanceSetting;
 
+typedef enum ExtraShieldsSetting {
+    EXTRASHIELDS_NEVER,       // Vanilla
+    EXTRASHIELDS_RANDOM_ONLY, // Only randomized items can give extra shields
+    EXTRASHIELDS_ALWAYS,      // Shops will allow buying shields while having one
+} ExtraShieldsSetting;
+
 typedef enum RandomTrapDamageSetting {
     RANDOMTRAPS_OFF,
     RANDOMTRAPS_BASIC,
@@ -630,6 +636,7 @@ typedef struct SettingsContext {
     u8 chestAnimations;
     u8 chestAppearance;
     u8 chestAgony;
+    u8 extraShields;
     u8 generateSpoilerLog;
     u8 ingameSpoilers;
     u8 menuOpeningButton;

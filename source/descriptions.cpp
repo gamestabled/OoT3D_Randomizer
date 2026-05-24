@@ -1007,6 +1007,16 @@ string_view chestAgonyDesc            = "The Chest Appearance Mod will only appl
                                         "after obtaining the Shard of Agony.\n";           //
                                                                                            //
 /*------------------------------                                                           //
+|         EXTRA SHIELDS        |                                                           //
+------------------------------*/                                                           //
+string_view extraShieldsDesc          = "Allow keeping more than 1 Deku and Hylian shield\n"
+                                        "in the inventory, so if you lose one you can then\n"
+                                        "re-equip it immediately. The shield count will be\n"
+                                        "displayed next to the item name.\n\n"             //
+                                        "You can choose if extra shields should only be\n" //
+                                        "obtainable from randomized items or if they should"
+                                        "also be repeatedly buyable from shops.";          //
+/*------------------------------                                                           //
 |        INGAME SPOILERS       |                                                           //
 ------------------------------*/                                                           //
 string_view ingameSpoilersShowDesc    = "Every spoiler is shown.";                         //

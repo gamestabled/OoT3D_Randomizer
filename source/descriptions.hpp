@@ -322,6 +322,8 @@ extern string_view chestClassicDesc;
 
 extern string_view chestAgonyDesc;
 
+extern string_view extraShieldsDesc;
+
 extern string_view ingameSpoilersShowDesc;
 extern string_view ingameSpoilersHideDesc;
 

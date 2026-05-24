@@ -1,6 +1,7 @@
 #include "item_override.h"
 #include "rHeap.h"
 #include "item_table.h"
+#include "item_effect.h"
 #include "icetrap.h"
 #include "settings.h"
 #include "custom_models.h"
@@ -10,7 +11,6 @@
 #include "common.h"
 #include "chest.h"
 #include "bgm.h"
-#include "actors/obj_mure3.h"
 
 #include <stddef.h>
 
@@ -528,7 +528,25 @@ s8 ItemOverride_GetOverheadItem(GlobalContext* globalCtx, Player* player) {
 
         return ItemOverride_PlayFanfare(itemId);
     }
+
+    // No override
+    switch (PLAYER->getItemId) {
+        case GI_SHIELD_DEKU:
+        case GI_SHIELD_HYLIAN:
+            ItemEffect_Shield(&gSaveContext, PLAYER->getItemId - GI_SHIELD_DEKU + EQUIP_VALUE_SHIELD_DEKU, -1);
+            break;
+    };
     return -1;
+}
+
+/**
+ * Called when Link accepts a GetItem offer without the overhead mini-cutscene (e.g. deku seeds after the first time or
+ * shields that are already owned).
+ */
+void ItemOverride_GetQuickItem(u8 item) {
+    if (item == ITEM_SHIELD_DEKU || item == ITEM_SHIELD_HYLIAN) {
+        ItemEffect_Shield(&gSaveContext, item - ITEM_SHIELD_DEKU + EQUIP_VALUE_SHIELD_DEKU, -1);
+    }
 }
 
 /**
