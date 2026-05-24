@@ -98,7 +98,8 @@ void EnemySouls_SetSoulFlag(EnemySoulId soulId) {
 u8 EnemySouls_CheckSoulForActor(Actor* actor) {
     if ((gSettingsContext.shuffleEnemySouls == SHUFFLEENEMYSOULS_OFF) ||
         (gSettingsContext.shuffleEnemySouls == SHUFFLEENEMYSOULS_BOSSES && !Actor_IsBoss(actor)) ||
-        (actor->id == 0x054 && ((EnAm*)actor)->textureBlend == 0 /* Armos, statue or asleep */)) {
+        (actor->id == ACTOR_ARMOS && ((EnAm*)actor)->textureBlend == 0 /* Statue or asleep enemy */) ||
+        (actor->id == ACTOR_DEAD_HAND && actor->shape.yOffset <= -15000.0 /* Waiting underground */)) {
         return TRUE;
     }
 

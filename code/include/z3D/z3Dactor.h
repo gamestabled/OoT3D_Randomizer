@@ -81,7 +81,7 @@ typedef struct SkelAnime {
     /* 0x14 */ char unk_14[0x14];
     /* 0x28 */ struct SkeletonAnimationModel* unk_28;
     /* 0x2C */ char unk_2C[0x4];
-    /* 0x30 */ s32 animationType;
+    /* 0x30 */ s32 animIndex;
     /* 0x34 */ char unk_34[0x8];
     /* 0x3C */ f32 curFrame;
     /* 0x40 */ f32 playSpeed;
@@ -381,5 +381,7 @@ void Actor_UpdateBgCheckInfo(struct GlobalContext* globalCtx, Actor* actor, f32 
 s32 Player_InCsMode(struct GlobalContext* globalCtx);
 Actor* Actor_FindNearby(struct GlobalContext* globalCtx, Actor* ref_actor, s16 actorId, u8 actor_category, f32 range);
 void ActorShadow_DrawFeet(Actor* actor, void* lights, struct GlobalContext* globalCtx);
+void LinkAnimation_Change(SkelAnime* skelAnime, struct GlobalContext* play, u32 animation, f32 playSpeed,
+                          f32 startFrame, f32 endFrame, u8 mode, f32 morphFrames) __attribute__((pcs("aapcs-vfp")));
 
 #endif
