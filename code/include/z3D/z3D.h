@@ -606,7 +606,7 @@ typedef struct StaticContext {
     /* 0x0E62 */ char unk_E72[0x0010];
     /* 0x0E72 */ u16 collisionDisplay;
     /* 0x0E74 */ char unk_E74[0x015C];
-    /* 0x0FD0 */ u16 renderGeometryDisable;
+    /* 0x0FD0 */ u16 disableRoomDraw;
     /* 0x0FD2 */ char unk_FD2[0x0602];
 } StaticContext; // size 0x15D4
 // _Static_assert(sizeof(StaticContext) == 0x15D4, "Static Context size");

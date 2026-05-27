@@ -113,10 +113,9 @@ void PlayerActor_rUpdate(Actor* thisx, GlobalContext* globalCtx) {
          PLAYER->itemActionParam == 35)) { // sword items
         PLAYER->meleeWeaponState = -1;     // slash effect with no hitbox (same as "damageless death ISG")
     }
-    if (PLAYER->itemActionParam == 38) { // Blue Potion
-        if (IceTrap_ActiveCurse == ICETRAP_CURSE_BLIND)
-            gStaticContext.dekuNutFlash = -1;
 
+    // Drinking Blue Potion
+    if (PLAYER->itemActionParam == 38 && this->skelAnime.curFrame > 45.0f) {
         IceTrap_DispelCurses();
     }
 

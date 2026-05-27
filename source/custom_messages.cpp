@@ -676,6 +676,13 @@ void CreateAlwaysIncludedMessages() {
                 /*german */ "Die Umgebung ist #unsichtbar#!",
             },
             Text{
+                /*english*/ "Many things are #invisible#!",
+                /*french */ "",
+                /*spanish*/ "",
+                /*italian*/ "Molte cose sono #invisibili#!",
+                /*german */ "",
+            },
+            Text{
                 /*english*/ "You are feeling #sluggish#...",
                 /*french */ "Vous vous sentez #léthargique#...",
                 /*spanish*/ "Te sientes #lento#...",
