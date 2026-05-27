@@ -133,10 +133,8 @@ void IceTrap_Give(void) {
         pendingFreezes--;
 
         if (trapType >= ICETRAP_CURSE_SHIELD) {
-            if (IceTrap_ActivateCurseTrap(trapType))
-                return;
-            else
-                trapType = ICETRAP_SCALE; // if the curse can't trigger, use a scale trap
+            IceTrap_ActivateCurseTrap(trapType);
+            return;
         }
 
         modifyScale = (trapType == ICETRAP_SCALE);
@@ -180,9 +178,11 @@ void IceTrap_Give(void) {
     }
 }
 
-u8 IceTrap_ActivateCurseTrap(u8 curseType) {
-    if (IceTrap_ActiveCurse >= 0 || gSaveContext.timer2State != 0)
-        return 0;
+void IceTrap_ActivateCurseTrap(u8 curseType) {
+    if (IceTrap_ActiveCurse >= 0 || gSaveContext.timer2State != 0) {
+        // Dispel previous curse when activating a new one.
+        IceTrap_DispelCurses();
+    }
 
     do {
         switch (curseType) {
@@ -223,7 +223,7 @@ u8 IceTrap_ActivateCurseTrap(u8 curseType) {
                 targetOffset = dizzyCurseSeed % 0x4001 - 0x2000;
                 break;
             default:
-                return 0;
+                return;
         }
         break;
     } while (1);
@@ -234,7 +234,6 @@ u8 IceTrap_ActivateCurseTrap(u8 curseType) {
     DisplayTextbox(gGlobalContext, CURSETRAP_TEXT_BASE_INDEX + curseType - ICETRAP_CURSE_SHIELD, 0);
     Audio_PlayFanfare(NA_SE_EN_PO_LAUGH);
     IceTrap_ActiveCurse = (s8)curseType;
-    return 1;
 }
 
 void IceTrap_DispelCurses(void) {

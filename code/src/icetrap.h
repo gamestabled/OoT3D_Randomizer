@@ -16,7 +16,7 @@ void IceTrap_Give(void);
 u32 IceTrap_IsPending(void);
 void IceTrap_Update(void);
 void IceTrap_Init(void);
-u8 IceTrap_ActivateCurseTrap(u8 curseType);
+void IceTrap_ActivateCurseTrap(u8 curseType);
 void IceTrap_DispelCurses(void);
 u16 IceTrap_CamRoll(u16 roll);
 void IceTrap_HandleNaviCurse(void);

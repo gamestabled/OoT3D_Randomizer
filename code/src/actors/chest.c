@@ -208,14 +208,11 @@ u8 Chest_OverrideIceSmoke(Actor* thisx) {
 
         // Curses
         if (trapType >= ICETRAP_CURSE_SHIELD) {
-            if (IceTrap_ActivateCurseTrap(trapType)) {
-                PLAYER->getItemId = 0;
-                PLAYER->stateFlags1 &= ~0x20000C00;
-                PLAYER->actor.home.pos.y = -5000; // Make Link airborne for a frame to cancel the get item event
-                return 1;
-            } else {
-                trapType = ICETRAP_BOMB_KNOCKDOWN; // if the curse can't trigger, use a bomb trap
-            }
+            IceTrap_ActivateCurseTrap(trapType);
+            PLAYER->getItemId = 0;
+            PLAYER->stateFlags1 &= ~0x20000C00;
+            PLAYER->actor.home.pos.y = -5000; // Make Link airborne for a frame to cancel the get item event
+            return TRUE;
         }
 
         if (trapType == ICETRAP_VANILLA) {
