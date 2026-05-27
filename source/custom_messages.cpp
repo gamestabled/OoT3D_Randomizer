@@ -614,17 +614,18 @@ void CreateAlwaysIncludedMessages() {
             "erfährst und es vergessen solltest," + NEWLINE() + "frag mich nur. Ich kann mir so etwas" + NEWLINE() +
             "ziemlich gut merken!" + EVENT_TRIGGER() + MESSAGE_END());
     // Ice Trap
-    CreateMessage(0x9001, 0, 2, 3,
-                  UNSKIPPABLE() + INSTANT_TEXT_ON() + CENTER_TEXT() + COLOR(QM_RED) + "FOOL!" + COLOR(QM_WHITE) +
-                      INSTANT_TEXT_OFF() + MESSAGE_END(),
-                  UNSKIPPABLE() + INSTANT_TEXT_ON() + CENTER_TEXT() + COLOR(QM_RED) + "IDIOT!" + COLOR(QM_WHITE) +
-                      INSTANT_TEXT_OFF() + MESSAGE_END(),
-                  UNSKIPPABLE() + INSTANT_TEXT_ON() + CENTER_TEXT() + COLOR(QM_RED) + "¡TONTO!" + COLOR(QM_WHITE) +
-                      INSTANT_TEXT_OFF() + MESSAGE_END(),
-                  UNSKIPPABLE() + INSTANT_TEXT_ON() + CENTER_TEXT() + COLOR(QM_RED) + "STOLTO!" + COLOR(QM_WHITE) +
-                      INSTANT_TEXT_OFF() + MESSAGE_END(),
-                  UNSKIPPABLE() + INSTANT_TEXT_ON() + CENTER_TEXT() + COLOR(QM_RED) + "NARR!" + COLOR(QM_WHITE) +
-                      INSTANT_TEXT_OFF() + MESSAGE_END());
+    {
+        Text trapText = Text{
+            /*english*/ "#FOOL!#",
+            /*french */ "#IDIOT!#",
+            /*spanish*/ "#¡TONTO!#",
+            /*italian*/ "#STOLTO!#",
+            /*german */ "#NARR!#",
+        };
+        trapText = AddColorsAndFormat(trapText, { QM_RED }, MANUAL_NEWLINES);
+        trapText.Replace(INSTANT_TEXT_ON(), INSTANT_TEXT_ON() + CENTER_TEXT());
+        CreateMessageFromTextObject(0x9001, 0, 2, 3, trapText);
+    }
     // Rupoor
     {
         Text rupoorMsg = Text{
@@ -637,125 +638,74 @@ void CreateAlwaysIncludedMessages() {
         CreateMessageFromTextObject(0x9002, 0, 2, 3, AddColorsAndFormat(rupoorMsg, { QM_RED }));
     }
     // Curse Traps
-    u32 curseIdxOffset = 0;
-    CreateMessage(CURSETRAP_TEXT_BASE_INDEX + curseIdxOffset++, 0, 2, 3,
-                  UNSKIPPABLE() + INSTANT_TEXT_ON() + CENTER_TEXT() + "You've been " + COLOR(QM_RED) + "cursed" +
-                      COLOR(QM_WHITE) + "!" + NEWLINE() + CENTER_TEXT() + "You can't use your shield!" +
-                      INSTANT_TEXT_OFF() + CLOSE_AFTER(120) + MESSAGE_END(),
-                  UNSKIPPABLE() + INSTANT_TEXT_ON() + CENTER_TEXT() + "Un " + COLOR(QM_RED) + "sort" + COLOR(QM_WHITE) +
-                      " vous a été jeté!" + NEWLINE() + CENTER_TEXT() + "Vous ne pouvez pas utiliser votre bouclier" +
-                      INSTANT_TEXT_OFF() + CLOSE_AFTER(120) + MESSAGE_END(),
-                  UNSKIPPABLE() + INSTANT_TEXT_ON() + CENTER_TEXT() + "¡Has sido " + COLOR(QM_RED) + "hechizado" +
-                      COLOR(QM_WHITE) + "!" + NEWLINE() + CENTER_TEXT() + "¡No puedes usar tu escudo!" +
-                      INSTANT_TEXT_OFF() + CLOSE_AFTER(120) + MESSAGE_END(),
-                  UNSKIPPABLE() + INSTANT_TEXT_ON() + CENTER_TEXT() + "Sei caduto vittima di una " + COLOR(QM_RED) +
-                      "maledizione" + COLOR(QM_WHITE) + "!" + NEWLINE() + CENTER_TEXT() + "Non puoi usare lo scudo!" +
-                      INSTANT_TEXT_OFF() + CLOSE_AFTER(120) + MESSAGE_END(),
-                  UNSKIPPABLE() + INSTANT_TEXT_ON() + CENTER_TEXT() + "Du wurdest " + COLOR(QM_RED) + "verflucht" +
-                      COLOR(QM_WHITE) + "!" + NEWLINE() + CENTER_TEXT() +
-                      "Du kannst deinen Schild nicht mehr benutzen!" + INSTANT_TEXT_OFF() + CLOSE_AFTER(120) +
-                      MESSAGE_END());
-    CreateMessage(
-        CURSETRAP_TEXT_BASE_INDEX + curseIdxOffset++, 0, 2, 3,
-        UNSKIPPABLE() + INSTANT_TEXT_ON() + CENTER_TEXT() + "You've been " + COLOR(QM_RED) + "cursed" +
-            COLOR(QM_WHITE) + "!" + NEWLINE() + CENTER_TEXT() + "Your sword " + COLOR(QM_RED) + "can't hit" +
-            COLOR(QM_WHITE) + " anything!" + INSTANT_TEXT_OFF() + CLOSE_AFTER(120) + MESSAGE_END(),
-        UNSKIPPABLE() + INSTANT_TEXT_ON() + CENTER_TEXT() + "Un " + COLOR(QM_RED) + "sort" + COLOR(QM_WHITE) +
-            " vous a été jeté!" + NEWLINE() + CENTER_TEXT() + "Votre épée " + COLOR(QM_RED) + "ne peut rien toucher" +
-            COLOR(QM_WHITE) + "!" + INSTANT_TEXT_OFF() + CLOSE_AFTER(120) + MESSAGE_END(),
-        UNSKIPPABLE() + INSTANT_TEXT_ON() + CENTER_TEXT() + "¡Has sido " + COLOR(QM_RED) + "hechizado" +
-            COLOR(QM_WHITE) + "!" + NEWLINE() + CENTER_TEXT() + "¡Tu espada " + COLOR(QM_RED) + "no puede golpear" +
-            COLOR(QM_WHITE) + " nada!" + INSTANT_TEXT_OFF() + CLOSE_AFTER(120) + MESSAGE_END(),
-        UNSKIPPABLE() + INSTANT_TEXT_ON() + CENTER_TEXT() + "Sei caduto vittima di una " + COLOR(QM_RED) +
-            "maledizione" + COLOR(QM_WHITE) + "!" + NEWLINE() + CENTER_TEXT() + "La tua spada " + COLOR(QM_RED) +
-            "non può colpire" + COLOR(QM_WHITE) + " nulla!" + INSTANT_TEXT_OFF() + CLOSE_AFTER(120) + MESSAGE_END(),
-        UNSKIPPABLE() + INSTANT_TEXT_ON() + CENTER_TEXT() + "Du wurdest " + COLOR(QM_RED) + "verflucht" +
-            COLOR(QM_WHITE) + "!" + NEWLINE() + CENTER_TEXT() + "Dein Schwert " + COLOR(QM_RED) + "verfehlt" +
-            COLOR(QM_WHITE) + " absolut alles!" + INSTANT_TEXT_OFF() + CLOSE_AFTER(120) + MESSAGE_END());
-    CreateMessage(CURSETRAP_TEXT_BASE_INDEX + curseIdxOffset++, 0, 2, 3,
-                  UNSKIPPABLE() + INSTANT_TEXT_ON() + CENTER_TEXT() + "You've been " + COLOR(QM_RED) + "cursed" +
-                      COLOR(QM_WHITE) + "!" + NEWLINE() + CENTER_TEXT() + "You are " + COLOR(QM_RED) + "confused" +
-                      COLOR(QM_WHITE) + "!" + INSTANT_TEXT_OFF() + CLOSE_AFTER(120) + MESSAGE_END(),
-                  UNSKIPPABLE() + INSTANT_TEXT_ON() + CENTER_TEXT() + "Un " + COLOR(QM_RED) + "sort" + COLOR(QM_WHITE) +
-                      " vous a été jeté!" + NEWLINE() + CENTER_TEXT() + "Vous êtes " + COLOR(QM_RED) + "confus" +
-                      COLOR(QM_WHITE) + "!" + INSTANT_TEXT_OFF() + CLOSE_AFTER(120) + MESSAGE_END(),
-                  UNSKIPPABLE() + INSTANT_TEXT_ON() + CENTER_TEXT() + "¡Has sido " + COLOR(QM_RED) + "hechizado" +
-                      COLOR(QM_WHITE) + "!" + NEWLINE() + CENTER_TEXT() + "¡Estás " + COLOR(QM_RED) + "confundido" +
-                      COLOR(QM_WHITE) + "!" + INSTANT_TEXT_OFF() + CLOSE_AFTER(120) + MESSAGE_END(),
-                  UNSKIPPABLE() + INSTANT_TEXT_ON() + CENTER_TEXT() + "Sei caduto vittima di una " + COLOR(QM_RED) +
-                      "maledizione" + COLOR(QM_WHITE) + "!" + NEWLINE() + CENTER_TEXT() + "Sei " + COLOR(QM_RED) +
-                      "confuso" + COLOR(QM_WHITE) + "!" + INSTANT_TEXT_OFF() + CLOSE_AFTER(120) + MESSAGE_END(),
-                  UNSKIPPABLE() + INSTANT_TEXT_ON() + CENTER_TEXT() + "Du wurdest " + COLOR(QM_RED) + "verflucht" +
-                      COLOR(QM_WHITE) + "!" + NEWLINE() + CENTER_TEXT() + "Du bist " + COLOR(QM_RED) + "verwirrt" +
-                      COLOR(QM_WHITE) + "!" + INSTANT_TEXT_OFF() + CLOSE_AFTER(120) + MESSAGE_END());
-    CreateMessage(CURSETRAP_TEXT_BASE_INDEX + curseIdxOffset++, 0, 2, 3,
-                  UNSKIPPABLE() + INSTANT_TEXT_ON() + CENTER_TEXT() + "You've been " + COLOR(QM_RED) + "cursed" +
-                      COLOR(QM_WHITE) + "!" + NEWLINE() + CENTER_TEXT() + "Terrain is " + COLOR(QM_RED) + "invisible" +
-                      COLOR(QM_WHITE) + "!" + INSTANT_TEXT_OFF() + CLOSE_AFTER(120) + MESSAGE_END(),
-                  UNSKIPPABLE() + INSTANT_TEXT_ON() + CENTER_TEXT() + "Un " + COLOR(QM_RED) + "sort" + COLOR(QM_WHITE) +
-                      " vous a été jeté!" + NEWLINE() + CENTER_TEXT() + "Le terrain est " + COLOR(QM_RED) +
-                      "invisible" + COLOR(QM_WHITE) + "!" + INSTANT_TEXT_OFF() + CLOSE_AFTER(120) + MESSAGE_END(),
-                  UNSKIPPABLE() + INSTANT_TEXT_ON() + CENTER_TEXT() + "¡Has sido " + COLOR(QM_RED) + "hechizado" +
-                      COLOR(QM_WHITE) + "!" + NEWLINE() + CENTER_TEXT() + "¡El terreno es " + COLOR(QM_RED) +
-                      "invisible" + COLOR(QM_WHITE) + "!" + INSTANT_TEXT_OFF() + CLOSE_AFTER(120) + MESSAGE_END(),
-                  UNSKIPPABLE() + INSTANT_TEXT_ON() + CENTER_TEXT() + "Sei caduto vittima di una " + COLOR(QM_RED) +
-                      "maledizione" + COLOR(QM_WHITE) + "!" + NEWLINE() + CENTER_TEXT() + "Il terreno è " +
-                      COLOR(QM_RED) + "invisibile" + COLOR(QM_WHITE) + "!" + INSTANT_TEXT_OFF() + CLOSE_AFTER(120) +
-                      MESSAGE_END(),
-                  UNSKIPPABLE() + INSTANT_TEXT_ON() + CENTER_TEXT() + "Du wurdest " + COLOR(QM_RED) + "verflucht" +
-                      COLOR(QM_WHITE) + "!" + NEWLINE() + CENTER_TEXT() + "Die Umgebung ist " + COLOR(QM_RED) +
-                      "unsichtbar" + COLOR(QM_WHITE) + "!" + INSTANT_TEXT_OFF() + CLOSE_AFTER(120) + MESSAGE_END());
-    CreateMessage(CURSETRAP_TEXT_BASE_INDEX + curseIdxOffset++, 0, 2, 3,
-                  UNSKIPPABLE() + INSTANT_TEXT_ON() + CENTER_TEXT() + "You've been " + COLOR(QM_RED) + "cursed" +
-                      COLOR(QM_WHITE) + "!" + NEWLINE() + CENTER_TEXT() + "You are feeling " + COLOR(QM_RED) +
-                      "sluggish" + COLOR(QM_WHITE) + "..." + INSTANT_TEXT_OFF() + CLOSE_AFTER(120) + MESSAGE_END(),
-                  UNSKIPPABLE() + INSTANT_TEXT_ON() + CENTER_TEXT() + "Un " + COLOR(QM_RED) + "sort" + COLOR(QM_WHITE) +
-                      " vous a été jeté!" + NEWLINE() + CENTER_TEXT() + "Vous vous sentez " + COLOR(QM_RED) +
-                      "léthargique" + COLOR(QM_WHITE) + "..." + INSTANT_TEXT_OFF() + CLOSE_AFTER(120) + MESSAGE_END(),
-                  UNSKIPPABLE() + INSTANT_TEXT_ON() + CENTER_TEXT() + "¡Has sido " + COLOR(QM_RED) + "hechizado" +
-                      COLOR(QM_WHITE) + "!" + NEWLINE() + CENTER_TEXT() + "Te sientes " + COLOR(QM_RED) + "lento" +
-                      COLOR(QM_WHITE) + "..." + INSTANT_TEXT_OFF() + CLOSE_AFTER(120) + MESSAGE_END(),
-                  UNSKIPPABLE() + INSTANT_TEXT_ON() + CENTER_TEXT() + "Sei caduto vittima di una " + COLOR(QM_RED) +
-                      "maledizione" + COLOR(QM_WHITE) + "!" + NEWLINE() + CENTER_TEXT() + "Ti senti un po' " +
-                      COLOR(QM_RED) + "fiacco" + COLOR(QM_WHITE) + "..." + INSTANT_TEXT_OFF() + CLOSE_AFTER(120) +
-                      MESSAGE_END(),
-                  UNSKIPPABLE() + INSTANT_TEXT_ON() + CENTER_TEXT() + "Du wurdest " + COLOR(QM_RED) + "verflucht" +
-                      COLOR(QM_WHITE) + "!" + NEWLINE() + CENTER_TEXT() + "Du fühlst dich " + COLOR(QM_RED) + "träge" +
-                      COLOR(QM_WHITE) + "..." + INSTANT_TEXT_OFF() + CLOSE_AFTER(120) + MESSAGE_END());
-    CreateMessage(CURSETRAP_TEXT_BASE_INDEX + curseIdxOffset++, 0, 2, 3,
-                  UNSKIPPABLE() + INSTANT_TEXT_ON() + CENTER_TEXT() + "You've been " + COLOR(QM_RED) + "cursed" +
-                      COLOR(QM_WHITE) + "!" + NEWLINE() + CENTER_TEXT() + "The world is " + COLOR(QM_RED) + "crooked" +
-                      COLOR(QM_WHITE) + "!" + INSTANT_TEXT_OFF() + CLOSE_AFTER(120) + MESSAGE_END(),
-                  UNSKIPPABLE() + INSTANT_TEXT_ON() + CENTER_TEXT() + "Un " + COLOR(QM_RED) + "sort" + COLOR(QM_WHITE) +
-                      " vous a été jeté!" + NEWLINE() + CENTER_TEXT() + "Le monde est " + COLOR(QM_RED) + "penché" +
-                      COLOR(QM_WHITE) + "!" + INSTANT_TEXT_OFF() + CLOSE_AFTER(120) + MESSAGE_END(),
-                  UNSKIPPABLE() + INSTANT_TEXT_ON() + CENTER_TEXT() + "¡Has sido " + COLOR(QM_RED) + "hechizado" +
-                      COLOR(QM_WHITE) + "!" + NEWLINE() + CENTER_TEXT() + "¡El mundo está " + COLOR(QM_RED) +
-                      "torcido" + COLOR(QM_WHITE) + "!" + INSTANT_TEXT_OFF() + CLOSE_AFTER(120) + MESSAGE_END(),
-                  UNSKIPPABLE() + INSTANT_TEXT_ON() + CENTER_TEXT() + "Sei caduto vittima di una " + COLOR(QM_RED) +
-                      "maledizione" + COLOR(QM_WHITE) + "!" + NEWLINE() + CENTER_TEXT() + "Il mondo si è " +
-                      COLOR(QM_RED) + "inclinato" + COLOR(QM_WHITE) + "!" + INSTANT_TEXT_OFF() + CLOSE_AFTER(120) +
-                      MESSAGE_END(),
-                  UNSKIPPABLE() + INSTANT_TEXT_ON() + CENTER_TEXT() + "Du wurdest " + COLOR(QM_RED) + "verflucht" +
-                      COLOR(QM_WHITE) + "!" + NEWLINE() + CENTER_TEXT() + "Die Welt wurde " + COLOR(QM_RED) +
-                      "gedreht" + COLOR(QM_WHITE) + "!" + INSTANT_TEXT_OFF() + CLOSE_AFTER(120) + MESSAGE_END());
-    CreateMessage(
-        CURSETRAP_TEXT_BASE_INDEX + curseIdxOffset++, 0, 2, 3,
-        UNSKIPPABLE() + INSTANT_TEXT_ON() + CENTER_TEXT() + "You've been " + COLOR(QM_RED) + "cursed" +
-            COLOR(QM_WHITE) + "!" + NEWLINE() + CENTER_TEXT() + "The camera is " + COLOR(QM_RED) + "unstable" +
-            COLOR(QM_WHITE) + "!" + INSTANT_TEXT_OFF() + CLOSE_AFTER(120) + MESSAGE_END(),
-        UNSKIPPABLE() + INSTANT_TEXT_ON() + CENTER_TEXT() + "Un " + COLOR(QM_RED) + "sort" + COLOR(QM_WHITE) +
-            " vous a été jeté!" + NEWLINE() + CENTER_TEXT() + "La caméra est " + COLOR(QM_RED) + "instable" +
-            COLOR(QM_WHITE) + "!" + INSTANT_TEXT_OFF() + CLOSE_AFTER(120) + MESSAGE_END(),
-        UNSKIPPABLE() + INSTANT_TEXT_ON() + CENTER_TEXT() + "¡Has sido " + COLOR(QM_RED) + "hechizado" +
-            COLOR(QM_WHITE) + "!" + NEWLINE() + CENTER_TEXT() + "¡La cámara está " + COLOR(QM_RED) + "inestable" +
-            COLOR(QM_WHITE) + "!" + INSTANT_TEXT_OFF() + CLOSE_AFTER(120) + MESSAGE_END(),
-        UNSKIPPABLE() + INSTANT_TEXT_ON() + CENTER_TEXT() + "Sei caduto vittima di una " + COLOR(QM_RED) +
-            "maledizione" + COLOR(QM_WHITE) + "!" + NEWLINE() + CENTER_TEXT() + "La visuale è " + COLOR(QM_RED) +
-            "impazzita" + COLOR(QM_WHITE) + "!" + INSTANT_TEXT_OFF() + CLOSE_AFTER(120) + MESSAGE_END(),
-        UNSKIPPABLE() + INSTANT_TEXT_ON() + CENTER_TEXT() + "Du wurdest " + COLOR(QM_RED) + "verflucht" +
-            COLOR(QM_WHITE) + "!" + NEWLINE() + CENTER_TEXT() + "Die Kameraperspektive " + COLOR(QM_RED) +
-            "ändert sich stetig" + COLOR(QM_WHITE) + "!" + INSTANT_TEXT_OFF() + CLOSE_AFTER(120) + MESSAGE_END());
+    {
+        Text baseCurseText = Text{
+            /*english*/ "You've been #cursed#!",
+            /*french */ "Un #sort# vous a été jeté!",
+            /*spanish*/ "¡Has sido #hechizado#!",
+            /*italian*/ "Sei caduto vittima di una #maledizione#!",
+            /*german */ "Du wurdest #verflucht#!",
+        };
+        std::vector<Text> curseDescriptions = {
+            Text{
+                /*english*/ "You can't use your #shield#!",
+                /*french */ "Vous ne pouvez pas utiliser votre #bouclier#!",
+                /*spanish*/ "¡No puedes usar tu #escudo#!",
+                /*italian*/ "Non puoi usare lo #scudo#!",
+                /*german */ "Du kannst deinen #Schild# nicht mehr benutzen!",
+            },
+            Text{
+                /*english*/ "Your sword #can't hit# anything!",
+                /*french */ "Votre épée #ne peut rien toucher#!",
+                /*spanish*/ "¡Tu espada #no puede golpear# nada!",
+                /*italian*/ "La tua spada #non può colpire# nulla!",
+                /*german */ "Dein Schwert #verfehlt# absolut alles!",
+            },
+            Text{
+                /*english*/ "You are #confused#!",
+                /*french */ "Vous êtes #confus#!",
+                /*spanish*/ "¡Estás #confundido#!",
+                /*italian*/ "Sei #confuso#!",
+                /*german */ "Du bist #verwirrt#!",
+            },
+            Text{
+                /*english*/ "Terrain is #invisible#!",
+                /*french */ "Le terrain est #invisible#!",
+                /*spanish*/ "¡El terreno es #invisible#!",
+                /*italian*/ "Il terreno è #invisibile#!",
+                /*german */ "Die Umgebung ist #unsichtbar#!",
+            },
+            Text{
+                /*english*/ "You are feeling #sluggish#...",
+                /*french */ "Vous vous sentez #léthargique#...",
+                /*spanish*/ "Te sientes #lento#...",
+                /*italian*/ "Ti senti un po' #fiacco#...",
+                /*german */ "Du fühlst dich #träge#...",
+            },
+            Text{
+                /*english*/ "The world is #crooked#!",
+                /*french */ "Le monde est #penché#!",
+                /*spanish*/ "¡El mundo está #torcido#!",
+                /*italian*/ "Il mondo si è #inclinato#!",
+                /*german */ "Die Welt wurde #gedreht#!",
+            },
+            Text{
+                /*english*/ "The camera is #unstable#!",
+                /*french */ "La caméra est #instable#!",
+                /*spanish*/ "¡La cámara está #inestable#!",
+                /*italian*/ "La visuale è #impazzita#!",
+                /*german */ "Die Kameraperspektive #ändert sich stetig#!",
+            },
+        };
+        for (u32 i = 0; i < curseDescriptions.size(); i++) {
+            Text curseText = baseCurseText + "&" + curseDescriptions[i];
+            curseText      = AddColorsAndFormat(curseText, { QM_RED, QM_RED }, MANUAL_NEWLINES);
+            curseText.Replace(INSTANT_TEXT_ON(), INSTANT_TEXT_ON() + CENTER_TEXT());
+            curseText.Replace(NEWLINE(), NEWLINE() + CENTER_TEXT());
+            curseText.Replace(MESSAGE_END(), CLOSE_AFTER(120) + MESSAGE_END());
+            CreateMessageFromTextObject(CURSETRAP_TEXT_BASE_INDEX + i, 0, 2, 3, curseText);
+        }
+    }
 
     // Business Scrubs
     // The less significant byte represents the price of the item
