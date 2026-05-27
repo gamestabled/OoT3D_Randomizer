@@ -18,6 +18,7 @@
 #include "z3Deffect.h"
 #include "z3Daudio.h"
 #include "z3Dcmb.h"
+#include "z3Dlight.h"
 
 #include "hid.h"
 
@@ -363,7 +364,7 @@ typedef struct {
     /* 0x20 */ u32 tempCollect;
 } ActorFlags; // size = 0x24
 
-typedef struct {
+typedef struct ActorContext {
     /* 0x0000 */ u8 unk_00;
     /* 0x0001 */ char unk_01[0x01];
     /* 0x0002 */ u8 hammerQuakeFlag;
@@ -372,11 +373,12 @@ typedef struct {
     /* 0x0008 */ u8 total; // total number of actors loaded
     /* 0x0009 */ char unk_09[0x03];
     /* 0x000C */ ActorListEntry actorList[12];
-    // /* 0x006C */ TargetContext targetCtx;
-    /* 0x006C */ char unk_6C[0x130];
+    /* 0x006C */ Attention attention;
     /* 0x019C */ ActorFlags flags;
     /* 0x01C0 */ TitleCardContext titleCtx;
-} ActorContext; // TODO: size = 0x1D8
+    /* 0x01D8 */ char unk_1D8[0x034];
+} ActorContext;
+_Static_assert(sizeof(ActorContext) == 0x20C, "ActorContext size");
 
 typedef struct CutsceneContext {
     /* 0x00 */ char unk_00[0x4];
@@ -561,7 +563,6 @@ typedef struct GlobalContext {
     /* 0x0A66 */ char unk_A66[0x0032];
     /* 0x0A98 */ CollisionContext colCtx;
     /* 0x208C */ ActorContext actorCtx;
-    /* 0x2264 */ char unk_2264[0x0034];
     /* 0x2298 */ CutsceneContext csCtx; // "demo_play"
     /* 0x2304 */ char unk_2304[0x078C];
     /* 0x2A90 */ u8 msgMode; // seems to be used primarily for the ocarina
@@ -639,26 +640,6 @@ typedef struct {
     /* 0x02 */ u8 flags2;
     /* 0x03 */ u8 flags3;
 } RestrictionFlags;
-
-typedef struct TargetIndicatorModels {
-    /* 0x00 */ SkeletonAnimationModel* pointer;                 // arrow above targetable actor
-    /* 0x04 */ SkeletonAnimationModel* reticle[4];              // four arrows circling around target
-    /* 0x14 */ SkeletonAnimationModel* reticleAfterimageOne[4]; // four arrows trailing behind `reticle`
-    /* 0x24 */ SkeletonAnimationModel* reticleAfterimageTwo[4]; // four arrows trailing behind `reticleAfterimageOne`
-} TargetIndicatorModels;
-
-typedef struct TargetContext {
-    /* 0x000 */ char unk_000[0x4E];
-    /* 0x04E */ u8 reticleActorType;
-    /* 0x04F */ char unk_04F[0x61];
-    /* 0x0B0 */ TargetIndicatorModels visibleTargetIndicators; // culled when behind a wall
-    /* 0x0E4 */ TargetIndicatorModels hiddenTargetIndicators;  // drawn even when behind walls
-    /* 0x118 */ char unk_118[0x08];
-    /* 0x120 */ ZARInfo* zarInfo;
-    /* 0x124 */ char unk_120[0x04];
-    /* 0x128 */ u32 pointerActorType;
-    // ... size unknown
-} TargetContext;
 
 typedef struct SAModelListEntry {
     SkeletonAnimationModel* saModel;

@@ -9,6 +9,7 @@
 #include "player.h"
 #include "item_override.h"
 #include "actor.h"
+#include "fairy.h"
 
 extern s16 TimerFrameCounter; // Used to decrease the timer every 30 frames
 extern float ControlStick_X;
@@ -66,12 +67,14 @@ void IceTrap_Init(void) {
         possibleChestTraps[possibleChestTrapsAmount++] = ICETRAP_CURSE_INVISIBLE_TERRAIN;
         possibleChestTraps[possibleChestTrapsAmount++] = ICETRAP_CURSE_INVISIBLE_ACTORS;
         possibleChestTraps[possibleChestTrapsAmount++] = ICETRAP_CURSE_SLOW;
+        possibleChestTraps[possibleChestTrapsAmount++] = ICETRAP_CURSE_NAVI;
         possibleItemTraps[possibleItemTrapsAmount++]   = ICETRAP_CURSE_SWORD;
         possibleItemTraps[possibleItemTrapsAmount++]   = ICETRAP_CURSE_SHIELD;
         possibleItemTraps[possibleItemTrapsAmount++]   = ICETRAP_CURSE_DIZZY;
         possibleItemTraps[possibleItemTrapsAmount++]   = ICETRAP_CURSE_INVISIBLE_TERRAIN;
         possibleItemTraps[possibleItemTrapsAmount++]   = ICETRAP_CURSE_INVISIBLE_ACTORS;
         possibleItemTraps[possibleItemTrapsAmount++]   = ICETRAP_CURSE_SLOW;
+        possibleItemTraps[possibleItemTrapsAmount++]   = ICETRAP_CURSE_NAVI;
     }
     if (gSettingsContext.screenTraps) {
         possibleChestTraps[possibleChestTrapsAmount++] = ICETRAP_CURSE_CROOKED;
@@ -211,6 +214,7 @@ u8 IceTrap_ActivateCurseTrap(u8 curseType) {
                 gActorsHidden               = TRUE;
                 break;
             case ICETRAP_CURSE_SLOW:
+            case ICETRAP_CURSE_NAVI:
                 break;
             case ICETRAP_CURSE_CROOKED:
                 targetOffset = dizzyCurseSeed % 0xC001 + 0x2000;
@@ -366,4 +370,25 @@ void IceTrap_RandomizeButtons(btn_t* btns) {
 
 u16 IceTrap_CamRoll(u16 roll) {
     return roll + rollOffset;
+}
+
+void IceTrap_HandleNaviCurse(void) {
+    if (IceTrap_ActiveCurse == ICETRAP_CURSE_NAVI) {
+        PLAYER->naviTextId                                 = 0;
+        PLAYER->focusActor                                 = NULL;
+        gGlobalContext->actorCtx.attention.arrowHoverActor = NULL;
+        gGlobalContext->actorCtx.attention.reticleActor    = NULL;
+        gGlobalContext->actorCtx.attention.naviHoverActor  = NULL;
+
+        EnElf* navi = (EnElf*)PLAYER->naviActor;
+        if (navi != NULL) {
+            navi->actor.update                        = Actor_DoNothing;
+            navi->actor.draw                          = Actor_DoNothing;
+            navi->lightInfoGlow.params.point.radius   = 0;
+            navi->lightInfoNoGlow.params.point.radius = 0;
+        }
+    } else if (PLAYER->naviActor != NULL && PLAYER->naviActor->update == Actor_DoNothing) {
+        PLAYER->naviActor->update = EnElf_UpdateNavi;
+        PLAYER->naviActor->draw   = EnElf_Draw;
+    }
 }

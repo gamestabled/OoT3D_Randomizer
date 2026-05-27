@@ -205,6 +205,7 @@ SECTIONS
 	EnBox_Update = 0x1D5B70 + _LD_OFF;
 	.patch_ChestIceSmoke 0x1D5E5C + _LD_OFF : { *(.patch_ChestIceSmoke) }
 	EnDns_Update = 0x1D67CC + _LD_OFF;
+	EnElf_Draw = 0x1D6EC4 + _LD_OFF;
 	EnGe1_Update = 0x1D742C + _LD_OFF;
 	.patch_CheckGerudoToken_1D7AD4 0x1D7AD4 + _LD_OFF : { *(.patch_CheckGerudoToken_1D7AD4) }
 	EnGeldB_Init = 0x1D7BD8 + _LD_OFF;
@@ -333,6 +334,7 @@ SECTIONS
 	DemoEffect_Update = 0x262C58 + _LD_OFF;
 	DemoKankyo_Update = 0x262EA4 + _LD_OFF;
 	DoorGerudo_Update = 0x263118 + _LD_OFF;
+	EnElf_UpdateNavi = 0x267DC0 + _LD_OFF;
 	.patch_NaviNotifications 0x267E04 + _LD_OFF : { *(.patch_NaviNotifications) }
 	EnEncount1_Update = 0x2682D0 + _LD_OFF;
 	EnExRuppy_Update = 0x2689B8 + _LD_OFF;

@@ -19,6 +19,7 @@ void IceTrap_Init(void);
 u8 IceTrap_ActivateCurseTrap(u8 curseType);
 void IceTrap_DispelCurses(void);
 u16 IceTrap_CamRoll(u16 roll);
+void IceTrap_HandleNaviCurse(void);
 
 typedef enum {
     ICETRAP_FIRE,
@@ -38,6 +39,7 @@ typedef enum {
     ICETRAP_CURSE_INVISIBLE_TERRAIN,
     ICETRAP_CURSE_INVISIBLE_ACTORS,
     ICETRAP_CURSE_SLOW,
+    ICETRAP_CURSE_NAVI,
     ICETRAP_CURSE_CROOKED,
     ICETRAP_CURSE_UNSTABLE,
 } IceTrapTypes;

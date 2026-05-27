@@ -690,6 +690,13 @@ void CreateAlwaysIncludedMessages() {
                 /*german */ "Du fühlst dich #träge#...",
             },
             Text{
+                /*english*/ "#Navi# disappeared!",
+                /*french */ "",
+                /*spanish*/ "",
+                /*italian*/ "#Navi# è sparita!",
+                /*german */ "",
+            },
+            Text{
                 /*english*/ "The world is #crooked#!",
                 /*french */ "Le monde est #penché#!",
                 /*spanish*/ "¡El mundo está #torcido#!",

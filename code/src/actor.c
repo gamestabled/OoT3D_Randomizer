@@ -101,6 +101,9 @@ void Actor_Kill(Actor* actor) {
     actor->flags &= ~0x1;
 }
 
+void Actor_DoNothing(Actor* thisx, GlobalContext* globalCtx) {
+}
+
 void TitleCard_Update(GlobalContext* globalCtx, TitleCardContext* titleCtx);
 
 void Actor_Init() {

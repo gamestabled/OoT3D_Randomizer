@@ -1,6 +1,10 @@
 #pragma once
 #include "s_types.h"
 
+typedef struct Color_RGB8 {
+    u8 r, g, b;
+} Color_RGB8;
+
 typedef struct Color_RGBA8 {
     u8 r, g, b, a;
 } Color_RGBA8;

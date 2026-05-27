@@ -85,6 +85,7 @@ void before_GlobalContext_Update(GlobalContext* globalCtx) {
 void after_GlobalContext_Update() {
     Alert_Update();
     Multiplayer_Sync_Update();
+    IceTrap_HandleNaviCurse();
 
     if (gGlobalContext->state.running == 0) {
         Model_DestroyAll();
