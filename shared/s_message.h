@@ -102,4 +102,5 @@ typedef enum TextControlCode {
     TEXT_CTRL_HIT_COUNT,
     TEXT_CTRL_DAMAGE_RECEIVED,
     TEXT_CTRL_BONK_COUNT,
+    TEXT_CTRL_REQUIRED_BIG_POE_POINTS,
 } TextControlCode;

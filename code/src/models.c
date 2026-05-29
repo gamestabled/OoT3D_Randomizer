@@ -113,43 +113,34 @@ void Actor_SetModelMatrixWrapper(Actor* actor, nn_math_MTX34* mtx) {
                  "pop {r0-r12, lr}\n");
 }
 
-void Model_UpdateMatrix(Model* model) {
+void Model_DrawSAM(Model* model, SkeletonAnimationModel* saModel, Bool mustFaceCamera) {
+    f32 realShapeYaw = model->actor->shape.rot.y;
+    if (mustFaceCamera) {
+        model->actor->shape.rot.y = gGlobalContext->mainCamera.camDir.y;
+    }
+    // Update matrix
     nn_math_MTX44 scaleMtx = { 0 };
-    Actor_SetModelMatrixWrapper(model->actor, &model->saModel->mtx);
-    if (model->saModel2 != NULL) {
-        f32 tempRotY = model->actor->shape.rot.y;
-        // The second model should always face the camera, except for Skull Token
-        if (model->itemRow->objectId != 0x015C) {
-            model->actor->shape.rot.y = gGlobalContext->mainCamera.camDir.y;
-        }
-        Actor_SetModelMatrixWrapper(model->actor, &model->saModel2->mtx);
-        model->actor->shape.rot.y = tempRotY;
-    }
+    scaleMtx.data[0][0]    = model->scale;
+    scaleMtx.data[1][1]    = model->scale;
+    scaleMtx.data[2][2]    = model->scale;
+    scaleMtx.data[3][3]    = 1.0f;
+    Actor_SetModelMatrixWrapper(model->actor, &saModel->mtx);
+    Matrix_Multiply(&saModel->mtx, &saModel->mtx, &scaleMtx);
+    Matrix_UpdatePosition(&saModel->mtx, &saModel->mtx, &model->posOffset);
 
-    scaleMtx.data[0][0] = model->scale;
-    scaleMtx.data[1][1] = model->scale;
-    scaleMtx.data[2][2] = model->scale;
-    scaleMtx.data[3][3] = 1.0f;
+    // Draw model
+    saModel->unk_AC = 1;
+    SkeletonAnimationModel_Draw(saModel, 0);
 
-    Matrix_Multiply(&model->saModel->mtx, &model->saModel->mtx, &scaleMtx);
-    Matrix_UpdatePosition(&model->saModel->mtx, &model->saModel->mtx, &model->posOffset);
-    if (model->saModel2 != NULL) {
-        Matrix_Multiply(&model->saModel2->mtx, &model->saModel2->mtx, &scaleMtx);
-        Matrix_UpdatePosition(&model->saModel->mtx, &model->saModel->mtx, &model->posOffset);
-    }
+    model->actor->shape.rot.y = realShapeYaw;
 }
 
 void Model_Draw(Model* model) {
     if (model->loaded) {
-        if (model->saModel != NULL) {
-            model->saModel->unk_AC = 1;
-            Model_UpdateMatrix(model);
-            SkeletonAnimationModel_Draw(model->saModel, 0); // TODO is 0 always okay?
-        }
+        Model_DrawSAM(model, model->saModel, CustomModels_MustFaceCamera(model->itemRow));
         if (model->saModel2 != NULL) {
-            model->saModel2->unk_AC = 1;
-            Model_UpdateMatrix(model);
-            SkeletonAnimationModel_Draw(model->saModel2, 0);
+            // The second model should always face the camera, except for Skull Token
+            Model_DrawSAM(model, model->saModel2, model->itemRow->objectId != OBJECT_SKULL_TOKEN);
         }
     }
 }
@@ -210,21 +201,22 @@ void Model_Create(Model* model, GlobalContext* globalCtx) {
         newModel->loaded     = 0;
         newModel->saModel    = NULL;
         newModel->saModel2   = NULL;
+        newModel->scale      = 0.3f;
+        newModel->posOffset  = (Vec3f){ 0 };
         switch (newModel->itemRow->objectId) {
-            case 0x00BA: // Medallions
-            case 0x019C: // Kokiri Emerald
-            case 0x019D: // Goron Ruby
-            case 0x019E: // Zora Sapphire
-                newModel->scale     = 0.2f;
-                newModel->posOffset = (Vec3f){ 0 };
+            case OBJECT_GI_MEDALLION:
+            case OBJECT_GI_KOKIRI_EMERALD:
+            case OBJECT_GI_GORON_RUBY:
+            case OBJECT_GI_ZORA_SAPPHIRE:
+                newModel->scale = 0.2f;
                 break;
             case OBJECT_CUSTOM_TRIFORCE_PIECE:
                 newModel->scale     = 0.025f;
                 newModel->posOffset = (Vec3f){ 0.0f, -800.0f, 0.0f };
                 break;
-            default:
-                newModel->scale     = 0.3f;
-                newModel->posOffset = (Vec3f){ 0 };
+            case OBJECT_CUSTOM_UNBOTTLED_BIG_POE:
+                newModel->scale     = 1.0f;
+                newModel->posOffset = (Vec3f){ 0.0f, 10.0f, 0.0f };
                 break;
         }
     }

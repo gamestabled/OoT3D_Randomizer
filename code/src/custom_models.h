@@ -3,13 +3,17 @@
 
 #include "s_custom_models.h"
 
+#include "z3D/z3D.h"
+#include "item_table.h"
+
 void CustomModel_EditLinkToCustomTunic(void* linkCMB);
 void CustomModel_EditChildLinkToCustomTunic(void* linkCMB);
 void CustomModel_EditTitleScreenLogo(void* titleScreenZAR);
 void CustomModel_Update(void);
 void CustomModels_EditItemCMB(void* ZARBuf, u16 objectId, s8 special);
 void CustomModels_ApplyItemCMAB(SkeletonAnimationModel* model, u16 objectId, s8 special);
-void CustomModels_UpdateMatrix(nn_math_MTX34* modelMtx, u16 objectId);
+void CustomModels_UpdateMatrix(nn_math_MTX34* modelMtx, ItemRow* itemRow);
+Bool CustomModels_MustFaceCamera(ItemRow* itemRow);
 
 typedef enum {
     TEXANIMFRAME_ZELDAS_LULLABY,

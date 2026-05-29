@@ -580,6 +580,7 @@ typedef struct SettingsContext {
     u8 shuffleChestMinigame;
     u8 shuffleEnemySouls;
     u8 shuffleOcarinaButtons;
+    u8 shuffleBigPoes;
 
     u8 mapsAndCompasses;
     u8 keysanity;

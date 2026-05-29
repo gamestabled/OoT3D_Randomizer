@@ -267,6 +267,8 @@ extern bool SoulBongoBongo;
 extern bool SoulTwinrova;
 extern bool SoulGanon;
 
+extern u8 BigPoes;
+
 /* --- HELPERS --- */
 /* These are used to simplify reading the logic, but need to be updated
 /  every time a base value is updated.                       */

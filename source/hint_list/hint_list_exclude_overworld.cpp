@@ -2025,5 +2025,85 @@ void HintTable_Init_Exclude_Overworld() {
                        // obscure text
                        Text{"a #cow in a luxurious hole# offers", /*french*/"la #vache dans une grotte luxueuse# donne", /*spanish*/"una #vaca de un lujoso hoyo# brinda", /*italian*/"una #mucca in una grotta lussuosa# regala", /*german*/"die Milch einer #wohlhabenden Kuh#, |wäre|wären|"},
     });
+
+    hintTable[HF_BIG_POE_1] = HintText::Exclude({
+                       // obscure text
+                       Text{"a #fast ghost# on the road to the west holds", /*french*/"", /*spanish*/"", /*italian*/"un #fantasma veloce# sulla strada ad ovest possiede", /*german*/""},
+                     }, {
+                       // ambiguous text
+                       Text{"a #fast ghost# holds", /*french*/"", /*spanish*/"", /*italian*/"un #fantasma veloce# possiede", /*german*/""},
+    });
+
+    hintTable[HF_BIG_POE_2] = HintText::Exclude({
+                       // obscure text
+                       Text{"a #fast ghost# near a tree to the west holds", /*french*/"", /*spanish*/"", /*italian*/"un #fantasma veloce# presso un albero ad ovest possiede", /*german*/""},
+                     }, {
+                       // ambiguous text
+                       Text{"a #fast ghost# holds", /*french*/"", /*spanish*/"", /*italian*/"un #fantasma veloce# possiede", /*german*/""},
+    });
+
+    hintTable[HF_BIG_POE_3] = HintText::Exclude({
+                       // obscure text
+                       Text{"a #fast ghost# in a bush to the east holds", /*french*/"", /*spanish*/"", /*italian*/"un #fantasma veloce# in un cespuglio ad est possiede", /*german*/""},
+                     }, {
+                       // ambiguous text
+                       Text{"a #fast ghost# holds", /*french*/"", /*spanish*/"", /*italian*/"un #fantasma veloce# possiede", /*german*/""},
+    });
+
+    hintTable[HF_BIG_POE_4] = HintText::Exclude({
+                       // obscure text
+                       Text{"a #fast ghost# in the grass to the east holds", /*french*/"", /*spanish*/"", /*italian*/"un #fantasma veloce# nell'erba ad est possiede", /*german*/""},
+                     }, {
+                       // ambiguous text
+                       Text{"a #fast ghost# holds", /*french*/"", /*spanish*/"", /*italian*/"un #fantasma veloce# possiede", /*german*/""},
+    });
+
+    hintTable[HF_BIG_POE_5] = HintText::Exclude({
+                       // obscure text
+                       Text{"a #fast ghost# near a boulder holds", /*french*/"", /*spanish*/"", /*italian*/"un #fantasma veloce# presso un macigno possiede", /*german*/""},
+                     }, {
+                       // ambiguous text
+                       Text{"a #fast ghost# holds", /*french*/"", /*spanish*/"", /*italian*/"un #fantasma veloce# possiede", /*german*/""},
+    });
+
+    hintTable[HF_BIG_POE_6] = HintText::Exclude({
+                       // obscure text
+                       Text{"a #fast ghost# near a retaining wall holds", /*french*/"", /*spanish*/"", /*italian*/"un #fantasma veloce# presso un muro di sostegno possiede", /*german*/""},
+                     }, {
+                       // ambiguous text
+                       Text{"a #fast ghost# holds", /*french*/"", /*spanish*/"", /*italian*/"un #fantasma veloce# possiede", /*german*/""},
+    });
+
+    hintTable[HF_BIG_POE_7] = HintText::Exclude({
+                       // obscure text
+                       Text{"a #fast ghost# near a village holds", /*french*/"", /*spanish*/"", /*italian*/"un #fantasma veloce# presso un villaggio possiede", /*german*/""},
+                     }, {
+                       // ambiguous text
+                       Text{"a #fast ghost# holds", /*french*/"", /*spanish*/"", /*italian*/"un #fantasma veloce# possiede", /*german*/""},
+    });
+
+    hintTable[HF_BIG_POE_8] = HintText::Exclude({
+                       // obscure text
+                       Text{"a #fast ghost# near a castle holds", /*french*/"", /*spanish*/"", /*italian*/"un #fantasma veloce# presso un castello possiede", /*german*/""},
+                     }, {
+                       // ambiguous text
+                       Text{"a #fast ghost# holds", /*french*/"", /*spanish*/"", /*italian*/"un #fantasma veloce# possiede", /*german*/""},
+    });
+
+    hintTable[HF_BIG_POE_9] = HintText::Exclude({
+                       // obscure text
+                       Text{"a #fast ghost# near a ranch holds", /*french*/"", /*spanish*/"", /*italian*/"un #fantasma veloce# presso una fattoria possiede", /*german*/""},
+                     }, {
+                       // ambiguous text
+                       Text{"a #fast ghost# holds", /*french*/"", /*spanish*/"", /*italian*/"un #fantasma veloce# possiede", /*german*/""},
+    });
+
+    hintTable[HF_BIG_POE_10] = HintText::Exclude({
+                       // obscure text
+                       Text{"a #fast ghost# near a river in the west holds", /*french*/"", /*spanish*/"", /*italian*/"un #fantasma veloce# presso un fiume ad ovest possiede", /*german*/""},
+                     }, {
+                       // ambiguous text
+                       Text{"a #fast ghost# holds", /*french*/"", /*spanish*/"", /*italian*/"un #fantasma veloce# possiede", /*german*/""},
+    });
 }
 // clang-format on

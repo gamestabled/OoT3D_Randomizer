@@ -49,9 +49,13 @@ typedef struct EnPoField {
     /* 0x8AC */ SkeletonAnimationModel* saModel_2;
     /* 0x8B0 */ char unk_8B0[0x044];
     /* 0x8F4 */ EnPoFieldActionFunc actionFunc;
-    /* 0x8F8 */ char unk_8F8[0x0F8];
+    /* 0x8F8 */ u8 unk_8F8;
+    /* 0x8F9 */ u8 spawnFlagIndex;
+    /* 0x8FA */ char unk_8FA[0x0F6];
 } EnPoField;
 _Static_assert(sizeof(EnPoField) == 0x9F0, "EnPoField size");
+
+void EnPoField_rInit(Actor* thisx, GlobalContext* globalCtx);
 
 void EnPoField_ReinitModels(EnPoField* this);
 

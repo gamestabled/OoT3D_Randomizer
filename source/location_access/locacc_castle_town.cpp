@@ -268,7 +268,10 @@ void AreaTable_Init_CastleTown() {
         Area("Market Guard House", "Market Guard House", NONE, NO_DAY_NIGHT_CYCLE, {},
              {
                  // Locations
-                 LocationAccess(MARKET_10_BIG_POES, { [] { return IsAdult && BigPoeKill; } }),
+                 LocationAccess(MARKET_10_BIG_POES, { [] {
+                                    return IsAdult &&
+                                           (ShuffleBigPoes ? BigPoes >= BigPoeTargetCount.Value<u8>() + 1 : BigPoeKill);
+                                } }),
              },
              {
                  // Exits

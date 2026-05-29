@@ -600,6 +600,15 @@ string_view shuffleRupeesDesc         = "Shuffles all freestanding visible rupee
                                         "from the Goron City spinning pot or the pots in\n"//
                                         "Shadow Temple.";                                  //
 /*------------------------------                                                           //
+|       SHUFFLE BIG POES       |                                                           //
+------------------------------*/                                                           //
+string_view shuffleBigPoesDesc        = "The 10 Big Poes in Hyrule Field will drop random\n"
+                                        "items.\n"                                         //
+                                        "Their bottled spirits will be added to the item\n"//
+                                        "pool, and won't require a bottle to be obtained.\n"
+                                        "Speak to the Poe Collector to get his reward after"
+                                        "finding the required amount.";                    //
+/*------------------------------                                                           //
 |      MAPS AND COMPASSES      |                                                           //
 ------------------------------*/                                                           //
 string_view mapCompassStartWith       = "Maps and Compasses are given to you from the\n"   //
@@ -760,8 +769,8 @@ string_view lakeHyliaOwlDesc          = "The owl flight cutscene in Lake Hylia w
 /*------------------------------                                                           //
 |     BIG POE TARGET COUNT     |                                                           //
 ------------------------------*/                                                           //
-string_view bigPoeTargetCountDesc     = "The Poe buyer will give a reward for turning in\n"//
-                                        "the chosen number of Big Poes.";                  //
+string_view bigPoeTargetCountDesc     = "The Poe Collector will give a reward for turning\n"
+                                        "in the chosen number of Big Poes.";               //
 /*------------------------------                                                           //
 |     NUM REQUIRED CUCCOS      |                                                           //
 ------------------------------*/                                                           //

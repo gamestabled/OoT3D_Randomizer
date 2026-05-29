@@ -127,6 +127,14 @@ HOOK EditDrawDetItemAfterModelSpawn
     str r0,[r6,#0x78]
     bx lr
 
+HOOK DrawGetItem_ShouldRotate
+    push {r0-r12, lr}
+    bl ItemOverride_DrawGetItem_ShouldSkipRotation
+    cmp r0,#0x0
+    pop {r0-r12, lr}
+    cmpeq r4,#0x0
+    bx lr
+
 HOOK EditDrawGetItemAfterMatrixUpdate
     push {r0-r12, lr}
     cpy r0,r1 @ SkeletonAnimationModel
@@ -156,13 +164,6 @@ HOOK GetToken
     cmp r0,#0x0
     pop {r0-r12, lr}
     addne lr,lr,#0x20 @ skip playing fanfare
-    bx lr
-
-HOOK PoeCollectorCheckPoints
-    push {r0-r12, lr}
-    bl EnGb_CheckPoints
-    cmp r0,#0x1
-    pop {r0-r12, lr}
     bx lr
 
 HOOK ItemEtceteraModelDraw
@@ -252,12 +253,6 @@ HOOK SariasSongCheckFlag
     bl Cutscene_CheckSariasSongFlag
     cmp r0,#0x0
     pop {r0-r12, lr}
-    bx lr
-
-HOOK PoeCollectorGetFirstTextbox
-    push {r1-r12, lr}
-    bl EnGb_GetFirstTextbox
-    pop {r1-r12, lr}
     bx lr
 
 HOOK ApplyDamageMultiplier

@@ -613,60 +613,6 @@ void CreateAlwaysIncludedMessages() {
             WAIT_FOR_INPUT() + "Wenn du etwas Hilfreiches von ihnen" + NEWLINE() +
             "erfährst und es vergessen solltest," + NEWLINE() + "frag mich nur. Ich kann mir so etwas" + NEWLINE() +
             "ziemlich gut merken!" + EVENT_TRIGGER() + MESSAGE_END());
-    // Poe Collector (when enough has been sold)
-    CreateMessage(
-        0x70F8, 0, 0, 0,
-        UNSKIPPABLE() + "Wait a minute! WOW!" + WAIT_FOR_INPUT() + NEWLINE() + UNSKIPPABLE() +
-            "You have earned enough points!" + WAIT_FOR_INPUT() + NEWLINE() + UNSKIPPABLE() +
-            "Young man, you are a genuine " + COLOR(QM_RED) + "ghost hunter" + COLOR(QM_WHITE) + "!" +
-            WAIT_FOR_INPUT() + NEWLINE() + UNSKIPPABLE() + "Is that what you expected me to say?" + NEWLINE() +
-            "Heh heh heh!" + WAIT_FOR_INPUT() + NEWLINE() + UNSKIPPABLE() +
-            "Because of you, I have extra inventory of" + NEWLINE() + COLOR(QM_RED) + "Big Poes" + COLOR(QM_WHITE) +
-            ", so this will be the last time I can" + NEWLINE() + "buy one of these ghosts." + WAIT_FOR_INPUT() +
-            NEWLINE() + UNSKIPPABLE() + "You're thinking about what I promised would" + NEWLINE() +
-            "happen when you earned enough points." + NEWLINE() + "Heh heh." + WAIT_FOR_INPUT() + NEWLINE() +
-            UNSKIPPABLE() + "Don't worry. I didn't forget. Just take this." + MESSAGE_END(),
-        UNSKIPPABLE() + "Ooooh! WHOA!" + WAIT_FOR_INPUT() + NEWLINE() + UNSKIPPABLE() +
-            "Tu as obtenu suffisamment de points!" + WAIT_FOR_INPUT() + NEWLINE() + UNSKIPPABLE() +
-            "Tu es un véritable " + COLOR(QM_RED) + "chasseur de fantômes" + COLOR(QM_WHITE) + "!" + WAIT_FOR_INPUT() +
-            NEWLINE() + UNSKIPPABLE() + "Il est content, hein?" + NEWLINE() + "Il est content le monsieur?" +
-            NEWLINE() + "Hé hé hé!" + WAIT_FOR_INPUT() + NEWLINE() + UNSKIPPABLE() + "Grâce à toi, mon stock d'" +
-            COLOR(QM_RED) + "Âmes" + COLOR(QM_WHITE) + " est plein!" + NEWLINE() +
-            "C'est donc la dernière fois que nous" + NEWLINE() + "faisons affaire." + WAIT_FOR_INPUT() + NEWLINE() +
-            UNSKIPPABLE() + "Je sais, je sais..." + WAIT_FOR_INPUT() + NEWLINE() + UNSKIPPABLE() +
-            "Nous avions passé un pacte..." + NEWLINE() + "Tu as eu tes points et je t'en félicite..." + NEWLINE() +
-            "Hé hé hé!" + WAIT_FOR_INPUT() + NEWLINE() + UNSKIPPABLE() + "Alors prends donc ceci, mon bon ami!" +
-            MESSAGE_END(),
-        UNSKIPPABLE() + "¡Un momento! ¡OYE!" + WAIT_FOR_INPUT() + NEWLINE() + UNSKIPPABLE() +
-            "¡Has conseguido los puntos suficientes!" + WAIT_FOR_INPUT() + NEWLINE() + UNSKIPPABLE() +
-            "¡Jovencito, eres un auténtico " + COLOR(QM_RED) + "cazador de" + NEWLINE() + "fantasmas" +
-            COLOR(QM_WHITE) + "!" + WAIT_FOR_INPUT() + NEWLINE() + UNSKIPPABLE() +
-            "¿Era eso lo que esperabas que dijera?" + NEWLINE() + "¡Je, je je!" + WAIT_FOR_INPUT() + NEWLINE() +
-            UNSKIPPABLE() + "Gracias a ti, ya tengo la cantidad necesaria" + NEWLINE() + "de " + COLOR(QM_RED) +
-            "grandes poes" + COLOR(QM_WHITE) + ", así que esta será la" + NEWLINE() +
-            "última vez que te compre unos de ese tipo." + WAIT_FOR_INPUT() + NEWLINE() + UNSKIPPABLE() +
-            "¿Recuerdas lo que te dije que ocurriría" + NEWLINE() + "cuando tuvieses suficientes puntos?" + NEWLINE() +
-            "Je, je, je." + WAIT_FOR_INPUT() + NEWLINE() + UNSKIPPABLE() + "Tranquilo, que no se me ha olvidado." +
-            NEWLINE() + "Toma esto." + MESSAGE_END(),
-        UNSKIPPABLE() + "Aspetta un attimo, bello mio!" + WAIT_FOR_INPUT() + NEWLINE() + UNSKIPPABLE() +
-            "Hai ottenuto abbastanza punti!" + WAIT_FOR_INPUT() + NEWLINE() + UNSKIPPABLE() +
-            "Bello mio, sei un vero " + COLOR(QM_RED) + "acchiappaspettri" + COLOR(QM_WHITE) + "!" + WAIT_FOR_INPUT() +
-            NEWLINE() + UNSKIPPABLE() + "Grazie a te, ora ho una bella scorta" + NEWLINE() +
-            "di Grandi Poo e non devo comprare" + WAIT_FOR_INPUT() + NEWLINE() + UNSKIPPABLE() +
-            "altri fantasmi di questo tipo." + WAIT_FOR_INPUT() + NEWLINE() + UNSKIPPABLE() +
-            "So a cosa stai pensando, bello mio..." + WAIT_FOR_INPUT() + NEWLINE() + UNSKIPPABLE() +
-            "Ti stai chiedendo dov'è la tua" + NEWLINE() + "sorpresa ora che hai raggiunto" + NEWLINE() +
-            "i punti necessari... Non me sono" + NEWLINE() + "dimenticato. Tieni, prendi!" + MESSAGE_END(),
-        UNSKIPPABLE() + "Oh! WOW!" + WAIT_FOR_INPUT() + NEWLINE() + UNSKIPPABLE() + "Du hast jetzt " + COLOR(QM_RED) +
-            "ausreichend Punkte" + COLOR(QM_WHITE) + "!" + WAIT_FOR_INPUT() + NEWLINE() + UNSKIPPABLE() +
-            "Du bist ja der geborene " + COLOR(QM_RED) + "Geisterjäger" + COLOR(QM_WHITE) + "!" + WAIT_FOR_INPUT() +
-            NEWLINE() + UNSKIPPABLE() + "Du erwartest noch etwas von mir?" + NEWLINE() + "Was denn? Hehehe..." +
-            WAIT_FOR_INPUT() + NEWLINE() + UNSKIPPABLE() + "Dank dir ist mein Bestand an " + COLOR(QM_RED) + "Nacht-" +
-            NEWLINE() + "schwärmern " + COLOR(QM_WHITE) + "enorm gestiegen... Dies" + NEWLINE() +
-            "ist der letzte, den ich dir abnehme." + WAIT_FOR_INPUT() + NEWLINE() + UNSKIPPABLE() +
-            "Ach, du wartest auf das, was ich dir für ein" + NEWLINE() + "volles Punkte-Konto versprochen habe?" +
-            NEWLINE() + "Hehehe..." + WAIT_FOR_INPUT() + NEWLINE() + UNSKIPPABLE() +
-            "Na, da will ich mal nicht so sein..." + NEWLINE() + "Nimm das hier!" + MESSAGE_END());
     // Ice Trap
     CreateMessage(0x9001, 0, 2, 3,
                   UNSKIPPABLE() + INSTANT_TEXT_ON() + CENTER_TEXT() + COLOR(QM_RED) + "FOOL!" + COLOR(QM_WHITE) +
@@ -832,56 +778,83 @@ void CreateAlwaysIncludedMessages() {
                 " Rubine" + COLOR(QM_WHITE) + "!" + NEWLINE() + NEWLINE() + TWO_WAY_CHOICE() + COLOR(QM_GREEN) +
                 "Her damit!" + NEWLINE() + "Niemals!" + COLOR(QM_WHITE) + INSTANT_TEXT_OFF() + MESSAGE_END());
     }
-    // Poe Collector
-    // The last digit represent the number of poes needed to collect
-    for (u32 poes = 1; poes <= 10; poes++) {
-        CreateMessage(
-            0x9080 + poes, 0, 0, 0,
-            UNSKIPPABLE() + "Oh, you brought a Poe today!" + WAIT_FOR_INPUT() + NEWLINE() + UNSKIPPABLE() + "Hmmmm!" +
-                WAIT_FOR_INPUT() + NEWLINE() + UNSKIPPABLE() + "Very interesting! This is a " + COLOR(QM_RED) +
-                "Big Poe" + COLOR(QM_WHITE) + "!" + WAIT_FOR_INPUT() + NEWLINE() + UNSKIPPABLE() + "I'll buy it for " +
-                COLOR(QM_RED) + "50 Rupees" + COLOR(QM_WHITE) + "." + WAIT_FOR_INPUT() + NEWLINE() + UNSKIPPABLE() +
-                "On top of that, I'll put " + COLOR(QM_RED) + "100 points " + COLOR(QM_WHITE) + "on" + NEWLINE() +
-                "your card." + WAIT_FOR_INPUT() + NEWLINE() + UNSKIPPABLE() + "If you earn " + COLOR(QM_RED) +
-                std::to_string(poes * 100) + " points" + COLOR(QM_WHITE) + ", you'll be a" + NEWLINE() +
-                "happy man! Heh heh." + MESSAGE_END(),
 
-            UNSKIPPABLE() + "Oh! Tu as apporté un fantôme!" + WAIT_FOR_INPUT() + NEWLINE() + UNSKIPPABLE() + "Hmmmm!" +
-                WAIT_FOR_INPUT() + NEWLINE() + UNSKIPPABLE() + "Magnifique!" + NEWLINE() + "C'est une " +
-                COLOR(QM_RED) + "Âme" + COLOR(QM_WHITE) + "!" + WAIT_FOR_INPUT() + NEWLINE() + UNSKIPPABLE() +
-                "Je t'en donne " + COLOR(QM_RED) + "50 Rubis" + COLOR(QM_WHITE) + "." + WAIT_FOR_INPUT() + NEWLINE() +
-                UNSKIPPABLE() + "Et en plus, j'inscris " + COLOR(QM_RED) + "100 points " + COLOR(QM_WHITE) + NEWLINE() +
-                "sur ta carte." + WAIT_FOR_INPUT() + NEWLINE() + UNSKIPPABLE() + "Obtiens " + COLOR(QM_RED) +
-                std::to_string(poes * 100) + " points" + COLOR(QM_WHITE) + " et tu ne" + NEWLINE() +
-                "seras pas déçu..." + NEWLINE() + "Hé hé hé." + MESSAGE_END(),
-
-            UNSKIPPABLE() + "¡Vaya! ¡Traes un poe!" + WAIT_FOR_INPUT() + NEWLINE() + UNSKIPPABLE() + "¡Mmm! ¿A ver?" +
-                WAIT_FOR_INPUT() + NEWLINE() + UNSKIPPABLE() + "¡Qué interesante! ¡Es un " + COLOR(QM_RED) +
-                "gran poe" + COLOR(QM_WHITE) + "!" + WAIT_FOR_INPUT() + NEWLINE() + UNSKIPPABLE() + "Te daré " +
-                COLOR(QM_RED) + "50 rupias " + COLOR(QM_WHITE) + "por él." + WAIT_FOR_INPUT() + NEWLINE() +
-                UNSKIPPABLE() + "Y además agregaré " + COLOR(QM_RED) + "100 puntos " + COLOR(QM_WHITE) + "a tu" +
-                NEWLINE() + "tarjeta." + WAIT_FOR_INPUT() + NEWLINE() + UNSKIPPABLE() + "¡Si llegas a " +
-                COLOR(QM_RED) + std::to_string(poes * 100) + " puntos" + COLOR(QM_WHITE) + ", serás muy feliz!" +
-                NEWLINE() + "Je, je, je..." + MESSAGE_END(),
-
-            UNSKIPPABLE() + "Eccoti bello mio! Hai un Poo per me?" + WAIT_FOR_INPUT() + NEWLINE() + UNSKIPPABLE() +
-                "Sì???" + WAIT_FOR_INPUT() + NEWLINE() + UNSKIPPABLE() + "Fantasmagorico! Questo è un " +
-                COLOR(QM_RED) + "Grande Poo" + COLOR(QM_WHITE) + "!" + WAIT_FOR_INPUT() + NEWLINE() + UNSKIPPABLE() +
-                "Ti do " + COLOR(QM_RED) + "50 Rupie" + COLOR(QM_WHITE) + "." + WAIT_FOR_INPUT() + NEWLINE() +
-                UNSKIPPABLE() + "E aggiungo anche " + COLOR(QM_RED) + "100 punti " + COLOR(QM_WHITE) + "sulla tua" +
-                NEWLINE() + "tessera! Sì, sono molto generoso!" + WAIT_FOR_INPUT() + NEWLINE() + UNSKIPPABLE() +
-                "Se arrivi a " + COLOR(QM_RED) + std::to_string(poes * 100) + " punti" + COLOR(QM_WHITE) +
-                ", ti aspetta" + NEWLINE() + "una sorpresa stupenda!" + MESSAGE_END(),
-
-            UNSKIPPABLE() + "Oh, du bringst mir etwas!" + WAIT_FOR_INPUT() + NEWLINE() + UNSKIPPABLE() + "Nun..." +
-                WAIT_FOR_INPUT() + NEWLINE() + UNSKIPPABLE() + "Erstaunlich!" + NEWLINE() + "Das ist ja ein " +
-                COLOR(QM_RED) + "Nachtschwärmer" + COLOR(QM_WHITE) + "!" + WAIT_FOR_INPUT() + NEWLINE() +
-                UNSKIPPABLE() + "Dafür bekommst du " + COLOR(QM_RED) + "50 Rubine" + COLOR(QM_WHITE) + "!" +
-                WAIT_FOR_INPUT() + NEWLINE() + UNSKIPPABLE() + "Obendrein hast du nun " + COLOR(QM_RED) +
-                "100 Punkte " + COLOR(QM_WHITE) + NEWLINE() + "auf dem Nachtschwärmer-Konto gut." + WAIT_FOR_INPUT() +
-                NEWLINE() + UNSKIPPABLE() + "Hast du " + COLOR(QM_RED) + std::to_string(poes * 100) + " Punkte" +
-                COLOR(QM_WHITE) + ", gesammelt, dann" + NEWLINE() + "wartet eine geniale Belohnung! Hehehe..." +
-                MESSAGE_END());
+    // Poe Collector (when selling Big Poe)
+    {
+        Text bigPoeText = Text{
+            // english
+            "Oh, you brought a Poe today!^Hmmmm!^Very interesting! This is a #Big Poe#!^I'll buy it for #50 "
+            "Rupees#.^On top of that, I'll put #100 points# on&your card.^If you earn #1000 points#, you'll be a&happy "
+            "man! Heh heh.",
+            // french
+            "Oh! Tu as apporté un fantôme!^Hmmmm!^Magnifique!&C'est une #Âme#!^Je t'en donne #50 Rubis#.^Et en plus, "
+            "j'inscris #100 points#&sur ta carte.^Obtiens #1000 points# et tu ne&seras pas déçu...&Hé hé hé.",
+            // spanish
+            "¡Vaya! ¡Traes un poe!^¡Mmm! ¿A ver?^¡Qué interesante! ¡Es un #gran poe#!^Te daré #50 rupias# por él.^Y "
+            "además agregaré #100 puntos# a tu&tarjeta.^¡Si llegas a #1000 puntos#, serás muy feliz!&Je, je, je...",
+            // italian
+            "Eccoti bello mio! Hai un Poo per me?^Sì???^Fantasmagorico! Questo è un #Grande Poo#!^Ti do #50 Rupie#.^E "
+            "aggiungo anche #100 punti# sulla tua&tessera! Sì, sono molto generoso!^Se arrivi a #1000 punti#, ti "
+            "aspetta&una sorpresa stupenda!",
+            // german
+            "Oh, du bringst mir etwas!^Nun...^Erstaunlich!&Das ist ja ein #Nachtschwärmer#!^Dafür bekommst du #50 "
+            "Rubine#!^Obendrein hast du nun #100 Punkte#&auf dem Nachtschwärmer-Konto gut.^Hast du #1000 Punkte#, "
+            "gesammelt, dann&wartet eine geniale Belohnung! Hehehe...",
+        };
+        bigPoeText = AddColorsAndFormat(bigPoeText, { QM_RED, QM_RED, QM_RED, QM_RED }, MANUAL_NEWLINES);
+        bigPoeText.Replace("1000", REQUIRED_BIG_POE_POINTS());
+        CreateMessageFromTextObject(0x70F7, 0, 0, 0, bigPoeText);
+    }
+    // Poe Collector (when enough has been sold)
+    {
+        Text poeRewardText = Text{
+            // english
+            "Wait a minute! WOW!^You have earned enough points!^Young man, you are a genuine #ghost hunter#!^Is that "
+            "what you expected me to say?&Heh heh heh!^Because of you, I have extra inventory of&#Big Poes#, so this "
+            "will be the last time I can&buy one of these ghosts.^You're thinking about what I promised would&happen "
+            "when you earned enough points.&Heh heh.^Don't worry. I didn't forget. Just take this.",
+            // french
+            "Ooooh! WHOA!^Tu as obtenu suffisamment de points!^Tu es un véritable #chasseur de fantômes#!^Il est "
+            "content, hein?&Il est content le monsieur?&Hé hé hé!^Grâce à toi, mon stock d'#Âmes# est plein!&C'est "
+            "donc la dernière fois que nous&faisons affaire.^Je sais, je sais...^Nous avions passé un pacte...&Tu as "
+            "eu tes points et je t'en félicite...&Hé hé hé!^Alors prends donc ceci, mon bon ami!",
+            // spanish
+            "¡Un momento! ¡OYE!^¡Has conseguido los puntos suficientes!^¡Jovencito, eres un auténtico #cazador "
+            "de&fantasmas#!^¿Era eso lo que esperabas que dijera?&¡Je, je je!^Gracias a ti, ya tengo la cantidad "
+            "necesaria&de #grandes poes#, así que esta será la&última vez que te compre unos de ese tipo.^¿Recuerdas "
+            "lo que te dije que ocurriría&cuando tuvieses suficientes puntos?&Je, je, je.^Tranquilo, que no se me ha "
+            "olvidado.&Toma esto.",
+            // italian
+            "Aspetta un attimo, bello mio!^Hai ottenuto abbastanza punti!^Bello mio, sei un vero "
+            "#acchiappaspettri#!^Grazie a te, ora ho una bella scorta&di Grandi Poo e non devo comprare^altri fantasmi "
+            "di questo tipo.^So a cosa stai pensando, bello mio...^Ti stai chiedendo dov'è la tua&sorpresa ora che hai "
+            "raggiunto&i punti necessari... Non me sono&dimenticato. Tieni, prendi!",
+            // german
+            "Oh! WOW!^Du hast jetzt #ausreichend Punkte#!^Du bist ja der geborene #Geisterjäger#!^Du erwartest noch "
+            "etwas von mir?&Was denn? Hehehe...^Dank dir ist mein Bestand an #Nacht-&schwärmern# enorm gestiegen... "
+            "Dies&ist der letzte, den ich dir abnehme.^Ach, du wartest auf das, was ich dir für ein&volles "
+            "Punkte-Konto versprochen habe?&Hehehe...^Na, da will ich mal nicht so sein...&Nimm das hier!",
+        };
+        CreateMessageFromTextObject(0x70F8, 0, 0, 0,
+                                    AddColorsAndFormat(poeRewardText, { QM_RED, QM_RED, QM_RED }, MANUAL_NEWLINES));
+    }
+    // Get Item text for shuffled Big Poes
+    {
+        Text bigPoeText = Text{
+            // english
+            "You got a #Big Poe#!&Your card now has #XXXX# points!",
+            // french
+            "",
+            // spanish
+            "",
+            // italian
+            "Hai ottenuto un #Grande Poo#!&La tua tessera ora ha #XXXX# punti!",
+            // german
+            "",
+        };
+        bigPoeText = AddColorsAndFormat(bigPoeText, { QM_RED, QM_PINK });
+        bigPoeText.Replace("XXXX", BIG_POE_POINTS());
+        CreateMessageFromTextObject(0x9080, 0, 2, 3, bigPoeText);
     }
 
     // Talon (this is to prevent accidentally skipping Malon in HC)
@@ -1415,7 +1388,7 @@ static size_t NextLineLength(std::string* textStr, size_t lastNewline) {
     }
 }
 
-Text AddColorsAndFormat(Text text, const std::vector<u8>& colors /*= {}*/) {
+Text AddColorsAndFormat(Text text, const std::vector<u8>& colors /*= {}*/, bool manualNewLines /*= false*/) {
 
     // for each language
     for (std::string* textStr : { &text.NAenglish, &text.NAfrench, &text.NAspanish, &text.EURenglish, &text.EURfrench,
@@ -1451,37 +1424,40 @@ Text AddColorsAndFormat(Text text, const std::vector<u8>& colors /*= {}*/) {
             brace = textStr->find('{');
         }
 
-        // insert newlines either manually or when encountering a '&'
-        size_t lastNewline = 0;
-        size_t lineLength  = NextLineLength(textStr, lastNewline);
-        while (lastNewline + lineLength < textStr->length()) {
-            size_t carrot     = textStr->find('^', lastNewline);
-            size_t ampersand  = textStr->find('&', lastNewline);
-            size_t lastSpace  = textStr->rfind(' ', lastNewline + lineLength);
-            size_t lastPeriod = textStr->rfind('.', lastNewline + lineLength);
-            // replace '&' first if it's within the newline range
-            if (ampersand < lastNewline + lineLength) {
-                textStr->replace(ampersand, 1, NEWLINE());
-                lastNewline = ampersand + NEWLINE().length();
-                // or move the lastNewline cursor to the next line if a '^' is encountered
-            } else if (carrot < lastNewline + lineLength) {
-                lastNewline = carrot + 1;
-            } else if (lastSpace != std::string::npos) {
-                textStr->replace(lastSpace, 1, NEWLINE());
-                lastNewline = lastSpace + NEWLINE().length();
-            } else if (lastPeriod != std::string::npos) {
-                // some lines need to be split but don't have spaces, look for periods instead
-                textStr->replace(lastPeriod, 1, "." + NEWLINE());
-                lastNewline = lastPeriod + NEWLINE().length() + 1;
-            } else {
-                // should never get here
-                CitraPrint("ERROR: Line too long in " + (*textStr));
-                textStr->insert(lastNewline + lineLength, NEWLINE());
-                lastNewline = lastNewline + lineLength + NEWLINE().length() + 1;
+        if (!manualNewLines) {
+            // insert newlines either automatically or when encountering a '&'
+            size_t lastNewline = 0;
+            size_t lineLength  = NextLineLength(textStr, lastNewline);
+            while (lastNewline + lineLength < textStr->length()) {
+                size_t carrot     = textStr->find('^', lastNewline);
+                size_t ampersand  = textStr->find('&', lastNewline);
+                size_t lastSpace  = textStr->rfind(' ', lastNewline + lineLength);
+                size_t lastPeriod = textStr->rfind('.', lastNewline + lineLength);
+                // replace '&' first if it's within the newline range
+                if (ampersand < lastNewline + lineLength) {
+                    textStr->replace(ampersand, 1, NEWLINE());
+                    lastNewline = ampersand + NEWLINE().length();
+                    // or move the lastNewline cursor to the next line if a '^' is encountered
+                } else if (carrot < lastNewline + lineLength) {
+                    lastNewline = carrot + 1;
+                } else if (lastSpace != std::string::npos) {
+                    textStr->replace(lastSpace, 1, NEWLINE());
+                    lastNewline = lastSpace + NEWLINE().length();
+                } else if (lastPeriod != std::string::npos) {
+                    // some lines need to be split but don't have spaces, look for periods instead
+                    textStr->replace(lastPeriod, 1, "." + NEWLINE());
+                    lastNewline = lastPeriod + NEWLINE().length() + 1;
+                } else {
+                    // should never get here
+                    CitraPrint("ERROR: Line too long in " + (*textStr));
+                    textStr->insert(lastNewline + lineLength, NEWLINE());
+                    lastNewline = lastNewline + lineLength + NEWLINE().length() + 1;
+                }
+                lineLength = NextLineLength(textStr, lastNewline);
             }
-            lineLength = NextLineLength(textStr, lastNewline);
         }
-        // clean up any remaining '&' characters
+
+        // insert newlines (if there are any remaining '&' characters)
         size_t ampersand = textStr->find('&');
         while (ampersand != std::string::npos) {
             textStr->replace(ampersand, 1, NEWLINE());
@@ -1500,7 +1476,7 @@ Text AddColorsAndFormat(Text text, const std::vector<u8>& colors /*= {}*/) {
         if (choice != std::string::npos) {
             size_t newLinesCount = 0;
             size_t lastBoxBreak  = textStr->rfind(WAIT_FOR_INPUT(), choice);
-            lastNewline          = choice;
+            size_t lastNewline   = choice;
 
             if (lastBoxBreak == std::string::npos) {
                 lastBoxBreak = 0;
@@ -1581,6 +1557,9 @@ std::string SKULLTULAS_DESTROYED() {
 std::string CURRENT_TIME() {
     return "\x7F\x17"s;
 }
+std::string BIG_POE_POINTS() {
+    return "\x7F\x18\x01"s;
+}
 std::string UNSKIPPABLE() {
     return "\x7F\x19"s;
 }
@@ -1636,5 +1615,8 @@ std::string DAMAGE_RECEIVED() {
 }
 std::string BONK_COUNT() {
     return { '\x7F', static_cast<char>(TEXT_CTRL_BONK_COUNT) };
+}
+std::string REQUIRED_BIG_POE_POINTS() {
+    return { '\x7F', static_cast<char>(TEXT_CTRL_REQUIRED_BIG_POE_POINTS) };
 }
 } // namespace CustomMessages
