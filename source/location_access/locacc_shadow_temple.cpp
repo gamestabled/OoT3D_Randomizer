@@ -161,7 +161,7 @@ void AreaTable_Init_ShadowTemple() {
                 // Exits
                 Entrance(SHADOW_TEMPLE_WIND_TUNNEL, { [] {
                              return (LogicLensShadowBack || CanUse(LENS_OF_TRUTH)) && Hookshot &&
-                                    SmallKeys(SHADOW_TEMPLE, 3, 4);
+                                    SmallKeys(SHADOW_TEMPLE, 3, 4) && (CanDefeatEnemies(7, 0, 11) || CanUse(LONGSHOT));
                          } }),
             });
 
