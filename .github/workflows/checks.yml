@@ -49,7 +49,6 @@ jobs:
       env:
         GITHUB_BUILD_TYPE: "PR${{ env.pr_number }}"
       run: |
-        chmod +x write_version.sh
         make -j
         mv -v OoT3D_Randomizer.3dsx ${{ env.artifact_name }}.3dsx
 
