@@ -62,7 +62,6 @@ jobs:
           GITHUB_BUILD_TYPE: ${{ github.event.inputs.build_type }}
           GITHUB_INPUT_VERSION: ${{ github.event.inputs.version }}
         run: |
-          chmod +x linux_build_rando.sh write_version.sh
           ./linux_build_rando.sh
 
       - name: Create QR codes
