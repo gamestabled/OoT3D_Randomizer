@@ -10,7 +10,6 @@
 #include "grotto.h"
 #include "item_override.h"
 #include "colors.h"
-#include "common.h"
 #include "gloom.h"
 #include "savefile.h"
 
@@ -66,7 +65,7 @@ void Player_SetChildCustomTunicCMAB(void) {
         return;
     }
     void* cmabMan = Object_GetCMABByIndex(OBJECT_CUSTOM_GENERAL_ASSETS, TEXANIM_CHILD_LINK_BODY);
-    TexAnim_Spawn(PLAYER->skelAnime.unk_28->unk_0C, cmabMan);
+    MatAnim_Init(PLAYER->skelAnime.saModel->matAnim, cmabMan);
 }
 
 void PlayerActor_rInit(Actor* thisx, GlobalContext* globalCtx) {
@@ -219,7 +218,7 @@ void Player_UpdateRainbowTunic(void) {
         if (gSettingsContext.rainbowChildTunic == OFF) {
             return;
         }
-        cmabManager = PLAYER->skelAnime.unk_28->unk_0C->cmabManager;
+        cmabManager = PLAYER->skelAnime.saModel->matAnim->cmabManager;
         redOffset   = 0x70;
         greenOffset = 0x88;
         blueOffset  = 0xA0;

@@ -6,6 +6,8 @@
 #include "s_scene_id.h"
 #include "s_dungeon.h"
 
+#include "common.h"
+
 #include <sys/cdefs.h>
 #include "z3Dactor.h"
 #include "z3Dequipment.h"
@@ -15,11 +17,9 @@
 #include "z3Dbgcheck.h"
 #include "z3Deffect.h"
 #include "z3Daudio.h"
+#include "z3Dcmb.h"
 
 #include "hid.h"
-
-#define TRUE 1
-#define FALSE 0
 
 typedef struct {
     /* 0x00 */ u8 buttonItems[5]; // B,Y,X,I,II
@@ -439,16 +439,42 @@ typedef struct {
 
 #define OBJECT_SLOT_MAX 19
 
+typedef struct ZAR {
+    /* 0x00 */ char magic[4]; //"ZAR\1"
+    /* 0x04 */ u32 size;
+    /* 0x08 */ u16 numTypes;
+    /* 0x0A */ u16 numFiles;
+    /* 0x0C */ u32 fileTypesOffset;
+    /* 0x10 */ u32 fileMetadataOffset;
+    /* 0x14 */ u32 dataOffset;
+    /* 0x18 */ char magic2[8]; // "queen"
+    /* 0x20 */ char data[1];
+} ZAR;
+
+typedef struct ZARFileTypeEntry {
+    /* 0x00 */ u32 numFiles;
+    /* 0x04 */ u32 filesListOffset;
+    /* 0x08 */ u32 typeNameOffset;
+    /* 0x0C */ u32 unk_0C; // always -1?
+} ZARFileTypeEntry;
+
 typedef struct ZARInfo {
     /* 0x00 */ void* buf;
-    /* 0x04 */ char unk_04[0x48];
-    /* 0x4C */ void*** cmbPtrs;  /* Really, this is a pointer to an array of pointers to CMB managers,
-                                    the first member of which is a pointer to the CMB data */
-    /* 0x50 */ void*** csabPtrs; /* Same as above but for CSAB */
+    /* 0x04 */ s32 size;
+    /* 0x08 */ ZAR* buf2;
+    /* 0x0C */ ZARFileTypeEntry* fileTypes;
+    /* 0x10 */ void* fileMetadata;
+    /* 0x14 */ void* data;
+    /* 0x18 */ ZAR* buf3;
+    /* 0x1C */ s32 fileTypeMap[11];
+    /* 0x48 */ s32 unk_48;
+    /* 0x4C */ struct CmbManager** cmbMans;
+    /* 0x50 */ void** csabMans;
     /* 0x54 */ char unk_54[0x04];
-    /* 0x58 */ void*** cmabPtrs; /* Same as above but for CMAB */
+    /* 0x58 */ void** cmabMans;
     /* 0x5C */ char unk_5C[0x14];
-} ZARInfo; // size = 0x70
+} ZARInfo;
+_Static_assert(sizeof(ZARInfo) == 0x70, "ZARInfo size");
 
 typedef struct ObjectEntry {
     /* 0x00 */ s16 id;
@@ -640,19 +666,23 @@ typedef struct SAModelListEntry {
 } SAModelListEntry;
 
 typedef struct SubMainClass_180 {
-    /* 0x000 */ char unk_00[0x8];
-    /* 0x008 */ s32 saModelsCount1;
-    /* 0x00C */ s32 saModelsCount2;
-    /* 0x010 */ char unk_10[0x10];
-    /* 0x020 */ SAModelListEntry* saModelsList1; // 3D models
-    /* 0x024 */ SAModelListEntry* saModelsList2; // 2D billboards
-    /* ... size unknown*/
+    /* 0x000 */ char unk_00[0x4];
+    /* 0x004 */ s32 unk_04;
+    /* 0x008 */ s32 count_08; // 3D models
+    /* 0x00C */ s32 count_0C; // 2D billboards
+    /* 0x010 */ char unk_10[0x04];
+    /* 0x014 */ s32 count_14;
+    /* 0x018 */ s32* countPointer_18;
+    /* 0x01C */ SAModelListEntry* list_1C;
+    /* 0x020 */ SAModelListEntry* list_20; // 3D models
+    /* 0x024 */ SAModelListEntry* list_24; // 2D billboards
+    // ... size unknown
 } SubMainClass_180;
 
 typedef struct MainClass {
     /* 0x000 */ char unk_00[0x180];
     /* 0x180 */ SubMainClass_180 sub180;
-    /* ... size unknown*/
+    // ... size unknown
 } MainClass;
 
 extern GlobalContext* gGlobalContext;
@@ -727,12 +757,6 @@ void Camera_UpdateInterface(u32 flags);
 f32 Camera_BGCheckInfo(Camera* camera, Vec3f* from, CamColChk* to);
 s32 Quake_Update(Camera* camera, ShakeInfo* camShake);
 s16 Camera_GetCamDataId(CollisionContext* colCtx, CollisionPoly* poly, s32 bgId);
-s32 Animation_GetLastFrame(SkelAnime* anime, s32 animation_index);
-void Animation_Change(SkelAnime* anime, s32 animation_index, f32 play_speed, f32 start_frame, f32 end_frame,
-                      f32 morph_frames, s32 mode) __attribute__((pcs("aapcs-vfp")));
-void EffectSsDeadDb_Spawn(GlobalContext* globalCtx, Vec3f* position, Vec3f* velocity, Vec3f* acceleration, s16 scale,
-                          s16 scale_step, s16 prim_r, s16 prim_g, s16 prim_b, s16 prim_a, s16 env_r, s16 env_g,
-                          s16 env_b, s16 unused, s32 frame_duration, s16 play_sound);
 void SaveGame(GlobalContext* globalCtx, u8 isSaveFileCreation);
 s32 Message_GetState(void);
 

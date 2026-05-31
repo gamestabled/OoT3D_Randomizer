@@ -922,18 +922,18 @@ void Multiplayer_Send_GhostData(void) {
 
     ghostData.meshGroups1 = 0;
     ghostData.meshGroups2 = 0;
-    s32 meshGroupCount    = Model_GetMeshGroupCount(PLAYER->skelAnime.unk_28);
+    s32 meshGroupCount    = Model_GetMeshGroupCount(PLAYER->skelAnime.saModel);
 
     for (size_t index = 0; index < BIT_COUNT(u32); index++) {
         if (index > meshGroupCount) {
             break;
         }
-        if (Model_IsMeshGroupUsed(PLAYER->skelAnime.unk_28, index)) {
+        if (Model_IsMeshGroupUsed(PLAYER->skelAnime.saModel, index)) {
             ghostData.meshGroups1 |= 1 << index;
         }
     }
     for (size_t index = BIT_COUNT(u32); index < meshGroupCount; index++) {
-        if (Model_IsMeshGroupUsed(PLAYER->skelAnime.unk_28, index)) {
+        if (Model_IsMeshGroupUsed(PLAYER->skelAnime.saModel, index)) {
             ghostData.meshGroups2 |= 1 << (index - BIT_COUNT(u32));
         }
     }

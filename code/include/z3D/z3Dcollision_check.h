@@ -6,6 +6,14 @@
 struct GlobalContext;
 struct CollisionCheckContext;
 
+typedef enum ColliderShape {
+    COLSHAPE_JNTSPH,
+    COLSHAPE_CYLINDER,
+    COLSHAPE_TRIS,
+    COLSHAPE_QUAD,
+    COLSHAPE_MAX
+} ColliderShape;
+
 typedef struct {
     /* 0x00 */ struct Actor* actor; // Attached actor
     /* 0x04 */ struct Actor* at;    // Actor attached to what it collided with as an AT collider.
@@ -20,6 +28,9 @@ typedef struct {
 } Collider;                         // size = 0x18
 _Static_assert(sizeof(Collider) == 0x18, "Collider size");
 
+#define AT_BOUNCED (1 << 2) // Had an AT collision with an AC_HARD collider
+
+#define AC_ON (1 << 0)      // Can have AC collisions when set as AC
 #define AC_BOUNCED (1 << 7) // Caused an AT collider to bounce off it
 
 typedef struct {

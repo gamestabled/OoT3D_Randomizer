@@ -1,7 +1,7 @@
 #include "stinger.h"
 #include "settings.h"
 #include "enemizer.h"
-#include "common.h"
+#include "actor.h"
 
 void EnEiyer_Update(Actor* thisx, GlobalContext* globalCtx);
 
@@ -32,4 +32,11 @@ void EnEiyer_rUpdate(Actor* thisx, GlobalContext* globalCtx) {
             thisx->world.pos = thisx->prevPos;
         }
     }
+}
+
+void EnEiyer_ReinitModels(EnEiyer* this) {
+    Actor_DestroySkelModels(&this->actor, &this->saModel, NULL);
+    Actor_CreateSkelModels(&this->actor, gGlobalContext, &this->saModel, 0, NULL);
+
+    Actor_ReinitSkelAnime(&this->actor, &this->anime, 0);
 }

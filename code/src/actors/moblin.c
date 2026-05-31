@@ -2,7 +2,7 @@
 #include "moblin.h"
 #include "settings.h"
 #include "enemizer.h"
-#include "common.h"
+#include "actor.h"
 
 void EnMb_Init(Actor* thisx, GlobalContext* globalCtx);
 void EnMb_Update(Actor* thisx, GlobalContext* globalCtx);
@@ -85,4 +85,9 @@ void EnMb_rUpdate(Actor* thisx, GlobalContext* globalCtx) {
             }
         }
     }
+}
+
+void EnMb_ReinitModels(EnMb* this) {
+    s32 cmbIndex = this->actor.params == ENMB_TYPE_CLUB ? 1 : 0;
+    Actor_ReinitSkelAnime(&this->actor, &this->skelAnime, cmbIndex);
 }

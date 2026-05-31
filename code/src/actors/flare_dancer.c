@@ -2,6 +2,7 @@
 #include "settings.h"
 #include "enemizer.h"
 #include "bgm.h"
+#include "actor.h"
 
 void EnFd_Update(Actor* thisx, GlobalContext* globalCtx);
 
@@ -76,4 +77,21 @@ void EnFd_rUpdate(Actor* thisx, GlobalContext* globalCtx) {
             }
         }
     }
+}
+
+void EnFd_ReinitModels(EnFd* this) {
+    Actor_DestroySkelModelsArray(&this->actor, EN_FD_EFFECT_COUNT, this->saModels);
+    ZARInfo* zarInfo =
+        Actor_CreateSkelModelsArray(&this->actor, gGlobalContext, EN_FD_EFFECT_COUNT, this->saModels, this->cmbIndices);
+
+    for (s32 i = 0; i < EN_FD_EFFECT_COUNT; i++) {
+        SkeletonAnimationModel* model = this->saModels[i];
+
+        this->effects[i].saModel = model;
+        MatAnim_Init(model->matAnim, ZAR_GetCMABByIndex(zarInfo, 1));
+        model->matAnim->animMode  = 1;
+        model->matAnim->animSpeed = 2.0;
+    }
+
+    Actor_ReinitSkelAnime(&this->actor, &this->skelAnime, 0);
 }

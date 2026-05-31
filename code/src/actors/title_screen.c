@@ -20,14 +20,14 @@ void EnMag_rInit(Actor* thisx, GlobalContext* globalCtx) {
     EnMag_Init(thisx, globalCtx);
 
     cmabMan = ZAR_GetCMABByIndex(customAssetsZAR, TEXANIM_TITLE_LOGO_US);
-    TexAnim_Spawn(this->logoModel->unk_0C, cmabMan);
-    this->logoModel->unk_0C->animSpeed = 0.0f;
-    this->logoModel->unk_0C->animMode  = 0;
+    MatAnim_Init(this->logoModel->matAnim, cmabMan);
+    this->logoModel->matAnim->animSpeed = 0.0f;
+    this->logoModel->matAnim->animMode  = 0;
 
     cmabMan = ZAR_GetCMABByIndex(customAssetsZAR, TEXANIM_COPY_NINTENDO);
-    TexAnim_Spawn(this->copyrightModel->unk_0C, cmabMan);
-    this->copyrightModel->unk_0C->animSpeed = 0.0f;
-    this->copyrightModel->unk_0C->animMode  = 0;
+    MatAnim_Init(this->copyrightModel->matAnim, cmabMan);
+    this->copyrightModel->matAnim->animSpeed = 0.0f;
+    this->copyrightModel->matAnim->animMode  = 0;
 
     if (cmabMan == 0) {
         // If the pointer is 0, the romfs folder is not present.

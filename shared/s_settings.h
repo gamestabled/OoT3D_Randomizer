@@ -211,7 +211,10 @@ typedef enum ShuffleEnemySoulsSetting {
 } ShuffleEnemySoulsSetting;
 
 typedef enum SoullessEnemiesLookSetting {
-    SOULLESSLOOK_PURPLE_FLAME,
+    SOULLESSLOOK_VANILLA,
+    SOULLESSLOOK_TEXTURELESS,
+    SOULLESSLOOK_GRAYSCALE,
+    SOULLESSLOOK_PURPLE_FLAMES,
     SOULLESSLOOK_FLASHING,
 } SoullessEnemiesLookSetting;
 
@@ -721,11 +724,11 @@ typedef struct SettingsContext {
     u8 rainbowChuTrailOuterColor;
     u8 bombchuTrailDuration;
     Color_RGBA8 ganonBloodColor;
-
     u8 coloredKeys;
     u8 coloredBossKeys;
     u8 mirrorWorld;
     u8 soullessEnemiesLook;
+    Color_RGBA8 soullessColor;
 
     u8 shuffleSFX;
     u8 shuffleSFXFootsteps;
