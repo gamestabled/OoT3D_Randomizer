@@ -51,7 +51,7 @@ jobs:
     permissions:
       contents: write
     container:
-      image: ghcr.io/z3dr/randotools:latest
+      image: ghcr.io/z3dr/randotools:next
 
     steps:
       - name: Checkout Project
