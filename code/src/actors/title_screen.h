@@ -13,7 +13,4 @@ typedef struct {
 
 void EnMag_rInit(Actor* thisx, GlobalContext* globalCtx);
 
-extern u8 missingRomfsAlert;
-extern s16 romfsAlertFrames;
-
 #endif //_TITLE_SCREEN_H_

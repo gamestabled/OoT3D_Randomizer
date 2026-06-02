@@ -22,6 +22,7 @@
 #include "icetrap.h"
 #include "bgm.h"
 #include "business_scrubs.h"
+#include "alert.h"
 
 #include "z3D/z3D.h"
 #include "3ds/extdata.h"
@@ -31,6 +32,10 @@
 GlobalContext* gGlobalContext = NULL;
 static u8 rRandomizerInit     = 0;
 u32 rGameplayFrames           = 0;
+static AlertType sActiveAlert = ALERT_NONE;
+static s16 sAlertFrames       = 0;
+
+static void Alert_Update(void);
 
 void Randomizer_Init() {
     rHeap_Init();
@@ -76,19 +81,40 @@ void before_GlobalContext_Update(GlobalContext* globalCtx) {
 }
 
 void after_GlobalContext_Update() {
-    // The alert is always displayed on the Title Screen, and for 10 seconds after opening a save file.
-    if (missingRomfsAlert && romfsAlertFrames > 0) {
-        Draw_DrawFormattedStringTop(75, 180, COLOR_WHITE,
-                                    "WARNING: THE ROMFS FOLDER IS MISSING!\nCOPY IT FROM AND TO THE SAME "
-                                    "LOCATIONS\nUSED FOR CODE.IPS AND EXHEADER.BIN");
-        if (IsInGame()) {
-            romfsAlertFrames--;
-        }
-    }
-
+    Alert_Update();
     Multiplayer_Sync_Update();
 
     if (gGlobalContext->state.running == 0) {
         Model_DestroyAll();
     }
+}
+
+void Alert_Set(AlertType alert) {
+    sActiveAlert = alert;
+    sAlertFrames = 450; // 15 seconds
+}
+
+static void Alert_Update(void) {
+    if (sActiveAlert == ALERT_NONE || sAlertFrames <= 0) {
+        return;
+    }
+
+    const char* const alertMessages[] = {
+        [ALERT_MISSING_ROMFS] = "WARNING: THE ROMFS FOLDER IS MISSING!\n"
+                                "COPY IT ALONGSIDE CODE.IPS AND EXHEADER.BIN",
+        [ALERT_HASH_MISMATCH] = "WARNING: THIS SAVE FILE DOES NOT MATCH\n"
+                                "THE CURRENT RANDOMIZER SEED!\n"
+                                "CONTINUING MAY RESULT IN SOFTLOCKS.\n"
+                                "PLEASE CREATE A NEW FILE.",
+    };
+
+    // The alert is always displayed on the Title Screen, decrease timer only in game.
+    if (IsInGame()) {
+        sAlertFrames--;
+    } else if (sActiveAlert == ALERT_HASH_MISMATCH) {
+        sActiveAlert = ALERT_NONE;
+        return;
+    }
+
+    Draw_DrawFormattedStringTop(75, 150, COLOR_WHITE, alertMessages[sActiveAlert]);
 }

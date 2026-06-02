@@ -36,7 +36,7 @@ void SaveFile_SetRupeeSanityFlag(s16 sceneNum, u16 collectibleFlag);
 u8 SaveFile_GetRupeeSanityFlag(s16 sceneNum, u16 collectibleFlag);
 
 // Increment the version number whenever the ExtSaveData structure is changed
-#define EXTSAVEDATA_VERSION 18
+#define EXTSAVEDATA_VERSION 19
 
 typedef struct ExtInf {
     u32 rupeesanityFlags[SCENE_MAX];
@@ -52,6 +52,7 @@ typedef struct ExtInf {
 
 typedef struct {
     u32 version; // Needs to always be the first field of the structure
+    u8 hashIndexes[5];
     union {
         ExtInf extInf; // Used for various bit flags that should also be synced in multiplayer with shared progress
         u8 extInfArray[EXTINF_SIZE]; // Used only by multiplayer code for easier management of bit flags
