@@ -1000,6 +1000,10 @@ void LocationTable_Init() {
     locationTable[KF_ON_SARIAS_HOUSE_HEART_2]                   = ItemLocation::Collectable(0x55, 0x1D, "KF on Saria's House Heart 2",                 KF_ON_SARIAS_HOUSE_HEART_2,                 RECOVERY_HEART,     {Category::cKokiriForest, Category::cForest, Category::cRecoveryHeart},                                                                                          SpoilerCollectionCheckGroup::GROUP_KOKIRI_FOREST);  
     locationTable[KF_ON_SARIAS_HOUSE_HEART_3]                   = ItemLocation::Collectable(0x55, 0x1E, "KF on Saria's House Heart 3",                 KF_ON_SARIAS_HOUSE_HEART_3,                 RECOVERY_HEART,     {Category::cKokiriForest, Category::cForest, Category::cRecoveryHeart},                                                                                          SpoilerCollectionCheckGroup::GROUP_KOKIRI_FOREST);  
 
+    locationTable[KF_IN_SARIAS_HOUSE_HEART_1]                   = ItemLocation::Collectable(0x29, 0x38, "KF in Saria's House Heart 1",                 KF_IN_SARIAS_HOUSE_HEART_1,                 RECOVERY_HEART,     {Category::cKokiriForest, Category::cForest, Category::cRecoveryHeart},                                                                                          SpoilerCollectionCheckGroup::GROUP_KOKIRI_FOREST);  
+    locationTable[KF_IN_SARIAS_HOUSE_HEART_2]                   = ItemLocation::Collectable(0x29, 0x39, "KF in Saria's House Heart 2",                 KF_IN_SARIAS_HOUSE_HEART_2,                 RECOVERY_HEART,     {Category::cKokiriForest, Category::cForest, Category::cRecoveryHeart},                                                                                          SpoilerCollectionCheckGroup::GROUP_KOKIRI_FOREST);
+    locationTable[KF_IN_SARIAS_HOUSE_HEART_3]                   = ItemLocation::Collectable(0x29, 0x3A, "KF in Saria's House Heart 3",                 KF_IN_SARIAS_HOUSE_HEART_3,                 RECOVERY_HEART,     {Category::cKokiriForest, Category::cForest, Category::cRecoveryHeart},                                                                                          SpoilerCollectionCheckGroup::GROUP_KOKIRI_FOREST);
+    locationTable[KF_IN_SARIAS_HOUSE_HEART_4]                   = ItemLocation::Collectable(0x29, 0x3B, "KF in Saria's House Heart 4",                 KF_IN_SARIAS_HOUSE_HEART_4,                 RECOVERY_HEART,     {Category::cKokiriForest, Category::cForest, Category::cRecoveryHeart},                                                                                          SpoilerCollectionCheckGroup::GROUP_KOKIRI_FOREST);
     /*-------------------------------
           --- GOSSIP STONES ---
       -------------------------------*/
@@ -1226,7 +1230,11 @@ std::vector<LocationKey> overworldLocations = {
   KF_ON_SARIAS_HOUSE_HEART_1,
   KF_ON_SARIAS_HOUSE_HEART_2,
   KF_ON_SARIAS_HOUSE_HEART_3,
-
+  KF_IN_SARIAS_HOUSE_HEART_1,
+  KF_IN_SARIAS_HOUSE_HEART_2,
+  KF_IN_SARIAS_HOUSE_HEART_3,
+  KF_IN_SARIAS_HOUSE_HEART_4,
+  
   // Shop
   KF_SHOP_ITEM_1,
   KF_SHOP_ITEM_2,

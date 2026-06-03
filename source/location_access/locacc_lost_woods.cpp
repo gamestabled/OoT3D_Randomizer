@@ -174,7 +174,14 @@ void AreaTable_Init_LostWoods() {
                                          Entrance(KOKIRI_FOREST, { [] { return true; } }),
                                      });
 
-    areaTable[KF_SARIAS_HOUSE] = Area("KF Saria's House", "KF Saria's House", NONE, NO_DAY_NIGHT_CYCLE, {}, {},
+    areaTable[KF_SARIAS_HOUSE] = Area("KF Saria's House", "KF Saria's House", NONE, NO_DAY_NIGHT_CYCLE, {}, 
+                                     {
+                                         // Locations
+                                         LocationAccess(KF_IN_SARIAS_HOUSE_HEART_1,{ [] { return true; } } ),
+                                         LocationAccess(KF_IN_SARIAS_HOUSE_HEART_2,{ [] { return true; } } ),
+                                         LocationAccess(KF_IN_SARIAS_HOUSE_HEART_3,{ [] { return true; } } ),
+                                         LocationAccess(KF_IN_SARIAS_HOUSE_HEART_4,{ [] { return true; } } ),
+                                     },
                                       {
                                           // Exits
                                           Entrance(KOKIRI_FOREST, { [] { return true; } }),
