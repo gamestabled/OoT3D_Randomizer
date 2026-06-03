@@ -994,6 +994,13 @@ void LocationTable_Init() {
     locationTable[JABU_JABUS_BELLY_MQ_NEAR_COW_TOP_GREEN_RUPEE]                = ItemLocation::Collectable(0x02, 0x03, "Jabu Jabus Belly MQ Near Cow Top Green Rupee",       JABU_JABUS_BELLY_MQ_NEAR_COW_TOP_GREEN_RUPEE,           GREEN_RUPEE,    {Category::cJabuJabusBelly, Category::cFreestandingRupee},                                                                           SpoilerCollectionCheckGroup::GROUP_DUNGEON_JABUJABUS_BELLY);
 
     /*-------------------------------
+        --- Recovery Hearts ---
+      -------------------------------*/
+    locationTable[KF_ON_SARIAS_HOUSE_HEART_1]                   = ItemLocation::Collectable(0x55, 0x1C, "KF on Saria's House Heart 1",                 KF_ON_SARIAS_HOUSE_HEART_1,                 RECOVERY_HEART,     {Category::cKokiriForest, Category::cForest, Category::cRecoveryHeart},                                                                                          SpoilerCollectionCheckGroup::GROUP_KOKIRI_FOREST);  
+    locationTable[KF_ON_SARIAS_HOUSE_HEART_2]                   = ItemLocation::Collectable(0x55, 0x1D, "KF on Saria's House Heart 2",                 KF_ON_SARIAS_HOUSE_HEART_2,                 RECOVERY_HEART,     {Category::cKokiriForest, Category::cForest, Category::cRecoveryHeart},                                                                                          SpoilerCollectionCheckGroup::GROUP_KOKIRI_FOREST);  
+    locationTable[KF_ON_SARIAS_HOUSE_HEART_3]                   = ItemLocation::Collectable(0x55, 0x1E, "KF on Saria's House Heart 3",                 KF_ON_SARIAS_HOUSE_HEART_3,                 RECOVERY_HEART,     {Category::cKokiriForest, Category::cForest, Category::cRecoveryHeart},                                                                                          SpoilerCollectionCheckGroup::GROUP_KOKIRI_FOREST);  
+
+    /*-------------------------------
           --- GOSSIP STONES ---
       -------------------------------*/
     // These are not actual locations, but are filler spots used for hint reachability. - OoT Randomizer
@@ -1216,6 +1223,9 @@ std::vector<LocationKey> overworldLocations = {
   KF_RUPEE_CIRCLE_GREEN_RUPEE_5,
   KF_RUPEE_CIRCLE_GREEN_RUPEE_6,
   KF_RUPEE_CIRCLE_RED_RUPEE,
+  KF_ON_SARIAS_HOUSE_HEART_1,
+  KF_ON_SARIAS_HOUSE_HEART_2,
+  KF_ON_SARIAS_HOUSE_HEART_3,
 
   // Shop
   KF_SHOP_ITEM_1,

@@ -598,7 +598,14 @@ string_view shuffleRupeesDesc         = "Shuffles all freestanding visible rupee
                                         "placed in other objects like boulders, but it\n"  //
                                         "doesn't include Wonder Items or Rupees that spawn\n"
                                         "from the Goron City spinning pot or the pots in\n"//
-                                        "Shadow Temple.";                                  //
+                                        "Shadow Temple.";
+/*------------------------------                                                           //
+|  SHUFFLE Recovery Hearts     |                                                           //
+------------------------------*/                                                           //
+string_view shuffleRecoveryHeartsDesc = "Shuffles all freestanding visible recovery hearts\n"
+                                        "that are placed in the world without player\n"    //
+                                        "intervention.";
+                                        
 /*------------------------------                                                           //
 |      MAPS AND COMPASSES      |                                                           //
 ------------------------------*/                                                           //

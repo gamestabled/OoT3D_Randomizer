@@ -696,6 +696,13 @@ void GenerateItemPool() {
         }
     }
 
+    if (!ShuffleRecoveryHearts) {
+        for (LocationKey loc : GetLocations(allLocations, Category::cRecoveryHeart)) {
+            Location(loc)->PlaceVanillaItem();
+        }
+    }
+
+
     if (BombchusInLogic) {
         AddItemToMainPool(PROGRESSIVE_BOMBCHUS, 5);
     } else {

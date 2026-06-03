@@ -148,7 +148,7 @@ static ItemOverride_Key ItemOverride_GetSearchKey(Actor* actor, u8 scene, u8 ite
         s32 respawningCollected =
             collectibleFlag >= 0x20 && SaveFile_GetRupeeSanityFlag(gGlobalContext->sceneNum, collectibleFlag);
 
-        if ((collectibleType > ITEM00_RUPEE_RED && collectibleType != ITEM00_HEART_PIECE &&
+        if ((collectibleType > ITEM00_RECOVERY_HEART && collectibleType != ITEM00_HEART_PIECE &&
              collectibleType != ITEM00_SMALL_KEY) ||
             respawningCollected) {
             return (ItemOverride_Key){ .all = 0 };

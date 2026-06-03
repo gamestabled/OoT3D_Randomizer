@@ -65,6 +65,7 @@ enum class Category {
     cAdultTrade,
     cFrogRupees,
     cFreestandingRupee,
+    cRecoveryHeart,
 };
 
 enum class OptionCategory {

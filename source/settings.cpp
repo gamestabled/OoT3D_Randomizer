@@ -230,7 +230,8 @@ Option ShuffleChestMinigame   = Option::U8  ("Shuffle Chest Minigame", {"Off", "
 Option ShuffleFrogSongRupees  = Option::Bool("Shuffle Frog Rupees",    {"Off", "On"},                                                     {frogSongRupeesDesc});
 Option ShuffleEnemySouls      = Option::U8  ("Shuffle Enemy Souls",    {"Off", "All enemies", "Bosses only"},                             {enemySoulDesc});
 Option ShuffleOcarinaButtons  = Option::Bool("Shuffle Ocarina Buttons",{"Off", "On"},                                                     {ocarinaButtonsDesc});
-Option ShuffleRupees          = Option::Bool("Shuffle Standing Rupees",{"Off", "On"},                                                     {shuffleRupeesDesc});
+Option ShuffleRupees          = Option::Bool("Shuffle Standing Rupees",{"Off","On"},                                                      {shuffleRupeesDesc});
+Option ShuffleRecoveryHearts  = Option::Bool("Shuffle Recovery Hearts",{"Off","On"},                                                      {shuffleRecoveryHeartsDesc});
 std::vector<Option *> shuffleOptions = {
     &RandomizeShuffle,
     &ShuffleRewards,
@@ -255,6 +256,7 @@ std::vector<Option *> shuffleOptions = {
     &ShuffleEnemySouls,
     &ShuffleOcarinaButtons,
     &ShuffleRupees,
+    &ShuffleRecoveryHearts,
 };
 
 // Shuffle Dungeon Items
@@ -3462,10 +3464,11 @@ bool ValidateSettings() {
 
     // Check features that don't support logic for MQ dungeons.
     if (MQDungeonCount.IsNot(0) && Logic.IsNot(LOGIC_NONE) && Logic.IsNot(LOGIC_VANILLA) &&
-        (ShuffleEnemySouls.Is(SHUFFLEENEMYSOULS_ALL) || Enemizer)) {
+        (ShuffleEnemySouls.Is(SHUFFLEENEMYSOULS_ALL) || Enemizer || ShuffleRecoveryHearts)) {
         if (ShuffleEnemySouls.IsHidden() && Enemizer.IsHidden()) {
             ShuffleEnemySouls.SetSelectedIndex(SHUFFLEENEMYSOULS_OFF);
             Enemizer.SetSelectedIndex(OFF);
+            ShuffleRecoveryHearts.SetSelectedIndex(OFF);
         } else {
             printf("\x1b[%d;0H"
                    "----------------------------------------"
@@ -3476,6 +3479,7 @@ bool ValidateSettings() {
                    "\n"
                    " - Enemy Randomizer\n"
                    " - Shuffle Enemy Souls\n"
+                   " - Shuffle Hearts\n"
                    "----------------------------------------",
                    posY);
             valid = false;
