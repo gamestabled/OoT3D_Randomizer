@@ -429,8 +429,8 @@ void AreaTable_Init_DodongosCavern() {
             Area("Dodongos Cavern Upper Lizalfos", "Dodongos Cavern", DODONGOS_CAVERN, NO_DAY_NIGHT_CYCLE, {}, 
                  {
                      // Locations
-                     LocationAccess(DODONGOS_CAVERN_2F_MINIBOSS_ROOM_HEART_1,{ [] { return true; } });
-                     LocationAccess(DODONGOS_CAVERN_2F_MINIBOSS_ROOM_HEART_2,{ [] { return true; } });
+                     LocationAccess(DODONGOS_CAVERN_2F_MINIBOSS_ROOM_HEART_1,{ [] { return true; } }),
+                     LocationAccess(DODONGOS_CAVERN_2F_MINIBOSS_ROOM_HEART_2,{ [] { return true; } }),
                  },
                  {
                      // Exits
