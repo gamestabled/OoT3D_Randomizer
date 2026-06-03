@@ -41,6 +41,8 @@ void AreaTable_Init_DekuTree() {
             {
                 // Locations
                 LocationAccess(DEKU_TREE_MAP_CHEST, { [] { return true; } }),
+                LocationAccess(DEKU_TREE_2F_FLOATING_HEART, { [] { return true; } }),
+                LocationAccess(DEKU_TREE_3F_FLOATING_HEART, { [] { return CanPassEnemies(0, 0, 0, { 0, 1, 2 }, SpaceAroundEnemy::NARROW) && CanPassAnyEnemy(0, 0, 0, { 3, 4, 5 });}}),
             },
             {
                 // Exits

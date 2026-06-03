@@ -28,6 +28,22 @@ void HintTable_Init_Exclude_Dungeon() {
                        // obscure text
                        Text{"#pillars of wood# in the Deku Tree lead to", /*french*/"les #piliers de bois# dans l'arbre Mojo indiquent", /*spanish*/"los #salientes del Gran Árbol Deku# conducen a", /*italian*/"dei #pilastri di legno# nell'Albero Deku conducono verso", /*german*/"nahe #hölzerner Säulen# des Deku-Baumes, |wäre|wären|"},
     });
+        
+    hintTable[DEKU_TREE_2F_FLOATING_HEART] = HintText::Exclude({
+                       // obscure text
+                       Text{"#in a tree# floats", /*french*/"#in a tree# floats", /*spanish*/"#in a tree# floats", /*italian*/"#in a tree# floats", /*german*/"#in a tree# floats"},
+                     }, {},
+                       // clear text
+                       Text{"#the lower floating heart in the Deku Tree# is", /*french*/"#the lower floating heart in the Deku Tree# is", /*spanish*/"#the lower floating heart in the Deku Tree# is", /*italian*/"#the lower floating heart in the Deku Tree# is", /*german*/"#the lower floating heart in the Deku Tree# is"
+    });
+
+    hintTable[DEKU_TREE_3F_FLOATING_HEART] = HintText::Exclude({
+                       // obscure text
+                       Text{"#Deku's heart floated up to his brain# only to get replaced by", /*french*/"#Deku's heart floated up to his brain# only to get replaced by", /*spanish*/"#Deku's heart floated up to his brain# only to get replaced by", /*italian*/"#Deku's heart floated up to his brain# only to get replaced by", /*german*/"#Deku's heart floated up to his brain# only to get replaced by"},
+                     }, {},
+                       // clear text
+                       Text{"#the higher floating heart in the Deku Tree# is", /*french*/"#the higher floating heart in the Deku Tree# is", /*spanish*/"#the higher floating heart in the Deku Tree# is", /*italian*/"#the higher floating heart in the Deku Tree# is", /*german*/"#the higher floating heart in the Deku Tree# is"
+    });
 
     hintTable[DEKU_TREE_BASEMENT_CHEST] = HintText::Exclude({
                        // obscure text
