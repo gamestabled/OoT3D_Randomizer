@@ -45,6 +45,30 @@ void HintTable_Init_Exclude_Dungeon() {
                        Text{"#the higher floating heart in the Deku Tree# is", /*french*/"#the higher floating heart in the Deku Tree# is", /*spanish*/"#the higher floating heart in the Deku Tree# is", /*italian*/"#the higher floating heart in the Deku Tree# is", /*german*/"#the higher floating heart in the Deku Tree# is"
     });
 
+    hintTable[DEKU_TREE_B2F_UNDER_WATER_HEART_1] = HintText::Exclude({
+                       // obscure text
+                       Text{"Queenie is cooking some soup with", /*french*/"Queenie is cooking some soup with", /*spanish*/"Queenie is cooking some soup with", /*italian*/"Queenie is cooking some soup with", /*german*/"Queenie is cooking some soup with"},
+                     }, {},
+                       // clear text
+                       Text{"#underwater near the 231 scrubs in Deku Tree# is", /*french*/"#underwater near the 231 scrubs in Deku Tree# is", /*spanish*/"#underwater near the 231 scrubs in Deku Tree# is", /*italian*/"#underwater near the 231 scrubs in Deku Tree# is", /*german*/"#underwater near the 231 scrubs in Deku Tree# is"
+    });
+    
+    hintTable[DEKU_TREE_B2F_UNDER_WATER_HEART_2] = HintText::Exclude({
+                       // obscure text
+                       Text{"Queenie is cooking some soup with", /*french*/"Queenie is cooking some soup with", /*spanish*/"Queenie is cooking some soup with", /*italian*/"Queenie is cooking some soup with", /*german*/"Queenie is cooking some soup with"},
+                     }, {},
+                       // clear text
+                       Text{"#underwater near the 231 scrubs in Deku Tree# is", /*french*/"#underwater near the 231 scrubs in Deku Tree# is", /*spanish*/"#underwater near the 231 scrubs in Deku Tree# is", /*italian*/"#underwater near the 231 scrubs in Deku Tree# is", /*german*/"#underwater near the 231 scrubs in Deku Tree# is"
+    });
+    
+    hintTable[DEKU_TREE_B2F_UNDER_WATER_HEART_3] = HintText::Exclude({
+                       // obscure text
+                       Text{"Queenie is cooking some soup with", /*french*/"Queenie is cooking some soup with", /*spanish*/"Queenie is cooking some soup with", /*italian*/"Queenie is cooking some soup with", /*german*/"Queenie is cooking some soup with"},
+                     }, {},
+                       // clear text
+                       Text{"#underwater near the 231 scrubs in Deku Tree# is", /*french*/"#underwater near the 231 scrubs in Deku Tree# is", /*spanish*/"#underwater near the 231 scrubs in Deku Tree# is", /*italian*/"#underwater near the 231 scrubs in Deku Tree# is", /*german*/"#underwater near the 231 scrubs in Deku Tree# is"
+    });
+
     hintTable[DEKU_TREE_BASEMENT_CHEST] = HintText::Exclude({
                        // obscure text
                        Text{"#webs in the Deku Tree# hide", /*french*/"les #toiles dans l'arbre Mojo# cachent", /*spanish*/"entre #telarañas del Gran Árbol Deku# yace", /*italian*/"una #ragnatela nell'Albero Deku# copre", /*german*/"unterhalb von #Spinnenweben# des Deku-Baumes, |wäre|wären|"},
