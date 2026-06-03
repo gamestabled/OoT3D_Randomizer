@@ -184,7 +184,11 @@ void AreaTable_Init_ForestTemple() {
                 EventAccess(&DekuBabaSticks, { [] { return DekuBabaSticks || CanGetDekuBabaSticks(3, 0, 8, { 5 }); } }),
                 EventAccess(&DekuBabaNuts, { [] { return DekuBabaNuts || CanGetDekuBabaNuts(3, 0, 8, { 5 }); } }),
             },
-            {},
+            {
+                // Locations
+                LocationAccess(FOREST_TEMPLE_LEVEL_ISLAND_RIDGE_HEART_1, { [] { return true; } }),
+                LocationAccess(FOREST_TEMPLE_LEVEL_ISLAND_RIDGE_HEART_2, { [] { return true; } }),
+            },
             {
                 // Exits
                 Entrance(FOREST_TEMPLE_NW_OUTDOORS_LOWER, { [] { return true; } }),
@@ -266,6 +270,10 @@ void AreaTable_Init_ForestTemple() {
                      // Locations
                      LocationAccess(FOREST_TEMPLE_WELL_CHEST,
                                     { [] { return HasAccessTo(FOREST_TEMPLE_NE_OUTDOORS_UPPER); } }),
+                     LocationAccess(FOREST_TEMPLE_WELL_HEART_1,
+                                    { [] { return HasAccessTo(FOREST_TEMPLE_NE_OUTDOORS_UPPER) || (CanUse(IRON_BOOTS) && CanSurviveUnderwaterFor(16)); } }),
+                     LocationAccess(FOREST_TEMPLE_WELL_HEART_2,
+                                    { [] { return HasAccessTo(FOREST_TEMPLE_NE_OUTDOORS_UPPER) || (CanUse(IRON_BOOTS) && CanSurviveUnderwaterFor(16)); } }),
                  },
                  {
                      // Exits

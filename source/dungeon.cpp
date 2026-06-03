@@ -165,6 +165,10 @@ DungeonInfo DodongosCavern = DungeonInfo("Dodongo's Cavern", DODONGOS_CAVERN, DO
                                              DODONGOS_CAVERN_GS_ALCOVE_ABOVE_STAIRS,
                                              DODONGOS_CAVERN_GS_BACK_ROOM,
                                              DODONGOS_CAVERN_GS_SIDE_ROOM_NEAR_LOWER_LIZALFOS,
+                                             DODONGOS_CAVERN_1F_MINIBOSS_ROOM_HEART_BEHIND_LAVAFALL,
+                                             DODONGOS_CAVERN_2F_BLADE_TRAPS_ROOM_HEART_BEHIND_BLOCK,
+                                             DODONGOS_CAVERN_2F_MINIBOSS_ROOM_HEART_1,
+                                             DODONGOS_CAVERN_2F_MINIBOSS_ROOM_HEART_2,
                                          },
                                          {
                                              // MQ Locations
@@ -245,6 +249,10 @@ DungeonInfo ForestTemple =
                     FOREST_TEMPLE_GS_LEVEL_ISLAND_COURTYARD,
                     FOREST_TEMPLE_GS_LOBBY,
                     FOREST_TEMPLE_GS_BASEMENT,
+                    FOREST_TEMPLE_WELL_HEART_1,
+                    FOREST_TEMPLE_WELL_HEART_2,
+                    FOREST_TEMPLE_LEVEL_ISLAND_RIDGE_HEART_1,
+                    FOREST_TEMPLE_LEVEL_ISLAND_RIDGE_HEART_2,
                 },
                 {
                     // MQ Locations
