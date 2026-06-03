@@ -165,6 +165,22 @@ void AreaTable_Init_DeathMountain() {
                                 {
                                     [] { return true; },
                                 }),
+                 LocationAccess(DMT_COW_GROTTO_HEART_1,
+                                {
+                                    [] { return true; },
+                                }),
+                 LocationAccess(DMT_COW_GROTTO_HEART_2,
+                                {
+                                    [] { return true; },
+                                }),
+                 LocationAccess(DMT_COW_GROTTO_HEART_3,
+                                {
+                                    [] { return true; },
+                                }),                                
+                 LocationAccess(DMT_COW_GROTTO_HEART_4,
+                                {
+                                    [] { return true; },
+                                }),
              },
              {
                  // Exits

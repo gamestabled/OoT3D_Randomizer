@@ -983,6 +983,38 @@ void HintTable_Init_Exclude_Overworld() {
                        Text{"#the rupee circle in the cow grotto in DMT# includes", /*french*/"#le cercle de rubis dans la trou à vache du mont de la Mort# inclus", /*spanish*/"#the rupee circle in the cow grotto in DMT# includes", /*European*/"#the rupee circle in the cow grotto in DMT# includes", /*french*/"#le cercle de rubis dans la trou à vache du Chemin du péril# inclus", /*spanish*/"#the rupee circle in the cow grotto in DMT# includes", /*italian*/"il #cerchio di oggetti nella grotta sul sentiero del Monte Morte# include", /*german*/"#the rupee circle in the cow grotto in DMT# includes"}
     );
 
+    hintTable[DMT_COW_GROTTO_HEART_1] = HintText::Exclude({
+                       // obscure text
+                       Text{"#a cow stands with it's butt towards#", /*french*/"#a cow stands with it's butt towards#", /*spanish*/"#a cow stands with it's butt towards#", /*italian*/"#a cow stands with it's butt towards#", /*german*/"#a cow stands with it's butt towards#"},
+                     }, {},
+                       // clear text
+                       Text{"#the hearts in the cow grotto in DMT# include", /*french*/"#the hearts in the cow grotto in DMT# include", /*spanish*/"#the hearts in the cow grotto in DMT# include", /*italian*/"#the hearts in the cow grotto in DMT# include", /*german*/"#the hearts in the cow grotto in DMT# include"}
+    );
+
+    hintTable[DMT_COW_GROTTO_HEART_2] = HintText::Exclude({
+                       // obscure text
+                       Text{"#a cow stands with it's butt towards#", /*french*/"#a cow stands with it's butt towards#", /*spanish*/"#a cow stands with it's butt towards#", /*italian*/"#a cow stands with it's butt towards#", /*german*/"#a cow stands with it's butt towards#"},
+                     }, {},
+                       // clear text
+                       Text{"#the hearts in the cow grotto in DMT# include", /*french*/"#the hearts in the cow grotto in DMT# include", /*spanish*/"#the hearts in the cow grotto in DMT# include", /*italian*/"#the hearts in the cow grotto in DMT# include", /*german*/"#the hearts in the cow grotto in DMT# include"}
+    );
+
+    hintTable[DMT_COW_GROTTO_HEART_3] = HintText::Exclude({
+                       // obscure text
+                       Text{"#a cow stands with it's butt towards#", /*french*/"#a cow stands with it's butt towards#", /*spanish*/"#a cow stands with it's butt towards#", /*italian*/"#a cow stands with it's butt towards#", /*german*/"#a cow stands with it's butt towards#"},
+                     }, {},
+                       // clear text
+                       Text{"#the hearts in the cow grotto in DMT# include", /*french*/"#the hearts in the cow grotto in DMT# include", /*spanish*/"#the hearts in the cow grotto in DMT# include", /*italian*/"#the hearts in the cow grotto in DMT# include", /*german*/"#the hearts in the cow grotto in DMT# include"}
+    );
+
+    hintTable[DMT_COW_GROTTO_HEART_4] = HintText::Exclude({
+                       // obscure text
+                       Text{"#a cow stands with it's butt towards#", /*french*/"#a cow stands with it's butt towards#", /*spanish*/"#a cow stands with it's butt towards#", /*italian*/"#a cow stands with it's butt towards#", /*german*/"#a cow stands with it's butt towards#"},
+                     }, {},
+                       // clear text
+                       Text{"#the hearts in the cow grotto in DMT# include", /*french*/"#the hearts in the cow grotto in DMT# include", /*spanish*/"#the hearts in the cow grotto in DMT# include", /*italian*/"#the hearts in the cow grotto in DMT# include", /*german*/"#the hearts in the cow grotto in DMT# include"}
+    );
+
     hintTable[DMC_WALL_FREESTANDING_POH] = HintText::Exclude({
                        // obscure text
                        Text{"nestled in a #volcanic wall# is", /*french*/"dans une #alcove volcanique# gît", /*spanish*/"entre unas #murallas volcánicas# yace", /*italian*/"in una #nicchia vulcanica# puoi trovare", /*german*/"in einer #vulkanischen Wand#, |wäre|wären|"},
