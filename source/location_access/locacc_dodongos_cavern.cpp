@@ -207,7 +207,11 @@ void AreaTable_Init_DodongosCavern() {
                  });
 
         areaTable[DODONGOS_CAVERN_LOWER_LIZALFOS] =
-            Area("Dodongos Cavern Lower Lizalfos", "Dodongos Cavern", DODONGOS_CAVERN, NO_DAY_NIGHT_CYCLE, {}, {},
+            Area("Dodongos Cavern Lower Lizalfos", "Dodongos Cavern", DODONGOS_CAVERN, NO_DAY_NIGHT_CYCLE, {}, 
+                 {
+                    // Locations
+                     LocationAccess(DODONGOS_CAVERN_1F_MINIBOSS_ROOM_HEART_BEHIND_LAVAFALL, { []{ return true; }}),
+                 },
                  {
                      // Exits
                      Entrance(DODONGOS_CAVERN_NEAR_LOWER_LIZALFOS, { [] {
@@ -341,6 +345,7 @@ void AreaTable_Init_DodongosCavern() {
             {
                 // Locations
                 LocationAccess(DODONGOS_CAVERN_BOMB_FLOWER_PLATFORM_CHEST, { [] { return true; } }),
+                LocationAccess(DODONGOS_CAVERN_2F_BLADE_TRAPS_ROOM_HEART_BEHIND_BLOCK, { [] { return true; } }), 
             },
             {
                 // Exits
@@ -421,7 +426,12 @@ void AreaTable_Init_DodongosCavern() {
             });
 
         areaTable[DODONGOS_CAVERN_UPPER_LIZALFOS] =
-            Area("Dodongos Cavern Upper Lizalfos", "Dodongos Cavern", DODONGOS_CAVERN, NO_DAY_NIGHT_CYCLE, {}, {},
+            Area("Dodongos Cavern Upper Lizalfos", "Dodongos Cavern", DODONGOS_CAVERN, NO_DAY_NIGHT_CYCLE, {}, 
+                 {
+                     // Locations
+                     LocationAccess(DODONGOS_CAVERN_2F_MINIBOSS_ROOM_HEART_1,{ [] { return true; } });
+                     LocationAccess(DODONGOS_CAVERN_2F_MINIBOSS_ROOM_HEART_2,{ [] { return true; } });
+                 },
                  {
                      // Exits
                      Entrance(DODONGOS_CAVERN_LOWER_LIZALFOS, { [] { return true; } }),

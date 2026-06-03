@@ -985,7 +985,7 @@ void HintTable_Init_Exclude_Overworld() {
 
     hintTable[DMT_COW_GROTTO_HEART_1] = HintText::Exclude({
                        // obscure text
-                       Text{"#a cow stands with it's butt towards#", /*french*/"#a cow stands with it's butt towards#", /*spanish*/"#a cow stands with it's butt towards#", /*italian*/"#a cow stands with it's butt towards#", /*german*/"#a cow stands with it's butt towards#"},
+                       Text{"#a cow stands with its butt towards#", /*french*/"#a cow stands with its butt towards#", /*spanish*/"#a cow stands with its butt towards#", /*italian*/"#a cow stands with its butt towards#", /*german*/"#a cow stands with its butt towards#"},
                      }, {},
                        // clear text
                        Text{"#the hearts in the cow grotto in DMT# include", /*french*/"#the hearts in the cow grotto in DMT# include", /*spanish*/"#the hearts in the cow grotto in DMT# include", /*italian*/"#the hearts in the cow grotto in DMT# include", /*german*/"#the hearts in the cow grotto in DMT# include"}
@@ -993,7 +993,7 @@ void HintTable_Init_Exclude_Overworld() {
 
     hintTable[DMT_COW_GROTTO_HEART_2] = HintText::Exclude({
                        // obscure text
-                       Text{"#a cow stands with it's butt towards#", /*french*/"#a cow stands with it's butt towards#", /*spanish*/"#a cow stands with it's butt towards#", /*italian*/"#a cow stands with it's butt towards#", /*german*/"#a cow stands with it's butt towards#"},
+                       Text{"#a cow stands with its butt towards#", /*french*/"#a cow stands with its butt towards#", /*spanish*/"#a cow stands with its butt towards#", /*italian*/"#a cow stands with its butt towards#", /*german*/"#a cow stands with its butt towards#"},
                      }, {},
                        // clear text
                        Text{"#the hearts in the cow grotto in DMT# include", /*french*/"#the hearts in the cow grotto in DMT# include", /*spanish*/"#the hearts in the cow grotto in DMT# include", /*italian*/"#the hearts in the cow grotto in DMT# include", /*german*/"#the hearts in the cow grotto in DMT# include"}
@@ -1001,7 +1001,7 @@ void HintTable_Init_Exclude_Overworld() {
 
     hintTable[DMT_COW_GROTTO_HEART_3] = HintText::Exclude({
                        // obscure text
-                       Text{"#a cow stands with it's butt towards#", /*french*/"#a cow stands with it's butt towards#", /*spanish*/"#a cow stands with it's butt towards#", /*italian*/"#a cow stands with it's butt towards#", /*german*/"#a cow stands with it's butt towards#"},
+                       Text{"#a cow stands with its butt towards#", /*french*/"#a cow stands with its butt towards#", /*spanish*/"#a cow stands with its butt towards#", /*italian*/"#a cow stands with its butt towards#", /*german*/"#a cow stands with its butt towards#"},
                      }, {},
                        // clear text
                        Text{"#the hearts in the cow grotto in DMT# include", /*french*/"#the hearts in the cow grotto in DMT# include", /*spanish*/"#the hearts in the cow grotto in DMT# include", /*italian*/"#the hearts in the cow grotto in DMT# include", /*german*/"#the hearts in the cow grotto in DMT# include"}
@@ -1009,7 +1009,7 @@ void HintTable_Init_Exclude_Overworld() {
 
     hintTable[DMT_COW_GROTTO_HEART_4] = HintText::Exclude({
                        // obscure text
-                       Text{"#a cow stands with it's butt towards#", /*french*/"#a cow stands with it's butt towards#", /*spanish*/"#a cow stands with it's butt towards#", /*italian*/"#a cow stands with it's butt towards#", /*german*/"#a cow stands with it's butt towards#"},
+                       Text{"#a cow stands with its butt towards#", /*french*/"#a cow stands with its butt towards#", /*spanish*/"#a cow stands with its butt towards#", /*italian*/"#a cow stands with its butt towards#", /*german*/"#a cow stands with its butt towards#"},
                      }, {},
                        // clear text
                        Text{"#the hearts in the cow grotto in DMT# include", /*french*/"#the hearts in the cow grotto in DMT# include", /*spanish*/"#the hearts in the cow grotto in DMT# include", /*italian*/"#the hearts in the cow grotto in DMT# include", /*german*/"#the hearts in the cow grotto in DMT# include"}
