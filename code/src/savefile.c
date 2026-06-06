@@ -10,6 +10,7 @@
 #include "item_override.h"
 #include "permadeath.h"
 #include "gloom.h"
+#include "alert.h"
 
 #include "savefile.h"
 
@@ -728,6 +729,9 @@ void SaveFile_InitExtSaveData(u32 saveNumber, u8 fromSaveCreation) {
     memset(&gExtSaveData, 0, sizeof(gExtSaveData));
 
     gExtSaveData.version = EXTSAVEDATA_VERSION; // Do not change this line
+    if (fromSaveCreation) {
+        memcpy(&gExtSaveData.hashIndexes, &gSettingsContext.hashIndexes, sizeof(gExtSaveData.hashIndexes));
+    }
     gExtSaveData.extInf.masterSwordFlags =
         (gSettingsContext.shuffleMasterSword && !(gSettingsContext.startingEquipment & 0x2)) ? 0 : 1;
     gExtSaveData.permadeath = fromSaveCreation ? gSettingsContext.permadeath : 0;
@@ -859,6 +863,9 @@ void SaveFile_BeforeLoadGame(u32 saveNumber) {
 }
 
 void SaveFile_AfterLoadGame(void) {
+    if (memcmp(&gExtSaveData.hashIndexes, &gSettingsContext.hashIndexes, sizeof(gExtSaveData.hashIndexes)) != 0) {
+        Alert_Set(ALERT_HASH_MISMATCH);
+    }
     // Give Ganon BK if Triforce Hunt has been completed
     if (gSettingsContext.triforceHunt == ON && gExtSaveData.triforcePieces >= gSettingsContext.triforcePiecesRequired &&
         (gSaveContext.dungeonItems[DUNGEON_GANONS_TOWER] & 1) == 0) {
