@@ -1,9 +1,7 @@
 #ifndef _COMMON_H_
 #define _COMMON_H_
 
-#include "z3D/z3D.h"
-
-#include <stdarg.h>
+#include "s_types.h"
 
 #define ARRAY_SIZE(x) (sizeof(x) / sizeof(x[0]))
 #define BIT_COUNT(x) (sizeof(x) * 8)
@@ -14,6 +12,11 @@
 
 #define TICKS_PER_SEC 268123480
 #define SEQ_AUDIO_BLANK NA_SE_IT_YOBI19
+
+typedef enum Bool : u8 {
+    FALSE = 0,
+    TRUE  = 1,
+} Bool;
 
 extern u8 playingOnCitra;
 extern u32 rGameplayFrames; // globalCtx->gameplayFrames is not accurate, it doesn't increment on file 3

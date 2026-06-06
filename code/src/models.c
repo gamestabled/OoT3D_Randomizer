@@ -10,8 +10,6 @@
 
 void SkeletonAnimationModel_MatrixCopy(SkeletonAnimationModel* glModel, nn_math_MTX34* mtx);
 void SkeletonAnimationModel_Draw(SkeletonAnimationModel* glModel, s32 param_2);
-void SkeletonAnimationModel_SpawnAt(Actor* actor, GlobalContext* globalCtx, SkeletonAnimationModel** glModel,
-                                    s32 objModelIdx);
 void Actor_SetModelMatrix(f32 x, f32 y, f32 z, nn_math_MTX34* mtx, ActorShape* shape);
 
 #define LOADEDMODELS_MAX 20
@@ -19,7 +17,7 @@ Model ModelContext[LOADEDMODELS_MAX] = { 0 };
 
 void Model_SetAnim(SkeletonAnimationModel* model, s16 objectId, u32 objectAnimIdx) {
     void* cmabMan = Object_GetCMABByIndex(objectId, objectAnimIdx);
-    TexAnim_Spawn(model->unk_0C, cmabMan);
+    MatAnim_Init(model->matAnim, cmabMan);
 }
 
 void Model_Init(Model* model, GlobalContext* globalCtx) {
@@ -40,8 +38,8 @@ void Model_Init(Model* model, GlobalContext* globalCtx) {
 
     if (model->itemRow->cmabIndex >= 0) {
         Model_SetAnim(model->saModel, model->itemRow->objectId, model->itemRow->cmabIndex);
-        model->saModel->unk_0C->animSpeed = 2.0f;
-        model->saModel->unk_0C->animMode  = 1;
+        model->saModel->matAnim->animSpeed = 2.0f;
+        model->saModel->matAnim->animMode  = 1;
     }
 
     if (model->itemRow->objectModelIdx2 >= 0) {
@@ -49,8 +47,8 @@ void Model_Init(Model* model, GlobalContext* globalCtx) {
                                                        model->itemRow->objectModelIdx2);
         if (model->itemRow->cmabIndex2 >= 0) {
             Model_SetAnim(model->saModel2, model->itemRow->objectId, model->itemRow->cmabIndex2);
-            model->saModel2->unk_0C->animSpeed = 2.0f;
-            model->saModel2->unk_0C->animMode  = 1;
+            model->saModel2->matAnim->animSpeed = 2.0f;
+            model->saModel2->matAnim->animMode  = 1;
         }
     }
 
@@ -273,7 +271,7 @@ u32 Model_OverrideMesh(void* unk, u32 meshGroupIndex) {
     if (IsInGameOrBossChallenge() && gSaveContext.linkAge == AGE_ADULT && gSettingsContext.stickAsAdult &&
         PLAYER->heldItemActionParam == 6 && // holding a deku stick
         meshGroupIndex == 23 &&             // meshGroupIndex for deku stick in child object and shield in adult object
-        unk == PLAYER->skelAnime.unk_28->unk_draw_struct_14 // check that this is for the player model
+        unk == PLAYER->skelAnime.saModel->subSAM14 // check that this is for the player model
     ) {
         return 44; // meshGroupIndex for unused deku stick in adult object
     }

@@ -20,6 +20,7 @@
 #include "gloom.h"
 #include "ocarina_notes.h"
 #include "icetrap.h"
+#include "enemy_souls.h"
 #include "bgm.h"
 #include "business_scrubs.h"
 
@@ -73,6 +74,7 @@ void before_GlobalContext_Update(GlobalContext* globalCtx) {
     Triforce_HandleCreditsWarp();
     Enemizer_Update();
     Bgm_ApplyFanfareMod();
+    EnemySouls_Update();
 }
 
 void after_GlobalContext_Update() {

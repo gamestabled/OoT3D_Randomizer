@@ -160,6 +160,20 @@ const std::array<std::string_view, 14> ganonBloodColors = {
     "800080", // Purple
     "FF69B4", // Pink
 };
+const std::array<std::string_view, 12> soullessColors = {
+    "000000", // Black
+    "FFFFFF", // White
+    "FF0000", // Red
+    "00FF00", // Green
+    "0000FF", // Blue
+    "FFFF00", // Yellow
+    "00FFFF", // Cyan
+    "FF00FF", // Magenta
+    "FFA500", // Orange
+    "FFD700", // Gold
+    "800080", // Purple
+    "FF69B4", // Pink
+};
 
 // Generate random hex color
 std::string RandomColor() {

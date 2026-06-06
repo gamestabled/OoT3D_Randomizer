@@ -34,6 +34,7 @@ struct ZARInfo;
 #define UPDBGCHECKINFO_FLAG_6 (1 << 6) // disable water ripples
 #define UPDBGCHECKINFO_FLAG_7 (1 << 7) // alternate wall check?
 
+#define ACTOR_FLAG_ATTENTION_ENABLED (1 << 0)
 #define ACTOR_FLAG_INSIDE_CULLING_VOLUME (1 << 6)
 
 struct SkeletonAnimationModel;
@@ -42,44 +43,72 @@ typedef void (*SkeletonAnimationModelFunc)(struct SkeletonAnimationModel*);
 typedef struct {
     /* 0x00 */ char unk_00[0x4];
     /* 0x04 */ SkeletonAnimationModelFunc destroy;
+    /* 0x04 */ SkeletonAnimationModelFunc draw;
 } SkeletonAnimationModel_VTable;
 
 typedef struct SkeletonAnimationModel_unk_10 {
-    /* 0x00 */ void* unk_00;
+    /* 0x00 */ struct CmbManager* cmbMan;
     /* 0x04 */ void* unk_04;
     /* 0x08 */ s32 unk_08;
     /* 0x0C */ s32 unk_0C;
     /* 0x10 */ s32 unk_10;
-} SkeletonAnimationModel_unk_10; // size = 0x14
+} SkeletonAnimationModel_unk_10;
+_Static_assert(sizeof(SkeletonAnimationModel_unk_10) == 0x14, "SkeletonAnimationModel_unk_10 size");
 
-typedef struct SkeletonAnimationModel_unk_0C {
-    /* 0x00 */ SkeletonAnimationModel_unk_10* unk_00;
+typedef struct MaterialAnimation {
+    /* 0x00 */ SkeletonAnimationModel_unk_10* subSAM10;
     /* 0x04 */ void* cmabManager;
     /* 0x08 */ f32 curFrame;
     /* 0x0C */ f32 animSpeed;
     /* 0x10 */ s8 animMode;
     /* 0x11 */ char unk_11[0x87];
-} SkeletonAnimationModel_unk_0C; // size = 0x98
+} MaterialAnimation;
+_Static_assert(sizeof(MaterialAnimation) == 0x98, "MaterialAnimation size");
+
+typedef struct SkeletonAnimationModel_unk_14 {
+    void* vtable_4EBD98;
+    void* cmbManager;
+    void* unk_08;
+    void* unk_0C;
+    void* unkAutoClass1;
+} SkeletonAnimationModel_unk_14;
 
 typedef struct SkeletonAnimationModel {
     /* 0x00 */ SkeletonAnimationModel_VTable* vtbl;
     /* 0x04 */ char unk_04[0x08];
-    /* 0x0C */ SkeletonAnimationModel_unk_0C* unk_0C;
-    /* 0x10 */ SkeletonAnimationModel_unk_10* unk_10;
-    /* 0x14 */ void* unk_draw_struct_14;
+    /* 0x0C */ MaterialAnimation* matAnim;
+    /* 0x10 */ SkeletonAnimationModel_unk_10* subSAM10;
+    /* 0x14 */ SkeletonAnimationModel_unk_14* subSAM14;
     /* 0x18 */ char unk_18[0x64];
     /* 0x7C */ nn_math_MTX34 mtx;
     /* 0xAC */ s8 unk_AC;
     /* 0xAD */ char unk_AD[0x03];
-} SkeletonAnimationModel; // size = 0xB0
+} SkeletonAnimationModel;
+_Static_assert(sizeof(SkeletonAnimationModel) == 0xB0, "SkeletonAnimationModel size");
+
+typedef struct FaceAnimation {
+    /* 0x00 */ s8 flags[3];
+    /* 0x04 */ MaterialAnimation matAnims[3];
+} FaceAnimation;
+
+typedef struct UnkSubSkelAnime_20 {
+    /* 0x00 */ char unk_00[0x04];
+    /* 0x04 */ struct Actor* actor;
+    /* 0x08 */ char unk_08[0x08];
+    /* 0x10 */ void* overrideLimbDraw;
+    /* 0x14 */ void* postLimbDraw;
+    // ... size unknown
+} UnkSubSkelAnime_20;
 
 typedef struct SkelAnime {
-    /* 0x00 */ void* unk_00;
+    /* 0x00 */ struct CmbManager* cmbMan;
     /* 0x04 */ struct ZARInfo* zarInfo;
     /* 0x08 */ char unk_08[0x08];
     /* 0x10 */ struct GlobalContext* globalCtx;
-    /* 0x14 */ char unk_14[0x14];
-    /* 0x28 */ struct SkeletonAnimationModel* unk_28;
+    /* 0x14 */ char unk_14[0x0C];
+    /* 0x20 */ UnkSubSkelAnime_20* sub20;
+    /* 0x24 */ char unk_24[0x04];
+    /* 0x28 */ struct SkeletonAnimationModel* saModel;
     /* 0x2C */ char unk_2C[0x4];
     /* 0x30 */ s32 animIndex;
     /* 0x34 */ char unk_34[0x8];
@@ -88,15 +117,24 @@ typedef struct SkelAnime {
     /* 0x44 */ f32 startFrame;
     /* 0x48 */ f32 endFrame;
     /* 0x4C */ f32 animLength;
-    /* 0x50 */ char unk_50[0x24];
+    /* 0x50 */ char unk_50[0x20];
+    /* 0x70 */ s32 animMode;
     /* 0x74 */ u8 limbCount;
     /* 0x75 */ char unk_75[0x03];
     /* 0x78 */ void* jointTable;
     /* 0x7C */ void* morphTable;
     /* 0x80 */ char unk_80[0x02];
-    /* 0x82 */ u8 tablesAllocated;
+    /* 0x82 */ u8 dynamicTables;
     /* 0x83 */ char unk_83[0x01];
-} SkelAnime; // size = 0x84
+} SkelAnime;
+_Static_assert(sizeof(SkelAnime) == 0x84, "SkelAnime size");
+
+typedef struct FlameModelData {
+    SkeletonAnimationModel* saModel;
+    struct CMBManager* cmbMan;
+    MaterialAnimation* matAnim;
+} FlameModelData;
+_Static_assert(sizeof(FlameModelData) == 0xC, "FlameModelData size");
 
 typedef void (*ActorFunc)(struct Actor*, struct GlobalContext*);
 
@@ -333,9 +371,9 @@ typedef struct Player {
     /* 0x24DC */ void* cmbMan;
     /* 0x24E0 */ void* zarInfo;
     /* 0x24E4 */ char unk_24E4[0x0220];
-    /* 0x2704 */ SkeletonAnimationModel_unk_0C tunicTexAnim;
-    /* 0x279C */ SkeletonAnimationModel_unk_0C fireMirroShieldTexAnim;
-    /* 0x2834 */ SkeletonAnimationModel_unk_0C iceMirroShieldTexAnim;
+    /* 0x2704 */ MaterialAnimation tunicTexAnim;
+    /* 0x279C */ MaterialAnimation fireMirroShieldTexAnim;
+    /* 0x2834 */ MaterialAnimation iceMirroShieldTexAnim;
     /* 0x28CC */ char unk_28CC[0x180];
 } Player; // total size (from init vars): 2A4C
 _Static_assert(sizeof(Player) == 0x2A4C, "Player size");
@@ -381,7 +419,37 @@ void Actor_UpdateBgCheckInfo(struct GlobalContext* globalCtx, Actor* actor, f32 
 s32 Player_InCsMode(struct GlobalContext* globalCtx);
 Actor* Actor_FindNearby(struct GlobalContext* globalCtx, Actor* ref_actor, s16 actorId, u8 actor_category, f32 range);
 void ActorShadow_DrawFeet(Actor* actor, void* lights, struct GlobalContext* globalCtx);
+// limbCount param is ignored, the function takes the value from the cmb
+void SkelAnime_Init(Actor* actor, struct GlobalContext* globalCtx, SkelAnime* skelAnime, s32 cmbIndex, s32 csabIndex,
+                    void* jointTable, void* morphTable, s32 limbCount);
+void SkelAnime_Destroy(SkelAnime* anime);
+s32 SkelAnime_Update(SkelAnime* skelAnime);
+s32 Animation_GetLastFrame(SkelAnime* anime, s32 animation_index);
+void Animation_Change(SkelAnime* anime, s32 animationIndex, f32 playSpeed, f32 startFrame, f32 endFrame, s32 mode,
+                      f32 morphFrames) __attribute__((pcs("aapcs-vfp")));
 void LinkAnimation_Change(SkelAnime* skelAnime, struct GlobalContext* play, u32 animation, f32 playSpeed,
                           f32 startFrame, f32 endFrame, u8 mode, f32 morphFrames) __attribute__((pcs("aapcs-vfp")));
+// Variadic arguments are pairs of a model and a CMB index; last argument must always be NULL.
+struct ZARInfo* Actor_CreateSkelModels(Actor* actor, struct GlobalContext* globalCtx,
+                                       SkeletonAnimationModel** firstSAModel, u32 firstCmbIndex, ...)
+    __attribute__((sentinel));
+// Variadic arguments are models; last argument must always be NULL.
+struct ZARInfo* Actor_DestroySkelModels(Actor* actor, SkeletonAnimationModel** firstSAModel, ...)
+    __attribute__((sentinel));
+struct ZARInfo* Actor_CreateSkelModelsArray(Actor* actor, struct GlobalContext* globalCtx, s32 modelCount,
+                                            SkeletonAnimationModel** models, s32* cmbIndices);
+struct ZARInfo* Actor_DestroySkelModelsArray(Actor* actor, s32 modelCount, SkeletonAnimationModel** models);
+void ZAR_Init(struct ZARInfo* zarInfo, void* buf, s32 size, s8 unkParam);
+void ZAR_Destroy(struct ZARInfo* zarInfo);
+void* ZAR_GetCMBByIndex(struct ZARInfo* zarInfo, u32 index);
+void* ZAR_GetCMABByIndex(struct ZARInfo* zarInfo, u32 index);
+void MatAnim_Init(MaterialAnimation* matAnim, void* cmabMan);
+void MatAnim_Destroy(MaterialAnimation* matAnim);
+void FaceAnim_Init(FaceAnimation* faceAnim, SkelAnime* skelAnime, s32 cmabIdx1, s32 cmabIdx2, s32 cmabIdx3);
+void FaceAnim_Destroy(FaceAnimation* faceAnim);
+void FaceAnim_SetFrame(FaceAnimation* faceAnim, s32 matAnimIdx, s32 animFrame);
+void FaceAnim_35E330(FaceAnimation* faceAnim);
+void FlameModel_Init(FlameModelData* modelData, struct GlobalContext* globalCtx, s32 unk, u32 cmabIndex);
+void FlameModel_Destroy(FlameModelData* model);
 
 #endif

@@ -1745,7 +1745,7 @@ HOOK FlyingPotCollision
     strh r0,[r4,#0xBE]
     push {r0-r12, lr}
     cpy r0,r4 @ Actor
-    bl FlyingTraps_Pot_OnImpact
+    bl EnTuboTrap_OnImpact
     cmp r0,#0x1
     pop {r0-r12, lr}
     bne 0x11DEE4 @ Skip collision checks and return
@@ -1755,7 +1755,7 @@ HOOK FlyingTileCollision
     cpy r0,r5
     push {r0-r12, lr}
     cpy r0,r4 @ Actor
-    bl FlyingTraps_Tile_OnImpact
+    bl EnYukabyun_OnImpact
     cmp r0,#0x1
     pop {r0-r12, lr}
     addne lr,lr,#0x8 @ Skip setting actionFunc
@@ -2068,8 +2068,8 @@ HOOK BabyDodongoWallCheck
     push {r0-r12, lr}
     @ Prevent burrowing for soulless baby dodongos.
     cpy r0,r4
-    bl EnemySouls_CheckSoulForActor
-    cmp r0,#0x0
+    bl EnemySouls_IsInvulnerable
+    cmp r0,#0x1
     pop {r0-r12, lr}
     bx lr
 
@@ -2078,8 +2078,8 @@ HOOK PeahatLarvaGroundCheck
     bxeq lr @ did not hit ground
     push {r0-r12, lr}
     cpy r0,r4 @ actor
-    bl EnemySouls_CheckSoulForActor
-    cmp r0,#0x0
+    bl EnemySouls_IsInvulnerable
+    cmp r0,#0x1
     pop {r0-r12, lr}
     @ Prevent death when hitting ground without soul.
     bx lr
@@ -2197,6 +2197,22 @@ HOOK PlayerBonk
     strh r8,[r7,#0x38]
     push {r0-r12, lr}
     bl Player_OnBonk
+    pop {r0-r12, lr}
+    bx lr
+
+HOOK CmbManagerInit
+    push {r0-r12, lr}
+    @ r0 = cmbManager
+    cpy r1,r4 @ zarInfo
+    cpy r2,r5 @ cmbIndex
+    bl SoullessModels_BeforeCmbManagerInit
+    pop {r0-r12, lr}
+    ldr r1,[r4,#0x4C]
+    bx lr
+
+HOOK ActorInit
+    push {r0-r12, lr}
+    bl Actor_rInit
     pop {r0-r12, lr}
     bx lr
 

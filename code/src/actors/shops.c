@@ -210,18 +210,18 @@ void ShopsanityItem_ResetModels(ShopsanityItem* shopItem, GlobalContext* globalC
 
     if (cmabIdx >= 0) {
         void* cmabMan = Object_GetCMABByIndex(objectId, cmabIdx);
-        TexAnim_Spawn(item->model->unk_0C, cmabMan);
-        item->model->unk_0C->animSpeed = 2.0f;
-        item->model->unk_0C->animMode  = 1;
+        MatAnim_Init(item->model->matAnim, cmabMan);
+        item->model->matAnim->animSpeed = 2.0f;
+        item->model->matAnim->animMode  = 1;
     }
 
     if (objModelIdx2 >= 0) {
         item->model2 = SkeletonAnimationModel_Spawn(&item->actor, globalCtx, objectId, objModelIdx2);
         if (cmabIdx2 >= 0) {
             void* cmabMan = Object_GetCMABByIndex(objectId, cmabIdx2);
-            TexAnim_Spawn(item->model2->unk_0C, cmabMan);
-            item->model2->unk_0C->animSpeed = 2.0f;
-            item->model2->unk_0C->animMode  = 1;
+            MatAnim_Init(item->model2->matAnim, cmabMan);
+            item->model2->matAnim->animSpeed = 2.0f;
+            item->model2->matAnim->animMode  = 1;
         }
     }
 }

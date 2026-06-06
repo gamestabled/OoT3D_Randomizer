@@ -434,7 +434,7 @@ void ItemEffect_ShardOfAgony(SaveContext* saveCtx, s16 arg1, s16 arg2) {
 }
 
 void ItemEffect_EnemySoul(SaveContext* saveCtx, s16 soulId, s16 arg2) {
-    EnemySouls_SetSoulFlag(soulId);
+    EnemySouls_OnCollect(soulId);
 }
 
 void ItemEffect_OcarinaNote(SaveContext* saveCtx, s16 buttonId, s16 arg2) {

@@ -153,4 +153,8 @@ extern EffectSsInfo gEffectSsInfo;
 
 void EffectSs_Delete(EffectSs* effectSs);
 
+void EffectSsDeadDb_Spawn(struct GlobalContext* globalCtx, Vec3f* pos, Vec3f* velocity, Vec3f* accel, s16 scale,
+                          s16 scaleStep, s16 primR, s16 primG, s16 primB, s16 primA, s16 envR, s16 envG, s16 envB,
+                          s16 unused, s32 frameDuration, s16 playSfx);
+
 #endif //_Z3DEFFECT_H_

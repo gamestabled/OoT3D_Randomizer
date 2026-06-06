@@ -4,7 +4,7 @@
 #include "z3D/z3D.h"
 
 /*------------------------------
-|           EN_DOOR            |
+|            EnDoor            |
 ------------------------------*/
 
 struct EnDoor;
@@ -23,7 +23,7 @@ void EnDoor_rUpdate(Actor* thisx, GlobalContext* globalCtx);
 void EnDoor_Unlock(EnDoor* this);
 
 /*------------------------------
-|         DOOR_SHUTTER         |
+|          DoorShutter         |
 ------------------------------*/
 
 struct DoorShutter;
@@ -48,7 +48,7 @@ void DoorShutter_rUpdate(Actor* thisx, GlobalContext* globalCtx);
 void DoorShutter_Unlock(DoorShutter* this);
 
 /*------------------------------
-|         DOOR_GERUDO          |
+|          DoorGerudo          |
 ------------------------------*/
 
 struct DoorGerudo;
@@ -66,5 +66,22 @@ typedef struct DoorGerudo {
 
 void DoorGerudo_rUpdate(Actor* thisx, GlobalContext* globalCtx);
 void DoorGerudo_Unlock(DoorGerudo* this);
+
+/*------------------------------
+|          DoorKiller          |
+------------------------------*/
+
+typedef struct DoorKiller {
+    /* 0x000 */ Actor actor;
+    /* 0x1A4 */ SkelAnime anime;
+    /* 0x228 */ char unk_228[0x340];
+    /* 0x568 */ FaceAnimation doorFaceAnim;
+    /* 0x734 */ SkeletonAnimationModel* rubbleModel;
+    /* 0x738 */ FaceAnimation rubbleFaceAnim;
+    /* 0x904 */ char unk_904[0x0DC];
+} DoorKiller;
+_Static_assert(sizeof(DoorKiller) == 0x9E0, "DoorKiller size");
+
+void DoorKiller_ReinitModels(DoorKiller* this);
 
 #endif //_DOOR_H_

@@ -2,8 +2,8 @@
 #include "multiplayer.h"
 #include "settings.h"
 #include "enemizer.h"
-#include "common.h"
 #include "objects.h"
+#include "actor.h"
 
 void EnSw_Init(Actor* thisx, GlobalContext* globalCtx);
 void EnSw_Update(Actor* thisx, GlobalContext* globalCtx);
@@ -280,4 +280,8 @@ s16 Skullwalltula_GetTargetRotation(s16 orig, EnSw* walltula) {
     // Attacking player, remove Y offset
     walltula->targetPos.y = PLAYER->actor.world.pos.y;
     return walltula->base.yawTowardsPlayer;
+}
+
+void EnSw_ReinitModels(EnSw* this) {
+    return Actor_ReinitSkelAnime(&this->base, &this->anime, this->base.params & 0xE000 ? 1 : 0);
 }

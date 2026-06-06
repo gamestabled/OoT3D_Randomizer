@@ -1,10 +1,12 @@
 #include "dark_link.h"
 #include "settings.h"
 #include "enemizer.h"
-#include "common.h"
+#include "enemy_souls.h"
 
 void EnTorch2_Init(Actor* thisx, GlobalContext* globalCtx);
 void EnTorch2_Update(Actor* thisx, GlobalContext* globalCtx);
+void EnTorch2_Destroy(Actor* thisx, GlobalContext* globalCtx);
+void EnTorch2_Draw(Actor* thisx, GlobalContext* globalCtx);
 
 u8 sPlayerWeaponClanked = FALSE;
 
@@ -104,6 +106,26 @@ void EnTorch2_rUpdate(Actor* thisx, GlobalContext* globalCtx) {
     }
 
     sPlayerWeaponClanked = FALSE;
+}
+
+void EnTorch2_rDraw(Actor* thisx, GlobalContext* globalCtx) {
+    EnTorch2* this = (EnTorch2*)thisx;
+    u8 prevAlpha   = this->alpha;
+    if (SoullessModels_Enabled && EnemySouls_IsInvulnerable(thisx)) {
+        this->alpha = 0xFF;
+    }
+
+    EnTorch2_Draw(thisx, globalCtx);
+
+    this->alpha = prevAlpha;
+}
+
+void EnTorch2_ReinitModels(EnTorch2* this) {
+    // Reinit whole actor because it looks good enough and reiniting player models/animations is too complex.
+    u8 prevActionState = this->actionState;
+    EnTorch2_Destroy(&this->darkPlayer.actor, gGlobalContext);
+    EnTorch2_rInit(&this->darkPlayer.actor, gGlobalContext);
+    this->actionState = prevActionState;
 }
 
 Actor* DarkLink_Spawn(Actor* spawner) {
