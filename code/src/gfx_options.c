@@ -50,12 +50,19 @@ Option options[] = {
     OPTION(OPTION_FREECAMCONTROL, "Free Camera Control",
            "Change the input directions of the free camera.\n\nThis feature is not available on old 3DS systems.",
            "Normal", "Invert Y-Axis", "Invert X-Axis", "Invert Both"),
+    OPTION(OPTION_SPOILERS, "Spoilers",                            //
+           "Toggle visibility for spoilers in the in-game\nmenu.", //
+           "Hide", "Show"),
 };
 s8 selectedOption;
 
 void InitOptions(void) {
     if (!gSettingsContext.freeCamera) {
         options[OPTION_FREECAMCONTROL].hidden = TRUE;
+    }
+
+    if (!gSettingsContext.ingameSpoilers) {
+        options[OPTION_SPOILERS].hidden = TRUE;
     }
 }
 

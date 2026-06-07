@@ -1019,7 +1019,8 @@ string_view extraShieldsDesc          = "Allow keeping more than 1 Deku and Hyli
 /*------------------------------                                                           //
 |        INGAME SPOILERS       |                                                           //
 ------------------------------*/                                                           //
-string_view ingameSpoilersShowDesc    = "Every spoiler is shown.";                         //
+string_view ingameSpoilersShowDesc    = "Every spoiler is shown. Visibility can be toggled\n"
+                                        "from the in-game options menu.";                  //
 string_view ingameSpoilersHideDesc    = "Hides the spheres page and only shows a\n"        //
                                         "location's item after it has been found.";        //
                                                                                            //
