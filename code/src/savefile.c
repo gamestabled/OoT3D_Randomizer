@@ -721,7 +721,7 @@ s8 SaveFile_GetIgnoreMaskReactionOption(u32 reactionSet) {
     if (reactionSet == 0x3C && PLAYER->currentMask == 1 && (gSaveContext.infTable[7] & 0x80) == 0) {
         return 0;
     }
-    return gExtSaveData.option_IgnoreMaskReaction;
+    return gExtSaveData.options[OPTION_IGNOREMASKREACTION];
 }
 
 void SaveFile_InitExtSaveData(u32 saveNumber, u8 fromSaveCreation) {
@@ -736,12 +736,12 @@ void SaveFile_InitExtSaveData(u32 saveNumber, u8 fromSaveCreation) {
         (gSettingsContext.shuffleMasterSword && !(gSettingsContext.startingEquipment & 0x2)) ? 0 : 1;
     gExtSaveData.permadeath = fromSaveCreation ? gSettingsContext.permadeath : 0;
     // Ingame Options
-    gExtSaveData.option_EnableBGM          = gSettingsContext.playMusic;
-    gExtSaveData.option_EnableSFX          = gSettingsContext.playSFX;
-    gExtSaveData.option_NaviNotifications  = gSettingsContext.naviNotifications;
-    gExtSaveData.option_IgnoreMaskReaction = gSettingsContext.ignoreMaskReaction;
-    gExtSaveData.option_SkipSongReplays    = gSettingsContext.skipSongReplays;
-    gExtSaveData.option_FreeCamControl     = gSettingsContext.freeCamControl;
+    gExtSaveData.options[OPTION_ENABLEBGM]          = gSettingsContext.playMusic;
+    gExtSaveData.options[OPTION_ENABLESFX]          = gSettingsContext.playSFX;
+    gExtSaveData.options[OPTION_NAVINOTIFICATIONS]  = gSettingsContext.naviNotifications;
+    gExtSaveData.options[OPTION_IGNOREMASKREACTION] = gSettingsContext.ignoreMaskReaction;
+    gExtSaveData.options[OPTION_SKIPSONGREPLAYS]    = gSettingsContext.skipSongReplays;
+    gExtSaveData.options[OPTION_FREECAMCONTROL]     = gSettingsContext.freeCamControl;
 }
 
 void SaveFile_LoadExtSaveData(u32 saveNumber) {
