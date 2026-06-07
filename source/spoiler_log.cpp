@@ -754,7 +754,7 @@ static void WriteRandomizedEnemies(tinyxml2::XMLDocument& spoilerLog) {
 
     for (auto& scene : scenes) {
         auto sceneNode        = parentNode->InsertNewChildElement("scene");
-        std::string sceneName = std::to_string(scene.first) + " - " + sceneNames[scene.first];
+        std::string sceneName = std::to_string(scene.first) + " - " + SceneNames[scene.first];
         sceneNode->SetAttribute("name", sceneName.c_str());
 
         // Create sorted vector of layers
