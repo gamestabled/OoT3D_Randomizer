@@ -799,6 +799,78 @@ void HintTable_Init_Exclude_Dungeon() {
                        Text{"a #Goron atop the Fire Temple# holds", /*french*/"le #Goron au sommet du temple du feu# a", /*spanish*/"un #goron en lo alto del Templo del Fuego# guarda", /*italian*/"un #Goron in cima al Santuario del Fuoco# possiede", /*german*/"nahe eines #Goronen, im oberen Teil des Feuertempels#, |wäre|wären|"},
     });
 
+    hintTable[FIRE_TEMPLE_PILLAR_ROOM_HEART_1] = HintText::Exclude({
+                       // obscure text
+                       Text{"#some keese in a sauna# guard", /*french*/"#some keese in a sauna# guard", /*spanish*/"#some keese in a sauna# guard", /*italian*/"#some keese in a sauna# guard", /*german*/"#some keese in a sauna# guard"},
+                      },{},
+                      // Clear text
+                       Text{"a heart #next to the pushblock lift in Fire Temple# is", /*french*/"a heart #next to the pushblock lift in Fire Temple# is", /*spanish*/"a heart #next to the pushblock lift in Fire Temple# is", /*italian*/"a heart #next to the pushblock lift in Fire Temple# is", /*german*/"a heart #next to the pushblock lift in Fire Temple# is"}
+   );
+
+   hintTable[FIRE_TEMPLE_PILLAR_ROOM_HEART_2] = HintText::Exclude({
+                       // obscure text
+                       Text{"#some keese in a sauna# guard", /*french*/"#some keese in a sauna# guard", /*spanish*/"#some keese in a sauna# guard", /*italian*/"#some keese in a sauna# guard", /*german*/"#some keese in a sauna# guard"},
+                      },{},
+                      // Clear text
+                       Text{"a heart #next to the pushblock lift in Fire Temple# is", /*french*/"a heart #next to the pushblock lift in Fire Temple# is", /*spanish*/"a heart #next to the pushblock lift in Fire Temple# is", /*italian*/"a heart #next to the pushblock lift in Fire Temple# is", /*german*/"a heart #next to the pushblock lift in Fire Temple# is"}
+   );
+
+   hintTable[FIRE_TEMPLE_PILLAR_ROOM_HEART_3] = HintText::Exclude({
+                       // obscure text
+                       Text{"#some keese in a sauna# guard", /*french*/"#some keese in a sauna# guard", /*spanish*/"#some keese in a sauna# guard", /*italian*/"#some keese in a sauna# guard", /*german*/"#some keese in a sauna# guard"},
+                      },{},
+                      // Clear text
+                       Text{"a heart #next to the pushblock lift in Fire Temple# is", /*french*/"a heart #next to the pushblock lift in Fire Temple# is", /*spanish*/"a heart #next to the pushblock lift in Fire Temple# is", /*italian*/"a heart #next to the pushblock lift in Fire Temple# is", /*german*/"a heart #next to the pushblock lift in Fire Temple# is"}
+   );
+
+   hintTable[FIRE_TEMPLE_EAST_CENTRAL_ROOM_HEART_1] = HintText::Exclude({
+                       // obscure text
+                       Text{"on #an edge overlooking a big drop# lies", /*french*/"on #an edge overlooking a big drop# lies", /*spanish*/"on #an edge overlooking a big drop# lies", /*italian*/"on #an edge overlooking a big drop# lies", /*german*/"on #an edge overlooking a big drop# lies"},
+                      },{},
+                      // Clear text
+                       Text{"a heart #in the east central room in Fire Temple# is", /*french*/"a heart #in the east central room in Fire Temple# is", /*spanish*/"a heart #in the east central room in Fire Temple# is", /*italian*/"a heart #in the east central room in Fire Temple# is", /*german*/"a heart #in the east central room in Fire Temple# is"}
+   );
+
+   hintTable[FIRE_TEMPLE_EAST_CENTRAL_ROOM_HEART_2] = HintText::Exclude({
+                       // obscure text
+                       Text{"on #an edge overlooking a big drop# lies", /*french*/"on #an edge overlooking a big drop# lies", /*spanish*/"on #an edge overlooking a big drop# lies", /*italian*/"on #an edge overlooking a big drop# lies", /*german*/"on #an edge overlooking a big drop# lies"},
+                      },{},
+                      // Clear text
+                       Text{"a heart #in the east central room in Fire Temple# is", /*french*/"a heart #in the east central room in Fire Temple# is", /*spanish*/"a heart #in the east central room in Fire Temple# is", /*italian*/"a heart #in the east central room in Fire Temple# is", /*german*/"a heart #in the east central room in Fire Temple# is"}
+   );
+
+   hintTable[FIRE_TEMPLE_EAST_CENTRAL_ROOM_HEART_3] = HintText::Exclude({
+                       // obscure text
+                       Text{"on #an edge overlooking a big drop# lies", /*french*/"on #an edge overlooking a big drop# lies", /*spanish*/"on #an edge overlooking a big drop# lies", /*italian*/"on #an edge overlooking a big drop# lies", /*german*/"on #an edge overlooking a big drop# lies"},
+                      },{},
+                      // Clear text
+                       Text{"a heart #in the east central room in Fire Temple# is", /*french*/"a heart #in the east central room in Fire Temple# is", /*spanish*/"a heart #in the east central room in Fire Temple# is", /*italian*/"a heart #in the east central room in Fire Temple# is", /*german*/"a heart #in the east central room in Fire Temple# is"}
+   );
+
+  hintTable[FIRE_TEMPLE_FIRE_WALL_CHASE_HEART_1] = HintText::Exclude({
+                       // obscure text
+                       Text{"on #a sometimes roasted pillar# rests", /*french*/"on #a sometimes roasted pillar# rests", /*spanish*/"on #a sometimes roasted pillar# rests", /*italian*/"on #a sometimes roasted pillar# rests", /*german*/"on #a sometimes roasted pillar# rests"},
+                      },{},
+                      // Clear text
+                       Text{"a heart #on a pillar in the fire wall chase room in Fire Temple# is", /*french*/"a heart #on a pillar in the fire wall chase room in Fire Temple# is", /*spanish*/"a heart #on a pillar in the fire wall chase room in Fire Temple# is", /*italian*/"a heart #on a pillar in the fire wall chase room in Fire Temple# is", /*german*/"a heart #on a pillar in the fire wall chase room in Fire Temple# is"}
+   );
+
+   hintTable[FIRE_TEMPLE_FIRE_WALL_CHASE_HEART_2] = HintText::Exclude({
+                       // obscure text
+                       Text{"on #a sometimes roasted pillar# rests", /*french*/"on #a sometimes roasted pillar# rests", /*spanish*/"on #a sometimes roasted pillar# rests", /*italian*/"on #a sometimes roasted pillar# rests", /*german*/"on #a sometimes roasted pillar# rests"},
+                      },{},
+                      // Clear text
+                       Text{"a heart #on a pillar in the fire wall chase room in Fire Temple# is", /*french*/"a heart #on a pillar in the fire wall chase room in Fire Temple# is", /*spanish*/"a heart #on a pillar in the fire wall chase room in Fire Temple# is", /*italian*/"a heart #on a pillar in the fire wall chase room in Fire Temple# is", /*german*/"a heart #on a pillar in the fire wall chase room in Fire Temple# is"}
+   );
+
+   hintTable[FIRE_TEMPLE_FIRE_WALL_CHASE_HEART_3] = HintText::Exclude({
+                       // obscure text
+                       Text{"on #a platform only reachable when hotly chased# you can find", /*french*/"on #a platform only reachable when hotly chased# you can find", /*spanish*/"on #a platform only reachable when hotly chased# you can find", /*italian*/"on #a platform only reachable when hotly chased# you can find", /*german*/"on #a platform only reachable when hotly chased# you can find"},
+                      },{},
+                      // Clear text
+                       Text{"a heart #on the last platform in the fire wall chase room in Fire Temple# is", /*french*/"a heart #on the last platform in the fire wall chase room in Fire Temple# is", /*spanish*/"a heart #on the last platform in the fire wall chase room in Fire Temple# is", /*italian*/"a heart #on the last platform in the fire wall chase room in Fire Temple# is", /*german*/"a heart #on the last platform in the fire wall chase room in Fire Temple# is"}
+   );
+
     hintTable[FIRE_TEMPLE_MQ_NEAR_BOSS_CHEST] = HintText::Exclude({
                        // obscure text
                        Text{"#near a dragon# is", /*french*/"#près d'un dragon# gît", /*spanish*/"#cerca de un dragón# yace", /*italian*/"#vicino a un drago# un forziere contiene", /*german*/"in der Nähe eines #Drachens#, |wäre|wären|"},

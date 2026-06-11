@@ -259,7 +259,11 @@ void AreaTable_Init_FireTemple() {
                      EventAccess(&DekuBabaSticks, { [] { return DekuBabaSticks || CanGetDekuBabaSticks(4, 0, 21); } }),
                      EventAccess(&DekuBabaNuts, { [] { return DekuBabaNuts || CanGetDekuBabaNuts(4, 0, 21); } }),
                  },
-                 {},
+                 {
+                    LocationAccess(FIRE_TEMPLE_PILLAR_ROOM_HEART_1, { [] { return CanSurviveHeatFor(56); } }),
+                    LocationAccess(FIRE_TEMPLE_PILLAR_ROOM_HEART_2, { [] { return CanSurviveHeatFor(56); } }),
+                    LocationAccess(FIRE_TEMPLE_PILLAR_ROOM_HEART_3, { [] { return CanSurviveHeatFor(56); } }),
+                 },
                  {
                      // Exits
                      Entrance(FIRE_TEMPLE_BIG_LAVA_ROOM, { [] { return SmallKeys(FIRE_TEMPLE, 3); } }),
@@ -358,7 +362,12 @@ void AreaTable_Init_FireTemple() {
                  });
 
         areaTable[FIRE_TEMPLE_EAST_CENTRAL_ROOM] =
-            Area("Fire Temple East Central Room", "Fire Temple", FIRE_TEMPLE, NO_DAY_NIGHT_CYCLE, {}, {},
+            Area("Fire Temple East Central Room", "Fire Temple", FIRE_TEMPLE, NO_DAY_NIGHT_CYCLE, {}, 
+                 {
+                    LocationAccess(FIRE_TEMPLE_EAST_CENTRAL_ROOM_HEART_1, { [] { return true; } }),
+                    LocationAccess(FIRE_TEMPLE_EAST_CENTRAL_ROOM_HEART_2, { [] { return true; } }),
+                    LocationAccess(FIRE_TEMPLE_EAST_CENTRAL_ROOM_HEART_3, { [] { return true; } }),
+                 },
                  {
                      // Exits
                      Entrance(FIRE_TEMPLE_BIG_LAVA_ROOM, { [] { return CanTakeDamage; } }),
@@ -374,7 +383,11 @@ void AreaTable_Init_FireTemple() {
                      EventAccess(&DekuBabaSticks, { [] { return DekuBabaSticks || CanGetDekuBabaSticks(4, 0, 16); } }),
                      EventAccess(&DekuBabaNuts, { [] { return DekuBabaNuts || CanGetDekuBabaNuts(4, 0, 16); } }),
                  },
-                 {},
+                 {
+                    LocationAccess(FIRE_TEMPLE_FIRE_WALL_CHASE_HEART_1, { [] { return CanSurviveHeatFor(24) && IsAdult; } }),
+                    LocationAccess(FIRE_TEMPLE_FIRE_WALL_CHASE_HEART_2, { [] { return CanSurviveHeatFor(24) && IsAdult; } }),
+                    LocationAccess(FIRE_TEMPLE_FIRE_WALL_CHASE_HEART_3, { [] { return CanSurviveHeatFor(24) && IsAdult; } }),
+                 },
                  {
                      // Exits
                      Entrance(FIRE_TEMPLE_EAST_CENTRAL_ROOM,
