@@ -305,6 +305,15 @@ DungeonInfo FireTemple =
                     FIRE_TEMPLE_GS_BOULDER_MAZE,
                     FIRE_TEMPLE_GS_SCARECROW_TOP,
                     FIRE_TEMPLE_GS_SCARECROW_CLIMB,
+                    FIRE_TEMPLE_PILLAR_ROOM_HEART_1,
+                    FIRE_TEMPLE_PILLAR_ROOM_HEART_2,
+                    FIRE_TEMPLE_PILLAR_ROOM_HEART_3,
+                    FIRE_TEMPLE_EAST_CENTRAL_ROOM_HEART_1,
+                    FIRE_TEMPLE_EAST_CENTRAL_ROOM_HEART_2,
+                    FIRE_TEMPLE_EAST_CENTRAL_ROOM_HEART_3,
+                    FIRE_TEMPLE_FIRE_WALL_CHASE_HEART_1,
+                    FIRE_TEMPLE_FIRE_WALL_CHASE_HEART_2,
+                    FIRE_TEMPLE_FIRE_WALL_CHASE_HEART_3,
                 },
                 {
                     // MQ Locations
