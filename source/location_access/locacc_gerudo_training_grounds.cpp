@@ -137,7 +137,7 @@ void AreaTable_Init_GerudoTrainingGrounds() {
                      // Exits
                      Entrance(GERUDO_TRAINING_GROUNDS_EYE_STATUE_LOWER,
                               { [] { return CanUse(MEGATON_HAMMER) && CanUse(BOW); } }),
-                     Entrance(GERUDO_TRAINING_GROUNDS_LAVA_ROOM, { [] { return true; } }),
+                     Entrance(GERUDO_TRAINING_GROUNDS_LAVA_ROOM, { [] { return CanDefeatEnemies(11, 0, 5); } }),
                  });
 
         areaTable[GERUDO_TRAINING_GROUNDS_EYE_STATUE_LOWER] =
