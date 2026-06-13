@@ -78,7 +78,9 @@ u32 Message_HandleTextControlCode(TextControlCode ctrl, void* textObj, UnkTextCo
             case TEXT_CTRL_CHECK_PERCENTAGE:
                 // Calculate percentage of revealed items in the tracker (instead of collected items, as that percentage
                 // already appears in the tracker menu).
-                u16 revealedItems = 0;
+                u16 revealedItems                     = 0;
+                s8 realOptionSpoilers                 = gExtSaveData.options[OPTION_SPOILERS];
+                gExtSaveData.options[OPTION_SPOILERS] = FALSE;
                 for (u32 locIndex = 0; locIndex < gSpoilerData.ItemLocationsCount; locIndex++) {
                     if (SpoilerData_GetIsItemLocationCollected(locIndex) ||
                         SpoilerData_GetIsItemLocationRevealed(locIndex)) {
@@ -86,6 +88,7 @@ u32 Message_HandleTextControlCode(TextControlCode ctrl, void* textObj, UnkTextCo
                     }
                 }
                 f32 revealedPercentage = ((f32)revealedItems / (f32)gSpoilerData.ItemLocationsCount) * 100.0f;
+                gExtSaveData.options[OPTION_SPOILERS] = realOptionSpoilers;
                 snprintf(str, MAX_DYNAMIC_STRING_SIZE, "%5.1f%%", revealedPercentage);
                 break;
             case TEXT_CTRL_SAVE_COUNT:

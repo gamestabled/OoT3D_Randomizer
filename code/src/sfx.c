@@ -29,8 +29,8 @@ u32 SetSFX(u32 original) {
     mp_duplicateSendProtection = false;
 
     static const u16 GET_BOXITEM_ID = 1205; // Treat GET_BOXITEM as a fanfare
-    if (IsInGameOrBossChallenge() && ((!gExtSaveData.option_EnableSFX && sfxID != GET_BOXITEM_ID) ||
-                                      (!gExtSaveData.option_EnableBGM && sfxID == GET_BOXITEM_ID))) {
+    if (IsInGameOrBossChallenge() && ((!gExtSaveData.options[OPTION_ENABLESFX] && sfxID != GET_BOXITEM_ID) ||
+                                      (!gExtSaveData.options[OPTION_ENABLEBGM] && sfxID == GET_BOXITEM_ID))) {
         return SEQ_AUDIO_BLANK;
     }
 

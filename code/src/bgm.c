@@ -8,7 +8,7 @@ u8 Bgm_FanfareModEnabled = FALSE;
 static u32 rBGMOverrides[128] = { 0 };
 
 u32 SetBGM(u32 original) {
-    if (!gExtSaveData.option_EnableBGM && IsInGameOrBossChallenge()) {
+    if (!gExtSaveData.options[OPTION_ENABLEBGM] && IsInGameOrBossChallenge()) {
         return SEQ_AUDIO_BLANK;
     }
 

@@ -10,76 +10,59 @@
 #define BORDER_WIDTH 2
 #define CHOICE_COLUMN 220
 #define DESCRIPTION_ROW 184
-#define OPTIONS_COUNT 6
 
 typedef struct {
-    char name[30];
-    char alternatives[8][16];
-    char description[256];
     s8* optionPointer;
+    char* name;
+    char* description;
+    char** alternatives;
+    u8 alternativesCount;
+    Bool hidden;
 } Option;
 
+// clang-format off
+#define OPTION(_optionId, _name, _description, ...) {            \
+    .optionPointer     = &gExtSaveData.options[_optionId],       \
+    .name              = _name,                                  \
+    .description       = _description,                           \
+    .alternatives      = (char*[]){ __VA_ARGS__ },               \
+    .alternativesCount = ARRAY_SIZE(((char*[]){ __VA_ARGS__ })), \
+    .hidden            = 0,                                      \
+}
+// clang-format on
+
+Option options[] = {
+    OPTION(OPTION_ENABLEBGM, "Play Music",                             //
+           "Toggles the music.\nTakes effect once music is switched.", //
+           "Off", "On"),
+    OPTION(OPTION_ENABLESFX, "Play Sound Effects", //
+           "Toggles the sound effects.",           //
+           "Off", "On"),
+    OPTION(OPTION_NAVINOTIFICATIONS, "Navi Notifications",      //
+           "Determines the frequency of Navi's notifications.", //
+           "Silenced", "Normal", "Constant"),
+    OPTION(OPTION_IGNOREMASKREACTION, "Ignore Mask Reaction",
+           "Causes NPCs to respond normally when wearing\nmasks. Does not apply to trade quest dialogues.", //
+           "Off", "On"),
+    OPTION(OPTION_SKIPSONGREPLAYS, "Skip Song Replays",
+           "Toggle skipping the automatic replay after\nyou play a song.", //
+           "Don't Skip", "Skip (No SFX)", "Skip (Keep SFX)"),
+    OPTION(OPTION_FREECAMCONTROL, "Free Camera Control",
+           "Change the input directions of the free camera.\n\nThis feature is not available on old 3DS systems.",
+           "Normal", "Invert Y-Axis", "Invert X-Axis", "Invert Both"),
+    OPTION(OPTION_SPOILERS, "Spoilers",                            //
+           "Toggle visibility for spoilers in the in-game\nmenu.", //
+           "Hide", "Show"),
+};
 s8 selectedOption;
-Option options[OPTIONS_COUNT];
 
 void InitOptions(void) {
-    u8 opNum  = 0;
-    u8 altNum = 0;
+    if (!gSettingsContext.freeCamera) {
+        options[OPTION_FREECAMCONTROL].hidden = TRUE;
+    }
 
-    // BGM
-    altNum = 0;
-    strcpy(options[opNum].name, "Play Music");
-    strcpy(options[opNum].alternatives[altNum++], "Off");
-    strcpy(options[opNum].alternatives[altNum++], "On");
-    strcpy(options[opNum].description, "Toggles the music.\nTakes effect once music is switched.");
-    options[opNum++].optionPointer = &gExtSaveData.option_EnableBGM;
-
-    // SFX
-    altNum = 0;
-    strcpy(options[opNum].name, "Play Sound Effects");
-    strcpy(options[opNum].alternatives[altNum++], "Off");
-    strcpy(options[opNum].alternatives[altNum++], "On");
-    strcpy(options[opNum].description, "Toggles the sound effects.");
-    options[opNum++].optionPointer = &gExtSaveData.option_EnableSFX;
-
-    // Silence Navi
-    altNum = 0;
-    strcpy(options[opNum].name, "Navi Notifications");
-    strcpy(options[opNum].alternatives[altNum++], "Silenced");
-    strcpy(options[opNum].alternatives[altNum++], "Normal");
-    strcpy(options[opNum].alternatives[altNum++], "Constant");
-    strcpy(options[opNum].description, "Determines the frequency of Navi's notifications.");
-    options[opNum++].optionPointer = &gExtSaveData.option_NaviNotifications;
-
-    // Ignore Mask Reaction
-    altNum = 0;
-    strcpy(options[opNum].name, "Ignore Mask Reaction");
-    strcpy(options[opNum].alternatives[altNum++], "Off");
-    strcpy(options[opNum].alternatives[altNum++], "On");
-    strcpy(options[opNum].description,
-           "Causes NPCs to respond normally when wearing\nmasks. Does not apply to trade quest dialogues.");
-    options[opNum++].optionPointer = &gExtSaveData.option_IgnoreMaskReaction;
-
-    // Skip Song Replays
-    altNum = 0;
-    strcpy(options[opNum].name, "Skip Song Replays");
-    strcpy(options[opNum].alternatives[altNum++], "Don't Skip");
-    strcpy(options[opNum].alternatives[altNum++], "Skip (No SFX)");
-    strcpy(options[opNum].alternatives[altNum++], "Skip (Keep SFX)");
-    strcpy(options[opNum].description, "Toggle skipping the automatic replay after\nyou play a song.");
-    options[opNum++].optionPointer = &gExtSaveData.option_SkipSongReplays;
-
-    // Free Camera Control
-    if (gSettingsContext.freeCamera) {
-        altNum = 0;
-        strcpy(options[opNum].name, "Free Camera Control");
-        strcpy(options[opNum].alternatives[altNum++], "Normal");
-        strcpy(options[opNum].alternatives[altNum++], "Invert Y-Axis");
-        strcpy(options[opNum].alternatives[altNum++], "Invert X-Axis");
-        strcpy(options[opNum].alternatives[altNum++], "Invert Both");
-        strcpy(options[opNum].description,
-               "Change the input directions of the free camera.\n\nThis feature is not available on old 3DS systems.");
-        options[opNum++].optionPointer = &gExtSaveData.option_FreeCamControl;
+    if (!gSettingsContext.ingameSpoilers) {
+        options[OPTION_SPOILERS].hidden = TRUE;
     }
 }
 
@@ -87,15 +70,15 @@ void Gfx_DrawOptions(void) {
     Draw_DrawString(10, 16, COLOR_TITLE, "Options");
 
     // Options
+    u32 offY = 0;
     for (u8 i = 0; i < ARRAY_SIZE(options); i++) {
-        if (strlen(options[i].name) == 0) {
-            break;
+        if (options[i].hidden) {
+            continue;
         }
-        Draw_DrawString(10, 16 + SPACING_Y + SPACING_Y * i, (i == selectedOption) ? COLOR_GREEN : COLOR_WHITE,
-                        options[i].name);
-        Draw_DrawString(CHOICE_COLUMN, 16 + SPACING_Y + SPACING_Y * i,
-                        (i == selectedOption) ? COLOR_GREEN : COLOR_WHITE,
+        Draw_DrawString(10, 16 + SPACING_Y + offY, (i == selectedOption) ? COLOR_GREEN : COLOR_WHITE, options[i].name);
+        Draw_DrawString(CHOICE_COLUMN, 16 + SPACING_Y + offY, (i == selectedOption) ? COLOR_GREEN : COLOR_WHITE,
                         options[i].alternatives[*options[i].optionPointer]);
+        offY += SPACING_Y;
     }
 
     // Description
@@ -105,48 +88,32 @@ void Gfx_DrawOptions(void) {
     Draw_DrawString(10, DESCRIPTION_ROW, COLOR_WHITE, options[selectedOption].description);
 }
 
-void NextOption(const Option* option) {
-    do {
-        (*option->optionPointer)++;
-        if (*option->optionPointer > ARRAY_SIZE(option->alternatives) - 1) {
-            *option->optionPointer = 0;
-        }
-    } while (strlen(option->alternatives[*option->optionPointer]) == 0);
-}
+static void Scroll(s8* const var, const s8 valCount, const s8 scrollAmount) {
+    const s8 min = 0;
+    const s8 max = valCount - 1;
 
-void PrevOption(const Option* option) {
-    do {
-        (*option->optionPointer)--;
-        if (*option->optionPointer < 0) {
-            *option->optionPointer = ARRAY_SIZE(option->alternatives) - 1;
+    *var += scrollAmount;
+
+    while ((*var > max) || (*var < min)) {
+        s64 offset = 1 + max - min;
+        if (*var > max) {
+            *var -= offset;
+        } else {
+            *var += offset;
         }
-    } while (strlen(option->alternatives[*option->optionPointer]) == 0);
+    }
 }
 
 void Gfx_OptionsUpdate(void) {
-    if (pressed & (BUTTON_DOWN | CPAD_DOWN)) {
+    if (pressed & (PAD_DOWN | PAD_UP)) {
+        s8 scrollAmount = pressed & PAD_DOWN ? +1 : -1;
         do {
-            selectedOption++;
-            if (selectedOption > ARRAY_SIZE(options) - 1) {
-                selectedOption = 0;
-            }
-        } while (strlen(options[selectedOption].name) == 0);
+            Scroll(&selectedOption, ARRAY_SIZE(options), scrollAmount);
+        } while (options[selectedOption].hidden);
         handledInput = true;
-    } else if (pressed & (BUTTON_UP | CPAD_UP)) {
-        do {
-            selectedOption--;
-            if (selectedOption < 0) {
-                selectedOption = ARRAY_SIZE(options) - 1;
-            }
-        } while (strlen(options[selectedOption].name) == 0);
-        handledInput = true;
-    }
-
-    if (pressed & (BUTTON_RIGHT | CPAD_RIGHT)) {
-        NextOption(&options[selectedOption]);
-        handledInput = true;
-    } else if (pressed & (BUTTON_LEFT | CPAD_LEFT)) {
-        PrevOption(&options[selectedOption]);
+    } else if (pressed & (PAD_RIGHT | PAD_LEFT)) {
+        s8 scrollAmount = pressed & PAD_RIGHT ? +1 : -1;
+        Scroll(options[selectedOption].optionPointer, options[selectedOption].alternativesCount, scrollAmount);
         handledInput = true;
     }
 }
