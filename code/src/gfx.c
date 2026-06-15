@@ -583,7 +583,13 @@ static void Gfx_DrawEnemySouls(void) {
 }
 
 static void Gfx_DrawSpoilerData(void) {
-    if (gSpoilerData.SphereCount > 0) {
+    if (gSpoilerData.SphereCount == 0) {
+        Draw_DrawString(10, 16, COLOR_TITLE, "Spoiler Log");
+        Draw_DrawString(10, 46, COLOR_WHITE, "No spoiler log generated!");
+    } else if (!gExtSaveData.options[OPTION_SPOILERS]) {
+        Draw_DrawString(10, 16, COLOR_TITLE, "Spoiler Log");
+        Draw_DrawString(10, 46, COLOR_WHITE, "Enable the \"Spoilers\" option to view.");
+    } else {
         u16 itemCount = gSpoilerData.Spheres[currentSphere].ItemCount;
 
         Draw_DrawFormattedString(10, 16, COLOR_TITLE, "Spoiler Log - Sphere %i / %i", currentSphere + 1,
@@ -615,9 +621,6 @@ static void Gfx_DrawSpoilerData(void) {
 
         Gfx_DrawScrollBar(SCREEN_BOT_WIDTH - 3, listTopY, SCREEN_BOT_HEIGHT - 40 - listTopY, spoilerScroll, itemCount,
                           MAX_ENTRY_LINES);
-    } else {
-        Draw_DrawString(10, 16, COLOR_TITLE, "Spoiler Log");
-        Draw_DrawString(10, 46, COLOR_WHITE, "No spoiler log generated!");
     }
 }
 
@@ -800,10 +803,11 @@ static void Gfx_DrawEntranceTracker(void) {
         u32 rplcSrcColor = isDiscovered ? entranceTypeToColor[override->type] : COLOR_WHITE;
         u32 rplcDstColor = isDiscovered ? entranceTypeToColor[override->type] : COLOR_WHITE;
 
-        u8 showOriginal = gSettingsContext.ingameSpoilers || isDiscovered ||
-                          (!destListToggle || original->srcGroup == ENTRANCE_GROUP_ONE_WAY);
-        u8 showOverride = gSettingsContext.ingameSpoilers || isDiscovered ||
-                          (destListToggle && original->srcGroup != ENTRANCE_GROUP_ONE_WAY);
+        bool showSpoilers = gSettingsContext.ingameSpoilers && gExtSaveData.options[OPTION_SPOILERS];
+        bool showOriginal =
+            showSpoilers || isDiscovered || (!destListToggle || original->srcGroup == ENTRANCE_GROUP_ONE_WAY);
+        bool showOverride =
+            showSpoilers || isDiscovered || (destListToggle && original->srcGroup != ENTRANCE_GROUP_ONE_WAY);
 
         const char* unknown = "???";
 

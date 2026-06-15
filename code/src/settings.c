@@ -106,7 +106,7 @@ u32 Settings_GetQuickTextOption() {
 }
 
 u32 Settings_GetSongReplaysOption() {
-    return gExtSaveData.option_SkipSongReplays;
+    return gExtSaveData.options[OPTION_SKIPSONGREPLAYS];
 }
 
 u32 Settings_IsTurboText() {
@@ -121,9 +121,9 @@ void Settings_SkipSongReplays() {
     // msgModes 18 to 23 are used to manage the song replays. Skipping to mode 23 ends the replay.
     // msgMode 18 starts the playback music. It can't be skipped for scarecrow's song (song "12") because it spawns
     // Pierre.
-    if ((gExtSaveData.option_SkipSongReplays == SONGREPLAYS_SKIP_NO_SFX && gGlobalContext->msgMode == 18 &&
+    if ((gExtSaveData.options[OPTION_SKIPSONGREPLAYS] == SONGREPLAYS_SKIP_NO_SFX && gGlobalContext->msgMode == 18 &&
          gGlobalContext->lastPlayedSong != 12) ||
-        (gExtSaveData.option_SkipSongReplays != SONGREPLAYS_DONT_SKIP && gGlobalContext->msgMode == 19)) {
+        (gExtSaveData.options[OPTION_SKIPSONGREPLAYS] != SONGREPLAYS_DONT_SKIP && gGlobalContext->msgMode == 19)) {
         // In Water Temple, playing ZL cycles through the modes to avoid problems with the dimmed bottom screen at the
         // ZL switches
         if (gGlobalContext->sceneNum == 5 && gGlobalContext->lastPlayedSong == 8) {
@@ -131,7 +131,7 @@ void Settings_SkipSongReplays() {
         } else {
             gGlobalContext->msgMode = 23;
         }
-    } else if (gExtSaveData.option_SkipSongReplays != SONGREPLAYS_DONT_SKIP && gGlobalContext->msgMode > 19 &&
+    } else if (gExtSaveData.options[OPTION_SKIPSONGREPLAYS] != SONGREPLAYS_DONT_SKIP && gGlobalContext->msgMode > 19 &&
                gGlobalContext->msgMode < 23) {
         gGlobalContext->msgMode++;
     }
