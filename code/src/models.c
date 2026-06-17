@@ -10,7 +10,7 @@
 
 void SkeletonAnimationModel_MatrixCopy(SkeletonAnimationModel* glModel, nn_math_MTX34* mtx);
 void SkeletonAnimationModel_Draw(SkeletonAnimationModel* glModel, s32 param_2);
-void Actor_SetModelMatrix(f32 x, f32 y, f32 z, nn_math_MTX34* mtx, ActorShape* shape);
+void Actor_SetModelMatrix(f32 x, f32 y, f32 z, nn_math_MTX34* mtx, ActorShape* shape) __attribute__((pcs("aapcs-vfp")));
 
 #define LOADEDMODELS_MAX 20
 Model ModelContext[LOADEDMODELS_MAX] = { 0 };
@@ -96,43 +96,39 @@ void Model_UpdateAll(GlobalContext* globalCtx) {
     }
 }
 
-void Actor_SetModelMatrixWrapper(Actor* actor, nn_math_MTX34* mtx) {
-    asm volatile("push {r0-r12, lr}\n"
-                 "vldr s1,[r0,#0x2C]\n"
-                 "vldr s0,[r0,#0xC4]\n"
-                 "vldr s2,[r0,#0x58]\n"
-                 "vmla.f32 s1,s0,s2\n"  // y coord calc
-                 "vldr s0,[r0,#0x28]\n" // x coord
-                 "vldr s2,[r0,#0x30]\n" // z coord
-                 "add r2,r0,#0xBC\n"
-                 "mov r0,r1\n" // mtx
-                 "mov r1,r2\n" // shape
-                 "push {r0-r12, lr}\n"
-                 "bl Actor_SetModelMatrix\n"
-                 "pop {r0-r12, lr}\n"
-                 "pop {r0-r12, lr}\n");
-}
-
 void Model_DrawSAM(Model* model, SkeletonAnimationModel* saModel, Bool mustFaceCamera) {
-    f32 realShapeYaw = model->actor->shape.rot.y;
-    if (mustFaceCamera) {
-        model->actor->shape.rot.y = gGlobalContext->mainCamera.camDir.y;
+    Actor* actor     = model->actor;
+    f32 realShapeYaw = actor->shape.rot.y;
+    Camera* camera   = gGlobalContext->cameraPtrs[gGlobalContext->activeCamera];
+    if (mustFaceCamera && camera != NULL) {
+        actor->shape.rot.y = camera->camDir.y;
     }
-    // Update matrix
+    // Copy matrix from actor
+    f32 x = actor->world.pos.x;
+    f32 y = actor->world.pos.y + actor->shape.yOffset * actor->scale.y;
+    f32 z = actor->world.pos.z;
+    Actor_SetModelMatrix(x, y, z, &saModel->mtx, &actor->shape);
+
+    // Update scale for all items
+    f32 modelScale = 0.30f;
+    if (actor->id == ACTOR_DEMO_EFFECT) { // Sapphire in Big Octo room
+        modelScale = 0.15f;
+    }
     nn_math_MTX44 scaleMtx = { 0 };
-    scaleMtx.data[0][0]    = model->scale;
-    scaleMtx.data[1][1]    = model->scale;
-    scaleMtx.data[2][2]    = model->scale;
+    scaleMtx.data[0][0]    = modelScale;
+    scaleMtx.data[1][1]    = modelScale;
+    scaleMtx.data[2][2]    = modelScale;
     scaleMtx.data[3][3]    = 1.0f;
-    Actor_SetModelMatrixWrapper(model->actor, &saModel->mtx);
     Matrix_Multiply(&saModel->mtx, &saModel->mtx, &scaleMtx);
-    Matrix_UpdatePosition(&saModel->mtx, &saModel->mtx, &model->posOffset);
+
+    // Update matrix for items that use custom models
+    CustomModels_UpdateMatrix(&saModel->mtx, model->itemRow);
 
     // Draw model
     saModel->unk_AC = 1;
     SkeletonAnimationModel_Draw(saModel, 0);
 
-    model->actor->shape.rot.y = realShapeYaw;
+    actor->shape.rot.y = realShapeYaw;
 }
 
 void Model_Draw(Model* model) {
@@ -201,24 +197,6 @@ void Model_Create(Model* model, GlobalContext* globalCtx) {
         newModel->loaded     = 0;
         newModel->saModel    = NULL;
         newModel->saModel2   = NULL;
-        newModel->scale      = 0.3f;
-        newModel->posOffset  = (Vec3f){ 0 };
-        switch (newModel->itemRow->objectId) {
-            case OBJECT_GI_MEDALLION:
-            case OBJECT_GI_KOKIRI_EMERALD:
-            case OBJECT_GI_GORON_RUBY:
-            case OBJECT_GI_ZORA_SAPPHIRE:
-                newModel->scale = 0.2f;
-                break;
-            case OBJECT_CUSTOM_TRIFORCE_PIECE:
-                newModel->scale     = 0.025f;
-                newModel->posOffset = (Vec3f){ 0.0f, -800.0f, 0.0f };
-                break;
-            case OBJECT_CUSTOM_UNBOTTLED_BIG_POE:
-                newModel->scale     = 1.0f;
-                newModel->posOffset = (Vec3f){ 0.0f, 10.0f, 0.0f };
-                break;
-        }
     }
 }
 

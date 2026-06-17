@@ -25,5 +25,5 @@ To use a custom asset, currently:
     - if you need to apply a custom texture to the model:
         - add a CMAB file with the new texture in the custom archive (romfs/zelda_gi_melody.zar)
         - in CustomModels_ApplyItemCMAB, add a case for the objectId
-    - if you need to edit the scale or position of the model, add a case in Model_Create (for overworld models) and in CustomModels_UpdateMatrix (for shop and GetItem models)
+    - if you need to edit the scale or position of the model, add a case in CustomModels_UpdateMatrix
     - add the objectId to this txt file
