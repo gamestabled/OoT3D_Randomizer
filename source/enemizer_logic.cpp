@@ -274,7 +274,7 @@ static bool _CanPassEnemy(EnemyLocation& loc, SpaceAroundEnemy space = SpaceArou
                 case ENEMY_LIKE_LIKE:
                     return _CanDefeatEnemy(loc);
                 case ENEMY_FREEZARD:
-                    return loc.randomizedParams != 0 // mobile
+                    return loc.randomizedParamsIdx == 1 // mobile
                            || _CanDefeatEnemy(loc);
             }
             // fallthrough
@@ -334,7 +334,7 @@ bool CanHookEnemy(u8 scene, u8 layer, u8 room, u8 actorEntry, bool onLedge /*= f
         case ENEMY_GIBDO:
             return true;
         case ENEMY_FREEZARD:
-            return loc.randomizedParams == 0; // immobile, always spawned
+            return loc.randomizedParamsIdx == 0; // immobile, always spawned
         case ENEMY_IRON_KNUCKLE:
         case ENEMY_FLOORMASTER:
             return !onLedge; // these can walk off ledges

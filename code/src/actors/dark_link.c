@@ -145,9 +145,9 @@ Actor* DarkLink_Spawn(Actor* spawner) {
     };
 
     EnemyOverride enemyOverride = Enemizer_GetSpawnerOverride();
-    if (enemyOverride.actorId != 0) {
-        tempActorEntry.id     = enemyOverride.actorId;
-        tempActorEntry.params = enemyOverride.params;
+    if (enemyOverride.enemyId != ENEMY_INVALID) {
+        tempActorEntry.id     = gEnemyTable[enemyOverride.enemyId].actorId;
+        tempActorEntry.params = gEnemyTable[enemyOverride.enemyId].possibleParams[enemyOverride.paramsIdx];
         tempActorEntry.pos.z -= 75; // Move enemy outside of the tree.
 
         // Apply position updates depending on the specific enemy.

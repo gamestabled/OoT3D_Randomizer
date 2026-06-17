@@ -26,9 +26,8 @@ enum class LocType {
 class EnemyType {
   public:
     EnemyType() = default;
-    EnemyType(std::string _name, bool* _soulVar, u16 _actorId, std::vector<u16> _possibleParams,
-              std::vector<LocType> _validLocTypes)
-        : name(std::move(_name)), soulVar(_soulVar), actorId(_actorId), possibleParams(_possibleParams),
+    EnemyType(u8 _id, std::string _name, bool* _soulVar, u8 _possibleParamsCount, std::vector<LocType> _validLocTypes)
+        : id(_id), name(std::move(_name)), soulVar(_soulVar), possibleParamsCount(_possibleParamsCount),
           validLocTypes(std::move(_validLocTypes)) {
     }
 
@@ -42,19 +41,19 @@ class EnemyType {
         return Settings::ShuffleEnemySouls.IsNot(SHUFFLEENEMYSOULS_ALL) || *soulVar;
     }
 
+    u8 id;
     std::string name;
     bool* soulVar;
-    u16 actorId;
-    std::vector<u16> possibleParams; // Values to randomly select as actor params, without affecting the logic.
+    u8 possibleParamsCount; // Count of values to randomly select as actor params, without affecting the logic.
     std::vector<LocType> validLocTypes;
 };
 
 class EnemyLocation {
   public:
     EnemyLocation() = default;
-    EnemyLocation(u16 _vanillaEnemyId, LocType _type) : vanillaEnemyId(_vanillaEnemyId), types({ _type }) {
+    EnemyLocation(u8 _vanillaEnemyId, LocType _type) : vanillaEnemyId(_vanillaEnemyId), types({ _type }) {
     }
-    EnemyLocation(u16 _vanillaEnemyId, std::vector<LocType> _types)
+    EnemyLocation(u8 _vanillaEnemyId, std::vector<LocType> _types)
         : vanillaEnemyId(_vanillaEnemyId), types(std::move(_types)) {
     }
 
@@ -66,9 +65,9 @@ class EnemyLocation {
         return std::find(types.begin(), types.end(), LocType::UNDERWATER) != types.end();
     }
 
-    u16 vanillaEnemyId    = 0;
-    u16 randomizedEnemyId = 0;
-    u16 randomizedParams  = 0;
+    u8 vanillaEnemyId      = ENEMY_INVALID;
+    u8 randomizedEnemyId   = ENEMY_INVALID;
+    u8 randomizedParamsIdx = 0;
     std::vector<LocType> types;
 };
 

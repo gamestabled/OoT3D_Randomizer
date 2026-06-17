@@ -1872,7 +1872,7 @@ SettingsContext FillContext() {
 // One-time initialization
 void InitSettings() {
     enemizerListOptions = mapArrayToOptions(Enemizer::enemyTypes, [](Enemizer::EnemyType enemy) {
-        bool hidden = enemy.actorId == 0 || enemy.validLocTypes.empty();
+        bool hidden = enemy.id == ENEMY_INVALID || enemy.validLocTypes.empty();
         return Option::U8(enemy.name, { "Randomized", "Vanilla", "Removed" },
                           {
                               enemyRandomizedDesc,
