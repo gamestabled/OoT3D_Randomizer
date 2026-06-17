@@ -636,6 +636,18 @@ void AreaTable_Init_WaterTemple() {
                                         return (CanUse(IRON_BOOTS) && CanUse(HOOKSHOT)) ||
                                                (LogicWaterRiverGS && CanUse(LONGSHOT));
                                     } }),
+                     LocationAccess(WATER_TEMPLE_RIVER_HEART_1, { [] {
+                                        return (true);
+                                    } }),
+                     LocationAccess(WATER_TEMPLE_RIVER_HEART_2, { [] {
+                                        return (true);
+                                    } }),
+                     LocationAccess(WATER_TEMPLE_RIVER_HEART_3, { [] {
+                                        return (true);
+                                    } }),
+                     LocationAccess(WATER_TEMPLE_RIVER_HEART_4, { [] {
+                                        return (true);
+                                    } }),
                  },
                  {
                      // Exits

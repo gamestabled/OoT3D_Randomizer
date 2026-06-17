@@ -361,6 +361,10 @@ DungeonInfo WaterTemple =
                     WATER_TEMPLE_GS_CENTRAL_PILLAR,
                     WATER_TEMPLE_GS_NEAR_BOSS_KEY_CHEST,
                     WATER_TEMPLE_GS_RIVER,
+                    WATER_TEMPLE_RIVER_HEART_1,
+                    WATER_TEMPLE_RIVER_HEART_2,
+                    WATER_TEMPLE_RIVER_HEART_3,
+                    WATER_TEMPLE_RIVER_HEART_4
                 },
                 {
                     // MQ Locations

@@ -1035,6 +1035,38 @@ void HintTable_Init_Exclude_Dungeon() {
                        Text{"#Dark @# guards", /*french*/"#@ noir# protège", /*spanish*/"#@ Oscuro# guarda", /*italian*/"#@ oscuro# protegge", /*german*/"nahe #dem schwarzen @#, |wäre|wären|"}
     );
 
+    hintTable[WATER_TEMPLE_RIVER_HEART_1] = HintText::Exclude({
+                       // obscure text
+                       Text{"among #Dark @'s turds# has sunk", /*french*/"among #Dark @'s turds# has sunk", /*spanish*/"among #Dark @'s turds# have sunk", /*italian*/"among #Dark @'s turds# have sunk", /*german*/"on #a sometimes roasted pillar# rests"},
+                      },{},
+                      // Clear text
+                       Text{"in #the river in Water Temple# is", /*french*/"in #the river in Water Temple# is", /*spanish*/"in #the river in Water Temple# is", /*italian*/"in #the river in Water Temple# is", /*german*/"in #the river in Water Temple# is"}
+   );
+
+   hintTable[WATER_TEMPLE_RIVER_HEART_2] = HintText::Exclude({
+                       // obscure text
+                       Text{"among #Dark @'s turds# has sunk", /*french*/"among #Dark @'s turds# has sunk", /*spanish*/"among #Dark @'s turds# have sunk", /*italian*/"among #Dark @'s turds# have sunk", /*german*/"on #a sometimes roasted pillar# rests"},
+                      },{},
+                      // Clear text
+                       Text{"in #the river in Water Temple# is", /*french*/"in #the river in Water Temple# is", /*spanish*/"in #the river in Water Temple# is", /*italian*/"in #the river in Water Temple# is", /*german*/"in #the river in Water Temple# is"}
+   );
+
+   hintTable[WATER_TEMPLE_RIVER_HEART_3] = HintText::Exclude({
+                       // obscure text
+                       Text{"among #Dark @'s turds# has sunk", /*french*/"among #Dark @'s turds# has sunk", /*spanish*/"among #Dark @'s turds# have sunk", /*italian*/"among #Dark @'s turds# have sunk", /*german*/"on #a sometimes roasted pillar# rests"},
+                      },{},
+                      // Clear text
+                       Text{"in #the river in Water Temple# is", /*french*/"in #the river in Water Temple# is", /*spanish*/"in #the river in Water Temple# is", /*italian*/"in #the river in Water Temple# is", /*german*/"in #the river in Water Temple# is"}
+   );
+
+   hintTable[WATER_TEMPLE_RIVER_HEART_4] = HintText::Exclude({
+                       // obscure text
+                       Text{"among #Dark @'s turds# has sunk", /*french*/"among #Dark @'s turds# has sunk", /*spanish*/"among #Dark @'s turds# have sunk", /*italian*/"among #Dark @'s turds# have sunk", /*german*/"on #a sometimes roasted pillar# rests"},
+                      },{},
+                      // Clear text
+                       Text{"in #the river in Water Temple# is", /*french*/"in #the river in Water Temple# is", /*spanish*/"in #the river in Water Temple# is", /*italian*/"in #the river in Water Temple# is", /*german*/"in #the river in Water Temple# is"}
+   );
+
     hintTable[WATER_TEMPLE_MQ_CENTRAL_PILLAR_CHEST] = HintText::Exclude({
                        // obscure text
                        Text{"in the #depths of the Water Temple# lies", /*french*/"le #cœur du temple de l'eau# cache", /*spanish*/"en las #profundidades del Templo del Agua# yace", /*italian*/"#nel più profondo del Santuario dell'Acqua# puoi recuperare", /*german*/"in #den Tiefen# des Wassertempels, |wäre|wären|"},
