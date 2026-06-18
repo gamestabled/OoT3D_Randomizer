@@ -9,11 +9,6 @@ endif
 TOPDIR ?= $(CURDIR)
 include $(DEVKITARM)/3ds_rules
 
-# Generate data-driven source files before SOURCES is evaluated
-ifneq ($(MAKECMDGOALS),clean)
-$(shell python3 ./tools/gen_all_tables.py)
-endif
-
 #---------------------------------------------------------------------------------
 # TARGET is the name of the output
 # BUILD is the directory where object files & intermediate files will be placed
@@ -41,8 +36,8 @@ APP_AUTHOR      :=  Gamestabled
 APP_DESCRIPTION :=  A different Ocarina of Time experience
 TARGET		    :=	$(notdir $(CURDIR))
 BUILD		    :=	build
-SOURCES 		:=  $(sort $(dir $(filter-out %.jsonc, $(filter-out %.json, $(wildcard source/*/ source/*)))))
-# DATA		    :=	data 				# Data files aren't built into the project
+SOURCES		    :=	$(sort $(dir $(wildcard source/*/ source/)))
+DATA		    :=	data
 INCLUDES	    :=	include $(SOURCES)
 GRAPHICS		:=	gfx
 GFXBUILD		:=	$(BUILD)
@@ -211,8 +206,7 @@ endif
 clean:
 	@echo clean ...
 	@rm -fr $(BUILD) $(TARGET).3dsx $(OUTPUT).smdh $(TARGET).elf $(GFXBUILD) \
-		$(ROMFS)/basecode.ips $(ROMFS)/basecode_USA.ips $(ROMFS)/basecode_EUR.ips \
-		source/generated/generated*
+		$(ROMFS)/basecode.ips $(ROMFS)/basecode_USA.ips $(ROMFS)/basecode_EUR.ips
 	$(MAKE) clean -C code
 
 #---------------------------------------------------------------------------------
