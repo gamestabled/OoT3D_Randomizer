@@ -18,5 +18,6 @@ build/*
 *.pyc
 *.ips
 *.zar
-source/patch_symbols*.hpp
+source/patch_symbols*
+version.hpp
 .DS_Store

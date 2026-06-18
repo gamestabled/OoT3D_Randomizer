@@ -1,7 +1,10 @@
 #include "lizalfos.h"
 #include "settings.h"
+#include "enemizer.h"
+#include "actor.h"
 
-#define EnZf_Update ((ActorFunc)GAME_ADDR(0x101C48))
+void EnZf_Update(Actor* thisx, GlobalContext* globalCtx);
+void EnZf_Draw(Actor* thisx, GlobalContext* globalCtx);
 
 void EnZf_rUpdate(Actor* thisx, GlobalContext* globalCtx) {
     EnZf* this = (EnZf*)thisx;
@@ -17,4 +20,17 @@ void EnZf_rUpdate(Actor* thisx, GlobalContext* globalCtx) {
         f32 yGroundIntersect = BgCheck_RaycastDown1(&gGlobalContext->colCtx, &floorPoly, &floorCheckPos);
         thisx->world.pos.y   = yGroundIntersect + 150.0f;
     }
+}
+
+void EnZf_rDraw(Actor* thisx, GlobalContext* globalCtx) {
+    EnZf* this = (EnZf*)thisx;
+
+    // Skip draw function when invisible because the textureless soulless look would draw the model anyway.
+    if (this->alpha != 0) {
+        EnZf_Draw(thisx, globalCtx);
+    }
+}
+
+void EnZf_ReinitModels(EnZf* this) {
+    Actor_ReinitSkelAnime(&this->actor, &this->anime, this->actor.params == -2 ? 1 : 0);
 }

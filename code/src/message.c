@@ -19,11 +19,8 @@ u32 gFinalPlaytimeSeconds;
 volatile const u32 numCustomMessageEntries;
 volatile const MessageEntry* ptrCustomMessageEntries;
 
-typedef const MessageEntry* (*Message_GetEntry_proc)(void* param_1, u32 textId);
-#define Message_GetEntry ((Message_GetEntry_proc)GAME_ADDR(0x2DF4C4))
-
-typedef const char* (*Message_GetText_proc)(void* param_1, u32 offset);
-#define Message_GetText ((Message_GetText_proc)GAME_ADDR(0x2DF4B0))
+const MessageEntry* Message_GetEntry(void* param_1, u32 textId);
+const char* Message_GetText(void* param_1, u32 offset);
 
 const MessageEntry* Message_GetCustomEntry(void* param_1, u32 textId) {
     s32 start;
@@ -66,6 +63,12 @@ u32 Message_HandleTextControlCode(TextControlCode ctrl, void* textObj, UnkTextCo
             case TEXT_CTRL_TRIFORCE_PIECE_COUNT:
                 snprintf(str, MAX_DYNAMIC_STRING_SIZE, "%d", gExtSaveData.triforcePieces);
                 break;
+            case TEXT_CTRL_DEKU_SHIELD_COUNT:
+                snprintf(str, MAX_DYNAMIC_STRING_SIZE, "%d", gExtSaveData.dekuShieldsCount);
+                break;
+            case TEXT_CTRL_HYLIAN_SHIELD_COUNT:
+                snprintf(str, MAX_DYNAMIC_STRING_SIZE, "%d", gExtSaveData.hylianShieldsCount);
+                break;
             case TEXT_CTRL_FINAL_TIME:
                 u32 hours   = gFinalPlaytimeSeconds / 3600;
                 u32 minutes = (gFinalPlaytimeSeconds / 60) % 60;
@@ -75,7 +78,9 @@ u32 Message_HandleTextControlCode(TextControlCode ctrl, void* textObj, UnkTextCo
             case TEXT_CTRL_CHECK_PERCENTAGE:
                 // Calculate percentage of revealed items in the tracker (instead of collected items, as that percentage
                 // already appears in the tracker menu).
-                u16 revealedItems = 0;
+                u16 revealedItems                     = 0;
+                s8 realOptionSpoilers                 = gExtSaveData.options[OPTION_SPOILERS];
+                gExtSaveData.options[OPTION_SPOILERS] = FALSE;
                 for (u32 locIndex = 0; locIndex < gSpoilerData.ItemLocationsCount; locIndex++) {
                     if (SpoilerData_GetIsItemLocationCollected(locIndex) ||
                         SpoilerData_GetIsItemLocationRevealed(locIndex)) {
@@ -83,6 +88,7 @@ u32 Message_HandleTextControlCode(TextControlCode ctrl, void* textObj, UnkTextCo
                     }
                 }
                 f32 revealedPercentage = ((f32)revealedItems / (f32)gSpoilerData.ItemLocationsCount) * 100.0f;
+                gExtSaveData.options[OPTION_SPOILERS] = realOptionSpoilers;
                 snprintf(str, MAX_DYNAMIC_STRING_SIZE, "%5.1f%%", revealedPercentage);
                 break;
             case TEXT_CTRL_SAVE_COUNT:

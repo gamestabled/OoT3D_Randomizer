@@ -1,7 +1,7 @@
 #ifndef _GROTTO_H_
 #define _GROTTO_H_
 
-#include "z3D/z3Dvec.h"
+#include "s_types.h"
 
 #define NUM_GROTTOS 33
 #define NOT_GROTTO 0

@@ -3,13 +3,10 @@
 #include "models.h"
 #include "settings.h"
 
-#define ItemEtcetera_Init ((ActorFunc)GAME_ADDR(0x273F28))
-
-#define ItemEtcetera_Destroy ((ActorFunc)GAME_ADDR(0x2740BC))
-
-#define ItemEtcetera_Update ((ActorFunc)GAME_ADDR(0x298D88))
-
-#define ItemEtcetera_Draw ((ActorFunc)GAME_ADDR(0x11707C))
+void ItemEtcetera_Init(Actor* thisx, GlobalContext* globalCtx);
+void ItemEtcetera_Destroy(Actor* thisx, GlobalContext* globalCtx);
+void ItemEtcetera_Update(Actor* thisx, GlobalContext* globalCtx);
+void ItemEtcetera_Draw(Actor* thisx, GlobalContext* globalCtx);
 
 #define THIS ((ItemEtcetera*)thisx)
 

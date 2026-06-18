@@ -1,12 +1,13 @@
+#include "s_item_override.h"
+#include "s_item.h"
+
 #include "item.hpp"
-
-#include <array>
-
 #include "logic.hpp"
 #include "random.hpp"
 #include "item_pool.hpp"
 #include "settings.hpp"
-#include "../code/src/item_override.h"
+
+#include <array>
 
 Item::Item(ItemType type_, int getItemId_, ItemClass class_, bool* logicVar_, HintKey hintKey_, u16 price_, Text name_)
     : type(type_), getItemId(getItemId_), itemClass(class_), logicVar(logicVar_), hintKey(hintKey_), price(price_),

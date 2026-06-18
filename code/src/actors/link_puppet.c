@@ -5,22 +5,26 @@
 #include "objects.h"
 #include "custom_models.h"
 #include "settings.h"
-#include "common.h"
 
 // Draw at most three extra Links. More can cause graphical issues that persist until game restart.
 #define MAX_PUPPETS_AT_ONCE 3
 
+void EnLinkPuppet_Init(Actor* thisx, GlobalContext* globalCtx);
+void EnLinkPuppet_Destroy(Actor* thisx, GlobalContext* globalCtx);
+void EnLinkPuppet_Update(Actor* thisx, GlobalContext* globalCtx);
+void EnLinkPuppet_Draw(Actor* thisx, GlobalContext* globalCtx);
+
 ActorInit EnLinkPuppet_InitVars = {
-    0x1,                             // ID
-    ACTORTYPE_NPC,                   // Type
-    0xFF,                            // Room
-    0x2000410,                       // Flags
-    21,                              // Object ID (20: Adult, 21: Child)
-    sizeof(EnLinkPuppet),            //
-    (ActorFunc)EnLinkPuppet_Init,    //
-    (ActorFunc)EnLinkPuppet_Destroy, //
-    (ActorFunc)EnLinkPuppet_Update,  //
-    (ActorFunc)EnLinkPuppet_Draw,    //
+    0x1,           // ID
+    ACTORTYPE_NPC, // Type
+    0xFF,          // Room
+    0x2000410,     // Flags
+    21,            // Object ID (20: Adult, 21: Child)
+    sizeof(EnLinkPuppet),
+    EnLinkPuppet_Init,
+    EnLinkPuppet_Destroy,
+    EnLinkPuppet_Update,
+    EnLinkPuppet_Draw,
 };
 
 static ColliderCylinderInit EnLinkPupper_ColliderCylinderInit = {
@@ -43,15 +47,15 @@ static ColliderCylinderInit EnLinkPupper_ColliderCylinderInit = {
     { 12.0f, 50.0f, 0.0f, { 0.0f, 0.0f, 0.0f } },
 };
 
-typedef void (*SkelAnime_InitLink_proc)(SkelAnime* skelAnime, ZARInfo* zarInfo, GlobalContext* globalCtx, void* cmbMan,
-                                        void* param_5, u32 animation, s32 limbBufCount, void* jointTable,
-                                        void* morphTable);
-#define SkelAnime_InitLink ((SkelAnime_InitLink_proc)GAME_ADDR(0x3413EC))
+void SkelAnime_InitLink(SkelAnime* skelAnime, ZARInfo* zarInfo, GlobalContext* globalCtx, void* cmbMan, void* param_5,
+                        u32 animation, s32 limbBufCount, void* jointTable, void* morphTable);
 
 // When posing the model by copying the joint table, the model for some reason gets raised about 12 units.
 static const f32 childOffsetY = 12.5f;
 
-void EnLinkPuppet_Init(EnLinkPuppet* this, GlobalContext* globalCtx) {
+void EnLinkPuppet_Init(Actor* thisx, GlobalContext* globalCtx) {
+    EnLinkPuppet* this = (EnLinkPuppet*)thisx;
+
     this->base.room = -1;
 
     SkelAnime_InitLink(&this->skelAnime, PLAYER->zarInfo, globalCtx, PLAYER->cmbMan, this->base.unk_178, 0, 9,
@@ -66,17 +70,17 @@ void EnLinkPuppet_Init(EnLinkPuppet* this, GlobalContext* globalCtx) {
         cmabMan = ZAR_GetCMABByIndex(PLAYER->zarInfo, 2);
     }
     if (cmabMan != NULL) {
-        TexAnim_Spawn(this->skelAnime.unk_28->unk_0C, cmabMan);
+        MatAnim_Init(this->skelAnime.saModel->matAnim, cmabMan);
     }
-    this->skelAnime.unk_28->unk_0C->animSpeed = 0.0f;
-    this->skelAnime.unk_28->unk_0C->animMode  = 0;
+    this->skelAnime.saModel->matAnim->animSpeed = 0.0f;
+    this->skelAnime.saModel->matAnim->animMode  = 0;
 
     // Mesh Groups
     for (size_t index = 0; index < BIT_COUNT(this->ghostPtr->ghostData.meshGroups1); index++) {
-        Model_DisableMeshGroupByIndex(this->skelAnime.unk_28, index);
+        Model_DisableMeshGroupByIndex(this->skelAnime.saModel, index);
     }
     for (size_t index = 0; index < BIT_COUNT(this->ghostPtr->ghostData.meshGroups2); index++) {
-        Model_DisableMeshGroupByIndex(this->skelAnime.unk_28, index + BIT_COUNT(u32));
+        Model_DisableMeshGroupByIndex(this->skelAnime.saModel, index + BIT_COUNT(u32));
     }
 
     // Collision
@@ -85,17 +89,18 @@ void EnLinkPuppet_Init(EnLinkPuppet* this, GlobalContext* globalCtx) {
 
     // Shadow
     f32 feetShadowScale = (this->ghostPtr->ghostData.age == 0) ? 90.0f : 60.0f;
-    ActorShape_Init(&this->base.shape, 0.0f, (void*)GAME_ADDR(0x1D04F4), feetShadowScale);
+    ActorShape_Init(&this->base.shape, 0.0f, ActorShadow_DrawFeet, feetShadowScale);
 }
 
-typedef void (*SkelAnime_Free2_proc)(SkelAnime* anime);
-#define SkelAnime_Free2 ((SkelAnime_Free2_proc)GAME_ADDR(0x350BE0))
+void EnLinkPuppet_Destroy(Actor* thisx, GlobalContext* globalCtx) {
+    EnLinkPuppet* this = (EnLinkPuppet*)thisx;
 
-void EnLinkPuppet_Destroy(EnLinkPuppet* this, GlobalContext* globalCtx) {
-    SkelAnime_Free2(&this->skelAnime);
+    SkelAnime_Destroy(&this->skelAnime);
 }
 
-void EnLinkPuppet_Update(EnLinkPuppet* this, GlobalContext* globalCtx) {
+void EnLinkPuppet_Update(Actor* thisx, GlobalContext* globalCtx) {
+    EnLinkPuppet* this = (EnLinkPuppet*)thisx;
+
     if (!this->ghostPtr->inUse || !this->ghostPtr->isInGame ||
         this->ghostPtr->ghostData.currentScene != gGlobalContext->sceneNum) {
         Actor_Kill(&this->base);
@@ -110,21 +115,21 @@ void EnLinkPuppet_Update(EnLinkPuppet* this, GlobalContext* globalCtx) {
     // Mesh Groups
     for (size_t index = 0; index < BIT_COUNT(this->ghostPtr->ghostData.meshGroups1); index++) {
         if (this->ghostPtr->ghostData.meshGroups1 & (0b1 << index)) {
-            Model_EnableMeshGroupByIndex(this->skelAnime.unk_28, index);
+            Model_EnableMeshGroupByIndex(this->skelAnime.saModel, index);
         } else {
-            Model_DisableMeshGroupByIndex(this->skelAnime.unk_28, index);
+            Model_DisableMeshGroupByIndex(this->skelAnime.saModel, index);
         }
     }
     for (size_t index = 0; index < BIT_COUNT(this->ghostPtr->ghostData.meshGroups2); index++) {
         if (this->ghostPtr->ghostData.meshGroups2 & (0b1 << index)) {
-            Model_EnableMeshGroupByIndex(this->skelAnime.unk_28, index + BIT_COUNT(u32));
+            Model_EnableMeshGroupByIndex(this->skelAnime.saModel, index + BIT_COUNT(u32));
         } else {
-            Model_DisableMeshGroupByIndex(this->skelAnime.unk_28, index + BIT_COUNT(u32));
+            Model_DisableMeshGroupByIndex(this->skelAnime.saModel, index + BIT_COUNT(u32));
         }
     }
 
     // Tunic
-    this->skelAnime.unk_28->unk_0C->curFrame = this->ghostPtr->ghostData.currentTunic;
+    this->skelAnime.saModel->matAnim->curFrame = this->ghostPtr->ghostData.currentTunic;
 
     // Collider
     Collider_UpdateCylinder(&this->base, &this->collider);
@@ -141,19 +146,20 @@ void EnLinkPuppet_Update(EnLinkPuppet* this, GlobalContext* globalCtx) {
     }
 }
 
-#define Vec3f_PlayerFeet_unk ((Vec3f*)GAME_ADDR(0x53CACC))
 void EnLinkPuppet_PostLimbDraw(GlobalContext* globalCtx, s32 limbIndex, nn_math_MTX34* mtx, EnLinkPuppet* this) {
+    extern Vec3f Vec3f_PlayerFeet_unk[];
     if (limbIndex != 0x15) {
         Actor_SetFeetPos((Actor*)this, mtx, limbIndex, 5, &Vec3f_PlayerFeet_unk[gSaveContext.linkAge], 8,
                          &Vec3f_PlayerFeet_unk[gSaveContext.linkAge]);
     }
 }
 
-typedef void (*SkelAnime_DrawOpa_proc)(SkelAnime* skelAnime, nn_math_MTX34* modelMtx, void* overrideLimbDraw,
-                                       void* postLimbDraw, Actor* param_5, u32 param_6);
-#define SkelAnime_DrawOpa ((SkelAnime_DrawOpa_proc)GAME_ADDR(0x35E240))
+void SkelAnime_DrawOpa(SkelAnime* skelAnime, nn_math_MTX34* modelMtx, void* overrideLimbDraw, void* postLimbDraw,
+                       Actor* param_5, u32 param_6);
 
-void EnLinkPuppet_Draw(EnLinkPuppet* this, GlobalContext* globalCtx) {
+void EnLinkPuppet_Draw(Actor* thisx, GlobalContext* globalCtx) {
+    EnLinkPuppet* this = (EnLinkPuppet*)thisx;
+
     // Check how many Link puppets already exist before this one.
     u8 linkPuppetCount = 0;
     Actor* firstActor  = gGlobalContext->actorCtx.actorList[EnLinkPuppet_InitVars.type].first;

@@ -1,9 +1,11 @@
 #include "guay.h"
 #include "settings.h"
+#include "enemizer.h"
+#include "actor.h"
 
-#define EnCrow_Update ((ActorFunc)GAME_ADDR(0x1F4D40))
+void EnCrow_Update(Actor* thisx, GlobalContext* globalCtx);
 
-#define EnCrow_Respawn ((EnCrowActionFunc)GAME_ADDR(0x158648))
+void EnCrow_Respawn(EnCrow* this, GlobalContext* globalCtx);
 
 #define sDefaultColliderRadius 20
 
@@ -23,4 +25,8 @@ void EnCrow_rUpdate(Actor* thisx, GlobalContext* globalCtx) {
             Actor_Kill(thisx);
         }
     }
+}
+
+void EnCrow_ReinitModels(EnCrow* this) {
+    Actor_ReinitSkelAnime(&this->actor, &this->skelAnime, 0);
 }

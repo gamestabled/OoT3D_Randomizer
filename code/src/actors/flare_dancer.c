@@ -1,19 +1,21 @@
 #include "flare_dancer.h"
 #include "settings.h"
+#include "enemizer.h"
 #include "bgm.h"
+#include "actor.h"
 
-#define EnFd_Update ((ActorFunc)GAME_ADDR(0x1B004C))
+void EnFd_Update(Actor* thisx, GlobalContext* globalCtx);
 
-#define EnFd_Reappear ((EnFdActionFunc)GAME_ADDR(0x117D98))
-#define EnFd_JumpToGround ((EnFdActionFunc)GAME_ADDR(0x3ACD84))
+void EnFd_Reappear(EnFd* this, GlobalContext* globalCtx);
+void EnFd_JumpToGround(EnFd* this, GlobalContext* globalCtx);
 
-#define EnFdFire_Disappear ((EnFdFireActionFunc)GAME_ADDR(0x3ABFB8))
+void EnFdFire_Disappear(EnFdFire* this, GlobalContext* globalCtx);
 
 void EnFd_rUpdate(Actor* thisx, GlobalContext* globalCtx) {
     EnFd* this = (EnFd*)thisx;
 
     Actor* prevEnemiesHead = globalCtx->actorCtx.actorList[ACTORTYPE_ENEMY].first;
-    u32 prevBgm            = Audio_GetActiveSeqId(0);
+    u32 prevBgm            = Audio_GetActiveSeqId(SEQ_PLAYER_BGM_MAIN);
 
     EnFd_Update(thisx, globalCtx);
 
@@ -67,12 +69,29 @@ void EnFd_rUpdate(Actor* thisx, GlobalContext* globalCtx) {
         }
 
         // If Flare Dancer started the Mini-Boss battle theme, disable it immediately
-        if (prevBgm != BGM_MINI_BOSS && Audio_GetActiveSeqId(0) == BGM_MINI_BOSS) {
+        if (prevBgm != NA_BGM_MIDDLE_BOSS && Audio_GetActiveSeqId(SEQ_PLAYER_BGM_MAIN) == NA_BGM_MIDDLE_BOSS) {
             if (sPrevMainBgmSeqId != -1) {
                 Audio_RestoreBGM();
             } else {
-                Audio_StopBGM();
+                Audio_StopSequence(SEQ_PLAYER_BGM_MAIN, 0);
             }
         }
     }
+}
+
+void EnFd_ReinitModels(EnFd* this) {
+    Actor_DestroySkelModelsArray(&this->actor, EN_FD_EFFECT_COUNT, this->saModels);
+    ZARInfo* zarInfo =
+        Actor_CreateSkelModelsArray(&this->actor, gGlobalContext, EN_FD_EFFECT_COUNT, this->saModels, this->cmbIndices);
+
+    for (s32 i = 0; i < EN_FD_EFFECT_COUNT; i++) {
+        SkeletonAnimationModel* model = this->saModels[i];
+
+        this->effects[i].saModel = model;
+        MatAnim_Init(model->matAnim, ZAR_GetCMABByIndex(zarInfo, 1));
+        model->matAnim->animMode  = 1;
+        model->matAnim->animSpeed = 2.0;
+    }
+
+    Actor_ReinitSkelAnime(&this->actor, &this->skelAnime, 0);
 }

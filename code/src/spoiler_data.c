@@ -183,7 +183,7 @@ u8 SpoilerData_GetIsItemLocationCollected(u16 itemIndex) {
 }
 
 u8 SpoilerData_GetIsItemLocationRevealed(u16 itemIndex) {
-    if (gSettingsContext.ingameSpoilers) {
+    if (gSettingsContext.ingameSpoilers && gExtSaveData.options[OPTION_SPOILERS]) {
         return 1;
     }
 

@@ -1,3 +1,5 @@
+#include "s_message.h"
+
 #include "icetrap.h"
 #include "objects.h"
 #include "z3D/z3D.h"
@@ -7,9 +9,9 @@
 #include "player.h"
 #include "item_override.h"
 
-#define TimerFrameCounter *(s16*)GAME_ADDR(0x539D8A) // Used to decrease the timer every 30 frames
-#define ControlStick_X *(float*)GAME_ADDR(0x5655C0)
-#define ControlStick_Y *(float*)GAME_ADDR(0x5655C4)
+extern s16 TimerFrameCounter; // Used to decrease the timer every 30 frames
+extern float ControlStick_X;
+extern float ControlStick_Y;
 
 static u8 pendingFreezes = 0;
 static u8 cooldown       = 0;
@@ -219,7 +221,7 @@ u8 IceTrap_ActivateCurseTrap(u8 curseType) {
     gSaveContext.timer2Value = 60;
     TimerFrameCounter        = 30;
     DisplayTextbox(gGlobalContext, CURSETRAP_TEXT_BASE_INDEX + curseType - ICETRAP_CURSE_SHIELD, 0);
-    PlaySound(0x100035C); // Poe laugh SFX
+    Audio_PlayFanfare(NA_SE_EN_PO_LAUGH);
     IceTrap_ActiveCurse = (s8)curseType;
     return 1;
 }
@@ -323,12 +325,12 @@ void IceTrap_ReverseStick(void) {
     }
 }
 
-btn_t IceTrap_RandomizeButtons(btn_t in) {
+void IceTrap_RandomizeButtons(btn_t* btns) {
     if (IceTrap_ActiveCurse != ICETRAP_CURSE_DIZZY) {
-        return in;
+        return;
     }
 
-    uint32_t arr[4] = { in.a, in.b, in.r, in.l };
+    uint32_t arr[4] = { btns->a, btns->b, btns->r, btns->l };
     for (u32 i = 3; i > 0; i--) {
         u32 j    = dizzyCurseSeed % i;
         u32 temp = arr[j];
@@ -336,12 +338,10 @@ btn_t IceTrap_RandomizeButtons(btn_t in) {
         arr[i]   = temp;
     }
 
-    btn_t out = in;
-    out.a     = arr[0];
-    out.b     = arr[1];
-    out.r     = arr[2];
-    out.l     = arr[3];
-    return out;
+    btns->a = arr[0];
+    btns->b = arr[1];
+    btns->r = arr[2];
+    btns->l = arr[3];
 }
 
 u16 IceTrap_CamRoll(u16 roll) {

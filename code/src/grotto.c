@@ -1,4 +1,4 @@
-#include "../include/z3D/z3D.h"
+#include "z3D/z3D.h"
 #include "grotto.h"
 #include "savefile.h"
 #include "settings.h"

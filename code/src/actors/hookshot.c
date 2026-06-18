@@ -2,9 +2,9 @@
 #include "hookshot.h"
 #include "settings.h"
 
-#define ArmsHook_Init ((ActorFunc)GAME_ADDR(0x1EBF84))
+void ArmsHook_Init(Actor* thisx, GlobalContext* globalCtx);
 
-#define HookshotRotation (f32*)GAME_ADDR(0x4C257C)
+extern f32 HookshotRotation;
 
 void ArmsHook_rInit(Actor* thisx, GlobalContext* globalCtx) {
     ArmsHook_Init(thisx, globalCtx);
@@ -16,5 +16,5 @@ void ArmsHook_rInit(Actor* thisx, GlobalContext* globalCtx) {
 }
 
 f32 Hookshot_GetZRotation(void) {
-    return gSaveContext.linkAge == AGE_ADULT ? *HookshotRotation : -1.4; // TODO find position and lower that
+    return gSaveContext.linkAge == AGE_ADULT ? HookshotRotation : -1.4; // TODO find position and lower that
 }

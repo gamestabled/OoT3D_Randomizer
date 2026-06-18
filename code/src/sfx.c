@@ -14,8 +14,8 @@ u8 SeqTypeIsMovement(SeqType type) {
 
 u32 SetSFX(u32 original) {
     // Hack for hookshot as child (adult voice -> child voice)
-    if (original == 0x100050D && gSaveContext.linkAge == 1) {
-        original = 0x100050B;
+    if (original == NA_SE_VO_LI_LASH_KID && gSaveContext.linkAge == 1) {
+        original = NA_SE_VO_LI_SWORD_N_KID;
     }
     u16 sfxID    = original - SFX_BASE;
     SeqType type = rSfxData.rSeqTypesSFX[sfxID];
@@ -29,8 +29,8 @@ u32 SetSFX(u32 original) {
     mp_duplicateSendProtection = false;
 
     static const u16 GET_BOXITEM_ID = 1205; // Treat GET_BOXITEM as a fanfare
-    if (IsInGameOrBossChallenge() && ((!gExtSaveData.option_EnableSFX && sfxID != GET_BOXITEM_ID) ||
-                                      (!gExtSaveData.option_EnableBGM && sfxID == GET_BOXITEM_ID))) {
+    if (IsInGameOrBossChallenge() && ((!gExtSaveData.options[OPTION_ENABLESFX] && sfxID != GET_BOXITEM_ID) ||
+                                      (!gExtSaveData.options[OPTION_ENABLEBGM] && sfxID == GET_BOXITEM_ID))) {
         return SEQ_AUDIO_BLANK;
     }
 

@@ -1,13 +1,14 @@
 #include "z3D/z3D.h"
 #include "moblin.h"
 #include "settings.h"
-#include "common.h"
+#include "enemizer.h"
+#include "actor.h"
 
-#define EnMb_Init ((ActorFunc)GAME_ADDR(0x165BA4))
-#define EnMb_Update ((ActorFunc)GAME_ADDR(0x1B6D80))
+void EnMb_Init(Actor* thisx, GlobalContext* globalCtx);
+void EnMb_Update(Actor* thisx, GlobalContext* globalCtx);
 
-#define EnMb_ClubWaitPlayerNear ((EnMbActionFunc)GAME_ADDR(0x10B5D0))
-#define EnMb_ClubAttack ((EnMbActionFunc)GAME_ADDR(0x136C68))
+void EnMb_ClubWaitPlayerNear(EnMb* this, GlobalContext* globalCtx);
+void EnMb_ClubAttack(EnMb* this, GlobalContext* globalCtx);
 
 void EnMb_rInit(Actor* thisx, GlobalContext* globalCtx) {
     EnMb_Init(thisx, globalCtx);
@@ -84,4 +85,9 @@ void EnMb_rUpdate(Actor* thisx, GlobalContext* globalCtx) {
             }
         }
     }
+}
+
+void EnMb_ReinitModels(EnMb* this) {
+    s32 cmbIndex = this->actor.params == ENMB_TYPE_CLUB ? 1 : 0;
+    Actor_ReinitSkelAnime(&this->actor, &this->skelAnime, cmbIndex);
 }

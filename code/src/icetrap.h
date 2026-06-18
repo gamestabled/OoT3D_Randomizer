@@ -1,9 +1,7 @@
 #ifndef _ICETRAP_H_
 #define _ICETRAP_H_
 
-#include "../include/z3D/z3D.h"
-
-#define CURSETRAP_TEXT_BASE_INDEX 0x8FF0
+#include "z3D/z3D.h"
 
 struct ItemOverride;
 

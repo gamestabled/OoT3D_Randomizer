@@ -1,3 +1,5 @@
+#include "s_item.h"
+
 #include "item_location.hpp"
 #include "item_pool.hpp"
 #include "location_access.hpp"

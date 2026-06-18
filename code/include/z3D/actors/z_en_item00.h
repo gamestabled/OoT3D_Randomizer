@@ -3,6 +3,10 @@
 
 #include "z3D/z3D.h"
 
+struct EnItem00;
+
+typedef void (*EnItem00ActionFunc)(struct EnItem00* this, GlobalContext* globalCtx);
+
 typedef enum Item00Type {
     /* 0x00 */ ITEM00_RUPEE_GREEN,
     /* 0x01 */ ITEM00_RUPEE_BLUE,
@@ -41,7 +45,7 @@ typedef struct EnItem00Extension {
 
 typedef struct EnItem00 {
     /* 0x000 */ Actor actor;
-    /* 0x1A4 */ void* actionFunc;
+    /* 0x1A4 */ EnItem00ActionFunc actionFunc;
     /* 0x1A8 */ u16 collectibleFlag;
     /* 0x1AA */ char unk_1AA[0x4];
     /* 0x1AE */ u16 unk_1AE;

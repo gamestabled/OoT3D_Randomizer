@@ -5,8 +5,8 @@
 namespace Enemizer {
 
 static void AssignRandomEnemy(EnemyLocation& loc) {
-    std::vector<u16> enemyOptions;
-    for (u16 enemyId = ENEMY_INVALID + 1; enemyId < ENEMY_MAX; enemyId++) {
+    std::vector<u8> enemyOptions;
+    for (u8 enemyId = ENEMY_INVALID + 1; enemyId < ENEMY_MAX; enemyId++) {
         EnemyType& candidate = enemyTypes[enemyId];
         u8 enemyMode         = Settings::enemizerListOptions.at(enemyId)->GetSelectedOptionIndex();
         if (enemyMode == ENEMYMODE_RANDOMIZED &&
@@ -15,8 +15,8 @@ static void AssignRandomEnemy(EnemyLocation& loc) {
         }
     }
     if (enemyOptions.size() > 0) {
-        loc.randomizedEnemyId = RandomElement(enemyOptions);
-        loc.randomizedParams  = RandomElement(enemyTypes[loc.randomizedEnemyId].possibleParams);
+        loc.randomizedEnemyId   = RandomElement(enemyOptions);
+        loc.randomizedParamsIdx = Random(0, enemyTypes[loc.randomizedEnemyId].possibleParamsCount);
     }
 }
 
@@ -53,14 +53,15 @@ void FillPatchOverrides(std::vector<EnemyOverride>& enemyOverrides) {
                         continue;
                     }
                     EnemyType& enemyType = enemyTypes[entry.second.randomizedEnemyId];
-                    if (enemyType.actorId != 0) {
+                    if (enemyType.id != ENEMY_INVALID) {
                         EnemyOverride ovr;
                         ovr.scene      = scene.first;
                         ovr.layer      = layer.first;
                         ovr.room       = room.first;
                         ovr.actorEntry = entry.first;
-                        ovr.actorId    = enemyType.actorId;
-                        ovr.params     = entry.second.randomizedParams;
+                        ovr.enemyId    = enemyType.id;
+                        ovr.paramsIdx  = entry.second.randomizedParamsIdx;
+                        ovr.vanillaId  = entry.second.vanillaEnemyId;
                         enemyOverrides.push_back(ovr);
                     }
                 }

@@ -8,25 +8,16 @@
 #include "common.h"
 #include <stddef.h>
 
-typedef void (*SkeletonAnimationModel_MatrixCopy_proc)(SkeletonAnimationModel* glModel, nn_math_MTX34* mtx);
-#define SkeletonAnimationModel_MatrixCopy ((SkeletonAnimationModel_MatrixCopy_proc)GAME_ADDR(0x3721E0))
-
-typedef void (*SkeletonAnimationModel_Draw_proc)(SkeletonAnimationModel* glModel, s32 param_2);
-#define SkeletonAnimationModel_Draw ((SkeletonAnimationModel_Draw_proc)GAME_ADDR(0x372170))
-
-typedef void (*SkeletonAnimationModel_SpawnAt_proc)(Actor* actor, GlobalContext* globalCtx,
-                                                    SkeletonAnimationModel** glModel, s32 objModelIdx);
-#define SkeletonAnimationModel_SpawnAt ((SkeletonAnimationModel_SpawnAt_proc)GAME_ADDR(0x372F38))
-
-typedef void (*Actor_SetModelMatrix_proc)(f32 x, f32 y, f32 z, nn_math_MTX34* mtx, ActorShape* shape);
-#define Actor_SetModelMatrix ((Actor_SetModelMatrix_proc)GAME_ADDR(0x3679D0))
+void SkeletonAnimationModel_MatrixCopy(SkeletonAnimationModel* glModel, nn_math_MTX34* mtx);
+void SkeletonAnimationModel_Draw(SkeletonAnimationModel* glModel, s32 param_2);
+void Actor_SetModelMatrix(f32 x, f32 y, f32 z, nn_math_MTX34* mtx, ActorShape* shape);
 
 #define LOADEDMODELS_MAX 20
 Model ModelContext[LOADEDMODELS_MAX] = { 0 };
 
 void Model_SetAnim(SkeletonAnimationModel* model, s16 objectId, u32 objectAnimIdx) {
     void* cmabMan = Object_GetCMABByIndex(objectId, objectAnimIdx);
-    TexAnim_Spawn(model->unk_0C, cmabMan);
+    MatAnim_Init(model->matAnim, cmabMan);
 }
 
 void Model_Init(Model* model, GlobalContext* globalCtx) {
@@ -47,8 +38,8 @@ void Model_Init(Model* model, GlobalContext* globalCtx) {
 
     if (model->itemRow->cmabIndex >= 0) {
         Model_SetAnim(model->saModel, model->itemRow->objectId, model->itemRow->cmabIndex);
-        model->saModel->unk_0C->animSpeed = 2.0f;
-        model->saModel->unk_0C->animMode  = 1;
+        model->saModel->matAnim->animSpeed = 2.0f;
+        model->saModel->matAnim->animMode  = 1;
     }
 
     if (model->itemRow->objectModelIdx2 >= 0) {
@@ -56,8 +47,8 @@ void Model_Init(Model* model, GlobalContext* globalCtx) {
                                                        model->itemRow->objectModelIdx2);
         if (model->itemRow->cmabIndex2 >= 0) {
             Model_SetAnim(model->saModel2, model->itemRow->objectId, model->itemRow->cmabIndex2);
-            model->saModel2->unk_0C->animSpeed = 2.0f;
-            model->saModel2->unk_0C->animMode  = 1;
+            model->saModel2->matAnim->animSpeed = 2.0f;
+            model->saModel2->matAnim->animMode  = 1;
         }
     }
 
@@ -117,7 +108,7 @@ void Actor_SetModelMatrixWrapper(Actor* actor, nn_math_MTX34* mtx) {
                  "mov r0,r1\n" // mtx
                  "mov r1,r2\n" // shape
                  "push {r0-r12, lr}\n"
-                 "bl 0x3679D0\n"
+                 "bl Actor_SetModelMatrix\n"
                  "pop {r0-r12, lr}\n"
                  "pop {r0-r12, lr}\n");
 }
@@ -280,7 +271,7 @@ u32 Model_OverrideMesh(void* unk, u32 meshGroupIndex) {
     if (IsInGameOrBossChallenge() && gSaveContext.linkAge == AGE_ADULT && gSettingsContext.stickAsAdult &&
         PLAYER->heldItemActionParam == 6 && // holding a deku stick
         meshGroupIndex == 23 &&             // meshGroupIndex for deku stick in child object and shield in adult object
-        unk == PLAYER->skelAnime.unk_28->unk_draw_struct_14 // check that this is for the player model
+        unk == PLAYER->skelAnime.saModel->subSAM14 // check that this is for the player model
     ) {
         return 44; // meshGroupIndex for unused deku stick in adult object
     }

@@ -2,11 +2,9 @@
 #include "z3D/actors/z_demo_effect.h"
 #include "models.h"
 
-#define DemoEffect_Init ((ActorFunc)GAME_ADDR(0x22345C))
-
-#define DemoEffect_Destroy ((ActorFunc)GAME_ADDR(0x2245B8))
-
-#define DemoEffect_Update ((ActorFunc)GAME_ADDR(0x262C58))
+void DemoEffect_Init(Actor* thisx, GlobalContext* globalCtx);
+void DemoEffect_Destroy(Actor* thisx, GlobalContext* globalCtx);
+void DemoEffect_Update(Actor* thisx, GlobalContext* globalCtx);
 
 #define THIS ((DemoEffect*)thisx)
 

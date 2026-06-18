@@ -2,7 +2,7 @@
 #include "obj_switch.h"
 #include "settings.h"
 
-#define ObjSwitch_Init ((ActorFunc)GAME_ADDR(0x215A14))
+void ObjSwitch_Init(Actor* thisx, GlobalContext* globalCtx);
 
 void ObjSwitch_rInit(Actor* thisx, GlobalContext* globalCtx) {
 

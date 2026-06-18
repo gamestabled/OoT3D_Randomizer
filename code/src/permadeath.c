@@ -9,8 +9,7 @@ u8 Permadeath_GetOption(void) {
            (gSettingsContext.gloomMode != GLOOMMODE_DEATH || gSaveContext.healthCapacity == 0);
 }
 
-typedef void (*SaveFile_Delete_proc)(u8 fileNum);
-#define SaveFile_Delete ((SaveFile_Delete_proc)GAME_ADDR(0x446FC4))
+void SaveFile_Delete(u8 fileNum);
 
 void Permadeath_DeleteSave(void) {
     if (!Permadeath_GetOption()) {

@@ -3,9 +3,9 @@
 
 #include "z3D/z3D.h"
 
-#define Fishing_Init ((ActorFunc)GAME_ADDR(0x1C0AD8))
-#define Fishing_UpdateFish ((ActorFunc)GAME_ADDR(0x1F9ACC))
-#define Fishing_DrawFish ((ActorFunc)GAME_ADDR(0x1F98B4))
+void Fishing_Init(Actor* thisx, GlobalContext* globalCtx);
+void Fishing_UpdateFish(Actor* thisx, GlobalContext* globalCtx);
+void Fishing_DrawFish(Actor* thisx, GlobalContext* globalCtx);
 
 #define EN_FISH_AQUARIUM 200 // param for record fish in tank.
 

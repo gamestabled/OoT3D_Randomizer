@@ -2,11 +2,10 @@
 #include "settings.h"
 #include "multiplayer.h"
 
-#define EnIshi_Init ((ActorFunc)GAME_ADDR(0x1B5460))
+void EnIshi_Init(Actor* thisx, GlobalContext* globalCtx);
+void EnIshi_Update(Actor* thisx, GlobalContext* globalCtx);
 
-#define EnIshi_Update ((ActorFunc)GAME_ADDR(0x1F69AC))
-
-#define EnIshi_LiftedUp (void*)GAME_ADDR(0x3CBAC4)
+void EnIshi_LiftedUp(EnIshi* this, GlobalContext* globalCtx);
 
 void EnIshi_rInit(Actor* thisx, GlobalContext* globalCtx) {
 
@@ -21,13 +20,15 @@ void EnIshi_rInit(Actor* thisx, GlobalContext* globalCtx) {
     }
 }
 
-void EnIshi_rUpdate(EnIshi* thisx, GlobalContext* globalCtx) {
-    void* prev_action_fn = thisx->action_fn;
+void EnIshi_rUpdate(Actor* thisx, GlobalContext* globalCtx) {
+    EnIshi* this = (EnIshi*)thisx;
+
+    EnIshiActionFunc prev_action_fn = this->action_fn;
 
     EnIshi_Update((Actor*)thisx, globalCtx);
 
-    s16 type = thisx->base.params & 0x1;
-    if (type == LARGE_ROCK && prev_action_fn != thisx->action_fn && thisx->action_fn == EnIshi_LiftedUp) {
+    s16 type = thisx->params & 0x1;
+    if (type == LARGE_ROCK && prev_action_fn != this->action_fn && this->action_fn == EnIshi_LiftedUp) {
         Multiplayer_Send_ActorUpdate((Actor*)thisx, NULL, 0);
     }
 }

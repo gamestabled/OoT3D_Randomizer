@@ -160,8 +160,7 @@ void ItemEffect_TriforcePiece(SaveContext* saveCtx, s16 arg1, s16 arg2) {
 
 // With the No Ammo Drops option on, when the player gets an ammo upgrade,
 // the ammo count increases by 10 instead of being set to the maximum
-typedef void (*Inventory_ChangeUpgrade_proc)(u32 upgrade, u32 value);
-#define Inventory_ChangeUpgrade ((Inventory_ChangeUpgrade_proc)GAME_ADDR(0x33C730))
+void Inventory_ChangeUpgrade(u32 upgrade, u32 value);
 
 void ItemEffect_GiveUpgrade(SaveContext* saveCtx, s16 arg1, s16 arg2) {
     Inventory_ChangeUpgrade(arg2, arg1);
@@ -383,6 +382,19 @@ void ItemEffect_GiveChildKokiriSword(SaveContext* saveCtx, s16 arg1, s16 arg2) {
     }
 }
 
+void ItemEffect_Shield(SaveContext* saveCtx, s16 shieldEquipValue, s16 arg2) {
+    if (gSettingsContext.extraShields != EXTRASHIELDS_NEVER) {
+        switch (shieldEquipValue) {
+            case EQUIP_VALUE_SHIELD_DEKU:
+                gExtSaveData.dekuShieldsCount++;
+                break;
+            case EQUIP_VALUE_SHIELD_HYLIAN:
+                gExtSaveData.hylianShieldsCount++;
+                break;
+        }
+    }
+}
+
 void ItemEffect_GiveStone(SaveContext* saveCtx, s16 mask, s16 arg2) {
     s32 trueMask = mask << 16;
     saveCtx->questItems |= trueMask;
@@ -422,7 +434,7 @@ void ItemEffect_ShardOfAgony(SaveContext* saveCtx, s16 arg1, s16 arg2) {
 }
 
 void ItemEffect_EnemySoul(SaveContext* saveCtx, s16 soulId, s16 arg2) {
-    EnemySouls_SetSoulFlag(soulId);
+    EnemySouls_OnCollect(soulId);
 }
 
 void ItemEffect_OcarinaNote(SaveContext* saveCtx, s16 buttonId, s16 arg2) {

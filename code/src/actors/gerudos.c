@@ -1,16 +1,18 @@
 #include "z3D/z3D.h"
 #include "settings.h"
+#include "enemizer.h"
+#include "actor.h"
 
 #include "gerudos.h"
 
-#define EnGe1_Init ((ActorFunc)GAME_ADDR(0x18B218))
-#define EnGe1_Update ((ActorFunc)GAME_ADDR(0x1D742C))
+/*-------------------------------
+|             EnGe1             |
+-------------------------------*/
 
-#define EnGe1_TalkAfterGame_Archery ((ActorFunc)GAME_ADDR(0x12A5C8))
+void EnGe1_Init(Actor* thisx, GlobalContext* globalCtx);
+void EnGe1_Update(Actor* thisx, GlobalContext* globalCtx);
 
-#define EnGeldB_Init ((ActorFunc)GAME_ADDR(0x1D7BD8))
-#define EnGeldB_Update ((ActorFunc)GAME_ADDR(0x14A04C))
-#define EnGeldB_Draw ((ActorFunc)GAME_ADDR(0x1B2B00))
+void EnGe1_TalkAfterGame_Archery(Actor* thisx, GlobalContext* globalCtx);
 
 void EnGe1_rInit(Actor* thisx, GlobalContext* globalCtx) {
     EnGe1* self = (EnGe1*)thisx;
@@ -45,6 +47,25 @@ void EnGe1_rUpdate(Actor* thisx, GlobalContext* globalCtx) {
     }
 }
 
+/*-------------------------------
+|             EnGe2             |
+-------------------------------*/
+
+void EnGe2_ReinitModels(EnGe2* this) {
+    Actor_ReinitSkelAnime(&this->actor, &this->skelAnime, 0);
+
+    FaceAnim_Destroy(&this->faceAnim);
+    FaceAnim_Init(&this->faceAnim, &this->skelAnime, 0, -1, -1);
+}
+
+/*-------------------------------
+|            EnGeldB            |
+-------------------------------*/
+
+void EnGeldB_Init(Actor* thisx, GlobalContext* globalCtx);
+void EnGeldB_Update(Actor* thisx, GlobalContext* globalCtx);
+void EnGeldB_Draw(Actor* thisx, GlobalContext* globalCtx);
+
 void EnGeldB_rUpdate(Actor* thisx, GlobalContext* globalCtx) {
     u32 prevSwitchFlags = gGlobalContext->actorCtx.flags.swch;
 
@@ -63,6 +84,8 @@ void EnGeldB_rUpdate(Actor* thisx, GlobalContext* globalCtx) {
 void EnGeldB_rDraw(Actor* thisx, GlobalContext* globalCtx) {
     EnGeldB* this = (EnGeldB*)thisx;
 
+    thisx->shape.shadowDrawFunc = NULL; // Skip broken shadow
+
     EnGeldB_Draw(thisx, globalCtx);
 
     // If the player is caught by a randomized Gerudo, go back to the last entrance.
@@ -74,4 +97,11 @@ void EnGeldB_rDraw(Actor* thisx, GlobalContext* globalCtx) {
 
 u8 GerudoFighter_IsRandomized(void) {
     return Enemizer_IsEnemyRandomized(ENEMY_GERUDO_FIGHTER);
+}
+
+void EnGeldB_ReinitModels(EnGeldB* this) {
+    Actor_ReinitSkelAnime(&this->actor, &this->skelAnime, 0);
+
+    FaceAnim_Destroy(&this->faceAnim);
+    FaceAnim_Init(&this->faceAnim, &this->skelAnime, 0, -1, -1);
 }

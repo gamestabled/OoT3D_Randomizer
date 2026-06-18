@@ -1,17 +1,10 @@
 #include "z3D/z3D.h"
 #include "twinrova.h"
 
-#define Boss_Tw_Init ((ActorFunc)GAME_ADDR(0x1A7E18))
-
-#define Boss_Tw_Update ((ActorFunc)GAME_ADDR(0x1EF880))
-
-#define Boss_Tw_Draw ((ActorFunc)GAME_ADDR(0x1EEDF0))
-
-#define Boss_Tw_Destroy ((ActorFunc)GAME_ADDR(0x1A88E8))
-
-#define PlayActorMusic ((void (*)(u8 unk, u32 music))GAME_ADDR(0x36EC40))
-
-#define BOSS_BATTLE_BGM 0x1000589
+void Boss_Tw_Init(Actor* thisx, GlobalContext* globalCtx);
+void Boss_Tw_Update(Actor* thisx, GlobalContext* globalCtx);
+void Boss_Tw_Draw(Actor* thisx, GlobalContext* globalCtx);
+void Boss_Tw_Destroy(Actor* thisx, GlobalContext* globalCtx);
 
 static u8 fightStarted = 0;
 static u8 appeared     = 0;
@@ -32,7 +25,7 @@ void Boss_Tw_rUpdate(Actor* thisx, GlobalContext* globalCtx) {
 
     if (!fightStarted && pos.x > -100 && pos.x < 100 && pos.y > 200 && pos.z > -100 && pos.z < 100) {
         fightStarted = 1;
-        PlayActorMusic(0, BOSS_BATTLE_BGM);
+        Audio_PlaySequence(SEQ_PLAYER_BGM_MAIN, NA_BGM_BOSS00);
     }
 
     if (fightStarted) {

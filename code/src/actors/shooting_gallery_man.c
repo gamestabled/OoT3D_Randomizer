@@ -2,9 +2,8 @@
 #include "entrance.h"
 #include "settings.h"
 
-#define EnSyatekiMan_Init ((ActorFunc)GAME_ADDR(0x283F94))
-
-#define EnSyatekiMan_Update ((ActorFunc)GAME_ADDR(0x2A60BC))
+void EnSyatekiMan_Init(Actor* thisx, GlobalContext* globalCtx);
+void EnSyatekiMan_Update(Actor* thisx, GlobalContext* globalCtx);
 
 void EnSyatekiMan_rInit(Actor* thisx, GlobalContext* globalCtx) {
     // If child is in the adult shooting gallery or adult in the child shooting gallery, then despawn the shooting

@@ -1,8 +1,9 @@
 #include "stalchild.h"
 #include "settings.h"
+#include "enemizer.h"
 #include "enemy_souls.h"
 
-#define EnSkb_Update ((ActorFunc)GAME_ADDR(0x1DE320))
+void EnSkb_Update(Actor* thisx, GlobalContext* globalCtx);
 
 s32 Stalchild_CanDespawn(Actor* stalchild) {
     return !Enemizer_IsEnemyRandomized(ENEMY_STALCHILD) ||
@@ -11,7 +12,7 @@ s32 Stalchild_CanDespawn(Actor* stalchild) {
 }
 
 void EnSkb_rUpdate(Actor* thisx, GlobalContext* globalCtx) {
-    if (!EnemySouls_CheckSoulForActor(thisx)) {
+    if (EnemySouls_IsInvulnerable(thisx)) {
         // prevent drowning
         thisx->depthInWater = 0;
     }

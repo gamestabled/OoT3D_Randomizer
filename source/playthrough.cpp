@@ -1,12 +1,10 @@
 #include "playthrough.hpp"
-
 #include "custom_messages.hpp"
 #include "fill.hpp"
 #include "location_access.hpp"
 #include "logic.hpp"
 #include "random.hpp"
 #include "spoiler_log.hpp"
-#include "../code/src/item_override.h"
 
 #include <3ds.h>
 #include <unistd.h>

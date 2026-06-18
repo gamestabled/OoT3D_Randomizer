@@ -11,6 +11,12 @@ struct EnMb;
 
 typedef void (*EnMbActionFunc)(struct EnMb*, GlobalContext*);
 
+typedef enum EnMbType {
+    /* -1 */ ENMB_TYPE_SPEAR_GUARD = -1,
+    /*  0 */ ENMB_TYPE_CLUB,
+    /*  1 */ ENMB_TYPE_SPEAR_PATROL,
+} EnMbType;
+
 typedef struct EnMb {
     /* 0x0000 */ Actor actor;
     /* 0x01A4 */ char unk_1A4[0x040];
@@ -27,5 +33,6 @@ _Static_assert(sizeof(EnMb) == 0xBAC, "EnMb size");
 
 void EnMb_rInit(Actor* thisx, GlobalContext* globalCtx);
 void EnMb_rUpdate(Actor* thisx, GlobalContext* globalCtx);
+void EnMb_ReinitModels(EnMb* this);
 
 #endif //_MOBLIN_H_

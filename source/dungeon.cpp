@@ -1,6 +1,6 @@
-#include "dungeon.hpp"
-#include "../code/src/dungeon.h"
+#include "s_dungeon.h"
 
+#include "dungeon.hpp"
 #include "category.hpp"
 #include "item_location.hpp"
 #include "pool_functions.hpp"

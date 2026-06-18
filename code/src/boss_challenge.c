@@ -2,8 +2,6 @@
 #include "multiplayer.h"
 
 #define STONES_MEDALLIONS_BITMASK 0x001C003F
-#define bossChallengeData ((void*)GAME_ADDR(0x5C3F58))
-#define bossVictories ((u32*)(bossChallengeData + 0x1C))
 
 static u32 ownedStonesMedallions = 0;
 static u8 enteredBCmenu          = 0;

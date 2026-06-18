@@ -922,18 +922,18 @@ void Multiplayer_Send_GhostData(void) {
 
     ghostData.meshGroups1 = 0;
     ghostData.meshGroups2 = 0;
-    s32 meshGroupCount    = Model_GetMeshGroupCount(PLAYER->skelAnime.unk_28);
+    s32 meshGroupCount    = Model_GetMeshGroupCount(PLAYER->skelAnime.saModel);
 
     for (size_t index = 0; index < BIT_COUNT(u32); index++) {
         if (index > meshGroupCount) {
             break;
         }
-        if (Model_IsMeshGroupUsed(PLAYER->skelAnime.unk_28, index)) {
+        if (Model_IsMeshGroupUsed(PLAYER->skelAnime.saModel, index)) {
             ghostData.meshGroups1 |= 1 << index;
         }
     }
     for (size_t index = BIT_COUNT(u32); index < meshGroupCount; index++) {
-        if (Model_IsMeshGroupUsed(PLAYER->skelAnime.unk_28, index)) {
+        if (Model_IsMeshGroupUsed(PLAYER->skelAnime.saModel, index)) {
             ghostData.meshGroups2 |= 1 << (index - BIT_COUNT(u32));
         }
     }
@@ -1000,8 +1000,8 @@ void Multiplayer_Receive_LinkSFX(u16 senderID) {
     }
 
     mp_duplicateSendProtection = true;
-    PlaySFX(mBuffer[1], &ghostDataPtr->position, 4, (f32*)GAME_ADDR(0x54AC20), (f32*)GAME_ADDR(0x54AC20),
-            (s8*)GAME_ADDR(0x54AC24));
+    Audio_PlaySfxGeneral(mBuffer[1], &ghostDataPtr->position, 4, &gSfxDefaultFreqAndVolScale,
+                         &gSfxDefaultFreqAndVolScale, &gSfxDefaultReverb);
 }
 
 // Shared Progress

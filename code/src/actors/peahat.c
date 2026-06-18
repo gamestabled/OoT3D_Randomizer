@@ -1,11 +1,13 @@
 #include "peahat.h"
 #include "settings.h"
+#include "enemizer.h"
 #include "enemy_souls.h"
+#include "actor.h"
 
-#define EnPeehat_Update ((ActorFunc)GAME_ADDR(0x167644))
+void EnPeehat_Update(Actor* thisx, GlobalContext* globalCtx);
 
-#define EnPeehat_StateAttackRecoil ((EnPeehatActionFunc)GAME_ADDR(0x2B2CC0))
-#define EnPeehat_Larva_StateSeekPlayer ((EnPeehatActionFunc)GAME_ADDR(0x391588))
+void EnPeehat_StateAttackRecoil(EnPeehat* this, GlobalContext* globalCtx);
+void EnPeehat_Larva_StateSeekPlayer(EnPeehat* this, GlobalContext* globalCtx);
 
 #define STATE_SEEK_PLAYER 14
 
@@ -14,7 +16,7 @@ void EnPeehat_rUpdate(Actor* thisx, GlobalContext* globalCtx) {
 
     EnPeehat_Update(thisx, globalCtx);
 
-    if (Enemizer_IsEnemyRandomized(ENEMY_PEAHAT) && thisx->params == (s16)0xFFFF) { // Grounded Peahat
+    if (Enemizer_IsEnemyRandomized(ENEMY_PEAHAT) && thisx->params == PEAHAT_TYPE_GROUNDED) {
         f32 yWaterSurface;
         void* waterBox;
         s32 waterBoxFound = WaterBox_GetSurfaceImpl(gGlobalContext, &gGlobalContext->colCtx, thisx->world.pos.x,
@@ -35,12 +37,12 @@ void EnPeehat_rUpdate(Actor* thisx, GlobalContext* globalCtx) {
                                 UPDBGCHECKINFO_WALL | UPDBGCHECKINFO_CEILING | UPDBGCHECKINFO_FLOOR_WATER);
     }
 
-    if (!EnemySouls_CheckSoulForActor(thisx) && thisx->params == 1) { // Peahat Larva
+    if (EnemySouls_IsInvulnerable(thisx) && thisx->params == PEAHAT_TYPE_LARVA) {
         // Prevent death when hitting player's shield.
         if (this->actionFunc == EnPeehat_StateAttackRecoil && thisx->speedXZ > -1.0) {
             this->actionFunc = EnPeehat_Larva_StateSeekPlayer;
             this->state      = STATE_SEEK_PLAYER;
-            this->colliderQuadBase.atFlags &= ~(1 << 2); // AT_BOUNCED
+            this->colliderQuadBase.atFlags &= ~AT_BOUNCED;
         }
 
         CollisionPoly floorPoly;
@@ -53,4 +55,11 @@ void EnPeehat_rUpdate(Actor* thisx, GlobalContext* globalCtx) {
             thisx->world.pos.y = yGroundIntersect + 10;
         }
     }
+}
+
+void EnPeehat_ReinitModels(EnPeehat* this) {
+    Actor_DestroySkelModels(&this->actor, &this->rootModel, NULL);
+    Actor_CreateSkelModels(&this->actor, gGlobalContext, &this->rootModel, 1, NULL);
+
+    Actor_ReinitSkelAnime(&this->actor, &this->anime, 0);
 }

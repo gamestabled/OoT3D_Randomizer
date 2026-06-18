@@ -5,6 +5,7 @@
 #include "custom_models.h"
 #include "item_override.h"
 #include "item_table.h"
+#include "item_effect.h"
 #include "models.h"
 #include "entrance.h"
 #include "multiplayer.h"
@@ -17,13 +18,13 @@ s32 Shop_CheckCanBuyBombchus(void) {
 
     if (gSettingsContext.bombchusInLogic) {
         if (gSaveContext.items[slot] != ITEM_NONE) {
-            return CANBUY_RESULT_0;
+            return CANBUY_RESULT_SUCCESS_FANFARE;
         } else {
             return CANBUY_RESULT_CANT_GET_NOW;
         }
     } else {
         if (((gSaveContext.upgrades >> 3) & 0x7) != 0) {
-            return CANBUY_RESULT_0;
+            return CANBUY_RESULT_SUCCESS_FANFARE;
         } else {
             return CANBUY_RESULT_CANT_GET_NOW;
         }
@@ -32,10 +33,10 @@ s32 Shop_CheckCanBuyBombchus(void) {
 
 s32 numShopItemsLoaded = 0; // Used to determine params. Reset this to 0 in ossan_destroy or smth
 
-#define EnGirlA_Init ((ActorFunc)GAME_ADDR(0x1D7F20))
-#define EnGirlA_Draw ((ActorFunc)GAME_ADDR(0x210188))
+void EnGirlA_Init(Actor* thisx, GlobalContext* globalCtx);
+void EnGirlA_Draw(Actor* thisx, GlobalContext* globalCtx);
 
-#define EnGirlA_InitializeItemAction ((EnGirlAActionFunc)GAME_ADDR(0x14D5C8))
+void EnGirlA_InitializeItemAction(EnGirlA* this, GlobalContext* globalCtx);
 
 void ShopsanityItem_Draw(Actor* itemx, GlobalContext* globalCtx);
 
@@ -106,17 +107,17 @@ s32 ShopsanityItem_CanBuy(GlobalContext* globalCtx, EnGirlA* item) {
             u8 id = ((ShopsanityItem*)item)->itemRow->actionId;
             if (ShopsanityItem_IsBombs(id)) {
                 if ((gSaveContext.upgrades >> 3) & 0x7) { // Has bomb bag
-                    return CANBUY_RESULT_0;
+                    return CANBUY_RESULT_SUCCESS_FANFARE;
                 }
                 return CANBUY_RESULT_CANT_GET_NOW;
             } else if (ShopsanityItem_IsArrows(id)) {
                 if (gSaveContext.upgrades & 0x7) { // Has bow
-                    return CANBUY_RESULT_0;
+                    return CANBUY_RESULT_SUCCESS_FANFARE;
                 }
                 return CANBUY_RESULT_CANT_GET_NOW;
             } else if (ShopsanityItem_IsSeeds(id)) {
                 if ((gSaveContext.upgrades >> 14) & 0x7) { // Has slingshot
-                    return CANBUY_RESULT_0;
+                    return CANBUY_RESULT_SUCCESS_FANFARE;
                 }
                 return CANBUY_RESULT_CANT_GET_NOW;
             }
@@ -127,10 +128,31 @@ s32 ShopsanityItem_CanBuy(GlobalContext* globalCtx, EnGirlA* item) {
         } else if (item->getItemId == GI_TUNIC_ZORA && gSaveContext.equipment & 0x0400) {
             return CANBUY_RESULT_CANT_GET_NOW;
         }
-        return CANBUY_RESULT_0;
+        return CANBUY_RESULT_SUCCESS_FANFARE;
     } else { // Not enough rupees
         return CANBUY_RESULT_NEED_RUPEES;
     }
+}
+
+// Allow buying shields even when already owned.
+static s32 ShopsanityItem_CanBuyExtraShield(GlobalContext* globalCtx, EnGirlA* item) {
+    if (item->basePrice > gSaveContext.rupees) {
+        return CANBUY_RESULT_NEED_RUPEES;
+    }
+    s16 shieldValue = item->getItemId == GI_SHIELD_DEKU ? EQUIP_VALUE_SHIELD_DEKU : EQUIP_VALUE_SHIELD_HYLIAN;
+    u8 hasShield    = gSaveContext.equipment & (1 << (3 + shieldValue));
+    if (!hasShield) {
+        return CANBUY_RESULT_SUCCESS_FANFARE;
+    }
+    return CANBUY_RESULT_SUCCESS;
+}
+
+// This function is called instead of offering a GetItem when the shield is already owned.
+static void ShopsanityItem_GiveExtraShield(GlobalContext* globalCtx, EnGirlA* item) {
+    u8 shieldItem = item->getItemId == GI_SHIELD_DEKU ? ITEM_SHIELD_DEKU : ITEM_SHIELD_HYLIAN;
+    Item_Give(globalCtx, shieldItem);
+    ItemEffect_Shield(&gSaveContext, shieldItem - ITEM_SHIELD_DEKU + EQUIP_VALUE_SHIELD_DEKU, -1);
+    Rupees_ChangeBy(-item->basePrice);
 }
 
 s16 ShopsanityItem_GetPrice(ShopsanityItem* item) {
@@ -188,18 +210,18 @@ void ShopsanityItem_ResetModels(ShopsanityItem* shopItem, GlobalContext* globalC
 
     if (cmabIdx >= 0) {
         void* cmabMan = Object_GetCMABByIndex(objectId, cmabIdx);
-        TexAnim_Spawn(item->model->unk_0C, cmabMan);
-        item->model->unk_0C->animSpeed = 2.0f;
-        item->model->unk_0C->animMode  = 1;
+        MatAnim_Init(item->model->matAnim, cmabMan);
+        item->model->matAnim->animSpeed = 2.0f;
+        item->model->matAnim->animMode  = 1;
     }
 
     if (objModelIdx2 >= 0) {
         item->model2 = SkeletonAnimationModel_Spawn(&item->actor, globalCtx, objectId, objModelIdx2);
         if (cmabIdx2 >= 0) {
             void* cmabMan = Object_GetCMABByIndex(objectId, cmabIdx2);
-            TexAnim_Spawn(item->model2->unk_0C, cmabMan);
-            item->model2->unk_0C->animSpeed = 2.0f;
-            item->model2->unk_0C->animMode  = 1;
+            MatAnim_Init(item->model2->matAnim, cmabMan);
+            item->model2->matAnim->animSpeed = 2.0f;
+            item->model2->matAnim->animMode  = 1;
         }
     }
 }
@@ -237,13 +259,18 @@ void ShopsanityItem_InitializeRegularShopItem(EnGirlA* item, GlobalContext* glob
         ShopsanityItem_ResetModels(shopItem, globalCtx, shopItemEntry->objId, shopItemEntry->objModelIdx,
                                    shopItemEntry->objModelIdx2, shopItemEntry->cmabIndex, shopItemEntry->cmabIndex2,
                                    0xFF);
-        item->getItemId  = shopItemEntry->getItemId;
-        item->canBuyFunc = shopItemEntry->canBuyFunc;
+        item->getItemId    = shopItemEntry->getItemId;
+        item->canBuyFunc   = shopItemEntry->canBuyFunc;
+        item->itemGiveFunc = shopItemEntry->itemGiveFunc;
         if (item->getItemId == GI_TUNIC_GORON ||
             item->getItemId == GI_TUNIC_ZORA) { // Override buyable functions for tunics
             item->canBuyFunc = ShopsanityItem_CanBuy;
+        } else if (gSettingsContext.extraShields == EXTRASHIELDS_ALWAYS &&
+                   (item->getItemId == GI_SHIELD_DEKU || item->getItemId == GI_SHIELD_HYLIAN)) {
+            // Override buyable functions for shields to allow buying extra ones.
+            item->canBuyFunc   = ShopsanityItem_CanBuyExtraShield;
+            item->itemGiveFunc = ShopsanityItem_GiveExtraShield;
         }
-        item->itemGiveFunc        = shopItemEntry->itemGiveFunc;
         item->buyEventFunc        = shopItemEntry->buyEventFunc;
         item->basePrice           = shopItemEntry->price;
         item->itemCount           = shopItemEntry->count;
@@ -256,6 +283,17 @@ void ShopsanityItem_InitializeRegularShopItem(EnGirlA* item, GlobalContext* glob
         } else if (item->actor.params == SI_BLUE_FIRE) {
             item->actor.params = 0;
         }
+    }
+}
+
+// For shop items that are not overridden at all
+static void ShopsanityItem_InitializeVanillaShopItem(EnGirlA* item, GlobalContext* globalCtx) {
+    EnGirlA_InitializeItemAction(item, globalCtx);
+    if (gSettingsContext.extraShields == EXTRASHIELDS_ALWAYS &&
+        (item->getItemId == GI_SHIELD_DEKU || item->getItemId == GI_SHIELD_HYLIAN)) {
+        // Override buyable functions for shields to allow buying extra ones.
+        item->canBuyFunc   = ShopsanityItem_CanBuyExtraShield;
+        item->itemGiveFunc = ShopsanityItem_GiveExtraShield;
     }
 }
 
@@ -276,6 +314,7 @@ void ShopsanityItem_Init(Actor* itemx, GlobalContext* globalCtx) {
     override = ItemOverride_Lookup(&item->super.actor, globalCtx->sceneNum, item->getItemId);
     if ((override.value.all == 0) || Shopsanity_CheckAlreadySold(item)) {
         EnGirlA_Init(itemx, globalCtx);
+        item->super.actionFunc2 = ShopsanityItem_InitializeVanillaShopItem;
     } else if (override.value.player == 0xFF) { // Special way to detect regular shop items
         EnGirlA_Init(itemx, globalCtx);
 

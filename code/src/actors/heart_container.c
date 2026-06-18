@@ -2,13 +2,10 @@
 #include "z3D/actors/z_item_b_heart.h"
 #include "models.h"
 
-#define ItemBHeart_Init ((ActorFunc)GAME_ADDR(0x25375C))
-
-#define ItemBHeart_Destroy ((ActorFunc)GAME_ADDR(0x2537D4))
-
-#define ItemBHeart_Update ((ActorFunc)GAME_ADDR(0x285C18))
-
-#define ItemBHeart_Draw ((ActorFunc)GAME_ADDR(0x285BEC))
+void ItemBHeart_Init(Actor* thisx, GlobalContext* globalCtx);
+void ItemBHeart_Destroy(Actor* thisx, GlobalContext* globalCtx);
+void ItemBHeart_Update(Actor* thisx, GlobalContext* globalCtx);
+void ItemBHeart_Draw(Actor* thisx, GlobalContext* globalCtx);
 
 #define THIS ((ItemBHeart*)thisx)
 

@@ -10,6 +10,7 @@
 #include "item_override.h"
 #include "permadeath.h"
 #include "gloom.h"
+#include "alert.h"
 
 #include "savefile.h"
 
@@ -518,6 +519,16 @@ void SaveFile_SetStartingInventory(void) {
     gSaveContext.equipment |= gSettingsContext.startingEquipment;
     gSaveContext.upgrades |= gSettingsContext.startingUpgrades;
 
+    if (gSettingsContext.extraShields != EXTRASHIELDS_NEVER) {
+        u8 startingShields = gSettingsContext.startingEquipment >> (4 * EQUIP_TYPE_SHIELD);
+        if (startingShields & EQUIP_VALUE_SHIELD_DEKU) {
+            gExtSaveData.dekuShieldsCount = 1;
+        }
+        if (startingShields & EQUIP_VALUE_SHIELD_HYLIAN) {
+            gExtSaveData.hylianShieldsCount = 1;
+        }
+    }
+
     // max rupees
     if (gSettingsContext.startingMaxRupees) {
         u8 wallet = (gSaveContext.upgrades >> 12) & 0x3;
@@ -638,8 +649,7 @@ void SaveFile_BorrowMask(s16 SI_ItemId) {
     gSaveContext.sceneFlags[0x60].unk |= (itemId - ITEM_MASK_KEATON) << 0x13;
 }
 
-typedef s32 (*Inventory_ReplaceItem_proc)(GlobalContext* globalCtx, u16 oldItem, u16 newItem);
-#define Inventory_ReplaceItem ((Inventory_ReplaceItem_proc)GAME_ADDR(0x316CEC))
+s32 Inventory_ReplaceItem(GlobalContext* globalCtx, u16 oldItem, u16 newItem);
 
 u32 SaveFile_CheckForWeirdEggHatch(void) {
     // Force the egg into the child trade slot so that it can hatch
@@ -711,7 +721,7 @@ s8 SaveFile_GetIgnoreMaskReactionOption(u32 reactionSet) {
     if (reactionSet == 0x3C && PLAYER->currentMask == 1 && (gSaveContext.infTable[7] & 0x80) == 0) {
         return 0;
     }
-    return gExtSaveData.option_IgnoreMaskReaction;
+    return gExtSaveData.options[OPTION_IGNOREMASKREACTION];
 }
 
 void SaveFile_InitExtSaveData(u32 saveNumber, u8 fromSaveCreation) {
@@ -719,16 +729,20 @@ void SaveFile_InitExtSaveData(u32 saveNumber, u8 fromSaveCreation) {
     memset(&gExtSaveData, 0, sizeof(gExtSaveData));
 
     gExtSaveData.version = EXTSAVEDATA_VERSION; // Do not change this line
+    if (fromSaveCreation) {
+        memcpy(&gExtSaveData.hashIndexes, &gSettingsContext.hashIndexes, sizeof(gExtSaveData.hashIndexes));
+    }
     gExtSaveData.extInf.masterSwordFlags =
         (gSettingsContext.shuffleMasterSword && !(gSettingsContext.startingEquipment & 0x2)) ? 0 : 1;
     gExtSaveData.permadeath = fromSaveCreation ? gSettingsContext.permadeath : 0;
     // Ingame Options
-    gExtSaveData.option_EnableBGM          = gSettingsContext.playMusic;
-    gExtSaveData.option_EnableSFX          = gSettingsContext.playSFX;
-    gExtSaveData.option_NaviNotifications  = gSettingsContext.naviNotifications;
-    gExtSaveData.option_IgnoreMaskReaction = gSettingsContext.ignoreMaskReaction;
-    gExtSaveData.option_SkipSongReplays    = gSettingsContext.skipSongReplays;
-    gExtSaveData.option_FreeCamControl     = gSettingsContext.freeCamControl;
+    gExtSaveData.options[OPTION_ENABLEBGM]          = gSettingsContext.playMusic;
+    gExtSaveData.options[OPTION_ENABLESFX]          = gSettingsContext.playSFX;
+    gExtSaveData.options[OPTION_NAVINOTIFICATIONS]  = gSettingsContext.naviNotifications;
+    gExtSaveData.options[OPTION_IGNOREMASKREACTION] = gSettingsContext.ignoreMaskReaction;
+    gExtSaveData.options[OPTION_SKIPSONGREPLAYS]    = gSettingsContext.skipSongReplays;
+    gExtSaveData.options[OPTION_FREECAMCONTROL]     = gSettingsContext.freeCamControl;
+    gExtSaveData.options[OPTION_SPOILERS]           = gSettingsContext.ingameSpoilers;
 }
 
 void SaveFile_LoadExtSaveData(u32 saveNumber) {
@@ -837,7 +851,7 @@ void SaveFile_LoadFileSwordless(void) {
     if (gSaveContext.linkAge == 0) {
         // Push pedestal item if adult and haven't received yet
         if (gSettingsContext.shuffleMasterSword && !(gExtSaveData.extInf.masterSwordFlags & 2)) {
-            ItemOverride_PushDelayedOverride(0x00);
+            ItemOverride_PushDelayedOverride(DLYOVR_MASTER_SWORD);
         }
 
         // Mark pedestal item collected
@@ -850,6 +864,9 @@ void SaveFile_BeforeLoadGame(u32 saveNumber) {
 }
 
 void SaveFile_AfterLoadGame(void) {
+    if (memcmp(&gExtSaveData.hashIndexes, &gSettingsContext.hashIndexes, sizeof(gExtSaveData.hashIndexes)) != 0) {
+        Alert_Set(ALERT_HASH_MISMATCH);
+    }
     // Give Ganon BK if Triforce Hunt has been completed
     if (gSettingsContext.triforceHunt == ON && gExtSaveData.triforcePieces >= gSettingsContext.triforcePiecesRequired &&
         (gSaveContext.dungeonItems[DUNGEON_GANONS_TOWER] & 1) == 0) {

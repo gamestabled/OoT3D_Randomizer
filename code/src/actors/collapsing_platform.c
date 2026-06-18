@@ -1,32 +1,34 @@
 #include "collapsing_platform.h"
 #include "multiplayer.h"
 
-#define ObjLift_Update ((ActorFunc)GAME_ADDR(0x2159DC))
+void ObjLift_Update(Actor* thisx, GlobalContext* globalCtx);
 
-#define ObjLift_Wait (void*)GAME_ADDR(0x3C05B0)
-#define ObjLift_Shake (void*)GAME_ADDR(0x110E98)
-#define ObjLift_Fall (void*)GAME_ADDR(0x3BB7BC)
+void ObjLift_Wait(ObjLift* this, GlobalContext* globalCtx);
+void ObjLift_Shake(ObjLift* this, GlobalContext* globalCtx);
+void ObjLift_Fall(ObjLift* this, GlobalContext* globalCtx);
 
-void ObjLift_rUpdate(ObjLift* thisx, GlobalContext* globalCtx) {
-    void* prev_action_fn = thisx->action_fn;
+void ObjLift_rUpdate(Actor* thisx, GlobalContext* globalCtx) {
+    ObjLift* this = (ObjLift*)thisx;
 
-    ObjLift_Update((Actor*)thisx, globalCtx);
+    ObjLiftActionFunc prev_action_fn = this->action_fn;
 
-    if (prev_action_fn != thisx->action_fn && prev_action_fn == ObjLift_Wait) {
-        Multiplayer_Send_ActorUpdate((Actor*)thisx, &thisx->action_fn, sizeof(void*));
+    ObjLift_Update(thisx, globalCtx);
+
+    if (prev_action_fn != this->action_fn && prev_action_fn == ObjLift_Wait) {
+        Multiplayer_Send_ActorUpdate(thisx, &this->action_fn, sizeof(void*));
     }
 }
 
-void ObjLift_SetActionFn(ObjLift* thisx, void* new_action_fn) {
-    if (thisx->action_fn != ObjLift_Wait) {
+void ObjLift_SetActionFn(ObjLift* this, ObjLiftActionFunc new_action_fn) {
+    if (this->action_fn != ObjLift_Wait) {
         return;
     }
     if (new_action_fn == ObjLift_Shake) {
-        thisx->timer = 30;
+        this->timer = 30;
     } else if (new_action_fn == ObjLift_Fall) {
-        thisx->base.world.pos = thisx->base.home.pos;
-        thisx->base.world.rot = thisx->base.home.rot;
-        thisx->base.shape.rot = thisx->base.world.rot;
+        this->base.world.pos = this->base.home.pos;
+        this->base.world.rot = this->base.home.rot;
+        this->base.shape.rot = this->base.world.rot;
     }
-    thisx->action_fn = new_action_fn;
+    this->action_fn = new_action_fn;
 }

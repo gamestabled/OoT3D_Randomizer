@@ -15,7 +15,7 @@ typedef struct {
     SkeletonAnimationModel* animation_model;
 } ObjHamishi;
 
-void ObjHamishi_rUpdate(ObjHamishi* thisx, GlobalContext* globalCtx);
-void ObjHamishi_Hit(ObjHamishi* thisx);
+void ObjHamishi_rUpdate(Actor* thisx, GlobalContext* globalCtx);
+void ObjHamishi_Hit(ObjHamishi* this);
 
 #endif //_BOULDER_RED_H_

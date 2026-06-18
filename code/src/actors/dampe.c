@@ -1,6 +1,10 @@
 #include "dampe.h"
 
-#define EnTk_Update ((ActorFunc)GAME_ADDR(0x1BC088))
+/*-------------------------------
+|              EnTk             |
+-------------------------------*/
+
+void EnTk_Update(Actor* thisx, GlobalContext* globalCtx);
 
 void EnTk_rUpdate(Actor* thisx, GlobalContext* globalCtx) {
     // Custom collectible flag for the heart piece
@@ -16,8 +20,31 @@ void EnTk_SetRewardFlag(EnTk* dampe) {
     dampe->currentReward = 4;
 }
 
+/*-------------------------------
+|           EnPoRelay           |
+-------------------------------*/
+
+void EnPoRelay_Destroy(Actor* thisx, GlobalContext* globalCtx);
+
+void EnPoRelay_rDestroy(Actor* thisx, GlobalContext* globalCtx) {
+    EnPoRelay_Destroy(thisx, globalCtx);
+
+    // Despawn previous doors when finishing the race with Dampé.
+    Actor* bgActor = globalCtx->actorCtx.actorList[ACTORTYPE_BG].first;
+    while (bgActor != NULL) {
+        if (bgActor->id == ACTOR_WINDMILL_OBJECTS && bgActor->world.pos.z < -1800.0) {
+            Actor_Kill(bgActor);
+        }
+        bgActor = bgActor->next;
+    }
+    // Set temp flags to enable loading triggers.
+    Flags_SetSwitch(globalCtx, 0x35);
+    Flags_SetSwitch(globalCtx, 0x36);
+    Flags_SetSwitch(globalCtx, 0x37);
+}
+
 // Checks the clear flag for the first race (chest spawned, not opened)
 // Replaces a check for hookshot in the inventory
 void EnPoRelay_CheckChestFlag(EnPoRelay* dampe) {
-    dampe->unk_B1C = ((gSaveContext.sceneFlags[0x48].clear & 0x00000010) != 0);
+    dampe->isSecondRace = ((gSaveContext.sceneFlags[0x48].clear & 0x00000010) != 0);
 }

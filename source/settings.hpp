@@ -1,7 +1,8 @@
 #pragma once
 
-#include <3ds.h>
+#include "s_settings.h"
 
+#include <3ds.h>
 #include <array>
 #include <algorithm>
 #include <cstdlib>
@@ -11,7 +12,6 @@
 #include <variant>
 #include <vector>
 
-#include "../code/src/settings.h"
 #include "category.hpp"
 #include "cosmetics.hpp"
 #include "debug.hpp"
@@ -356,7 +356,6 @@ bool ValidateSettings();
 std::string TitleId();
 
 extern std::string seed;
-extern std::string version;
 extern std::array<u8, 5> hashIconIndexes;
 
 extern Option OpenForest;
@@ -489,6 +488,7 @@ extern Option StartingTime;
 extern Option ChestAnimations;
 extern Option ChestAppearance;
 extern Option ChestAgony;
+extern Option ExtraShields;
 extern Option GenerateSpoilerLog;
 extern Option IngameSpoilers;
 extern Option MenuOpeningButton;

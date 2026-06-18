@@ -1,12 +1,16 @@
 #include "dark_link.h"
 #include "settings.h"
 #include "enemizer.h"
-#include "common.h"
+#include "enemy_souls.h"
 
-#define EnTorch2_Init ((ActorFunc)GAME_ADDR(0x1F853C))
-#define EnTorch2_Update ((ActorFunc)GAME_ADDR(0x22F0C8))
+void EnTorch2_Init(Actor* thisx, GlobalContext* globalCtx);
+void EnTorch2_Update(Actor* thisx, GlobalContext* globalCtx);
+void EnTorch2_Destroy(Actor* thisx, GlobalContext* globalCtx);
+void EnTorch2_Draw(Actor* thisx, GlobalContext* globalCtx);
 
 u8 sPlayerWeaponClanked = FALSE;
+
+#define IDLE_STANDING_ANIM_IDX 0x58
 
 void EnTorch2_rInit(Actor* thisx, GlobalContext* globalCtx) {
     EnTorch2_Init(thisx, globalCtx);
@@ -58,6 +62,15 @@ void EnTorch2_rUpdate(Actor* thisx, GlobalContext* globalCtx) {
             case ENTORCH2_WAIT:
                 // Avoid triggering fall damage effect when spawning in certain locations.
                 this->darkPlayer.fallStartHeight = thisx->world.pos.y;
+
+                // Sometimes during the first update cycle the animation changes to the falling one, so we need to
+                // restore it. Check water level in case it can raise and submerge Dark Link while idle.
+                if (this->darkPlayer.skelAnime.animIndex != IDLE_STANDING_ANIM_IDX &&
+                    this->darkPlayer.actor.depthInWater <= 0) {
+                    LinkAnimation_Change(&this->darkPlayer.skelAnime, globalCtx, IDLE_STANDING_ANIM_IDX, 1.0, 0.0, 0.0,
+                                         0, 0.0);
+                }
+
                 break;
             case ENTORCH2_ATTACK:
                 CollisionPoly floorPoly;
@@ -95,6 +108,26 @@ void EnTorch2_rUpdate(Actor* thisx, GlobalContext* globalCtx) {
     sPlayerWeaponClanked = FALSE;
 }
 
+void EnTorch2_rDraw(Actor* thisx, GlobalContext* globalCtx) {
+    EnTorch2* this = (EnTorch2*)thisx;
+    u8 prevAlpha   = this->alpha;
+    if (SoullessModels_Enabled && EnemySouls_IsInvulnerable(thisx)) {
+        this->alpha = 0xFF;
+    }
+
+    EnTorch2_Draw(thisx, globalCtx);
+
+    this->alpha = prevAlpha;
+}
+
+void EnTorch2_ReinitModels(EnTorch2* this) {
+    // Reinit whole actor because it looks good enough and reiniting player models/animations is too complex.
+    u8 prevActionState = this->actionState;
+    EnTorch2_Destroy(&this->darkPlayer.actor, gGlobalContext);
+    EnTorch2_rInit(&this->darkPlayer.actor, gGlobalContext);
+    this->actionState = prevActionState;
+}
+
 Actor* DarkLink_Spawn(Actor* spawner) {
     ActorEntry tempActorEntry = {
         .id = ACTOR_DARK_LINK,
@@ -112,9 +145,9 @@ Actor* DarkLink_Spawn(Actor* spawner) {
     };
 
     EnemyOverride enemyOverride = Enemizer_GetSpawnerOverride();
-    if (enemyOverride.actorId != 0) {
-        tempActorEntry.id     = enemyOverride.actorId;
-        tempActorEntry.params = enemyOverride.params;
+    if (enemyOverride.enemyId != ENEMY_INVALID) {
+        tempActorEntry.id     = gEnemyTable[enemyOverride.enemyId].actorId;
+        tempActorEntry.params = gEnemyTable[enemyOverride.enemyId].possibleParams[enemyOverride.paramsIdx];
         tempActorEntry.pos.z -= 75; // Move enemy outside of the tree.
 
         // Apply position updates depending on the specific enemy.

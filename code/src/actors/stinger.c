@@ -1,10 +1,11 @@
 #include "stinger.h"
 #include "settings.h"
-#include "common.h"
+#include "enemizer.h"
+#include "actor.h"
 
-#define EnEiyer_Update ((ActorFunc)GAME_ADDR(0x20F700))
+void EnEiyer_Update(Actor* thisx, GlobalContext* globalCtx);
 
-#define EnEiyer_WanderUnderground ((EnEiyerActionFunc)GAME_ADDR(0x1CD1D4))
+void EnEiyer_WanderUnderground(EnEiyer* this, GlobalContext* globalCtx);
 
 void EnEiyer_rUpdate(Actor* thisx, GlobalContext* globalCtx) {
     EnEiyer* this = (EnEiyer*)thisx;
@@ -31,4 +32,11 @@ void EnEiyer_rUpdate(Actor* thisx, GlobalContext* globalCtx) {
             thisx->world.pos = thisx->prevPos;
         }
     }
+}
+
+void EnEiyer_ReinitModels(EnEiyer* this) {
+    Actor_DestroySkelModels(&this->actor, &this->saModel, NULL);
+    Actor_CreateSkelModels(&this->actor, gGlobalContext, &this->saModel, 0, NULL);
+
+    Actor_ReinitSkelAnime(&this->actor, &this->anime, 0);
 }

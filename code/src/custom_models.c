@@ -338,31 +338,31 @@ void CustomModels_ApplyItemCMAB(SkeletonAnimationModel* model, u16 objectId, s8 
     switch (objectId) {
         case OBJECT_CUSTOM_CHILD_SONGS:
             cmabMan = Object_GetCMABByIndex(OBJECT_CUSTOM_GENERAL_ASSETS, TEXANIM_CHILD_SONG);
-            TexAnim_Spawn(model->unk_0C, cmabMan);
-            model->unk_0C->animSpeed = 0.0f;
-            model->unk_0C->animMode  = 0;
-            model->unk_0C->curFrame  = special;
+            MatAnim_Init(model->matAnim, cmabMan);
+            model->matAnim->animSpeed = 0.0f;
+            model->matAnim->animMode  = 0;
+            model->matAnim->curFrame  = special;
             break;
         case OBJECT_CUSTOM_ADULT_SONGS:
             cmabMan = Object_GetCMABByIndex(OBJECT_CUSTOM_GENERAL_ASSETS, TEXANIM_ADULT_SONG);
-            TexAnim_Spawn(model->unk_0C, cmabMan);
-            model->unk_0C->animSpeed = 0.0f;
-            model->unk_0C->animMode  = 0;
-            model->unk_0C->curFrame  = special;
+            MatAnim_Init(model->matAnim, cmabMan);
+            model->matAnim->animSpeed = 0.0f;
+            model->matAnim->animMode  = 0;
+            model->matAnim->curFrame  = special;
             break;
         case OBJECT_CUSTOM_BOSS_KEYS:
             cmabMan = Object_GetCMABByIndex(OBJECT_CUSTOM_GENERAL_ASSETS, TEXANIM_BOSS_KEY);
-            TexAnim_Spawn(model->unk_0C, cmabMan);
-            model->unk_0C->animSpeed = 0.0f;
-            model->unk_0C->animMode  = 0;
-            model->unk_0C->curFrame  = special;
+            MatAnim_Init(model->matAnim, cmabMan);
+            model->matAnim->animSpeed = 0.0f;
+            model->matAnim->animMode  = 0;
+            model->matAnim->curFrame  = special;
             break;
         case OBJECT_CUSTOM_OCARINA_BUTTON:
             cmabMan = Object_GetCMABByIndex(OBJECT_CUSTOM_GENERAL_ASSETS, TEXANIM_OCARINA_NOTE_BUTTON);
-            TexAnim_Spawn(model->unk_0C, cmabMan);
-            model->unk_0C->animSpeed = 0.0f;
-            model->unk_0C->animMode  = 0;
-            model->unk_0C->curFrame  = special;
+            MatAnim_Init(model->matAnim, cmabMan);
+            model->matAnim->animSpeed = 0.0f;
+            model->matAnim->animMode  = 0;
+            model->matAnim->curFrame  = special;
             break;
     }
 }

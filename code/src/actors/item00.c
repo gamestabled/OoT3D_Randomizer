@@ -6,17 +6,14 @@
 #include "common.h"
 #include "savefile.h"
 
-#define EnItem00_Init ((ActorFunc)GAME_ADDR(0x1F69B4))
-
-#define EnItem00_Destroy ((ActorFunc)GAME_ADDR(0x1F706C))
-
-#define EnItem00_Update ((ActorFunc)GAME_ADDR(0x22B71C))
-
-#define EnItem00_Draw ((ActorFunc)GAME_ADDR(0x22B6C0))
+void EnItem00_Init(Actor* thisx, GlobalContext* globalCtx);
+void EnItem00_Destroy(Actor* thisx, GlobalContext* globalCtx);
+void EnItem00_Update(Actor* thisx, GlobalContext* globalCtx);
+void EnItem00_Draw(Actor* thisx, GlobalContext* globalCtx);
 
 #define THIS ((EnItem00*)thisx)
 
-#define EnItem00_Collected ((void*)GAME_ADDR(0x2B175C))
+void EnItem00_Collected(EnItem00* this, GlobalContext* globalCtx);
 
 void EnItem00_rInit(Actor* thisx, GlobalContext* globalCtx) {
     EnItem00* item = THIS;

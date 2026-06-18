@@ -2,17 +2,14 @@
 #include "z3D/actors/z_en_si.h"
 #include "models.h"
 
-#define EnSi_Init ((ActorFunc)GAME_ADDR(0x168A90))
+void EnSi_Init(Actor* thisx, GlobalContext* globalCtx);
+void EnSi_Destroy(Actor* thisx, GlobalContext* globalCtx);
+void EnSi_Update(Actor* thisx, GlobalContext* globalCtx);
+void EnSi_Draw(Actor* thisx, GlobalContext* globalCtx);
 
-#define EnSi_Destroy ((ActorFunc)GAME_ADDR(0x168C3C))
-
-#define EnSi_Update ((ActorFunc)GAME_ADDR(0x1BA0C8))
-
-#define EnSi_Draw ((ActorFunc)GAME_ADDR(0x1BA050))
+void EnSi_DestroyAfterText(EnSi* this, GlobalContext* globalCtx);
 
 #define THIS ((EnSi*)thisx)
-
-#define EnSi_DestroyAfterText (void*)GAME_ADDR(0x3D0544)
 
 void EnSi_rInit(Actor* thisx, GlobalContext* globalCtx) {
     EnSi* token = THIS;
@@ -41,13 +38,11 @@ void EnSi_rUpdate(Actor* thisx, GlobalContext* globalCtx) {
     EnSi_Update(&token->actor, globalCtx);
 }
 
-typedef u32 (*EnSi_Draw_GetData_proc)(void);
-
 void EnSi_rDraw(Actor* thisx, GlobalContext* globalCtx) {
     EnSi* token = THIS;
 
-    if (token->actionFunc != (EnSiActionFunc)GAME_ADDR(0x3D0544)) {
-        token->unk_20C[3] = ((EnSi_Draw_GetData_proc)GAME_ADDR(0x3695F8))() ? 0.0f : 2.0f;
+    if (token->actionFunc != EnSi_DestroyAfterText) {
+        token->unk_20C[3] = PauseContext_GetState() ? 0.0f : 2.0f;
         if (!Model_DrawByActor(&token->actor)) {
             EnSi_Draw(&token->actor, globalCtx);
         }

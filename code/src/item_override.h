@@ -1,13 +1,9 @@
 #ifndef _ITEM_OVERRIDES_H_
 #define _ITEM_OVERRIDES_H_
 
-#include "../include/z3D/z3D.h"
+#include "s_item_override.h"
 
-extern u8 isItemOverrideActive;
-extern u8 rActiveItemChestType;
-
-void ItemOverride_Init(void);
-void ItemOverride_Update(void);
+#include "z3D/z3D.h"
 
 enum ItemOverride_Type {
     OVR_BASE_ITEM    = 0,
@@ -19,30 +15,11 @@ enum ItemOverride_Type {
     OVR_TEMPLE       = 6,
 };
 
-typedef union ItemOverride_Key {
-    u32 all;
-    struct {
-        char pad_;
-        u8 scene;
-        u8 type;
-        u8 flag;
-    };
-} ItemOverride_Key;
+extern u8 isItemOverrideActive;
+extern u8 rActiveItemChestType;
 
-typedef union ItemOverride_Value {
-    u32 all;
-    struct {
-        u16 itemId;
-        u8 player;
-        u8 looksLikeItemId;
-    };
-} ItemOverride_Value;
-
-typedef struct ItemOverride {
-    ItemOverride_Key key;
-    ItemOverride_Value value;
-} ItemOverride;
-
+void ItemOverride_Init(void);
+void ItemOverride_Update(void);
 ItemOverride ItemOverride_LookupByKey(ItemOverride_Key key);
 ItemOverride ItemOverride_Lookup(Actor* actor, u8 scene, u8 item_id);
 s32 ItemOverride_IsAPendingOverride(void);

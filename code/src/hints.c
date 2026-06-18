@@ -6,11 +6,8 @@
 
 #define SCENE_YDAN_BOSS 17
 
-typedef u8 (*Player_GetMask_proc)(GlobalContext* globalCtx);
-#define Player_GetMask ((Player_GetMask_proc)GAME_ADDR(0x36EF98))
-
-typedef u16 (*ElfMessage_GetSariaText_proc)(GlobalContext* globalCtx);
-#define ElfMessage_GetSariaText ((ElfMessage_GetSariaText_proc)GAME_ADDR(0x31C698))
+u8 Player_GetMask(GlobalContext* globalCtx);
+u16 ElfMessage_GetSariaText(GlobalContext* globalCtx);
 
 u16 sSariasSongHintTextIds[MAX_SARIAS_SONG_HINTS] = { 0x0A00 };
 s32 sNumSariasSongHints                           = 1;

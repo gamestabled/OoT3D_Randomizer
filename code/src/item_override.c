@@ -1,6 +1,7 @@
 #include "item_override.h"
 #include "rHeap.h"
 #include "item_table.h"
+#include "item_effect.h"
 #include "icetrap.h"
 #include "settings.h"
 #include "custom_models.h"
@@ -8,10 +9,10 @@
 #include "entrance.h"
 #include "savefile.h"
 #include "common.h"
-#include "actors/obj_mure3.h"
+#include "chest.h"
+#include "bgm.h"
 
 #include <stddef.h>
-#include "chest.h"
 
 #include "z3D/z3D.h"
 #include "z3D/actors/z_en_box.h"
@@ -463,21 +464,10 @@ void ItemOverride_GetItem(Actor* fromActor, Player* player, s8 incomingItemId) {
     }
 
     if (override.key.all == 0) {
-        // Hack for Scrubsanity Off
-        // The game will spawn different scrub actors in grottos depending on if
-        // Link is child or adult (one for deku seeds and another for arrows
-        // respectively). Since we only override the child deku scrubs when
-        // scrubsanity is off, the adult ones will return the Gold Scale getItemID
-        // and not find an override in the overrid table. This is where we fix that
-        // so adult Link will receive arrows properly.
-        if (incomingItemId == GI_SCALE_GOLD && gSettingsContext.scrubsanity == SCRUBSANITY_OFF) {
-            override.value.itemId = GI_ARROWS_LARGE;
-        } else {
-            // No override, use base game's item code
-            ItemOverride_Clear();
-            player->getItemId = incomingItemId;
-            return;
-        }
+        // No override, use base game's item code
+        ItemOverride_Clear();
+        player->getItemId = incomingItemId;
+        return;
     }
 
     IceTrap_UpdateOverride(&override, fromActor->id == ACTOR_CHEST);
@@ -496,34 +486,78 @@ void ItemOverride_GetItem(Actor* fromActor, Player* player, s8 incomingItemId) {
     player->getItemId = incomingNegative ? -baseItemId : baseItemId;
 }
 
-void ItemOverride_GetItemTextAndItemID(Actor* actor) {
+/**
+ * @return true if fanfare is played, false otherwise
+ */
+static s8 ItemOverride_PlayFanfare(u16 itemId) {
+    // Override fanfare for certain items
+    if (itemId >= GI_FOREST_MEDALLION && itemId <= GI_LIGHT_MEDALLION) {
+        Audio_PlayFanfare(NA_BGM_MEDAL_GET);
+    } else if (itemId >= GI_KOKIRI_EMERALD && itemId <= GI_ZORA_SAPPHIRE) {
+        Audio_PlayFanfare(NA_BGM_SPIRIT_STONE);
+    } else if (itemId == GI_ICE_TRAP || itemId == GI_RUPOOR) {
+        Audio_PlayFanfare(NA_BGM_ITEM_GET);
+        Bgm_FanfareModEnabled = TRUE;
+    } else {
+        return FALSE;
+    }
+    return TRUE;
+}
+
+/**
+ * @return
+ * -1: no override
+ *  0: override for item and text, vanilla code for fanfare
+ *  1: override for item, text and fanfare
+ */
+s8 ItemOverride_GetOverheadItem(GlobalContext* globalCtx, Player* player) {
     if (rActiveItemRow != NULL) {
+        u16 itemId  = rActiveItemOverride.value.itemId;
         u16 textId  = rActiveItemRow->textId;
         u8 actionId = rActiveItemRow->actionId;
 
         ItemTable_CallEffect(rActiveItemRow);
         if (actionId == ITEM_SKULL_TOKEN) {
-            Item_Give(gGlobalContext, actionId);
-            DisplayTextbox(gGlobalContext, textId, actor);
+            Item_Give(globalCtx, actionId);
+            DisplayTextbox(globalCtx, textId, &player->actor);
         } else {
-            DisplayTextbox(gGlobalContext, textId, actor);
-            Item_Give(gGlobalContext, actionId);
+            DisplayTextbox(globalCtx, textId, &player->actor);
+            Item_Give(globalCtx, actionId);
         }
         ItemOverride_AfterItemReceived();
+
+        return ItemOverride_PlayFanfare(itemId);
+    }
+
+    // No override
+    switch (PLAYER->getItemId) {
+        case GI_SHIELD_DEKU:
+        case GI_SHIELD_HYLIAN:
+            ItemEffect_Shield(&gSaveContext, PLAYER->getItemId - GI_SHIELD_DEKU + EQUIP_VALUE_SHIELD_DEKU, -1);
+            break;
+    };
+    return -1;
+}
+
+/**
+ * Called when Link accepts a GetItem offer without the overhead mini-cutscene (e.g. deku seeds after the first time or
+ * shields that are already owned).
+ */
+void ItemOverride_GetQuickItem(u8 item) {
+    if (item == ITEM_SHIELD_DEKU || item == ITEM_SHIELD_HYLIAN) {
+        ItemEffect_Shield(&gSaveContext, item - ITEM_SHIELD_DEKU + EQUIP_VALUE_SHIELD_DEKU, -1);
     }
 }
 
-void ItemOverride_GetSkulltulaToken(Actor* tokenActor) {
+/**
+ * @return true if fanfare is overridden, false otherwise
+ */
+s8 ItemOverride_GetSkulltulaToken(Actor* tokenActor) {
     ItemOverride override = ItemOverride_Lookup(tokenActor, 0, 0);
     IceTrap_UpdateOverride(&override, FALSE);
 
-    u16 itemId;
-    if (override.key.all == 0) {
-        // Give a skulltula token if there is no override
-        itemId = 0x5B;
-    } else {
-        itemId = override.value.itemId;
-    }
+    // Give a skulltula token if there is no override
+    u16 itemId = override.key.all ? override.value.itemId : GI_SKULL_TOKEN;
 
     u16 resolvedItemId = ItemTable_ResolveUpgrades(itemId);
     ItemRow* itemRow   = ItemTable_GetItemRow(resolvedItemId);
@@ -538,6 +572,8 @@ void ItemOverride_GetSkulltulaToken(Actor* tokenActor) {
         DisplayTextbox(gGlobalContext, itemRow->textId, 0);
         Item_Give(gGlobalContext, itemRow->actionId);
     }
+
+    return ItemOverride_PlayFanfare(itemId);
 }
 
 u8 ItemOverride_GetItemDrop(EnItem00* this) {
@@ -641,7 +677,7 @@ s32 ItemOverride_GiveSariasGift(void) {
     u32 receivedGift = EventCheck(0xC1);
     if (receivedGift == 0 &&
         Entrance_SceneAndSpawnAre(0x5B, 0x09)) { // Kokiri Forest -> LW Bridge, index 05E0 in the entrance table
-        ItemOverride_PushDelayedOverride(0x02);
+        ItemOverride_PushDelayedOverride(DLYOVR_SARIA_GIFT);
         EventSet(0xC1);
     }
 
@@ -651,13 +687,8 @@ s32 ItemOverride_GiveSariasGift(void) {
 
 // If we haven't obtained Zelda's Letter and are in the castle courtyard, push it
 void ItemOverride_CheckZeldasLetter() {
-    if (EventCheck(0x40) == 0 && gGlobalContext->sceneNum == 0x4A) {
-        ItemOverride_Key key  = { .all = 0 };
-        key.scene             = 0x4A;
-        key.type              = OVR_BASE_ITEM;
-        key.flag              = 0x0B;
-        ItemOverride override = ItemOverride_LookupByKey(key);
-        ItemOverride_PushPendingOverride(override);
+    if (!EventCheck(0x40) && gGlobalContext->sceneNum == SCENE_CASTLE_COURTYARD_ZELDA) {
+        ItemOverride_PushDelayedOverride(DLYOVR_ZELDA_LETTER);
         EventSet(0x40);
     }
 }

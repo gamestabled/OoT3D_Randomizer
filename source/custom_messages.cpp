@@ -1,11 +1,12 @@
+#include "s_message.h"
+#include "s_item.h"
+#include "s_dungeon.h"
+
 #include "custom_messages.hpp"
-#include "patch_symbols_USA.hpp"
-#include "patch_symbols_EUR.hpp"
+#include "patch.hpp"
 #include "debug.hpp"
 #include "shops.hpp"
-#include "../code/src/message.h"
 #include "settings.hpp"
-#include "../code/src/icetrap.h"
 
 #include <array>
 #include <set>
@@ -160,7 +161,7 @@ void CreateMessage(u32 textId, u32 unk_04, u32 textBoxType, u32 textBoxPosition,
             NAEnglishText += "\0"s;
         }
         messageData.seekg(0, messageData.end);
-        newEntry.info[ENGLISH_U].offset = (char*)((int)messageData.tellg()) + RCUSTOMMESSAGES_USA_ADDR;
+        newEntry.info[ENGLISH_U].offset = (char*)((int)messageData.tellg()) + gPatchSymbols.rCustomMessages;
         newEntry.info[ENGLISH_U].length = NAEnglishText.size();
         messageData << NAEnglishText;
 
@@ -168,7 +169,7 @@ void CreateMessage(u32 textId, u32 unk_04, u32 textBoxType, u32 textBoxPosition,
             NAFrenchText += "\0"s;
         }
         messageData.seekg(0, messageData.end);
-        newEntry.info[FRENCH_U].offset = (char*)((int)messageData.tellg()) + RCUSTOMMESSAGES_USA_ADDR;
+        newEntry.info[FRENCH_U].offset = (char*)((int)messageData.tellg()) + gPatchSymbols.rCustomMessages;
         newEntry.info[FRENCH_U].length = NAFrenchText.size();
         messageData << NAFrenchText;
 
@@ -176,7 +177,7 @@ void CreateMessage(u32 textId, u32 unk_04, u32 textBoxType, u32 textBoxPosition,
             NASpanishText += "\0"s;
         }
         messageData.seekg(0, messageData.end);
-        newEntry.info[SPANISH_U].offset = (char*)((int)messageData.tellg()) + RCUSTOMMESSAGES_USA_ADDR;
+        newEntry.info[SPANISH_U].offset = (char*)((int)messageData.tellg()) + gPatchSymbols.rCustomMessages;
         newEntry.info[SPANISH_U].length = NASpanishText.size();
         messageData << NASpanishText;
     } else if (Settings::Region == REGION_EUR) {
@@ -184,7 +185,7 @@ void CreateMessage(u32 textId, u32 unk_04, u32 textBoxType, u32 textBoxPosition,
             EUREnglishText += "\0"s;
         }
         messageData.seekg(0, messageData.end);
-        newEntry.info[ENGLISH_E].offset = (char*)((int)messageData.tellg()) + RCUSTOMMESSAGES_EUR_ADDR;
+        newEntry.info[ENGLISH_E].offset = (char*)((int)messageData.tellg()) + gPatchSymbols.rCustomMessages;
         newEntry.info[ENGLISH_E].length = EUREnglishText.size();
         messageData << EUREnglishText;
 
@@ -192,7 +193,7 @@ void CreateMessage(u32 textId, u32 unk_04, u32 textBoxType, u32 textBoxPosition,
             EURFrenchText += "\0"s;
         }
         messageData.seekg(0, messageData.end);
-        newEntry.info[FRENCH_E].offset = (char*)((int)messageData.tellg()) + RCUSTOMMESSAGES_EUR_ADDR;
+        newEntry.info[FRENCH_E].offset = (char*)((int)messageData.tellg()) + gPatchSymbols.rCustomMessages;
         newEntry.info[FRENCH_E].length = EURFrenchText.size();
         messageData << EURFrenchText;
 
@@ -200,7 +201,7 @@ void CreateMessage(u32 textId, u32 unk_04, u32 textBoxType, u32 textBoxPosition,
             EURSpanishText += "\0"s;
         }
         messageData.seekg(0, messageData.end);
-        newEntry.info[SPANISH_E].offset = (char*)((int)messageData.tellg()) + RCUSTOMMESSAGES_EUR_ADDR;
+        newEntry.info[SPANISH_E].offset = (char*)((int)messageData.tellg()) + gPatchSymbols.rCustomMessages;
         newEntry.info[SPANISH_E].length = EURSpanishText.size();
         messageData << EURSpanishText;
 
@@ -208,7 +209,7 @@ void CreateMessage(u32 textId, u32 unk_04, u32 textBoxType, u32 textBoxPosition,
             EURItalianText += "\0"s;
         }
         messageData.seekg(0, messageData.end);
-        newEntry.info[ITALIAN_E].offset = (char*)((int)messageData.tellg()) + RCUSTOMMESSAGES_EUR_ADDR;
+        newEntry.info[ITALIAN_E].offset = (char*)((int)messageData.tellg()) + gPatchSymbols.rCustomMessages;
         newEntry.info[ITALIAN_E].length = EURItalianText.size();
         messageData << EURItalianText;
 
@@ -216,7 +217,7 @@ void CreateMessage(u32 textId, u32 unk_04, u32 textBoxType, u32 textBoxPosition,
             EURGermanText += "\0"s;
         }
         messageData.seekg(0, messageData.end);
-        newEntry.info[GERMAN_E].offset = (char*)((int)messageData.tellg()) + RCUSTOMMESSAGES_EUR_ADDR;
+        newEntry.info[GERMAN_E].offset = (char*)((int)messageData.tellg()) + gPatchSymbols.rCustomMessages;
         newEntry.info[GERMAN_E].length = EURGermanText.size();
         messageData << EURGermanText;
     }
@@ -1175,6 +1176,52 @@ void CreateAlwaysIncludedMessages() {
         CreateMessageFromTextObject(0x40AE, 0, 2, 3, AddColorsAndFormat(aquariumText, {}));
     }
 
+    // Deku Shield and Hylian Shield inventory descriptions. Add counter to vanilla text.
+    if (Settings::ExtraShields.IsNot(EXTRASHIELDS_NEVER)) {
+        Text dekuShieldText = Text{
+            // english
+            "#Deku Shield (x11)#&--A child-sized wooden shield.&--It's light, but also flammable.",
+            // french
+            "#Bouclier Mojo (x11)#&--Un bouclier en bois pour enfants.&--Il est léger mais inflammable.",
+            // spanish
+            "#Escudo deku (x11)#&--Escudo de madera de pequeño tamaño.&--Es ligero, pero inflamable.",
+            // italian
+            "#Scudo Deku (x11)#&--Uno scudo di legno ideale per i ragazzi.&--È leggero ma è facilmente infiammabile.",
+            // german
+            "#Deku-Schild (x11)#&--Ein Holzschild, in der Größe passend für&--Kinder. Er ist leicht, und entflammbar..."
+        };
+        dekuShieldText = AddColorsAndFormat(dekuShieldText, { QM_LBLUE });
+        dekuShieldText.Replace("11", DEKU_SHIELD_COUNT());
+        dekuShieldText.Replace("--", HORIZONTAL_SPACE(0x10));
+        dekuShieldText.Replace(MESSAGE_END(), SHOP_MESSAGE_BOX());
+        dekuShieldText += MESSAGE_END();
+        CreateMessageFromTextObject(0x73E, 0, 2, 3, dekuShieldText);
+
+        Text hylianShieldText =
+            Text{ // english
+                  "#Hylian Shield (x11)#&--A big shield just like the Hylian Knights&--use. It's light, "
+                  "sturdy and can stand up to&--flame attacks.",
+                  // french
+                  "#Bouclier Hylien (x11)#&--Un bouclier digne des chevaliers d'Hyrule.&--Il est léger, robuste et "
+                  "résiste au feu.",
+                  // spanish
+                  "#Escudo hyliano (x11)#&--Escudo grande como los que usan los&--caballeros hylianos. Es ligero, "
+                  "sólido y&--resistente al fuego.",
+                  // italian
+                  "#Scudo Hylia (x11)#&--Un grande scudo, uguale a&--quello usato dai cavalieri Hylia.&--È leggero, "
+                  "robusto e resiste al fuoco.",
+                  // german
+                  "#Hylia-Schild (x11)#&--Ein großer Schild wie ihn die Hylia-Ritter&--tragen. Er ist leicht, robust "
+                  "und feuerfest."
+            };
+        hylianShieldText = AddColorsAndFormat(hylianShieldText, { QM_LBLUE });
+        hylianShieldText.Replace("11", HYLIAN_SHIELD_COUNT());
+        hylianShieldText.Replace("--", HORIZONTAL_SPACE(0x10));
+        hylianShieldText.Replace(MESSAGE_END(), SHOP_MESSAGE_BOX());
+        hylianShieldText += MESSAGE_END();
+        CreateMessageFromTextObject(0x73F, 0, 2, 3, hylianShieldText);
+    }
+
     // Zelda final dialog
     {
         Text happyMsg = Text{
@@ -1562,6 +1609,12 @@ std::string MQ_END() {
 // Custom control codes
 std::string TRIFORCE_PIECE_COUNT() {
     return { '\x7F', static_cast<char>(TEXT_CTRL_TRIFORCE_PIECE_COUNT) };
+}
+std::string DEKU_SHIELD_COUNT() {
+    return { '\x7F', static_cast<char>(TEXT_CTRL_DEKU_SHIELD_COUNT) };
+}
+std::string HYLIAN_SHIELD_COUNT() {
+    return { '\x7F', static_cast<char>(TEXT_CTRL_HYLIAN_SHIELD_COUNT) };
 }
 std::string FINAL_TIME() {
     return { '\x7F', static_cast<char>(TEXT_CTRL_FINAL_TIME) };

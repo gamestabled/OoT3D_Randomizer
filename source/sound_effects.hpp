@@ -1,11 +1,10 @@
 #pragma once
 
-#include <3ds.h>
+#include "s_sfx.h"
 
+#include <3ds.h>
 #include <array>
 #include <vector>
-
-#include "../code/src/sfx.h"
 
 namespace SFX {
 extern const std::array<SeqType, SFX_COUNT> seqTypesSFX;

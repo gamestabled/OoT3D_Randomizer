@@ -1,10 +1,16 @@
 #include "poe.h"
 #include "settings.h"
+#include "enemizer.h"
+#include "actor.h"
 
-#define EnPoh_Init ((ActorFunc)GAME_ADDR(0x18DF00))
-#define EnPoh_Update ((ActorFunc)GAME_ADDR(0x24D368))
-#define EnPoh_UpdateLiving ((ActorFunc)GAME_ADDR(0x1DD974))
-#define EnPoh_UpdateDead ((ActorFunc)GAME_ADDR(0x282E88))
+/*-------------------------------
+|             EnPoh             |
+-------------------------------*/
+
+void EnPoh_Init(Actor* thisx, GlobalContext* globalCtx);
+void EnPoh_Update(Actor* thisx, GlobalContext* globalCtx);
+void EnPoh_UpdateLiving(Actor* thisx, GlobalContext* globalCtx);
+void EnPoh_UpdateDead(Actor* thisx, GlobalContext* globalCtx);
 
 /**
  * Composer Brothers set some flags when they spawn and when the player talks to them.
@@ -54,4 +60,51 @@ void EnPoh_rUpdate(Actor* thisx, GlobalContext* globalCtx) {
     if (thisx->update == EnPoh_UpdateLiving) {
         thisx->update = EnPoh_rUpdateLiving;
     }
+}
+
+void EnPoh_ReinitModels(EnPoh* this) {
+    Actor_DestroySkelModels(&this->actor, &this->saModel_1, &this->saModel_2, NULL);
+    u32 cmb1Index    = this->infoIdx == 0 ? 1 : this->composerLanternCmbIndex;
+    u32 cmb2Index    = this->infoIdx == 0 ? 2 : 1;
+    ZARInfo* zarInfo = Actor_CreateSkelModels(&this->actor, gGlobalContext, &this->saModel_1, cmb1Index,
+                                              &this->saModel_2, cmb2Index, NULL);
+    void* cmabMan    = ZAR_GetCMABByIndex(zarInfo, 0);
+    MatAnim_Init(this->saModel_2->matAnim, cmabMan);
+    this->saModel_2->matAnim->animMode  = 1;
+    this->saModel_2->matAnim->animSpeed = 2.0;
+    this->saModel_94C                   = this->saModel_1;
+    this->saModel_950                   = this->saModel_2;
+
+    Actor_ReinitSkelAnime(&this->actor, &this->anime, 0);
+}
+
+/*-------------------------------
+|           EnPoField           |
+-------------------------------*/
+
+void EnPoField_WaitForSpawn(EnPoField* this, GlobalContext* globalCtx);
+
+void EnPoField_ReinitModels(EnPoField* this) {
+    Actor_DestroySkelModels(&this->actor, &this->saModel_1, &this->saModel_2, NULL);
+    ZARInfo* zarInfo =
+        Actor_CreateSkelModels(&this->actor, gGlobalContext, &this->saModel_1, 1, &this->saModel_2, 3, NULL);
+    if (this->actionFunc != EnPoField_WaitForSpawn) {
+        void* cmabMan = ZAR_GetCMABByIndex(zarInfo, this->actor.params == EN_PO_FIELD_BIG ? 0 : 1);
+        MatAnim_Init(this->saModel_2->matAnim, cmabMan);
+        this->saModel_2->matAnim->animMode  = 1;
+        this->saModel_2->matAnim->animSpeed = 2.0;
+    }
+
+    Actor_ReinitSkelAnime(&this->actor, &this->anime, 0);
+}
+
+/*-------------------------------
+|           EnPoSister          |
+-------------------------------*/
+
+void EnPoSisters_ReinitModels(EnPoSisters* this) {
+    Actor_DestroySkelModels(&this->actor, &this->saModel_death, NULL);
+    Actor_CreateSkelModels(&this->actor, gGlobalContext, &this->saModel_death, 6, NULL);
+
+    Actor_ReinitSkelAnime(&this->actor, &this->anime, 0);
 }

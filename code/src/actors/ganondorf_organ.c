@@ -1,6 +1,6 @@
 #include "z3D/z3D.h"
 
-#define EnGanonOrgan_Init ((ActorFunc)GAME_ADDR(0x280E0C))
+void EnGanonOrgan_Init(Actor* thisx, GlobalContext* globalCtx);
 
 void EnGanonOrgan_rInit(Actor* organ, GlobalContext* globalCtx) {
     gSaveContext.eventChkInf[12] &= ~0x80;

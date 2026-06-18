@@ -17,6 +17,7 @@
 #include "multiplayer.h"
 #include "dungeon.h"
 #include "enemy_souls.h"
+#include "enemizer.h"
 
 u32 pressed;
 bool handledInput;
@@ -26,6 +27,12 @@ static u32 closingButton = 0;
 static u8 currentSphere  = 0;
 static s16 spoilerScroll = 0;
 static s16 soulsScroll   = 0;
+
+static s16 enemyBaseIdx     = 0;
+static s16 enemyCount       = 0;
+static s16 enemyScroll      = 0;
+static Bool enemyMultiLayer = FALSE;
+static Bool enemyMultiRoom  = FALSE;
 
 static s16 allItemsScroll   = 0;
 static s16 groupItemsScroll = 0;
@@ -78,6 +85,26 @@ static s8 spoilerGroupDungeonIds[] = {
     -1,
     -1,
     DUNGEON_INSIDE_GANONS_CASTLE,
+};
+
+static const char* const DungeonNames[] = {
+    "Deku Tree",
+    "Dodongo's Cavern",
+    "Jabu-Jabu's Belly",
+    "Forest Temple",
+    "Fire Temple",
+    "Water Temple",
+    "Spirit Temple",
+    "Shadow Temple",
+    "Bottom of the Well",
+    "Ice Cavern",
+    "Ganon's Tower",
+    "Gerudo Training Grounds",
+    "Gerudo Fortress",
+    "Ganon's Castle",
+    "",
+    "",
+    "Treasure Chest Shop",
 };
 
 static char* spoilerCollectionGroupNames[] = {
@@ -156,6 +183,7 @@ typedef enum {
     PAGE_SEEDHASH,
     PAGE_DUNGEONITEMS,
     PAGE_ENEMYSOULS,
+    PAGE_ENEMYLOCATIONS,
     PAGE_SPHERES,
     PAGE_ITEMTRACKER_ALL,
     PAGE_ITEMTRACKER_GROUPS,
@@ -297,6 +325,20 @@ static void Gfx_DrawButtonPrompts(void) {
         Draw_DrawIcon(offsetX, promptY, COLOR_WHITE, ICON_BUTTON_DPAD);
         offsetX += buttonSpacing;
         nextStr = "Scroll";
+        Draw_DrawString(offsetX, textY, COLOR_TITLE, nextStr);
+    } else if (curMenuIdx == PAGE_ENEMYLOCATIONS) {
+        Draw_DrawIcon(offsetX, promptY, COLOR_WHITE, ICON_BUTTON_DPAD);
+        offsetX += buttonSpacing;
+        nextStr = "Browse enemies";
+        Draw_DrawString(offsetX, textY, COLOR_TITLE, nextStr);
+        offsetX += (strlen(nextStr) + 1) * SPACING_X;
+        Draw_DrawIcon(offsetX, promptY, COLOR_BUTTON_Y, ICON_BUTTON_Y);
+        offsetX += 8;
+        Draw_DrawString(offsetX, textY, COLOR_TITLE, "/");
+        offsetX += 8;
+        Draw_DrawIcon(offsetX, promptY, COLOR_BUTTON_A, ICON_BUTTON_A);
+        offsetX += buttonSpacing;
+        nextStr = "Change scene";
         Draw_DrawString(offsetX, textY, COLOR_TITLE, nextStr);
     } else if (curMenuIdx == PAGE_SPHERES) {
         Draw_DrawIcon(offsetX, promptY, COLOR_WHITE, ICON_BUTTON_DPAD);
@@ -562,8 +604,109 @@ static void Gfx_DrawEnemySouls(void) {
     }
 }
 
+static void Gfx_ScrollEnemiesPage(s8 scrollAmount) {
+    s8 baseIdxShift = 0;
+    if (scrollAmount >= 0) {
+        enemyBaseIdx += enemyCount;
+        if (enemyBaseIdx >= rEnemyOverrides_Count) {
+            enemyBaseIdx = 0;
+        }
+    } else {
+        enemyBaseIdx--;
+        if (enemyBaseIdx < 0) {
+            enemyBaseIdx = rEnemyOverrides_Count - 1;
+        }
+        baseIdxShift = -1;
+    }
+
+    EnemyOverride* enemy = &rEnemyOverrides[enemyBaseIdx];
+    enemyCount           = 0;
+    u8 baseScene         = enemy->scene;
+    u8 baseLayer         = enemy->layer;
+    u8 baseRoom          = enemy->room;
+    enemyMultiLayer = enemyMultiRoom = FALSE;
+    while (enemyBaseIdx >= 0 && enemyBaseIdx + enemyCount < rEnemyOverrides_Count && enemy->scene == baseScene) {
+        if (enemy->layer != baseLayer) {
+            enemyMultiLayer = TRUE;
+        }
+        if (enemy->room != baseRoom) {
+            enemyMultiRoom = TRUE;
+        }
+        enemy += scrollAmount;
+        enemyBaseIdx += baseIdxShift;
+        enemyCount++;
+    }
+    if (scrollAmount < 0) {
+        enemyBaseIdx++;
+    }
+}
+
+static void Gfx_DrawEnemyLocations(void) {
+    if (enemyCount == 0) {
+        Gfx_ScrollEnemiesPage(+1);
+    }
+
+    Draw_DrawFormattedString(10, 16, COLOR_TITLE, "Enemy Locations - %.33s",
+                             SceneNames[rEnemyOverrides[enemyBaseIdx].scene]);
+
+    u16 listTopY = 41;
+    for (u32 lineIdx = 0; lineIdx < MAX_ENTRY_LINES; lineIdx++) {
+        u32 curEnemyIdx = enemyScroll + lineIdx;
+        if (curEnemyIdx >= enemyCount) {
+            break;
+        }
+        EnemyOverride* enemy = &rEnemyOverrides[enemyBaseIdx + curEnemyIdx];
+        // Don't show duplicated layers
+        if ((enemy->scene == SCENE_HYRULE_FIELD && enemy->layer == 1) ||
+            (enemy->scene == SCENE_GRAVEYARD && enemy->layer == 3)) {
+            break;
+        }
+
+        u32 posY = listTopY + ((SPACING_SMALL_Y + 1) * lineIdx * 2);
+
+        u8 layerNameSpacing = 0;
+        if (curEnemyIdx == 0 || enemy->layer != (enemy - 1)->layer) {
+            char* layerName = NULL;
+            if (enemy->layer == 0) {
+                // Explicitly name layer 0 only if other layers are present
+                if (enemyMultiLayer) {
+                    layerName = "Child Era";
+                }
+            } else if (enemy->layer == 1) { // Only used for Lon Lon Ranch
+                layerName = "Child Era at nighttime";
+            } else if (enemy->layer == 2 || enemy->layer == 3) {
+                layerName = "Adult Era";
+            }
+
+            if (layerName != NULL) {
+                Draw_DrawFormattedString_Small(10 + (SPACING_SMALL_X * 2), posY - SPACING_SMALL_Y, COLOR_RED, "%s",
+                                               layerName);
+                layerNameSpacing = strlen(layerName) + 2;
+            }
+        }
+
+        if (enemyMultiRoom && (curEnemyIdx == 0 || enemy->room != (enemy - 1)->room)) {
+            Draw_DrawFormattedString_Small(10 + SPACING_SMALL_X * (2 + layerNameSpacing), posY - SPACING_SMALL_Y,
+                                           COLOR_GREEN, "Room %d", enemy->room);
+        }
+
+        char* randomEnemyName = (gSettingsContext.ingameSpoilers && gExtSaveData.options[OPTION_SPOILERS])
+                                    ? gEnemyTable[enemy->enemyId].name
+                                    : "???";
+        Draw_DrawFormattedString_Small(10 + (SPACING_SMALL_X * 4), posY, COLOR_WHITE, "%s",
+                                       gEnemyTable[enemy->vanillaId].name);
+        Draw_DrawFormattedString_Small(10 + (SPACING_SMALL_X * 25), posY, COLOR_WHITE, "-> %s", randomEnemyName);
+    }
+}
+
 static void Gfx_DrawSpoilerData(void) {
-    if (gSpoilerData.SphereCount > 0) {
+    if (gSpoilerData.SphereCount == 0) {
+        Draw_DrawString(10, 16, COLOR_TITLE, "Spoiler Log");
+        Draw_DrawString(10, 46, COLOR_WHITE, "No spoiler log generated!");
+    } else if (!gExtSaveData.options[OPTION_SPOILERS]) {
+        Draw_DrawString(10, 16, COLOR_TITLE, "Spoiler Log");
+        Draw_DrawString(10, 46, COLOR_WHITE, "Enable the \"Spoilers\" option to view.");
+    } else {
         u16 itemCount = gSpoilerData.Spheres[currentSphere].ItemCount;
 
         Draw_DrawFormattedString(10, 16, COLOR_TITLE, "Spoiler Log - Sphere %i / %i", currentSphere + 1,
@@ -595,9 +738,6 @@ static void Gfx_DrawSpoilerData(void) {
 
         Gfx_DrawScrollBar(SCREEN_BOT_WIDTH - 3, listTopY, SCREEN_BOT_HEIGHT - 40 - listTopY, spoilerScroll, itemCount,
                           MAX_ENTRY_LINES);
-    } else {
-        Draw_DrawString(10, 16, COLOR_TITLE, "Spoiler Log");
-        Draw_DrawString(10, 46, COLOR_WHITE, "No spoiler log generated!");
     }
 }
 
@@ -780,10 +920,11 @@ static void Gfx_DrawEntranceTracker(void) {
         u32 rplcSrcColor = isDiscovered ? entranceTypeToColor[override->type] : COLOR_WHITE;
         u32 rplcDstColor = isDiscovered ? entranceTypeToColor[override->type] : COLOR_WHITE;
 
-        u8 showOriginal = gSettingsContext.ingameSpoilers || isDiscovered ||
-                          (!destListToggle || original->srcGroup == ENTRANCE_GROUP_ONE_WAY);
-        u8 showOverride = gSettingsContext.ingameSpoilers || isDiscovered ||
-                          (destListToggle && original->srcGroup != ENTRANCE_GROUP_ONE_WAY);
+        bool showSpoilers = gSettingsContext.ingameSpoilers && gExtSaveData.options[OPTION_SPOILERS];
+        bool showOriginal =
+            showSpoilers || isDiscovered || (!destListToggle || original->srcGroup == ENTRANCE_GROUP_ONE_WAY);
+        bool showOverride =
+            showSpoilers || isDiscovered || (destListToggle && original->srcGroup != ENTRANCE_GROUP_ONE_WAY);
 
         const char* unknown = "???";
 
@@ -821,16 +962,16 @@ static void Gfx_DrawEntranceTracker(void) {
 }
 
 static void (*menu_draw_funcs[])(void) = {
-    // Make sure these line up with the GfxPage enum above
-    Gfx_DrawSeedHash,        //
-    Gfx_DrawDungeonItems,    //
-    Gfx_DrawEnemySouls,      //
-    Gfx_DrawSpoilerData,     //
-    Gfx_DrawItemTracker,     // All
-    Gfx_DrawItemTracker,     // Groups
-    Gfx_DrawEntranceTracker, // All
-    Gfx_DrawEntranceTracker, // Groups
-    Gfx_DrawOptions,
+    [PAGE_SEEDHASH]               = Gfx_DrawSeedHash,
+    [PAGE_DUNGEONITEMS]           = Gfx_DrawDungeonItems,
+    [PAGE_ENEMYSOULS]             = Gfx_DrawEnemySouls,
+    [PAGE_ENEMYLOCATIONS]         = Gfx_DrawEnemyLocations,
+    [PAGE_SPHERES]                = Gfx_DrawSpoilerData,
+    [PAGE_ITEMTRACKER_ALL]        = Gfx_DrawItemTracker,
+    [PAGE_ITEMTRACKER_GROUPS]     = Gfx_DrawItemTracker,
+    [PAGE_ENTRANCETRACKER_ALL]    = Gfx_DrawEntranceTracker,
+    [PAGE_ENTRANCETRACKER_GROUPS] = Gfx_DrawEntranceTracker,
+    [PAGE_OPTIONS]                = Gfx_DrawOptions,
 };
 
 static void Gfx_DrawHeader() {
@@ -895,6 +1036,25 @@ static void Gfx_ShowMenu(void) {
             if (pressed & (PAD_UP | PAD_DOWN | PAD_RIGHT | PAD_LEFT)) {
                 soulsScroll  = (soulsScroll + 1) % 2;
                 handledInput = true;
+            }
+        } else if (curMenuIdx == PAGE_ENEMYLOCATIONS) {
+            handledInput = true;
+            if (pressed & PAD_DOWN) {
+                enemyScroll = Gfx_Scroll(enemyScroll, +1, enemyCount);
+            } else if (pressed & PAD_UP) {
+                enemyScroll = Gfx_Scroll(enemyScroll, -1, enemyCount);
+            } else if (pressed & PAD_RIGHT) {
+                enemyScroll = Gfx_Scroll(enemyScroll, +MAX_ENTRY_LINES, enemyCount);
+            } else if (pressed & PAD_LEFT) {
+                enemyScroll = Gfx_Scroll(enemyScroll, -MAX_ENTRY_LINES, enemyCount);
+            } else if (pressed & BUTTON_A) {
+                Gfx_ScrollEnemiesPage(+1);
+                enemyScroll = 0;
+            } else if (pressed & BUTTON_Y) {
+                Gfx_ScrollEnemiesPage(-1);
+                enemyScroll = 0;
+            } else {
+                handledInput = false;
             }
         } else if (curMenuIdx == PAGE_SPHERES && gSpoilerData.SphereCount > 0) {
             // Spoiler log
@@ -1217,6 +1377,9 @@ void Gfx_Init(void) {
 
     if (!gSettingsContext.shuffleEnemySouls) {
         menu_draw_funcs[PAGE_ENEMYSOULS] = NULL;
+    }
+    if (!gSettingsContext.enemizer || !gSettingsContext.ingameSpoilers) {
+        menu_draw_funcs[PAGE_ENEMYLOCATIONS] = NULL;
     }
     if (!gSettingsContext.ingameSpoilers) {
         menu_draw_funcs[PAGE_SPHERES] = NULL;

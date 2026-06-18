@@ -3,7 +3,7 @@
  * for the program Magikoopa.
  */
 
-#include "newcodeinfo.h"
+#include "ld_symbols.h"
 
 #include "3ds/types.h"
 #include "3ds/svc.h"

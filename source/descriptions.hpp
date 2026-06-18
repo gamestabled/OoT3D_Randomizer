@@ -322,6 +322,8 @@ extern string_view chestClassicDesc;
 
 extern string_view chestAgonyDesc;
 
+extern string_view extraShieldsDesc;
+
 extern string_view ingameSpoilersShowDesc;
 extern string_view ingameSpoilersHideDesc;
 
@@ -405,7 +407,10 @@ extern string_view mirrorWorldRandomDesc;
 
 extern string_view betaSoldOutDesc;
 
-extern string_view soullessPurpleFlameDesc;
+extern string_view soullessVanillaDesc;
+extern string_view soullessTexturelessDesc;
+extern string_view soullessGrayscaleDesc;
+extern string_view soullessPurpleFlamesDesc;
 extern string_view soullessFlashingDesc;
 
 extern string_view musicRandoDesc;

@@ -1,8 +1,9 @@
 #ifndef _SAVEFILE_H_
 #define _SAVEFILE_H_
 
+#include "s_scene_id.h"
+
 #include "z3D/z3D.h"
-#include "z3D/z3Dscene.h"
 
 #define SAVEFILE_SCENES_DISCOVERED_IDX_COUNT 4
 #define SAVEFILE_ENTRANCES_DISCOVERED_IDX_COUNT 66
@@ -35,7 +36,7 @@ void SaveFile_SetRupeeSanityFlag(s16 sceneNum, u16 collectibleFlag);
 u8 SaveFile_GetRupeeSanityFlag(s16 sceneNum, u16 collectibleFlag);
 
 // Increment the version number whenever the ExtSaveData structure is changed
-#define EXTSAVEDATA_VERSION 18
+#define EXTSAVEDATA_VERSION 19
 
 typedef struct ExtInf {
     u32 rupeesanityFlags[SCENE_MAX];
@@ -49,8 +50,20 @@ typedef struct ExtInf {
 
 #define EXTINF_SIZE sizeof(ExtInf)
 
+enum InGameOption {
+    OPTION_ENABLEBGM,
+    OPTION_ENABLESFX,
+    OPTION_NAVINOTIFICATIONS,
+    OPTION_IGNOREMASKREACTION,
+    OPTION_SKIPSONGREPLAYS,
+    OPTION_FREECAMCONTROL,
+    OPTION_SPOILERS,
+    OPTION_MAX,
+};
+
 typedef struct {
     u32 version; // Needs to always be the first field of the structure
+    u8 hashIndexes[5];
     union {
         ExtInf extInf; // Used for various bit flags that should also be synced in multiplayer with shared progress
         u8 extInfArray[EXTINF_SIZE]; // Used only by multiplayer code for easier management of bit flags
@@ -76,13 +89,9 @@ typedef struct {
     u8 permadeath;
     u8 gloomedHeart;
     u8 triforcePieces;
-    // Ingame Options, all need to be s8
-    s8 option_EnableBGM;
-    s8 option_EnableSFX;
-    s8 option_NaviNotifications;
-    s8 option_IgnoreMaskReaction;
-    s8 option_SkipSongReplays;
-    s8 option_FreeCamControl;
+    u8 dekuShieldsCount;
+    u8 hylianShieldsCount;
+    s8 options[OPTION_MAX];
 } ExtSaveData;
 
 extern ExtSaveData gExtSaveData;

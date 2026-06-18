@@ -1007,9 +1007,20 @@ string_view chestAgonyDesc            = "The Chest Appearance Mod will only appl
                                         "after obtaining the Shard of Agony.\n";           //
                                                                                            //
 /*------------------------------                                                           //
+|         EXTRA SHIELDS        |                                                           //
+------------------------------*/                                                           //
+string_view extraShieldsDesc          = "Allow keeping more than 1 Deku and Hylian shield\n"
+                                        "in the inventory, so if you lose one you can then\n"
+                                        "re-equip it immediately. The shield count will be\n"
+                                        "displayed next to the item name.\n\n"             //
+                                        "You can choose if extra shields should only be\n" //
+                                        "obtainable from randomized items or if they should"
+                                        "also be repeatedly buyable from shops.";          //
+/*------------------------------                                                           //
 |        INGAME SPOILERS       |                                                           //
 ------------------------------*/                                                           //
-string_view ingameSpoilersShowDesc    = "Every spoiler is shown.";                         //
+string_view ingameSpoilersShowDesc    = "Every spoiler is shown. Visibility can be toggled\n"
+                                        "from the in-game options menu.";                  //
 string_view ingameSpoilersHideDesc    = "Hides the spheres page and only shows a\n"        //
                                         "location's item after it has been found.";        //
                                                                                            //
@@ -1300,9 +1311,13 @@ string_view betaSoldOutDesc           = "The game contains an unused model for s
 /*------------------------------                                                           //
 |    SOULLESS ENEMIES LOOK     |                                                           //
 ------------------------------*/                                                           //
-string_view soullessPurpleFlameDesc   = "Soulless enemies will appear as a purple flame,\n"//
-                                        "and their body will be invisible.";               //
-string_view soullessFlashingDesc      = "Soulless enemies will flash between visible and\n"
+string_view soullessVanillaDesc       = "Soulless enemies will appear normal.";            //
+string_view soullessTexturelessDesc   = "Soulless enemies will appear with no textures and\n"
+                                        "a shaded selectable color applied to their bodies.";
+string_view soullessGrayscaleDesc     = "Soulless enemies will appear in black and white.";//
+string_view soullessPurpleFlamesDesc  = "Soulless enemies will appear with purple flames\n"//
+                                        "around them, and their bodies will be invisible.";//
+string_view soullessFlashingDesc      = "Soulless enemies will flash between visible and\n"//
                                         "invisible on every frame.";                       //
 /*------------------------------                                                           //
 |        SHUFFLE MUSIC         |                                                           //

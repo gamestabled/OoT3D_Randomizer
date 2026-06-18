@@ -1,10 +1,10 @@
 #pragma once
 
+#include "s_colors.h"
+
 #include <array>
 #include <string>
 #include <vector>
-
-#include "../code/include/z3D/z3Dcolor.h"
 
 namespace Cosmetics {
 constexpr std::string_view RANDOM_CHOICE_STR   = "Random Choice";
@@ -28,6 +28,8 @@ extern const std::array<std::string_view, 29> tunicColors;
 extern const std::array<std::string_view, 20> naviInnerColors;
 extern const std::array<std::string_view, 20> naviOuterColors;
 extern const std::array<std::string_view, 13> weaponTrailColors;
+extern const std::array<std::string_view, 14> ganonBloodColors;
+extern const std::array<std::string_view, 12> soullessColors;
 
 bool ValidHexString(std::string_view hexStr);
 Color_RGBAf HexStrToColorRGBAf(const std::string& hexStr);

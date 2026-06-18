@@ -106,9 +106,9 @@ typedef struct EnGirlA {
     /* 0x1FC */ f32 unk_1FC;
 } EnGirlA; // size 0x200
 
-typedef enum {
-    CANBUY_RESULT_0,
-    CANBUY_RESULT_1,
+typedef enum EnGirlA_CanBuyResult {
+    CANBUY_RESULT_SUCCESS_FANFARE,
+    CANBUY_RESULT_SUCCESS,
     CANBUY_RESULT_CANT_GET_NOW,
     CANBUY_RESULT_NEED_BOTTLE,
     CANBUY_RESULT_NEED_RUPEES,
@@ -140,7 +140,7 @@ typedef struct {
     /* 0x24 */ Vec3f modelPositionOffsets;
 } ShopItemEntry; // size 0x30
 
-#define EnGirlA_ShopItemEntries ((ShopItemEntry*)GAME_ADDR(0x524F50))
+extern ShopItemEntry EnGirlA_ShopItemEntries[];
 
 void ShopsanityItem_Init(Actor* itemx, GlobalContext* globalCtx);
 void ShopsanityItem_SellOut(Actor* itemx, u16 index); // Used for multiplayer
