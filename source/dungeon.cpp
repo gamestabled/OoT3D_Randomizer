@@ -414,6 +414,8 @@ DungeonInfo SpiritTemple =
                     SPIRIT_TEMPLE_GS_LOBBY,
                     SPIRIT_TEMPLE_GS_SUN_ON_FLOOR_ROOM,
                     SPIRIT_TEMPLE_GS_METAL_FENCE,
+                    SPIRIT_TEMPLE_ADULT_CLIMB_HEART_1,
+                    SPIRIT_TEMPLE_ADULT_CLIMB_HEART_2,
                 },
                 {
                     // MQ Locations

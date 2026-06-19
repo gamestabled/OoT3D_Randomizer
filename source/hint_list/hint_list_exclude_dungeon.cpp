@@ -1226,6 +1226,22 @@ void HintTable_Init_Exclude_Dungeon() {
                        Text{"those who #show the light above the Colossus# find", /*french*/"le #soleil au sommet du colosse# révèle", /*spanish*/"aquellos que #iluminen en lo alto del Coloso# encontrarán", /*italian*/"#chi sa riflettere bene# in cima al colosso può trovare", /*german*/"nahe einer #lichtbedürftigen Sonne, an der Spitze des Kolosses#, |wäre|wären|"},
     });
 
+    hintTable[SPIRIT_TEMPLE_ADULT_CLIMB_HEART_1] = HintText::Exclude({
+                       // obscure text
+                       Text{"some #feisty rock climbing Beamos# hide", /*french*/"some #feisty rock climbing Beamos# hide", /*spanish*/"some #feisty rock climbing Beamos# hide", /*italian*/"some #feisty rock climbing Beamos# hide", /*german*/"on #a sometimes roasted pillar# rests"},
+                      },{},
+                      // Clear text
+                       Text{"a #heart on a platform near a climbing wall in Spirit Temple# is", /*french*/"a #heart on a platform near a climbing wall in Spirit Temple# is", /*spanish*/"a #heart on a platform near a climbing wall in Spirit Temple# is", /*italian*/"a #heart on a platform near a climbing wall in Spirit Temple# is", /*german*/"a #heart on a platform near a climbing wall in Spirit Temple# is"}
+   );
+
+    hintTable[SPIRIT_TEMPLE_ADULT_CLIMB_HEART_2] = HintText::Exclude({
+                       // obscure text
+                       Text{"some #feisty rock climbing Beamos# hide", /*french*/"among #Dark @'s turds# has sunk", /*spanish*/"some #feisty rock climbing Beamos# hide", /*italian*/"some #feisty rock climbing Beamos# hide", /*german*/"on #a sometimes roasted pillar# rests"},
+                      },{},
+                      // Clear text
+                       Text{"a #heart on a platform near a climbing wall in Spirit Temple# is", /*french*/"a #heart on a platform near a climbing wall in Spirit Temple# is", /*spanish*/"a #heart on a platform near a climbing wall in Spirit Temple# is", /*italian*/"a #heart on a platform near a climbing wall in Spirit Temple# is", /*german*/"a #heart on a platform near a climbing wall in Spirit Temple# is"}
+    );
+
     hintTable[SPIRIT_TEMPLE_MQ_ENTRANCE_FRONT_LEFT_CHEST] = HintText::Exclude({
                        // obscure text
                        Text{"#lying unguarded# in the Spirit Temple is", /*french*/"dans #l'entrée du colosse# se trouve", /*spanish*/"en la #entrada del Templo del Espíritu# yace", /*italian*/"un forziere #incustodito# all'ingresso del Santuario dello Spirito contiene", /*german*/"in einer #unbewachten Truhe# des Geistertempels, |wäre|wären|"},
