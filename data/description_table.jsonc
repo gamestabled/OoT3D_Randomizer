@@ -1867,7 +1867,6 @@
     /*------------------------------                                                                           //
     |           GLITCHES           |                                                                           //
     ------------------------------*/                                                                           //
-    "GlitchDifficulties": [ "Disabled", "Novice", "Intermediate", "Advanced", "Expert", "Hero" ],              //
     "ToggleAllGlitchesDesc":                              [ "Set all glitches to the selected difficulty, or", //
                                                             "the closest available below." ],                  //
     /* Restricted Items */                                                                                     //

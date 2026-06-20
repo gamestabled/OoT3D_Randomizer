@@ -66,25 +66,26 @@ static std::vector<Option*> mapArrayToOptions(const T (&array)[N], Func mapper) 
 }
 
 // clang-format off
-//                                        Setting name,              Options,                                                                     Setting Descriptions (assigned in setting_descriptions.cpp)                                                 Category (default: Setting),Default index (default: 0), Default hidden (default: false)
+//                                        Setting name,              Options,                                                                     Setting Description Keys (defined in description_table.jsonc)                                               Category (default: Setting),Default index (default: 0), Default hidden (default: false)
+//                                                                                                                                                 Any Key that does not match one in the description table will be treated as a string literal
 // Open Settings                                                                                                                                   Any option index past the last description will use the last description
-Option RandomizeOpen       = Option::Bool("Randomize Settings",     {"No","Yes"},                                                                 {openRandomize},                                                                                            OptionCategory::Toggle);
-Option OpenForest          = Option::U8  ("Forest",                 {"Closed", "Open", "Closed Deku"},                                            {forestClosed, forestOpen, forestClosedDeku},                                                               OptionCategory::Setting,    OPENFOREST_OPEN);
-Option OpenKakariko        = Option::U8  ("Kakariko Gate",          {"Closed", "Open"},                                                           {kakGateClosed, kakGateOpen});
-Option OpenDoorOfTime      = Option::U8  ("Door of Time",           {"Open", "Closed", "Intended"},                                               {doorOfTimeOpen, doorOfTimeClosed, doorOfTimeIntended});
-Option ZorasFountain       = Option::U8  ("Zora's Fountain",        {"Normal", "Adult", "Open"},                                                  {fountainNormal, fountainAdult, fountainOpen});
-Option OpenJabu            = Option::U8  ("Jabu-Jabu",              {"Closed", "Open"},                                                           {jabuJabuCloseDesc, jabuJabuOpenDesc});
-Option GerudoFortress      = Option::U8  ("Gerudo Fortress",        {"Normal", "Fast", "Open"},                                                   {gerudoNormal, gerudoFast, gerudoOpen});
+Option RandomizeOpen       = Option::Bool("Randomize Settings",     {"No","Yes"},                                                                 {"openRandomize"},                                                                                          OptionCategory::Toggle);
+Option OpenForest          = Option::U8  ("Forest",                 {"Closed", "Open", "Closed Deku"},                                            {"forestClosed", "forestOpen", "forestClosedDeku"},                                                         OptionCategory::Setting,    OPENFOREST_OPEN);
+Option OpenKakariko        = Option::U8  ("Kakariko Gate",          {"Closed", "Open"},                                                           {"kakGateClosed", "kakGateOpen"});
+Option OpenDoorOfTime      = Option::U8  ("Door of Time",           {"Open", "Closed", "Intended"},                                               {"doorOfTimeOpen", "doorOfTimeClosed", "doorOfTimeIntended"});
+Option ZorasFountain       = Option::U8  ("Zora's Fountain",        {"Normal", "Adult", "Open"},                                                  {"fountainNormal", "fountainAdult", "fountainOpen"});
+Option OpenJabu            = Option::U8  ("Jabu-Jabu",              {"Closed", "Open"},                                                           {"jabuJabuCloseDesc", "jabuJabuOpenDesc"});
+Option GerudoFortress      = Option::U8  ("Gerudo Fortress",        {"Normal", "Fast", "Open"},                                                   {"gerudoNormal", "gerudoFast", "gerudoOpen"});
 Option Bridge              = Option::U8  ("Rainbow Bridge",         {"Open", "Vanilla", "Stones", "Medallions", "Rewards", "Dungeons", "Tokens", "Hearts"},
-                                                                     {bridgeOpen, bridgeVanilla, bridgeStones, bridgeMedallions, bridgeRewards, bridgeDungeons, bridgeTokens, bridgeHearts},                                                                  OptionCategory::Setting,    RAINBOWBRIDGE_MEDALLIONS);
-Option BridgeStoneCount    = Option::U8  (2, "Stone Count",         {NumOpts(0, 3)},                                                              {bridgeStoneCountDesc},                                                                                     OptionCategory::Setting,    1,                          true);
-Option BridgeMedallionCount= Option::U8  (2, "Medallion Count",     {NumOpts(0, 6)},                                                              {bridgeMedallionCountDesc},                                                                                 OptionCategory::Setting,    6);
-Option BridgeRewardCount   = Option::U8  (2, "Reward Count",        {NumOpts(0, 9)},                                                              {bridgeRewardCountDesc},                                                                                    OptionCategory::Setting,    1,                          true);
-Option BridgeDungeonCount  = Option::U8  (2, "Dungeon Count",       {NumOpts(0, 8)},                                                              {bridgeDungeonCountDesc},                                                                                   OptionCategory::Setting,    1,                          true);
-Option BridgeTokenCount    = Option::U8  (2, "Token Count",         {NumOpts(0, 100)},                                                            {bridgeTokenCountDesc},                                                                                     OptionCategory::Setting,    1,                          true);
-Option BridgeHeartCount    = Option::U8  (2, "Heart Count",         {NumOpts(0, 20)},                                                             {bridgeHeartCountDesc},                                                                                     OptionCategory::Setting,    1,                          true);
-Option RandomGanonsTrials  = Option::Bool("Random Ganon's Trials",  {"Off", "On"},                                                                {randomGanonsTrialsDesc},                                                                                   OptionCategory::Setting,    ON);
-Option GanonsTrialsCount   = Option::U8  (2, "Trial Count",         {NumOpts(0, 6)},                                                              {ganonsTrialCountDesc},                                                                                     OptionCategory::Setting,    1,                          true);
+                                                                     {"bridgeOpen", "bridgeVanilla", "bridgeStones", "bridgeMedallions", "bridgeRewards", "bridgeDungeons", "bridgeTokens", "bridgeHearts"},                                                  OptionCategory::Setting,    RAINBOWBRIDGE_MEDALLIONS);
+Option BridgeStoneCount    = Option::U8  (2, "Stone Count",         {NumOpts(0, 3)},                                                              {"bridgeStoneCountDesc"},                                                                                   OptionCategory::Setting,    1,                          true);
+Option BridgeMedallionCount= Option::U8  (2, "Medallion Count",     {NumOpts(0, 6)},                                                              {"bridgeMedallionCountDesc"},                                                                               OptionCategory::Setting,    6);
+Option BridgeRewardCount   = Option::U8  (2, "Reward Count",        {NumOpts(0, 9)},                                                              {"bridgeRewardCountDesc"},                                                                                  OptionCategory::Setting,    1,                          true);
+Option BridgeDungeonCount  = Option::U8  (2, "Dungeon Count",       {NumOpts(0, 8)},                                                              {"bridgeDungeonCountDesc"},                                                                                 OptionCategory::Setting,    1,                          true);
+Option BridgeTokenCount    = Option::U8  (2, "Token Count",         {NumOpts(0, 100)},                                                            {"bridgeTokenCountDesc"},                                                                                   OptionCategory::Setting,    1,                          true);
+Option BridgeHeartCount    = Option::U8  (2, "Heart Count",         {NumOpts(0, 20)},                                                             {"bridgeHeartCountDesc"},                                                                                   OptionCategory::Setting,    1,                          true);
+Option RandomGanonsTrials  = Option::Bool("Random Ganon's Trials",  {"Off", "On"},                                                                {"randomGanonsTrialsDesc"},                                                                                 OptionCategory::Setting,    ON);
+Option GanonsTrialsCount   = Option::U8  (2, "Trial Count",         {NumOpts(0, 6)},                                                              {"ganonsTrialCountDesc"},                                                                                   OptionCategory::Setting,    1,                          true);
 std::vector<Option *> openOptions = {
     &RandomizeOpen,
     &OpenForest,
@@ -105,48 +106,48 @@ std::vector<Option *> openOptions = {
 };
 
 // World Settings
-Option RandomizeWorld            = Option::Bool("Randomize Settings",     {"No","Yes"},                                                      {worldRandomize},                                                                                                OptionCategory::Toggle);
-Option StartingAge               = Option::U8  ("Starting Age",           {"Adult", "Child", "Random"},                                      {ageDesc},                                                                                                       OptionCategory::Setting,    AGE_CHILD);
+Option RandomizeWorld            = Option::Bool("Randomize Settings",     {"No","Yes"},                                                      {"worldRandomize"},                                                                                              OptionCategory::Toggle);
+Option StartingAge               = Option::U8  ("Starting Age",           {"Adult", "Child", "Random"},                                      {"ageDesc"},                                                                                                     OptionCategory::Setting,    AGE_CHILD);
 u8 ResolvedStartingAge;
-Option ShuffleEntrances          = Option::Bool("Shuffle Entrances",       {"Off", "On"},                                                    {shuffleEntrancesDesc});
-Option ShuffleDungeonEntrances   = Option::U8  (2, "Dungeon Entrances",    {"Off", "On", "On + Ganon"},                                      {dungeonEntrancesDesc});
-Option ShuffleBossEntrances      = Option::U8  (2, "Boss Entrances",       {"Off", "Age Restricted", "Full"},                                {bossEntrancesDesc});
-Option ShuffleOverworldEntrances = Option::Bool(2, "Overworld Entrances",  {"Off", "On"},                                                    {overworldEntrancesDesc});
-Option ShuffleInteriorEntrances  = Option::U8  (2, "Interior Entrances",   {"Off", "Simple", "All"},                                         {interiorEntrancesOff, interiorEntrancesSimple, interiorEntrancesAll});
-Option ShuffleGrottoEntrances    = Option::Bool(2, "Grottos Entrances",    {"Off", "On"},                                                    {grottoEntrancesDesc});
-Option ShuffleOwlDrops           = Option::Bool(2, "Owl Drops",            {"Off", "On"},                                                    {owlDropsDesc});
-Option ShuffleWarpSongs          = Option::Bool(2, "Warp Songs",           {"Off", "On"},                                                    {warpSongsDesc});
-Option ShuffleOverworldSpawns    = Option::Bool(2, "Overworld Spawns",     {"Off", "On"},                                                    {overworldSpawnsDesc});
-Option MixedEntrancePools        = Option::Bool(2, "Mixed Entrance Pools", {"Off", "On"},                                                    {mixedPoolsDesc});
-Option MixDungeons               = Option::Bool(4, "Mix Dungeons",         {"Off", "On"},                                                    {mixDungeonsDesc});
-Option MixOverworld              = Option::Bool(4, "Mix Overworld",        {"Off", "On"},                                                    {mixOverworldDesc});
-Option MixInteriors              = Option::Bool(4, "Mix Interiors",        {"Off", "On"},                                                    {mixInteriorsDesc});
-Option MixGrottos                = Option::Bool(4, "Mix Grottos",          {"Off", "On"},                                                    {mixGrottosDesc});
-Option DecoupleEntrances         = Option::Bool(2, "Decouple Entrances",   {"Off", "On"},                                                    {decoupledEntrancesDesc});
-Option BombchusInLogic           = Option::Bool("Bombchus in Logic",       {"Off", "On"},                                                    {bombchuLogicDesc});
-Option AmmoDrops                 = Option::U8  ("Ammo Drops",              {"On", "On + Bombchu", "Off"},                                    {defaultAmmoDropsDesc, bombchuDropsDesc, noAmmoDropsDesc},                                                       OptionCategory::Setting,    AMMODROPS_BOMBCHU);
-Option HeartDropRefill           = Option::U8  ("Heart Drops and Refills", {"On", "No Drop", "No Refill", "Off"},                            {defaultHeartDropsDesc, noHeartDropsDesc, noHeartRefillDesc, scarceHeartsDesc},                                  OptionCategory::Setting,    HEARTDROPREFILL_VANILLA);
-Option MQDungeonCount            = Option::U8  ("MQ Dungeon Count",        {MultiVecOpts({NumOpts(0, 12), {"Random"}})},                     {mqDungeonCountDesc});
+Option ShuffleEntrances          = Option::Bool("Shuffle Entrances",       {"Off", "On"},                                                    {"shuffleEntrancesDesc"});
+Option ShuffleDungeonEntrances   = Option::U8  (2, "Dungeon Entrances",    {"Off", "On", "On + Ganon"},                                      {"dungeonEntrancesDesc"});
+Option ShuffleBossEntrances      = Option::U8  (2, "Boss Entrances",       {"Off", "Age Restricted", "Full"},                                {"bossEntrancesDesc"});
+Option ShuffleOverworldEntrances = Option::Bool(2, "Overworld Entrances",  {"Off", "On"},                                                    {"overworldEntrancesDesc"});
+Option ShuffleInteriorEntrances  = Option::U8  (2, "Interior Entrances",   {"Off", "Simple", "All"},                                         {"interiorEntrancesOff", "interiorEntrancesSimple", "interiorEntrancesAll"});
+Option ShuffleGrottoEntrances    = Option::Bool(2, "Grottos Entrances",    {"Off", "On"},                                                    {"grottoEntrancesDesc"});
+Option ShuffleOwlDrops           = Option::Bool(2, "Owl Drops",            {"Off", "On"},                                                    {"owlDropsDesc"});
+Option ShuffleWarpSongs          = Option::Bool(2, "Warp Songs",           {"Off", "On"},                                                    {"warpSongsDesc"});
+Option ShuffleOverworldSpawns    = Option::Bool(2, "Overworld Spawns",     {"Off", "On"},                                                    {"overworldSpawnsDesc"});
+Option MixedEntrancePools        = Option::Bool(2, "Mixed Entrance Pools", {"Off", "On"},                                                    {"mixedPoolsDesc"});
+Option MixDungeons               = Option::Bool(4, "Mix Dungeons",         {"Off", "On"},                                                    {"mixDungeonsDesc"});
+Option MixOverworld              = Option::Bool(4, "Mix Overworld",        {"Off", "On"},                                                    {"mixOverworldDesc"});
+Option MixInteriors              = Option::Bool(4, "Mix Interiors",        {"Off", "On"},                                                    {"mixInteriorsDesc"});
+Option MixGrottos                = Option::Bool(4, "Mix Grottos",          {"Off", "On"},                                                    {"mixGrottosDesc"});
+Option DecoupleEntrances         = Option::Bool(2, "Decouple Entrances",   {"Off", "On"},                                                    {"decoupledEntrancesDesc"});
+Option BombchusInLogic           = Option::Bool("Bombchus in Logic",       {"Off", "On"},                                                    {"bombchuLogicDesc"});
+Option AmmoDrops                 = Option::U8  ("Ammo Drops",              {"On", "On + Bombchu", "Off"},                                    {"defaultAmmoDropsDesc", "bombchuDropsDesc", "noAmmoDropsDesc"},                                                 OptionCategory::Setting,    AMMODROPS_BOMBCHU);
+Option HeartDropRefill           = Option::U8  ("Heart Drops and Refills", {"On", "No Drop", "No Refill", "Off"},                            {"defaultHeartDropsDesc", "noHeartDropsDesc", "noHeartRefillDesc", "scarceHeartsDesc"},                          OptionCategory::Setting,    HEARTDROPREFILL_VANILLA);
+Option MQDungeonCount            = Option::U8  ("MQ Dungeon Count",        {MultiVecOpts({NumOpts(0, 12), {"Random"}})},                     {"mqDungeonCountDesc"});
 u8 MQSet;
 bool DungeonModesKnown[12];
-Option SetDungeonTypes           = Option::Bool("Set Dungeon Types",      {"Off", "On"},                                                     {setDungeonTypesDesc});
-Option MQDeku                    = Option::U8  (2, "Deku Tree",           {"Vanilla", "Master Quest", "Random"},                             {setDungeonTypesDesc});
-Option MQDodongo                 = Option::U8  (2, "Dodongo's Cavern",    {"Vanilla", "Master Quest", "Random"},                             {setDungeonTypesDesc});
-Option MQJabu                    = Option::U8  (2, "Jabu-Jabu's Belly",   {"Vanilla", "Master Quest", "Random"},                             {setDungeonTypesDesc});
-Option MQForest                  = Option::U8  (2, "Forest Temple",       {"Vanilla", "Master Quest", "Random"},                             {setDungeonTypesDesc});
-Option MQFire                    = Option::U8  (2, "Fire Temple",         {"Vanilla", "Master Quest", "Random"},                             {setDungeonTypesDesc});
-Option MQWater                   = Option::U8  (2, "Water Temple",        {"Vanilla", "Master Quest", "Random"},                             {setDungeonTypesDesc});
-Option MQSpirit                  = Option::U8  (2, "Spirit Temple",       {"Vanilla", "Master Quest", "Random"},                             {setDungeonTypesDesc});
-Option MQShadow                  = Option::U8  (2, "Shadow Temple",       {"Vanilla", "Master Quest", "Random"},                             {setDungeonTypesDesc});
-Option MQBotW                    = Option::U8  (2, "Bottom of the Well",  {"Vanilla", "Master Quest", "Random"},                             {setDungeonTypesDesc});
-Option MQIceCavern               = Option::U8  (2, "Ice Cavern",          {"Vanilla", "Master Quest", "Random"},                             {setDungeonTypesDesc});
-Option MQGTG                     = Option::U8  (2, "Training Grounds",    {"Vanilla", "Master Quest", "Random"},                             {setDungeonTypesDesc});
-Option MQCastle                  = Option::U8  (2, "Ganon's Castle",      {"Vanilla", "Master Quest", "Random"},                             {setDungeonTypesDesc});
-Option TriforceHunt              = Option::Bool("Triforce Hunt",          {"Off", "On"},                                                     {triforceHuntDesc});
-Option TriforcePiecesTotal       = Option::U8  (2, "Total pieces",        {NumOpts(1, 200)},                                                 {triforcePiecesTotalDesc},                                                                                       OptionCategory::Setting,    29);
-Option TriforcePiecesRequired    = Option::U8  (2, "Required pieces",     {NumOpts(1, 100)},                                                 {triforcePiecesRequiredDesc},                                                                                    OptionCategory::Setting,    19);
-Option Enemizer                  = Option::Bool("Enemy Randomizer",       {"Off", "On"},                                                     {enemizerDesc});
-Option EnemizerListToggle        = Option::Bool(2, "Enemy List",          {" >", ""},                                                        {enemizerListDesc},                                                                                              OptionCategory::Toggle);
+Option SetDungeonTypes           = Option::Bool("Set Dungeon Types",      {"Off", "On"},                                                     {"setDungeonTypesDesc"});
+Option MQDeku                    = Option::U8  (2, "Deku Tree",           {"Vanilla", "Master Quest", "Random"},                             {"setDungeonTypesDesc"});
+Option MQDodongo                 = Option::U8  (2, "Dodongo's Cavern",    {"Vanilla", "Master Quest", "Random"},                             {"setDungeonTypesDesc"});
+Option MQJabu                    = Option::U8  (2, "Jabu-Jabu's Belly",   {"Vanilla", "Master Quest", "Random"},                             {"setDungeonTypesDesc"});
+Option MQForest                  = Option::U8  (2, "Forest Temple",       {"Vanilla", "Master Quest", "Random"},                             {"setDungeonTypesDesc"});
+Option MQFire                    = Option::U8  (2, "Fire Temple",         {"Vanilla", "Master Quest", "Random"},                             {"setDungeonTypesDesc"});
+Option MQWater                   = Option::U8  (2, "Water Temple",        {"Vanilla", "Master Quest", "Random"},                             {"setDungeonTypesDesc"});
+Option MQSpirit                  = Option::U8  (2, "Spirit Temple",       {"Vanilla", "Master Quest", "Random"},                             {"setDungeonTypesDesc"});
+Option MQShadow                  = Option::U8  (2, "Shadow Temple",       {"Vanilla", "Master Quest", "Random"},                             {"setDungeonTypesDesc"});
+Option MQBotW                    = Option::U8  (2, "Bottom of the Well",  {"Vanilla", "Master Quest", "Random"},                             {"setDungeonTypesDesc"});
+Option MQIceCavern               = Option::U8  (2, "Ice Cavern",          {"Vanilla", "Master Quest", "Random"},                             {"setDungeonTypesDesc"});
+Option MQGTG                     = Option::U8  (2, "Training Grounds",    {"Vanilla", "Master Quest", "Random"},                             {"setDungeonTypesDesc"});
+Option MQCastle                  = Option::U8  (2, "Ganon's Castle",      {"Vanilla", "Master Quest", "Random"},                             {"setDungeonTypesDesc"});
+Option TriforceHunt              = Option::Bool("Triforce Hunt",          {"Off", "On"},                                                     {"triforceHuntDesc"});
+Option TriforcePiecesTotal       = Option::U8  (2, "Total pieces",        {NumOpts(1, 200)},                                                 {"triforcePiecesTotalDesc"},                                                                                     OptionCategory::Setting,    29);
+Option TriforcePiecesRequired    = Option::U8  (2, "Required pieces",     {NumOpts(1, 100)},                                                 {"triforcePiecesRequiredDesc"},                                                                                  OptionCategory::Setting,    19);
+Option Enemizer                  = Option::Bool("Enemy Randomizer",       {"Off", "On"},                                                     {"enemizerDesc"});
+Option EnemizerListToggle        = Option::Bool(2, "Enemy List",          {" >", ""},                                                        {"enemizerListDesc"},                                                                                            OptionCategory::Toggle);
 // These are initialized in InitSettings because they depend on Enemizer::enemyTypes, which is not statically initialized
 std::vector<Option*> enemizerListOptions;
 static Menu enemizerListMenu;
@@ -207,30 +208,30 @@ std::vector<Option *> dungeonOptions = {
 };
 
 // Shuffle Settings
-Option RandomizeShuffle       = Option::Bool("Randomize Settings",     {"No","Yes"},                                                      {shuffleRandomize},                                                                                                    OptionCategory::Toggle);
-Option ShuffleRewards         = Option::U8  ("Shuffle Dungeon Rewards",{"End of Dungeons", "Any Dungeon", "Overworld", "Anywhere"},       {shuffleRewardsEndOfDungeon, shuffleRewardsAnyDungeon, shuffleRewardsOverworld, shuffleRewardsAnywhere});
-Option LinksPocketItem        = Option::U8  ("Link's Pocket",          {"Dungeon Reward", "Advancement", "Anything", "Nothing"},          {linksPocketDungeonReward, linksPocketAdvancement, linksPocketAnything, linksPocketNothing});
-Option ShuffleSongs           = Option::U8  ("Shuffle Songs",          {"Song Locations", "Dungeon Rewards", "Anywhere"},                 {songsSongLocations, songsDungeonRewards, songsAllLocations});
-Option Shopsanity             = Option::U8  ("Shopsanity",             {MultiVecOpts({{"Off"}, NumOpts(0, 4), {"Random"}})},              {shopsOff, shopsZero, shopsOne, shopsTwo, shopsThree, shopsFour, shopsRandom});
+Option RandomizeShuffle       = Option::Bool("Randomize Settings",     {"No","Yes"},                                                      {"shuffleRandomize"},                                                                                                  OptionCategory::Toggle);
+Option ShuffleRewards         = Option::U8  ("Shuffle Dungeon Rewards",{"End of Dungeons", "Any Dungeon", "Overworld", "Anywhere"},       {"shuffleRewardsEndOfDungeon", "shuffleRewardsAnyDungeon", "shuffleRewardsOverworld", "shuffleRewardsAnywhere"});
+Option LinksPocketItem        = Option::U8  ("Link's Pocket",          {"Dungeon Reward", "Advancement", "Anything", "Nothing"},          {"linksPocketDungeonReward", "linksPocketAdvancement", "linksPocketAnything", "linksPocketNothing"});
+Option ShuffleSongs           = Option::U8  ("Shuffle Songs",          {"Song Locations", "Dungeon Rewards", "Anywhere"},                 {"songsSongLocations", "songsDungeonRewards", "songsAllLocations"});
+Option Shopsanity             = Option::U8  ("Shopsanity",             {MultiVecOpts({{"Off"}, NumOpts(0, 4), {"Random"}})},              {"shopsOff", "shopsZero", "shopsOne", "shopsTwo", "shopsThree", "shopsFour", "shopsRandom"});
 Option ShopsanityPrices       = Option::U8  (2, "Shopsanity Prices",   {"Random", "Affordable", "Child wallet", "Adult wallet",
-                                                                        "Giant's wallet", "Tycoon wallet"},                               {shopPriceRandom, shopPriceAffordable, shopPriceChild, shopPriceAdult, shopPriceGiant, shopPriceTycoon});
-Option Tokensanity            = Option::U8  ("Tokensanity",            {"Off", "Dungeons", "Overworld", "All Tokens"},                    {tokensOff, tokensDungeon, tokensOverworld, tokensAllTokens});
-Option Scrubsanity            = Option::U8  ("Scrub Shuffle",          {"Off", "Affordable", "Expensive", "Random Prices"},               {scrubsOff, scrubsAffordable, scrubsExpensive, scrubsRandomPrices});
-Option ShuffleCows            = Option::Bool("Shuffle Cows",           {"Off", "On"},                                                     {shuffleCowsDesc});
-Option ShuffleKokiriSword     = Option::Bool("Shuffle Kokiri Sword",   {"Off", "On"},                                                     {kokiriSwordDesc});
-Option ShuffleMasterSword     = Option::Bool("Shuffle Master Sword",   {"Off", "On"},                                                     {masterSwordDesc});
-Option ShuffleOcarinas        = Option::Bool("Shuffle Ocarinas",       {"Off", "On"},                                                     {ocarinasDesc});
-Option ShuffleWeirdEgg        = Option::Bool("Shuffle Weird Egg",      {"Off", "On"},                                                     {weirdEggDesc});
-Option ShuffleZeldasLetter    = Option::Bool("Shuffle Zelda's Letter", {"Off", "On"},                                                     {zeldasLetterDesc});
-Option ShuffleGerudoToken     = Option::Bool("Shuffle Gerudo Token",   {"Off", "On"},                                                     {gerudoTokenDesc});
-Option ShuffleMagicBeans      = Option::Bool("Shuffle Magic Beans",    {"Off", "On"},                                                     {magicBeansDesc});
-Option ShuffleMerchants       = Option::U8  ("Shuffle Merchants",      {"Off", "On (No Hints)", "On (With Hints)"},                       {merchantsDesc, merchantsHintsDesc});
-Option ShuffleAdultTradeQuest = Option::Bool("Shuffle Adult Trade",    {"Off", "On"},                                                     {adultTradeDesc});
-Option ShuffleChestMinigame   = Option::U8  ("Shuffle Chest Minigame", {"Off", "On (Separate)", "On (Pack)"},                             {chestMinigameDesc});
-Option ShuffleFrogSongRupees  = Option::Bool("Shuffle Frog Rupees",    {"Off", "On"},                                                     {frogSongRupeesDesc});
-Option ShuffleEnemySouls      = Option::U8  ("Shuffle Enemy Souls",    {"Off", "All enemies", "Bosses only"},                             {enemySoulDesc});
-Option ShuffleOcarinaButtons  = Option::Bool("Shuffle Ocarina Buttons",{"Off", "On"},                                                     {ocarinaButtonsDesc});
-Option ShuffleRupees          = Option::Bool("Shuffle Standing Rupees",{"Off", "On"},                                                     {shuffleRupeesDesc});
+                                                                        "Giant's wallet", "Tycoon wallet"},                               {"shopPriceRandom", "shopPriceAffordable", "shopPriceChild", "shopPriceAdult", "shopPriceGiant", "shopPriceTycoon"});
+Option Tokensanity            = Option::U8  ("Tokensanity",            {"Off", "Dungeons", "Overworld", "All Tokens"},                    {"tokensOff", "tokensDungeon", "tokensOverworld", "tokensAllTokens"});
+Option Scrubsanity            = Option::U8  ("Scrub Shuffle",          {"Off", "Affordable", "Expensive", "Random Prices"},               {"scrubsOff", "scrubsAffordable", "scrubsExpensive", "scrubsRandomPrices"});
+Option ShuffleCows            = Option::Bool("Shuffle Cows",           {"Off", "On"},                                                     {"shuffleCowsDesc"});
+Option ShuffleKokiriSword     = Option::Bool("Shuffle Kokiri Sword",   {"Off", "On"},                                                     {"kokiriSwordDesc"});
+Option ShuffleMasterSword     = Option::Bool("Shuffle Master Sword",   {"Off", "On"},                                                     {"masterSwordDesc"});
+Option ShuffleOcarinas        = Option::Bool("Shuffle Ocarinas",       {"Off", "On"},                                                     {"ocarinasDesc"});
+Option ShuffleWeirdEgg        = Option::Bool("Shuffle Weird Egg",      {"Off", "On"},                                                     {"weirdEggDesc"});
+Option ShuffleZeldasLetter    = Option::Bool("Shuffle Zelda's Letter", {"Off", "On"},                                                     {"zeldasLetterDesc"});
+Option ShuffleGerudoToken     = Option::Bool("Shuffle Gerudo Token",   {"Off", "On"},                                                     {"gerudoTokenDesc"});
+Option ShuffleMagicBeans      = Option::Bool("Shuffle Magic Beans",    {"Off", "On"},                                                     {"magicBeansDesc"});
+Option ShuffleMerchants       = Option::U8  ("Shuffle Merchants",      {"Off", "On (No Hints)", "On (With Hints)"},                       {"merchantsDesc", "merchantsHintsDesc"});
+Option ShuffleAdultTradeQuest = Option::Bool("Shuffle Adult Trade",    {"Off", "On"},                                                     {"adultTradeDesc"});
+Option ShuffleChestMinigame   = Option::U8  ("Shuffle Chest Minigame", {"Off", "On (Separate)", "On (Pack)"},                             {"chestMinigameDesc"});
+Option ShuffleFrogSongRupees  = Option::Bool("Shuffle Frog Rupees",    {"Off", "On"},                                                     {"frogSongRupeesDesc"});
+Option ShuffleEnemySouls      = Option::U8  ("Shuffle Enemy Souls",    {"Off", "All enemies", "Bosses only"},                             {"enemySoulDesc"});
+Option ShuffleOcarinaButtons  = Option::Bool("Shuffle Ocarina Buttons",{"Off", "On"},                                                     {"ocarinaButtonsDesc"});
+Option ShuffleRupees          = Option::Bool("Shuffle Standing Rupees",{"Off", "On"},                                                     {"shuffleRupeesDesc"});
 std::vector<Option *> shuffleOptions = {
     &RandomizeShuffle,
     &ShuffleRewards,
@@ -258,35 +259,35 @@ std::vector<Option *> shuffleOptions = {
 };
 
 // Shuffle Dungeon Items
-Option RandomizeDungeon    = Option::Bool("Randomize Settings",        {"No","Yes"},                                                           {dungeonRandomize},                                                                                               OptionCategory::Toggle);
+Option RandomizeDungeon    = Option::Bool("Randomize Settings",        {"No","Yes"},                                                           {"dungeonRandomize"},                                                                                             OptionCategory::Toggle);
 Option MapsAndCompasses    = Option::U8  ("Maps/Compasses",            {"Start With", "Vanilla", "Own Dungeon", "Any Dungeon", "Overworld", "Anywhere"},
-                                                                        {mapCompassStartWith, mapCompassVanilla, mapCompassOwnDungeon, mapCompassAnyDungeon, mapCompassOverworld, mapCompassAnywhere},                                                           OptionCategory::Setting,    MAPSANDCOMPASSES_OWN_DUNGEON);
+                                                                        {"mapCompassStartWith", "mapCompassVanilla", "mapCompassOwnDungeon", "mapCompassAnyDungeon", "mapCompassOverworld", "mapCompassAnywhere"},                                               OptionCategory::Setting,    MAPSANDCOMPASSES_OWN_DUNGEON);
 Option Keysanity           = Option::U8  ("Small Keys",                {"Start With", "Vanilla", "Own Dungeon", "Any Dungeon", "Overworld", "Anywhere"},
-                                                                        {smallKeyStartWith, smallKeyVanilla, smallKeyOwnDungeon, smallKeyAnyDungeon, smallKeyOverworld, smallKeyAnywhere},                                                                       OptionCategory::Setting,    KEYSANITY_OWN_DUNGEON);
+                                                                        {"smallKeyStartWith", "smallKeyVanilla", "smallKeyOwnDungeon", "smallKeyAnyDungeon", "smallKeyOverworld", "smallKeyAnywhere"},                                                           OptionCategory::Setting,    KEYSANITY_OWN_DUNGEON);
 Option GerudoKeys          = Option::U8  ("Gerudo Fortress Keys",      {"Vanilla", "Any Dungeon", "Overworld", "Anywhere"},
-                                                                        {gerudoKeysVanilla, gerudoKeysAnyDungeon, gerudoKeysOverworld, gerudoKeysAnywhere});
+                                                                        {"gerudoKeysVanilla", "gerudoKeysAnyDungeon", "gerudoKeysOverworld", "gerudoKeysAnywhere"});
 Option BossKeysanity       = Option::U8  ("Boss Keys",                 {"Start With", "Vanilla", "Own Dungeon", "Any Dungeon", "Overworld", "Anywhere"},
-                                                                        {bossKeyStartWith, bossKeyVanilla, bossKeyOwnDungeon, bossKeyAnyDungeon, bossKeyOverworld, bossKeyAnywhere},                                                                             OptionCategory::Setting,    BOSSKEYSANITY_OWN_DUNGEON);
+                                                                        {"bossKeyStartWith", "bossKeyVanilla", "bossKeyOwnDungeon", "bossKeyAnyDungeon", "bossKeyOverworld", "bossKeyAnywhere"},                                                                 OptionCategory::Setting,    BOSSKEYSANITY_OWN_DUNGEON);
 Option GanonsBossKey       = Option::U8  ("Ganon's Boss Key",          {"Start With", "Vanilla", "Own Dungeon", "Any Dungeon", "Overworld", "Anywhere", "Triforce",
                                                                         "LACS-Vanilla", "LACS-Medallions", "LACS-Stones", "LACS-Rewards", "LACS-Dungeons", "LACS-Tokens", "LACS-Hearts"},
-                                                                        {ganonKeyStartWith, ganonKeyVanilla, ganonKeyOwnDungeon, ganonKeyAnyDungeon, ganonKeyOverworld, ganonKeyAnywhere, "", ganonKeyLACS},                                                         OptionCategory::Setting,    GANONSBOSSKEY_OWN_DUNGEON);
+                                                                        {"ganonKeyStartWith", "ganonKeyVanilla", "ganonKeyOwnDungeon", "ganonKeyAnyDungeon", "ganonKeyOverworld", "ganonKeyAnywhere", "", "ganonKeyLACS"},                                       OptionCategory::Setting,    GANONSBOSSKEY_OWN_DUNGEON);
 u8 LACSCondition           = 0;
-Option LACSMedallionCount  = Option::U8  (2, "Medallion Count",        {NumOpts(0, 6)},                                                        {lacsMedallionCountDesc},                                                                                         OptionCategory::Setting,    1,                          true);
-Option LACSStoneCount      = Option::U8  (2, "Stone Count",            {NumOpts(0, 3)},                                                        {lacsStoneCountDesc},                                                                                             OptionCategory::Setting,    1,                          true);
-Option LACSRewardCount     = Option::U8  (2, "Reward Count",           {NumOpts(0, 9)},                                                        {lacsRewardCountDesc},                                                                                            OptionCategory::Setting,    1,                          true);
-Option LACSDungeonCount    = Option::U8  (2, "Dungeon Count",          {NumOpts(0, 8)},                                                        {lacsDungeonCountDesc},                                                                                           OptionCategory::Setting,    1,                          true);
-Option LACSTokenCount      = Option::U8  (2, "Token Count",            {NumOpts(0, 100)},                                                      {lacsTokenCountDesc},                                                                                             OptionCategory::Setting,    1,                          true);
-Option LACSHeartCount      = Option::U8  (2, "Heart Count",            {NumOpts(0, 20)},                                                       {lacsHeartCountDesc},                                                                                             OptionCategory::Setting,    1,                          true);
-Option KeyRings            = Option::U8  ("Key Rings",                 {"All Off", "All On", "Choose", "Random"},                              {keyRingDesc});
-Option RingFortress        = Option::Bool(2, "Gerudo Fortress",        {"Off", "On"},                                                          {keyRingDesc},                                                                                                    OptionCategory::Setting);
-Option RingForest          = Option::Bool(2, "Forest Temple",          {"Off", "On"},                                                          {keyRingDesc},                                                                                                    OptionCategory::Setting);
-Option RingFire            = Option::Bool(2, "Fire Temple",            {"Off", "On"},                                                          {keyRingDesc},                                                                                                    OptionCategory::Setting);
-Option RingWater           = Option::Bool(2, "Water Temple",           {"Off", "On"},                                                          {keyRingDesc},                                                                                                    OptionCategory::Setting);
-Option RingSpirit          = Option::Bool(2, "Spirit Temple",          {"Off", "On"},                                                          {keyRingDesc},                                                                                                    OptionCategory::Setting);
-Option RingShadow          = Option::Bool(2, "Shadow Temple",          {"Off", "On"},                                                          {keyRingDesc},                                                                                                    OptionCategory::Setting);
-Option RingWell            = Option::Bool(2, "Bottom of the Well",     {"Off", "On"},                                                          {keyRingDesc},                                                                                                    OptionCategory::Setting);
-Option RingGtg             = Option::Bool(2, "GTG",                    {"Off", "On"},                                                          {keyRingDesc},                                                                                                    OptionCategory::Setting);
-Option RingCastle          = Option::Bool(2, "Ganon's Castle",         {"Off", "On"},                                                          {keyRingDesc},                                                                                                    OptionCategory::Setting);
+Option LACSMedallionCount  = Option::U8  (2, "Medallion Count",        {NumOpts(0, 6)},                                                        {"lacsMedallionCountDesc"},                                                                                       OptionCategory::Setting,    1,                          true);
+Option LACSStoneCount      = Option::U8  (2, "Stone Count",            {NumOpts(0, 3)},                                                        {"lacsStoneCountDesc"},                                                                                           OptionCategory::Setting,    1,                          true);
+Option LACSRewardCount     = Option::U8  (2, "Reward Count",           {NumOpts(0, 9)},                                                        {"lacsRewardCountDesc"},                                                                                          OptionCategory::Setting,    1,                          true);
+Option LACSDungeonCount    = Option::U8  (2, "Dungeon Count",          {NumOpts(0, 8)},                                                        {"lacsDungeonCountDesc"},                                                                                         OptionCategory::Setting,    1,                          true);
+Option LACSTokenCount      = Option::U8  (2, "Token Count",            {NumOpts(0, 100)},                                                      {"lacsTokenCountDesc"},                                                                                           OptionCategory::Setting,    1,                          true);
+Option LACSHeartCount      = Option::U8  (2, "Heart Count",            {NumOpts(0, 20)},                                                       {"lacsHeartCountDesc"},                                                                                           OptionCategory::Setting,    1,                          true);
+Option KeyRings            = Option::U8  ("Key Rings",                 {"All Off", "All On", "Choose", "Random"},                              {"keyRingDesc"});
+Option RingFortress        = Option::Bool(2, "Gerudo Fortress",        {"Off", "On"},                                                          {"keyRingDesc"},                                                                                                  OptionCategory::Setting);
+Option RingForest          = Option::Bool(2, "Forest Temple",          {"Off", "On"},                                                          {"keyRingDesc"},                                                                                                  OptionCategory::Setting);
+Option RingFire            = Option::Bool(2, "Fire Temple",            {"Off", "On"},                                                          {"keyRingDesc"},                                                                                                  OptionCategory::Setting);
+Option RingWater           = Option::Bool(2, "Water Temple",           {"Off", "On"},                                                          {"keyRingDesc"},                                                                                                  OptionCategory::Setting);
+Option RingSpirit          = Option::Bool(2, "Spirit Temple",          {"Off", "On"},                                                          {"keyRingDesc"},                                                                                                  OptionCategory::Setting);
+Option RingShadow          = Option::Bool(2, "Shadow Temple",          {"Off", "On"},                                                          {"keyRingDesc"},                                                                                                  OptionCategory::Setting);
+Option RingWell            = Option::Bool(2, "Bottom of the Well",     {"Off", "On"},                                                          {"keyRingDesc"},                                                                                                  OptionCategory::Setting);
+Option RingGtg             = Option::Bool(2, "GTG",                    {"Off", "On"},                                                          {"keyRingDesc"},                                                                                                  OptionCategory::Setting);
+Option RingCastle          = Option::Bool(2, "Ganon's Castle",         {"Off", "On"},                                                          {"keyRingDesc"},                                                                                                  OptionCategory::Setting);
 
 std::vector<Option *> shuffleDungeonItemOptions = {
     &RandomizeDungeon,
@@ -325,18 +326,18 @@ std::vector<Option *> keyRingOptions = {
 };
 
 // Timesaver Settings
-Option SkipChildStealth    = Option::Bool("Skip Child Stealth",     {"Don't Skip", "Skip"},                                                 {childStealthDesc},                                                                                               OptionCategory::Setting,    SKIP);
-Option SkipTowerEscape     = Option::Bool("Skip Tower Escape",      {"Don't Skip", "Skip"},                                                 {skipTowerEscapeDesc},                                                                                            OptionCategory::Setting,    SKIP);
-Option SkipEponaRace       = Option::Bool("Skip Epona Race",        {"Don't Skip", "Skip"},                                                 {skipEponaRaceDesc});
-Option SkipMinigamePhases  = Option::Bool("Minigames repetitions",  {"Don't Skip", "Skip"},                                                 {skipMinigamePhasesDesc});
-Option FreeScarecrow       = Option::Bool("Free Scarecrow",         {"Off", "On"},                                                          {freeScarecrowDesc});
-Option FourPoesCutscene    = Option::Bool("Four Poes Cutscene",     {"Don't Skip", "Skip"},                                                 {fourPoesDesc},                                                                                                   OptionCategory::Setting,    SKIP);
-Option LakeHyliaOwl        = Option::Bool("Lake Hylia Owl",         {"Don't Skip", "Skip"},                                                 {lakeHyliaOwlDesc},                                                                                               OptionCategory::Setting,    SKIP);
-Option BigPoeTargetCount   = Option::U8  ("Big Poe Target Count",   {NumOpts(1, 10)},                                                       {bigPoeTargetCountDesc});
-Option NumRequiredCuccos   = Option::U8  ("Cuccos to return",       {NumOpts(0, 7)},                                                        {numRequiredCuccosDesc});
-Option KingZoraSpeed       = Option::U8  ("King Zora Speed",        {"Fast", "Vanilla", "Random", "Custom"},                                {kingZoraSpeedFast, kingZoraSpeedVanilla, kingZoraSpeedRandom, kingZoraSpeedCustom});
+Option SkipChildStealth    = Option::Bool("Skip Child Stealth",     {"Don't Skip", "Skip"},                                                 {"childStealthDesc"},                                                                                             OptionCategory::Setting,    SKIP);
+Option SkipTowerEscape     = Option::Bool("Skip Tower Escape",      {"Don't Skip", "Skip"},                                                 {"skipTowerEscapeDesc"},                                                                                          OptionCategory::Setting,    SKIP);
+Option SkipEponaRace       = Option::Bool("Skip Epona Race",        {"Don't Skip", "Skip"},                                                 {"skipEponaRaceDesc"});
+Option SkipMinigamePhases  = Option::Bool("Minigames repetitions",  {"Don't Skip", "Skip"},                                                 {"skipMinigamePhasesDesc"});
+Option FreeScarecrow       = Option::Bool("Free Scarecrow",         {"Off", "On"},                                                          {"freeScarecrowDesc"});
+Option FourPoesCutscene    = Option::Bool("Four Poes Cutscene",     {"Don't Skip", "Skip"},                                                 {"fourPoesDesc"},                                                                                                 OptionCategory::Setting,    SKIP);
+Option LakeHyliaOwl        = Option::Bool("Lake Hylia Owl",         {"Don't Skip", "Skip"},                                                 {"lakeHyliaOwlDesc"},                                                                                             OptionCategory::Setting,    SKIP);
+Option BigPoeTargetCount   = Option::U8  ("Big Poe Target Count",   {NumOpts(1, 10)},                                                       {"bigPoeTargetCountDesc"});
+Option NumRequiredCuccos   = Option::U8  ("Cuccos to return",       {NumOpts(0, 7)},                                                        {"numRequiredCuccosDesc"});
+Option KingZoraSpeed       = Option::U8  ("King Zora Speed",        {"Fast", "Vanilla", "Random", "Custom"},                                {"kingZoraSpeedFast", "kingZoraSpeedVanilla", "kingZoraSpeedRandom", "kingZoraSpeedCustom"});
 Option ExactZoraSpeed      = Option::U8  (2, "Exact Shuffle Count", {NumOpts(1, 128)},                                                      {""});
-Option CompleteMaskQuest   = Option::Bool("Complete Mask Quest",    {"Off", "On"},                                                          {completeMaskDesc});
+Option CompleteMaskQuest   = Option::Bool("Complete Mask Quest",    {"Off", "On"},                                                          {"completeMaskDesc"});
 std::vector<Option *> timesaverOptions = {
     &SkipChildStealth,
     &SkipTowerEscape,
@@ -353,27 +354,27 @@ std::vector<Option *> timesaverOptions = {
 };
 
 // Misc Settings
-Option Racing              = Option::Bool("Racing",                 {"Off", "On"},                                                          {racingDesc});
-Option GossipStoneHints    = Option::U8  ("Gossip Stone Hints",     {"No Hints", "Need Nothing", "Mask of Truth", "Shard of Agony"},        {gossipStonesHintsDesc},                                                                                          OptionCategory::Setting,    HINTS_NEED_NOTHING);
-Option HintDistribution    = Option::U8  (2, "Hint Distribution",   {"Useless", "Balanced", "Strong", "Very Strong", "Playthrough"},        {uselessHintsDesc, balancedHintsDesc, strongHintsDesc, veryStrongHintsDesc, playthroughHintsDesc},                OptionCategory::Setting,    HINTDISTRIBUTION_BALANCED);
-Option BonusGossipHints    = Option::Bool(4, "Bonus Hints",         {"Off", "On"},                                                          {bonusGossipHintsDesc});
-Option MiscHints           = Option::U8  ("Miscellaneous Hints",    {"All Disabled",  "All Enabled", "Choose"},                             {miscHintsDesc},                                                                                                  OptionCategory::Setting,    TOGGLE_ALL_ENABLED);
-Option ToTAltarHints       = Option::Bool(2, "Temple of Time Altar",{"Off", "On"},                                                          {totAltarHintsDesc});
-Option GanonHints          = Option::Bool(2, "Ganondorf",           {"Off", "On"},                                                          {ganonHintsDesc});
-Option DampeHint           = Option::Bool(2, "Dampe's Diary",       {"Off", "On"},                                                          {dampeHintDesc});
-Option SkulltulaHints      = Option::Bool(2, "House of Skulltula",  {"Off", "On"},                                                          {skulltulaHintDesc});
-Option FishingHints        = Option::Bool(2, "Fishing Prizes",      {"Off", "On"},                                                          {fishingHintsDesc});
-Option ClearerHints        = Option::U8  ("Hint Clarity",           {"Obscure", "Ambiguous", "Clear"},                                      {obscureHintsDesc, ambiguousHintsDesc, clearHintsDesc});
-Option CompassesShowReward = Option::U8  ("Compasses Show Rewards", {"No", "Yes"},                                                          {compassesShowRewardsDesc});
-Option CompassesShowWotH   = Option::U8  ("Compasses Show WotH",    {"No", "Yes"},                                                          {compassesShowWotHDesc},                                                                                          OptionCategory::Setting,    ON);
-Option MapsShowDungeonMode = Option::U8  ("Maps Show Dungeon Modes",{"No", "Yes"},                                                          {mapsShowDungeonModesDesc},                                                                                       OptionCategory::Setting,    ON);
-Option StartingTime        = Option::U8  ("Starting Time",          {"Day", "Night"},                                                       {startingTimeDesc});
-Option ChestAnimations     = Option::Bool("Chest Animations",       {"Always Fast", "Match Contents"},                                      {chestAnimDesc});
-Option ChestAppearance     = Option::U8  ("Chest Appearance Mod",   {"Vanilla", "Texture", "Size + Texture", "Classic CSMC"},               {chestVanillaDesc, chestTextureDesc, chestSizeTextureDesc, chestClassicDesc});
-Option ChestAgony          = Option::Bool(2, "Need Shard of Agony", {"No", "Yes"},                                                          {chestAgonyDesc});
-Option ExtraShields        = Option::U8  ("Keep Extra Shields",     {"Never (Vanilla)", "Only if random", "Always allowed"},                {extraShieldsDesc},                                                                                               OptionCategory::Setting,    EXTRASHIELDS_RANDOM_ONLY);
+Option Racing              = Option::Bool("Racing",                 {"Off", "On"},                                                          {"racingDesc"});
+Option GossipStoneHints    = Option::U8  ("Gossip Stone Hints",     {"No Hints", "Need Nothing", "Mask of Truth", "Shard of Agony"},        {"gossipStonesHintsDesc"},                                                                                        OptionCategory::Setting,    HINTS_NEED_NOTHING);
+Option HintDistribution    = Option::U8  (2, "Hint Distribution",   {"Useless", "Balanced", "Strong", "Very Strong", "Playthrough"},        {"uselessHintsDesc", "balancedHintsDesc", "strongHintsDesc", "veryStrongHintsDesc", "playthroughHintsDesc"},      OptionCategory::Setting,    HINTDISTRIBUTION_BALANCED);
+Option BonusGossipHints    = Option::Bool(4, "Bonus Hints",         {"Off", "On"},                                                          {"bonusGossipHintsDesc"});
+Option MiscHints           = Option::U8  ("Miscellaneous Hints",    {"All Disabled",  "All Enabled", "Choose"},                             {"miscHintsDesc"},                                                                                                OptionCategory::Setting,    TOGGLE_ALL_ENABLED);
+Option ToTAltarHints       = Option::Bool(2, "Temple of Time Altar",{"Off", "On"},                                                          {"totAltarHintsDesc"});
+Option GanonHints          = Option::Bool(2, "Ganondorf",           {"Off", "On"},                                                          {"ganonHintsDesc"});
+Option DampeHint           = Option::Bool(2, "Dampe's Diary",       {"Off", "On"},                                                          {"dampeHintDesc"});
+Option SkulltulaHints      = Option::Bool(2, "House of Skulltula",  {"Off", "On"},                                                          {"skulltulaHintDesc"});
+Option FishingHints        = Option::Bool(2, "Fishing Prizes",      {"Off", "On"},                                                          {"fishingHintsDesc"});
+Option ClearerHints        = Option::U8  ("Hint Clarity",           {"Obscure", "Ambiguous", "Clear"},                                      {"obscureHintsDesc", "ambiguousHintsDesc", "clearHintsDesc"});
+Option CompassesShowReward = Option::U8  ("Compasses Show Rewards", {"No", "Yes"},                                                          {"compassesShowRewardsDesc"});
+Option CompassesShowWotH   = Option::U8  ("Compasses Show WotH",    {"No", "Yes"},                                                          {"compassesShowWotHDesc"},                                                                                        OptionCategory::Setting,    ON);
+Option MapsShowDungeonMode = Option::U8  ("Maps Show Dungeon Modes",{"No", "Yes"},                                                          {"mapsShowDungeonModesDesc"},                                                                                     OptionCategory::Setting,    ON);
+Option StartingTime        = Option::U8  ("Starting Time",          {"Day", "Night"},                                                       {"startingTimeDesc"});
+Option ChestAnimations     = Option::Bool("Chest Animations",       {"Always Fast", "Match Contents"},                                      {"chestAnimDesc"});
+Option ChestAppearance     = Option::U8  ("Chest Appearance Mod",   {"Vanilla", "Texture", "Size + Texture", "Classic CSMC"},               {"chestVanillaDesc", "chestTextureDesc", "chestSizeTextureDesc", "chestClassicDesc"});
+Option ChestAgony          = Option::Bool(2, "Need Shard of Agony", {"No", "Yes"},                                                          {"chestAgonyDesc"});
+Option ExtraShields        = Option::U8  ("Keep Extra Shields",     {"Never (Vanilla)", "Only if random", "Always allowed"},                {"extraShieldsDesc"},                                                                                             OptionCategory::Setting,    EXTRASHIELDS_RANDOM_ONLY);
 Option GenerateSpoilerLog  = Option::Bool("Generate Spoiler Log",   {"No", "Yes"},                                                          {""},                                                                                                             OptionCategory::Setting,    ON);
-Option IngameSpoilers      = Option::Bool("Ingame Spoilers",        {"Hide", "Show"},                                                       {ingameSpoilersHideDesc, ingameSpoilersShowDesc });
+Option IngameSpoilers      = Option::Bool("Ingame Spoilers",        {"Hide", "Show"},                                                       {"ingameSpoilersHideDesc", "ingameSpoilersShowDesc" });
 bool HasNightStart         = false;
 std::vector<Option *> miscOptions = {
     &Racing,
@@ -400,28 +401,28 @@ std::vector<Option *> miscOptions = {
 };
 
 // Item Usability Settings
-Option FaroresWindAnywhere = Option::Bool("Farore's Wind Anywhere",  {"Disabled", "Enabled"},                                               {faroresWindAnywhereDesc});
-Option AgeItemsToggle      = Option::U8  ("Lift Age Restrictions",   {"All Disabled",  "All Enabled", "Choose"},                            {ageRestrictionsDesc});
-Option AgeItemsInLogic     = Option::Bool(1, "Consider in Logic",    {"No", "Yes"},                                                         {ageItemsInLogicDesc});
-Option StickAsAdult        = Option::Bool(2, "Adult Deku Stick",     {"Disabled", "Enabled"},                                               {adultStickDesc});
-Option BoomerangAsAdult    = Option::Bool(2, "Adult Boomerang",      {"Disabled", "Enabled"},                                               {adultBoomerangDesc});
-Option HammerAsChild       = Option::Bool(2, "Child Hammer",         {"Disabled", "Enabled"},                                               {childHammerDesc});
-Option SlingshotAsAdult    = Option::Bool(2, "Adult Slingshot",      {"Disabled", "Enabled"},                                               {adultSlingshotDesc});
-Option BowAsChild          = Option::Bool(2, "Child Bow",            {"Disabled", "Enabled"},                                               {childBowDesc});
-Option HookshotAsChild     = Option::Bool(2, "Child Hookshot",       {"Disabled", "Enabled"},                                               {childHookshotDesc});
-Option IronBootsAsChild    = Option::Bool(2, "Child Iron Boots",     {"Disabled", "Enabled"},                                               {childIronBootsDesc});
-Option HoverBootsAsChild   = Option::Bool(2, "Child Hover Boots",    {"Disabled", "Enabled"},                                               {childHoverBootsDesc});
-Option MasksAsAdult        = Option::Bool(2, "Adult Masks",          {"Disabled", "Enabled"},                                               {adultMasksDesc});
-Option KokiriSwordAsAdult  = Option::Bool(2, "Adult Kokiri Sword",   {"Disabled", "Enabled"},                                               {adultKokiriSwordDesc});
-Option MasterSwordAsChild  = Option::Bool(2, "Child Master Sword",   {"Disabled", "Enabled"},                                               {childMasterSwordDesc});
-Option BiggoronSwordAsChild= Option::Bool(2, "Child Biggoron Sword", {"Disabled", "Enabled"},                                               {childBiggoronSwordDesc});
-Option DekuShieldAsAdult   = Option::Bool(2, "Adult Deku Shield",    {"Disabled", "Enabled"},                                               {adultDekuShieldDesc});
-Option MirrorShieldAsChild = Option::Bool(2, "Child Mirror Shield",  {"Disabled", "Enabled"},                                               {childMirrorShieldDesc});
-Option GoronTunicAsChild   = Option::Bool(2, "Child Goron Tunic",    {"Disabled", "Enabled"},                                               {childGoronTunicDesc});
-Option ZoraTunicAsChild    = Option::Bool(2, "Child Zora Tunic",     {"Disabled", "Enabled"},                                               {childZoraTunicDesc});
-Option RestoreISG          = Option::Bool("Restore ISG",             {"Disabled", "Enabled"},                                               {restoreISGdesc},                                                                                                 OptionCategory::Setting,    ON);
-Option GkDurability        = Option::U8  ("GK Durability",           {"Vanilla", "Random Risk", "Random Safe"},                             {gkDurabilityVanilla, gkDurabilityRandomRisk, gkDurabilityRandomSafe});
-Option RetroAmmo           = Option::Bool("Rupees as Ammo",          {"Disabled", "Enabled"},                                               {retroAmmoDesc});
+Option FaroresWindAnywhere = Option::Bool("Farore's Wind Anywhere",  {"Disabled", "Enabled"},                                               {"faroresWindAnywhereDesc"});
+Option AgeItemsToggle      = Option::U8  ("Lift Age Restrictions",   {"All Disabled",  "All Enabled", "Choose"},                            {"ageRestrictionsDesc"});
+Option AgeItemsInLogic     = Option::Bool(1, "Consider in Logic",    {"No", "Yes"},                                                         {"ageItemsInLogicDesc"});
+Option StickAsAdult        = Option::Bool(2, "Adult Deku Stick",     {"Disabled", "Enabled"},                                               {"adultStickDesc"});
+Option BoomerangAsAdult    = Option::Bool(2, "Adult Boomerang",      {"Disabled", "Enabled"},                                               {"adultBoomerangDesc"});
+Option HammerAsChild       = Option::Bool(2, "Child Hammer",         {"Disabled", "Enabled"},                                               {"childHammerDesc"});
+Option SlingshotAsAdult    = Option::Bool(2, "Adult Slingshot",      {"Disabled", "Enabled"},                                               {"adultSlingshotDesc"});
+Option BowAsChild          = Option::Bool(2, "Child Bow",            {"Disabled", "Enabled"},                                               {"childBowDesc"});
+Option HookshotAsChild     = Option::Bool(2, "Child Hookshot",       {"Disabled", "Enabled"},                                               {"childHookshotDesc"});
+Option IronBootsAsChild    = Option::Bool(2, "Child Iron Boots",     {"Disabled", "Enabled"},                                               {"childIronBootsDesc"});
+Option HoverBootsAsChild   = Option::Bool(2, "Child Hover Boots",    {"Disabled", "Enabled"},                                               {"childHoverBootsDesc"});
+Option MasksAsAdult        = Option::Bool(2, "Adult Masks",          {"Disabled", "Enabled"},                                               {"adultMasksDesc"});
+Option KokiriSwordAsAdult  = Option::Bool(2, "Adult Kokiri Sword",   {"Disabled", "Enabled"},                                               {"adultKokiriSwordDesc"});
+Option MasterSwordAsChild  = Option::Bool(2, "Child Master Sword",   {"Disabled", "Enabled"},                                               {"childMasterSwordDesc"});
+Option BiggoronSwordAsChild= Option::Bool(2, "Child Biggoron Sword", {"Disabled", "Enabled"},                                               {"childBiggoronSwordDesc"});
+Option DekuShieldAsAdult   = Option::Bool(2, "Adult Deku Shield",    {"Disabled", "Enabled"},                                               {"adultDekuShieldDesc"});
+Option MirrorShieldAsChild = Option::Bool(2, "Child Mirror Shield",  {"Disabled", "Enabled"},                                               {"childMirrorShieldDesc"});
+Option GoronTunicAsChild   = Option::Bool(2, "Child Goron Tunic",    {"Disabled", "Enabled"},                                               {"childGoronTunicDesc"});
+Option ZoraTunicAsChild    = Option::Bool(2, "Child Zora Tunic",     {"Disabled", "Enabled"},                                               {"childZoraTunicDesc"});
+Option RestoreISG          = Option::Bool("Restore ISG",             {"Disabled", "Enabled"},                                               {"restoreISGdesc"},                                                                                               OptionCategory::Setting,    ON);
+Option GkDurability        = Option::U8  ("GK Durability",           {"Vanilla", "Random Risk", "Random Safe"},                             {"gkDurabilityVanilla", "gkDurabilityRandomRisk", "gkDurabilityRandomSafe"});
+Option RetroAmmo           = Option::Bool("Rupees as Ammo",          {"Disabled", "Enabled"},                                               {"retroAmmoDesc"});
 std::vector<Option *> itemUsabilityOptions = {
     &FaroresWindAnywhere,
     &AgeItemsToggle,
@@ -448,10 +449,10 @@ std::vector<Option *> itemUsabilityOptions = {
 };
 
 // Item Pool Settings
-Option ItemPoolValue         = Option::U8  ("Item Pool",             {"Minimal", "Scarce", "Balanced", "Plentiful"},                        {itemPoolMinimal, itemPoolScarce, itemPoolBalanced, itemPoolPlentiful},                                           OptionCategory::Setting,    ITEMPOOL_BALANCED);
-Option IceTrapValue          = Option::U8  ("Ice Traps",             {"Off", "Normal", "Extra", "Mayhem", "Onslaught"},                     {iceTrapsOff, iceTrapsNormal, iceTrapsExtra, iceTrapsMayhem, iceTrapsOnslaught},                                  OptionCategory::Setting,    ICETRAPS_NORMAL);
-Option RemoveDoubleDefense   = Option::Bool("Remove Double Defense", {"No", "Yes"},                                                         {removeDDDesc});
-Option ProgressiveGoronSword = Option::Bool("Prog Goron Sword",      {"Disabled", "Enabled"},                                               {progGoronSword});
+Option ItemPoolValue         = Option::U8  ("Item Pool",             {"Minimal", "Scarce", "Balanced", "Plentiful"},                        {"itemPoolMinimal", "itemPoolScarce", "itemPoolBalanced", "itemPoolPlentiful"},                                   OptionCategory::Setting,    ITEMPOOL_BALANCED);
+Option IceTrapValue          = Option::U8  ("Ice Traps",             {"Off", "Normal", "Extra", "Mayhem", "Onslaught"},                     {"iceTrapsOff", "iceTrapsNormal", "iceTrapsExtra", "iceTrapsMayhem", "iceTrapsOnslaught"},                        OptionCategory::Setting,    ICETRAPS_NORMAL);
+Option RemoveDoubleDefense   = Option::Bool("Remove Double Defense", {"No", "Yes"},                                                         {"removeDDDesc"});
+Option ProgressiveGoronSword = Option::Bool("Prog Goron Sword",      {"Disabled", "Enabled"},                                               {"progGoronSword"});
 std::vector<Option *> itemPoolOptions = {
     &ItemPoolValue,
     &IceTrapValue,
@@ -459,28 +460,28 @@ std::vector<Option *> itemPoolOptions = {
     &ProgressiveGoronSword,
 };
 
-Option FastBunnyHood       = Option::Bool("Fast Bunny Hood",        {"Off", "On"},                                                          {fastBunnyHoodDesc});
-Option KeepFWWarpPoint     = Option::Bool("Keep FW Warp Point",     {"Off", "On"},                                                          {keepFWWarpPointDesc});
-Option DamageMultiplier    = Option::U8  ("Damage Multiplier",      {"x1/2", "x1", "x2", "x4", "x8", "x16", "OHKO"},                        {damageMultiDesc},                                                                                                OptionCategory::Setting,    DAMAGEMULTIPLIER_DEFAULT);
-Option BonkDamage          = Option::U8  ("Bonk Damage",            {"0", "1/4", "1/2", "1", "2", "4", "OHKO"},                             {bonkDamageDesc});
-Option Permadeath          = Option::Bool("Permadeath",             {"Off", "On"},                                                          {permadeathDesc});
-Option GloomMode           = Option::U8  ("Gloom Mode",             {"Off", "Death", "Damage", "Collision", "Empty"},                       {gloomModeOffDesc, gloomModeDeathDesc, gloomModeDamageDesc, gloomModeCollisionDesc, gloomModeEmptyDesc});
-Option RandomTrapDmg       = Option::U8  ("Random Trap Damage",     {"Off", "Basic", "Advanced"},                                           {randomTrapDmgDesc, basicTrapDmgDesc, advancedTrapDmgDesc},                                                       OptionCategory::Setting,    RANDOMTRAPS_BASIC);
-Option FireTrap            = Option::Bool(2, "Fire Trap",           {"Off", "On"},                                                          {fireTrapDesc},                                                                                                   OptionCategory::Setting,    ON);
-Option AntiFairyTrap       = Option::Bool(2, "Anti-Fairy Trap",     {"Off", "On"},                                                          {antiFairyTrapDesc},                                                                                              OptionCategory::Setting,    ON);
-Option RupoorTrap          = Option::Bool(2, "Rupoor Trap",         {"Off", "On"},                                                          {rupoorTrapDesc},                                                                                                 OptionCategory::Setting,    ON);
-Option RupoorTrapSeverity  = Option::U8  (4, "Severity",            {"10", "Random Ratio",  "Bankruptcy"},                                  {rupoorTrapSeverityDesc},                                                                                         OptionCategory::Setting,    RUPOORTRAPSEVERITY_TEN);
-Option CurseTraps          = Option::Bool(2, "Curse Traps",         {"Off", "On"},                                                          {curseTrapsDesc},                                                                                                 OptionCategory::Setting);
-Option ScreenTraps         = Option::Bool(4, "Screen Traps",        {"Off", "On"},                                                          {screenTrapsDesc},                                                                                                OptionCategory::Setting);
-Option ExtraArrowEffects   = Option::Bool("Extra Arrow Effects",    {"Off", "On"},                                                          {extraArrowEffectsDesc});
-Option HyperActors         = Option::U8  ("Hyper Actors",           {"All Off", "All On", "Choose"},                                        {hyperActorsDesc});
-Option HyperBosses         = Option::Bool(2, "Hyper Bosses",        {"Off", "On"},                                                          {hyperBossesDesc});
-Option HyperMiddleBosses   = Option::Bool(2, "Hyper Middle Bosses", {"Off", "On"},                                                          {hyperMiddleBossesDesc});
-Option HyperEnemies        = Option::Bool(2, "Hyper Enemies",       {"Off", "On"},                                                          {hyperEnemiesDesc});
-Option FreeCamera          = Option::Bool("Free Camera",            {"Off", "On"},                                                          {freeCamDesc},                                                                                                    OptionCategory::Setting,    ON);
-Option RandomGsLocations   = Option::Bool("Random GS Locations",    {"Off", "On"},                                                          {randomGsLocationsDesc});
-Option GsLocGuaranteeNew   = Option::Bool(2, "Guarantee New",       {"Off", "On"},                                                          {gsLocGuaranteeNewDesc});
-Option RandomSongNotes     = Option::Bool("Random Ocarina Melodies",{"Off", "On"},                                                          {randomSongNotesDesc});
+Option FastBunnyHood       = Option::Bool("Fast Bunny Hood",        {"Off", "On"},                                                          {"fastBunnyHoodDesc"});
+Option KeepFWWarpPoint     = Option::Bool("Keep FW Warp Point",     {"Off", "On"},                                                          {"keepFWWarpPointDesc"});
+Option DamageMultiplier    = Option::U8  ("Damage Multiplier",      {"x1/2", "x1", "x2", "x4", "x8", "x16", "OHKO"},                        {"damageMultiDesc"},                                                                                              OptionCategory::Setting,    DAMAGEMULTIPLIER_DEFAULT);
+Option BonkDamage          = Option::U8  ("Bonk Damage",            {"0", "1/4", "1/2", "1", "2", "4", "OHKO"},                             {"bonkDamageDesc"});
+Option Permadeath          = Option::Bool("Permadeath",             {"Off", "On"},                                                          {"permadeathDesc"});
+Option GloomMode           = Option::U8  ("Gloom Mode",             {"Off", "Death", "Damage", "Collision", "Empty"},                       {"gloomModeOffDesc", "gloomModeDeathDesc", "gloomModeDamageDesc", "gloomModeCollisionDesc", "gloomModeEmptyDesc"});
+Option RandomTrapDmg       = Option::U8  ("Random Trap Damage",     {"Off", "Basic", "Advanced"},                                           {"randomTrapDmgDesc", "basicTrapDmgDesc", "advancedTrapDmgDesc"},                                                 OptionCategory::Setting,    RANDOMTRAPS_BASIC);
+Option FireTrap            = Option::Bool(2, "Fire Trap",           {"Off", "On"},                                                          {"fireTrapDesc"},                                                                                                 OptionCategory::Setting,    ON);
+Option AntiFairyTrap       = Option::Bool(2, "Anti-Fairy Trap",     {"Off", "On"},                                                          {"antiFairyTrapDesc"},                                                                                            OptionCategory::Setting,    ON);
+Option RupoorTrap          = Option::Bool(2, "Rupoor Trap",         {"Off", "On"},                                                          {"rupoorTrapDesc"},                                                                                               OptionCategory::Setting,    ON);
+Option RupoorTrapSeverity  = Option::U8  (4, "Severity",            {"10", "Random Ratio",  "Bankruptcy"},                                  {"rupoorTrapSeverityDesc"},                                                                                       OptionCategory::Setting,    RUPOORTRAPSEVERITY_TEN);
+Option CurseTraps          = Option::Bool(2, "Curse Traps",         {"Off", "On"},                                                          {"curseTrapsDesc"},                                                                                               OptionCategory::Setting);
+Option ScreenTraps         = Option::Bool(4, "Screen Traps",        {"Off", "On"},                                                          {"screenTrapsDesc"},                                                                                              OptionCategory::Setting);
+Option ExtraArrowEffects   = Option::Bool("Extra Arrow Effects",    {"Off", "On"},                                                          {"extraArrowEffectsDesc"});
+Option HyperActors         = Option::U8  ("Hyper Actors",           {"All Off", "All On", "Choose"},                                        {"hyperActorsDesc"});
+Option HyperBosses         = Option::Bool(2, "Hyper Bosses",        {"Off", "On"},                                                          {"hyperBossesDesc"});
+Option HyperMiddleBosses   = Option::Bool(2, "Hyper Middle Bosses", {"Off", "On"},                                                          {"hyperMiddleBossesDesc"});
+Option HyperEnemies        = Option::Bool(2, "Hyper Enemies",       {"Off", "On"},                                                          {"hyperEnemiesDesc"});
+Option FreeCamera          = Option::Bool("Free Camera",            {"Off", "On"},                                                          {"freeCamDesc"},                                                                                                  OptionCategory::Setting,    ON);
+Option RandomGsLocations   = Option::Bool("Random GS Locations",    {"Off", "On"},                                                          {"randomGsLocationsDesc"});
+Option GsLocGuaranteeNew   = Option::Bool(2, "Guarantee New",       {"Off", "On"},                                                          {"gsLocGuaranteeNewDesc"});
+Option RandomSongNotes     = Option::Bool("Random Ocarina Melodies",{"Off", "On"},                                                          {"randomSongNotesDesc"});
 std::vector<Option*> gameplayOptions = {
     &FastBunnyHood,
     &KeepFWWarpPoint,
@@ -598,7 +599,7 @@ Option StartingBottle2          = Option::U8  ("Bottle 2",             bottleOpt
 Option StartingBottle3          = Option::U8  ("Bottle 3",             bottleOptions,                                                                   {""});
 Option StartingBottle4          = Option::U8  ("Bottle 4",             bottleOptions,                                                                   {""});
 Option StartingRutoBottle       = Option::U8  ("Ruto's Letter",        {"Off",             "On"},                                                       {""});
-Option StartingChildTrade       = Option::U8  ("Bunny Hood",           {"Off",             "On"},                                                       {startingBunnyHoodDesc});
+Option StartingChildTrade       = Option::U8  ("Bunny Hood",           {"Off",             "On"},                                                       {"startingBunnyHoodDesc"});
 std::vector<Option *> startingItemsOptions = {
     &StartingStickCapacity,
     &StartingNutCapacity,
@@ -667,7 +668,7 @@ Option StartingStrength         = Option::U8  ("Strength Upgrade",     {"Off",  
 Option StartingScale            = Option::U8  ("Scale Upgrade",        {"Off",             "Silver Scale",     "Golden Scale"},                         {""});
 Option StartingWallet           = Option::U8  ("Wallet Upgrade",       {"Off",             "Adult's Wallet",   "Giant's Wallet",   "Tycoon's Wallet"},  {""});
 Option StartingShardOfAgony     = Option::U8  ("Shard of Agony",       {"Off",             "On"},                                                       {""});
-Option StartingHearts           = Option::U8  ("Hearts",               {NumOpts(0, 20)},                                                                {startingHealthDesc,""}, OptionCategory::Setting, 3); // Default 3 hearts
+Option StartingHearts           = Option::U8  ("Hearts",               {NumOpts(0, 20)},                                                                {"startingHealthDesc",""}, OptionCategory::Setting, 3); // Default 3 hearts
 Option StartingMagicMeter       = Option::U8  ("Magic Meter",          {"Off",             "Single Magic",     "Double Magic"},                         {""});
 Option StartingDoubleDefense    = Option::U8  ("Double Defense",       {"Off",             "On"},                                                       {""});
 std::vector<Option *> startingEquipmentOptions = {
@@ -727,8 +728,8 @@ std::vector<Option *> startingOcarinaButtonsOptions = {
     &StartingOcarinaButtonA,
 };
 
-Option StartingConsumables      = Option::Bool("Start with Consumables", {"No",               "Yes"},                                                     {startWithConsumablesDesc});
-Option StartingMaxRupees        = Option::Bool("Start with Max Rupees",  {"No",               "Yes"},                                                     {startWithMaxRupeesDesc});
+Option StartingConsumables      = Option::Bool("Start with Consumables", {"No",               "Yes"},                                                     {"startWithConsumablesDesc"});
+Option StartingMaxRupees        = Option::Bool("Start with Max Rupees",  {"No",               "Yes"},                                                     {"startWithMaxRupeesDesc"});
 Option StartingSkulltulaToken   = Option::U8  ("Gold Skulltula Tokens",  {NumOpts(0, 100)},                                                               {""});
 std::vector<Option *> startingOthersOptions = {
     &StartingConsumables,
@@ -752,9 +753,9 @@ std::vector<Menu *> startingInventoryOptions = {
     &startingOcarinaButtons,
     &startingOthers,
 };
-Option Logic              = Option::U8  ("Logic",                   {"Glitchless", "Glitched", "No Logic", "Vanilla"}, {logicGlitchless, logicGlitched, logicNoLogic, logicVanilla});
-Option LocationsReachable = Option::Bool("All Locations Reachable", {"Off", "On"},                                     {locationsReachableDesc},                                                                                                              OptionCategory::Setting,    ON);
-Option NightGSExpectSuns  = Option::Bool("Night GSs Expect Sun's",  {"Off", "On"},                                     {nightGSDesc});
+Option Logic              = Option::U8  ("Logic",                   {"Glitchless", "Glitched", "No Logic", "Vanilla"}, {"logicGlitchless", "logicGlitched", "logicNoLogic", "logicVanilla"});
+Option LocationsReachable = Option::Bool("All Locations Reachable", {"Off", "On"},                                     {"locationsReachableDesc"},                                                                                                            OptionCategory::Setting,    ON);
+Option NightGSExpectSuns  = Option::Bool("Night GSs Expect Sun's",  {"Off", "On"},                                     {"nightGSDesc"});
 std::vector<Option *> logicOptions = {
     &Logic,
     &LocationsReachable,
@@ -767,99 +768,99 @@ Option LogicTrick(std::string setting, std::string_view description) {
 }
 
 // Detailed Logic Tricks                               ---------------------
-Option ToggleAllTricks                  = Option::U8("All Tricks", {"None", "Novice", "Intermediate", "Expert"},  {ToggleLogicNoneDesc, ToggleLogicNoviceDesc, ToggleLogicIntermediateDesc, ToggleLogicExpertDesc},                                           OptionCategory::Toggle);
-Option LogicGrottosWithoutAgony         = LogicTrick("Grotto Access\n  w/o Shard of Agony",       LogicGrottosWithoutAgonyDesc);
-Option LogicVisibleCollision            = LogicTrick("Go Through Visible\n  One-Way Collisions",  LogicVisibleCollisionDesc);
-Option LogicFewerTunicRequirements      = LogicTrick("Fewer Tunic\n  Requirements",               LogicFewerTunicRequirementsDesc);
-Option LogicLostWoodsGSBean             = LogicTrick("LW Adult Tree GS\n  w/o Magic Beans",       LogicLostWoodsGSBeanDesc);
-Option LogicLabDiving                   = LogicTrick("LH Lab Dive\n  w/o Gold Scale",             LogicLabDivingDesc);
-Option LogicLabWallGS                   = LogicTrick("LH Lab Wall GS\n  w/ Jump Slash",           LogicLabWallGSDesc);
-Option LogicGraveyardPoH                = LogicTrick("GY Crate PoH\n  w/ Boomerang",              LogicGraveyardPoHDesc);
-Option LogicChildDampeRacePoH           = LogicTrick("GY Second Dampe\n  Race as Child",          LogicChildDampeRacePoHDesc);
-Option LogicGVHammerChest               = LogicTrick("GV Hammer Chest\n  w/o Hammer",             LogicGVHammerChestDesc);
-Option LogicGerudoKitchen               = LogicTrick("GF Through Kitchen\n  w/ Nothing",          LogicGerudoKitchenDesc);
-Option LogicGerudoChildClimb            = LogicTrick("GF Top Floor\n  as child",                  LogicGerudoChildClimbDesc);
-Option LogicLensWasteland               = LogicTrick("Haunted Wasteland\n  w/o Lens of Truth",    LogicLensWastelandDesc);
-Option LogicReverseWasteland            = LogicTrick("Haunted Wasteland\n  in Reverse",           LogicReverseWastelandDesc);
-Option LogicColossusGS                  = LogicTrick("Colossus Hill GS\n  w/ Hookshot",           LogicColossusGSDesc);
-Option LogicOutsideGanonsGS             = LogicTrick("Outside GaC GS\n  w/ Jump Slash",           LogicOutsideGanonsGSDesc);
-Option LogicManOnRoof                   = LogicTrick("Kak Roof Guy\n  w/o Hookshot",              LogicManOnRoofDesc);
-Option LogicWindmillPoHHookshot         = LogicTrick("Windmill PoH\n  w/ Hookshot",               LogicWindmillPoHHookshotDesc);
-Option LogicDMTBombable                 = LogicTrick("DMT Wall Chest\n  w/ Strength",             LogicDMTBombableDesc);
-Option LogicDMTSoilGS                   = LogicTrick("DMT Soil GS\n  w/o Opening DC",             LogicDMTSoilGSDesc);
-Option LogicDMCPlatformJump             = LogicTrick("DMC Scarecrow Rupee\n circle w/ nothing",   LogicDMCPlatformJumpDesc);
-Option LogicDMTSummitHover              = LogicTrick("DMT Summit\n  w/ Hover Boots",              LogicDMTSummitHoverDesc);
-Option LogicLinkGoronDins               = LogicTrick("GoC Adult Goron\n  w/ Din's Fire",          LogicLinkGoronDinsDesc);
-Option LogicGoronCityLeftMost           = LogicTrick("GoC Maze Left Chest\n  w/ Hover Boots",     LogicGoronCityLeftMostDesc);
-Option LogicGoronCityPot                = LogicTrick("GoC Goron Vase PoH\n  w/ Bombchu",          LogicGoronCityPotDesc); //Needs Testing
-Option LogicGoronCityPotWithStrength    = LogicTrick("GoC Goron Vase PoH\n  w/ Strength",         LogicGoronCityPotWithStrengthDesc);
-Option LogicChildRollingWithStrength    = LogicTrick("GoC Child Goron\n  w/ Strength",            LogicChildRollingWithStrengthDesc);
-Option LogicCraterUpperToLower          = LogicTrick("DMC Upper to Lower\n  w/ Hammer",           LogicCraterUpperToLowerDesc); //Needs Testing
-Option LogicCraterBeanPoHWithHovers     = LogicTrick("DMC Bean PoH\n  w/ Hover Boots",            LogicCraterBeanPoHWithHoversDesc);
-Option LogicBiggoronBolero              = LogicTrick("DMC Deliver Eyedrops\n  w/ Bolero of Fire", LogicBiggoronBoleroDesc);
-Option LogicZoraRiverLower              = LogicTrick("ZR Lower PoH\n  w/ Nothing",                LogicZoraRiverLowerDesc);
-Option LogicZoraRiverUpper              = LogicTrick("ZR Upper PoH\n  w/ Nothing",                LogicZoraRiverUpperDesc);
-Option LogicZoraRiverRupeesJump         = LogicTrick("ZR Under waterfall\n rupees w/o Iron boots",LogicZoraRiverRupeesJumpDesc);
-Option LogicZFGreatFairy                = LogicTrick("ZF Great Fairy\n  w/o Explosives",          LogicZFGreatFairyDesc);
-Option LogicDekuB1WebsWithBow           = LogicTrick("DT B1 Web\n  w/ Bow",                       LogicDekuB1WebsWithBowDesc);
-Option LogicDekuB1Skip                  = LogicTrick("DT B1 Navigation\n  w/o Slingshot",         LogicDekuB1SkipDesc);
-Option LogicDekuBasementGS              = LogicTrick("DT B1 Vines GS\n  w/ Jump Slash",           LogicDekuBasementGSDesc);
-Option LogicDCStaircase                 = LogicTrick("DC Staircase\n  w/ Bow",                    LogicDCStaircaseDesc);
-Option LogicDCJump                      = LogicTrick("DC Spike Trap Room\n  w/o Hover Boots",     LogicDCJumpDesc);
-Option LogicDCSlingshotSkip             = LogicTrick("DC Eye Switches\n  w/o Slingshot",          LogicDCSlingshotSkipDesc);
-Option LogicDCScarecrowGS               = LogicTrick("DC Scarecrow GS\n  w/ Armos Statue",        LogicDCScarecrowGSDesc);
-Option LogicJabuBossGSAdult             = LogicTrick("JJB Near Boss GS\n  as Adult",              LogicJabuBossGSAdultDesc); //Needs Testing
-Option LogicJabuScrubJumpDive           = LogicTrick("JJB Deku Scrub\n  as Adult",                LogicJabuScrubJumpDiveDesc); //Needs Testing
-Option LogicForestOutsideBackdoor       = LogicTrick("FoT West Backdoor\n  w/ Jump Slash",        LogicForestOutsideBackdoorDesc); //Needs Testing
-Option LogicForestDoorFrame             = LogicTrick("FoT East Scarecrow\n  w/ Hover Boots",      LogicForestDoorFrameDesc); //Needs Testing
-Option LogicForestOutdoorEastGS         = LogicTrick("FoT East Yard GS\n  w/ Boomerang",          LogicForestOutdoorEastGSDesc);
-Option LogicFireBossDoorJump            = LogicTrick("FiT Boss Door\n  w/o Hover Boots",          LogicFireBossDoorJumpDesc);
-Option LogicFireStrength                = LogicTrick("FiT Climb Block\n  w/o Strength",           LogicFireStrengthDesc);
-Option LogicFireScarecrow               = LogicTrick("FiT East Tower\n  w/o Scarecrow",           LogicFireScarecrowDesc);
-Option LogicFireFlameMaze               = LogicTrick("FiT Firewall Maze\n  w/ Nothing",           LogicFireFlameMazeDesc);
-Option LogicFireSongOfTime              = LogicTrick("FiT SoT Room GS\n  w/o SoT",                LogicFireSongOfTimeDesc);
-Option LogicWaterTempleTorchLongshot    = LogicTrick("WaT Torch Longshot\n  Shortcut",            LogicWaterTempleTorchLongshotDesc);
-Option LogicWaterTempleUpperBoost       = LogicTrick("WaT Boss Ledge\n  w/ Bombs",                LogicWaterTempleUpperBoostDesc);
-Option LogicWaterCentralBow             = LogicTrick("WaT Bow Target\n  w/o Longshot/Hover",      LogicWaterCentralBowDesc);
-Option LogicWaterCentralGSFW            = LogicTrick("WaT Center Room GS\n  w/ Farore's Wind",    LogicWaterCentralGSFWDesc);
-Option LogicWaterCrackedWallNothing     = LogicTrick("WaT Cracked Wall\n  w/ Nothing",            LogicWaterCrackedWallNothingDesc);
-Option LogicWaterCrackedWallHovers      = LogicTrick("WaT Cracked Wall\n  w/ Hover Boots",        LogicWaterCrackedWallHoversDesc);
-Option LogicWaterBossKeyRegion          = LogicTrick("WaT B1 North Area\n  w/ Hover Boots",       LogicWaterBossKeyRegionDesc);
-Option LogicWaterBKJumpDive             = LogicTrick("WaT Boss Key Room\n  w/o Iron Boots",       LogicWaterBKJumpDiveDesc);
-Option LogicWaterNorthBasementLedgeJump = LogicTrick("WaT Boss Key Rooms\n  w/ Precise Jump",     LogicWaterNorthBasementLedgeJumpDesc);
-Option LogicWaterDragonAdult            = LogicTrick("WaT Whirlpool\n  w/o Iron Boots",           LogicWaterDragonAdultDesc);
-Option LogicWaterDragonJumpDive         = LogicTrick("WaT Whirlpool Up\n  w/o Iron Boots",        LogicWaterDragonJumpDiveDesc);
-Option LogicWaterRiverGS                = LogicTrick("WaT River GS\n  w/o Iron Boots",            LogicWaterRiverGSDesc);
-Option LogicWaterFallingPlatformGS      = LogicTrick("WaT Waterfall GS\n  w/ Hookshot",           LogicWaterFallingPlatformGSDesc);
-Option LogicSpiritLowerAdultSwitch      = LogicTrick("SpT Ceiling Switch\n  w/ Bombs",            LogicSpiritLowerAdultSwitchDesc);
-Option LogicSpiritChildBombchu          = LogicTrick("SpT Child Bridge\n  w/ Bombchu",            LogicSpiritChildBombchuDesc);
-Option LogicSpiritWall                  = LogicTrick("SpT Shifting Wall\n  w/ Nothing",           LogicSpiritWallDesc);
-Option LogicSpiritLobbyGS               = LogicTrick("SpT Main Room GS\n  w/ Boomerang",          LogicSpiritLobbyGSDesc);
-Option LogicSpiritMapChest              = LogicTrick("SpT Map Chest\n  w/ Bow",                   LogicSpiritMapChestDesc);
-Option LogicSpiritSunChest              = LogicTrick("SpT Sun Block Room\n  w/ Bow",              LogicSpiritSunChestDesc);
-Option LogicShadowFireArrowEntry        = LogicTrick("ShT Entry\n  w/ Fire Arrows",               LogicShadowFireArrowEntryDesc); //Needs Testing
-Option LogicShadowUmbrella              = LogicTrick("ShT Stone Umbrella\n  w/ Hover Boots",      LogicShadowUmbrellaDesc);
-Option LogicShadowFreestandingKey       = LogicTrick("ShT Skull Vase Key\n  w/ Bombchu",          LogicShadowFreestandingKeyDesc);
-Option LogicShadowStatue                = LogicTrick("ShT River Statue\n  w/ Bombchu",            LogicShadowStatueDesc);
-Option LogicShadowBongo                 = LogicTrick("ShT Bongo\n  w/o Projectiles",              LogicShadowBongoDesc);
-Option LogicChildDeadhand               = LogicTrick("BotW Deadhand\n  w/o Sword",                LogicChildDeadhandDesc);
-Option LogicGtgWithoutHookshot          = LogicTrick("GTG West Silver Rupee\n  w/o Hookshot",     LogicGtgWithoutHookshotDesc);
-Option LogicGtgFakeWall                 = LogicTrick("GTG Invisible Wall\n  w/ Hover Boots",      LogicGtgFakeWallDesc);
-Option LogicLensSpirit                  = LogicTrick("SpT Navigate\n  w/o Lens of Truth",         LogicLensSpiritDesc);
-Option LogicLensShadow                  = LogicTrick("ShT Early Rooms\n  w/o Lens of Truth",      LogicLensShadowDesc);
-Option LogicLensShadowBack              = LogicTrick("ShT Later Rooms\n  w/o Lens of Truth",      LogicLensShadowBackDesc);
-Option LogicLensBotw                    = LogicTrick("BotW Navigate\n  w/o Lens of Truth",        LogicLensBotwDesc);
-Option LogicLensGtg                     = LogicTrick("GTG Navigate\n  w/o Lens of Truth",         LogicLensGtgDesc);
-Option LogicLensCastle                  = LogicTrick("GaC Navigate\n  w/o Lens of Truth",         LogicLensCastleDesc);
-Option LogicLensJabuMQ                  = LogicTrick("JJB MQ Navigate\n  w/o Lens of Truth",      LogicLensJabuMQDesc);
-Option LogicLensSpiritMQ                = LogicTrick("SpT MQ Navigate\n  w/o Lens of Truth",      LogicLensSpiritMQDesc);
-Option LogicLensShadowMQ                = LogicTrick("ShT MQ Early Rooms\n  w/o Lens of Truth",   LogicLensShadowMQDesc);
-Option LogicLensShadowMQBack            = LogicTrick("ShT MQ Later Rooms\n  w/o Lens of Truth",   LogicLensShadowMQBackDesc);
-Option LogicLensBotwMQ                  = LogicTrick("BotW MQ Nagivate\n  w/o Lens of Truth",     LogicLensBotwMQDesc);
-Option LogicLensGtgMQ                   = LogicTrick("GTG MQ Navigate\n  w/o Lens of Truth",      LogicLensGtgMQDesc);
-Option LogicLensCastleMQ                = LogicTrick("GaC MQ Navigate\n  w/o Lens of Truth",      LogicLensCastleMQDesc);
-Option LogicSpiritTrialHookshot         = LogicTrick("Spirit Trial\n  w/o Hookshot",              LogicSpiritTrialHookshotDesc);
-Option LogicFlamingChests               = LogicTrick("Open chests through\n  flame circles",      LogicFlamingChestsDesc);
+Option ToggleAllTricks                  = Option::U8("All Tricks", {"None", "Novice", "Intermediate", "Expert"},  {"ToggleLogicNoneDesc", "ToggleLogicNoviceDesc", "ToggleLogicIntermediateDesc", "ToggleLogicExpertDesc"},                                   OptionCategory::Toggle);
+Option LogicGrottosWithoutAgony         = LogicTrick("Grotto Access\n  w/o Shard of Agony",       "LogicGrottosWithoutAgonyDesc");
+Option LogicVisibleCollision            = LogicTrick("Go Through Visible\n  One-Way Collisions",  "LogicVisibleCollisionDesc");
+Option LogicFewerTunicRequirements      = LogicTrick("Fewer Tunic\n  Requirements",               "LogicFewerTunicRequirementsDesc");
+Option LogicLostWoodsGSBean             = LogicTrick("LW Adult Tree GS\n  w/o Magic Beans",       "LogicLostWoodsGSBeanDesc");
+Option LogicLabDiving                   = LogicTrick("LH Lab Dive\n  w/o Gold Scale",             "LogicLabDivingDesc");
+Option LogicLabWallGS                   = LogicTrick("LH Lab Wall GS\n  w/ Jump Slash",           "LogicLabWallGSDesc");
+Option LogicGraveyardPoH                = LogicTrick("GY Crate PoH\n  w/ Boomerang",              "LogicGraveyardPoHDesc");
+Option LogicChildDampeRacePoH           = LogicTrick("GY Second Dampe\n  Race as Child",          "LogicChildDampeRacePoHDesc");
+Option LogicGVHammerChest               = LogicTrick("GV Hammer Chest\n  w/o Hammer",             "LogicGVHammerChestDesc");
+Option LogicGerudoKitchen               = LogicTrick("GF Through Kitchen\n  w/ Nothing",          "LogicGerudoKitchenDesc");
+Option LogicGerudoChildClimb            = LogicTrick("GF Top Floor\n  as child",                  "LogicGerudoChildClimbDesc");
+Option LogicLensWasteland               = LogicTrick("Haunted Wasteland\n  w/o Lens of Truth",    "LogicLensWastelandDesc");
+Option LogicReverseWasteland            = LogicTrick("Haunted Wasteland\n  in Reverse",           "LogicReverseWastelandDesc");
+Option LogicColossusGS                  = LogicTrick("Colossus Hill GS\n  w/ Hookshot",           "LogicColossusGSDesc");
+Option LogicOutsideGanonsGS             = LogicTrick("Outside GaC GS\n  w/ Jump Slash",           "LogicOutsideGanonsGSDesc");
+Option LogicManOnRoof                   = LogicTrick("Kak Roof Guy\n  w/o Hookshot",              "LogicManOnRoofDesc");
+Option LogicWindmillPoHHookshot         = LogicTrick("Windmill PoH\n  w/ Hookshot",               "LogicWindmillPoHHookshotDesc");
+Option LogicDMTBombable                 = LogicTrick("DMT Wall Chest\n  w/ Strength",             "LogicDMTBombableDesc");
+Option LogicDMTSoilGS                   = LogicTrick("DMT Soil GS\n  w/o Opening DC",             "LogicDMTSoilGSDesc");
+Option LogicDMCPlatformJump             = LogicTrick("DMC Scarecrow Rupee\n circle w/ nothing",   "LogicDMCPlatformJumpDesc");
+Option LogicDMTSummitHover              = LogicTrick("DMT Summit\n  w/ Hover Boots",              "LogicDMTSummitHoverDesc");
+Option LogicLinkGoronDins               = LogicTrick("GoC Adult Goron\n  w/ Din's Fire",          "LogicLinkGoronDinsDesc");
+Option LogicGoronCityLeftMost           = LogicTrick("GoC Maze Left Chest\n  w/ Hover Boots",     "LogicGoronCityLeftMostDesc");
+Option LogicGoronCityPot                = LogicTrick("GoC Goron Vase PoH\n  w/ Bombchu",          "LogicGoronCityPotDesc"); //Needs Testing
+Option LogicGoronCityPotWithStrength    = LogicTrick("GoC Goron Vase PoH\n  w/ Strength",         "LogicGoronCityPotWithStrengthDesc");
+Option LogicChildRollingWithStrength    = LogicTrick("GoC Child Goron\n  w/ Strength",            "LogicChildRollingWithStrengthDesc");
+Option LogicCraterUpperToLower          = LogicTrick("DMC Upper to Lower\n  w/ Hammer",           "LogicCraterUpperToLowerDesc"); //Needs Testing
+Option LogicCraterBeanPoHWithHovers     = LogicTrick("DMC Bean PoH\n  w/ Hover Boots",            "LogicCraterBeanPoHWithHoversDesc");
+Option LogicBiggoronBolero              = LogicTrick("DMC Deliver Eyedrops\n  w/ Bolero of Fire", "LogicBiggoronBoleroDesc");
+Option LogicZoraRiverLower              = LogicTrick("ZR Lower PoH\n  w/ Nothing",                "LogicZoraRiverLowerDesc");
+Option LogicZoraRiverUpper              = LogicTrick("ZR Upper PoH\n  w/ Nothing",                "LogicZoraRiverUpperDesc");
+Option LogicZoraRiverRupeesJump         = LogicTrick("ZR Under waterfall\n rupees w/o Iron boots","LogicZoraRiverRupeesJumpDesc");
+Option LogicZFGreatFairy                = LogicTrick("ZF Great Fairy\n  w/o Explosives",          "LogicZFGreatFairyDesc");
+Option LogicDekuB1WebsWithBow           = LogicTrick("DT B1 Web\n  w/ Bow",                       "LogicDekuB1WebsWithBowDesc");
+Option LogicDekuB1Skip                  = LogicTrick("DT B1 Navigation\n  w/o Slingshot",         "LogicDekuB1SkipDesc");
+Option LogicDekuBasementGS              = LogicTrick("DT B1 Vines GS\n  w/ Jump Slash",           "LogicDekuBasementGSDesc");
+Option LogicDCStaircase                 = LogicTrick("DC Staircase\n  w/ Bow",                    "LogicDCStaircaseDesc");
+Option LogicDCJump                      = LogicTrick("DC Spike Trap Room\n  w/o Hover Boots",     "LogicDCJumpDesc");
+Option LogicDCSlingshotSkip             = LogicTrick("DC Eye Switches\n  w/o Slingshot",          "LogicDCSlingshotSkipDesc");
+Option LogicDCScarecrowGS               = LogicTrick("DC Scarecrow GS\n  w/ Armos Statue",        "LogicDCScarecrowGSDesc");
+Option LogicJabuBossGSAdult             = LogicTrick("JJB Near Boss GS\n  as Adult",              "LogicJabuBossGSAdultDesc"); //Needs Testing
+Option LogicJabuScrubJumpDive           = LogicTrick("JJB Deku Scrub\n  as Adult",                "LogicJabuScrubJumpDiveDesc"); //Needs Testing
+Option LogicForestOutsideBackdoor       = LogicTrick("FoT West Backdoor\n  w/ Jump Slash",        "LogicForestOutsideBackdoorDesc"); //Needs Testing
+Option LogicForestDoorFrame             = LogicTrick("FoT East Scarecrow\n  w/ Hover Boots",      "LogicForestDoorFrameDesc"); //Needs Testing
+Option LogicForestOutdoorEastGS         = LogicTrick("FoT East Yard GS\n  w/ Boomerang",          "LogicForestOutdoorEastGSDesc");
+Option LogicFireBossDoorJump            = LogicTrick("FiT Boss Door\n  w/o Hover Boots",          "LogicFireBossDoorJumpDesc");
+Option LogicFireStrength                = LogicTrick("FiT Climb Block\n  w/o Strength",           "LogicFireStrengthDesc");
+Option LogicFireScarecrow               = LogicTrick("FiT East Tower\n  w/o Scarecrow",           "LogicFireScarecrowDesc");
+Option LogicFireFlameMaze               = LogicTrick("FiT Firewall Maze\n  w/ Nothing",           "LogicFireFlameMazeDesc");
+Option LogicFireSongOfTime              = LogicTrick("FiT SoT Room GS\n  w/o SoT",                "LogicFireSongOfTimeDesc");
+Option LogicWaterTempleTorchLongshot    = LogicTrick("WaT Torch Longshot\n  Shortcut",            "LogicWaterTempleTorchLongshotDesc");
+Option LogicWaterTempleUpperBoost       = LogicTrick("WaT Boss Ledge\n  w/ Bombs",                "LogicWaterTempleUpperBoostDesc");
+Option LogicWaterCentralBow             = LogicTrick("WaT Bow Target\n  w/o Longshot/Hover",      "LogicWaterCentralBowDesc");
+Option LogicWaterCentralGSFW            = LogicTrick("WaT Center Room GS\n  w/ Farore's Wind",    "LogicWaterCentralGSFWDesc");
+Option LogicWaterCrackedWallNothing     = LogicTrick("WaT Cracked Wall\n  w/ Nothing",            "LogicWaterCrackedWallNothingDesc");
+Option LogicWaterCrackedWallHovers      = LogicTrick("WaT Cracked Wall\n  w/ Hover Boots",        "LogicWaterCrackedWallHoversDesc");
+Option LogicWaterBossKeyRegion          = LogicTrick("WaT B1 North Area\n  w/ Hover Boots",       "LogicWaterBossKeyRegionDesc");
+Option LogicWaterBKJumpDive             = LogicTrick("WaT Boss Key Room\n  w/o Iron Boots",       "LogicWaterBKJumpDiveDesc");
+Option LogicWaterNorthBasementLedgeJump = LogicTrick("WaT Boss Key Rooms\n  w/ Precise Jump",     "LogicWaterNorthBasementLedgeJumpDesc");
+Option LogicWaterDragonAdult            = LogicTrick("WaT Whirlpool\n  w/o Iron Boots",           "LogicWaterDragonAdultDesc");
+Option LogicWaterDragonJumpDive         = LogicTrick("WaT Whirlpool Up\n  w/o Iron Boots",        "LogicWaterDragonJumpDiveDesc");
+Option LogicWaterRiverGS                = LogicTrick("WaT River GS\n  w/o Iron Boots",            "LogicWaterRiverGSDesc");
+Option LogicWaterFallingPlatformGS      = LogicTrick("WaT Waterfall GS\n  w/ Hookshot",           "LogicWaterFallingPlatformGSDesc");
+Option LogicSpiritLowerAdultSwitch      = LogicTrick("SpT Ceiling Switch\n  w/ Bombs",            "LogicSpiritLowerAdultSwitchDesc");
+Option LogicSpiritChildBombchu          = LogicTrick("SpT Child Bridge\n  w/ Bombchu",            "LogicSpiritChildBombchuDesc");
+Option LogicSpiritWall                  = LogicTrick("SpT Shifting Wall\n  w/ Nothing",           "LogicSpiritWallDesc");
+Option LogicSpiritLobbyGS               = LogicTrick("SpT Main Room GS\n  w/ Boomerang",          "LogicSpiritLobbyGSDesc");
+Option LogicSpiritMapChest              = LogicTrick("SpT Map Chest\n  w/ Bow",                   "LogicSpiritMapChestDesc");
+Option LogicSpiritSunChest              = LogicTrick("SpT Sun Block Room\n  w/ Bow",              "LogicSpiritSunChestDesc");
+Option LogicShadowFireArrowEntry        = LogicTrick("ShT Entry\n  w/ Fire Arrows",               "LogicShadowFireArrowEntryDesc"); //Needs Testing
+Option LogicShadowUmbrella              = LogicTrick("ShT Stone Umbrella\n  w/ Hover Boots",      "LogicShadowUmbrellaDesc");
+Option LogicShadowFreestandingKey       = LogicTrick("ShT Skull Vase Key\n  w/ Bombchu",          "LogicShadowFreestandingKeyDesc");
+Option LogicShadowStatue                = LogicTrick("ShT River Statue\n  w/ Bombchu",            "LogicShadowStatueDesc");
+Option LogicShadowBongo                 = LogicTrick("ShT Bongo\n  w/o Projectiles",              "LogicShadowBongoDesc");
+Option LogicChildDeadhand               = LogicTrick("BotW Deadhand\n  w/o Sword",                "LogicChildDeadhandDesc");
+Option LogicGtgWithoutHookshot          = LogicTrick("GTG West Silver Rupee\n  w/o Hookshot",     "LogicGtgWithoutHookshotDesc");
+Option LogicGtgFakeWall                 = LogicTrick("GTG Invisible Wall\n  w/ Hover Boots",      "LogicGtgFakeWallDesc");
+Option LogicLensSpirit                  = LogicTrick("SpT Navigate\n  w/o Lens of Truth",         "LogicLensSpiritDesc");
+Option LogicLensShadow                  = LogicTrick("ShT Early Rooms\n  w/o Lens of Truth",      "LogicLensShadowDesc");
+Option LogicLensShadowBack              = LogicTrick("ShT Later Rooms\n  w/o Lens of Truth",      "LogicLensShadowBackDesc");
+Option LogicLensBotw                    = LogicTrick("BotW Navigate\n  w/o Lens of Truth",        "LogicLensBotwDesc");
+Option LogicLensGtg                     = LogicTrick("GTG Navigate\n  w/o Lens of Truth",         "LogicLensGtgDesc");
+Option LogicLensCastle                  = LogicTrick("GaC Navigate\n  w/o Lens of Truth",         "LogicLensCastleDesc");
+Option LogicLensJabuMQ                  = LogicTrick("JJB MQ Navigate\n  w/o Lens of Truth",      "LogicLensJabuMQDesc");
+Option LogicLensSpiritMQ                = LogicTrick("SpT MQ Navigate\n  w/o Lens of Truth",      "LogicLensSpiritMQDesc");
+Option LogicLensShadowMQ                = LogicTrick("ShT MQ Early Rooms\n  w/o Lens of Truth",   "LogicLensShadowMQDesc");
+Option LogicLensShadowMQBack            = LogicTrick("ShT MQ Later Rooms\n  w/o Lens of Truth",   "LogicLensShadowMQBackDesc");
+Option LogicLensBotwMQ                  = LogicTrick("BotW MQ Nagivate\n  w/o Lens of Truth",     "LogicLensBotwMQDesc");
+Option LogicLensGtgMQ                   = LogicTrick("GTG MQ Navigate\n  w/o Lens of Truth",      "LogicLensGtgMQDesc");
+Option LogicLensCastleMQ                = LogicTrick("GaC MQ Navigate\n  w/o Lens of Truth",      "LogicLensCastleMQDesc");
+Option LogicSpiritTrialHookshot         = LogicTrick("Spirit Trial\n  w/o Hookshot",              "LogicSpiritTrialHookshotDesc");
+Option LogicFlamingChests               = LogicTrick("Open chests through\n  flame circles",      "LogicFlamingChestsDesc");
 std::vector<Option *> trickOptions = {
     &ToggleAllTricks,
     &LogicGrottosWithoutAgony,
@@ -956,9 +957,10 @@ std::vector<Option *> trickOptions = {
     &LogicFlamingChests,
 };
 // clang-format on
+static constexpr std::array glitchDifficulties{ "Novice", "Intermediate", "Advanced", "Expert", "Hero" };
+
 // Function to avoid accidentally naming the options wrong, as logic.cpp requires these exact names
 std::vector<std::string> GlitchDifficultyOptions(u8 enabledDifficulties) {
-    static constexpr std::array glitchDifficulties{ "Novice", "Intermediate", "Advanced", "Expert", "Hero" };
 
     std::vector<std::string> selectableDifficulties;
     selectableDifficulties.push_back("Disabled");
@@ -971,28 +973,28 @@ std::vector<std::string> GlitchDifficultyOptions(u8 enabledDifficulties) {
     return selectableDifficulties;
 }
 // clang-format off
-Option ToggleAllGlitches        = Option::U8("All Glitches",          GlitchDifficultyOptions(0b11111), { ToggleAllGlitchesDesc }, OptionCategory::Toggle);
-Option GlitchRestrictedItems    = Option::U8("Restricted Items",      GlitchDifficultyOptions(0b00001), { GlitchRestrictedItemsDescDisabled    , GlitchRestrictedItemsDescNovice                                                                                                                                                              });
-Option GlitchSuperStab          = Option::U8("Super Stab",            GlitchDifficultyOptions(0b00001), { GlitchSuperStabDescDisabled          , GlitchSuperStabDescNovice                                                                                                                                                                    });
-Option GlitchISG                = Option::U8("Infinite Sword Glitch", GlitchDifficultyOptions(0b00111), { GlitchISGDescDisabled                , GlitchISGDescNovice                , GlitchISGDescIntermediate                , GlitchISGDescAdvanced                                                                                        });
-Option GlitchHover              = Option::U8("Bomb Hover",            GlitchDifficultyOptions(0b00111), { GlitchHoverDescDisabled              , GlitchHoverDescNovice              , GlitchHoverDescIntermediate              , GlitchHoverDescAdvanced                                                                                      });
-Option GlitchBombOI             = Option::U8("Ocarina Items (Bomb)",  GlitchDifficultyOptions(0b01111), { GlitchBombOIDescDisabled             , GlitchBombOIDescNovice             , GlitchBombOIDescIntermediate             , GlitchBombOIDescAdvanced             , GlitchBombOIDescExpert                                                });
-Option GlitchHoverBoost         = Option::U8("HoverBoost",            GlitchDifficultyOptions(0b00111), { GlitchHoverBoostDescDisabled         , GlitchHoverBoostDescNovice         , GlitchHoverBoostDescIntermediate         , GlitchHoverBoostDescAdvanced                                                                                 });
-Option GlitchSuperSlide         = Option::U8("Extended Super Slide",  GlitchDifficultyOptions(0b01111), { GlitchSuperSlideDescDisabled         , GlitchSuperSlideDescNovice         , GlitchSuperSlideDescIntermediate         , GlitchSuperSlideDescAdvanced         , GlitchSuperSlideDescExpert                                            });
-Option GlitchMegaflip           = Option::U8("Megaflip",              GlitchDifficultyOptions(0b11111), { GlitchMegaflipDescDisabled           , GlitchMegaflipDescNovice           , GlitchMegaflipDescIntermediate           , GlitchMegaflipDescAdvanced           , GlitchMegaflipDescExpert           , GlitchMegaflipDescHero           });
-Option GlitchASlide             = Option::U8("A-Slide",               GlitchDifficultyOptions(0b01111), { GlitchASlideDescDisabled             , GlitchASlideDescNovice             , GlitchASlideDescIntermediate             , GlitchASlideDescAdvanced             , GlitchASlideDescExpert                                                });
-Option GlitchHammerSlide        = Option::U8("Hammer Slide",          GlitchDifficultyOptions(0b00011), { GlitchHammerSlideDescDisabled        , GlitchHammerSlideDescNovice        , GlitchHammerSlideDescIntermediate                                                                                                                       });
-Option GlitchLedgeCancel        = Option::U8("Ledge Cancel",          GlitchDifficultyOptions(0b00111), { GlitchLedgeCancelDescDisabled        , GlitchLedgeCancelDescNovice        , GlitchLedgeCancelDescIntermediate        , GlitchLedgeCancelDescAdvanced                                                                                });
-Option GlitchActionSwap         = Option::U8("Action Swap",           GlitchDifficultyOptions(0b00101), { GlitchActionSwapDescDisabled         , GlitchActionSwapDescNovice                                                    , GlitchActionSwapDescAdvanced                                                                                 });
-Option GlitchQPA                = Option::U8("Quick Put Away",        GlitchDifficultyOptions(0b01111), { GlitchQPADescDisabled                , GlitchQPADescNovice                , GlitchQPADescIntermediate                , GlitchQPADescAdvanced                , GlitchQPADescExpert                                                   });
-Option GlitchHookshotClip       = Option::U8("Hookshot Clip",         GlitchDifficultyOptions(0b00011), { GlitchHookshotClipDescDisabled       , GlitchHookshotClipDescNovice       , GlitchHookshotClipDescIntermediate                                                                                                                      });
-Option GlitchHookshotJump_Bonk  = Option::U8("Hookshot Jump (Bonk)",  GlitchDifficultyOptions(0b00111), { GlitchHookshotJump_BonkDescDisabled  , GlitchHookshotJump_BonkDescNovice  , GlitchHookshotJump_BonkDescIntermediate  , GlitchHookshotJump_BonkDescAdvanced                                                                          });
-Option GlitchHookshotJump_Boots = Option::U8("Hookshot Jump (Boots)", GlitchDifficultyOptions(0b00111), { GlitchHookshotJump_BootsDescDisabled , GlitchHookshotJump_BootsDescNovice , GlitchHookshotJump_BootsDescIntermediate , GlitchHookshotJump_BootsDescAdvanced                                                                         });
-Option GlitchCutsceneDive       = Option::U8("Cutscene Dives",        GlitchDifficultyOptions(0b00111), { GlitchCutsceneDiveDescDisabled       , GlitchCutsceneDiveDescNovice       , GlitchCutsceneDiveDescIntermediate       , GlitchCutsceneDiveDescAdvanced                                                                               });
-Option GlitchNaviDive_Stick     = Option::U8("Navi Dive (Stick)",     GlitchDifficultyOptions(0b00111), { GlitchNaviDive_StickDescDisabled     , GlitchNaviDive_StickDescNovice     , GlitchNaviDive_StickDescIntermediate     , GlitchNaviDive_StickDescAdvanced                                                                             });
-Option GlitchTripleSlashClip    = Option::U8("Triple Slash Clip",     GlitchDifficultyOptions(0b01111), { GlitchTripleSlashClipDescDisabled    , GlitchTripleSlashClipDescNovice    , GlitchTripleSlashClipDescIntermediate    , GlitchTripleSlashClipDescAdvanced    , GlitchTripleSlashClipDescExpert                                       });
-Option GlitchLedgeClip          = Option::U8("Ledge Clip",            GlitchDifficultyOptions(0b00111), { GlitchLedgeClipDescDisabled          , GlitchLedgeClipDescNovice          , GlitchLedgeClipDescIntermediate          , GlitchLedgeClipDescAdvanced                                                                                  });
-Option GlitchSeamWalk           = Option::U8("Seam Walk",             GlitchDifficultyOptions(0b11111), { GlitchSeamWalkDescDisabled           , GlitchSeamWalkDescNovice           , GlitchSeamWalkDescIntermediate           , GlitchSeamWalkDescAdvanced           , GlitchSeamWalkDescExpert           , GlitchSeamWalkDescHero           });
+Option ToggleAllGlitches        = Option::U8("All Glitches",          GlitchDifficultyOptions(0b11111), { "ToggleAllGlitchesDesc" }, OptionCategory::Toggle);
+Option GlitchRestrictedItems    = Option::U8("Restricted Items",      GlitchDifficultyOptions(0b00001), { "GlitchRestrictedItemsDescDisabled"    , "GlitchRestrictedItemsDescNovice"                                                                                                                                                              });
+Option GlitchSuperStab          = Option::U8("Super Stab",            GlitchDifficultyOptions(0b00001), { "GlitchSuperStabDescDisabled"          , "GlitchSuperStabDescNovice"                                                                                                                                                                    });
+Option GlitchISG                = Option::U8("Infinite Sword Glitch", GlitchDifficultyOptions(0b00111), { "GlitchISGDescDisabled"                , "GlitchISGDescNovice"                , "GlitchISGDescIntermediate"                , "GlitchISGDescAdvanced"                                                                                    });
+Option GlitchHover              = Option::U8("Bomb Hover",            GlitchDifficultyOptions(0b00111), { "GlitchHoverDescDisabled"              , "GlitchHoverDescNovice"              , "GlitchHoverDescIntermediate"              , "GlitchHoverDescAdvanced"                                                                                  });
+Option GlitchBombOI             = Option::U8("Ocarina Items (Bomb)",  GlitchDifficultyOptions(0b01111), { "GlitchBombOIDescDisabled"             , "GlitchBombOIDescNovice"             , "GlitchBombOIDescIntermediate"             , "GlitchBombOIDescAdvanced"             , "GlitchBombOIDescExpert"                                          });
+Option GlitchHoverBoost         = Option::U8("HoverBoost",            GlitchDifficultyOptions(0b00111), { "GlitchHoverBoostDescDisabled"         , "GlitchHoverBoostDescNovice"         , "GlitchHoverBoostDescIntermediate"         , "GlitchHoverBoostDescAdvanced"                                                                             });
+Option GlitchSuperSlide         = Option::U8("Extended Super Slide",  GlitchDifficultyOptions(0b01111), { "GlitchSuperSlideDescDisabled"         , "GlitchSuperSlideDescNovice"         , "GlitchSuperSlideDescIntermediate"         , "GlitchSuperSlideDescAdvanced"         , "GlitchSuperSlideDescExpert"                                      });
+Option GlitchMegaflip           = Option::U8("Megaflip",              GlitchDifficultyOptions(0b11111), { "GlitchMegaflipDescDisabled"           , "GlitchMegaflipDescNovice"           , "GlitchMegaflipDescIntermediate"           , "GlitchMegaflipDescAdvanced"           , "GlitchMegaflipDescExpert"           , "GlitchMegaflipDescHero"   });
+Option GlitchASlide             = Option::U8("A-Slide",               GlitchDifficultyOptions(0b01111), { "GlitchASlideDescDisabled"             , "GlitchASlideDescNovice"             , "GlitchASlideDescIntermediate"             , "GlitchASlideDescAdvanced"             , "GlitchASlideDescExpert"                                          });
+Option GlitchHammerSlide        = Option::U8("Hammer Slide",          GlitchDifficultyOptions(0b00011), { "GlitchHammerSlideDescDisabled"        , "GlitchHammerSlideDescNovice"        , "GlitchHammerSlideDescIntermediate"                                                                                                                     });
+Option GlitchLedgeCancel        = Option::U8("Ledge Cancel",          GlitchDifficultyOptions(0b00111), { "GlitchLedgeCancelDescDisabled"        , "GlitchLedgeCancelDescNovice"        , "GlitchLedgeCancelDescIntermediate"        , "GlitchLedgeCancelDescAdvanced"                                                                            });
+Option GlitchActionSwap         = Option::U8("Action Swap",           GlitchDifficultyOptions(0b00101), { "GlitchActionSwapDescDisabled"         , "GlitchActionSwapDescNovice"                                                      , "GlitchActionSwapDescAdvanced"                                                                             });
+Option GlitchQPA                = Option::U8("Quick Put Away",        GlitchDifficultyOptions(0b01111), { "GlitchQPADescDisabled"                , "GlitchQPADescNovice"                , "GlitchQPADescIntermediate"                , "GlitchQPADescAdvanced"                , "GlitchQPADescExpert"                                             });
+Option GlitchHookshotClip       = Option::U8("Hookshot Clip",         GlitchDifficultyOptions(0b00011), { "GlitchHookshotClipDescDisabled"       , "GlitchHookshotClipDescNovice"       , "GlitchHookshotClipDescIntermediate"                                                                                                                    });
+Option GlitchHookshotJump_Bonk  = Option::U8("Hookshot Jump (Bonk)",  GlitchDifficultyOptions(0b00111), { "GlitchHookshotJump_BonkDescDisabled"  , "GlitchHookshotJump_BonkDescNovice"  , "GlitchHookshotJump_BonkDescIntermediate"  , "GlitchHookshotJump_BonkDescAdvanced"                                                                      });
+Option GlitchHookshotJump_Boots = Option::U8("Hookshot Jump (Boots)", GlitchDifficultyOptions(0b00111), { "GlitchHookshotJump_BootsDescDisabled" , "GlitchHookshotJump_BootsDescNovice" , "GlitchHookshotJump_BootsDescIntermediate" , "GlitchHookshotJump_BootsDescAdvanced"                                                                     });
+Option GlitchCutsceneDive       = Option::U8("Cutscene Dives",        GlitchDifficultyOptions(0b00111), { "GlitchCutsceneDiveDescDisabled"       , "GlitchCutsceneDiveDescNovice"       , "GlitchCutsceneDiveDescIntermediate"       , "GlitchCutsceneDiveDescAdvanced"                                                                           });
+Option GlitchNaviDive_Stick     = Option::U8("Navi Dive (Stick)",     GlitchDifficultyOptions(0b00111), { "GlitchNaviDive_StickDescDisabled"     , "GlitchNaviDive_StickDescNovice"     , "GlitchNaviDive_StickDescIntermediate"     , "GlitchNaviDive_StickDescAdvanced"                                                                         });
+Option GlitchTripleSlashClip    = Option::U8("Triple Slash Clip",     GlitchDifficultyOptions(0b01111), { "GlitchTripleSlashClipDescDisabled"    , "GlitchTripleSlashClipDescNovice"    , "GlitchTripleSlashClipDescIntermediate"    , "GlitchTripleSlashClipDescAdvanced"    , "GlitchTripleSlashClipDescExpert"                                 });
+Option GlitchLedgeClip          = Option::U8("Ledge Clip",            GlitchDifficultyOptions(0b00111), { "GlitchLedgeClipDescDisabled"          , "GlitchLedgeClipDescNovice"          , "GlitchLedgeClipDescIntermediate"          , "GlitchLedgeClipDescAdvanced"                                                                              });
+Option GlitchSeamWalk           = Option::U8("Seam Walk",             GlitchDifficultyOptions(0b11111), { "GlitchSeamWalkDescDisabled"           , "GlitchSeamWalkDescNovice"           , "GlitchSeamWalkDescIntermediate"           , "GlitchSeamWalkDescAdvanced"           , "GlitchSeamWalkDescExpert"           , "GlitchSeamWalkDescHero"   });
 std::vector<Option*> glitchCategories = {
     &ToggleAllGlitches,
     &GlitchRestrictedItems,
@@ -1018,20 +1020,20 @@ std::vector<Option*> glitchCategories = {
     &GlitchSeamWalk,
 };
 
-Option GlitchWWTEscape         = Option::Bool("WWT Kokiri\n  Forest Escape", {"Off", "On"}, {GlitchWWTEscapeDesc});
-Option GlitchGVTentAsChild     = Option::Bool("Enter GV Tent\n  as Child",   {"Off", "On"}, {GlitchGVTentAsChildDesc});
-Option GlitchGFGuardSneak      = Option::Bool("Sneak Past\n  the GF Guard",  {"Off", "On"}, {GlitchGFGuardSneakDesc});
-Option GlitchItemlessWasteland = Option::Bool("Cross the HW\n  w/o Items",   {"Off", "On"}, {GlitchItemlessWastelandDesc});
-Option GlitchOccamsStatue      = Option::Bool("Occam's Statue",              {"Off", "On"}, {GlitchOccamsStatueDesc});
-Option GlitchZDOoBJumpSlash    = Option::Bool("ZD OoB w/\n  Jump Slash",     {"Off", "On"}, {GlitchZDOoBJumpSlashDesc});
-Option GlitchJabuStickRecoil   = Option::Bool("Enter Jabu\n  w/o Bottle",    {"Off", "On"}, {GlitchJabuStickRecoilDesc});
-Option GlitchJabuAdult         = Option::Bool("Enter Jabu\n  as Adult",      {"Off", "On"}, {GlitchJabuAdultDesc});
-Option GlitchBlueFireWall      = Option::Bool("Break Walls\n  w/ Blue Fire", {"Off", "On"}, {GlitchBlueFireWallDesc});
-Option GlitchClassicHalfie     = Option::Bool("Classic Halfie",              {"Off", "On"}, {GlitchClassicHalfieDesc});
-Option GlitchModernHalfie      = Option::Bool("Modern Halfie",               {"Off", "On"}, {GlitchModernHalfieDesc});
-Option GlitchJabuSwitch        = Option::Bool("Jabu Switch\n  w/ CS item",   {"Off", "On"}, {GlitchJabuSwitchDesc});
-Option GlitchForestBKSkip      = Option::Bool("Forest Temple\n  BK Skip",    {"Off", "On"}, {GlitchForestBKSkipDesc});
-Option GlitchFireGrunzClip     = Option::Bool("Fire Temple\n  Grunz Clip",   {"Off", "On"}, {GlitchFireGrunzClipDesc});
+Option GlitchWWTEscape         = Option::Bool("WWT Kokiri\n  Forest Escape", {"Off", "On"}, {"GlitchWWTEscapeDesc"});
+Option GlitchGVTentAsChild     = Option::Bool("Enter GV Tent\n  as Child",   {"Off", "On"}, {"GlitchGVTentAsChildDesc"});
+Option GlitchGFGuardSneak      = Option::Bool("Sneak Past\n  the GF Guard",  {"Off", "On"}, {"GlitchGFGuardSneakDesc"});
+Option GlitchItemlessWasteland = Option::Bool("Cross the HW\n  w/o Items",   {"Off", "On"}, {"GlitchItemlessWastelandDesc"});
+Option GlitchOccamsStatue      = Option::Bool("Occam's Statue",              {"Off", "On"}, {"GlitchOccamsStatueDesc"});
+Option GlitchZDOoBJumpSlash    = Option::Bool("ZD OoB w/\n  Jump Slash",     {"Off", "On"}, {"GlitchZDOoBJumpSlashDesc"});
+Option GlitchJabuStickRecoil   = Option::Bool("Enter Jabu\n  w/o Bottle",    {"Off", "On"}, {"GlitchJabuStickRecoilDesc"});
+Option GlitchJabuAdult         = Option::Bool("Enter Jabu\n  as Adult",      {"Off", "On"}, {"GlitchJabuAdultDesc"});
+Option GlitchBlueFireWall      = Option::Bool("Break Walls\n  w/ Blue Fire", {"Off", "On"}, {"GlitchBlueFireWallDesc"});
+Option GlitchClassicHalfie     = Option::Bool("Classic Halfie",              {"Off", "On"}, {"GlitchClassicHalfieDesc"});
+Option GlitchModernHalfie      = Option::Bool("Modern Halfie",               {"Off", "On"}, {"GlitchModernHalfieDesc"});
+Option GlitchJabuSwitch        = Option::Bool("Jabu Switch\n  w/ CS item",   {"Off", "On"}, {"GlitchJabuSwitchDesc"});
+Option GlitchForestBKSkip      = Option::Bool("Forest Temple\n  BK Skip",    {"Off", "On"}, {"GlitchForestBKSkipDesc"});
+Option GlitchFireGrunzClip     = Option::Bool("Fire Temple\n  Grunz Clip",   {"Off", "On"}, {"GlitchFireGrunzClipDesc"});
 // These are all expected to be booleans by the GlitchEnabled function
 std::vector<Option*> miscGlitches = {
     &GlitchWWTEscape,
@@ -1057,12 +1059,12 @@ std::vector<Menu*> glitchOptions = {
     &miscGlitchSettings,
 };
 
-Option MP_Enabled        = Option::U8  ("Multiplayer",     {"Off", "On (Local)"}, {mp_EnabledDesc});
-Option MP_SharedProgress = Option::Bool("Shared Progress", {"Off", "On"},         {mp_SharedProgressDesc});
-Option MP_SyncId         = Option::U8  (2, "Sync ID",      {NumOpts(1, 8)},       {mp_SyncIdDesc}, OptionCategory::Cosmetic);
-Option MP_SharedHealth   = Option::Bool("Shared Health",   {"Off", "On"},         {mp_SharedHealthDesc});
-Option MP_SharedRupees   = Option::Bool("Shared Rupees",   {"Off", "On"},         {mp_SharedRupeesDesc});
-Option MP_SharedAmmo     = Option::Bool("Shared Ammo",     {"Off", "On"},         {mp_SharedAmmoDesc});
+Option MP_Enabled        = Option::U8  ("Multiplayer",     {"Off", "On (Local)"}, {"mp_EnabledDesc"});
+Option MP_SharedProgress = Option::Bool("Shared Progress", {"Off", "On"},         {"mp_SharedProgressDesc"});
+Option MP_SyncId         = Option::U8  (2, "Sync ID",      {NumOpts(1, 8)},       {"mp_SyncIdDesc"}, OptionCategory::Cosmetic);
+Option MP_SharedHealth   = Option::Bool("Shared Health",   {"Off", "On"},         {"mp_SharedHealthDesc"});
+Option MP_SharedRupees   = Option::Bool("Shared Rupees",   {"Off", "On"},         {"mp_SharedRupeesDesc"});
+Option MP_SharedAmmo     = Option::Bool("Shared Ammo",     {"Off", "On"},         {"mp_SharedAmmoDesc"});
 std::vector<Option*> multiplayerOptions = {
     &MP_Enabled,
     &MP_SharedProgress,
@@ -1072,24 +1074,24 @@ std::vector<Option*> multiplayerOptions = {
     &MP_SharedAmmo,
 };
 
-Option QuickText           = Option::U8  ("Quick Text",             {"0: Vanilla", "1: Skippable", "2: Instant", "3: Turbo"},               {quickTextDesc0, quickTextDesc1, quickTextDesc2, quickTextDesc3},                                                 OptionCategory::Cosmetic,   QUICKTEXT_INSTANT);
-Option MenuOpeningButton   = Option::U8  ("Open Info Menu with",    {"Select","Start","D-Pad Up","D-Pad Down","D-Pad Right","D-Pad Left",}, {menuButtonDesc},                                                                                                 OptionCategory::Cosmetic);
-Option ArrowSwitchButton   = Option::U8  ("Switch Arrows with",     {"D-Pad Right","D-Pad Left","D-Pad Up","D-Pad Down","Touch Screen",},   {arrowSwitchDesc},                                                                                                OptionCategory::Cosmetic);
+Option QuickText           = Option::U8  ("Quick Text",             {"0: Vanilla", "1: Skippable", "2: Instant", "3: Turbo"},               {"quickTextDesc0", "quickTextDesc1", "quickTextDesc2", "quickTextDesc3"},                                           OptionCategory::Cosmetic,   QUICKTEXT_INSTANT);
+Option MenuOpeningButton   = Option::U8  ("Open Info Menu with",    {"Select","Start","D-Pad Up","D-Pad Down","D-Pad Right","D-Pad Left",}, {"menuButtonDesc"},                                                                                                 OptionCategory::Cosmetic);
+Option ArrowSwitchButton   = Option::U8  ("Switch Arrows with",     {"D-Pad Right","D-Pad Left","D-Pad Up","D-Pad Down","Touch Screen",},   {"arrowSwitchDesc"},                                                                                                OptionCategory::Cosmetic);
 std::vector<Option*> preferenceOptions = {
     &QuickText,
     &MenuOpeningButton,
     &ArrowSwitchButton,
 };
 
-Option ZTargeting         = Option::U8("L-Targeting",          {"Switch", "Hold"},                                          {""},                     OptionCategory::Cosmetic, 1);
-Option CameraControl      = Option::U8("Camera Control",       {"Normal", "Invert Y-axis"},                                 {""},                     OptionCategory::Cosmetic);
-Option MotionControl      = Option::U8("Motion Control",       {"On", "Off"},                                               {""},                     OptionCategory::Cosmetic);
-Option TogglePlayMusic    = Option::U8("Play Music",           {"Off", "On"},                                               {""},                     OptionCategory::Cosmetic, 1);
-Option TogglePlaySFX      = Option::U8("Play Sound Effects",   {"Off", "On"},                                               {""},                     OptionCategory::Cosmetic, 1);
-Option NaviNotifications  = Option::U8("Navi Notifications",   {"Silenced", "Normal", "Constant"},                          {naviNotificationsDesc},  OptionCategory::Cosmetic, NAVINOTIFS_NORMAL);
-Option IgnoreMaskReaction = Option::U8("Ignore Mask Reaction", {"Off", "On"},                                               {ignoreMaskReactionDesc}, OptionCategory::Cosmetic);
-Option SkipSongReplays    = Option::U8("Skip Song Replays",    {"Don't Skip", "Skip (No SFX)", "Skip (Keep SFX)"},          {skipSongReplaysDesc},    OptionCategory::Cosmetic);
-Option FreeCamControl     = Option::U8("Free Camera Control",  {"Normal", "Invert Y-Axis", "Invert X-Axis", "Invert Both"}, {""},                     OptionCategory::Cosmetic);
+Option ZTargeting         = Option::U8("L-Targeting",          {"Switch", "Hold"},                                          {""},                       OptionCategory::Cosmetic, 1);
+Option CameraControl      = Option::U8("Camera Control",       {"Normal", "Invert Y-axis"},                                 {""},                       OptionCategory::Cosmetic);
+Option MotionControl      = Option::U8("Motion Control",       {"On", "Off"},                                               {""},                       OptionCategory::Cosmetic);
+Option TogglePlayMusic    = Option::U8("Play Music",           {"Off", "On"},                                               {""},                       OptionCategory::Cosmetic, 1);
+Option TogglePlaySFX      = Option::U8("Play Sound Effects",   {"Off", "On"},                                               {""},                       OptionCategory::Cosmetic, 1);
+Option NaviNotifications  = Option::U8("Navi Notifications",   {"Silenced", "Normal", "Constant"},                          {"naviNotificationsDesc"},  OptionCategory::Cosmetic, NAVINOTIFS_NORMAL);
+Option IgnoreMaskReaction = Option::U8("Ignore Mask Reaction", {"Off", "On"},                                               {"ignoreMaskReactionDesc"}, OptionCategory::Cosmetic);
+Option SkipSongReplays    = Option::U8("Skip Song Replays",    {"Don't Skip", "Skip (No SFX)", "Skip (Keep SFX)"},          {"skipSongReplaysDesc"},    OptionCategory::Cosmetic);
+Option FreeCamControl     = Option::U8("Free Camera Control",  {"Normal", "Invert Y-Axis", "Invert X-Axis", "Invert Both"}, {""},                       OptionCategory::Cosmetic);
 std::vector<Option*> ingameDefaultOptions = {
     &ZTargeting,
     &CameraControl,
@@ -1290,16 +1292,16 @@ Option ZoraTunicColor             = Option::U8  (2, "Zora Tunic Color",      tun
 Option SilverGauntletsColor       = Option::U8  ("Silver Gauntlets Color",   gauntletOptions,               cosmeticDescriptions,                                                                                                                                             OptionCategory::Cosmetic,                     3); // Silver
 Option GoldGauntletsColor         = Option::U8  ("Gold Gauntlets Color",     gauntletOptions,               cosmeticDescriptions,                                                                                                                                             OptionCategory::Cosmetic,                     4); // Gold
 Option CustomNaviColors           = Option::Bool("Custom Navi Colors",       {"Off", "On"},                 {""},                                                                                                                                                             OptionCategory::Cosmetic);
-Option IdleNaviInnerColor         = Option::U8  (2, "Idle (Inner)",          naviInnerOptionNames,          {RANDOM_CHOICE_DESC, RANDOM_COLOR_DESC, CUSTOM_COLOR_DESC, naviColorsDesc},                                                                                       OptionCategory::Cosmetic,                     3); // White
-Option NPCNaviInnerColor          = Option::U8  (2, "On NPC (Inner)",        naviInnerOptionNames,          {RANDOM_CHOICE_DESC, RANDOM_COLOR_DESC, CUSTOM_COLOR_DESC, naviColorsDesc},                                                                                       OptionCategory::Cosmetic,                     5); // Light Blue
-Option EnemyNaviInnerColor        = Option::U8  (2, "On Enemy (Inner)",      naviInnerOptionNames,          {RANDOM_CHOICE_DESC, RANDOM_COLOR_DESC, CUSTOM_COLOR_DESC, naviColorsDesc},                                                                                       OptionCategory::Cosmetic,                     6); // Yellow
-Option PropNaviInnerColor         = Option::U8  (2, "On Prop (Inner)",       naviInnerOptionNames,          {RANDOM_CHOICE_DESC, RANDOM_COLOR_DESC, CUSTOM_COLOR_DESC, naviColorsDesc},                                                                                       OptionCategory::Cosmetic,                     4); // Green
-Option IdleNaviOuterColor         = Option::U8  (2, "Idle (Outer)",          naviOuterOptionNames,          {RANDOM_CHOICE_DESC, RANDOM_COLOR_DESC, CUSTOM_COLOR_DESC, naviColorsDesc},                                                                                       OptionCategory::Cosmetic,    SAME_AS_INNER_NAVI);
-Option NPCNaviOuterColor          = Option::U8  (2, "On NPC (Outer)",        naviOuterOptionNames,          {RANDOM_CHOICE_DESC, RANDOM_COLOR_DESC, CUSTOM_COLOR_DESC, naviColorsDesc},                                                                                       OptionCategory::Cosmetic,    SAME_AS_INNER_NAVI);
-Option EnemyNaviOuterColor        = Option::U8  (2, "On Enemy (Outer)",      naviOuterOptionNames,          {RANDOM_CHOICE_DESC, RANDOM_COLOR_DESC, CUSTOM_COLOR_DESC, naviColorsDesc},                                                                                       OptionCategory::Cosmetic,    SAME_AS_INNER_NAVI);
-Option PropNaviOuterColor         = Option::U8  (2, "On Prop (Outer)",       naviOuterOptionNames,          {RANDOM_CHOICE_DESC, RANDOM_COLOR_DESC, CUSTOM_COLOR_DESC, naviColorsDesc},                                                                                       OptionCategory::Cosmetic,    SAME_AS_INNER_NAVI);
+Option IdleNaviInnerColor         = Option::U8  (2, "Idle (Inner)",          naviInnerOptionNames,          {RANDOM_CHOICE_DESC, RANDOM_COLOR_DESC, CUSTOM_COLOR_DESC, "naviColorsDesc"},                                                                                     OptionCategory::Cosmetic,                     3); // White
+Option NPCNaviInnerColor          = Option::U8  (2, "On NPC (Inner)",        naviInnerOptionNames,          {RANDOM_CHOICE_DESC, RANDOM_COLOR_DESC, CUSTOM_COLOR_DESC, "naviColorsDesc"},                                                                                     OptionCategory::Cosmetic,                     5); // Light Blue
+Option EnemyNaviInnerColor        = Option::U8  (2, "On Enemy (Inner)",      naviInnerOptionNames,          {RANDOM_CHOICE_DESC, RANDOM_COLOR_DESC, CUSTOM_COLOR_DESC, "naviColorsDesc"},                                                                                     OptionCategory::Cosmetic,                     6); // Yellow
+Option PropNaviInnerColor         = Option::U8  (2, "On Prop (Inner)",       naviInnerOptionNames,          {RANDOM_CHOICE_DESC, RANDOM_COLOR_DESC, CUSTOM_COLOR_DESC, "naviColorsDesc"},                                                                                     OptionCategory::Cosmetic,                     4); // Green
+Option IdleNaviOuterColor         = Option::U8  (2, "Idle (Outer)",          naviOuterOptionNames,          {RANDOM_CHOICE_DESC, RANDOM_COLOR_DESC, CUSTOM_COLOR_DESC, "naviColorsDesc"},                                                                                     OptionCategory::Cosmetic,    SAME_AS_INNER_NAVI);
+Option NPCNaviOuterColor          = Option::U8  (2, "On NPC (Outer)",        naviOuterOptionNames,          {RANDOM_CHOICE_DESC, RANDOM_COLOR_DESC, CUSTOM_COLOR_DESC, "naviColorsDesc"},                                                                                     OptionCategory::Cosmetic,    SAME_AS_INNER_NAVI);
+Option EnemyNaviOuterColor        = Option::U8  (2, "On Enemy (Outer)",      naviOuterOptionNames,          {RANDOM_CHOICE_DESC, RANDOM_COLOR_DESC, CUSTOM_COLOR_DESC, "naviColorsDesc"},                                                                                     OptionCategory::Cosmetic,    SAME_AS_INNER_NAVI);
+Option PropNaviOuterColor         = Option::U8  (2, "On Prop (Outer)",       naviOuterOptionNames,          {RANDOM_CHOICE_DESC, RANDOM_COLOR_DESC, CUSTOM_COLOR_DESC, "naviColorsDesc"},                                                                                     OptionCategory::Cosmetic,    SAME_AS_INNER_NAVI);
 Option CustomTrailEffects         = Option::Bool("Custom Trail Effects",     {"Off", "On"},                 {""},                                                                                                                                                             OptionCategory::Cosmetic);
-Option ChosenSimpleMode           = Option::Bool(2, "Draw simple texture",   {"When necessary","Always"},   {necessarySimpleModeDesc,alwaysSimpleModeDesc},                                                                                                                   OptionCategory::Cosmetic);
+Option ChosenSimpleMode           = Option::Bool(2, "Draw simple texture",   {"When necessary","Always"},   {"necessarySimpleModeDesc","alwaysSimpleModeDesc"},                                                                                                               OptionCategory::Cosmetic);
 Option SwordTrailInnerColor       = Option::U8  (2, "Sword (Inner Color)",   weaponTrailInnerOptionNames,   {RANDOM_CHOICE_DESC, RANDOM_COLOR_DESC, CUSTOM_COLOR_DESC, "Select the color that appears from the base\nof the sword."},                                         OptionCategory::Cosmetic,                      3); // White
 Option SwordTrailOuterColor       = Option::U8  (2, "Sword (Outer Color)",   weaponTrailOuterOptionNames,   {RANDOM_CHOICE_DESC, RANDOM_COLOR_DESC, CUSTOM_COLOR_DESC, "Select the color that appears from the tip\nof the sword."},                                          OptionCategory::Cosmetic,    SAME_AS_INNER_TRAIL);
 Option SwordTrailDuration         = Option::U8  (2, "Sword (Duration)",      trailDurationOptionNames,      {"Select the duration for sword trails.\n\nIf too many trails are on screen, the duration\nmay be capped at Long for some of them."},                             OptionCategory::Cosmetic,                      2); // Vanilla
@@ -1331,13 +1333,13 @@ std::string finalChuTrailInnerColor   = BombchuTrailInnerColor.GetSelectedOption
 std::string finalChuTrailOuterColor   = BombchuTrailOuterColor.GetSelectedOptionText();
 Color_RGBA8 finalGanonBloodColor = { 0, 120, 0, 255 };
 
-Option ColoredKeys         = Option::Bool("Colored Small Keys",     {"Off", "On"},                                {coloredKeysDesc},                                                                                                                                  OptionCategory::Cosmetic);
-Option ColoredBossKeys     = Option::Bool("Colored Boss Keys",      {"Off", "On"},                                {coloredBossKeysDesc},                                                                                                                              OptionCategory::Cosmetic);
-Option MirrorWorld         = Option::U8  ("Mirror World",           {"Off", "On", "Scene", "Entrance", "Random"}, {mirrorWorldOffDesc, mirrorWorldOnDesc, mirrorWorldSceneDesc, mirrorWorldEntranceDesc, mirrorWorldRandomDesc},                                      OptionCategory::Cosmetic);
-Option BetaSoldOut         = Option::Bool("Beta Sold-Out Model",    {"Off", "On"},                                {betaSoldOutDesc},                                                                                                                                  OptionCategory::Cosmetic);
+Option ColoredKeys         = Option::Bool("Colored Small Keys",     {"Off", "On"},                                {"coloredKeysDesc"},                                                                                                                                  OptionCategory::Cosmetic);
+Option ColoredBossKeys     = Option::Bool("Colored Boss Keys",      {"Off", "On"},                                {"coloredBossKeysDesc"},                                                                                                                              OptionCategory::Cosmetic);
+Option MirrorWorld         = Option::U8  ("Mirror World",           {"Off", "On", "Scene", "Entrance", "Random"}, {"mirrorWorldOffDesc", "mirrorWorldOnDesc", "mirrorWorldSceneDesc", "mirrorWorldEntranceDesc", "mirrorWorldRandomDesc"},                              OptionCategory::Cosmetic);
+Option BetaSoldOut         = Option::Bool("Beta Sold-Out Model",    {"Off", "On"},                                {"betaSoldOutDesc"},                                                                                                                                  OptionCategory::Cosmetic);
 Option SoullessEnemiesLook = Option::U8  ("Soulless Enemies Look",  {"Vanilla", "Textureless", "Grayscale",
-                                                                     "Purple Flames", "Flashing"},                {soullessVanillaDesc, soullessTexturelessDesc, soullessGrayscaleDesc, soullessPurpleFlamesDesc, soullessFlashingDesc},                              OptionCategory::Cosmetic,     SOULLESSLOOK_TEXTURELESS);
-Option SoullessColor       = Option::U8  (2, "Soulless Color",      soullessColorOptionNames,                     {RANDOM_CHOICE_DESC, RANDOM_COLOR_DESC, CUSTOM_COLOR_DESC, "Select the color of soulless enemies."},                                                OptionCategory::Cosmetic,                            3); // Black
+                                                                     "Purple Flames", "Flashing"},                {"soullessVanillaDesc", "soullessTexturelessDesc", "soullessGrayscaleDesc", "soullessPurpleFlamesDesc", "soullessFlashingDesc"},                      OptionCategory::Cosmetic,     SOULLESSLOOK_TEXTURELESS);
+Option SoullessColor       = Option::U8  (2, "Soulless Color",      soullessColorOptionNames,                     {RANDOM_CHOICE_DESC, RANDOM_COLOR_DESC, CUSTOM_COLOR_DESC, "Select the color of soulless enemies."},                                                  OptionCategory::Cosmetic,                            3); // Black
 Color_RGBA8 finalSoullessColor;
 
 std::vector<Option *> cosmeticOptions = {
@@ -1378,20 +1380,20 @@ std::vector<Option *> cosmeticOptions = {
 
 static std::vector<std::string> musicOptions = {"Off", "On (Mixed)", "On (Grouped)", "On (Own)"};
 
-Option ShuffleMusic    = Option::Bool("Shuffle Music",                   {"Off", "On"},                             {musicRandoDesc},                                                                                                                          OptionCategory::Cosmetic);
-Option ShuffleBGM      = Option::U8  (2, "Shuffle BGM",                  {musicOptions},                            {shuffleBGMDesc},                                                                                                                          OptionCategory::Cosmetic,               SHUFFLEMUSIC_MIXED);
-Option ShuffleMelodies = Option::U8  (2, "Shuffle Melodies",             {musicOptions},                            {shuffleMelodiesDesc},                                                                                                                     OptionCategory::Cosmetic,               SHUFFLEMUSIC_GROUPED);
-Option CustomMusic     = Option::Bool(2, "Custom Music",                 {"Off", "On"},                             {customMusicDesc},                                                                                                                         OptionCategory::Cosmetic);
-Option CustomMusicOnly = Option::Bool(4, "Custom Music Only",            {"Off", "On"},                             {customMusicOnlyDesc},                                                                                                                     OptionCategory::Cosmetic);
+Option ShuffleMusic    = Option::Bool("Shuffle Music",                   {"Off", "On"},                             {"musicRandoDesc"},                                                                                                                        OptionCategory::Cosmetic);
+Option ShuffleBGM      = Option::U8  (2, "Shuffle BGM",                  {musicOptions},                            {"shuffleBGMDesc"},                                                                                                                        OptionCategory::Cosmetic,               SHUFFLEMUSIC_MIXED);
+Option ShuffleMelodies = Option::U8  (2, "Shuffle Melodies",             {musicOptions},                            {"shuffleMelodiesDesc"},                                                                                                                   OptionCategory::Cosmetic,               SHUFFLEMUSIC_GROUPED);
+Option CustomMusic     = Option::Bool(2, "Custom Music",                 {"Off", "On"},                             {"customMusicDesc"},                                                                                                                       OptionCategory::Cosmetic);
+Option CustomMusicOnly = Option::Bool(4, "Custom Music Only",            {"Off", "On"},                             {"customMusicOnlyDesc"},                                                                                                                   OptionCategory::Cosmetic);
 
-Option ShuffleSFX              = Option::U8  ("Shuffle SFX",             {"Off", "All", "Scene Specific", "Chaos"}, {shuffleSFXOff, shuffleSFXAll, shuffleSFXSceneSpecific, shuffleSFXChaos},                                                                  OptionCategory::Cosmetic);
+Option ShuffleSFX              = Option::U8  ("Shuffle SFX",             {"Off", "All", "Scene Specific", "Chaos"}, {"shuffleSFXOff", "shuffleSFXAll", "shuffleSFXSceneSpecific", "shuffleSFXChaos"},                                                          OptionCategory::Cosmetic);
 Option ShuffleSFXFootsteps     = Option::Bool(2, "Include Footsteps",    {"No", "Yes"},                             {""},                                                                                                                                      OptionCategory::Cosmetic,               ON);
 Option ShuffleSFXLinkVoice     = Option::Bool(2, "Include Link's Voice", {"No", "Yes"},                             {""},                                                                                                                                      OptionCategory::Cosmetic,               ON);
-Option ShuffleSFXCategorically = Option::Bool(2, "Categorical Shuffle",  {"Off", "On"},                             {shuffleSFXCategorically},                                                                                                                 OptionCategory::Cosmetic,               ON);
+Option ShuffleSFXCategorically = Option::Bool(2, "Categorical Shuffle",  {"Off", "On"},                             {"shuffleSFXCategorically"},                                                                                                               OptionCategory::Cosmetic,               ON);
 
 Option OcarinaNoteInstrument   = Option::U8  ("Ocarina Instrument",      {"Random Choice", "Scene Specific",
                                                                           "Default", "Malon", "Whistle", "Harp",
-                                                                          "Grind Organ", "Flute"},                  {ocarinaInstrRandomDesc, ocarinaInstrSceneDesc, ocarinaInstrDesc},                                                                         OptionCategory::Cosmetic,               OCARINA_INSTR_SETTING_DEFAULT);
+                                                                          "Grind Organ", "Flute"},                  {"ocarinaInstrRandomDesc", "ocarinaInstrSceneDesc", "ocarinaInstrDesc"},                                                                   OptionCategory::Cosmetic,               OCARINA_INSTR_SETTING_DEFAULT);
 
 std::vector<Option*> audioOptions = {
     &ShuffleMusic,
@@ -1407,7 +1409,7 @@ std::vector<Option*> audioOptions = {
 };
 
 Menu preferences              = Menu::SubMenu("Misc Preferences",           &preferenceOptions);
-Menu ingameDefaults           = Menu::SubMenu("Ingame Defaults",            &ingameDefaultOptions, menuIngameDefaultsDesc);
+Menu ingameDefaults           = Menu::SubMenu("Ingame Defaults",            &ingameDefaultOptions, "menuIngameDefaultsDesc");
 Menu cosmetics                = Menu::SubMenu("Cosmetic Settings",          &cosmeticOptions);
 Menu audio                    = Menu::SubMenu("Audio Settings",             &audioOptions);
 std::vector<Menu*> personalizationOptions = {
@@ -1453,9 +1455,9 @@ std::vector<Menu *> settingsPresetItems = {
 
 // Detailed Logic Options Submenu
 Menu logicSettings    = Menu::SubMenu("Logic Options",     &logicOptions);
-Menu excludeLocations = Menu::SubMenu("Exclude Locations", &excludeLocationsMenus, "",                    false);
-Menu tricks           = Menu::SubMenu("Logical Tricks",    &trickOptions,          "",                    false);
-Menu glitchSettings   = Menu::SubMenu("Glitch Options",    &glitchOptions,         menuGlitchOptionsDesc, false);
+Menu excludeLocations = Menu::SubMenu("Exclude Locations", &excludeLocationsMenus, "",                      false);
+Menu tricks           = Menu::SubMenu("Logical Tricks",    &trickOptions,          "",                      false);
+Menu glitchSettings   = Menu::SubMenu("Glitch Options",    &glitchOptions,         "menuGlitchOptionsDesc", false);
 std::vector<Menu *> detailedLogicOptions = {
     &logicSettings,
     &excludeLocations,
@@ -1463,7 +1465,7 @@ std::vector<Menu *> detailedLogicOptions = {
     &glitchSettings,
 };
 
-Menu open                     = Menu::SubMenu("Open Settings",              &openOptions, menuOpenSettingsDesc);
+Menu open                     = Menu::SubMenu("Open Settings",              &openOptions, LoadDesc("menuOpenSettingsDesc"));
 Menu world                    = Menu::SubMenu("World Settings",             &worldOptions);
 Menu shuffle                  = Menu::SubMenu("Shuffle Settings",           &shuffleOptions);
 Menu shuffleDungeonItems      = Menu::SubMenu("Shuffle Dungeon Items",      &shuffleDungeonItemOptions);
@@ -1475,7 +1477,7 @@ Menu itemPoolSettings         = Menu::SubMenu("Item Pool Settings",         &ite
 Menu itemUsabilitySettings    = Menu::SubMenu("Item Usability Settings",    &itemUsabilityOptions);
 Menu gameplaySettings         = Menu::SubMenu("Gameplay Settings",          &gameplayOptions);
 Menu multiplayerSettings      = Menu::SubMenu("Multiplayer Settings",       &multiplayerOptions);
-Menu personalization          = Menu::SubMenu("Personalization Settings",   &personalizationOptions, menuPersonalizationDesc);
+Menu personalization          = Menu::SubMenu("Personalization Settings",   &personalizationOptions, LoadDesc("menuPersonalizationDesc"));
 Menu settingsPresets          = Menu::SubMenu("Settings Presets",           &settingsPresetItems);
 Menu generateRandomizer       = Menu::Action ("Generate Randomizer",        GENERATE_MODE);
 
@@ -1630,7 +1632,7 @@ SettingsContext FillContext() {
     ctx.totAltarHints       = ToTAltarHints ? 1 : 0;
     ctx.ganonHints          = GanonHints ? 1 : 0;
     ctx.sheikHints          = (GanonHints && GanonsTrialsCount.Value<u8>() > 0 &&
-                      (!StartingLightArrows || (ShuffleMasterSword && !StartingMasterSword)));
+                               (!StartingLightArrows || (ShuffleMasterSword && !StartingMasterSword)));
     ctx.dampeHint           = DampeHint ? 1 : 0;
     ctx.skulltulaHints      = SkulltulaHints ? 1 : 0;
     ctx.fishingHints        = FishingHints ? 1 : 0;
@@ -1875,9 +1877,9 @@ void InitSettings() {
         bool hidden = enemy.id == ENEMY_INVALID || enemy.validLocTypes.empty();
         return Option::U8(enemy.name, { "Randomized", "Vanilla", "Removed" },
                           {
-                              enemyRandomizedDesc,
-                              enemyVanillaDesc,
-                              enemyRemovedDesc,
+                              "enemyRandomizedDesc",
+                              "enemyVanillaDesc",
+                              "enemyRemovedDesc",
                           },
                           OptionCategory::Setting, 0, hidden);
     });
@@ -2741,7 +2743,7 @@ void ForceChange(u32 kDown, Option* currentSetting) {
             bool difficultyFound = false;
             for (size_t i = setDifficulty; i >= 0; i--) {
                 for (size_t j = 0; j < option->GetOptions().size(); j++) {
-                    if (option->GetOptions()[j] == GlitchDifficulties[i]) {
+                    if (option->GetOptions()[j] == glitchDifficulties[i]) {
                         option->SetSelectedIndex(j);
                         difficultyFound = true;
                         break;
@@ -3400,8 +3402,8 @@ u8 GlitchValue(Option& glitchOption) {
     if (Logic.IsNot(LOGIC_GLITCHED) || !IsGlitchOption(glitchOption)) {
         return 0;
     }
-    for (size_t difficulty = 0; difficulty < GlitchDifficulties.size(); difficulty++) {
-        if (glitchOption.GetSelectedOptionText() == GlitchDifficulties[difficulty]) {
+    for (size_t difficulty = 0; difficulty < glitchDifficulties.size(); difficulty++) {
+        if (glitchOption.GetSelectedOptionText() == glitchDifficulties[difficulty]) {
             return difficulty;
         }
     }

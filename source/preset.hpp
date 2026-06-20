@@ -22,7 +22,7 @@ void LoadCachedCosmetics();
 
 typedef struct {
     std::string_view name;
-    std::string_view description;
+    std::string description;
     std::vector<std::pair<Option*, u8>> optionOverrides;
     std::vector<LocationKey> excludedLocations;
 } PremadePreset;

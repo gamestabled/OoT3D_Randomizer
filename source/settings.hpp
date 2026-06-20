@@ -15,6 +15,7 @@
 #include "category.hpp"
 #include "cosmetics.hpp"
 #include "debug.hpp"
+#include "descriptions.hpp"
 #include "menu.hpp"
 #include "pool_functions.hpp"
 #include "utils.hpp"
@@ -26,7 +27,13 @@ class Option {
                        std::vector<std::string_view> optionDescriptions_,
                        OptionCategory category_ = OptionCategory::Setting, u8 defaultOption_ = 0,
                        bool defaultHidden_ = false) {
-        return Option{ false,     u8{ 0 },        std::move(name_), std::move(options_), std::move(optionDescriptions_),
+        std::vector<std::string> descs;
+        descs.reserve(optionDescriptions_.size());
+        for (auto& d : optionDescriptions_) {
+            std::string desc{ d };
+            descs.push_back(LoadDesc(desc));
+        }
+        return Option{ false,     u8{ 0 },        std::move(name_), std::move(options_), std::move(descs),
                        category_, defaultOption_, defaultHidden_ };
     }
 
@@ -34,15 +41,27 @@ class Option {
                      std::vector<std::string_view> optionDescriptions_,
                      OptionCategory category_ = OptionCategory::Setting, u8 defaultOption_ = 0,
                      bool defaultHidden_ = false) {
-        return Option{ u8{ 0 },   u8{ 0 },        std::move(name_), std::move(options_), std::move(optionDescriptions_),
-                       category_, defaultOption_, defaultHidden_ };
+        std::vector<std::string> descs;
+        descs.reserve(optionDescriptions_.size());
+        for (auto& d : optionDescriptions_) {
+            std::string desc{ d };
+            descs.push_back(LoadDesc(desc));
+        }
+        return Option{ u8{ 0 },          u8{ 0 },   std::move(name_), std::move(options_),
+                       std::move(descs), category_, defaultOption_,   defaultHidden_ };
     }
 
     static Option Bool(u8 indent_, std::string name_, std::vector<std::string> options_,
                        std::vector<std::string_view> optionDescriptions_,
                        OptionCategory category_ = OptionCategory::Setting, u8 defaultOption_ = 0,
                        bool defaultHidden_ = false) {
-        return Option{ false,     indent_,        std::move(name_), std::move(options_), std::move(optionDescriptions_),
+        std::vector<std::string> descs;
+        descs.reserve(optionDescriptions_.size());
+        for (auto& d : optionDescriptions_) {
+            std::string desc{ d };
+            descs.push_back(LoadDesc(desc));
+        }
+        return Option{ false,     indent_,        std::move(name_), std::move(options_), std::move(descs),
                        category_, defaultOption_, defaultHidden_ };
     }
 
@@ -50,8 +69,14 @@ class Option {
                      std::vector<std::string_view> optionDescriptions_,
                      OptionCategory category_ = OptionCategory::Setting, u8 defaultOption_ = 0,
                      bool defaultHidden_ = false) {
-        return Option{ u8{ 0 },   indent_,        std::move(name_), std::move(options_), std::move(optionDescriptions_),
-                       category_, defaultOption_, defaultHidden_ };
+        std::vector<std::string> descs;
+        descs.reserve(optionDescriptions_.size());
+        for (auto& d : optionDescriptions_) {
+            std::string desc{ d };
+            descs.push_back(LoadDesc(desc));
+        }
+        return Option{ u8{ 0 },          indent_,   std::move(name_), std::move(options_),
+                       std::move(descs), category_, defaultOption_,   defaultHidden_ };
     }
 
     template <typename T> T Value() const {
@@ -216,7 +241,7 @@ class Option {
 
   private:
     Option(u8 var_, u8 indent_, std::string name_, std::vector<std::string> options_,
-           std::vector<std::string_view> optionDescriptions_, OptionCategory category_, u8 defaultOption_,
+           std::vector<std::string> optionDescriptions_, OptionCategory category_, u8 defaultOption_,
            bool defaultHidden_)
         : var(var_), indent(indent_), name(std::move(name_)), options(std::move(options_)),
           optionDescriptions(std::move(optionDescriptions_)), category(category_), defaultOption(defaultOption_),
@@ -227,7 +252,7 @@ class Option {
     }
 
     Option(bool var_, u8 indent_, std::string name_, std::vector<std::string> options_,
-           std::vector<std::string_view> optionDescriptions_, OptionCategory category_, u8 defaultOption_,
+           std::vector<std::string> optionDescriptions_, OptionCategory category_, u8 defaultOption_,
            bool defaultHidden_)
         : var(var_), indent(indent_), name(std::move(name_)), options(std::move(options_)),
           optionDescriptions(std::move(optionDescriptions_)), category(category_), defaultOption(defaultOption_),
@@ -241,7 +266,7 @@ class Option {
     u8 indent = 0;
     std::string name;
     std::vector<std::string> options;
-    std::vector<std::string_view> optionDescriptions;
+    std::vector<std::string> optionDescriptions;
     u8 selectedOption = 0;
     bool locked       = false;
     bool hidden       = false;
@@ -323,12 +348,12 @@ class Menu {
     std::vector<Option*>* settingsList;
     std::vector<Menu*>* itemsList;
     u8 mode;
-    u16 menuIdx                  = 0;
-    u16 settingBound             = 0;
-    int selectedSetting          = 0;
-    std::string_view description = "";
-    bool printInSpoiler          = true;
-    bool locked                  = false;
+    u16 menuIdx             = 0;
+    u16 settingBound        = 0;
+    int selectedSetting     = 0;
+    std::string description = "";
+    bool printInSpoiler     = true;
+    bool locked             = false;
 };
 
 namespace Settings {
