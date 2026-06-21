@@ -7,5 +7,5 @@
 
 extern std::unordered_map<std::string, std::string> descriptionTable;
 
-extern void InitDescriptionTable();
+extern void DescriptionTable_Init();
 extern std::string LoadDesc(std::string name);

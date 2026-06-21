@@ -9,7 +9,7 @@ using json = nlohmann::json;
 
 std::unordered_map<std::string, std::string> descriptionTable;
 
-void InitDescriptionTable() {
+void DescriptionTable_Init() {
     const char* data = reinterpret_cast<const char*>(description_table_jsonc);
     std::string text(data, description_table_jsonc_size);
 
@@ -36,7 +36,7 @@ void InitDescriptionTable() {
 
 std::string LoadDesc(std::string name) {
     if (descriptionTable.empty()) {
-        InitDescriptionTable();
+        DescriptionTable_Init();
     }
 
     auto it = descriptionTable.find(name);
