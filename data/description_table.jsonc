@@ -1019,9 +1019,20 @@
                                             "after obtaining the Shard of Agony." ],           //
                                                                                                //
     /*------------------------------                                                           //
+    |         EXTRA SHIELDS        |                                                           //
+    ------------------------------*/                                                           //
+    "extraShieldsDesc":                   [ "Allow keeping more than 1 Deku and Hylian shield",//
+                                            "in the inventory, so if you lose one you can then",
+                                            "re-equip it immediately. The shield count will be",
+                                            "displayed next to the item name.\n",              //
+                                            "You can choose if extra shields should only be",  //
+                                            "obtainable from randomized items or if they should",
+                                            "also be repeatedly buyable from shops." ],        //
+    /*------------------------------                                                           //
     |        INGAME SPOILERS       |                                                           //
     ------------------------------*/                                                           //
-    "ingameSpoilersShowDesc":             [ "Every spoiler is shown." ],                       //
+    "ingameSpoilersShowDesc":             [ "Every spoiler is shown. Visibility can be toggled",
+                                            "from the in-game options menu." ],                //
     "ingameSpoilersHideDesc":             [ "Hides the spheres page and only shows a",         //
                                             "location's item after it has been found." ],      //
                                                                                                //
@@ -1317,8 +1328,12 @@
     /*------------------------------                                                           //
     |    SOULLESS ENEMIES LOOK     |                                                           //
     ------------------------------*/                                                           //
-    "soullessPurpleFlameDesc":            [ "Soulless enemies will appear as a purple flame,", //
-                                            "and their body will be invisible." ],             //
+    "soullessVanillaDesc":                [ "Soulless enemies will appear normal." ],          //
+    "soullessTexturelessDesc":            [ "Soulless enemies will appear with no textures and", 
+                                            "a shaded selectable color applied to their bodies." ],
+    "soullessGrayscaleDesc":              [ "Soulless enemies will appear in black and white." ],
+    "soullessPurpleFlamesDesc":           [ "Soulless enemies will appear with purple flames", //
+                                            "around them, and their bodies will be invisible." ],
     "soullessFlashingDesc":               [ "Soulless enemies will flash between visible and", //
                                             "invisible on every frame." ],                     //
     /*------------------------------                                                           //
