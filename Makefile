@@ -59,6 +59,7 @@ CFLAGS	:=	-g -Wall -O2 -mword-relocations \
 CFLAGS	+=	$(INCLUDE) -D__3DS__
 
 CXXFLAGS	:= $(CFLAGS) -fno-exceptions -fno-var-tracking-assignments -std=gnu++17 -Wreorder
+CXXFLAGS += -Wno-psabi
 
 ASFLAGS	:=	-g $(ARCH)
 LDFLAGS	=	-specs=3dsx.specs -g $(ARCH) -Wl,-Map,$(notdir $*.map)
@@ -242,6 +243,11 @@ $(OUTPUT).elf	:	$(OFILES)
 #---------------------------------------------------------------------------------
 %.bin.o	%_bin.h :	%.bin
 #---------------------------------------------------------------------------------
+	@echo $(notdir $<)
+	@$(bin2o)
+
+#---------------------------------------------------------------------------------
+%.jsonc.o %_jsonc.h : %.jsonc
 	@echo $(notdir $<)
 	@$(bin2o)
 

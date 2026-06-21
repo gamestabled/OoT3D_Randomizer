@@ -1,6 +1,7 @@
 #include <3ds.h>
 
 #include "menu.hpp"
+#include "descriptions.hpp"
 #include "hint_list.hpp"
 #include "item_list.hpp"
 #include "item_location.hpp"
@@ -15,6 +16,7 @@ int main() {
     HintTable_Init();
     ItemTable_Init();
     LocationTable_Init();
+    DescriptionTable_Init();
     Enemizer::InitEnemyTypes();
     MenuInit();
 

@@ -258,7 +258,7 @@ void LoadCachedCosmetics() {
 }
 
 PremadePreset presetNintended = { "Nintended",
-                                  presetNintendedDesc,
+                                  LoadDesc("presetNintendedDesc"),
                                   {
                                       // Open Settings
                                       { &Settings::OpenForest, OPENFOREST_CLOSED },
@@ -274,7 +274,7 @@ PremadePreset presetNintended = { "Nintended",
                                   } };
 
 PremadePreset presetAllsanity = { "Allsanity",
-                                  presetAllsanityDesc,
+                                  LoadDesc("presetAllsanityDesc"),
                                   {
                                       // World Settings
                                       { &Settings::ShuffleEntrances, ON },
@@ -319,7 +319,7 @@ PremadePreset presetAllsanity = { "Allsanity",
                                   } };
 
 PremadePreset presetRacing = { "Racing",
-                               presetRacingDesc,
+                               LoadDesc("presetRacingDesc"),
                                {
                                    // Open Settings
                                    { &Settings::OpenForest, OPENFOREST_OPEN },
@@ -410,7 +410,7 @@ PremadePreset presetRacing = { "Racing",
                                } };
 
 PremadePreset presetVanilla = { "Vanilla Plus",
-                                presetVanillaDesc,
+                                LoadDesc("presetVanillaDesc"),
                                 {
                                     // Open Settings
                                     { &Settings::OpenForest, OPENFOREST_CLOSED },
@@ -444,7 +444,7 @@ PremadePreset presetVanilla = { "Vanilla Plus",
                                 } };
 
 PremadePreset presetFullChaos = { "Full Chaos",
-                                  presetFullChaosDesc,
+                                  LoadDesc("presetFullChaosDesc"),
                                   {
                                       // Open Settings
                                       { &Settings::OpenForest, OPENFOREST_CLOSED },
