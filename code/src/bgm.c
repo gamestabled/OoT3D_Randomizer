@@ -44,5 +44,7 @@ void Bgm_ApplyFanfareMod(void) {
     }
 
     // Linearly decrease pitch
-    gUnkSequencePlayerData[SEQ_PLAYER_FANFARE]->freq -= 0.009;
+    if (gUnkSequencePlayerData[SEQ_PLAYER_FANFARE]->freq > 0.28) {
+        gUnkSequencePlayerData[SEQ_PLAYER_FANFARE]->freq -= 0.009;
+    }
 }
