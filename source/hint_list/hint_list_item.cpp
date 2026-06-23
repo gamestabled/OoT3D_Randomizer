@@ -2433,7 +2433,7 @@ void HintTable_Init_Item() {
                        Text{"a token of recognition", /*french*/"une preuve de reconnaissance", /*spanish*/"una prueba de reconocimiento", /*italian*/"un simbolo di riconoscimento", /*german*/"ein Zeichen der Anerkennung"},
                      }, {
                        // clear text
-                       Text {"a Big Poe", /*NA french*/"un Grand esprit", /*NA spanish*/"un Gran Poe", /*EUR english*/"", /*EUR french*/"une Âme", /*EUR spanish*/"", /*italian*/"un Grande Poo", /*german*/"eine Nachtschwärmer"},
+                       Text {"a Big Poe", /*NA french*/"un Grand esprit", /*NA spanish*/"un Gran Poe", /*EUR english*/"", /*EUR french*/"une Âme", /*EUR spanish*/"", /*italian*/"un Grande Poo", /*german*/"ein Nachtschwärmer"},
                      }
     );
 }

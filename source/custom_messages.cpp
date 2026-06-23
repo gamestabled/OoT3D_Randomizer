@@ -850,7 +850,7 @@ void CreateAlwaysIncludedMessages() {
             // italian
             "Hai ottenuto un #Grande Poo#!&La tua tessera ora ha #XXXX# punti!",
             // german
-            "",
+            "Du hast einen #Nachtschwärmer# gefunden!&Du hast jetzt #XXXX# Punkte auf deinem Konto!",
         };
         bigPoeText = AddColorsAndFormat(bigPoeText, { QM_RED, QM_PINK });
         bigPoeText.Replace("XXXX", BIG_POE_POINTS());
