@@ -483,6 +483,13 @@ DungeonInfo ShadowTemple =
                     SHADOW_TEMPLE_GS_TRIPLE_GIANT_POT,
                     SHADOW_TEMPLE_GS_LIKE_LIKE_ROOM,
                     SHADOW_TEMPLE_GS_NEAR_SHIP,
+                    SHADOW_TEMPLE_INVISIBLE_BLADES_SOT_BLOCK_HEART_1,
+                    SHADOW_TEMPLE_INVISIBLE_BLADES_SOT_BLOCK_HEART_2,
+                    SHADOW_TEMPLE_NEAR_SHIP_SCARECROW_HEART_1,
+                    SHADOW_TEMPLE_NEAR_SHIP_SCARECROW_HEART_2,
+                    SHADOW_TEMPLE_ACROSS_CAVERN_BROKEN_PILLAR_HEART,
+                    SHADOW_TEMPLE_ACROSS_CAVERN_SCARECROW_HEART_1,
+                    SHADOW_TEMPLE_ACROSS_CAVERN_SCARECROW_HEART_2,
                 },
                 {
                     // MQ Locations
