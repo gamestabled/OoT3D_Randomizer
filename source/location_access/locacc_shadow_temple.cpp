@@ -127,12 +127,8 @@ void AreaTable_Init_ShadowTemple() {
                     { [] { return CanDefeatEnemies(7, 0, 16); },
                       /*Glitched*/
                       [] { return CanDoGlitch(GlitchType::HookshotClip, GlitchDifficulty::INTERMEDIATE); } }),
-                LocationAccess(
-                    SHADOW_TEMPLE_INVISIBLE_BLADES_SOT_BLOCK_HEART_1,
-                    { [] { return CanPlay(SongOfTime) } }), 
-                LocationAccess(
-                    SHADOW_TEMPLE_INVISIBLE_BLADES_SOT_BLOCK_HEART_2,
-                    { [] { return CanPlay(SongOfTime) } }),     
+                LocationAccess(SHADOW_TEMPLE_INVISIBLE_BLADES_SOT_BLOCK_HEART_1, { [] { return CanPlay(SongOfTime); } }),
+                LocationAccess(SHADOW_TEMPLE_INVISIBLE_BLADES_SOT_BLOCK_HEART_2, { [] { return CanPlay(SongOfTime); } }),
                 LocationAccess(SHADOW_TEMPLE_FALLING_SPIKES_LOWER_CHEST,
                                { [] { return CanPassEnemy(7, 0, 9, 5, SpaceAroundEnemy::NONE); } }),
                 LocationAccess(SHADOW_TEMPLE_FALLING_SPIKES_UPPER_CHEST, { [] {
@@ -184,11 +180,9 @@ void AreaTable_Init_ShadowTemple() {
                 LocationAccess(SHADOW_TEMPLE_AFTER_WIND_ENEMY_CHEST, { [] { return CanDefeatEnemies(7, 0, 20); } }),
                 LocationAccess(SHADOW_TEMPLE_AFTER_WIND_HIDDEN_CHEST, { [] { return true; } }),
                 LocationAccess(SHADOW_TEMPLE_GS_NEAR_SHIP,
-                               { [] { return CanJumpslash && CanUse(LONGSHOT) && SmallKeys(SHADOW_TEMPLE, 4, 5); } }),
-                LocationAccess(SHADOW_TEMPLE_ACROSS_CAVERN_SCARECROW_HEART_1,
-                               { [] { return DistantScarecrow } }),
-                LocationAccess(SHADOW_TEMPLE_ACROSS_CAVERN_SCARECROW_HEART_2,
-                               { [] { return DistantScarecrow } }),    
+                               { [] { return CanJumpslash && CanUse(LONGSHOT) && SmallKeys(SHADOW_TEMPLE, 4, 5); } }),                               
+                LocationAccess(SHADOW_TEMPLE_NEAR_SHIP_SCARECROW_HEART_1, { [] { return DistantScarecrow; } }),
+                LocationAccess(SHADOW_TEMPLE_NEAR_SHIP_SCARECROW_HEART_2, { [] { return DistantScarecrow; } }),
             },
             {
                 // Exits
@@ -200,8 +194,35 @@ void AreaTable_Init_ShadowTemple() {
             return enemyCheckFn(7, 0, 21, {}) || enemyCheckFn(7, 0, 15, {}) ||
                    (CanUse(DINS_FIRE) && enemyCheckFn(7, 0, 13, {}));
         };
-        areaTable[SHADOW_TEMPLE_BEYOND_BOAT] = Area(
-            "Shadow Temple Beyond Boat", "Shadow Temple", SHADOW_TEMPLE, NO_DAY_NIGHT_CYCLE,
+        areaTable[SHADOW_TEMPLE_BEYOND_BOAT] =
+            Area("Shadow Temple Beyond Boat", "Shadow Temple", SHADOW_TEMPLE, NO_DAY_NIGHT_CYCLE,
+                 {
+                     // Events
+                     EventAccess(&DekuBabaSticks,
+                                 { [] { return DekuBabaSticks || ForEachEnemy_BeyondBoat(CanGetDekuBabaSticks); } }),
+                     EventAccess(&DekuBabaNuts,
+                                 { [] { return DekuBabaNuts || ForEachEnemy_BeyondBoat(CanGetDekuBabaNuts); } }),
+                 },
+                 {
+                     // Locations
+                     LocationAccess(SHADOW_TEMPLE_SPIKE_WALLS_LEFT_CHEST, { [] {
+                                        return CanUse(DINS_FIRE) && CanPassEnemy(7, 0, 13, 0, SpaceAroundEnemy::NARROW);
+                                    } }),
+                     LocationAccess(SHADOW_TEMPLE_BOSS_KEY_CHEST, { [] {
+                                        return CanUse(DINS_FIRE) && CanPassEnemy(7, 0, 13, 1, SpaceAroundEnemy::NONE);
+                                    } }),
+                     LocationAccess(SHADOW_TEMPLE_INVISIBLE_FLOORMASTER_CHEST,
+                                    { [] { return CanDefeatEnemy(7, 0, 17, 0); } }),
+                     LocationAccess(SHADOW_TEMPLE_GS_TRIPLE_GIANT_POT, { [] { return CanAdultAttack; } }),
+                 },
+                 {
+                     // Exits
+                     Entrance(SHADOW_TEMPLE_ACCROSS_CAVERN, { [] {
+                                  return CanUse(BOW) || CanUse(DISTANT_SCARECROW) || (LogicShadowStatue && HasBombchus);
+                              } }),
+                 });
+        areaTable[SHADOW_TEMPLE_ACCROSS_CAVERN] = Area(
+            "Shadow Temple across cavern", "Shadow Temple", SHADOW_TEMPLE, NO_DAY_NIGHT_CYCLE,
             {
                 // Events
                 EventAccess(&DekuBabaSticks,
@@ -211,21 +232,22 @@ void AreaTable_Init_ShadowTemple() {
             },
             {
                 // Locations
-                LocationAccess(SHADOW_TEMPLE_SPIKE_WALLS_LEFT_CHEST, { [] {
-                                   return CanUse(DINS_FIRE) && CanPassEnemy(7, 0, 13, 0, SpaceAroundEnemy::NARROW);
+                LocationAccess(SHADOW_TEMPLE_ACROSS_CAVERN_BROKEN_PILLAR_HEART, { [] { return CanPlay(SongOfTime); } }),
+                LocationAccess(SHADOW_TEMPLE_ACROSS_CAVERN_SCARECROW_HEART_1, { [] {
+                                   return (CanPlay(SongOfTime) && DistantScarecrow) ||
+                                          Here(SHADOW_TEMPLE_BEYOND_BOAT, [] { return DistantScarecrow; });
                                } }),
-                LocationAccess(SHADOW_TEMPLE_BOSS_KEY_CHEST, { [] {
-                                   return CanUse(DINS_FIRE) && CanPassEnemy(7, 0, 13, 1, SpaceAroundEnemy::NONE);
+                LocationAccess(SHADOW_TEMPLE_ACROSS_CAVERN_SCARECROW_HEART_2, { [] {
+                                   return (CanPlay(SongOfTime) && DistantScarecrow) ||
+                                          Here(SHADOW_TEMPLE_BEYOND_BOAT, [] { return DistantScarecrow; });
                                } }),
-                LocationAccess(SHADOW_TEMPLE_INVISIBLE_FLOORMASTER_CHEST,
-                               { [] { return CanDefeatEnemy(7, 0, 17, 0); } }),
-                LocationAccess(SHADOW_TEMPLE_GS_TRIPLE_GIANT_POT, { [] { return CanAdultAttack; } }),
             },
             {
                 // Exits
-                Entrance(SHADOW_TEMPLE_BOSS_ENTRYWAY, { [] {
-                             return (CanUse(BOW) || CanUse(DISTANT_SCARECROW) || (LogicShadowStatue && HasBombchus)) &&
-                                    SmallKeys(SHADOW_TEMPLE, 5) && CanUse(HOVER_BOOTS) && BossKeyShadowTemple;
+                Entrance(SHADOW_TEMPLE_BOSS_ENTRYWAY,
+                         { [] { return SmallKeys(SHADOW_TEMPLE, 5) && CanUse(HOVER_BOOTS) && BossKeyShadowTemple; } }),
+                Entrance(SHADOW_TEMPLE_BEYOND_BOAT, { [] {
+                             return CanUse(BOW) || HasExplosives;
                          } }),
             });
     }
@@ -376,16 +398,10 @@ void AreaTable_Init_ShadowTemple() {
     |         BOSS ROOM         |
     ---------------------------*/
     areaTable[SHADOW_TEMPLE_BOSS_ENTRYWAY] =
-        Area("Shadow Temple Boss Entryway", "Shadow Temple", SHADOW_TEMPLE, NO_DAY_NIGHT_CYCLE, {}, {
-            LocationAccess(SHADOW_TEMPLE_ACROSS_CAVERN_BROKEN_PILLAR_HEART, { [] { return ShadowTemple.IsVanilla() && CanPlay(SongOfTime); } }),
-            LocationAccess(SHADOW_TEMPLE_ACROSS_CAVERN_SCARECROW_HEART_1, { [] { 
-                return ShadowTemple.IsVanilla() && ((CanPlay(SongOfTime) && DistantScarecrow) || Here(SHADOW_TEMPLE_BEYOND_BOAT,[]{return DistantScarecrow;})); } }),
-            LocationAccess(SHADOW_TEMPLE_ACROSS_CAVERN_SCARECROW_HEART_2, { [] { 
-                return ShadowTemple.IsVanilla() && ((CanPlay(SongOfTime) && DistantScarecrow) || Here(SHADOW_TEMPLE_BEYOND_BOAT,[]{return DistantScarecrow;})); } }),    
-        },
+        Area("Shadow Temple Boss Entryway", "Shadow Temple", SHADOW_TEMPLE, NO_DAY_NIGHT_CYCLE, {}, {},
              {
                  // Exits
-                 Entrance(SHADOW_TEMPLE_BEYOND_BOAT, { [] { return Dungeon::ShadowTemple.IsVanilla() && false; } }),
+                 Entrance(SHADOW_TEMPLE_ACCROSS_CAVERN, { [] { return Dungeon::ShadowTemple.IsVanilla() && false; } }),
                  Entrance(SHADOW_TEMPLE_MQ_BEYOND_BOAT, { [] { return Dungeon::ShadowTemple.IsMQ() && false; } }),
                  Entrance(SHADOW_TEMPLE_BOSS_ROOM, { [] { return true; } }),
              });

@@ -1037,7 +1037,7 @@ void HintTable_Init_Exclude_Dungeon() {
 
     hintTable[WATER_TEMPLE_RIVER_HEART_1] = HintText::Exclude({
                        // obscure text
-                       Text{"among #Dark @'s turds# has sunk", /*french*/"among #Dark @'s turds# has sunk", /*spanish*/"among #Dark @'s turds# have sunk", /*italian*/"among #Dark @'s turds# have sunk", /*german*/"on #a sometimes roasted pillar# rests"},
+                       Text{"among #Dark @'s turds# has sunk", /*french*/"among #Dark @'s turds# has sunk", /*spanish*/"among #Dark @'s turds# have sunk", /*italian*/"among #Dark @'s turds# have sunk", /*german*/"among #Dark @'s turds# have sunk"},
                       },{},
                       // Clear text
                        Text{"in #the river in Water Temple# is", /*french*/"in #the river in Water Temple# is", /*spanish*/"in #the river in Water Temple# is", /*italian*/"in #the river in Water Temple# is", /*german*/"in #the river in Water Temple# is"}
@@ -1045,7 +1045,7 @@ void HintTable_Init_Exclude_Dungeon() {
 
    hintTable[WATER_TEMPLE_RIVER_HEART_2] = HintText::Exclude({
                        // obscure text
-                       Text{"among #Dark @'s turds# has sunk", /*french*/"among #Dark @'s turds# has sunk", /*spanish*/"among #Dark @'s turds# have sunk", /*italian*/"among #Dark @'s turds# have sunk", /*german*/"on #a sometimes roasted pillar# rests"},
+                       Text{"among #Dark @'s turds# has sunk", /*french*/"among #Dark @'s turds# has sunk", /*spanish*/"among #Dark @'s turds# have sunk", /*italian*/"among #Dark @'s turds# have sunk", /*german*/"among #Dark @'s turds# have sunk"},
                       },{},
                       // Clear text
                        Text{"in #the river in Water Temple# is", /*french*/"in #the river in Water Temple# is", /*spanish*/"in #the river in Water Temple# is", /*italian*/"in #the river in Water Temple# is", /*german*/"in #the river in Water Temple# is"}
@@ -1053,7 +1053,7 @@ void HintTable_Init_Exclude_Dungeon() {
 
    hintTable[WATER_TEMPLE_RIVER_HEART_3] = HintText::Exclude({
                        // obscure text
-                       Text{"among #Dark @'s turds# has sunk", /*french*/"among #Dark @'s turds# has sunk", /*spanish*/"among #Dark @'s turds# have sunk", /*italian*/"among #Dark @'s turds# have sunk", /*german*/"on #a sometimes roasted pillar# rests"},
+                       Text{"among #Dark @'s turds# has sunk", /*french*/"among #Dark @'s turds# has sunk", /*spanish*/"among #Dark @'s turds# have sunk", /*italian*/"among #Dark @'s turds# have sunk", /*german*/"among #Dark @'s turds# have sunk"},
                       },{},
                       // Clear text
                        Text{"in #the river in Water Temple# is", /*french*/"in #the river in Water Temple# is", /*spanish*/"in #the river in Water Temple# is", /*italian*/"in #the river in Water Temple# is", /*german*/"in #the river in Water Temple# is"}
@@ -1061,7 +1061,7 @@ void HintTable_Init_Exclude_Dungeon() {
 
    hintTable[WATER_TEMPLE_RIVER_HEART_4] = HintText::Exclude({
                        // obscure text
-                       Text{"among #Dark @'s turds# has sunk", /*french*/"among #Dark @'s turds# has sunk", /*spanish*/"among #Dark @'s turds# have sunk", /*italian*/"among #Dark @'s turds# have sunk", /*german*/"on #a sometimes roasted pillar# rests"},
+                       Text{"among #Dark @'s turds# has sunk", /*french*/"among #Dark @'s turds# has sunk", /*spanish*/"among #Dark @'s turds# have sunk", /*italian*/"among #Dark @'s turds# have sunk", /*german*/"among #Dark @'s turds# have sunk"},
                       },{},
                       // Clear text
                        Text{"in #the river in Water Temple# is", /*french*/"in #the river in Water Temple# is", /*spanish*/"in #the river in Water Temple# is", /*italian*/"in #the river in Water Temple# is", /*german*/"in #the river in Water Temple# is"}
@@ -1228,7 +1228,7 @@ void HintTable_Init_Exclude_Dungeon() {
 
     hintTable[SPIRIT_TEMPLE_ADULT_CLIMB_HEART_1] = HintText::Exclude({
                        // obscure text
-                       Text{"some #feisty rock climbing Beamos# hide", /*french*/"some #feisty rock climbing Beamos# hide", /*spanish*/"some #feisty rock climbing Beamos# hide", /*italian*/"some #feisty rock climbing Beamos# hide", /*german*/"on #a sometimes roasted pillar# rests"},
+                       Text{"some #feisty rock climbing Beamos# hide", /*french*/"some #feisty rock climbing Beamos# hide", /*spanish*/"some #feisty rock climbing Beamos# hide", /*italian*/"some #feisty rock climbing Beamos# hide", /*german*/"some #feisty rock climbing Beamos# hide"},
                       },{},
                       // Clear text
                        Text{"a #heart on a platform near a climbing wall in Spirit Temple# is", /*french*/"a #heart on a platform near a climbing wall in Spirit Temple# is", /*spanish*/"a #heart on a platform near a climbing wall in Spirit Temple# is", /*italian*/"a #heart on a platform near a climbing wall in Spirit Temple# is", /*german*/"a #heart on a platform near a climbing wall in Spirit Temple# is"}
@@ -1236,7 +1236,7 @@ void HintTable_Init_Exclude_Dungeon() {
 
     hintTable[SPIRIT_TEMPLE_ADULT_CLIMB_HEART_2] = HintText::Exclude({
                        // obscure text
-                       Text{"some #feisty rock climbing Beamos# hide", /*french*/"among #Dark @'s turds# has sunk", /*spanish*/"some #feisty rock climbing Beamos# hide", /*italian*/"some #feisty rock climbing Beamos# hide", /*german*/"on #a sometimes roasted pillar# rests"},
+                       Text{"some #feisty rock climbing Beamos# hide", /*french*/"among #Dark @'s turds# has sunk", /*spanish*/"some #feisty rock climbing Beamos# hide", /*italian*/"some #feisty rock climbing Beamos# hide", /*german*/"some #feisty rock climbing Beamos# hide"},
                       },{},
                       // Clear text
                        Text{"a #heart on a platform near a climbing wall in Spirit Temple# is", /*french*/"a #heart on a platform near a climbing wall in Spirit Temple# is", /*spanish*/"a #heart on a platform near a climbing wall in Spirit Temple# is", /*italian*/"a #heart on a platform near a climbing wall in Spirit Temple# is", /*german*/"a #heart on a platform near a climbing wall in Spirit Temple# is"}
@@ -1470,6 +1470,62 @@ void HintTable_Init_Exclude_Dungeon() {
                        // obscure text
                        Text{"#inside a burning skull# lies", /*french*/"#dans un crâne enflammé# gît", /*spanish*/"en el #interior de una calavera en llamas# aguarda", /*italian*/"da un #vaso a forma di teschio# |salta|saltano| fuori", /*german*/"#in einem brennenden Schädel#, |wäre|wären|"},
     });
+
+    hintTable[SHADOW_TEMPLE_INVISIBLE_BLADES_SOT_BLOCK_HEART_1] = HintText::Exclude({
+                       // obscure text
+                       Text{"hiding from #an invisible beyblade# lies", /*french*/"hiding from #an invisible beyblade# lies", /*spanish*/"hiding from #an invisible beyblade# lies", /*italian*/"hiding from #an invisible beyblade# lies", /*german*/"hiding from #an invisible beyblade# lies"},
+                      },{},
+                      // Clear text
+                       Text{"a heart #next to the Scarecrow at the start of the boart journey in Shadow temple# is", /*french*/"a heart #next to the Scarecrow at the start of the boart journey in Shadow temple# is", /*spanish*/"a heart #next to the Scarecrow at the start of the boart journey in Shadow temple# is", /*italian*/"a heart #next to the Scarecrow at the start of the boart journey in Shadow temple# is", /*german*/"a heart #next to the Scarecrow at the start of the boart journey in Shadow temple# is"}
+   );
+
+   hintTable[SHADOW_TEMPLE_INVISIBLE_BLADES_SOT_BLOCK_HEART_2] = HintText::Exclude({
+                       // obscure text
+                       Text{"hiding from #an invisible beyblade# lies", /*french*/"hiding from #an invisible beyblade# lies", /*spanish*/"hiding from #an invisible beyblade# lies", /*italian*/"hiding from #an invisible beyblade# lies", /*german*/"hiding from #an invisible beyblade# lies"},
+                      },{},
+                      // Clear text
+                       Text{"a heart #next to the Scarecrow at the start of the boart journey in Shadow temple# is", /*french*/"a heart #next to the Scarecrow at the start of the boart journey in Shadow temple# is", /*spanish*/"a heart #next to the Scarecrow at the start of the boart journey in Shadow temple# is", /*italian*/"a heart #next to the Scarecrow at the start of the boart journey in Shadow temple# is", /*german*/"a heart #next to the Scarecrow at the start of the boart journey in Shadow temple# is"}
+   );
+
+   hintTable[SHADOW_TEMPLE_NEAR_SHIP_SCARECROW_HEART_1] = HintText::Exclude({
+                       // obscure text
+                       Text{"a #scarecrow on a cruise vacation# is surrounded by", /*french*/"a #scarecrow on a cruise vacation# is surrounded by", /*spanish*/"a #scarecrow on a cruise vacation# is surrounded by", /*italian*/"a #scarecrow on a cruise vacation# is surrounded by", /*german*/"a #scarecrow on a cruise vacation# is surrounded by"},
+                      },{},
+                      // Clear text
+                       Text{"a heart #next to the Scarecrow at the start of the boart journey in Shadow temple# is", /*french*/"a heart #next to the Scarecrow at the start of the boart journey in Shadow temple# is", /*spanish*/"a heart #next to the Scarecrow at the start of the boart journey in Shadow temple# is", /*italian*/"a heart #next to the Scarecrow at the start of the boart journey in Shadow temple# is", /*german*/"a heart #next to the Scarecrow at the start of the boart journey in Shadow temple# is"}
+   );
+
+   hintTable[SHADOW_TEMPLE_NEAR_SHIP_SCARECROW_HEART_2] = HintText::Exclude({
+                       // obscure text
+                       Text{"a #scarecrow on a cruise vacation# is surrounded by", /*french*/"a #scarecrow on a cruise vacation# is surrounded by", /*spanish*/"a #scarecrow on a cruise vacation# is surrounded by", /*italian*/"a #scarecrow on a cruise vacation# is surrounded by", /*german*/"a #scarecrow on a cruise vacation# is surrounded by"},
+                      },{},
+                      // Clear text
+                       Text{"a #heart on a Song of Time block in Shadow Temple# is", /*french*/"a #heart on a Song of Time block in Shadow Temple# is", /*spanish*/"a #heart on a Song of Time block in Shadow Temple# is", /*italian*/"a #heart on a Song of Time block in Shadow Temple# is", /*german*/"a #heart on a Song of Time block in Shadow Temple# is"}
+   );
+
+  hintTable[SHADOW_TEMPLE_ACROSS_CAVERN_BROKEN_PILLAR_HEART] = HintText::Exclude({
+                       // obscure text
+                       Text{"#after a cruise, on a ruin# is hidden", /*french*/"#after a cruise, on a ruin# is hidden ", /*spanish*/"#after a cruise, on a ruin# is hidden", /*italian*/"#after a cruise, on a ruin# is hidden", /*german*/"#after a cruise, on a ruin# is hidden"},
+                      },{},
+                      // Clear text
+                       Text{"a heart #on a broken pillar near the Boss entry in Shadow Temple# is", /*french*/"a heart #on a broken pillar near the Boss entry in Shadow Temple# is", /*spanish*/"a heart #on a broken pillar near the Boss entry in Shadow Temple# is", /*italian*/"a heart #on a broken pillar near the Boss entry in Shadow Temple# is", /*german*/"a heart #on a broken pillar near the Boss entry in Shadow Temple# is"}
+   );
+
+  hintTable[SHADOW_TEMPLE_NEAR_SHIP_SCARECROW_HEART_1] = HintText::Exclude({
+                       // obscure text
+                       Text{"a #scarecrow overlooking a bottomless pit# is surrounded by", /*french*/"a #scarecrow overlooking a bottomless pit# is surrounded by", /*spanish*/"a #scarecrow overlooking a bottomless pit# is surrounded by", /*italian*/"a #scarecrow overlooking a bottomless pit# is surrounded by", /*german*/"a #scarecrow overlooking a bottomless pit# is surrounded by"},
+                      },{},
+                      // Clear text
+                       Text{"on #a platform overlooking the bottomless cavern in Shadow Temple# is", /*french*/"on #a platform overlooking the bottomless cavern in Shadow Temple# is", /*spanish*/"on #a platform overlooking the bottomless cavern in Shadow Temple# is", /*italian*/"on #a platform overlooking the bottomless cavern in Shadow Temple# is", /*german*/"on #a platform overlooking the bottomless cavern in Shadow Temple# is"}
+   );
+
+  hintTable[SHADOW_TEMPLE_NEAR_SHIP_SCARECROW_HEART_2] = HintText::Exclude({
+                       // obscure text
+                       Text{"a #scarecrow overlooking a bottomless pit# is surrounded by", /*french*/"a #scarecrow overlooking a bottomless pit# is surrounded by", /*spanish*/"a #scarecrow overlooking a bottomless pit# is surrounded by", /*italian*/"a #scarecrow overlooking a bottomless pit# is surrounded by", /*german*/"a #scarecrow overlooking a bottomless pit# is surrounded by"},
+                      },{},
+                      // Clear text
+                       Text{"on #a platform overlooking the bottomless cavern in Shadow Temple# is", /*french*/"on #a platform overlooking the bottomless cavern in Shadow Temple# is", /*spanish*/"on #a platform overlooking the bottomless cavern in Shadow Temple# is", /*italian*/"on #a platform overlooking the bottomless cavern in Shadow Temple# is", /*german*/"on #a platform overlooking the bottomless cavern in Shadow Temple# is"}
+   ); 
 
     hintTable[SHADOW_TEMPLE_MQ_COMPASS_CHEST] = HintText::Exclude({
                        // obscure text
