@@ -2,6 +2,7 @@
 #include "s_types.h"
 
 #define CURSETRAP_TEXT_BASE_INDEX 0x8FF0
+#define CUSTOM_TEXT_POE_COLLECTOR_TELL_POINTS 0x9070
 
 typedef struct {
     // In the true file format, offset is the offset into the QM file.

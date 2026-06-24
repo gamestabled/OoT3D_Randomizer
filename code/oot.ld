@@ -27,6 +27,7 @@ SECTIONS
 	.patch_LabScientistDontStartTimerAndSetFlag 0x112440 + _LD_OFF : { *(.patch_LabScientistDontStartTimerAndSetFlag) }
 	.patch_BombchuPurchaseableCheck 0x112ED0 + _LD_OFF : { *(.patch_BombchuPurchaseableCheck) }
 	EnDha_Update = 0x113050 + _LD_OFF;
+	EnGb_Idle = 0x113768 + _LD_OFF;
 	ItemEtcetera_Draw = 0x11707C + _LD_OFF;
 	.patch_ItemEtceteraModelDraw 0x117080 + _LD_OFF : { *(.patch_ItemEtceteraModelDraw) }
 	EnFd_Reappear = 0x117D98 + _LD_OFF;

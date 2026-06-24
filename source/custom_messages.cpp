@@ -784,25 +784,25 @@ void CreateAlwaysIncludedMessages() {
         Text bigPoeText = Text{
             // english
             "Oh, you brought a Poe today!^Hmmmm!^Very interesting! This is a #Big Poe#!^I'll buy it for #50 "
-            "Rupees#.^On top of that, I'll put #100 points# on&your card.^If you earn #1000 points#, you'll be a&happy "
+            "Rupees#.^On top of that, I'll put #100 points# on&your card.^If you earn #XXXX points#, you'll be a&happy "
             "man! Heh heh.",
             // french
             "Oh! Tu as apporté un fantôme!^Hmmmm!^Magnifique!&C'est une #Âme#!^Je t'en donne #50 Rubis#.^Et en plus, "
-            "j'inscris #100 points#&sur ta carte.^Obtiens #1000 points# et tu ne&seras pas déçu...&Hé hé hé.",
+            "j'inscris #100 points#&sur ta carte.^Obtiens #XXXX points# et tu ne&seras pas déçu...&Hé hé hé.",
             // spanish
             "¡Vaya! ¡Traes un poe!^¡Mmm! ¿A ver?^¡Qué interesante! ¡Es un #gran poe#!^Te daré #50 rupias# por él.^Y "
-            "además agregaré #100 puntos# a tu&tarjeta.^¡Si llegas a #1000 puntos#, serás muy feliz!&Je, je, je...",
+            "además agregaré #100 puntos# a tu&tarjeta.^¡Si llegas a #XXXX puntos#, serás muy feliz!&Je, je, je...",
             // italian
             "Eccoti bello mio! Hai un Poo per me?^Sì???^Fantasmagorico! Questo è un #Grande Poo#!^Ti do #50 Rupie#.^E "
-            "aggiungo anche #100 punti# sulla tua&tessera! Sì, sono molto generoso!^Se arrivi a #1000 punti#, ti "
+            "aggiungo anche #100 punti# sulla tua&tessera! Sì, sono molto generoso!^Se arrivi a #XXXX punti#, ti "
             "aspetta&una sorpresa stupenda!",
             // german
             "Oh, du bringst mir etwas!^Nun...^Erstaunlich!&Das ist ja ein #Nachtschwärmer#!^Dafür bekommst du #50 "
-            "Rubine#!^Obendrein hast du nun #100 Punkte#&auf dem Nachtschwärmer-Konto gut.^Hast du #1000 Punkte#, "
+            "Rubine#!^Obendrein hast du nun #100 Punkte#&auf dem Nachtschwärmer-Konto gut.^Hast du #XXXX Punkte#, "
             "gesammelt, dann&wartet eine geniale Belohnung! Hehehe...",
         };
         bigPoeText = AddColorsAndFormat(bigPoeText, { QM_RED, QM_RED, QM_RED, QM_RED }, MANUAL_NEWLINES);
-        bigPoeText.Replace("1000", REQUIRED_BIG_POE_POINTS());
+        bigPoeText.Replace("XXXX", REQUIRED_BIG_POE_POINTS());
         CreateMessageFromTextObject(0x70F7, 0, 0, 0, bigPoeText);
     }
     // Poe Collector (when enough has been sold)
@@ -835,8 +835,32 @@ void CreateAlwaysIncludedMessages() {
             "Dies&ist der letzte, den ich dir abnehme.^Ach, du wartest auf das, was ich dir für ein&volles "
             "Punkte-Konto versprochen habe?&Hehehe...^Na, da will ich mal nicht so sein...&Nimm das hier!",
         };
-        CreateMessageFromTextObject(0x70F8, 0, 0, 0,
-                                    AddColorsAndFormat(poeRewardText, { QM_RED, QM_RED, QM_RED }, MANUAL_NEWLINES));
+        poeRewardText = AddColorsAndFormat(poeRewardText, { QM_RED, QM_RED, QM_RED }, MANUAL_NEWLINES);
+        CreateMessageFromTextObject(0x70F8, 0, 0, 0, poeRewardText);
+    }
+    // Poe Collector (custom dialog to say both current and required points).
+    {
+        Text text = Text{
+            // english
+            "Hey, young man. What's happening today?&Your card now has #XXXX# points.^"
+            "If you earn #YYYY points#, you'll be a&happy man! Heh heh.",
+            // french
+            "Hé ! Jeune homme plein de vie !&Quoi de neuf ? Ta carte a #XXXX# points.^"
+            "Obtiens #YYYY points# et tu ne&seras pas déçu...&Hé hé hé.",
+            // spanish
+            "¿Qué tal estás hoy, jovencito?&Tu tarjeta tiene #XXXX# puntos.^"
+            "¡Si llegas a #YYYY puntos#, serás muy feliz!&Je, je, je...",
+            // italian
+            "Ehi, bello mio, che si dice?&Sulla tua tessera ci sono&#XXXX# punti.^"
+            "Se arrivi a #YYYY punti#, ti aspetta&una sorpresa stupenda!",
+            // german
+            "Na, mein Junge!&Du hast bis jetzt #XXXX# Punkte auf&dem Nachtschwärmer-Konto gut!^"
+            "Hast du #YYYY Punkte#, gesammelt, dann&wartet eine geniale Belohnung! Hehehe...",
+        };
+        text = AddColorsAndFormat(text, { QM_PINK, QM_RED }, MANUAL_NEWLINES);
+        text.Replace("XXXX", BIG_POE_POINTS());
+        text.Replace("YYYY", REQUIRED_BIG_POE_POINTS());
+        CreateMessageFromTextObject(CUSTOM_TEXT_POE_COLLECTOR_TELL_POINTS, 0, 0, 0, text);
     }
     // Get Item text for shuffled Big Poes
     {
