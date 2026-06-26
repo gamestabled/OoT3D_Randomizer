@@ -254,6 +254,7 @@ void Camera_FreeCamUpdate(Vec3s* out, Camera* camera) {
             if (newSetting != camera->setting) {
                 camera->prevSetting = camera->setting;
                 camera->setting     = newSetting;
+                camera->mode        = 0; // Reset to CAM_MODE_NORMAL so won't read data OoB on switch back
             }
         }
     }
