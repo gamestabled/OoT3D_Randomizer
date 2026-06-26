@@ -55,6 +55,9 @@ void AreaTable_Init_IceCavern() {
             {
                 // Locations
                 LocationAccess(ICE_CAVERN_MAP_CHEST, { [] { return BlueFire && IsAdult; } }),
+                LocationAccess(ICE_CAVERN_MAP_CHEST_ROOM_HEART_1, { [] { return IsAdult && CanPassEnemy(9,0,9,4,SpaceAroundEnemy::NARROW); } }),
+                LocationAccess(ICE_CAVERN_MAP_CHEST_ROOM_HEART_2, { [] { return IsAdult && CanPassEnemy(9,0,9,4,SpaceAroundEnemy::NARROW); } }),
+                LocationAccess(ICE_CAVERN_MAP_CHEST_ROOM_HEART_3, { [] { return IsAdult && CanPassEnemy(9,0,9,4,SpaceAroundEnemy::NARROW); } }),
                 LocationAccess(ICE_CAVERN_COMPASS_CHEST, { [] { return BlueFire; } }),
                 LocationAccess(ICE_CAVERN_IRON_BOOTS_CHEST,
                                { [] { return BlueFire && CanPassEnemy(9, 0, 6, 18) && CanDefeatEnemy(9, 0, 7, 0); } }),

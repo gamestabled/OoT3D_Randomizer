@@ -1896,6 +1896,30 @@ void HintTable_Init_Exclude_Dungeon() {
                        Text{"#the rupees floating above the push blocks in Ice Cavern# are", /*french*/"#un rubis survolant les blocs glissants de la caverne polaire# est", /*spanish*/"#the rupees floating above the push blocks in Ice Cavern# are", /*italian*/"#a mezz'aria nella caverna di ghiaccio# puoi veder fluttuare", /*german*/"#the rupees floating above the push blocks in Ice Cavern# are"}
     );
 
+    hintTable[ICE_CAVERN_MAP_CHEST_ROOM_HEART_1] = HintText::Exclude({
+                       // obscure text
+                       Text{"a #repository for cold hearts# includes", /*french*/"a #repository for cold hearts# includes", /*spanish*/"a #repository for cold hearts# includes", /*italian*/"a #repository for cold hearts# includes", /*german*/"a #repository for cold hearts# includes"},
+                      },{},
+                      // Clear text
+                       Text{"one of #the hearts in Ice Cavern on a platform# is", /*french*/"one of #the hearts in Ice Cavern on a platform# is", /*spanish*/"one of #the hearts in Ice Cavern on a platform# is", /*italian*/"one of #the hearts in Ice Cavern on a platform# is", /*german*/"one of #the hearts in Ice Cavern on a platform# is"}
+   );
+
+   hintTable[ICE_CAVERN_MAP_CHEST_ROOM_HEART_2] = HintText::Exclude({
+                       // obscure text
+                       Text{"a #repository for cold hearts# includes", /*french*/"a #repository for cold hearts# includes", /*spanish*/"a #repository for cold hearts# includes", /*italian*/"a #repository for cold hearts# includes", /*german*/"a #repository for cold hearts# includes"},
+                      },{},
+                      // Clear text
+                       Text{"one of #the hearts in Ice Cavern on a platform# is", /*french*/"one of #the hearts in Ice Cavern on a platform# is", /*spanish*/"one of #the hearts in Ice Cavern on a platform# is", /*italian*/"one of #the hearts in Ice Cavern on a platform# is", /*german*/"one of #the hearts in Ice Cavern on a platform# is"}
+   );
+
+   hintTable[ICE_CAVERN_MAP_CHEST_ROOM_HEART_3] = HintText::Exclude({
+                       // obscure text
+                       Text{"a #repository for cold hearts# includes", /*french*/"a #repository for cold hearts# includes", /*spanish*/"a #repository for cold hearts# includes", /*italian*/"a #repository for cold hearts# includes", /*german*/"a #repository for cold hearts# includes"},
+                      },{},
+                      // Clear text
+                       Text{"one of #the hearts in Ice Cavern on a platform# is", /*french*/"one of #the hearts in Ice Cavern on a platform# is", /*spanish*/"one of #the hearts in Ice Cavern on a platform# is", /*italian*/"one of #the hearts in Ice Cavern on a platform# is", /*german*/"one of #the hearts in Ice Cavern on a platform# is"}
+   );
+
     hintTable[ICE_CAVERN_MQ_IRON_BOOTS_CHEST] = HintText::Exclude({
                        // obscure text
                        Text{"a #monster in a frozen cavern# guards", /*french*/"le #monstre de la caverne de glace# protège", /*spanish*/"un #monstruo de una helada caverna# guarda", /*italian*/"un #guardiano in una caverna ghiacciata# protegge", /*german*/"nahe eines #Monsters einer gefrorenen Höhle#, |wäre|wären|"},

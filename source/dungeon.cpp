@@ -582,6 +582,9 @@ DungeonInfo IceCavern =
                     ICE_CAVERN_PUSH_BLOCK_ROOM_RED_RUPEE_1,
                     ICE_CAVERN_PUSH_BLOCK_ROOM_RED_RUPEE_2,
                     ICE_CAVERN_PUSH_BLOCK_ROOM_RED_RUPEE_3,
+                    ICE_CARVEN_MAP_CHEST_ROOM_HEART_1,
+                    ICE_CARVEN_MAP_CHEST_ROOM_HEART_2,
+                    ICE_CARVEN_MAP_CHEST_ROOM_HEART_3,
                 },
                 {
                     // MQ Locations
