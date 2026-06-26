@@ -54,6 +54,7 @@ void SaveFile_Init(u32 fileBaseIndex) {
     gSaveContext.infTable[0x19] |= 0x0100;   // Picked up Magic Container
     gSaveContext.infTable[0x19] |= 0x0020;   // Talked to owl in Lake Hylia
     gSaveContext.infTable[0x8] |= 0x0810;    // Met Malon in Market/Castle Grounds and talked to her once
+    gSaveContext.infTable[0xB] |= 0x40;      // Spoke to Poe Collector
     gSaveContext.itemGetInf[0x1] |= 0x0008;  // Picked up Deku Seeds
     gSaveContext.eventChkInf[0x3] |= 0x0800; // began Nabooru Battle
     gSaveContext.eventChkInf[0x7] |= 0x01FF; // began boss battles

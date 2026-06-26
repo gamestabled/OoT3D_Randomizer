@@ -10,7 +10,7 @@
 
 void SkeletonAnimationModel_MatrixCopy(SkeletonAnimationModel* glModel, nn_math_MTX34* mtx);
 void SkeletonAnimationModel_Draw(SkeletonAnimationModel* glModel, s32 param_2);
-void Actor_SetModelMatrix(f32 x, f32 y, f32 z, nn_math_MTX34* mtx, ActorShape* shape);
+void Actor_SetModelMatrix(f32 x, f32 y, f32 z, nn_math_MTX34* mtx, ActorShape* shape) __attribute__((pcs("aapcs-vfp")));
 
 #define LOADEDMODELS_MAX 20
 Model ModelContext[LOADEDMODELS_MAX] = { 0 };
@@ -96,60 +96,47 @@ void Model_UpdateAll(GlobalContext* globalCtx) {
     }
 }
 
-void Actor_SetModelMatrixWrapper(Actor* actor, nn_math_MTX34* mtx) {
-    asm volatile("push {r0-r12, lr}\n"
-                 "vldr s1,[r0,#0x2C]\n"
-                 "vldr s0,[r0,#0xC4]\n"
-                 "vldr s2,[r0,#0x58]\n"
-                 "vmla.f32 s1,s0,s2\n"  // y coord calc
-                 "vldr s0,[r0,#0x28]\n" // x coord
-                 "vldr s2,[r0,#0x30]\n" // z coord
-                 "add r2,r0,#0xBC\n"
-                 "mov r0,r1\n" // mtx
-                 "mov r1,r2\n" // shape
-                 "push {r0-r12, lr}\n"
-                 "bl Actor_SetModelMatrix\n"
-                 "pop {r0-r12, lr}\n"
-                 "pop {r0-r12, lr}\n");
-}
+void Model_DrawSAM(Model* model, SkeletonAnimationModel* saModel, Bool mustFaceCamera) {
+    Actor* actor     = model->actor;
+    f32 realShapeYaw = actor->shape.rot.y;
+    Camera* camera   = gGlobalContext->cameraPtrs[gGlobalContext->activeCamera];
+    if (mustFaceCamera && camera != NULL) {
+        actor->shape.rot.y = camera->camDir.y;
+    }
+    // Copy matrix from actor
+    f32 x = actor->world.pos.x;
+    f32 y = actor->world.pos.y + actor->shape.yOffset * actor->scale.y;
+    f32 z = actor->world.pos.z;
+    Actor_SetModelMatrix(x, y, z, &saModel->mtx, &actor->shape);
 
-void Model_UpdateMatrix(Model* model) {
+    // Update scale for all items
+    f32 modelScale = 0.30f;
+    if (actor->id == ACTOR_DEMO_EFFECT) { // Sapphire in Big Octo room
+        modelScale = 0.15f;
+    }
     nn_math_MTX44 scaleMtx = { 0 };
-    Actor_SetModelMatrixWrapper(model->actor, &model->saModel->mtx);
-    if (model->saModel2 != NULL) {
-        f32 tempRotY = model->actor->shape.rot.y;
-        // The second model should always face the camera, except for Skull Token
-        if (model->itemRow->objectId != 0x015C) {
-            model->actor->shape.rot.y = gGlobalContext->mainCamera.camDir.y;
-        }
-        Actor_SetModelMatrixWrapper(model->actor, &model->saModel2->mtx);
-        model->actor->shape.rot.y = tempRotY;
-    }
+    scaleMtx.data[0][0]    = modelScale;
+    scaleMtx.data[1][1]    = modelScale;
+    scaleMtx.data[2][2]    = modelScale;
+    scaleMtx.data[3][3]    = 1.0f;
+    Matrix_Multiply(&saModel->mtx, &saModel->mtx, &scaleMtx);
 
-    scaleMtx.data[0][0] = model->scale;
-    scaleMtx.data[1][1] = model->scale;
-    scaleMtx.data[2][2] = model->scale;
-    scaleMtx.data[3][3] = 1.0f;
+    // Update matrix for items that use custom models
+    CustomModels_UpdateMatrix(&saModel->mtx, model->itemRow);
 
-    Matrix_Multiply(&model->saModel->mtx, &model->saModel->mtx, &scaleMtx);
-    Matrix_UpdatePosition(&model->saModel->mtx, &model->saModel->mtx, &model->posOffset);
-    if (model->saModel2 != NULL) {
-        Matrix_Multiply(&model->saModel2->mtx, &model->saModel2->mtx, &scaleMtx);
-        Matrix_UpdatePosition(&model->saModel->mtx, &model->saModel->mtx, &model->posOffset);
-    }
+    // Draw model
+    saModel->unk_AC = 1;
+    SkeletonAnimationModel_Draw(saModel, 0);
+
+    actor->shape.rot.y = realShapeYaw;
 }
 
 void Model_Draw(Model* model) {
     if (model->loaded) {
-        if (model->saModel != NULL) {
-            model->saModel->unk_AC = 1;
-            Model_UpdateMatrix(model);
-            SkeletonAnimationModel_Draw(model->saModel, 0); // TODO is 0 always okay?
-        }
+        Model_DrawSAM(model, model->saModel, CustomModels_MustFaceCamera(model->itemRow));
         if (model->saModel2 != NULL) {
-            model->saModel2->unk_AC = 1;
-            Model_UpdateMatrix(model);
-            SkeletonAnimationModel_Draw(model->saModel2, 0);
+            // The second model should always face the camera, except for Skull Token
+            Model_DrawSAM(model, model->saModel2, model->itemRow->objectId != OBJECT_SKULL_TOKEN);
         }
     }
 }
@@ -210,23 +197,6 @@ void Model_Create(Model* model, GlobalContext* globalCtx) {
         newModel->loaded     = 0;
         newModel->saModel    = NULL;
         newModel->saModel2   = NULL;
-        switch (newModel->itemRow->objectId) {
-            case 0x00BA: // Medallions
-            case 0x019C: // Kokiri Emerald
-            case 0x019D: // Goron Ruby
-            case 0x019E: // Zora Sapphire
-                newModel->scale     = 0.2f;
-                newModel->posOffset = (Vec3f){ 0 };
-                break;
-            case OBJECT_CUSTOM_TRIFORCE_PIECE:
-                newModel->scale     = 0.025f;
-                newModel->posOffset = (Vec3f){ 0.0f, -800.0f, 0.0f };
-                break;
-            default:
-                newModel->scale     = 0.3f;
-                newModel->posOffset = (Vec3f){ 0 };
-                break;
-        }
     }
 }
 

@@ -197,6 +197,10 @@ void WriteIngameSpoilerLog() {
         else if (loc->IsCategory(Category::cFreestandingRupee) && !Settings::ShuffleRupees) {
             continue;
         }
+        // Big Poes
+        else if (loc->IsCategory(Category::cBigPoe) && !Settings::ShuffleBigPoes) {
+            continue;
+        }
 
         // Copy at most 51 chars from the name and location name to avoid issues with names that don't fit on screen
         // Only copy enough characters that can fit on the screen

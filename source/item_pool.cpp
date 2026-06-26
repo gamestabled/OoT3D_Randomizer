@@ -10,6 +10,8 @@
 #include "settings.hpp"
 #include "spoiler_log.hpp"
 
+#include <vector>
+
 using namespace Settings;
 using namespace Dungeon;
 
@@ -789,6 +791,14 @@ void GenerateItemPool() {
         IceTrapModels.push_back(GI_TRIFORCE_PIECE);
     }
 
+    if (ShuffleBigPoes) {
+        AddItemToMainPool(UNBOTTLED_BIG_POE, 10);
+    } else {
+        for (LocationKey loc : GetLocations(allLocations, Category::cBigPoe)) {
+            Location(loc)->PlaceVanillaItem();
+        }
+    }
+
     if (ItemPoolValue.Is(ITEMPOOL_PLENTIFUL)) {
         if (ShuffleGerudoToken) {
             AddItemToPool(PendingJunkPool, GERUDO_TOKEN);
@@ -965,6 +975,13 @@ void GenerateItemPool() {
     u8 bottleCount = 4;
     std::vector<ItemKey> bottles;
     bottles.assign(normalBottles.begin(), normalBottles.end());
+    if (ShuffleBigPoes) {
+        // Remove Big Poe bottle because shuffled Big Poes will be stand-alone items.
+        auto bigPoeBottle = std::find(bottles.begin(), bottles.end(), BOTTLE_WITH_BIG_POE);
+        if (bigPoeBottle != bottles.end()) {
+            bottles.erase(bigPoeBottle);
+        }
+    }
     IceTrapModels.push_back(ItemTable(RandomElement(bottles)).GetItemID()); // Get one random bottle type for ice traps
     for (u8 i = 0; i < bottleCount; i++) {
         if (i >= rutoBottles) {

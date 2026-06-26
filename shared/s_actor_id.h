@@ -37,6 +37,7 @@ enum ActorId {
     ACTOR_BUBBLE             = 0x069,
     ACTOR_FLYING_FLOOR_TILE  = 0x06B,
     ACTOR_BEAMOS             = 0x08A,
+    ACTOR_DEMO_EFFECT        = 0x08B,
     ACTOR_FLOORMASTER        = 0x08E,
     ACTOR_REDEAD             = 0x090,
     ACTOR_POE_SISTER         = 0x091,

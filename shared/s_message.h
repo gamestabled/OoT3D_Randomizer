@@ -2,6 +2,7 @@
 #include "s_types.h"
 
 #define CURSETRAP_TEXT_BASE_INDEX 0x8FF0
+#define CUSTOM_TEXT_POE_COLLECTOR_TELL_POINTS 0x9070
 
 typedef struct {
     // In the true file format, offset is the offset into the QM file.
@@ -102,4 +103,5 @@ typedef enum TextControlCode {
     TEXT_CTRL_HIT_COUNT,
     TEXT_CTRL_DAMAGE_RECEIVED,
     TEXT_CTRL_BONK_COUNT,
+    TEXT_CTRL_REQUIRED_BIG_POE_POINTS,
 } TextControlCode;

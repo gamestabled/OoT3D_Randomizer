@@ -13,6 +13,7 @@ The following custom objectIds are currently being used:
 127: Ganon Small Key
 128: Boss Keys
 131: Rupoor
+132: Unbottled Big Poe
 228: Enemy Souls
 291: Ocarina Note Buttons
 366: Triforce Piece
@@ -24,5 +25,5 @@ To use a custom asset, currently:
     - if you need to apply a custom texture to the model:
         - add a CMAB file with the new texture in the custom archive (romfs/zelda_gi_melody.zar)
         - in CustomModels_ApplyItemCMAB, add a case for the objectId
-    - if you need to edit the scale or position of the model, add a case in Model_Create (for overworld models) and in CustomModels_UpdateMatrix (for shop and GetItem models)
+    - if you need to edit the scale or position of the model, add a case in CustomModels_UpdateMatrix
     - add the objectId to this txt file

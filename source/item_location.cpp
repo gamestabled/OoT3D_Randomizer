@@ -53,6 +53,16 @@ void LocationTable_Init() {
     locationTable[HF_OCARINA_OF_TIME_ITEM]               = ItemLocation::Base       (0x51, 0x0C, "HF Ocarina of Time Item",              HF_OCARINA_OF_TIME_ITEM,               PROGRESSIVE_OCARINA,       {Category::cHyruleField, Category::cNeedSpiritualStones,},                                                            SpoilerCollectionCheck::EventChkInf(0x43),               SpoilerCollectionCheckGroup::GROUP_HYRULE_FIELD);
     locationTable[HF_TEKTITE_GROTTO_FREESTANDING_POH]    = ItemLocation::Collectable(0x3E, 0x01, "HF Tektite Grotto Freestanding PoH",   HF_TEKTITE_GROTTO_FREESTANDING_POH,    PIECE_OF_HEART,            {Category::cHyruleField, Category::cGrotto,},                                                                                                                                  SpoilerCollectionCheckGroup::GROUP_HYRULE_FIELD);
     locationTable[HF_DEKU_SCRUB_GROTTO]                  = ItemLocation::GrottoScrub(0xE6, 0x3E, "HF Deku Scrub Grotto",                 HF_DEKU_SCRUB_GROTTO,                  PIECE_OF_HEART,            {Category::cHyruleField, Category::cDekuScrub, Category::cDekuScrubUpgrades, Category::cGrotto},                      SpoilerCollectionCheck::Scrub(0x10, 0x03),               SpoilerCollectionCheckGroup::GROUP_HYRULE_FIELD);
+    locationTable[HF_BIG_POE_1]                          = ItemLocation::Collectable(0x51, 0x01, "HF Big Poe near GV along road",        HF_BIG_POE_1,                          UNBOTTLED_BIG_POE,         {Category::cHyruleField, Category::cBigPoe},                                                                          SpoilerCollectionCheck::Collectable(0x51, 0x01),         SpoilerCollectionCheckGroup::GROUP_HYRULE_FIELD);
+    locationTable[HF_BIG_POE_2]                          = ItemLocation::Collectable(0x51, 0x02, "HF Big Poe near GV and tree",          HF_BIG_POE_2,                          UNBOTTLED_BIG_POE,         {Category::cHyruleField, Category::cBigPoe},                                                                          SpoilerCollectionCheck::Collectable(0x51, 0x02),         SpoilerCollectionCheckGroup::GROUP_HYRULE_FIELD);
+    locationTable[HF_BIG_POE_3]                          = ItemLocation::Collectable(0x51, 0x03, "HF Big Poe near south-east bush",      HF_BIG_POE_3,                          UNBOTTLED_BIG_POE,         {Category::cHyruleField, Category::cBigPoe},                                                                          SpoilerCollectionCheck::Collectable(0x51, 0x03),         SpoilerCollectionCheckGroup::GROUP_HYRULE_FIELD);
+    locationTable[HF_BIG_POE_4]                          = ItemLocation::Collectable(0x51, 0x04, "HF Big Poe near south-east grass",     HF_BIG_POE_4,                          UNBOTTLED_BIG_POE,         {Category::cHyruleField, Category::cBigPoe},                                                                          SpoilerCollectionCheck::Collectable(0x51, 0x04),         SpoilerCollectionCheckGroup::GROUP_HYRULE_FIELD);
+    locationTable[HF_BIG_POE_5]                          = ItemLocation::Collectable(0x51, 0x05, "HF Big Poe near silver boulder",       HF_BIG_POE_5,                          UNBOTTLED_BIG_POE,         {Category::cHyruleField, Category::cBigPoe},                                                                          SpoilerCollectionCheck::Collectable(0x51, 0x05),         SpoilerCollectionCheckGroup::GROUP_HYRULE_FIELD);
+    locationTable[HF_BIG_POE_6]                          = ItemLocation::Collectable(0x51, 0x06, "HF Big Poe near central wall",         HF_BIG_POE_6,                          UNBOTTLED_BIG_POE,         {Category::cHyruleField, Category::cBigPoe},                                                                          SpoilerCollectionCheck::Collectable(0x51, 0x06),         SpoilerCollectionCheckGroup::GROUP_HYRULE_FIELD);
+    locationTable[HF_BIG_POE_7]                          = ItemLocation::Collectable(0x51, 0x07, "HF Big Poe near Kakariko",             HF_BIG_POE_7,                          UNBOTTLED_BIG_POE,         {Category::cHyruleField, Category::cBigPoe},                                                                          SpoilerCollectionCheck::Collectable(0x51, 0x07),         SpoilerCollectionCheckGroup::GROUP_HYRULE_FIELD);
+    locationTable[HF_BIG_POE_8]                          = ItemLocation::Collectable(0x51, 0x08, "HF Big Poe near Castle",               HF_BIG_POE_8,                          UNBOTTLED_BIG_POE,         {Category::cHyruleField, Category::cBigPoe},                                                                          SpoilerCollectionCheck::Collectable(0x51, 0x08),         SpoilerCollectionCheckGroup::GROUP_HYRULE_FIELD);
+    locationTable[HF_BIG_POE_9]                          = ItemLocation::Collectable(0x51, 0x09, "HF Big Poe near Ranch",                HF_BIG_POE_9,                          UNBOTTLED_BIG_POE,         {Category::cHyruleField, Category::cBigPoe},                                                                          SpoilerCollectionCheck::Collectable(0x51, 0x09),         SpoilerCollectionCheckGroup::GROUP_HYRULE_FIELD);
+    locationTable[HF_BIG_POE_10]                         = ItemLocation::Collectable(0x51, 0x0A, "HF Big Poe near north-west river",     HF_BIG_POE_10,                         UNBOTTLED_BIG_POE,         {Category::cHyruleField, Category::cBigPoe},                                                                          SpoilerCollectionCheck::Collectable(0x51, 0x0A),         SpoilerCollectionCheckGroup::GROUP_HYRULE_FIELD);
 
     // Lake Hylia
     locationTable[LH_CHILD_FISHING]                      = ItemLocation::Base       (0x49, 0x3E, "LH Child Fishing",                     LH_CHILD_FISHING,                      PIECE_OF_HEART,            {Category::cLakeHylia, Category::cMinigame,},                                                                         SpoilerCollectionCheck::Fishing(0x02),                   SpoilerCollectionCheckGroup::GROUP_LAKE_HYLIA);
@@ -1267,6 +1277,16 @@ std::vector<LocationKey> overworldLocations = {
   SONG_FROM_OCARINA_OF_TIME,
   HF_TEKTITE_GROTTO_FREESTANDING_POH,
   HF_DEKU_SCRUB_GROTTO,
+  HF_BIG_POE_1,
+  HF_BIG_POE_2,
+  HF_BIG_POE_3,
+  HF_BIG_POE_4,
+  HF_BIG_POE_5,
+  HF_BIG_POE_6,
+  HF_BIG_POE_7,
+  HF_BIG_POE_8,
+  HF_BIG_POE_9,
+  HF_BIG_POE_10,
   HF_COW_GROTTO_COW,
 
   // Lake Hylia

@@ -87,6 +87,7 @@
 #include "ganondorf.h"
 #include "obj_mure3.h"
 #include "armos.h"
+#include "poe_collector.h"
 
 Actor* gRunningActor;
 #define MAX_RUNNING_ACTORS 5
@@ -298,6 +299,8 @@ void Actor_Init() {
 
     gActorOverlayTable[0x172].initInfo->update = DoorGerudo_rUpdate;
 
+    gActorOverlayTable[0x175].initInfo->init = EnPoField_rInit;
+
     gActorOverlayTable[0x174].initInfo->update = DemoGt_rUpdate;
 
     gActorOverlayTable[0x17C].initInfo->init = EnTakaraMan_rInit;
@@ -337,6 +340,8 @@ void Actor_Init() {
 
     gActorOverlayTable[0x1B0].initInfo->update = EnSkb_rUpdate;
 
+    gActorOverlayTable[0x1B8].initInfo->update = EnGb_rUpdate;
+
     gActorOverlayTable[0x1B9].initInfo->init = EnGs_rInit;
 
     gActorOverlayTable[0x1C0].initInfo->update = EnCrow_rUpdate;
@@ -367,6 +372,7 @@ void Actor_Init() {
         { OBJECT_CUSTOM_SMALL_KEY_GANON, OBJECT_GI_KEY },
         { OBJECT_CUSTOM_BOSS_KEYS, OBJECT_GI_BOSSKEY },
         { OBJECT_CUSTOM_RUPOOR, OBJECT_GI_RUPEE },
+        { OBJECT_CUSTOM_UNBOTTLED_BIG_POE, OBJECT_GI_BIG_POE },
         { OBJECT_CUSTOM_ENEMY_SOUL, OBJECT_GI_SHOP_FAIRY },
         { OBJECT_CUSTOM_OCARINA_BUTTON, OBJECT_GI_SOLD_OUT },
         { OBJECT_CUSTOM_TRIFORCE_PIECE, OBJECT_TRIFORCE },

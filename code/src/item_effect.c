@@ -460,3 +460,7 @@ void ItemEffect_Rupoor(SaveContext* saveCtx, s16 arg1, s16 arg2) {
     }
     Rupees_ChangeBy(-rupeesToDeduct);
 }
+
+void ItemEffect_UnbottledBigPoe(SaveContext* saveCtx, s16 arg1, s16 arg2) {
+    saveCtx->bigPoePoints += 100;
+}

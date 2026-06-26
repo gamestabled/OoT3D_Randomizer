@@ -11,8 +11,6 @@ typedef struct {
     u8 loaded;
     SkeletonAnimationModel* saModel;
     SkeletonAnimationModel* saModel2;
-    f32 scale;
-    Vec3f posOffset;
 } Model;
 
 void Model_UpdateAll(GlobalContext* globalCtx);

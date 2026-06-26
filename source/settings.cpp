@@ -231,6 +231,7 @@ Option ShuffleFrogSongRupees  = Option::Bool("Shuffle Frog Rupees",    {"Off", "
 Option ShuffleEnemySouls      = Option::U8  ("Shuffle Enemy Souls",    {"Off", "All enemies", "Bosses only"},                             {enemySoulDesc});
 Option ShuffleOcarinaButtons  = Option::Bool("Shuffle Ocarina Buttons",{"Off", "On"},                                                     {ocarinaButtonsDesc});
 Option ShuffleRupees          = Option::Bool("Shuffle Standing Rupees",{"Off", "On"},                                                     {shuffleRupeesDesc});
+Option ShuffleBigPoes         = Option::Bool("Shuffle Big Poes",       {"Off", "On"},                                                     {shuffleBigPoesDesc});
 std::vector<Option *> shuffleOptions = {
     &RandomizeShuffle,
     &ShuffleRewards,
@@ -255,6 +256,7 @@ std::vector<Option *> shuffleOptions = {
     &ShuffleEnemySouls,
     &ShuffleOcarinaButtons,
     &ShuffleRupees,
+    &ShuffleBigPoes,
 };
 
 // Shuffle Dungeon Items
@@ -1585,6 +1587,7 @@ SettingsContext FillContext() {
     ctx.shuffleChestMinigame   = ShuffleChestMinigame.Value<u8>();
     ctx.shuffleEnemySouls      = ShuffleEnemySouls.Value<u8>();
     ctx.shuffleOcarinaButtons  = (ShuffleOcarinaButtons) ? 1 : 0;
+    ctx.shuffleBigPoes         = (ShuffleBigPoes) ? 1 : 0;
 
     ctx.mapsAndCompasses   = MapsAndCompasses.Value<u8>();
     ctx.keysanity          = Keysanity.Value<u8>();
@@ -2456,6 +2459,26 @@ void ForceChange(u32 kDown, Option* currentSetting) {
         startingInventory.ResetMenuIndex();
     }
 
+    if (ShuffleBigPoes) {
+        // If Big Poes are shuffled, prevent selecting Big Poe Bottles in the starting inventory.
+        std::vector<Option*> startingBottleOptions = {
+            &StartingBottle1,
+            &StartingBottle2,
+            &StartingBottle3,
+            &StartingBottle4,
+        };
+        for (Option* opt : startingBottleOptions) {
+            if (opt->Is(STARTINGBOTTLE_BIG_POE)) {
+                if (currentSetting == opt) {
+                    opt->ScrollOptionIndex(kDown);
+                } else {
+                    opt->SetSelectedIndex(STARTINGBOTTLE_POE);
+                }
+                opt->SetVariable();
+            }
+        }
+    }
+
     if (!RandomizeDungeon) {
         // Only show Medallion Count if setting Ganons Boss Key to LACS Medallions
         if (GanonsBossKey.Is(GANONSBOSSKEY_LACS_MEDALLIONS)) {
@@ -2929,6 +2952,7 @@ std::vector<std::pair<Option*, u8>> vanillaLogicOverrides = {
     { &ShuffleFrogSongRupees, SHUFFLEFROGSONGRUPEES_OFF },
     { &ShuffleEnemySouls, OFF },
     { &ShuffleOcarinaButtons, OFF },
+    { &ShuffleBigPoes, OFF },
     { &Keysanity, KEYSANITY_ANY_DUNGEON }, // Set small keys to any dungeon so FiT basement door will be locked
     { &GossipStoneHints, HINTS_NO_HINTS },
 };

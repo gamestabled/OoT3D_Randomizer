@@ -113,6 +113,9 @@ u32 Message_HandleTextControlCode(TextControlCode ctrl, void* textObj, UnkTextCo
             case TEXT_CTRL_BONK_COUNT:
                 snprintf(str, MAX_DYNAMIC_STRING_SIZE, "%d", gExtSaveData.bonkCount);
                 break;
+            case TEXT_CTRL_REQUIRED_BIG_POE_POINTS:
+                snprintf(str, MAX_DYNAMIC_STRING_SIZE, "%d", gSettingsContext.bigPoeTargetCount * 100);
+                break;
             default:
                 break;
         }
