@@ -2,6 +2,7 @@
 #include "drawbridge.h"
 
 void BgSpot00Hanebasi_Update(Actor* thisx, GlobalContext* globalCtx);
+void BgSpot00Hanebasi_Destroy(Actor* thisx, GlobalContext* globalCtx);
 
 void BgSpot00Hanebasi_rUpdate(Actor* thisx, GlobalContext* globalCtx) {
 
@@ -10,4 +11,14 @@ void BgSpot00Hanebasi_rUpdate(Actor* thisx, GlobalContext* globalCtx) {
         gSaveContext.nextCutsceneIndex = 0;
     }
     BgSpot00Hanebasi_Update(thisx, globalCtx);
+}
+
+void BgSpot00Hanebasi_rDestroy(Actor* thisx, GlobalContext* globalCtx) {
+    BgSpot00Hanebasi_Destroy(thisx, globalCtx);
+
+    u8 hasAllStones = (gSaveContext.questItems >> 18 & 0b111) == 0b111;
+    if (hasAllStones) {
+        // Set flag for zelda escape cutscene in case the last stone was obtained in Hyrule Field.
+        gSaveContext.eventChkInf[8] |= 0x0001;
+    }
 }

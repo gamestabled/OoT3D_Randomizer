@@ -611,6 +611,7 @@ SECTIONS
 	.patch_AltHeadersCommand 0x379020 + _LD_OFF : { *(.patch_AltHeadersCommand) }
 	EnWonderTalk2_Update = 0x3794EC + _LD_OFF;
 	Actor_KillAllWithMissingObject = 0x379C3C + _LD_OFF;
+	BgSpot00Hanebasi_Destroy = 0x37B324 + _LD_OFF;
 	.patch_EnFrSetupFrogSongTimerMultiplier 0x381204 + _LD_OFF : { *(.patch_EnFrSetupFrogSongTimerMultiplier) }
 	BgSpot02Objects_Update = 0x3831AC + _LD_OFF;
 	BgSpot06Objects_Update = 0x3833F8 + _LD_OFF;
