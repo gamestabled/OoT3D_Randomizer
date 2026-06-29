@@ -167,8 +167,7 @@ void EnBox_rUpdate(Actor* thisx, GlobalContext* globalCtx) {
     }
 }
 
-u8 Chest_OverrideAnimation() {
-
+Bool Chest_OverrideAnimation() {
     if ((gSettingsContext.chestAnimations == CHESTANIMATIONS_ALWAYSFAST) ||
         (!isItemOverrideActive)) // The animation is always fast for unused chests that aren't randomized
         return FALSE;
@@ -185,26 +184,24 @@ u8 Chest_OverrideAnimation() {
     return FALSE;
 }
 
-u8 vanillaIceTrap() {
+Bool vanillaIceTrap() {
     // Ice Traps from chests softlock when max health is 0, so just kill Link immediately
     if (gSaveContext.healthCapacity == 0) {
         PLAYER->stateFlags1 &= ~0x20000C00;
         gSaveContext.health = 0;
-        return 1;
+        return TRUE;
     }
-    return 0;
+    return FALSE;
 }
 
-u8 Chest_OverrideIceSmoke(Actor* thisx) {
+Bool Chest_OverrideIceSmoke(Actor* thisx) {
     if (gSettingsContext.randomTrapDmg == RANDOMTRAPS_OFF) {
         return vanillaIceTrap();
     }
 
     if (thisx != sLastTrapChest && thisx->xzDistToPlayer < 50.0f) {
-        sLastTrapChest = thisx;
-        u32 pRandInt = dizzyCurseSeed = IceTrap_ActiveHash;
-
-        u8 trapType = IceTrap_GetType(pRandInt, TRUE);
+        sLastTrapChest       = thisx;
+        IceTrapType trapType = IceTrap_GetType(IceTrap_ActiveHash, TRUE);
 
         // Curses
         if (trapType >= ICETRAP_CURSE_SHIELD) {
@@ -253,10 +250,12 @@ u8 Chest_OverrideIceSmoke(Actor* thisx) {
                 FireDamage(&(PLAYER->actor), gGlobalContext, gRandInt % 2);
                 LinkDamage(gGlobalContext, PLAYER, 0, 0.0f, 0.0f, 0, 20);
                 break;
+            default:
+                break;
         }
 
         Player_OnHit();
     }
 
-    return 1;
+    return TRUE;
 }

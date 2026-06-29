@@ -5,23 +5,8 @@
 
 struct ItemOverride;
 
-extern s8 IceTrap_ActiveCurse;
-extern u32 IceTrap_ActiveHash;
-extern u32 dizzyCurseSeed;
-
-void IceTrap_Push(void);
-u32 IceTrap_GetType(u32 hash, u8 isFromChest);
-void IceTrap_UpdateOverride(struct ItemOverride* override, u8 isFromChest);
-void IceTrap_Give(void);
-u32 IceTrap_IsPending(void);
-void IceTrap_Update(void);
-void IceTrap_Init(void);
-void IceTrap_ActivateCurseTrap(u8 curseType);
-void IceTrap_DispelCurses(void);
-u16 IceTrap_CamRoll(u16 roll);
-void IceTrap_HandleNaviCurse(void);
-
-typedef enum {
+typedef enum IceTrapType : s8 {
+    ICETRAP_NONE = -1,
     ICETRAP_FIRE,
     ICETRAP_KNOCKDOWN,
     ICETRAP_ZELDA2_KNOCKBACK,
@@ -42,6 +27,22 @@ typedef enum {
     ICETRAP_CURSE_NAVI,
     ICETRAP_CURSE_CROOKED,
     ICETRAP_CURSE_UNSTABLE,
-} IceTrapTypes;
+    ICETRAP_MAX,
+} IceTrapType;
+
+extern IceTrapType IceTrap_ActiveCurse;
+extern u32 IceTrap_ActiveHash;
+
+void IceTrap_Push(void);
+IceTrapType IceTrap_GetType(u32 hash, Bool isFromChest);
+void IceTrap_UpdateOverride(struct ItemOverride* override, Bool isFromChest);
+void IceTrap_Give(void);
+Bool IceTrap_IsPending(void);
+void IceTrap_Update(void);
+void IceTrap_Init(void);
+void IceTrap_ActivateCurseTrap(IceTrapType curseType);
+void IceTrap_DispelCurses(void);
+u16 IceTrap_CamRoll(u16 roll);
+void IceTrap_HandleNaviCurse(void);
 
 #endif //_ICETRAP_H_
