@@ -399,6 +399,7 @@ SECTIONS
 	.patch_OverrideItemAndTextID 0x2BC1C8 + _LD_OFF : { *(.patch_OverrideItemAndTextID) }
 	.patch_NoSilverGauntletsCutsceneWarp 0x2BC2A0 + _LD_OFF : { *(.patch_NoSilverGauntletsCutsceneWarp) }
 	.patch_RunAnimationSpeed 0x2BE70C + _LD_OFF : { *(.patch_RunAnimationSpeed) }
+	Player_SetupIdleStanding = 0x2C2224 + _LD_OFF;
 	.patch_FishingIgnoreTempBOne 0x2C3A10 + _LD_OFF : { *(.patch_FishingIgnoreTempBOne) }
 	.patch_DoorOfTimeOpenCutscene 0x2C6218 + _LD_OFF : { *(.patch_DoorOfTimeOpenCutscene) }
 	.patch_NoHealFromHealthUpgrades 0x2CD07C + _LD_OFF : { *(.patch_NoHealFromHealthUpgrades) }

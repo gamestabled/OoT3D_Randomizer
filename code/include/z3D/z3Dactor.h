@@ -475,6 +475,7 @@ void Actor_SetFeetPos(Actor* actor, nn_math_MTX34* mtx, int param_3, int param_4
 void Actor_UpdateBgCheckInfo(struct GlobalContext* globalCtx, Actor* actor, f32 wallCheckHeight, f32 wallCheckRadius,
                              f32 ceilingCheckHeight, s32 flags) __attribute__((pcs("aapcs-vfp")));
 s32 Player_InCsMode(struct GlobalContext* globalCtx);
+void Player_SetupIdleStanding(Player* this, struct GlobalContext* play);
 Actor* Actor_FindNearby(struct GlobalContext* globalCtx, Actor* ref_actor, s16 actorId, u8 actor_category, f32 range);
 void ActorShadow_DrawFeet(Actor* actor, void* lights, struct GlobalContext* globalCtx);
 // limbCount param is ignored, the function takes the value from the cmb
