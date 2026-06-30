@@ -1791,6 +1791,22 @@ void HintTable_Init_Exclude_Dungeon() {
                        Text{"the #rupees on the platform in the center pit of BOTW# hold", /*french*/"un #rubis de la platforme surplombant l'étage inférieur du puits# est", /*spanish*/"the #rupees on the platform in the center pit of BOTW# hold", /*italian*/"#sulla piattaforma centrale nel pozzo# puoi trovare", /*german*/"the #rupees on the platform in the center pit of BOTW# hold"}
     );
 
+    hintTable[BOTTOM_OF_THE_WELL_CLOSED_SARCOPHAGUS_HEART] = HintText::Exclude({
+                       // obscure text
+                       Text{"under #a stone lid# rests in peace", /*french*/"under #a stone lid# rests in peace", /*spanish*/"under #a stone lid# rests in peace", /*italian*/"under #a stone lid# rests in peace", /*german*/"under #a stone lid# rests in peace"},
+                      },{},
+                      // Clear text
+                       Text{"in #a coffin in Bottom of the Well# lies", /*french*/"in #a coffin in Bottom of the Well# lies", /*spanish*/"in #a coffin in Bottom of the Well# lies", /*italian*/"in #a coffin in Bottom of the Well# lies", /*german*/"in #a coffin in Bottom of the Well# lies"}
+   );
+
+   hintTable[BOTTOM_OF_THE_WELL_OPEN_SARCOPHAGUS_HEART] = HintText::Exclude({
+                       // obscure text
+                       Text{"while raising from the dead a gibdo left", /*french*/"while raising from the dead a gibdo left", /*spanish*/"while raising from the dead a gibdo left", /*italian*/"while raising from the dead a gibdo left", /*german*/"while raising from the dead a gibdo left"},
+                      },{},
+                      // Clear text
+                       Text{"in #an open coffin in Bottom of the Well# lies", /*french*/"in #an open coffin in Bottom of the Well# lies", /*spanish*/"in #an open coffin in Bottom of the Well# lies", /*italian*/"in #an open coffin in Bottom of the Well# lies", /*german*/"in #an open coffin in Bottom of the Well# lies"}
+   );
+
     hintTable[BOTTOM_OF_THE_WELL_MQ_MAP_CHEST] = HintText::Exclude({
                        // obscure text
                        Text{"a #royal melody in the well# uncovers", /*french*/"la #mélodie royale révèle dans le puits#", /*spanish*/"una #melodía real en el pozo# revela", /*italian*/"una #melodia regale# nel pozzo sblocca", /*german*/"nach #hoheitlicher Musik im Brunnen#, |wäre|wären|"},

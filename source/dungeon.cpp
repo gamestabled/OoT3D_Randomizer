@@ -553,6 +553,8 @@ DungeonInfo BottomOfTheWell =
                     BOTTOM_OF_THE_WELL_CENTER_ROOM_PIT_FALL_BLUE_RUPEE_3,
                     BOTTOM_OF_THE_WELL_CENTER_ROOM_PIT_FALL_BLUE_RUPEE_4,
                     BOTTOM_OF_THE_WELL_CENTER_ROOM_PIT_FALL_BLUE_RUPEE_5,
+                    BOTTOM_OF_THE_WELL_OPEN_SARCOPHAGUS_HEART,
+                    BOTTOM_OF_THE_WELL_CLOSED_SARCOPHAGUS_HEART,
                 },
                 {
                     // MQ Locations
