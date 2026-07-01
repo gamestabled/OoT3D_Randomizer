@@ -2099,7 +2099,7 @@ void HintTable_Init_Exclude_Dungeon() {
    
    hintTable[GERUDO_TRAINING_GROUNDS_BEAMOS_ROOM_HEART_1] = HintText::Exclude({
                        // obscure text
-                       Text{"dinos, fire and lasers protect", /*french*/"#dinos, fire and lasers# protect", /*spanish*/"#dinos, fire and lasers# protect", /*italian*/"#dinos, fire and lasers# protect", /*german*/"#dinos, fire and lasers# protect"},
+                       Text{"#dinos, fire and lasers# protect", /*french*/"#dinos, fire and lasers# protect", /*spanish*/"#dinos, fire and lasers# protect", /*italian*/"#dinos, fire and lasers# protect", /*german*/"#dinos, fire and lasers# protect"},
                       },{},
                       // Clear text
                        Text{"#behind the walls of fire in the Beamos room of GTG# lies", /*french*/"#behind the walls of fire in the Beamos room of GTG# lies", /*spanish*/"#behind the walls of fire in the Beamos room of GTG# lies", /*italian*/"#behind the walls of fire in the Beamos room of GTG# lies", /*german*/"#behind the walls of fire in the Beamos room of GTG# lies"}
@@ -2262,6 +2262,46 @@ void HintTable_Init_Exclude_Dungeon() {
                        // obscure text
                        Text{"#music in the test of radiance# reveals", /*french*/"la #musique dans l'épreuve du ciel# révèle", /*spanish*/"la #música en la prueba del resplandor# revela", /*italian*/"#musica nella prova dello splendore# cela", /*german*/"nahe #Musik in der Prüfung der Strahlen#, |wäre|wären|"},
     });
+
+    hintTable[GANONS_CASTLE_FIRE_TRIAL_HEART] = HintText::Exclude({
+                       // obscure text
+                       Text{"#ganon's sauna# hides", /*french*/"#ganon's sauna# hides", /*spanish*/"#ganon's sauna# hides", /*italian*/"#ganon's sauna# hides", /*german*/"#ganon's sauna# hides"},
+                      },{},
+                      // Clear text
+                       Text{"the #heart in Fire Trial# is replaced by", /*french*/"the #heart in Fire Trial# is replaced by", /*spanish*/"the #heart in Fire Trial# is replaced by", /*italian*/"the #heart in Fire Trial# is replaced by", /*german*/"the #heart in Fire Trial# is replaced by"}
+    );
+
+    hintTable[GANONS_CASTLE_SPIRIT_TRIAL_HEART] = HintText::Exclude({
+                       // obscure text
+                       Text{"ganon placed #some spiky slidy bois# to guard", /*french*/"ganon placed #some spiky slidy bois# to guard", /*spanish*/"ganon placed #some spiky slidy bois# to guard", /*italian*/"ganon placed #some spiky slidy bois# to guard", /*german*/"ganon placed #some spiky slidy bois# to guard"},
+                      },{},
+                      // Clear text
+                       Text{"the #heart in Spirit Trial# is replaced by", /*french*/"the #heart in Spirit Trial# is replaced by", /*spanish*/"the #heart in Spirit Trial# is replaced by", /*italian*/"the #heart in Spirit Trial# is replaced by", /*german*/"the #heart in Spirit Trial# is replaced by"}
+    );
+
+    hintTable[GANONS_CASTLE_SHADOW_TRIAL_HEART_1] = HintText::Exclude({
+                       // obscure text
+                       Text{"floating #in a shadowy void# you can find", /*french*/"floating #in a shadowy void# you can find", /*spanish*/"floating #in a shadowy void# you can find", /*italian*/"floating #in a shadowy void# you can find", /*german*/"floating #in a shadowy void# you can find"},
+                      },{},
+                      // Clear text
+                       Text{"a #heart in Shadow Trial# is replaced by", /*french*/"a #heart in Shadow Trial# is replaced by", /*spanish*/"a #heart in Shadow Trial# is replaced by", /*italian*/"a #heart in Shadow Trial# is replaced by", /*german*/"a #heart in Shadow Trial# is replaced by"}
+    );
+
+    hintTable[GANONS_CASTLE_SHADOW_TRIAL_HEART_2] = HintText::Exclude({
+                       // obscure text
+                       Text{"floating #in a shadowy void# you can find", /*french*/"floating #in a shadowy void# you can find", /*spanish*/"floating #in a shadowy void# you can find", /*italian*/"floating #in a shadowy void# you can find", /*german*/"floating #in a shadowy void# you can find"},
+                      },{},
+                      // Clear text
+                       Text{"a #heart in Shadow Trial# is replaced by", /*french*/"a #heart in Shadow Trial# is replaced by", /*spanish*/"a #heart in Shadow Trial# is replaced by", /*italian*/"a #heart in Shadow Trial# is replaced by", /*german*/"a #heart in Shadow Trial# is replaced by"}
+    );
+    
+    hintTable[GANONS_CASTLE_SHADOW_TRIAL_HEART_3] = HintText::Exclude({
+                       // obscure text
+                       Text{"floating #in a shadowy void# you can find", /*french*/"floating #in a shadowy void# you can find", /*spanish*/"floating #in a shadowy void# you can find", /*italian*/"floating #in a shadowy void# you can find", /*german*/"floating #in a shadowy void# you can find"},
+                      },{},
+                      // Clear text
+                       Text{"a #heart in Shadow Trial# is replaced by", /*french*/"a #heart in Shadow Trial# is replaced by", /*spanish*/"a #heart in Shadow Trial# is replaced by", /*italian*/"a #heart in Shadow Trial# is replaced by", /*german*/"a #heart in Shadow Trial# is replaced by"}
+    );
 
     hintTable[GANONS_CASTLE_MQ_WATER_TRIAL_CHEST] = HintText::Exclude({
                        // obscure text

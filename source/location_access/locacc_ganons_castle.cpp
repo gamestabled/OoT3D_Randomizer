@@ -93,7 +93,9 @@ void AreaTable_Init_GanonsCastle() {
                     return CanUse(GORON_TUNIC) && CanUse(GOLDEN_GAUNTLETS) && CanUse(LIGHT_ARROWS) && CanUse(LONGSHOT);
                 } }),
             },
-            {}, {});
+            {
+                LocationAccess(GANONS_CASTLE_FIRE_TRIAL_HEART, { [] { return CanSurviveHeatFor(30); }})
+            }, {});
 
         areaTable[GANONS_CASTLE_WATER_TRIAL] =
             Area("Ganon's Castle Water Trial", "Ganon's Castle", GANONS_CASTLE, NO_DAY_NIGHT_CYCLE,
@@ -143,6 +145,24 @@ void AreaTable_Init_GanonsCastle() {
                                            ((CanHookEnemy(13, 0, 12, 3, ENEMY_ON_LEDGE) && CanUse(HOVER_BOOTS)) ||
                                             CanUse(DINS_FIRE)));
                                } }),
+                LocationAccess(GANONS_CASTLE_SHADOW_TRIAL_HEART_1, { [] {
+                                   return (LensOfTruth || LogicLensCastle) && (CanUse(FIRE_ARROWS) ||
+                                          (CanUse(LONGSHOT) &&
+                                           ((CanHookEnemy(13, 0, 12, 3, ENEMY_ON_LEDGE) && CanUse(HOVER_BOOTS)) ||
+                                            CanUse(DINS_FIRE))));
+                               } }),
+                LocationAccess(GANONS_CASTLE_SHADOW_TRIAL_HEART_2, { [] {
+                                   return (LensOfTruth || LogicLensCastle) && (CanUse(FIRE_ARROWS) ||
+                                          (CanUse(LONGSHOT) &&
+                                           ((CanHookEnemy(13, 0, 12, 3, ENEMY_ON_LEDGE) && CanUse(HOVER_BOOTS)) ||
+                                            CanUse(DINS_FIRE))));
+                               } }),
+                LocationAccess(GANONS_CASTLE_SHADOW_TRIAL_HEART_3, { [] {
+                                   return (LensOfTruth || LogicLensCastle) && (CanUse(FIRE_ARROWS) ||
+                                          (CanUse(LONGSHOT) &&
+                                           ((CanHookEnemy(13, 0, 12, 3, ENEMY_ON_LEDGE) && CanUse(HOVER_BOOTS)) ||
+                                            CanUse(DINS_FIRE))));
+                               } }),
             },
             {});
 
@@ -174,6 +194,7 @@ void AreaTable_Init_GanonsCastle() {
                  },
                  {
                      // Locations
+                     LocationAccess(GANONS_CASTLE_SPIRIT_TRIAL_HEART, {[]{ return true; }}),
                      LocationAccess(GANONS_CASTLE_SPIRIT_TRIAL_CRYSTAL_SWITCH_CHEST,
                                     { [] { return SpiritTrial_CanPassFirstRoom(); } }),
                      LocationAccess(GANONS_CASTLE_SPIRIT_TRIAL_INVISIBLE_CHEST, { [] {

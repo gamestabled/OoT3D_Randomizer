@@ -680,6 +680,11 @@ DungeonInfo GanonsCastle =
                     GANONS_CASTLE_DEKU_SCRUB_CENTER_LEFT,
                     GANONS_CASTLE_DEKU_SCRUB_CENTER_RIGHT,
                     GANONS_CASTLE_DEKU_SCRUB_RIGHT,
+                    GANONS_CASTLE_SPIRIT_TRIAL_HEART,
+                    GANONS_CASTLE_SHADOW_TRIAL_HEART_1,
+                    GANONS_CASTLE_SHADOW_TRIAL_HEART_2,
+                    GANONS_CASTLE_SHADOW_TRIAL_HEART_3,
+                    GANONS_CASTLE_FIRE_TRIAL_HEART,
                 },
                 {
                     // MQ Locations
