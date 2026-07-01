@@ -2089,6 +2089,22 @@ void HintTable_Init_Exclude_Dungeon() {
                        Text{"the #Song of Time# in the Gerudo Training Grounds leads to", /*french*/"le #chant du temps# révèle dans le gymnase Gerudo", /*spanish*/"la #Canción del Tiempo# en el Centro de Instrucción Gerudo conduce a", /*italian*/"la #Canzone del tempo# nella zona di addestramento Gerudo apre la via per", /*german*/"nach der #Hymne der Zeit# beim Training der Diebe, |wäre|wären|"},
     });
 
+    hintTable[GERUDO_TRAINING_GROUNDS_BEAMOS_ROOM_HEART_1] = HintText::Exclude({
+                       // obscure text
+                       Text{"#dinos, fire and lasers# protect", /*french*/"#dinos, fire and lasers# protect", /*spanish*/"#dinos, fire and lasers# protect", /*italian*/"#dinos, fire and lasers# protect", /*german*/"#dinos, fire and lasers# protect"},
+                      },{},
+                      // Clear text
+                       Text{"#behind the walls of fire in the Beamos room of GTG# lies", /*french*/"#behind the walls of fire in the Beamos room of GTG# lies", /*spanish*/"#behind the walls of fire in the Beamos room of GTG# lies", /*italian*/"#behind the walls of fire in the Beamos room of GTG# lies", /*german*/"#behind the walls of fire in the Beamos room of GTG# lies"}
+   );
+   
+   hintTable[GERUDO_TRAINING_GROUNDS_BEAMOS_ROOM_HEART_1] = HintText::Exclude({
+                       // obscure text
+                       Text{"dinos, fire and lasers protect", /*french*/"#dinos, fire and lasers# protect", /*spanish*/"#dinos, fire and lasers# protect", /*italian*/"#dinos, fire and lasers# protect", /*german*/"#dinos, fire and lasers# protect"},
+                      },{},
+                      // Clear text
+                       Text{"#behind the walls of fire in the Beamos room of GTG# lies", /*french*/"#behind the walls of fire in the Beamos room of GTG# lies", /*spanish*/"#behind the walls of fire in the Beamos room of GTG# lies", /*italian*/"#behind the walls of fire in the Beamos room of GTG# lies", /*german*/"#behind the walls of fire in the Beamos room of GTG# lies"}
+   );
+
     hintTable[GERUDO_TRAINING_GROUNDS_MQ_LOBBY_RIGHT_CHEST] = HintText::Exclude({
                        // obscure text
                        Text{"#thieves prepare for training# with", /*french*/"dans #l'entrée du gymnase Gerudo# gît", /*spanish*/"las #bandidas se instruyen# con", /*italian*/"i #ladri si preparano all'addestramento# con", /*german*/"vor dem Training der Diebe, |wäre|wären|"},

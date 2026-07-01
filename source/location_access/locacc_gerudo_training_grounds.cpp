@@ -35,6 +35,8 @@ void AreaTable_Init_GerudoTrainingGrounds() {
                                { [] { return CanUse(BOW) || CanUse(SLINGSHOT); } }),
                 LocationAccess(GERUDO_TRAINING_GROUNDS_STALFOS_CHEST, { [] { return CanDefeatEnemies(11, 0, 1); } }),
                 LocationAccess(GERUDO_TRAINING_GROUNDS_BEAMOS_CHEST, { [] { return CanDefeatEnemies(11, 0, 7); } }),
+                LocationAccess(GERUDO_TRAINING_GROUNDS_BEAMOS_ROOM_HEART_1, { [] { return true; } }),
+                LocationAccess(GERUDO_TRAINING_GROUNDS_BEAMOS_ROOM_HEART_2, { [] { return true; } }),
             },
             {
                 // Exits
