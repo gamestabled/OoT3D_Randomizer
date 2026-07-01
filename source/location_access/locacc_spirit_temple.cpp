@@ -337,12 +337,10 @@ void AreaTable_Init_SpiritTemple() {
             },
             {
                 // Locations
-                LocationAccess(SPIRIT_TEMPLE_ADULT_CLIMB_HEART_1, { [] {
-                                   return (Hookshot && CanDefeatEnemies(6, 0, 23));
-                               } }),
-                LocationAccess(SPIRIT_TEMPLE_ADULT_CLIMB_HEART_2, { [] {
-                                   return (Hookshot && CanDefeatEnemies(6, 0, 23));
-                               } }),
+                LocationAccess(SPIRIT_TEMPLE_ADULT_CLIMB_HEART_1,
+                               { [] { return (Hookshot && CanDefeatEnemies(6, 0, 23)); } }),
+                LocationAccess(SPIRIT_TEMPLE_ADULT_CLIMB_HEART_2,
+                               { [] { return (Hookshot && CanDefeatEnemies(6, 0, 23)); } }),
                 LocationAccess(SPIRIT_TEMPLE_BOSS_KEY_CHEST, { [] {
                                    return CanPlay(ZeldasLullaby) &&
                                           ((CanTakeDamage && LogicFlamingChests) || (SoulDoorMimic && Bow && Hookshot));

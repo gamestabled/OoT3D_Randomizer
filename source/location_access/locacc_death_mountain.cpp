@@ -176,7 +176,7 @@ void AreaTable_Init_DeathMountain() {
                  LocationAccess(DMT_COW_GROTTO_HEART_3,
                                 {
                                     [] { return true; },
-                                }),                                
+                                }),
                  LocationAccess(DMT_COW_GROTTO_HEART_4,
                                 {
                                     [] { return true; },

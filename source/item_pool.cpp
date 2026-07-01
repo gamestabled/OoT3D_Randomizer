@@ -702,7 +702,6 @@ void GenerateItemPool() {
         }
     }
 
-
     if (BombchusInLogic) {
         AddItemToMainPool(PROGRESSIVE_BOMBCHUS, 5);
     } else {
