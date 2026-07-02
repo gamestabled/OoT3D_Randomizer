@@ -2,5 +2,5 @@
 #include "savefile.h"
 
 u8 Navi_GetNotificationOption(void) {
-    return gExtSaveData.option_NaviNotifications;
+    return gExtSaveData.options[OPTION_NAVINOTIFICATIONS];
 }

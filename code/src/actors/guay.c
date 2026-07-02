@@ -1,6 +1,7 @@
 #include "guay.h"
 #include "settings.h"
 #include "enemizer.h"
+#include "actor.h"
 
 void EnCrow_Update(Actor* thisx, GlobalContext* globalCtx);
 
@@ -24,4 +25,8 @@ void EnCrow_rUpdate(Actor* thisx, GlobalContext* globalCtx) {
             Actor_Kill(thisx);
         }
     }
+}
+
+void EnCrow_ReinitModels(EnCrow* this) {
+    Actor_ReinitSkelAnime(&this->actor, &this->skelAnime, 0);
 }

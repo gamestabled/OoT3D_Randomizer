@@ -210,18 +210,18 @@ void ShopsanityItem_ResetModels(ShopsanityItem* shopItem, GlobalContext* globalC
 
     if (cmabIdx >= 0) {
         void* cmabMan = Object_GetCMABByIndex(objectId, cmabIdx);
-        TexAnim_Spawn(item->model->unk_0C, cmabMan);
-        item->model->unk_0C->animSpeed = 2.0f;
-        item->model->unk_0C->animMode  = 1;
+        MatAnim_Init(item->model->matAnim, cmabMan);
+        item->model->matAnim->animSpeed = 2.0f;
+        item->model->matAnim->animMode  = 1;
     }
 
     if (objModelIdx2 >= 0) {
         item->model2 = SkeletonAnimationModel_Spawn(&item->actor, globalCtx, objectId, objModelIdx2);
         if (cmabIdx2 >= 0) {
             void* cmabMan = Object_GetCMABByIndex(objectId, cmabIdx2);
-            TexAnim_Spawn(item->model2->unk_0C, cmabMan);
-            item->model2->unk_0C->animSpeed = 2.0f;
-            item->model2->unk_0C->animMode  = 1;
+            MatAnim_Init(item->model2->matAnim, cmabMan);
+            item->model2->matAnim->animSpeed = 2.0f;
+            item->model2->matAnim->animMode  = 1;
         }
     }
 }
@@ -348,8 +348,11 @@ void ShopsanityItem_Draw(Actor* itemx, GlobalContext* globalCtx) {
     ItemOverride override = ItemOverride_Lookup(&item->super.actor, globalCtx->sceneNum, item->getItemId);
 
     u16 itemId = override.value.looksLikeItemId ? override.value.looksLikeItemId : override.value.itemId;
-    CustomModels_UpdateMatrix(&item->super.actor.modelMtx, ItemTable_GetItemRow(itemId)->objectId);
+    CustomModels_UpdateMatrix(&item->super.actor.modelMtx, ItemTable_GetItemRow(itemId));
 
+    if (CustomModels_MustFaceCamera(item->itemRow)) {
+        item->super.yRotation = 0;
+    }
     EnGirlA_Draw(itemx, globalCtx);
 }
 

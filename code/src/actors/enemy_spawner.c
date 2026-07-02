@@ -28,8 +28,8 @@ void EnEncount1_rInit(Actor* thisx, GlobalContext* globalCtx) {
     EnEncount1_Init(thisx, globalCtx);
 
     EnemyOverride enemyOverride = Enemizer_GetSpawnerOverride();
-    this->rSpawnedActorId       = enemyOverride.actorId;
-    this->rSpawnedActorParams   = enemyOverride.params;
+    this->rSpawnedActorId       = gEnemyTable[enemyOverride.enemyId].actorId;
+    this->rSpawnedActorParams   = gEnemyTable[enemyOverride.enemyId].possibleParams[enemyOverride.paramsIdx];
 
     if (this->rSpawnedActorId == ACTOR_STALFOS) {
         // Only use "rising from ground" stalfos type, and not the "falling from above" type.

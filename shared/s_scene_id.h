@@ -111,3 +111,5 @@ typedef enum SceneId {
     /* 0x6B */ SCENE_HYRULE_FIELD_TITLE_SCREEN,
     /* 0x6C */ SCENE_MAX,
 } SceneId;
+
+extern const char* const SceneNames[SCENE_MAX];

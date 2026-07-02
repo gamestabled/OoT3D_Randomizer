@@ -52,6 +52,9 @@ PATCH EditDrawGetItemAfterModelSpawn
 PATCH EditDrawGetItemAfterMatrixUpdate
     bl hook_EditDrawGetItemAfterMatrixUpdate
 
+PATCH DrawGetItem_ShouldRotate
+    bl hook_DrawGetItem_ShouldRotate
+
 PATCH NoLensOfTruthNaviText
     nop
 
@@ -222,9 +225,6 @@ PATCH DekuTheaterSkullMask
 PATCH DekuTheaterMaskOfTruth
     mov r0,#0x7A
     nop
-
-PATCH PoeCollectorCheckPoints
-    bl hook_PoeCollectorCheckPoints
 
 PATCH LACSConditionOne
     nop
@@ -419,9 +419,6 @@ PATCH FairyReward
     cpy r0,r4
     bl Cutscene_OverrideFairyReward
     b 0x3E75F8
-
-PATCH PoeCollectorGetFirstTextbox
-    bl hook_PoeCollectorGetFirstTextbox
 
 PATCH OcarinaMinigameRewardsOrder
     .word 0x76
@@ -1628,6 +1625,18 @@ PATCH GanonFinalBlow
 
 PATCH PlayerBonk
     bl hook_PlayerBonk
+
+PATCH CmbManagerInit
+    bl hook_CmbManagerInit
+
+PATCH ActorInit1
+    bl hook_ActorInit
+
+PATCH ActorInit2
+    bl hook_ActorInit
+
+PATCH ActorInit3
+    bl hook_ActorInit
 
 PATCH SetupDoorShutter
     bleq hook_SetupDoorShutter

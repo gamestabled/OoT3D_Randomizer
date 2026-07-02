@@ -17,6 +17,9 @@
 #define QM_BLACK 0x47
 
 namespace CustomMessages {
+
+constexpr bool MANUAL_NEWLINES = true;
+
 void CreateMessage(u32 textId, u32 unk_04, u32 textBoxType, u32 textBoxPosition, std::string englishText,
                    std::string frenchText, std::string spanishText, std::string italianText, std::string germanText);
 void CreateMessageFromTextObject(u32 textId, u32 unk_04, u32 textBoxType, u32 textBoxPosition, const Text& text);
@@ -28,7 +31,7 @@ std::pair<const char*, u32> RawMessageData();
 
 void CreateAlwaysIncludedMessages();
 std::vector<Text> CreateBaseCompassTexts();
-Text AddColorsAndFormat(Text text, const std::vector<u8>& colors = {});
+Text AddColorsAndFormat(Text text, const std::vector<u8>& colors = {}, bool manualNewLines = false);
 void ClearMessages();
 
 std::string MESSAGE_END();
@@ -48,6 +51,7 @@ std::string ITEM_OBTAINED(u8 x);
 std::string SET_SPEED(u8 x);
 std::string SKULLTULAS_DESTROYED();
 std::string CURRENT_TIME();
+std::string BIG_POE_POINTS();
 std::string UNSKIPPABLE();
 std::string TWO_WAY_CHOICE();
 std::string NEWLINE();
@@ -68,4 +72,5 @@ std::string DEATH_COUNT();
 std::string HIT_COUNT();
 std::string DAMAGE_RECEIVED();
 std::string BONK_COUNT();
+std::string REQUIRED_BIG_POE_POINTS();
 } // namespace CustomMessages

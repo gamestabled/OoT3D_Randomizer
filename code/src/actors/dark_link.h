@@ -15,11 +15,16 @@ typedef struct EnTorch2 {
     /* 0x2A4C */ Vec3f spawnPoint;
     /* 0x2A58 */ char unk_2A58[0x45];
     /* 0x2A9D */ u8 actionState;
-    /* 0x2A9E */ char unk_2A9E[0xA];
+    /* 0x2A9E */ char unk_2A9E[0x06];
+    /* 0x2AA4 */ u8 alpha;
+    /* 0x2AA5 */ char unk_2AA5[0x02];
 } EnTorch2;
 _Static_assert(sizeof(EnTorch2) == 0x2AA8, "EnTorch2 size");
 
 void EnTorch2_rInit(Actor* thisx, GlobalContext* globalCtx);
 void EnTorch2_rUpdate(Actor* thisx, GlobalContext* globalCtx);
+void EnTorch2_rDraw(Actor* thisx, GlobalContext* globalCtx);
+
+void EnTorch2_ReinitModels(EnTorch2* this);
 
 #endif //_DARK_LINK_H_

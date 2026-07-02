@@ -56,4 +56,6 @@ typedef struct EnItem00 {
 } EnItem00;
 _Static_assert(offsetof(EnItem00, rExt) == 0x218, "EnItem00 size");
 
+EnItem00* Item_DropCollectible(GlobalContext* globalCtx, Vec3f* spawnPos, s16 params);
+
 #endif //_EN_ITEM00_H_

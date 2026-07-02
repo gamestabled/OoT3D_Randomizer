@@ -3,13 +3,13 @@
 
 #include "z3D/z3D.h"
 
+/*-------------------------------
+|           EnDodongo           |
+-------------------------------*/
+
 struct EnDodongo;
-struct EnDodojr;
-struct BossDodongo;
 
 typedef void (*EnDodongoActionFunc)(struct EnDodongo*, GlobalContext*);
-typedef void (*EnDodojrActionFunc)(struct EnDodojr*, GlobalContext*);
-typedef void (*BossDodongoActionFunc)(struct BossDodongo*, GlobalContext*);
 
 typedef struct EnDodongo {
     /* 0x0000 */ Actor base;
@@ -20,6 +20,14 @@ typedef struct EnDodongo {
     /* 0x0980 */ char unk_980[0x47C];
 } EnDodongo; // size = 0xDFC
 _Static_assert(sizeof(EnDodongo) == 0xDFC, "EnDodongo size");
+
+/*-------------------------------
+|            EnDodojr           |
+-------------------------------*/
+
+struct EnDodojr;
+
+typedef void (*EnDodojrActionFunc)(struct EnDodojr*, GlobalContext*);
 
 typedef struct EnDodojr {
     /* 0x0000 */ Actor base;
@@ -34,9 +42,20 @@ typedef struct EnDodojr {
 } EnDodojr; // size = 0x520
 _Static_assert(sizeof(EnDodojr) == 0x520, "EnDodojr size");
 
+void EnDodojr_rInit(Actor* thisx, GlobalContext* globalCtx);
+void EnDodojr_DropItem(EnDodojr* this, GlobalContext* globalCtx);
+
+/*-------------------------------
+|          BossDodongo          |
+-------------------------------*/
+
+struct BossDodongo;
+
+typedef void (*BossDodongoActionFunc)(struct BossDodongo*, GlobalContext*);
+
 typedef struct BossDodongo {
     /* 0x0000 */ Actor actor;
-    /* 0x01A4 */ SkelAnime skelAnime;
+    /* 0x01A4 */ SkelAnime anime;
     /* 0x0228 */ char unk_288[0x0538];
     /* 0x0760 */ BossDodongoActionFunc actionFunc;
     /* 0x0764 */ s16 health;
@@ -46,10 +65,7 @@ typedef struct BossDodongo {
 } BossDodongo;
 _Static_assert(sizeof(BossDodongo) == 0x206C, "BossDodongo size");
 
-void EnDodojr_rInit(Actor* thisx, GlobalContext* globalCtx);
-
-void EnDodojr_DropItem(EnDodojr* this, GlobalContext* globalCtx);
-
 void BossDodongo_rUpdate(Actor* thisx, GlobalContext* globalCtx);
+void BossDodongo_ReinitModels(BossDodongo* this);
 
 #endif //_DODONGOS_H_

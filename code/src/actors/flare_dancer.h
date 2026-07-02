@@ -28,7 +28,7 @@ typedef struct EnFdEffect {
     /* 0x0014 */ Vec3f pos;
     /* 0x0020 */ Vec3f velocity;
     /* 0x002C */ Vec3f accel;
-    /* 0x0038 */ char unk_38[4];
+    /* 0x0038 */ SkeletonAnimationModel* saModel;
 } EnFdEffect;
 _Static_assert(sizeof(EnFdEffect) == 0x3C, "EnFdEffect size");
 
@@ -39,7 +39,9 @@ typedef struct EnFd {
     /* 0x022C */ EnFdActionFunc actionFunc;
     /* 0x0230 */ char unk_0230[0xC28];
     /* 0x0E58 */ EnFdEffect effects[EN_FD_EFFECT_COUNT];
-    /* 0x25C8 */ char unk_25C8[0x324];
+    /* 0x25C8 */ SkeletonAnimationModel* saModels[EN_FD_EFFECT_COUNT];
+    /* 0x2758 */ s32 cmbIndices[EN_FD_EFFECT_COUNT];
+    /* 0x28E8 */ void* unk_28E8;
 } EnFd;
 _Static_assert(sizeof(EnFd) == 0x28EC, "EnFd size");
 
@@ -57,5 +59,6 @@ typedef struct EnFdFire {
 _Static_assert(sizeof(EnFdFire) == 0x21C, "EnFdFire size");
 
 void EnFd_rUpdate(Actor* thisx, GlobalContext* globalCtx);
+void EnFd_ReinitModels(EnFd* this);
 
 #endif //_FLARE_DANCER_H_

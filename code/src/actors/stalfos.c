@@ -1,6 +1,7 @@
 #include "stalfos.h"
 #include "settings.h"
 #include "enemizer.h"
+#include "actor.h"
 
 void EnTest_Update(Actor* thisx, GlobalContext* globalCtx);
 
@@ -14,4 +15,8 @@ void EnTest_rUpdate(Actor* thisx, GlobalContext* globalCtx) {
                                 UPDBGCHECKINFO_WALL | UPDBGCHECKINFO_FLOOR_WATER | UPDBGCHECKINFO_FLAG_3 |
                                     UPDBGCHECKINFO_FLAG_4);
     }
+}
+
+void EnTest_ReinitModels(EnTest* this) {
+    Actor_ReinitSkelAnime(&this->actor, &this->skelAnime, 0);
 }

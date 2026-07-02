@@ -7,7 +7,7 @@ void EnAnubice_Update(Actor* thisx, GlobalContext* globalCtx);
 void EnAnubice_rUpdate(Actor* thisx, GlobalContext* globalCtx) {
     EnAnubice* this = (EnAnubice*)thisx;
 
-    if (!EnemySouls_CheckSoulForActor(thisx)) {
+    if (EnemySouls_IsInvulnerable(thisx)) {
         for (s32 i = 0; i < 5; i++) {
             this->flameCircles[i] = 0;
         }

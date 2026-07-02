@@ -5,7 +5,7 @@
 
 // This enum's values are sorted so that the enemy names
 // appear in alphabetical order in the app.
-typedef enum EnemyId {
+typedef enum EnemyId : u8 {
     ENEMY_INVALID,
     ENEMY_ANUBIS,
     ENEMY_ARMOS,
@@ -82,6 +82,7 @@ typedef struct EnemyOverride {
             u8 scene;
         };
     };
-    s16 actorId;
-    s16 params;
+    u8 enemyId;
+    u8 paramsIdx;
+    u8 vanillaId; // used for in-game log
 } EnemyOverride;

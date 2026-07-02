@@ -12,7 +12,7 @@ s32 Stalchild_CanDespawn(Actor* stalchild) {
 }
 
 void EnSkb_rUpdate(Actor* thisx, GlobalContext* globalCtx) {
-    if (!EnemySouls_CheckSoulForActor(thisx)) {
+    if (EnemySouls_IsInvulnerable(thisx)) {
         // prevent drowning
         thisx->depthInWater = 0;
     }

@@ -197,6 +197,10 @@ void WriteIngameSpoilerLog() {
         else if (loc->IsCategory(Category::cFreestandingRupee) && !Settings::ShuffleRupees) {
             continue;
         }
+        // Big Poes
+        else if (loc->IsCategory(Category::cBigPoe) && !Settings::ShuffleBigPoes) {
+            continue;
+        }
 
         // Copy at most 51 chars from the name and location name to avoid issues with names that don't fit on screen
         // Only copy enough characters that can fit on the screen
@@ -754,7 +758,7 @@ static void WriteRandomizedEnemies(tinyxml2::XMLDocument& spoilerLog) {
 
     for (auto& scene : scenes) {
         auto sceneNode        = parentNode->InsertNewChildElement("scene");
-        std::string sceneName = std::to_string(scene.first) + " - " + sceneNames[scene.first];
+        std::string sceneName = std::to_string(scene.first) + " - " + SceneNames[scene.first];
         sceneNode->SetAttribute("name", sceneName.c_str());
 
         // Create sorted vector of layers

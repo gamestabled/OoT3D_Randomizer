@@ -18,12 +18,24 @@ void AreaTable_Init_HyruleField() {
             EventAccess(&DekuBabaSticks,
                         { [] { return DekuBabaSticks || ForEachEnemy_HyruleField(CanGetDekuBabaSticks); } }),
             EventAccess(&DekuBabaNuts, { [] { return DekuBabaNuts || ForEachEnemy_HyruleField(CanGetDekuBabaNuts); } }),
-            EventAccess(&BigPoeKill, { [] { return SoulPoe && CanUse(BOW) && CanRideEpona && HasBottle; } }),
+            EventAccess(&BigPoeKill, { [] {
+                return IsAdult && SoulPoe && CanUse(BOW) && CanRideEpona && (ShuffleBigPoes || HasBottle);
+            } }),
         },
         {
             // Locations
             LocationAccess(HF_OCARINA_OF_TIME_ITEM, { [] { return IsChild && HasAllStones; } }),
             LocationAccess(SONG_FROM_OCARINA_OF_TIME, { [] { return IsChild && HasAllStones; } }),
+            LocationAccess(HF_BIG_POE_1, { [] { return BigPoeKill; } }),
+            LocationAccess(HF_BIG_POE_2, { [] { return BigPoeKill; } }),
+            LocationAccess(HF_BIG_POE_3, { [] { return BigPoeKill; } }),
+            LocationAccess(HF_BIG_POE_4, { [] { return BigPoeKill; } }),
+            LocationAccess(HF_BIG_POE_5, { [] { return BigPoeKill; } }),
+            LocationAccess(HF_BIG_POE_6, { [] { return BigPoeKill; } }),
+            LocationAccess(HF_BIG_POE_7, { [] { return BigPoeKill; } }),
+            LocationAccess(HF_BIG_POE_8, { [] { return BigPoeKill; } }),
+            LocationAccess(HF_BIG_POE_9, { [] { return BigPoeKill; } }),
+            LocationAccess(HF_BIG_POE_10, { [] { return BigPoeKill; } }),
         },
         {
             // Exits

@@ -66,6 +66,7 @@ enum class Category {
     cFrogRupees,
     cFreestandingRupee,
     cRecoveryHeart,
+    cBigPoe,
 };
 
 enum class OptionCategory {

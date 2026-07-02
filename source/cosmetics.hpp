@@ -29,6 +29,7 @@ extern const std::array<std::string_view, 20> naviInnerColors;
 extern const std::array<std::string_view, 20> naviOuterColors;
 extern const std::array<std::string_view, 13> weaponTrailColors;
 extern const std::array<std::string_view, 14> ganonBloodColors;
+extern const std::array<std::string_view, 12> soullessColors;
 
 bool ValidHexString(std::string_view hexStr);
 Color_RGBAf HexStrToColorRGBAf(const std::string& hexStr);

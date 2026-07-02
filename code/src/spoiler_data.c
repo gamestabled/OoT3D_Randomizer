@@ -4,6 +4,7 @@
 #include "gorons.h"
 #include "savefile.h"
 #include "entrance.h"
+#include "poe_collector.h"
 
 SpoilerData gSpoilerData                          = { 0 };
 SpoilerDataLocs gSpoilerDataLocs[SPOILER_LOCDATS] = { 0 };
@@ -97,6 +98,12 @@ u8 SpoilerData_GerudoTokenCheck() {
 }
 
 u8 SpoilerData_BigPoePointsCheck() {
+    if (gSettingsContext.shuffleBigPoes) {
+        u32* flags = gGlobalContext->sceneNum == SCENE_MARKET_GUARD_HOUSE
+                         ? &gGlobalContext->actorCtx.flags.swch
+                         : &gSaveContext.sceneFlags[SCENE_MARKET_GUARD_HOUSE].swch;
+        return (*flags & (1 << POE_REWARD_SWITCH_FLAG)) != 0;
+    }
     return gSaveContext.bigPoePoints >= (gSettingsContext.bigPoeTargetCount * 100);
 }
 
@@ -183,7 +190,7 @@ u8 SpoilerData_GetIsItemLocationCollected(u16 itemIndex) {
 }
 
 u8 SpoilerData_GetIsItemLocationRevealed(u16 itemIndex) {
-    if (gSettingsContext.ingameSpoilers) {
+    if (gSettingsContext.ingameSpoilers && gExtSaveData.options[OPTION_SPOILERS]) {
         return 1;
     }
 

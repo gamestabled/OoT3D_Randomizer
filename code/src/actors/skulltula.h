@@ -63,4 +63,6 @@ typedef enum {
 u8 Gs_HasAltLoc(void* ptr, GsParamPointerType ppt, u8 adjustArrayIndex);
 void Gs_SpawnAltLocs(void);
 
+void EnSw_ReinitModels(EnSw* this);
+
 #endif //_SKULLTULA_H_

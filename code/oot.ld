@@ -14,6 +14,8 @@ SECTIONS
 	EnZf_Update = 0x101C48 + _LD_OFF;
 	.patch_GrogSetTradedCojiroFlag 0x104C50 + _LD_OFF : { *(.patch_GrogSetTradedCojiroFlag) }
 	.patch_MidoCheckDekuTreeClearTwo 0x105CD4 + _LD_OFF : { *(.patch_MidoCheckDekuTreeClearTwo) }
+	EnPoField_WaitForSpawn = 0x108F6C + _LD_OFF;
+	EnPoField_Appear = 0x10AE34 + _LD_OFF;
 	.patch_ArmosCooldownTimer 0x10B41C + _LD_OFF : { *(.patch_ArmosCooldownTimer) }
 	.patch_ArmosPushSpeed 0x10B5C4 + _LD_OFF : { *(.patch_ArmosPushSpeed) }
 	EnMb_ClubWaitPlayerNear = 0x10B5D0 + _LD_OFF;
@@ -25,7 +27,7 @@ SECTIONS
 	.patch_LabScientistDontStartTimerAndSetFlag 0x112440 + _LD_OFF : { *(.patch_LabScientistDontStartTimerAndSetFlag) }
 	.patch_BombchuPurchaseableCheck 0x112ED0 + _LD_OFF : { *(.patch_BombchuPurchaseableCheck) }
 	EnDha_Update = 0x113050 + _LD_OFF;
-	.patch_PoeCollectorGetFirstTextbox 0x113844 + _LD_OFF : { *(.patch_PoeCollectorGetFirstTextbox) }
+	EnGb_Idle = 0x113768 + _LD_OFF;
 	ItemEtcetera_Draw = 0x11707C + _LD_OFF;
 	.patch_ItemEtceteraModelDraw 0x117080 + _LD_OFF : { *(.patch_ItemEtceteraModelDraw) }
 	EnFd_Reappear = 0x117D98 + _LD_OFF;
@@ -56,6 +58,7 @@ SECTIONS
 	.patch_JabuSwitchRutoCheck 0x143AC8 + _LD_OFF : { *(.patch_JabuSwitchRutoCheck) }
 	.patch_OwlMagicCheck 0x144B44 + _LD_OFF : { *(.patch_OwlMagicCheck) }
 	EnGeldB_Update = 0x14A04C + _LD_OFF;
+	EnZf_Draw = 0x14C864 + _LD_OFF;
 	EnGirlA_InitializeItemAction = 0x14D5C8 + _LD_OFF;
 	.patch_MedigoronItemOverrideOne 0x14D95C + _LD_OFF : { *(.patch_MedigoronItemOverrideOne) }
 	.patch_BeanDaddyPurchase 0x14EDA8 + _LD_OFF : { *(.patch_BeanDaddyPurchase) }
@@ -132,7 +135,6 @@ SECTIONS
 	EnOwl_Init = 0x18DB28 + _LD_OFF;
 	EnPoh_Init = 0x18DF00 + _LD_OFF;
 	.patch_SkullKidPoacherSawCheck 0x18ED80 + _LD_OFF : { *(.patch_SkullKidPoacherSawCheck) }
-	.patch_PoeCollectorCheckPoints 0x19091C + _LD_OFF : { *(.patch_PoeCollectorCheckPoints) }
 	.patch_GoronShopPurchaseableCheck 0x19120C + _LD_OFF : { *(.patch_GoronShopPurchaseableCheck) }
 	PlayerActor_Init = 0x191844 + _LD_OFF;
 	.patch_PlayerEditAndRetrieveCMB 0x191970 + _LD_OFF : { *(.patch_PlayerEditAndRetrieveCMB) }
@@ -163,8 +165,10 @@ SECTIONS
 	Boss_Tw_Init = 0x1A7E18 + _LD_OFF;
 	.patch_KotakeDontPlayBattleMusic 0x1A8218 + _LD_OFF : { *(.patch_KotakeDontPlayBattleMusic) }
 	Boss_Tw_Destroy = 0x1A88E8 + _LD_OFF;
+	EnAm_Draw = 0x1ACD4C + _LD_OFF;
 	EnFd_Update = 0x1B004C + _LD_OFF;
 	EnFu_Update = 0x1B1328 + _LD_OFF;
+	EnGb_Update = 0x1B2354 + _LD_OFF;
 	EnGeldB_Draw = 0x1B2B00 + _LD_OFF;
 	.patch_GetObjectEntry_EnGomaInit_One 0x1B3130 + _LD_OFF : { *(.patch_GetObjectEntry_EnGomaInit_One) }
 	.patch_GetObjectEntry_EnGomaInit_Two 0x1B3208 + _LD_OFF : { *(.patch_GetObjectEntry_EnGomaInit_Two) }
@@ -194,6 +198,7 @@ SECTIONS
 	.patch_EnEncount1_SpawnLeever 0x1CC94C + _LD_OFF : { *(.patch_EnEncount1_SpawnLeever) }
 	.patch_EnEncount1_SetLeeverAimType 0x1CC984 + _LD_OFF : { *(.patch_EnEncount1_SetLeeverAimType) }
 	EnEiyer_WanderUnderground = 0x1CD1D4 + _LD_OFF;
+	EnPoField_SoulAppearing = 0x1CD51C + _LD_OFF;
 	.patch_TruthSpinnerSpeed 0x1CD814 + _LD_OFF : { *(.patch_TruthSpinnerSpeed) }
 	ActorShadow_DrawFeet = 0x1D04F4 + _LD_OFF;
 	.patch_DemoEffectStoneDraw 0x1D209C + _LD_OFF : { *(.patch_DemoEffectStoneDraw) }
@@ -213,6 +218,7 @@ SECTIONS
 	EnSkb_Update = 0x1DE320 + _LD_OFF;
 	EnSkj_Update = 0x1DE890 + _LD_OFF;
 	EnSsh_Update = 0x1DF0A4 + _LD_OFF;
+	EnGb_OfferReward = 0x1E11C0 + _LD_OFF;
 	ObjBean_Init = 0x1E12B0 + _LD_OFF;
 	PlayerActor_Update = 0x1E1B54 + _LD_OFF;
 	.patch_AdultBlueWarpOverride 0x1E3F50 + _LD_OFF : { *(.patch_AdultBlueWarpOverride) }
@@ -234,6 +240,7 @@ SECTIONS
 	EnItem00_Destroy = 0x1F706C + _LD_OFF;
 	EnTorch2_Init = 0x1F853C + _LD_OFF;
 	.patch_GetObjectEntry_1F85B0 0x1F85B0 + _LD_OFF : { *(.patch_GetObjectEntry_1F85B0) }
+	EnTorch2_Destroy = 0x1F8764 + _LD_OFF;
 	Fishing_DrawFish = 0x1F98B4 + _LD_OFF;
 	Fishing_UpdateFish = 0x1F9ACC + _LD_OFF;
 	BgSpot02Objects_Explode = 0x205EDC + _LD_OFF;
@@ -284,9 +291,11 @@ SECTIONS
 	.patch_Item00GiveCollectedItemDrop 0x22B974 + _LD_OFF : { *(.patch_Item00GiveCollectedItemDrop) }
 	.patch_patch_ItemGiveBombchuDropTwo 0x22BAE4 + _LD_OFF : { *(.patch_ItemGiveBombchuDropTwo) }
 	.patch_GetObjectEntry_EnNutsballInit 0x22DEC4 + _LD_OFF : { *(.patch_GetObjectEntry_EnNutsballInit) }
+	EnPoField_Init = 0x22DFEC + _LD_OFF;
 	EnPoRelay_Destroy = 0x22E438 + _LD_OFF;
 	EnShopnuts_Init = 0x22ED2C + _LD_OFF;
 	.patch_BusinessScrubCheckFlags 0x22EE60 + _LD_OFF : { *(.patch_BusinessScrubCheckFlags) }
+	EnTorch2_Draw = 0x22EFF8 + _LD_OFF;
 	EnTorch2_Update = 0x22F0C8 + _LD_OFF;
 	.patch_DarkLinkPlayerRecoil 0x22F838 + _LD_OFF : { *(.patch_DarkLinkPlayerRecoil) }
 	ObjMure3_Update = 0x2318AC + _LD_OFF;
@@ -331,7 +340,9 @@ SECTIONS
 	EnNutsball_Update = 0x26BD8C + _LD_OFF;
 	.patch_MinuetLocation 0x26C388 + _LD_OFF : { *(.patch_MinuetLocation) }
 	.patch_BoleroLocation 0x26C448 + _LD_OFF : { *(.patch_BoleroLocation) }
+	EnPoField_Update = 0x26CA40 + _LD_OFF;
 	EnTakaraMan_Init = 0x26DEB8 + _LD_OFF;
+	EnYukabyun_Draw = 0x26E5F0 + _LD_OFF;
 	EnYukabyun_Update = 0x26E628 + _LD_OFF;
 	.patch_FlyingTileCollision 0x26E730 + _LD_OFF : { *(.patch_FlyingTileCollision) }
 	.patch_DeadHandHandCanGrabPlayer 0x26EB58 + _LD_OFF : { *(.patch_DeadHandHandCanGrabPlayer) }
@@ -356,6 +367,7 @@ SECTIONS
 	EnGanonOrgan_Init = 0x280E0C + _LD_OFF;
 	EnPoh_UpdateDead = 0x282E88 + _LD_OFF;
 	EnSyatekiMan_Init = 0x283F94 + _LD_OFF;
+	EnTuboTrap_Draw = 0x28488C + _LD_OFF;
 	ItemBHeart_Draw = 0x285BEC + _LD_OFF;
 	ItemBHeart_Update = 0x285C18 + _LD_OFF;
 	ItemOcarina_Draw = 0x285D48 + _LD_OFF;
@@ -397,6 +409,7 @@ SECTIONS
 	EffectSs_Delete = 0x2D6A50 + _LD_OFF;
 	.patch_CamUpdate 0x2D84C8 + _LD_OFF : { *(.patch_CamUpdate) }
 	.patch_CamRoll 0x2D88E4 + _LD_OFF : { *(.patch_CamRoll) }
+	CmbManager_Destroy = 0x2DA0E4 + _LD_OFF;
 	Message_GetText = 0x2DF4B0 + _LD_OFF;
 	Message_GetEntry = 0x2DF4C4 + _LD_OFF;
 	.patch_CheckForTextControlCode 0x2E0490 + _LD_OFF : { *(.patch_CheckForTextControlCode) }
@@ -424,6 +437,7 @@ SECTIONS
 	.patch_OoBBombchuThree 0x315150 + _LD_OFF : { *(.patch_OoBBombchuThree) }
 	Inventory_ReplaceItem = 0x316CEC + _LD_OFF;
 	.patch_CollisionATvsAC 0x3191B0 + _LD_OFF : { *(.patch_CollisionATvsAC) }
+	ZAR_Init = 0x31B124 + _LD_OFF;
 	ElfMessage_GetSariaText = 0x31C698 + _LD_OFF;
 	.patch_ISGPutaway 0x32B4AC + _LD_OFF : { *(.patch_ISGPutaway) }
 	Object_Spawn = 0x32E21C + _LD_OFF;
@@ -452,6 +466,7 @@ SECTIONS
 	Magic_Reset = 0x34708C + _LD_OFF;
 	Player_SetEquipmentData = 0x34913C + _LD_OFF;
 	.patch_FairyReviveHealAmount 0x34AF48 + _LD_OFF : { *(.patch_FairyReviveHealAmount) }
+	EnPoField_SetupWaitForSpawn = 0x34C2E8 + _LD_OFF;
 	Actor_SetFeetPos = 0x34CBB4 + _LD_OFF;
 	EventSet = 0x34CBF8 + _LD_OFF;
 	.patch_FishingIgnoreTempBTwo 0x34CFCC + _LD_OFF : { *(.patch_FishingIgnoreTempBTwo) }
@@ -460,14 +475,21 @@ SECTIONS
 	Effect_Delete = 0x34F0F4 + _LD_OFF;
 	.patch_GetObjectEntry_34F270 0x34F270 + _LD_OFF : { *(.patch_GetObjectEntry_34F270) }
 	SystemArena_Free = 0x34FC6C + _LD_OFF;
+	Actor_DestroySkelModelsArray = 0x34FDA8 + _LD_OFF;
 	.patch_GetObjectEntry_34FE68 0x34FE68 + _LD_OFF : { *(.patch_GetObjectEntry_34FE68) }
 	SystemArena_Malloc = 0x35010C + _LD_OFF;
-	SkelAnime_Free2 = 0x350BE0 + _LD_OFF;
+	FaceAnim_Destroy = 0x3501B8 + _LD_OFF;
+	FlameModel_Destroy = 0x35046C + _LD_OFF;
+	FlameModel_Init = 0x350508 + _LD_OFF;
+	SkelAnime_Destroy = 0x350BE0 + _LD_OFF;
 	EventCheck = 0x350CF4 + _LD_OFF;
+	Actor_DestroySkelModels = 0x350F34 + _LD_OFF;
 	.patch_FWGetSet 0x3519CC + _LD_OFF : { *(.patch_FWGetSet) }
 	Health_ChangeBy = 0x352DBC + _LD_OFF;
 	.patch_ApplyDamageMultiplier 0x352DC0 + _LD_OFF : { *(.patch_ApplyDamageMultiplier) }
+	Actor_CreateSkelModelsArray = 0x352EE0 + _LD_OFF;
 	.patch_GetObjectEntry_352F28 0x352F28 + _LD_OFF : { *(.patch_GetObjectEntry_352F28) } /* Used for: Flare Dancer */
+	SkelAnime_Init = 0x353C9C + _LD_OFF;
 	.patch_GetObjectEntry_353CE4 0x353CE4 + _LD_OFF : { *(.patch_GetObjectEntry_353CE4) }
 	Collider_SetCylinder = 0x353D24 + _LD_OFF;
 	Collider_InitCylinder = 0x353DD0 + _LD_OFF;
@@ -480,7 +502,9 @@ SECTIONS
 	.patch_LikeLikeNeverEatTunic 0x355C2C + _LD_OFF : { *(.patch_LikeLikeNeverEatTunic) }
 	DeleteModel_At = 0x357248 + _LD_OFF;
 	ZAR_GetCMBByIndex = 0x358EF8 + _LD_OFF;
+	.patch_CmbManagerInit 0x358F8C + _LD_OFF : { *(.patch_CmbManagerInit) }
 	BossChallenge_IsActive = 0x35B164 + _LD_OFF;
+	FaceAnim_Init = 0x35C358 + _LD_OFF;
 	.patch_Audio_PlayFanfare 0x35C528 + _LD_OFF : { *(.patch_Audio_PlayFanfare) }
 	Audio_PlayFanfare = 0x35C528 + _LD_OFF;
 	.patch_DeleteEquipment 0x35D1F8 + _LD_OFF : { *(.patch_DeleteEquipment) }
@@ -488,6 +512,8 @@ SECTIONS
 	FireDamage = 0x35D8D8 + _LD_OFF;
 	Player_InBlockingCsMode = 0x35DB20 + _LD_OFF;
 	SkelAnime_DrawOpa = 0x35E240 + _LD_OFF;
+	FaceAnim_35E330 = 0x35E330 + _LD_OFF;
+	FaceAnim_SetFrame = 0x35E3A4 + _LD_OFF;
 	.patch_ConvertBombDropOne 0x35E46C + _LD_OFF : { *(.patch_ConvertBombDropOne) }
 	WaterBox_GetSurfaceImpl = 0x35E8A0 + _LD_OFF;
 	.patch_SkullwalltulaAttack_35F328 0x35F328 + _LD_OFF : { *(.patch_SkullwalltulaAttack_35F328) }
@@ -508,6 +534,7 @@ SECTIONS
 	Flags_SetEnv = 0x366704 + _LD_OFF;
 	Actor_SetModelMatrix = 0x3679D0 + _LD_OFF;
 	DisplayTextbox = 0x367C7C + _LD_OFF;
+	MatAnim_Destroy = 0x3685A0 + _LD_OFF;
 	SkeletonAnimationModel_SetMesh = 0x369178 + _LD_OFF;
 	Model_DisableMeshGroupByIndex = 0x36932C + _LD_OFF;
 	Actor_FindNearby = 0x369334 + _LD_OFF;
@@ -523,6 +550,7 @@ SECTIONS
 	.patch_SetupDoorShutter 0x36C3BC + _LD_OFF : { *(.patch_SetupDoorShutter) }
 	Flags_GetClear = 0x36CF6C + _LD_OFF;
 	Math_Vec3f_DistXZ = 0x36D260 + _LD_OFF;
+	Item_DropCollectible = 0x36DF58 + _LD_OFF;
 	Math_SmoothStepToF = 0x36E168 + _LD_OFF;
 	Flags_GetSwitch = 0x36E864 + _LD_OFF;
 	Flags_SetClear = 0x36EC14 + _LD_OFF;
@@ -544,16 +572,18 @@ SECTIONS
 	.patch_MaskSalesmanCheckNoMaskTwo 0x372B70 + _LD_OFF : { *(.patch_MaskSalesmanCheckNoMaskTwo) }
 	ActorShape_Init = 0x372D4C + _LD_OFF;
 	Actor_Find = 0x372D64 + _LD_OFF;
-	TexAnim_Spawn = 0x372D94 + _LD_OFF;
+	MatAnim_Init = 0x372D94 + _LD_OFF;
 	ZAR_GetCMABByIndex = 0x372F0C + _LD_OFF;
-	SkeletonAnimationModel_SpawnAt = 0x372F38 + _LD_OFF;
+	Actor_CreateSkelModels = 0x372F38 + _LD_OFF;
 	.patch_GetObjectEntry_372F7C 0x372F7C + _LD_OFF : { *(.patch_GetObjectEntry_372F7C) }
 	.patch_OverrideObjectIsLoaded 0x373074 + _LD_OFF : { *(.patch_OverrideObjectIsLoaded) }
+	SkelAnime_Update = 0x3731E0 + _LD_OFF;
 	EnWonderTalk_Update = 0x3731F4 + _LD_OFF;
 	Actor_Spawn = 0x3738D0 + _LD_OFF;
 	.patch_ConvertBombDropTwo 0x3747A4 + _LD_OFF : { *(.patch_ConvertBombDropTwo) }
 	.patch_Audio_PlaySfxGeneral 0x37547C + _LD_OFF : { *(.patch_Audio_PlaySfxGeneral) }
 	Audio_PlaySfxGeneral = 0x37547C + _LD_OFF;
+	Rand_ZeroOne = 0x3759D0 + _LD_OFF;
 	Math_SmoothStepToS = 0x375A18 + _LD_OFF;
 	Enemy_StartFinishingBlow = 0x375B70 + _LD_OFF;
 	Actor_PlaySfx = 0x375BCC + _LD_OFF;
@@ -580,6 +610,7 @@ SECTIONS
 	Actor_KillAllWithMissingObject = 0x379C3C + _LD_OFF;
 	BgSpot02Objects_Update = 0x3831AC + _LD_OFF;
 	BgSpot06Objects_Update = 0x3833F8 + _LD_OFF;
+	EnPoField_UpdateDead = 0x387564 + _LD_OFF;
 	.patch_FrogRewardPurple 0x3898F0 + _LD_OFF : { *(.patch_FrogRewardPurple) }
 	.patch_FrogReward 0x38992C + _LD_OFF : { *(.patch_FrogReward) }
 	.patch_ChildShootingGallery 0x38AB70 + _LD_OFF : { *(.patch_ChildShootingGallery) }
@@ -605,6 +636,7 @@ SECTIONS
 	.patch_TalonGetCastleTextbox 0x3AE6E8 + _LD_OFF : { *(.patch_TalonGetCastleTextbox) }
 	.patch_GerudoArcheryOne 0x3AFA34 + _LD_OFF : { *(.patch_GerudoArcheryOne) }
 	EnHs_ActionAfterTradeCojiro = 0x3B02C0 + _LD_OFF;
+	EnGb_Talk = 0x3B3BAC + _LD_OFF;
 	.patch_ShabomAfterDamagePlayer 0x3B5060 + _LD_OFF : { *(.patch_ShabomAfterDamagePlayer) }
 	EnBubble_Disappear = 0x3B5190 + _LD_OFF;
 	EnDodojr_DropItem = 0x3B7C64 + _LD_OFF;
@@ -741,6 +773,7 @@ SECTIONS
 	.patch_OnActorSetup_SceneChange 0x452250 + _LD_OFF : { *(.patch_OnActorSetup_SceneChange) }
 	ret_OnActorSetup_SceneChange = 0x4522A4 + _LD_OFF;
 	.patch_AfterActorSetup_SceneChange 0x4522B8 + _LD_OFF : { *(.patch_AfterActorSetup_SceneChange) }
+	.patch_ActorInit1 0x452320 + _LD_OFF : { *(.patch_ActorInit1) }
 	.patch_before_GlobalContext_Update 0x452390 + _LD_OFF : { *(.patch_before_GlobalContext_Update) }
 	.patch_after_GlobalContext_Update 0x452434 + _LD_OFF : { *(.patch_after_GlobalContext_Update) }
 	.patch_FixItemsMenuSlotDuplication 0x456B90 + _LD_OFF : { *(.patch_FixItemsMenuSlotDuplication) }
@@ -770,6 +803,7 @@ SECTIONS
 	.patch_OnActorSetup_RoomChange 0x4613C4 + _LD_OFF : { *(.patch_OnActorSetup_RoomChange) }
 	ret_OnActorSetup_RoomChange = 0x461424 + _LD_OFF;
 	.patch_AfterActorSetup_RoomChange 0x461434 + _LD_OFF : { *(.patch_AfterActorSetup_RoomChange) }
+	.patch_ActorInit2 0x4615C4 + _LD_OFF : { *(.patch_ActorInit2) }
 	.patch_FixActorKillLoop 0x4615E0 + _LD_OFF : { *(.patch_FixActorKillLoop) }
 	.patch_ActorUpdate 0x461790 + _LD_OFF : { *(.patch_ActorUpdate) }
 	.patch_TitleCardUpdate 0x4618B8 + _LD_OFF : { *(.patch_TitleCardUpdate) }
@@ -809,6 +843,7 @@ SECTIONS
 	.patch_GanonBattleDeathWarp 0x496C98 + _LD_OFF : { *(.patch_GanonBattleDeathWarp) }
 	.patch_GanonRestoreMSOnDeath 0x496CB4 + _LD_OFF : { *(.patch_GanonRestoreMSOnDeath) }
 	.patch_CriticalHealthCheckThree 0x49F294 + _LD_OFF : { *(.patch_CriticalHealthCheckThree) }
+	.patch_ActorInit3 0x4A3318 + _LD_OFF : { *(.patch_ActorInit3) }
 
 	/* 0x4A5B00 */ _LD_OFF = _LD_EUR ? 0x0 : _LD_OFF;
 
@@ -820,6 +855,7 @@ SECTIONS
 	.patch_EditDrawGetItemBeforeModelSpawn 0x4C0FD0 + _LD_OFF : { *(.patch_EditDrawGetItemBeforeModelSpawn) }
 	.patch_HookshotRotation 0x4C2524 + _LD_OFF : { *(.patch_HookshotRotation) }
 	HookshotRotation = 0x4C257C + _LD_OFF;
+	.patch_DrawGetItem_ShouldRotate 0x4C4B1C + _LD_OFF : { *(.patch_DrawGetItem_ShouldRotate) }
 	.patch_EditDrawGetItemAfterMatrixUpdate 0x4C4D14 + _LD_OFF : { *(.patch_EditDrawGetItemAfterMatrixUpdate) }
 	.patch_EditDrawGetItemAfterModelSpawn 0x4C61A4 + _LD_OFF : { *(.patch_EditDrawGetItemAfterModelSpawn) }
 	Model_IsMeshGroupUsed = 0x4C6880 + _LD_OFF;
@@ -883,11 +919,13 @@ SECTIONS
 	sPrevMainBgmSeqId = 0x54ACB8 + _LD_OFF;
 	gOcarinaSongNotes = 0x54B5F2 + _LD_OFF;
 	gOcarinaSongButtons = 0x54C222 + _LD_OFF;
+	gStaticClass_55A19C = 0x55A19C + _LD_OFF;
 	ControlStick_X = 0x5655C0 + _LD_OFF;
 	ControlStick_Y = 0x5655C4 + _LD_OFF;
 	gSaveContext = 0x587958 + _LD_OFF;
 	gEffectContext = 0x58B2E0 + _LD_OFF;
 	gEffectSsInfo = 0x598530 + _LD_OFF;
+	EnPoField_SpawnSwitchFlags = 0x59B598 + _LD_OFF;
 	gUnkSequencePlayerData = 0x5AF450 + _LD_OFF;
 	gMainClass = 0x5BE5B8 + _LD_OFF;
 

@@ -32,11 +32,9 @@ void ExtendedObject_Clear(void) {
 
 // Copy of Object_Clear but only for non-persistent objects.
 void ExtendedObject_ClearNonPersistent(void) {
-    // CitraPrint("ExtendedObject_ClearNonPersistent enter %d", rExtendedObjectCtx.numPersistentEntries);
     for (s32 i = rExtendedObjectCtx.numPersistentEntries; i < OBJECT_SLOT_MAX; i++) {
         ObjectEntry* entry = &rExtendedObjectCtx.slots[i];
         if (entry->id > 0) {
-            // CitraPrint("deleting object %X", entry->id);
             if (entry->size != 0) {
                 ZAR_Destroy(&entry->zarInfo);
                 entry->size = 0;
@@ -55,7 +53,7 @@ void ExtendedObject_AfterObjectListCommand(void) {
         // Note: Player_Init has already run by this point, so whatever objects it
         // spawned in the extended context will also be marked as persistent here.
         Object_FindSlotOrSpawn(OBJECT_CUSTOM_GENERAL_ASSETS);
-        Object_FindSlotOrSpawn(3); // zelda_dangeon_keep (main dungeon object)
+        Object_FindSlotOrSpawn(OBJECT_GAMEPLAY_DUNGEON_KEEP);
         rExtendedObjectCtx.numPersistentEntries = rExtendedObjectCtx.numEntries;
     }
 }
@@ -91,20 +89,24 @@ ObjectEntry* Object_GetEntry(s16 slot) {
     return NULL;
 }
 
-ObjectEntry* Object_FindEntryOrSpawn(s16 objectId) {
-    ObjectEntry* obj;
+ObjectEntry* Object_FindEntry(s16 objectId) {
     s32 slot = Object_GetSlot(&gGlobalContext->objectCtx, objectId);
-    if (slot >= 0) {
-        if (slot >= OBJECT_SLOT_MAX) {
-            obj = &rExtendedObjectCtx.slots[slot - OBJECT_SLOT_MAX];
-        } else {
-            obj = &gGlobalContext->objectCtx.slots[slot];
-        }
-        return obj;
-    } else {
-        slot = Object_Spawn((ObjectContext*)&rExtendedObjectCtx, objectId);
-        return &rExtendedObjectCtx.slots[slot];
+    if (slot >= OBJECT_SLOT_MAX) {
+        return &rExtendedObjectCtx.slots[slot - OBJECT_SLOT_MAX];
     }
+    if (slot >= 0) {
+        return &gGlobalContext->objectCtx.slots[slot];
+    }
+    return NULL;
+}
+
+ObjectEntry* Object_FindEntryOrSpawn(s16 objectId) {
+    ObjectEntry* obj = Object_FindEntry(objectId);
+    if (obj != NULL) {
+        return obj;
+    }
+    s32 slot = Object_Spawn((ObjectContext*)&rExtendedObjectCtx, objectId);
+    return &rExtendedObjectCtx.slots[slot];
 }
 
 s32 Object_FindSlotOrSpawn(s16 objectId) {
@@ -113,6 +115,20 @@ s32 Object_FindSlotOrSpawn(s16 objectId) {
         objectSlot = Object_Spawn((ObjectContext*)&rExtendedObjectCtx, objectId) + OBJECT_SLOT_MAX;
     }
     return objectSlot;
+}
+
+ObjectEntry* Object_FindEntryByZarInfo(ZARInfo* zarInfo) {
+    for (s32 i = 0; i < gGlobalContext->objectCtx.numEntries; i++) {
+        if (&gGlobalContext->objectCtx.slots[i].zarInfo == zarInfo) {
+            return &gGlobalContext->objectCtx.slots[i];
+        }
+    }
+    for (s32 i = 0; i < rExtendedObjectCtx.numEntries; i++) {
+        if (&rExtendedObjectCtx.slots[i].zarInfo == zarInfo) {
+            return &rExtendedObjectCtx.slots[i];
+        }
+    }
+    return NULL;
 }
 
 static s16 Object_GetIdFromSlot(ObjectContext* objectCtx, s16 slot) {

@@ -1,3 +1,5 @@
+#include "s_enemy_table.h"
+
 #include "enemizer.h"
 #include "objects.h"
 #include "common.h"
@@ -13,94 +15,19 @@
 #define SKIP_ACTOR_ENTRY TRUE
 #define KEEP_ACTOR_ENTRY FALSE
 
-static EnemyOverride rEnemyOverrides[ENEMY_OVERRIDES_MAX];
-static s32 rEnemyOverrides_Count = 0;
-static u8 sRoomLoadSignal        = FALSE;
-static Actor* sSFMWolfos         = NULL;
-static u8 sLastRoomCleared       = FALSE;
+EnemyOverride rEnemyOverrides[ENEMY_OVERRIDES_MAX];
+s32 rEnemyOverrides_Count  = 0;
+static u8 sRoomLoadSignal  = FALSE;
+static Actor* sSFMWolfos   = NULL;
+static u8 sLastRoomCleared = FALSE;
 EnemizerLocationFlags gEnemizerLocationFlags;
 
+#define X(_enemyId, _name, _actorId, _possibleParams, ...) \
+    [_enemyId] = { .name = _name, .actorId = _actorId, .possibleParams = _possibleParams },
+EnemyData gEnemyTable[ENEMY_MAX] = { ENEMY_TABLE };
+#undef X
+
 static EnemyOverride Enemizer_FindOverride(u8 scene, u8 layer, u8 room, u8 actorEntry);
-
-// Enemies that need to spawn at ground level to work properly.
-static EnemyActorData sGroundedEnemies[] = {
-    { .actorId = ACTOR_STALFOS, .actorParams = 0x0002 }, // Rises from ground
-    { .actorId = ACTOR_DODONGO, .anyParams = TRUE },
-    { .actorId = ACTOR_LEEVER, .anyParams = TRUE },
-    { .actorId = ACTOR_GOHMA_LARVA, .actorParams = 0x0007 }, // Stationary egg
-    { .actorId = ACTOR_BABY_DODONGO, .anyParams = TRUE },
-    { .actorId = ACTOR_DARK_LINK, .anyParams = TRUE },
-    { .actorId = ACTOR_TAILPASARAN, .anyParams = TRUE },
-    { .actorId = ACTOR_STINGER_FLOOR, .anyParams = TRUE },
-    { .actorId = ACTOR_DEKU_BABA, .anyParams = TRUE },
-    { .actorId = ACTOR_MAD_SCRUB, .anyParams = TRUE },
-    { .actorId = ACTOR_BUBBLE, .actorParams = 0xFFFE }, // Fire Bubble
-    { .actorId = ACTOR_FLYING_FLOOR_TILE, .anyParams = TRUE },
-    { .actorId = ACTOR_BEAMOS, .anyParams = TRUE },
-    { .actorId = ACTOR_REDEAD, .anyParams = TRUE },
-    { .actorId = ACTOR_SKULLWALLTULA, .anyParams = TRUE },
-    { .actorId = ACTOR_DEAD_HAND_HAND, .anyParams = TRUE },
-    { .actorId = ACTOR_WITHERED_DEKU_BABA, .anyParams = TRUE },
-    { .actorId = ACTOR_ANUBIS_SPAWNER, .anyParams = TRUE },
-    { .actorId = ACTOR_FLYING_POT, .anyParams = TRUE },
-    { .actorId = ACTOR_HINT_DEKU_SCRUB, .anyParams = TRUE },
-    { .actorId = ACTOR_STALCHILD, .anyParams = TRUE },
-};
-
-// clang-format off
-static EnemyObjectDependency sEnemyObjectDeps[] = {
-    {
-        // Poe (actor profile only points to object 1)
-        .key      = { .actorId = ACTOR_POE, .actorParams = 0x0000 },
-        .objectId = 0x009,
-    },
-    {
-        // Sharp (Composer Brother)
-        .key      = { .actorId = ACTOR_POE, .actorParams = 0x0002 },
-        .objectId = 0x06E,
-    },
-    {
-        // Flat (Composer Brother)
-        .key      = { .actorId = ACTOR_POE, .actorParams = 0x0003 },
-        .objectId = 0x06E,
-    },
-    {
-        // Bari -> Biri
-        .key      = { .actorId = ACTOR_BARI, .anyParams = TRUE },
-        .objectId = 0x021,
-    },
-    {
-        // Dodongo -> dungeon object for fire breath
-        .key      = { .actorId = ACTOR_DODONGO, .anyParams = TRUE },
-        .objectId = 0x003,
-    },
-    {
-        // Gohma Egg -> dungeon object for egg fragments
-        .key      = { .actorId = ACTOR_GOHMA_LARVA, .anyParams = TRUE },
-        .objectId = 0x003,
-    },
-    {
-        // Flare Dancer -> dungeon object for flames
-        .key      = { .actorId = ACTOR_FLARE_DANCER, .anyParams = TRUE },
-        .objectId = 0x003,
-    },
-    {
-        // Like Like -> Deku Shield object
-        .key      = { .actorId = ACTOR_LIKE_LIKE, .anyParams = TRUE },
-        .objectId = 0x0CB,
-    },
-    {
-        // Like Like -> Hylian Shield object
-        .key      = { .actorId = ACTOR_LIKE_LIKE, .anyParams = TRUE },
-        .objectId = 0x0DC,
-    },
-    {
-        // Anubis Spawner -> Anubis object (actor profile only points to object 1)
-        .key      = { .actorId = ACTOR_ANUBIS_SPAWNER, .anyParams = TRUE },
-        .objectId = 0x0D6,
-    },
-};
-// clang-format on
 
 u8 Enemizer_IsEnemyRandomized(EnemyId enemyId) {
     return gSettingsContext.enemizer == ON && gSettingsContext.enemizerList[enemyId] == ENEMYMODE_RANDOMIZED;
@@ -111,19 +38,20 @@ void Enemizer_Init(void) {
         return;
     }
 
-    while (rEnemyOverrides[rEnemyOverrides_Count].actorId != 0) {
+    while (rEnemyOverrides[rEnemyOverrides_Count].enemyId != ENEMY_INVALID) {
         rEnemyOverrides_Count++;
     }
 
     // Initialize flags for specific location overrides.
     // For groups of enemies with the same location type, just check one of them.
-    gEnemizerLocationFlags.sfmWolfos      = Enemizer_FindOverride(86, 0, 0, 1).actorId != 0;
-    gEnemizerLocationFlags.dcLizalfos     = Enemizer_FindOverride(1, 0, 3, 1).actorId != 0; // both Vanilla and MQ
-    gEnemizerLocationFlags.gerudoFighters = Enemizer_FindOverride(12, 0, 1, 1).actorId != 0;
-    gEnemizerLocationFlags.nabooruKnuckle = Enemizer_FindOverride(23, 0, 1, 0).actorId != 0;
+    gEnemizerLocationFlags.sfmWolfos = Enemizer_FindOverride(86, 0, 0, 1).enemyId != ENEMY_INVALID;
+    gEnemizerLocationFlags.dcLizalfos =
+        Enemizer_FindOverride(1, 0, 3, 1).enemyId != ENEMY_INVALID; // both Vanilla and MQ
+    gEnemizerLocationFlags.gerudoFighters = Enemizer_FindOverride(12, 0, 1, 1).enemyId != ENEMY_INVALID;
+    gEnemizerLocationFlags.nabooruKnuckle = Enemizer_FindOverride(23, 0, 1, 0).enemyId != ENEMY_INVALID;
     gEnemizerLocationFlags.shadowShipStalfos =
         Enemizer_FindOverride(7, 0, 21, gSettingsContext.shadowTempleDungeonMode == DUNGEONMODE_VANILLA ? 13 : 16)
-            .actorId != 0;
+            .enemyId != ENEMY_INVALID;
 }
 
 static EnemyOverride Enemizer_FindOverride(u8 scene, u8 layer, u8 room, u8 actorEntry) {
@@ -381,12 +309,41 @@ void Enemizer_MoveSpecificEnemies(ActorEntry* actorEntry) {
             actorEntry->pos.y = yGroundIntersect + 60;
         }
     } else if (!isInvalidGround) {
-        // Snap enemy to the ground if needed
-        for (u32 i = 0; i < ARRAY_SIZE(sGroundedEnemies); i++) {
-            if (actorEntry->id == sGroundedEnemies[i].actorId &&
-                (sGroundedEnemies[i].anyParams || actorEntry->params == sGroundedEnemies[i].actorParams)) {
-                actorEntry->pos.y = yGroundIntersect;
-            }
+        // Snap enemy to ground level if needed for the actor to work properly.
+        Bool grounded = FALSE;
+        switch (actorEntry->id) {
+            case ACTOR_STALFOS:
+                grounded = actorEntry->params == 0x0002; // Rises from ground
+                break;
+            case ACTOR_GOHMA_LARVA:
+                grounded = actorEntry->params == 0x0007; // Stationary egg
+                break;
+            case ACTOR_BUBBLE:
+                grounded = actorEntry->params == 0xFFFE; // Fire Bubble
+                break;
+            case ACTOR_DODONGO:
+            case ACTOR_LEEVER:
+            case ACTOR_BABY_DODONGO:
+            case ACTOR_DARK_LINK:
+            case ACTOR_TAILPASARAN:
+            case ACTOR_STINGER_FLOOR:
+            case ACTOR_DEKU_BABA:
+            case ACTOR_MAD_SCRUB:
+            case ACTOR_FLYING_FLOOR_TILE:
+            case ACTOR_BEAMOS:
+            case ACTOR_REDEAD:
+            case ACTOR_SKULLWALLTULA:
+            case ACTOR_DEAD_HAND_HAND:
+            case ACTOR_WITHERED_DEKU_BABA:
+            case ACTOR_ANUBIS_SPAWNER:
+            case ACTOR_FLYING_POT:
+            case ACTOR_HINT_DEKU_SCRUB:
+            case ACTOR_STALCHILD:
+                grounded = TRUE;
+                break;
+        }
+        if (grounded) {
+            actorEntry->pos.y = yGroundIntersect;
         }
     }
 }
@@ -394,11 +351,25 @@ void Enemizer_MoveSpecificEnemies(ActorEntry* actorEntry) {
 static void Enemizer_SpawnObjectsForActor(s16 actorId, s16 params) {
     Object_FindEntryOrSpawn(gActorOverlayTable[actorId].initInfo->objectId);
 
-    for (u32 i = 0; i < ARRAY_SIZE(sEnemyObjectDeps); i++) {
-        if (actorId == sEnemyObjectDeps[i].key.actorId &&
-            (sEnemyObjectDeps[i].key.anyParams || params == sEnemyObjectDeps[i].key.actorParams)) {
-            Object_FindEntryOrSpawn(sEnemyObjectDeps[i].objectId);
-        }
+    switch (actorId) {
+        case ACTOR_POE: // actor profile only points to object 1
+            Object_FindEntryOrSpawn(params == 0 ? OBJECT_POE : OBJECT_POE_COMPOSER);
+            break;
+        case ACTOR_BARI: // can spawn Biri
+            Object_FindEntryOrSpawn(OBJECT_BIRI);
+            break;
+        case ACTOR_DODONGO:      // for fire breath
+        case ACTOR_GOHMA_LARVA:  // for egg fragments
+        case ACTOR_FLARE_DANCER: // for flames
+            Object_FindEntryOrSpawn(OBJECT_GAMEPLAY_DUNGEON_KEEP);
+            break;
+        case ACTOR_LIKE_LIKE: // can spawn shields
+            Object_FindEntryOrSpawn(OBJECT_GI_DEKU_SHIELD);
+            Object_FindEntryOrSpawn(OBJECT_GI_HYLIAN_SHIELD);
+            break;
+        case ACTOR_ANUBIS_SPAWNER: // actor profile only points to object 1
+            Object_FindEntryOrSpawn(OBJECT_ANUBIS);
+            break;
     }
 }
 
@@ -417,7 +388,7 @@ u8 Enemizer_OverrideActorEntry(ActorEntry* actorEntry, s32 actorEntryIndex) {
         Enemizer_FindOverride(gGlobalContext->sceneNum, rSceneLayer, gGlobalContext->roomNum, actorEntryIndex);
 
     // Do nothing if the override doesn't exist
-    if (enemyOverride.actorId == 0) {
+    if (enemyOverride.enemyId == ENEMY_INVALID) {
         return KEEP_ACTOR_ENTRY;
     }
 
@@ -441,8 +412,8 @@ u8 Enemizer_OverrideActorEntry(ActorEntry* actorEntry, s32 actorEntryIndex) {
         }
     }
 
-    actorEntry->id     = enemyOverride.actorId;
-    actorEntry->params = enemyOverride.params;
+    actorEntry->id     = gEnemyTable[enemyOverride.enemyId].actorId;
+    actorEntry->params = gEnemyTable[enemyOverride.enemyId].possibleParams[enemyOverride.paramsIdx];
 
     Enemizer_MoveSpecificLocations(actorEntry, actorEntryIndex);
     Enemizer_MoveSpecificEnemies(actorEntry);
@@ -570,8 +541,10 @@ void Enemizer_AfterActorSetup(void) {
     }
 
     EnemyOverride enemySpawnerOvr = Enemizer_GetSpawnerOverride();
-    if (enemySpawnerOvr.actorId != 0) {
-        Enemizer_SpawnObjectsForActor(enemySpawnerOvr.actorId, enemySpawnerOvr.params);
+    if (enemySpawnerOvr.enemyId != ENEMY_INVALID) {
+        s16 actorId = gEnemyTable[enemySpawnerOvr.enemyId].actorId;
+        s16 params  = gEnemyTable[enemySpawnerOvr.enemyId].possibleParams[enemySpawnerOvr.paramsIdx];
+        Enemizer_SpawnObjectsForActor(actorId, params);
     }
 
     sSFMWolfos       = NULL;

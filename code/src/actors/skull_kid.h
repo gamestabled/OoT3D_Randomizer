@@ -9,8 +9,10 @@ typedef void (*EnSkjActionFunc)(struct EnSkj*, GlobalContext*);
 
 typedef struct EnSkj {
     /* 0x0000 */ Actor actor;
-    /* 0x01A4 */ SkelAnime skelAnime;
-    /* 0x0228 */ char unk_228[0x784];
+    /* 0x01A4 */ SkelAnime anime;
+    /* 0x0228 */ char unk_228[0x750];
+    /* 0x0978 */ SkeletonAnimationModel* needleModel;
+    /* 0x097C */ char unk_97C[0x030];
     /* 0x09AC */ EnSkjActionFunc actionFunc;
     /* 0x09B0 */ char unk_9B0[0x65];
     /* 0x0A15 */ u8 action;
@@ -20,5 +22,6 @@ typedef struct EnSkj {
 _Static_assert(sizeof(EnSkj) == 0xA48, "EnSkj size");
 
 void EnSkj_rUpdate(Actor* thisx, GlobalContext* globalCtx);
+void EnSkj_ReinitModels(EnSkj* this);
 
 #endif //_SKULL_KID_H_

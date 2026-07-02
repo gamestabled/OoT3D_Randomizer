@@ -2424,4 +2424,16 @@ void HintTable_Init_Item() {
                        Text{"something to play songs", /*french*/"quelque chose qui fait des sons", /*spanish*/"algo para tocar canciones", /*italian*/"qualcosa per suonare melodie", /*german*/"etwas um Lieder zu spielen"},
                      }
     );
+
+    hintTable[UNBOTTLED_BIG_POE] = HintText::Item({
+                       // obscure text
+                       Text{"concentrated hatred", /*french*/"l'essence de la haine", /*spanish*/"odio concentrado", /*italian*/"acredine concentrata", /*german*/"allen Hass der Welt"},
+                     }, {
+                       // ambiguous text
+                       Text{"a token of recognition", /*french*/"une preuve de reconnaissance", /*spanish*/"una prueba de reconocimiento", /*italian*/"un simbolo di riconoscimento", /*german*/"ein Zeichen der Anerkennung"},
+                     }, {
+                       // clear text
+                       Text {"a Big Poe", /*NA french*/"un Grand esprit", /*NA spanish*/"un Gran Poe", /*EUR english*/"", /*EUR french*/"une Âme", /*EUR spanish*/"", /*italian*/"un Grande Poo", /*german*/"ein Nachtschwärmer"},
+                     }
+    );
 }

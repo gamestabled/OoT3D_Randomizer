@@ -5,16 +5,11 @@
 
 #include "z3D/z3D.h"
 
-typedef struct EnemyActorData {
+typedef struct EnemyData {
+    char* name;
     s16 actorId;
-    s16 actorParams;
-    u8 anyParams;
-} EnemyActorData;
-
-typedef struct EnemyObjectDependency {
-    EnemyActorData key;
-    u16 objectId;
-} EnemyObjectDependency;
+    u16* possibleParams;
+} EnemyData;
 
 typedef struct EnemizerLocationFlags {
     u8 sfmWolfos : 1;
@@ -23,6 +18,10 @@ typedef struct EnemizerLocationFlags {
     u8 nabooruKnuckle : 1;
     u8 shadowShipStalfos : 1;
 } EnemizerLocationFlags;
+
+extern EnemyOverride rEnemyOverrides[ENEMY_OVERRIDES_MAX];
+extern s32 rEnemyOverrides_Count;
+extern EnemyData gEnemyTable[ENEMY_MAX];
 
 // Helper flags to check if specific location overrides exist
 extern EnemizerLocationFlags gEnemizerLocationFlags;

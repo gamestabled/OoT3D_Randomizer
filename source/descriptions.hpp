@@ -191,6 +191,8 @@ extern string_view ocarinaButtonsDesc;
 extern string_view shuffleRupeesDesc;
 extern string_view shuffleRecoveryHeartsDesc;
 
+extern string_view shuffleBigPoesDesc;
+
 extern string_view mapCompassStartWith;
 extern string_view mapCompassVanilla;
 extern string_view mapCompassOwnDungeon;
@@ -408,7 +410,10 @@ extern string_view mirrorWorldRandomDesc;
 
 extern string_view betaSoldOutDesc;
 
-extern string_view soullessPurpleFlameDesc;
+extern string_view soullessVanillaDesc;
+extern string_view soullessTexturelessDesc;
+extern string_view soullessGrayscaleDesc;
+extern string_view soullessPurpleFlamesDesc;
 extern string_view soullessFlashingDesc;
 
 extern string_view musicRandoDesc;

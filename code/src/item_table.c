@@ -331,6 +331,7 @@ static ItemRow rItemTable[] = {
     [GI_OCARINA_BUTTON_A]   = ITEM_ROW(0x53, CHEST_MAJOR,     0x41, 0x93F4,   0x0123, 0x00, 0xFF, 0xFF, 0xFF,   0x04, ItemUpgrade_None, ItemEffect_OcarinaNote, OCARINA_BUTTON_A, -1), // Ocarina Note Button A
 
     [GI_RUPOOR]             = ITEM_ROW(0x53, CHEST_MAJOR,     0x41, 0x9002,   0x0083, 0x00, 0xFF, 0xFF, 0xFF,   0x6D, ItemUpgrade_None, ItemEffect_Rupoor, -1, -1), // Rupoor
+    [GI_UNBOTTLED_BIG_POE]  = ITEM_ROW(0x53, CHEST_MAJOR,     0x41, 0x9080,   0x0084, 0x01, 0x00, 0xFF, 0xFF,   0xFF, ItemUpgrade_None, ItemEffect_UnbottledBigPoe, -1, -1), // Unbottled spirit for Big Poe Shuffle
 };
 // clang-format on
 

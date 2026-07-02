@@ -11,7 +11,8 @@ typedef void (*EnZfActionFunc)(struct EnZf*, GlobalContext*);
 
 typedef struct EnZf {
     /* 0x000 */ Actor actor;
-    /* 0x1A4 */ char unk_1A4[0x8A4];
+    /* 0x1A4 */ SkelAnime anime;
+    /* 0x228 */ char unk_228[0x820];
     /* 0xA48 */ s32 action;
     /* 0xA4C */ char unk_A4C[0x024];
     /* 0xA70 */ s16 alpha;
@@ -20,5 +21,8 @@ typedef struct EnZf {
 _Static_assert(sizeof(EnZf) == 0xBE8, "EnZf size");
 
 void EnZf_rUpdate(Actor* thisx, GlobalContext* globalCtx);
+void EnZf_rDraw(Actor* thisx, GlobalContext* globalCtx);
+
+void EnZf_ReinitModels(EnZf* this);
 
 #endif //_LIZALFOS_H_
