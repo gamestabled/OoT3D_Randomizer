@@ -63,12 +63,6 @@ void AreaTable_Init_SpiritTemple() {
                      EventAccess(&NutCrate, { [] { return true; } }),
                  },
                  {
-                     // Locations
-                     LocationAccess(SPIRIT_TEMPLE_GS_METAL_FENCE, { [] {
-                                        return CanDefeatEnemies(6, 0, 1) && CanPassEnemy(6, 0, 3, 0) &&
-                                               (Boomerang || Slingshot || (HasExplosives && LogicSpiritChildBombchu)) &&
-                                               CanDefeatEnemy(6, 0, 27, 0);
-                                    } }),
                  },
                  {
                      // Exits
@@ -76,6 +70,10 @@ void AreaTable_Init_SpiritTemple() {
                            return CanDefeatEnemies(6, 0, 1);
                             }
                         }),
+                     Entrance(SPIRIT_TEMPLE_CHILD_TORCHES_ROOM_BEFORE_BRIDGE, { [] {
+                           return CanDefeatEnemies(6, 0, 1);
+                            }
+                        }),   
                      Entrance(SPIRIT_TEMPLE_CHILD_CLIMB, { [] {
                                   return SmallKeys(SPIRIT_TEMPLE, 1) &&
                                          CanPassEnemies(6, 0, 1, { 1, 2 }, SpaceAroundEnemy::NARROW) &&
@@ -154,7 +152,6 @@ void AreaTable_Init_SpiritTemple() {
                  },
                  {
                     LocationAccess(SPIRIT_TEMPLE_CHILD_EARLY_TORCHES_CHEST, { [] {
-
                                                return Here(SPIRIT_TEMPLE_CHILD_TORCHES_ROOM_BEFORE_BRIDGE,{[]{return Sticks || CanUse(DINS_FIRE);}});
                                     } }),
                  },
@@ -174,11 +171,13 @@ void AreaTable_Init_SpiritTemple() {
                      EventAccess(&NutCrate, { [] { return true; } }),
                  },
                  {
-                     
+                    // Locations
+                    LocationAccess(SPIRIT_TEMPLE_GS_METAL_FENCE, { [] { return Boomerang || Slingshot;} }),
                  },
                  {
                      // Exits
-                     Entrance(SPIRIT_TEMPLE_CHILD_ANUBIS_ROOM, {[]{ return true;}}),
+                     Entrance(SPIRIT_TEMPLE_CHILD_TORCHES_ROOM_AFTER_BRIDGE, {[]{ return Here(SPIRIT_TEMPLE_CHILD_TORCHES_ROOM_AFTER_BRIDGE, {[]{return true;}});}}),
+                     Entrance(SPIRIT_TEMPLE_CHILD, {[]{return true;}}),
                  });
 
         
