@@ -2097,7 +2097,7 @@ void HintTable_Init_Exclude_Dungeon() {
                        Text{"#behind the walls of fire in the Beamos room of GTG# lies", /*french*/"#behind the walls of fire in the Beamos room of GTG# lies", /*spanish*/"#behind the walls of fire in the Beamos room of GTG# lies", /*italian*/"#behind the walls of fire in the Beamos room of GTG# lies", /*german*/"#behind the walls of fire in the Beamos room of GTG# lies"}
    );
    
-   hintTable[GERUDO_TRAINING_GROUNDS_BEAMOS_ROOM_HEART_1] = HintText::Exclude({
+   hintTable[GERUDO_TRAINING_GROUNDS_BEAMOS_ROOM_HEART_2] = HintText::Exclude({
                        // obscure text
                        Text{"#dinos, fire and lasers# protect", /*french*/"#dinos, fire and lasers# protect", /*spanish*/"#dinos, fire and lasers# protect", /*italian*/"#dinos, fire and lasers# protect", /*german*/"#dinos, fire and lasers# protect"},
                       },{},
