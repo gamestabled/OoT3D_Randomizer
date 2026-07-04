@@ -22,7 +22,7 @@
 #define READY_ON_LAND 1
 #define READY_IN_WATER 2
 
-static ItemOverride rItemOverrides[640] = { 0 };
+static ItemOverride rItemOverrides[800] = { 0 };
 static s32 rItemOverrides_Count         = 0;
 
 static ItemOverride rPendingOverrideQueue[7] = { 0 };
