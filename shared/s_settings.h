@@ -477,11 +477,11 @@ typedef enum OcarinaNoteInstrumentSetting {
     OCARINA_INSTR_SETTING_DEFAULT,
 } OcarinaNoteInstrumentSetting;
 
-typedef enum DungeonInfo {
+typedef enum DungeonImportance {
     DUNGEON_NEITHER,
     DUNGEON_BARREN,
     DUNGEON_WOTH,
-} DungeonInfo;
+} DungeonImportance;
 
 typedef enum TrailColorMode {
     TRAILCOLOR_VANILLAMODE,

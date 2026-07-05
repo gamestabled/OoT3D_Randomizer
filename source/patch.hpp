@@ -27,7 +27,7 @@ typedef struct PatchSymbols {
     u32 rEntranceOverrides;
     u32 rBGMOverrides;
     u32 rSfxData;
-    u32 rDungeonInfoData;
+    u32 rDungeonImportance;
     u32 rGsLocOverrides;
     u32 rEnemyOverrides;
 } PatchSymbols;

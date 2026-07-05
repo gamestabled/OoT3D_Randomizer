@@ -111,7 +111,7 @@ constexpr std::array<HintSetting, 4> hintSettingTable{ {
     },
 } };
 
-std::array<DungeonInfo, 10> dungeonInfoData;
+std::array<DungeonImportance, 10> dungeonImportance;
 
 static Area* GetHintRegion(const AreaKey area) {
 
@@ -1062,15 +1062,15 @@ void CreateGossipStoneHints() {
             PlacementLog_Msg(wothDungeon + "\n");
         }
 
-        // Set DungeonInfo array for each dungeon
-        for (uint i = 0; i < dungeonInfoData.size(); i++) {
+        // Set DungeonImportance array for each dungeon
+        for (uint i = 0; i < dungeonImportance.size(); i++) {
             std::string dungeonName = dungeonNames[i];
             if (std::find(barrenDungeons.begin(), barrenDungeons.end(), dungeonName) != barrenDungeons.end()) {
-                dungeonInfoData[i] = DungeonInfo::DUNGEON_BARREN;
+                dungeonImportance[i] = DungeonImportance::DUNGEON_BARREN;
             } else if (std::find(wothDungeons.begin(), wothDungeons.end(), dungeonName) != wothDungeons.end()) {
-                dungeonInfoData[i] = DungeonInfo::DUNGEON_WOTH;
+                dungeonImportance[i] = DungeonImportance::DUNGEON_WOTH;
             } else {
-                dungeonInfoData[i] = DungeonInfo::DUNGEON_NEITHER;
+                dungeonImportance[i] = DungeonImportance::DUNGEON_NEITHER;
             }
         }
 

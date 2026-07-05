@@ -259,7 +259,7 @@ class HintText {
 using ConditionalAlwaysHint = std::pair<LocationKey, std::function<bool()>>;
 
 // 10 dungeons as GTG and GC are excluded
-extern std::array<DungeonInfo, 10> dungeonInfoData;
+extern std::array<DungeonImportance, 10> dungeonImportance;
 
 extern std::array<ConditionalAlwaysHint, 9> conditionalAlwaysHints;
 

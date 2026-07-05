@@ -9,7 +9,7 @@ LD_TEXT_START = '_LD_TEXT_START'
 # Put here the symbols from the patch which are needed by the app
 desiredSymbols = ['rItemOverrides', 'gSettingsContext', 'gSpoilerData', 'gSpoilerDataLocs', 'rScrubRandomItemPrices',
                   'rDungeonRewardOverrides', 'rCustomMessages', 'numCustomMessageEntries', 'ptrCustomMessageEntries',
-                  'rShopsanityPrices', 'rEntranceOverrides', 'rBGMOverrides', 'rSfxData', 'rDungeonInfoData',
+                  'rShopsanityPrices', 'rEntranceOverrides', 'rBGMOverrides', 'rSfxData', 'rDungeonImportance',
                   'rGsLocOverrides', 'rEnemyOverrides']
 
 def getSymbolsTable(elfFilePath):

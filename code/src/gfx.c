@@ -49,7 +49,7 @@ static u64 lastTick       = 0;
 static u64 ticksElapsed   = 0;
 static bool isAsleep      = false;
 
-DungeonInfo rDungeonInfoData[10];
+DungeonImportance rDungeonImportance[10];
 
 #define MAX_TICK_DELTA (TICKS_PER_SEC * 3)
 
@@ -558,9 +558,9 @@ static void Gfx_DrawDungeonItems(void) {
             // Way of the Hero
             if (gSettingsContext.compassesShowWotH) {
                 if (hasCompass) {
-                    if (rDungeonInfoData[dungeonId] == DUNGEON_WOTH) {
+                    if (rDungeonImportance[dungeonId] == DUNGEON_WOTH) {
                         Draw_DrawIcon(300, yPos, COLOR_ICON_WOTH, ICON_TRIFORCE);
-                    } else if (rDungeonInfoData[dungeonId] == DUNGEON_BARREN) {
+                    } else if (rDungeonImportance[dungeonId] == DUNGEON_BARREN) {
                         Draw_DrawIcon(300, yPos, COLOR_ICON_FOOL, ICON_FOOL);
                     } else {
                         Draw_DrawCharacter(300, yPos, COLOR_WHITE, '-');

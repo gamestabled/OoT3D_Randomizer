@@ -365,12 +365,12 @@ bool WriteAllPatches() {
     }
 
     /*---------------------------------
-    |        rDungeonInfoData         |
+    |       rDungeonImportance        |
     ---------------------------------*/
 
-    patchOffset = V_TO_P(gPatchSymbols.rDungeonInfoData);
-    patchSize   = sizeof(dungeonInfoData);
-    if (!WritePatch(patchOffset, patchSize, (char*)(&dungeonInfoData), code, bytesWritten, totalRW, buf)) {
+    patchOffset = V_TO_P(gPatchSymbols.rDungeonImportance);
+    patchSize   = sizeof(dungeonImportance);
+    if (!WritePatch(patchOffset, patchSize, (char*)(&dungeonImportance), code, bytesWritten, totalRW, buf)) {
         return false;
     }
 
