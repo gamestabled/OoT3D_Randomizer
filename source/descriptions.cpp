@@ -14,7 +14,7 @@ void DescriptionTable_Init() {
     std::string text(data, description_table_jsonc_size);
 
     json table = json::parse(text.begin(), text.end(), nullptr, true, true);
-    for (auto i = table.begin(); i < table.end(); ++i) {
+    for (auto i = table.begin(); i != table.end(); ++i) {
         const std::string& key = i.key();
         const json& entry      = i.value();
 
