@@ -137,7 +137,7 @@ void AreaTable_Init_SpiritTemple() {
                  {
                      // Exits
                      Entrance(SPIRIT_TEMPLE_CHILD_STALFOS_ROOM_AFTER_BRIDGE, {[]{ return true;}}),
-                     Entrance(SPIRIT_TEMPLE_CHILD_TORCHES_ROOM_AFTER_BRIDGE, {[]{ CanDefeatEnemy(6, 0, 27, 0);}}) 
+                     Entrance(SPIRIT_TEMPLE_CHILD_TORCHES_ROOM_AFTER_BRIDGE, {[]{return CanDefeatEnemy(6, 0, 27, 0);}}),
                  });
 
         areaTable[SPIRIT_TEMPLE_CHILD_TORCHES_ROOM_AFTER_BRIDGE] =
