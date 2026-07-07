@@ -605,7 +605,7 @@ DungeonInfo GerudoTrainingGrounds =
                   GERUDO_TRAINING_GROUNDS_HEAVY_BLOCK_FOURTH_CHEST,
                   GERUDO_TRAINING_GROUNDS_FREESTANDING_KEY,
                   GERUDO_TRAINING_GROUNDS_BEAMOS_ROOM_HEART_1,
-                  GERUDO_TRAINING_GROUNDS_BEAMOS_ROOM_HEART_2 },
+                  GERUDO_TRAINING_GROUNDS_BEAMOS_ROOM_HEART_2, },
                 {
                     // MQ Locations
                     GERUDO_TRAINING_GROUNDS_MQ_LOBBY_RIGHT_CHEST,
