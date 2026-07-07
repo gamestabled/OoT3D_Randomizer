@@ -249,7 +249,7 @@ void AreaTable_Init_ShadowTemple() {
                 // Exits
                 Entrance(SHADOW_TEMPLE_BOSS_ENTRYWAY,
                          { [] { return SmallKeys(SHADOW_TEMPLE, 5) && CanUse(HOVER_BOOTS) && BossKeyShadowTemple; } }),
-                Entrance(SHADOW_TEMPLE_BEYOND_BOAT, { [] { return CanUse(BOW) || HasExplosives; } }),
+                Entrance(SHADOW_TEMPLE_BEYOND_BOAT, { [] { return CanUse(BOW) || HasExplosives || GoronBracelet || CanUse(DINS_FIRE); } }),
             });
     }
 
