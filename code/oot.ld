@@ -507,7 +507,7 @@ SECTIONS
 	FaceAnim_Init = 0x35C358 + _LD_OFF;
 	.patch_Audio_PlayFanfare 0x35C528 + _LD_OFF : { *(.patch_Audio_PlayFanfare) }
 	Audio_PlayFanfare = 0x35C528 + _LD_OFF;
-	.patch_DeleteEquipment 0x35D1F8 + _LD_OFF : { *(.patch_DeleteEquipment) }
+	.patch_DeleteEquipment 0x35D1F4 + _LD_OFF : { *(.patch_DeleteEquipment) }
 	LinkDamage = 0x35D304 + _LD_OFF;
 	FireDamage = 0x35D8D8 + _LD_OFF;
 	Player_InBlockingCsMode = 0x35DB20 + _LD_OFF;

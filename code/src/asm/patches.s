@@ -1425,6 +1425,7 @@ PATCH TitleLinkObject
 
 PATCH DeleteEquipment
     bl hook_DeleteEquipment
+    nop
 
 PATCH GetQuickItem
     bl hook_GetQuickItem

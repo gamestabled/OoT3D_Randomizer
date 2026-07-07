@@ -1835,6 +1835,7 @@ HOOK DeleteEquipment
     cmp r0,#0x0
     pop {r0-r12, lr}
     strheq r2,[r12,#0xB6]
+    cmp r1,#0x2
     bx lr
 
 HOOK GetQuickItem
