@@ -219,11 +219,12 @@ void AreaTable_Init_ShadowTemple() {
                  },
                  {
                      // Exits
-                     Entrance(SHADOW_TEMPLE_ACCROSS_CAVERN, { [] {
+                     Entrance(SHADOW_TEMPLE_ACROSS_CAVERN, { [] {
                                   return CanUse(BOW) || CanUse(DISTANT_SCARECROW) || (LogicShadowStatue && HasBombchus);
                               } }),
                  });
-        areaTable[SHADOW_TEMPLE_ACCROSS_CAVERN] = Area(
+
+        areaTable[SHADOW_TEMPLE_ACROSS_CAVERN] = Area(
             "Shadow Temple across cavern", "Shadow Temple", SHADOW_TEMPLE, NO_DAY_NIGHT_CYCLE,
             {
                 // Events
