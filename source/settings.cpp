@@ -3517,15 +3517,15 @@ bool ValidateSettings() {
         }
     }
 
-    if(MQDungeonCount.IsNot(0) && ShuffleRecoveryHearts){
+    if (MQDungeonCount.IsNot(0) && ShuffleRecoveryHearts) {
         printf("\x1b[%d;0H"
-                   "----------------------------------------"
-                   "For your information: Recovery hearts\n"
-                   "inside MQ dungeons will currently not\n"
-                   "be shuffled.\n"
-                   "----------------------------------------",
-                   posY);
-                   posY += 10;
+               "----------------------------------------"
+               "For your information: Recovery hearts\n"
+               "inside MQ dungeons will currently not\n"
+               "be shuffled.\n"
+               "----------------------------------------",
+               posY);
+        posY += 10;
     }
 
     // Check features that don't support logic for MQ dungeons.

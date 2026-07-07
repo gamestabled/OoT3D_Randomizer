@@ -228,11 +228,12 @@ void AreaTable_Init_ShadowTemple() {
             "Shadow Temple across cavern", "Shadow Temple", SHADOW_TEMPLE, NO_DAY_NIGHT_CYCLE, {},
             {
                 // Locations
-                LocationAccess(SHADOW_TEMPLE_ACROSS_CAVERN_BROKEN_PILLAR_HEART, { [] { return IsAdult && CanPlay(SongOfTime); } }),
+                LocationAccess(SHADOW_TEMPLE_ACROSS_CAVERN_BROKEN_PILLAR_HEART,
+                               { [] { return IsAdult && CanPlay(SongOfTime); } }),
                 LocationAccess(SHADOW_TEMPLE_ACROSS_CAVERN_SCARECROW_HEART_1, { [] {
                                    return (IsAdult && CanPlay(SongOfTime) && CanUse(DISTANT_SCARECROW)) ||
                                           Here(SHADOW_TEMPLE_BEYOND_BOAT, [] { return CanUse(DISTANT_SCARECROW); });
-} }),
+                               } }),
                 LocationAccess(SHADOW_TEMPLE_ACROSS_CAVERN_SCARECROW_HEART_2, { [] {
                                    return (IsAdult && CanPlay(SongOfTime) && CanUse(DISTANT_SCARECROW)) ||
                                           Here(SHADOW_TEMPLE_BEYOND_BOAT, [] { return CanUse(DISTANT_SCARECROW); });
@@ -242,7 +243,8 @@ void AreaTable_Init_ShadowTemple() {
                 // Exits
                 Entrance(SHADOW_TEMPLE_BOSS_ENTRYWAY,
                          { [] { return SmallKeys(SHADOW_TEMPLE, 5) && CanUse(HOVER_BOOTS) && BossKeyShadowTemple; } }),
-                Entrance(SHADOW_TEMPLE_BEYOND_BOAT, { [] { return CanUse(BOW) || HasExplosives || GoronBracelet || CanUse(DINS_FIRE); } }),
+                Entrance(SHADOW_TEMPLE_BEYOND_BOAT,
+                         { [] { return CanUse(BOW) || HasExplosives || GoronBracelet || CanUse(DINS_FIRE); } }),
             });
     }
 
