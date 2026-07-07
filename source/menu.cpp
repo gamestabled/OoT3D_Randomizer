@@ -754,6 +754,17 @@ void GenerateRandomizer() {
         return;
     }
 
+    if (Settings::MQDungeonCount.IsNot(0) && Settings::ShuffleRecoveryHearts) {
+        u8 posY = 5;
+        printf("\x1b[%d;0H"
+               "----------------------------------------"
+               "For your information: Recovery hearts\n"
+               "inside MQ dungeons will currently not\n"
+               "be shuffled.\n"
+               "----------------------------------------",
+               posY);
+    }
+
     consoleSelect(&topScreen);
     consoleClear();
     printf("\x1b[6;10HCaching Settings...");
