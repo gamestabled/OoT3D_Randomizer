@@ -183,8 +183,8 @@ void AreaTable_Init_ShadowTemple() {
                 LocationAccess(SHADOW_TEMPLE_AFTER_WIND_HIDDEN_CHEST, { [] { return true; } }),
                 LocationAccess(SHADOW_TEMPLE_GS_NEAR_SHIP,
                                { [] { return CanJumpslash && CanUse(LONGSHOT) && SmallKeys(SHADOW_TEMPLE, 4, 5); } }),
-                LocationAccess(SHADOW_TEMPLE_NEAR_SHIP_SCARECROW_HEART_1, { [] { return DistantScarecrow; } }),
-                LocationAccess(SHADOW_TEMPLE_NEAR_SHIP_SCARECROW_HEART_2, { [] { return DistantScarecrow; } }),
+                LocationAccess(SHADOW_TEMPLE_NEAR_SHIP_SCARECROW_HEART_1, { [] { return CanUse(DISTANT_SCARECROW); } }),
+                LocationAccess(SHADOW_TEMPLE_NEAR_SHIP_SCARECROW_HEART_2, { [] { return CanUse(DISTANT_SCARECROW); } }),
             },
             {
                 // Exits
@@ -219,11 +219,12 @@ void AreaTable_Init_ShadowTemple() {
                  },
                  {
                      // Exits
-                     Entrance(SHADOW_TEMPLE_ACCROSS_CAVERN, { [] {
+                     Entrance(SHADOW_TEMPLE_ACROSS_CAVERN, { [] {
                                   return CanUse(BOW) || CanUse(DISTANT_SCARECROW) || (LogicShadowStatue && HasBombchus);
                               } }),
                  });
-        areaTable[SHADOW_TEMPLE_ACCROSS_CAVERN] = Area(
+
+        areaTable[SHADOW_TEMPLE_ACROSS_CAVERN] = Area(
             "Shadow Temple across cavern", "Shadow Temple", SHADOW_TEMPLE, NO_DAY_NIGHT_CYCLE,
             {
                 // Events
@@ -248,7 +249,7 @@ void AreaTable_Init_ShadowTemple() {
                 // Exits
                 Entrance(SHADOW_TEMPLE_BOSS_ENTRYWAY,
                          { [] { return SmallKeys(SHADOW_TEMPLE, 5) && CanUse(HOVER_BOOTS) && BossKeyShadowTemple; } }),
-                Entrance(SHADOW_TEMPLE_BEYOND_BOAT, { [] { return CanUse(BOW) || HasExplosives; } }),
+                Entrance(SHADOW_TEMPLE_BEYOND_BOAT, { [] { return CanUse(BOW) || HasExplosives || GoronBracelet || CanUse(DINS_FIRE); } }),
             });
     }
 
@@ -401,7 +402,7 @@ void AreaTable_Init_ShadowTemple() {
         Area("Shadow Temple Boss Entryway", "Shadow Temple", SHADOW_TEMPLE, NO_DAY_NIGHT_CYCLE, {}, {},
              {
                  // Exits
-                 Entrance(SHADOW_TEMPLE_ACCROSS_CAVERN, { [] { return Dungeon::ShadowTemple.IsVanilla() && false; } }),
+                 Entrance(SHADOW_TEMPLE_ACROSS_CAVERN, { [] { return Dungeon::ShadowTemple.IsVanilla() && false; } }),
                  Entrance(SHADOW_TEMPLE_MQ_BEYOND_BOAT, { [] { return Dungeon::ShadowTemple.IsMQ() && false; } }),
                  Entrance(SHADOW_TEMPLE_BOSS_ROOM, { [] { return true; } }),
              });

@@ -232,7 +232,7 @@ Option ShuffleEnemySouls      = Option::U8  ("Shuffle Enemy Souls",    {"Off", "
 Option ShuffleOcarinaButtons  = Option::Bool("Shuffle Ocarina Buttons",{"Off", "On"},                                                     {ocarinaButtonsDesc});
 Option ShuffleRupees          = Option::Bool("Shuffle Standing Rupees",{"Off", "On"},                                                     {shuffleRupeesDesc});
 Option ShuffleBigPoes         = Option::Bool("Shuffle Big Poes",       {"Off", "On"},                                                     {shuffleBigPoesDesc});
-Option ShuffleRecoveryHearts  = Option::Bool("Shuffle Recovery Hearts",{"Off","On"},                                                      {shuffleRecoveryHeartsDesc});
+Option ShuffleRecoveryHearts  = Option::Bool("Shuffle Recovery Hearts",{"Off", "On"},                                                     {shuffleRecoveryHeartsDesc});
 std::vector<Option *> shuffleOptions = {
     &RandomizeShuffle,
     &ShuffleRewards,
@@ -257,8 +257,8 @@ std::vector<Option *> shuffleOptions = {
     &ShuffleEnemySouls,
     &ShuffleOcarinaButtons,
     &ShuffleRupees,
-    &ShuffleBigPoes,
     &ShuffleRecoveryHearts,
+    &ShuffleBigPoes,
 };
 
 // Shuffle Dungeon Items
