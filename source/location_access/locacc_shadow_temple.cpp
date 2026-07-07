@@ -183,8 +183,8 @@ void AreaTable_Init_ShadowTemple() {
                 LocationAccess(SHADOW_TEMPLE_AFTER_WIND_HIDDEN_CHEST, { [] { return true; } }),
                 LocationAccess(SHADOW_TEMPLE_GS_NEAR_SHIP,
                                { [] { return CanJumpslash && CanUse(LONGSHOT) && SmallKeys(SHADOW_TEMPLE, 4, 5); } }),
-                LocationAccess(SHADOW_TEMPLE_NEAR_SHIP_SCARECROW_HEART_1, { [] { return DistantScarecrow; } }),
-                LocationAccess(SHADOW_TEMPLE_NEAR_SHIP_SCARECROW_HEART_2, { [] { return DistantScarecrow; } }),
+                LocationAccess(SHADOW_TEMPLE_NEAR_SHIP_SCARECROW_HEART_1, { [] { return CanUse(DISTANT_SCARECROW); } }),
+                LocationAccess(SHADOW_TEMPLE_NEAR_SHIP_SCARECROW_HEART_2, { [] { return CanUse(DISTANT_SCARECROW); } }),
             },
             {
                 // Exits
