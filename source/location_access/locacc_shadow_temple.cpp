@@ -128,9 +128,9 @@ void AreaTable_Init_ShadowTemple() {
                       /*Glitched*/
                       [] { return CanDoGlitch(GlitchType::HookshotClip, GlitchDifficulty::INTERMEDIATE); } }),
                 LocationAccess(SHADOW_TEMPLE_INVISIBLE_BLADES_SOT_BLOCK_HEART_1,
-                               { [] { return CanPlay(SongOfTime); } }),
+                               { [] { return IsAdult && CanPlay(SongOfTime); } }),
                 LocationAccess(SHADOW_TEMPLE_INVISIBLE_BLADES_SOT_BLOCK_HEART_2,
-                               { [] { return CanPlay(SongOfTime); } }),
+                               { [] { return IsAdult && CanPlay(SongOfTime); } }),
                 LocationAccess(SHADOW_TEMPLE_FALLING_SPIKES_LOWER_CHEST,
                                { [] { return CanPassEnemy(7, 0, 9, 5, SpaceAroundEnemy::NONE); } }),
                 LocationAccess(SHADOW_TEMPLE_FALLING_SPIKES_UPPER_CHEST, { [] {
