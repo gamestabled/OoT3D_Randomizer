@@ -257,8 +257,8 @@ std::vector<Option *> shuffleOptions = {
     &ShuffleEnemySouls,
     &ShuffleOcarinaButtons,
     &ShuffleRupees,
-    &ShuffleBigPoes,
     &ShuffleRecoveryHearts,
+    &ShuffleBigPoes,
 };
 
 // Shuffle Dungeon Items
