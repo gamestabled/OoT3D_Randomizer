@@ -235,14 +235,14 @@ void AreaTable_Init_ShadowTemple() {
             },
             {
                 // Locations
-                LocationAccess(SHADOW_TEMPLE_ACROSS_CAVERN_BROKEN_PILLAR_HEART, { [] { return CanPlay(SongOfTime); } }),
+                LocationAccess(SHADOW_TEMPLE_ACROSS_CAVERN_BROKEN_PILLAR_HEART, { [] { return IsAdult && CanPlay(SongOfTime); } }),
                 LocationAccess(SHADOW_TEMPLE_ACROSS_CAVERN_SCARECROW_HEART_1, { [] {
-                                   return (CanPlay(SongOfTime) && DistantScarecrow) ||
-                                          Here(SHADOW_TEMPLE_BEYOND_BOAT, [] { return DistantScarecrow; });
-                               } }),
+                                   return (IsAdult && CanPlay(SongOfTime) && CanUse(DISTANT_SCARECROW)) ||
+                                          Here(SHADOW_TEMPLE_BEYOND_BOAT, [] { return CanUse(DISTANT_SCARECROW); });
+} }),
                 LocationAccess(SHADOW_TEMPLE_ACROSS_CAVERN_SCARECROW_HEART_2, { [] {
-                                   return (CanPlay(SongOfTime) && DistantScarecrow) ||
-                                          Here(SHADOW_TEMPLE_BEYOND_BOAT, [] { return DistantScarecrow; });
+                                   return (IsAdult && CanPlay(SongOfTime) && CanUse(DISTANT_SCARECROW)) ||
+                                          Here(SHADOW_TEMPLE_BEYOND_BOAT, [] { return CanUse(DISTANT_SCARECROW); });
                                } }),
             },
             {
