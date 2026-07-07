@@ -225,14 +225,7 @@ void AreaTable_Init_ShadowTemple() {
                  });
 
         areaTable[SHADOW_TEMPLE_ACROSS_CAVERN] = Area(
-            "Shadow Temple across cavern", "Shadow Temple", SHADOW_TEMPLE, NO_DAY_NIGHT_CYCLE,
-            {
-                // Events
-                EventAccess(&DekuBabaSticks,
-                            { [] { return DekuBabaSticks || ForEachEnemy_BeyondBoat(CanGetDekuBabaSticks); } }),
-                EventAccess(&DekuBabaNuts,
-                            { [] { return DekuBabaNuts || ForEachEnemy_BeyondBoat(CanGetDekuBabaNuts); } }),
-            },
+            "Shadow Temple across cavern", "Shadow Temple", SHADOW_TEMPLE, NO_DAY_NIGHT_CYCLE, {},
             {
                 // Locations
                 LocationAccess(SHADOW_TEMPLE_ACROSS_CAVERN_BROKEN_PILLAR_HEART, { [] { return IsAdult && CanPlay(SongOfTime); } }),
