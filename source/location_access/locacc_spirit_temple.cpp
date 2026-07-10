@@ -45,9 +45,6 @@ void AreaTable_Init_SpiritTemple() {
         areaTable[SPIRIT_TEMPLE_CHILD] = Area(
             "Child Spirit Temple", "Spirit Temple", SPIRIT_TEMPLE, NO_DAY_NIGHT_CYCLE,
             {
-                // Events
-                EventAccess(&DekuBabaSticks, { [] { return DekuBabaSticks || CanGetDekuBabaSticks(6, 0, 1); } }),
-                EventAccess(&DekuBabaNuts, { [] { return DekuBabaNuts || CanGetDekuBabaNuts(6, 0, 1); } }),
             },
             {},
             {
@@ -72,21 +69,21 @@ void AreaTable_Init_SpiritTemple() {
             {
                 // Exits
                 Entrance(SPIRIT_TEMPLE_CHILD_STALFOS_ROOM_AFTER_BRIDGE, { [] {
-                             return CanPassEnemies(6, 0, 3, { 0, 3 }, SpaceAroundEnemy::NARROW) &&
+                             return CanPassEnemies(6, 0, 3, { 0 }, SpaceAroundEnemy::NARROW) &&
                                     (CanUse(Boomerang) || CanUse(Slingshot) ||
                                      (HasExplosives && LogicSpiritChildBombchu));
                          } }),
-                Entrance(SPIRIT_TEMPLE_CHILD, { [] { return CanPassEnemy(6, 0, 3, 3); } }),
+                Entrance(SPIRIT_TEMPLE_CHILD, { [] { return true; } }),
             });
         areaTable[SPIRIT_TEMPLE_CHILD_STALFOS_ROOM_AFTER_BRIDGE] =
             Area("Child Spirit Temple Stalfos Room After Bridge", "Spirit Temple", SPIRIT_TEMPLE, NO_DAY_NIGHT_CYCLE,
                  {
                      // Events
                      EventAccess(&DekuBabaSticks, { [] {
-                         return DekuBabaSticks || CanGetDekuBabaSticks(6, 0, 3, { 0, 4, 5 });
+                         return DekuBabaSticks || CanGetDekuBabaSticks(6, 0, 3, { 4, 5 });
                      } }),
                      EventAccess(&DekuBabaNuts, { [] {
-                         return DekuBabaNuts || CanGetDekuBabaNuts(6, 0, 3, { 0, 4, 5 });
+                         return DekuBabaNuts || CanGetDekuBabaNuts(6, 0, 3, { 4, 5 });
                      } }),
                  },
                  {
@@ -97,19 +94,12 @@ void AreaTable_Init_SpiritTemple() {
                      // Exits
                      Entrance(SPIRIT_TEMPLE_CHILD_STALFOS_ROOM_BEFORE_BRIDGE,
                               { [] { return CanChildDamage && CanPassEnemy(6, 0, 3, 0, SpaceAroundEnemy::NARROW); } }),
-                     Entrance(SPIRIT_TEMPLE_CHILD_ANUBIS_ROOM, { [] {
-                                  return CanPassEnemies(6, 0, 3, { 4, 5 });
-                              } }),
+                     Entrance(SPIRIT_TEMPLE_CHILD_ANUBIS_ROOM, { [] { return true; } }),
 
                  });
         areaTable[SPIRIT_TEMPLE_CHILD_ANUBIS_ROOM] = Area(
             "Child Spirit Temple Anubis Room", "Spirit Temple", SPIRIT_TEMPLE, NO_DAY_NIGHT_CYCLE,
-            {
-                // Events
-                EventAccess(&DekuBabaSticks,
-                            { [] { return DekuBabaSticks || CanGetDekuBabaSticks(6, 0, 27, { 0 }); } }),
-                EventAccess(&DekuBabaNuts, { [] { return DekuBabaNuts || CanGetDekuBabaNuts(6, 0, 27, { 0 }); } }),
-            },
+            {},
             {},
             {
                 // Exits
@@ -131,7 +121,7 @@ void AreaTable_Init_SpiritTemple() {
                  {
                      LocationAccess(SPIRIT_TEMPLE_CHILD_EARLY_TORCHES_CHEST, { [] {
                                         return Here(SPIRIT_TEMPLE_CHILD_TORCHES_ROOM_BEFORE_BRIDGE,
-                                                    { [] { return Sticks || CanUse(DINS_FIRE); } });
+                                                    { [] { return CanUse(STICKS) || CanUse(DINS_FIRE); } });
                                     } }),
                  },
                  { // Exits
@@ -139,21 +129,12 @@ void AreaTable_Init_SpiritTemple() {
                    Entrance(SPIRIT_TEMPLE_CHILD_TORCHES_ROOM_BEFORE_BRIDGE, { [] { return true; } }) });
         areaTable[SPIRIT_TEMPLE_CHILD_TORCHES_ROOM_BEFORE_BRIDGE] =
             Area("Child Spirit Temple Torches Room Before Bridge", "Spirit Temple", SPIRIT_TEMPLE, NO_DAY_NIGHT_CYCLE,
-                 {
-                     // Events
-                     EventAccess(&DekuBabaSticks, { [] {
-                         return DekuBabaSticks || CanGetDekuBabaSticks(6, 0, 2, { 0, 1, 2, 3 });
-                     } }),
-                     EventAccess(&DekuBabaNuts, { [] {
-                         return DekuBabaNuts || CanGetDekuBabaNuts(6, 0, 2, { 0, 1, 2, 3 });
-                     } }),
-                 },
+                 {},
                  {
                      // Locations
                      LocationAccess(SPIRIT_TEMPLE_GS_METAL_FENCE, { [] {
-                                        return (CanUse(Boomerang) || CanUse(Hookshot) ||
-                                                Here(SPIRIT_TEMPLE_CHILD_TORCHES_ROOM_AFTER_BRIDGE,
-                                                     { [] { return (CanUse(Slingshot) || CanUse(Bow)); } }));
+                                        return (HookshotOrBoomerang ||
+                                                Here(SPIRIT_TEMPLE_CHILD_TORCHES_ROOM_AFTER_BRIDGE, { [] { return CanUseProjectile || CanUse(DINS_FIRE); } }));
                                     } }),
                  },
                  {
