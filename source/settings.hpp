@@ -425,8 +425,8 @@ extern Option ShuffleChestMinigame;
 extern Option ShuffleEnemySouls;
 extern Option ShuffleOcarinaButtons;
 extern Option ShuffleRupees;
-extern Option ShuffleBigPoes;
 extern Option ShuffleRecoveryHearts;
+extern Option ShuffleBigPoes;
 
 extern Option MapsAndCompasses;
 extern Option Keysanity;
