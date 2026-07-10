@@ -158,61 +158,61 @@ void HintTable_Init_Exclude_Overworld() {
                        Text{"the #red rupee on the platform in Kokiri Forest# is", /*french*/"le #rubis rouge sur plateforme de la forêt Kokiri# est", /*spanish*/"the #red rupee on the platform in Kokiri Forest# is", /*italian*/"un #cerchio di oggetti nella foresta dei Kokiri# include", /*german*/"the #red rupee on the platform in Kokiri Forest# is"}
     );
 
-        
+
     hintTable[KF_ON_SARIAS_HOUSE_HEART_1] = HintText::Exclude({
                        // obscure text
-                       Text{"#health on a roof# is", /*french*/"#health on a roof# is", /*spanish*/"#health on a roof# is", /*italian*/"#health on a roof# is", /*german*/"#health on a roof# is"},
+                       Text{"#health on a roof# is", /*french*/"", /*spanish*/"", /*italian*/"", /*german*/""},
                      }, {},
                        // clear text
-                       Text{"a #heart on Saria's house# is", /*french*/"a #heart on Saria's house# is", /*spanish*/"a #heart on Saria's house# is", /*italian*/"a #heart on Saria's house# is", /*german*/"a #heart on Saria's house# is"}
+                       Text{"a #heart on Saria's house# is", /*french*/"", /*spanish*/"", /*italian*/"", /*german*/""}
     );
 
     hintTable[KF_ON_SARIAS_HOUSE_HEART_2] = HintText::Exclude({
                        // obscure text
-                       Text{"#health on a roof# is", /*french*/"#health on a roof# is", /*spanish*/"#health on a roof# is", /*italian*/"#health on a roof# is", /*german*/"#health on a roof# is"},
+                       Text{"#health on a roof# is", /*french*/"", /*spanish*/"", /*italian*/"", /*german*/""},
                      }, {},
                        // clear text
-                       Text{"a #heart on Saria's house# is", /*french*/"a #heart on Saria's house# is", /*spanish*/"a #heart on Saria's house# is", /*italian*/"a #heart on Saria's house# is", /*german*/"a #heart on Saria's house# is"}
+                       Text{"a #heart on Saria's house# is", /*french*/"", /*spanish*/"", /*italian*/"", /*german*/""}
     );
 
     hintTable[KF_ON_SARIAS_HOUSE_HEART_3] = HintText::Exclude({
                        // obscure text
-                       Text{"#health on a roof# is", /*french*/"#health on a roof# is", /*spanish*/"#health on a roof# is", /*italian*/"#health on a roof# is", /*german*/"#health on a roof# is"},
+                       Text{"#health on a roof# is", /*french*/"", /*spanish*/"", /*italian*/"", /*german*/""},
                      }, {},
                        // clear text
-                       Text{"a #heart on Saria's house# is", /*french*/"a #heart on Saria's house# is", /*spanish*/"a #heart on Saria's house# is", /*italian*/"a #heart on Saria's house# is", /*german*/"a #heart on Saria's house# is"}
+                       Text{"a #heart on Saria's house# is", /*french*/"", /*spanish*/"", /*italian*/"", /*german*/""}
     );
-    
+
     hintTable[KF_IN_SARIAS_HOUSE_HEART_1] = HintText::Exclude({
                        // obscure text
-                       Text{"#a green haired girl's valentine's gift# is", /*french*/"#a green haired girl's valentine's gift# is", /*spanish*/"#a green haired girl's valentine's gift# is", /*italian*/"#a green haired girl's valentine's gift# is", /*german*/"#a green haired girl's valentine's gift# is"},
+                       Text{"#a green haired girl's valentine's gift# is", /*french*/"", /*spanish*/"", /*italian*/"", /*german*/""},
                      }, {},
                        // clear text
-                       Text{"a #heart inside Saria's house# is", /*french*/"a #heart inside Saria's house# is", /*spanish*/"a #heart inside Saria's house# is", /*italian*/"a #heart inside Saria's house# is", /*german*/"a #heart inside Saria's house# is"}
+                       Text{"a #heart inside Saria's house# is", /*french*/"", /*spanish*/"", /*italian*/"", /*german*/""}
     );
 
     hintTable[KF_IN_SARIAS_HOUSE_HEART_2] = HintText::Exclude({
                        // obscure text
-                       Text{"#a green haired girl's valentine's gift# is", /*french*/"#a green haired girl's valentine's gift# is", /*spanish*/"#a green haired girl's valentine's gift# is", /*italian*/"#a green haired girl's valentine's gift# is", /*german*/"#a green haired girl's valentine's gift# is"},
+                       Text{"#a green haired girl's valentine's gift# is", /*french*/"", /*spanish*/"", /*italian*/"", /*german*/""},
                      }, {},
                        // clear text
-                       Text{"a #heart inside Saria's house# is", /*french*/"a #heart inside Saria's house# is", /*spanish*/"a #heart inside Saria's house# is", /*italian*/"a #heart inside Saria's house# is", /*german*/"a #heart inside Saria's house# is"}
+                       Text{"a #heart inside Saria's house# is", /*french*/"", /*spanish*/"", /*italian*/"", /*german*/""}
     );
 
     hintTable[KF_IN_SARIAS_HOUSE_HEART_3] = HintText::Exclude({
                        // obscure text
-                       Text{"#a green haired girl's valentine's gift# is", /*french*/"#a green haired girl's valentine's gift# is", /*spanish*/"#a green haired girl's valentine's gift# is", /*italian*/"#a green haired girl's valentine's gift# is", /*german*/"#a green haired girl's valentine's gift# is"},
+                       Text{"#a green haired girl's valentine's gift# is", /*french*/"", /*spanish*/"", /*italian*/"", /*german*/""},
                      }, {},
                        // clear text
-                       Text{"a #heart inside Saria's house# is", /*french*/"a #heart inside Saria's house# is", /*spanish*/"a #heart inside Saria's house# is", /*italian*/"a #heart inside Saria's house# is", /*german*/"a #heart inside Saria's house# is"}
+                       Text{"a #heart inside Saria's house# is", /*french*/"", /*spanish*/"", /*italian*/"", /*german*/""}
     );
 
     hintTable[KF_IN_SARIAS_HOUSE_HEART_4] = HintText::Exclude({
                        // obscure text
-                       Text{"#a green haired girl's valentine's gift# is", /*french*/"#a green haired girl's valentine's gift# is", /*spanish*/"#a green haired girl's valentine's gift# is", /*italian*/"#a green haired girl's valentine's gift# is", /*german*/"#a green haired girl's valentine's gift# is"},
+                       Text{"#a green haired girl's valentine's gift# is", /*french*/"", /*spanish*/"", /*italian*/"", /*german*/""},
                      }, {},
                        // clear text
-                       Text{"a #heart inside Saria's house# is", /*french*/"a #heart inside Saria's house# is", /*spanish*/"a #heart inside Saria's house# is", /*italian*/"a #heart inside Saria's house# is", /*german*/"a #heart inside Saria's house# is"}
+                       Text{"a #heart inside Saria's house# is", /*french*/"", /*spanish*/"", /*italian*/"", /*german*/""}
     );
 
 
@@ -985,34 +985,34 @@ void HintTable_Init_Exclude_Overworld() {
 
     hintTable[DMT_COW_GROTTO_HEART_1] = HintText::Exclude({
                        // obscure text
-                       Text{"#a cow stands with its butt towards#", /*french*/"#a cow stands with its butt towards#", /*spanish*/"#a cow stands with its butt towards#", /*italian*/"#a cow stands with its butt towards#", /*german*/"#a cow stands with its butt towards#"},
+                       Text{"#a cow stands with its butt towards#", /*french*/"", /*spanish*/"", /*italian*/"", /*german*/""},
                      }, {},
                        // clear text
-                       Text{"#the hearts in the cow grotto in DMT# include", /*french*/"#the hearts in the cow grotto in DMT# include", /*spanish*/"#the hearts in the cow grotto in DMT# include", /*italian*/"#the hearts in the cow grotto in DMT# include", /*german*/"#the hearts in the cow grotto in DMT# include"}
+                       Text{"#the hearts in the cow grotto in DMT# include", /*french*/"", /*spanish*/"", /*italian*/"", /*german*/""}
     );
 
     hintTable[DMT_COW_GROTTO_HEART_2] = HintText::Exclude({
                        // obscure text
-                       Text{"#a cow stands with its butt towards#", /*french*/"#a cow stands with its butt towards#", /*spanish*/"#a cow stands with its butt towards#", /*italian*/"#a cow stands with its butt towards#", /*german*/"#a cow stands with its butt towards#"},
+                       Text{"#a cow stands with its butt towards#", /*french*/"", /*spanish*/"", /*italian*/"", /*german*/""},
                      }, {},
                        // clear text
-                       Text{"#the hearts in the cow grotto in DMT# include", /*french*/"#the hearts in the cow grotto in DMT# include", /*spanish*/"#the hearts in the cow grotto in DMT# include", /*italian*/"#the hearts in the cow grotto in DMT# include", /*german*/"#the hearts in the cow grotto in DMT# include"}
+                       Text{"#the hearts in the cow grotto in DMT# include", /*french*/"", /*spanish*/"", /*italian*/"", /*german*/""}
     );
 
     hintTable[DMT_COW_GROTTO_HEART_3] = HintText::Exclude({
                        // obscure text
-                       Text{"#a cow stands with its butt towards#", /*french*/"#a cow stands with its butt towards#", /*spanish*/"#a cow stands with its butt towards#", /*italian*/"#a cow stands with its butt towards#", /*german*/"#a cow stands with its butt towards#"},
+                       Text{"#a cow stands with its butt towards#", /*french*/"", /*spanish*/"", /*italian*/"", /*german*/""},
                      }, {},
                        // clear text
-                       Text{"#the hearts in the cow grotto in DMT# include", /*french*/"#the hearts in the cow grotto in DMT# include", /*spanish*/"#the hearts in the cow grotto in DMT# include", /*italian*/"#the hearts in the cow grotto in DMT# include", /*german*/"#the hearts in the cow grotto in DMT# include"}
+                       Text{"#the hearts in the cow grotto in DMT# include", /*french*/"", /*spanish*/"", /*italian*/"", /*german*/""}
     );
 
     hintTable[DMT_COW_GROTTO_HEART_4] = HintText::Exclude({
                        // obscure text
-                       Text{"#a cow stands with its butt towards#", /*french*/"#a cow stands with its butt towards#", /*spanish*/"#a cow stands with its butt towards#", /*italian*/"#a cow stands with its butt towards#", /*german*/"#a cow stands with its butt towards#"},
+                       Text{"#a cow stands with its butt towards#", /*french*/"", /*spanish*/"", /*italian*/"", /*german*/""},
                      }, {},
                        // clear text
-                       Text{"#the hearts in the cow grotto in DMT# include", /*french*/"#the hearts in the cow grotto in DMT# include", /*spanish*/"#the hearts in the cow grotto in DMT# include", /*italian*/"#the hearts in the cow grotto in DMT# include", /*german*/"#the hearts in the cow grotto in DMT# include"}
+                       Text{"#the hearts in the cow grotto in DMT# include", /*french*/"", /*spanish*/"", /*italian*/"", /*german*/""}
     );
 
     hintTable[DMC_WALL_FREESTANDING_POH] = HintText::Exclude({
