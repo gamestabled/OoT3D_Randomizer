@@ -43,10 +43,7 @@ void AreaTable_Init_SpiritTemple() {
                      Entrance(SPIRIT_TEMPLE_EARLY_ADULT, { [] { return CanUse(SILVER_GAUNTLETS); } }),
                  });
         areaTable[SPIRIT_TEMPLE_CHILD] = Area(
-            "Child Spirit Temple", "Spirit Temple", SPIRIT_TEMPLE, NO_DAY_NIGHT_CYCLE,
-            {
-            },
-            {},
+            "Child Spirit Temple", "Spirit Temple", SPIRIT_TEMPLE, NO_DAY_NIGHT_CYCLE, {}, {},
             {
                 // Exits
                 Entrance(SPIRIT_TEMPLE_LOBBY, { [] { return IsChild; } }),
@@ -98,9 +95,7 @@ void AreaTable_Init_SpiritTemple() {
 
                  });
         areaTable[SPIRIT_TEMPLE_CHILD_ANUBIS_ROOM] = Area(
-            "Child Spirit Temple Anubis Room", "Spirit Temple", SPIRIT_TEMPLE, NO_DAY_NIGHT_CYCLE,
-            {},
-            {},
+            "Child Spirit Temple Anubis Room", "Spirit Temple", SPIRIT_TEMPLE, NO_DAY_NIGHT_CYCLE, {}, {},
             {
                 // Exits
                 Entrance(SPIRIT_TEMPLE_CHILD_STALFOS_ROOM_AFTER_BRIDGE, { [] { return true; } }),
@@ -127,23 +122,23 @@ void AreaTable_Init_SpiritTemple() {
                  { // Exits
                    Entrance(SPIRIT_TEMPLE_CHILD_ANUBIS_ROOM, { [] { return true; } }),
                    Entrance(SPIRIT_TEMPLE_CHILD_TORCHES_ROOM_BEFORE_BRIDGE, { [] { return true; } }) });
-        areaTable[SPIRIT_TEMPLE_CHILD_TORCHES_ROOM_BEFORE_BRIDGE] =
-            Area("Child Spirit Temple Torches Room Before Bridge", "Spirit Temple", SPIRIT_TEMPLE, NO_DAY_NIGHT_CYCLE,
-                 {},
-                 {
-                     // Locations
-                     LocationAccess(SPIRIT_TEMPLE_GS_METAL_FENCE, { [] {
-                                        return (HookshotOrBoomerang ||
-                                                Here(SPIRIT_TEMPLE_CHILD_TORCHES_ROOM_AFTER_BRIDGE, { [] { return CanUseProjectile || CanUse(DINS_FIRE); } }));
-                                    } }),
-                 },
-                 {
-                     // Exits
-                     Entrance(SPIRIT_TEMPLE_CHILD_TORCHES_ROOM_AFTER_BRIDGE, { [] {
-                                  return Here(SPIRIT_TEMPLE_CHILD_TORCHES_ROOM_AFTER_BRIDGE, { [] { return true; } });
-                              } }),
-                     Entrance(SPIRIT_TEMPLE_CHILD, { [] { return true; } }),
-                 });
+        areaTable[SPIRIT_TEMPLE_CHILD_TORCHES_ROOM_BEFORE_BRIDGE] = Area(
+            "Child Spirit Temple Torches Room Before Bridge", "Spirit Temple", SPIRIT_TEMPLE, NO_DAY_NIGHT_CYCLE, {},
+            {
+                // Locations
+                LocationAccess(SPIRIT_TEMPLE_GS_METAL_FENCE, { [] {
+                                   return (HookshotOrBoomerang ||
+                                           Here(SPIRIT_TEMPLE_CHILD_TORCHES_ROOM_AFTER_BRIDGE,
+                                                { [] { return CanUseProjectile || CanUse(DINS_FIRE); } }));
+                               } }),
+            },
+            {
+                // Exits
+                Entrance(SPIRIT_TEMPLE_CHILD_TORCHES_ROOM_AFTER_BRIDGE, { [] {
+                             return Here(SPIRIT_TEMPLE_CHILD_TORCHES_ROOM_AFTER_BRIDGE, { [] { return true; } });
+                         } }),
+                Entrance(SPIRIT_TEMPLE_CHILD, { [] { return true; } }),
+            });
         areaTable[SPIRIT_TEMPLE_CHILD_AFTER_SECOND_CRAWL_SPACE] =
             Area("Child Spirit Temple After Second Crawl Space", "Spirit Temple", SPIRIT_TEMPLE, NO_DAY_NIGHT_CYCLE,
                  {
