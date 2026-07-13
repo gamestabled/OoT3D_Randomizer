@@ -1795,9 +1795,14 @@ std::vector<LocationKey> childOnlyHotLocations = {
 // clang-format on
 
 void ItemLocation::OnInit(void) {
-    // Ignore hint reachability locations
-    if (type < ItemLocationType::HintStone) {
-        sInitializedItemLocations++;
+    if (type >= ItemLocationType::HintStone) {
+        return; // Ignore hint reachability locations
+    }
+
+    sInitializedItemLocations++;
+    if (name.size() > 51) { // max length for in-game menu
+        CitraPrint("ERROR! Location name too long: " + name);
+        gInitError = true;
     }
 }
 
