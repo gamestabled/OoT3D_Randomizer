@@ -42,6 +42,14 @@ void PrintTopScreen() {
     printf("\x1b[11;7HCurrent Seed: %s", Settings::seed.c_str());
 }
 
+void GfxInit(void) {
+    gfxInitDefault();
+    consoleInit(GFX_TOP, &topScreen);
+    consoleInit(GFX_BOTTOM, &bottomScreen);
+    consoleSelect(&topScreen);
+    printf("\x1b[5;20HInitializing...");
+}
+
 void MenuInit() {
     Settings::InitSettings();
 
@@ -54,10 +62,6 @@ void MenuInit() {
     currentMenu = main;
 
     srand(time(NULL));
-    consoleInit(GFX_TOP, &topScreen);
-    consoleInit(GFX_BOTTOM, &bottomScreen);
-
-    consoleSelect(&topScreen);
 
     // Create directories
     FS_Archive sdmcArchive;

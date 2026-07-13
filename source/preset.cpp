@@ -47,7 +47,6 @@ void CreatePresetDirectories(FS_Archive sdmcArchive) {
     };
 
     const auto printInfo = [&](int progress) {
-        consoleClear();
         printf("\x1b[10;10HCreating Preset Directories");
         printf("\x1b[11;10HProgress: %d/%d", progress, dirs.size());
     };
@@ -72,7 +71,6 @@ void CreatePresetDirectories(FS_Archive sdmcArchive) {
         for (const auto& entry : fs::directory_iterator(dirPair.first)) {
             if (entry.is_regular_file() && entry.path().extension().string() == ".xml") {
                 auto filename = entry.path().filename().string();
-                consoleClear();
                 printf("\x1b[10;10HMigrating Presets");
                 printf("\x1b[11;10HMoving %s", filename.c_str());
                 FSUSER_RenameFile(sdmcArchive, fsMakePath(PATH_ASCII, std::string(dirPair.first + filename).c_str()),

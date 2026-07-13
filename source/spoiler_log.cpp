@@ -55,7 +55,6 @@ void InitLogDirectories(FS_Archive sdmcArchive) {
     const char* stylesheetDest = "/OoT3DR/Logs/spoiler-log.css";
 
     const auto printInfo = [&](int progress) {
-        consoleClear();
         printf("\x1b[10;10HCreating Log Directories");
         printf("\x1b[11;10HProgress: %d/%d", progress, dirs.size());
     };

@@ -352,7 +352,6 @@ void CreateMusicDirectories(FS_Archive sdmcArchive) {
         dirs.insert(dirs.end(), melodyDirs.begin(), melodyDirs.end());
 
         const auto printInfo = [&](int progress) {
-            consoleClear();
             printf("\x1b[10;10HCreating Music Directories");
             printf("\x1b[11;10HProgress: %d/%d", progress, dirs.size());
 

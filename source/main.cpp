@@ -11,7 +11,7 @@
 #define TICKS_PER_SEC 268123480.0
 
 int main() {
-    gfxInitDefault();
+    GfxInit();
     HintTable_Init();
     ItemTable_Init();
     LocationTable_Init();

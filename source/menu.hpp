@@ -62,5 +62,6 @@ void PrintDescription(std::string_view description);
 void GenerateRandomizer();
 std::string GetInput(const char* hintText);
 
-extern void MenuInit();
-extern void MenuUpdate(u32 kDown, bool updatedByHeld, u32 kHeld);
+void GfxInit(void);
+void MenuInit(void);
+void MenuUpdate(u32 kDown, bool updatedByHeld, u32 kHeld);
