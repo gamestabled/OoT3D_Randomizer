@@ -3,6 +3,33 @@
 #include "colors.h"
 #include "objects.h"
 
+static const u8 sSwordTrailDurationValues[] = {
+    [TRAILDURATION_DISABLED]     = 0,   //
+    [TRAILDURATION_VERYSHORT]    = 3,   //
+    [TRAILDURATION_VANILLA]      = 6,   //
+    [TRAILDURATION_LONG]         = 16,  //
+    [TRAILDURATION_VERYLONG]     = 24,  //
+    [TRAILDURATION_LIGHTSABER]   = 32,  //
+};
+
+static const u8 sBoomerangTrailDurationValues[] = {
+    [TRAILDURATION_DISABLED]   = 0,  //
+    [TRAILDURATION_VERYSHORT]  = 4,  //
+    [TRAILDURATION_VANILLA]    = 9,  //
+    [TRAILDURATION_LONG]       = 16, //
+    [TRAILDURATION_VERYLONG]   = 32, //
+    [TRAILDURATION_LIGHTSABER] = 64, //
+};
+
+static const u8 sBombchuTrailDurationValues[] = {
+    [TRAILDURATION_DISABLED]   = 0,   //
+    [TRAILDURATION_VERYSHORT]  = 8,   //
+    [TRAILDURATION_VANILLA]    = 16,  //
+    [TRAILDURATION_LONG]       = 32,  //
+    [TRAILDURATION_VERYLONG]   = 64,  //
+    [TRAILDURATION_LIGHTSABER] = 128, //
+};
+
 void Effects_Init(void) {
     // Blood effect color for Ganondorf and Ganon defeat cutscenes
     typedef struct {
@@ -12,6 +39,15 @@ void Effects_Init(void) {
     extern BloodCol gGanondorfBlood, gGanonBlood;
     Color_RGBA8 col = gSettingsContext.ganonBloodColor;
     gGanondorfBlood = gGanonBlood = (BloodCol){ col, col };
+}
+
+void Effects_UpdateSwordTrailDuration(void) {
+    const u8 duration = sSwordTrailDurationValues[gSettingsContext.swordTrailDuration];
+    EffectBlure* swordTrail = Effect_GetByIndex(PLAYER->meleeWeaponEffectIndex);
+    if (swordTrail != NULL) {
+        swordTrail->elemDuration = duration;
+    }
+    Player_SwordBlureEffectInitParams.elemDuration = duration;
 }
 
 // This function is called when a new effect element tries to spawn but there's no space left.
@@ -75,26 +111,7 @@ u32 updateBoomerangTrailEffect(EffectBlure* effect, Vec3f* p1, Vec3f* p2) {
         return 1;
 
     if (effect->elemDuration == 8) { // using duration as a "flag" to set the colors only once (8 is vanilla)
-        switch (gSettingsContext.boomerangTrailDuration) {
-            case TRAILDURATION_DISABLED:
-                effect->elemDuration = 0;
-                break;
-            case TRAILDURATION_VERYSHORT:
-                effect->elemDuration = 4;
-                break;
-            case TRAILDURATION_VANILLA:
-                effect->elemDuration = 9;
-                break;
-            case TRAILDURATION_LONG:
-                effect->elemDuration = 16;
-                break;
-            case TRAILDURATION_VERYLONG:
-                effect->elemDuration = 32;
-                break;
-            case TRAILDURATION_LIGHTSABER:
-                effect->elemDuration = 64;
-                break;
-        }
+        effect->elemDuration = sBoomerangTrailDurationValues[gSettingsContext.boomerangTrailDuration];
 
         effect->p1StartColor.r = gSettingsContext.boomerangTrailColor.r;
         effect->p1StartColor.g = gSettingsContext.boomerangTrailColor.g;
@@ -140,26 +157,7 @@ u32 updateChuTrailColors(EffectBlure* effect, Vec3f* p1, Vec3f* p2) {
         Colors_ChangeRainbowColorRGBA8(&effect->p1EndColor, BOMBCHU_CYCLE_FRAMES_OUTER, 2);
     }
 
-    switch (gSettingsContext.bombchuTrailDuration) {
-        case TRAILDURATION_DISABLED:
-            effect->elemDuration = 0;
-            break;
-        case TRAILDURATION_VERYSHORT:
-            effect->elemDuration = 8;
-            break;
-        case TRAILDURATION_VANILLA:
-            effect->elemDuration = 16;
-            break;
-        case TRAILDURATION_LONG:
-            effect->elemDuration = 32;
-            break;
-        case TRAILDURATION_VERYLONG:
-            effect->elemDuration = 64;
-            break;
-        case TRAILDURATION_LIGHTSABER:
-            effect->elemDuration = 128;
-            break;
-    }
+    effect->elemDuration = sBombchuTrailDurationValues[gSettingsContext.bombchuTrailDuration];
 
     return handleLongTrails(gSettingsContext.bombchuTrailDuration, effect, p1, p2);
 }

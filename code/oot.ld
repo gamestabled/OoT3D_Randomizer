@@ -315,7 +315,6 @@ SECTIONS
 	EnMThunder_Init = 0x24C910 + _LD_OFF;
 	EnPoh_Update = 0x24D368 + _LD_OFF;
 	.patch_RedeadCanFreezePlayer 0x24DC2C + _LD_OFF : { *(.patch_RedeadCanFreezePlayer) }
-	.patch_SwordTrailDurationGrezzoFix 0x2507D0 + _LD_OFF : { *(.patch_SwordTrailDurationGrezzoFix) } /*duration is set to 6 due to framerate increase. NOP to allow custom duration*/
 	.patch_MultiplyPlayerSpeed 0x251D34 + _LD_OFF : { *(.patch_MultiplyPlayerSpeed) }
 	.patch_GameOverStart 0x252424 + _LD_OFF : { *(.patch_GameOverStart) }
 	ItemBHeart_Init = 0x25375C + _LD_OFF;
@@ -526,6 +525,7 @@ SECTIONS
 	LinkAnimation_PlayOnce = 0x3604F0 + _LD_OFF;
 	.patch_ISGCrouchStab 0x360690 + _LD_OFF : { *(.patch_ISGCrouchStab) }
 	.patch_ForceTrailEffectUpdate 0x362108 + _LD_OFF : { *(.patch_ForceTrailEffectUpdate) } /*EffectBlure_AddVertex*/
+	Effect_GetByIndex = 0x362384 + _LD_OFF;
 	Actor_GetScreenPos = 0x363A20 + _LD_OFF;
 	Object_GetSlot = 0x363C10 + _LD_OFF;
 	.patch_ExtendObjectGetSlot 0x363CB4 + _LD_OFF : { *(.patch_ExtendObjectGetSlot) }
@@ -908,6 +908,7 @@ SECTIONS
 	gRestrictionFlags = 0x539DC4 + _LD_OFF;
 	sFloorType = 0x53A0A4 + _LD_OFF;
 	dynamicExitList = 0x53C094 + _LD_OFF;
+	Player_SwordBlureEffectInitParams = 0x53C130 + _LD_OFF;
 	PlayerDListGroup_EmptySheathAdult = 0x53C4D8 + _LD_OFF;
 	PlayerDListGroup_EmptySheathChildWithHylianShield = 0x53C4DC + _LD_OFF;
 	Vec3f_PlayerFeet_unk = 0x53CACC + _LD_OFF;

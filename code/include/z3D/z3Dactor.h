@@ -350,7 +350,8 @@ typedef struct Player {
     /* 0x15E8 */ Collider unkMeleeWeaponCollider;
     /* 0x1600 */ char unk_1600[0x00F8];
     /* 0x16F8 */ Actor* focusActor;
-    /* 0x16FC */ char unk_16FC[0x000C];
+    /* 0x16FC */ char unk_16FC[0x0008];
+    /* 0x1704 */ s32 meleeWeaponEffectIndex;
     /* 0x1708 */ PlayerActionFunc actionFunc;
     /* 0x170C */ PlayerAgeProperties* ageProperties;
     /* 0x1710 */ u32 stateFlags1;

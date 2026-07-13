@@ -723,6 +723,7 @@ typedef struct SettingsContext {
     u8 customTrailEffects;
     u8 rainbowSwordTrailInnerColor;
     u8 rainbowSwordTrailOuterColor;
+    u8 swordTrailDuration;
     Color_RGBA8 boomerangTrailColor;
     u8 boomerangTrailColorMode;
     u8 boomerangTrailDuration;

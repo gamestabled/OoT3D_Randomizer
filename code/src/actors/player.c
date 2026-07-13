@@ -12,6 +12,7 @@
 #include "colors.h"
 #include "gloom.h"
 #include "savefile.h"
+#include "effects.h"
 
 void PlayerActor_Init(Actor* thisx, GlobalContext* globalCtx);
 void PlayerActor_Update(Actor* thisx, GlobalContext* globalCtx);
@@ -89,6 +90,9 @@ void PlayerActor_rInit(Actor* thisx, GlobalContext* globalCtx) {
     if (gSettingsContext.hookshotAsChild) {
         gActorOverlayTable[ACTOR_HOOKSHOT].initInfo->objectId = (gSaveContext.linkAge == 1 ? 0x1 : 0x14);
     }
+    // Trail duration is overwritten here because Grezzo decided to adjust the value for framerate by setting it to 6 in
+    // the Player init function instead of changing the static initialization data.
+    Effects_UpdateSwordTrailDuration();
 
     sPrevHealth = gSaveContext.health;
 }

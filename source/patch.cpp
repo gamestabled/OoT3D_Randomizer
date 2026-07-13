@@ -475,36 +475,6 @@ bool WriteAllPatches() {
         return false;
     }
 
-    const u32 SWORDTRAILDURATION_ADDR = 0x0053C146;
-    char rSwordTrailDuration          = 6;
-    switch (Settings::SwordTrailDuration.Value<u8>()) {
-        case TRAILDURATION_DISABLED:
-            rSwordTrailDuration = 0;
-            break;
-        case TRAILDURATION_VERYSHORT:
-            rSwordTrailDuration = 3;
-            break;
-        case TRAILDURATION_VANILLA:
-            rSwordTrailDuration = 6;
-            break;
-        case TRAILDURATION_LONG:
-            rSwordTrailDuration = 16;
-            break;
-        case TRAILDURATION_VERYLONG:
-            rSwordTrailDuration = 24;
-            break;
-        case TRAILDURATION_LIGHTSABER:
-            rSwordTrailDuration = 32;
-            break;
-    }
-
-    // Write Sword Trail Duration to code
-    patchOffset = V_TO_P(SWORDTRAILDURATION_ADDR);
-    patchSize   = sizeof(rSwordTrailDuration);
-    if (!WritePatch(patchOffset, patchSize, &rSwordTrailDuration, code, bytesWritten, totalRW, buf)) {
-        return false;
-    }
-
     const u32 SWORDTRAILUNKMODE_ADDR = 0x0053C158;
     char rSwordTrailUnkMode          = 0; // Mode 0 is needed to draw black.
 
