@@ -1225,7 +1225,17 @@ static std::vector<std::string> weaponTrailOuterOptionNames = {
 #define SAME_AS_INNER_TRAIL (weaponTrailOuterOptionNames.size() - 1)
 static std::vector<std::string> weaponTrailInnerOptionNames = VectorCopyExceptLastElement(weaponTrailOuterOptionNames);
 
-static std::vector<std::string> trailDurationOptionNames = {
+static std::vector<std::string> swordTrailDurationOptionNames = {
+    "Disabled",
+    "Very short",
+    "Vanilla",
+    "Long",
+    "Very Long",
+    "Lightsaber",
+    "Space Tearing",
+};
+
+static std::vector<std::string> rangTrailDurationOptionNames = {
     "Disabled",
     "Very short",
     "Vanilla",
@@ -1308,9 +1318,9 @@ Option CustomTrailEffects         = Option::Bool("Custom Trail Effects",     {"O
 Option ChosenSimpleMode           = Option::Bool(2, "Draw simple texture",   {"When necessary","Always"},   {necessarySimpleModeDesc,alwaysSimpleModeDesc},                                                                                                                   OptionCategory::Cosmetic);
 Option SwordTrailInnerColor       = Option::U8  (2, "Sword (Inner Color)",   weaponTrailInnerOptionNames,   {RANDOM_CHOICE_DESC, RANDOM_COLOR_DESC, CUSTOM_COLOR_DESC, "Select the color that appears from the base\nof the sword."},                                         OptionCategory::Cosmetic,                      3); // White
 Option SwordTrailOuterColor       = Option::U8  (2, "Sword (Outer Color)",   weaponTrailOuterOptionNames,   {RANDOM_CHOICE_DESC, RANDOM_COLOR_DESC, CUSTOM_COLOR_DESC, "Select the color that appears from the tip\nof the sword."},                                          OptionCategory::Cosmetic,    SAME_AS_INNER_TRAIL);
-Option SwordTrailDuration         = Option::U8  (2, "Sword (Duration)",      trailDurationOptionNames,      {"Select the duration for sword trails.\n\nIf too many trails are on screen, the duration\nmay be capped at Long for some of them."},                             OptionCategory::Cosmetic,  TRAILDURATION_VANILLA);
+Option SwordTrailDuration         = Option::U8  (2, "Sword (Duration)",      swordTrailDurationOptionNames, {"Select the duration for sword trails.\n\nIf too many trails are on screen, the duration\nmay be capped at Long for some of them."},                             OptionCategory::Cosmetic,  TRAILDURATION_VANILLA);
 Option BoomerangTrailColor        = Option::U8  (2, "Boomerang (Color)",     weaponTrailInnerOptionNames,   {RANDOM_CHOICE_DESC, RANDOM_COLOR_DESC, CUSTOM_COLOR_DESC, "Select the color for boomerang trails."},                                                             OptionCategory::Cosmetic,                      8); // Yellow
-Option BoomerangTrailDuration     = Option::U8  (2, "Boomerang (Duration)",  trailDurationOptionNames,      {"Select the duration for boomerang trails."},                                                                                                                    OptionCategory::Cosmetic,  TRAILDURATION_VANILLA);
+Option BoomerangTrailDuration     = Option::U8  (2, "Boomerang (Duration)",  rangTrailDurationOptionNames,  {"Select the duration for boomerang trails."},                                                                                                                    OptionCategory::Cosmetic,  TRAILDURATION_VANILLA);
 Option BombchuTrailInnerColor     = Option::U8  (2, "Bombchu (Inner Color)", weaponTrailInnerOptionNames,   {RANDOM_CHOICE_DESC, RANDOM_COLOR_DESC, CUSTOM_COLOR_DESC, "Select the color for the center of the\nbombchu trail."},                                             OptionCategory::Cosmetic,                      5); // Red
 Option BombchuTrailOuterColor     = Option::U8  (2, "Bombchu (Outer Color)", weaponTrailOuterOptionNames,   {RANDOM_CHOICE_DESC, RANDOM_COLOR_DESC, CUSTOM_COLOR_DESC, "Select the color for the sides of the\nbombchu trail."},                                              OptionCategory::Cosmetic,    SAME_AS_INNER_TRAIL);
 Option BombchuTrailDuration       = Option::U8  (2, "Bombchu (Duration)",    chuTrailDurationOptionNames,   {"Select the duration for bombchu trails."},                                                                                                                      OptionCategory::Cosmetic,  TRAILDURATION_VANILLA);

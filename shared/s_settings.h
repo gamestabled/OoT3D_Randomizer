@@ -502,6 +502,7 @@ typedef enum TrailDuration {
     TRAILDURATION_LONG,
     TRAILDURATION_VERYLONG,
     TRAILDURATION_LIGHTSABER,
+    TRAILDURATION_SPACETEARING,
 } TrailDuration;
 
 typedef enum MirrorWorld {

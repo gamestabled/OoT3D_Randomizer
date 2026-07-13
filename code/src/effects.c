@@ -10,6 +10,7 @@ static const u8 sSwordTrailDurationValues[] = {
     [TRAILDURATION_LONG]         = 16,  //
     [TRAILDURATION_VERYLONG]     = 24,  //
     [TRAILDURATION_LIGHTSABER]   = 32,  //
+    [TRAILDURATION_SPACETEARING] = 255, //
 };
 
 static const u8 sBoomerangTrailDurationValues[] = {
