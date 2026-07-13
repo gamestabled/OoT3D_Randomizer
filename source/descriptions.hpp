@@ -284,6 +284,7 @@ extern string_view balancedHintsDesc;
 extern string_view strongHintsDesc;
 extern string_view veryStrongHintsDesc;
 extern string_view playthroughHintsDesc;
+extern string_view hintSpecificityDesc;
 
 extern string_view bonusGossipHintsDesc;
 

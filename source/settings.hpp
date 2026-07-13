@@ -472,6 +472,7 @@ extern Option Racing;
 extern Option GossipStoneHints;
 extern Option ClearerHints;
 extern Option HintDistribution;
+extern Option HintSpecificity;
 extern Option BonusGossipHints;
 extern Option MiscHints;
 extern Option ToTAltarHints;

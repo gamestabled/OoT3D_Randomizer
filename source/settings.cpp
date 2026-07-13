@@ -360,6 +360,7 @@ std::vector<Option *> timesaverOptions = {
 Option Racing              = Option::Bool("Racing",                 {"Off", "On"},                                                          {racingDesc});
 Option GossipStoneHints    = Option::U8  ("Gossip Stone Hints",     {"No Hints", "Need Nothing", "Mask of Truth", "Shard of Agony"},        {gossipStonesHintsDesc},                                                                                          OptionCategory::Setting,    HINTS_NEED_NOTHING);
 Option HintDistribution    = Option::U8  (2, "Hint Distribution",   {"Useless", "Balanced", "Strong", "Very Strong", "Playthrough"},        {uselessHintsDesc, balancedHintsDesc, strongHintsDesc, veryStrongHintsDesc, playthroughHintsDesc},                OptionCategory::Setting,    HINTDISTRIBUTION_BALANCED);
+Option HintSpecificity     = Option::U8  (4, "Specificity",         {"General Area", "Exact Location"},                                     {hintSpecificityDesc});
 Option BonusGossipHints    = Option::Bool(4, "Bonus Hints",         {"Off", "On"},                                                          {bonusGossipHintsDesc});
 Option MiscHints           = Option::U8  ("Miscellaneous Hints",    {"All Disabled",  "All Enabled", "Choose"},                             {miscHintsDesc},                                                                                                  OptionCategory::Setting,    TOGGLE_ALL_ENABLED);
 Option ToTAltarHints       = Option::Bool(2, "Temple of Time Altar",{"Off", "On"},                                                          {totAltarHintsDesc});
@@ -383,6 +384,7 @@ std::vector<Option *> miscOptions = {
     &Racing,
     &GossipStoneHints,
     &HintDistribution,
+    &HintSpecificity,
     &BonusGossipHints,
     &MiscHints,
     &ToTAltarHints,
@@ -2558,14 +2560,17 @@ void ForceChange(u32 kDown, Option* currentSetting) {
     // Only show hint options if hints are enabled
     if (GossipStoneHints.Is(HINTS_NO_HINTS)) {
         HintDistribution.Hide();
-        BonusGossipHints.Hide();
+        HintDistribution.SetSelectedIndex(HINTDISTRIBUTION_BALANCED);
     } else {
         HintDistribution.Unhide();
-        if (HintDistribution.Is(HINTDISTRIBUTION_PLAYTHROUGH)) {
-            BonusGossipHints.Unhide();
-        } else {
-            BonusGossipHints.Hide();
-        }
+    }
+
+    if (HintDistribution.Is(HINTDISTRIBUTION_PLAYTHROUGH)) {
+        HintSpecificity.Unhide();
+        BonusGossipHints.Unhide();
+    } else {
+        HintSpecificity.Hide();
+        BonusGossipHints.Hide();
     }
 
     // Manage toggle for misc hints options

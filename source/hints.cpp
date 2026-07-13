@@ -242,10 +242,15 @@ static void CreateAreaLocationHint(LocationKey hintedLocation) {
     // make hint text
     Text prefix       = Hint(PREFIX).GetText();
     Text itemHintText = Location(hintedLocation)->GetPlacedItem().GetHint().GetText();
-    Text foundAt      = Hint(CAN_BE_FOUND_AT).GetText();
-    Text areaHintText = Hint(GetLocationRegionHintKey(hintedLocation)).GetText();
-
-    Text finalHint = prefix + "#" + itemHintText + "# " + foundAt + " #" + areaHintText + "#.";
+    Text finalHint;
+    if (HintSpecificity.Is(HINTSPECIFICITY_GENERAL)) {
+        Text foundAt      = Hint(CAN_BE_FOUND_AT).GetText();
+        Text areaHintText = Hint(GetLocationRegionHintKey(hintedLocation)).GetText();
+        finalHint         = prefix + "#" + itemHintText + "# " + foundAt + " #" + areaHintText + "#.";
+    } else { // HINTSPECIFICITY_EXACT
+        Text locHintText = Location(hintedLocation)->GetHint().GetText();
+        finalHint        = prefix + locHintText + " #" + itemHintText + "#.";
+    }
     finalHint.SetFormPerLanguage();
     PlacementLog_Msg("\tMessage: ");
     PlacementLog_Msg(finalHint.NAenglish);

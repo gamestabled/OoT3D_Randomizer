@@ -337,6 +337,11 @@ typedef enum HintDistributionSettings {
     HINTDISTRIBUTION_PLAYTHROUGH,
 } HintDistributionSettings;
 
+typedef enum HintSpecificitySetting {
+    HINTSPECIFICITY_GENERAL,
+    HINTSPECIFICITY_EXACT,
+} HintSpecificitySetting;
+
 typedef enum DamageMultiplierSetting {
     DAMAGEMULTIPLIER_HALF,
     DAMAGEMULTIPLIER_DEFAULT,
