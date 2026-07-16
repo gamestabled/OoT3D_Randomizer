@@ -10,6 +10,7 @@
 #include "item_override.h"
 #include "actor.h"
 #include "fairy.h"
+#include "effects.h"
 
 extern s16 TimerFrameCounter; // Used to decrease the timer every 30 frames
 extern float ControlStick_X;
@@ -180,7 +181,13 @@ void IceTrap_ActivateCurseTrap(IceTrapType curseType) {
         IceTrap_DispelCurses();
     }
 
+    IceTrap_ActiveCurse = curseType;
+
     switch (curseType) {
+        case ICETRAP_CURSE_SWORD:
+            // Disable slash effect.
+            Effects_UpdateSwordTrailDuration();
+            break;
         case ICETRAP_CURSE_SHIELD:
             gSaveContext.equips.equipment &= ~0xF0; // unequip shield
             Player_SetEquipmentData(gGlobalContext, PLAYER);
@@ -211,24 +218,27 @@ void IceTrap_ActivateCurseTrap(IceTrapType curseType) {
     TimerFrameCounter        = 30;
     DisplayTextbox(gGlobalContext, CURSETRAP_TEXT_BASE_INDEX + curseType - ICETRAP_CURSE_SHIELD, 0);
     Audio_PlayFanfare(NA_SE_EN_PO_LAUGH);
-    IceTrap_ActiveCurse = curseType;
 }
 
 void IceTrap_DispelCurses(void) {
-    if (IceTrap_ActiveCurse > ICETRAP_NONE) {
-        if (IceTrap_ActiveCurse == ICETRAP_CURSE_INVISIBLE_TERRAIN ||
-            IceTrap_ActiveCurse == ICETRAP_CURSE_INVISIBLE_ACTORS) {
-            gStaticContext.dekuNutFlash = -1;
-        }
-        gGearUsabilityTable[GearSlot(ITEM_SHIELD_DEKU)]   = gSettingsContext.dekuShieldAsAdult ? 0x09 : 0x01;
-        gGearUsabilityTable[GearSlot(ITEM_SHIELD_HYLIAN)] = 0x09;
-        gGearUsabilityTable[GearSlot(ITEM_SHIELD_MIRROR)] = gSettingsContext.mirrorShieldAsChild ? 0x09 : 0x00;
-        gStaticContext.disableRoomDraw                    = FALSE;
-        gActorsHidden                                     = FALSE;
-        previousTimer2Value                               = 60;
-        gSaveContext.timer2State                          = 0;
-        IceTrap_ActiveCurse                               = ICETRAP_NONE;
+    if (IceTrap_ActiveCurse <= ICETRAP_NONE) {
+        return;
     }
+
+    if (IceTrap_ActiveCurse == ICETRAP_CURSE_INVISIBLE_TERRAIN ||
+        IceTrap_ActiveCurse == ICETRAP_CURSE_INVISIBLE_ACTORS) {
+        gStaticContext.dekuNutFlash = -1;
+    }
+    gGearUsabilityTable[GearSlot(ITEM_SHIELD_DEKU)]   = gSettingsContext.dekuShieldAsAdult ? 0x09 : 0x01;
+    gGearUsabilityTable[GearSlot(ITEM_SHIELD_HYLIAN)] = 0x09;
+    gGearUsabilityTable[GearSlot(ITEM_SHIELD_MIRROR)] = gSettingsContext.mirrorShieldAsChild ? 0x09 : 0x00;
+    gStaticContext.disableRoomDraw                    = FALSE;
+    gActorsHidden                                     = FALSE;
+    previousTimer2Value                               = 60;
+    gSaveContext.timer2State                          = 0;
+    IceTrap_ActiveCurse                               = ICETRAP_NONE;
+
+    Effects_UpdateSwordTrailDuration();
 }
 
 u16 lerps(u16 a, u16 b, f32 t) {
@@ -291,8 +301,8 @@ void IceTrap_HandleCurses(void) {
     }
 
     // Dispel curses if the timer is reset or runs out, or if the scene is Tower Collapse Exterior
-    if ((!IsInGame() || gSaveContext.timer2State <= 1 || gSaveContext.timer2Value == 0 ||
-         gGlobalContext->sceneNum == 0x1A)) {
+    if (!IsInGame() || gSaveContext.timer2State <= 1 || gSaveContext.timer2Value == 0 ||
+        gGlobalContext->sceneNum == SCENE_GANONS_TOWER_COLLAPSE_EXTERIOR) {
         IceTrap_DispelCurses();
         return;
     }

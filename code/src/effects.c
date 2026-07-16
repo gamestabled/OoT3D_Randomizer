@@ -2,6 +2,7 @@
 #include "settings.h"
 #include "colors.h"
 #include "objects.h"
+#include "icetrap.h"
 
 static const u8 sSwordTrailDurationValues[] = {
     [TRAILDURATION_DISABLED]     = 0,   //
@@ -43,12 +44,22 @@ void Effects_Init(void) {
 }
 
 void Effects_UpdateSwordTrailDuration(void) {
-    const u8 duration = sSwordTrailDurationValues[gSettingsContext.swordTrailDuration];
-    EffectBlure* swordTrail = Effect_GetByIndex(PLAYER->meleeWeaponEffectIndex);
-    if (swordTrail != NULL) {
-        swordTrail->elemDuration = duration;
+    u8 duration;
+    if (IceTrap_ActiveCurse == ICETRAP_CURSE_SWORD) {
+        // Don't draw slash effect during sword curse.
+        duration = 0;
+    } else {
+        duration = sSwordTrailDurationValues[gSettingsContext.swordTrailDuration];
     }
+
     Player_SwordBlureEffectInitParams.elemDuration = duration;
+
+    if (PLAYER != NULL) {
+        EffectBlure* swordTrail = Effect_GetByIndex(PLAYER->meleeWeaponEffectIndex);
+        if (swordTrail != NULL) {
+            swordTrail->elemDuration = duration;
+        }
+    }
 }
 
 // This function is called when a new effect element tries to spawn but there's no space left.
