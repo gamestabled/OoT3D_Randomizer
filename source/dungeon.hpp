@@ -52,6 +52,14 @@ class DungeonInfo {
         return (masterQuest) ? mqKeyCount : vanillaKeyCount;
     }
 
+    const std::vector<LocationKey>& GetVanillaLocations() const {
+        return vanillaLocations;
+    }
+
+    const std::vector<LocationKey>& GetMQLocations() const {
+        return mqLocations;
+    }
+
     HintKey GetHintKey() const;
     ItemKey GetSmallKey() const;
     ItemKey GetKeyRing() const;

@@ -1,4 +1,3 @@
-// clang-format off
 #include "s_dungeon.h"
 
 #include "item_location.hpp"
@@ -10,10 +9,16 @@
 #include "debug.hpp"
 #include "keys.hpp"
 
+extern bool gInitError;
+
 // Location definitions
 static std::array<ItemLocation, KEY_ENUM_MAX> locationTable;
+// Count of locations added to the table, excluding hint types
+static u32 sInitializedItemLocations = 0;
 
 void LocationTable_Init() {
+    // clang-format off
+
     // No area                                                                       scene flag  name                                    hint key (hint_list.cpp)               vanilla item               categories                                                                                                            collection check (if needed)                             collection check group
     locationTable[NONE]                                  = ItemLocation::Base       (0xFF, 0xFF, "Invalid Location",                     NONE,                                  NONE,                      {},                                                                                                                   SpoilerCollectionCheck::None());
     locationTable[TRIFORCE_HUNT_GOAL]                    = ItemLocation::Base       (0xFF, 0xFF, "Triforce Hunt Goal",                   NONE,                                  TRIFORCE,                  {},                                                                                                                   SpoilerCollectionCheck::None());
@@ -1130,8 +1135,24 @@ void LocationTable_Init() {
 
     locationTable[GANONDORF_HINT]                                = ItemLocation::OtherHint(0x00, 0x00, "Ganondorf Hint",                              {});
 
+    // clang-format on
+
+    // Verify that the max possible location count is less than ITEM_OVERRIDES_MAX
+    u32 maxLocCount = sInitializedItemLocations;
+    // For each dungeon, only consider the quest type with most locations.
+    for (auto dungeon : Dungeon::dungeonList) {
+        u32 mqLocCount      = dungeon->GetMQLocations().size();
+        u32 vanillaLocCount = dungeon->GetVanillaLocations().size();
+        maxLocCount -= std::min(mqLocCount, vanillaLocCount);
+    }
+
+    if (maxLocCount > ITEM_OVERRIDES_MAX) {
+        CitraPrint("ERROR! Max location count: " + std::to_string(maxLocCount));
+        gInitError = true;
+    }
 }
 
+// clang-format off
 std::vector<LocationKey> KF_ShopLocations = {
     KF_SHOP_ITEM_1,
     KF_SHOP_ITEM_2,
@@ -1772,6 +1793,13 @@ std::vector<LocationKey> childOnlyHotLocations = {
     DMC_LOWER_BLUE_RUPEE_6,
 };
 // clang-format on
+
+void ItemLocation::OnInit(void) {
+    // Ignore hint reachability locations
+    if (type < ItemLocationType::HintStone) {
+        sInitializedItemLocations++;
+    }
+}
 
 ItemLocation* Location(LocationKey locKey) {
     return &(locationTable[locKey]);

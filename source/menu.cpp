@@ -17,6 +17,8 @@
 #include "debug.hpp"
 #include "music.hpp"
 
+bool gInitError = false;
+
 namespace {
 bool seedChanged;
 bool chosePlayOption;
@@ -93,6 +95,21 @@ void MenuInit() {
     // If Randomize all settings in a category is selected
     // Re-randomize them
     Settings::RandomizeAllSettings();
+
+    // If an error was detected during initialization, print error message and block the app.
+    if (gInitError) {
+        consoleClear();
+        printf("\x1b[5;13H\x1b[31mERROR!\x1b[37m Init checks failed!");
+        while (aptMainLoop()) {
+            hidScanInput();
+            if (hidKeysDown() & KEY_SELECT) {
+                break;
+            }
+        }
+        // Close the app.
+        gfxExit();
+        exit(0);
+    }
 
     PrintTopScreen();
 

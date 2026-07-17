@@ -120,6 +120,7 @@ class ItemLocation {
         : scene(scene_), type(type_), flag(flag_), name(std::move(name_)), hintKey(hintKey_), vanillaItem(vanillaItem_),
           categories(std::move(categories_)), price(price_), collectionCheck(collectionCheck_),
           collectionCheckGroup(collectionCheckGroup_) {
+        OnInit();
     }
 
     ItemOverride_Key Key() const {
@@ -437,6 +438,8 @@ class ItemLocation {
     }
 
   private:
+    void OnInit(void);
+
     u8 scene;
     ItemLocationType type;
     u8 flag;

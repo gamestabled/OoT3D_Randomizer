@@ -25,8 +25,8 @@ typedef enum Readiness {
     READY_SWIMMING,
 } Readiness;
 
-static ItemOverride rItemOverrides[800] = { 0 };
-static s32 rItemOverrides_Count         = 0;
+static ItemOverride rItemOverrides[ITEM_OVERRIDES_MAX] = { 0 };
+static s32 rItemOverrides_Count                        = 0;
 
 static ItemOverride rPendingOverrideQueue[7] = { 0 };
 static Actor* rDummyActor                    = NULL;
