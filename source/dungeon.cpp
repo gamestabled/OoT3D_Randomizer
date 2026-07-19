@@ -124,6 +124,9 @@ DungeonInfo DekuTree = DungeonInfo("Deku Tree", DEKU_TREE, DEKU_TREE_MAP, DEKU_T
                                        DEKU_TREE_GS_COMPASS_ROOM,
                                        DEKU_TREE_2F_FLOATING_HEART,
                                        DEKU_TREE_3F_FLOATING_HEART,
+                                       DEKU_TREE_B2F_UNDER_WATER_HEART_1,
+                                       DEKU_TREE_B2F_UNDER_WATER_HEART_2,
+                                       DEKU_TREE_B2F_UNDER_WATER_HEART_3,
                                    },
                                    {
                                        // MQ Locations
