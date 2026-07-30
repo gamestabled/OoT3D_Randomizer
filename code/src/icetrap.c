@@ -19,7 +19,9 @@ extern float ControlStick_Y;
 IceTrapType IceTrap_ActiveCurse = ICETRAP_NONE;
 u32 IceTrap_ActiveHash          = 0;
 
-static u8 pendingFreezes       = 0;
+// Receiving more pending traps than what this array can store will reuse the last hash for all extra traps.
+static u32 storedHashes[7]     = { 0 };
+static u8 pendingTrapsCount    = 0;
 static u8 cooldown             = 0;
 static u8 modifyScale          = 0;
 static s16 previousTimer1Value = 0;
@@ -85,11 +87,26 @@ void IceTrap_Init(void) {
 }
 
 Bool IceTrap_IsPending(void) {
-    return pendingFreezes > 0;
+    return pendingTrapsCount > 0;
 }
 
 void IceTrap_Push(void) {
-    pendingFreezes++;
+    if (pendingTrapsCount < ARRAY_SIZE(storedHashes)) {
+        storedHashes[pendingTrapsCount] = IceTrap_ActiveHash;
+    }
+
+    pendingTrapsCount++;
+}
+
+static void PopStoredHash(void) {
+    if (pendingTrapsCount > 0) {
+        IceTrap_ActiveHash    = storedHashes[0];
+        s32 storedHashesCount = MIN(pendingTrapsCount, ARRAY_SIZE(storedHashes));
+        for (s32 i = 0; i < storedHashesCount - 1; i++) {
+            storedHashes[i] = storedHashes[i + 1];
+        }
+        pendingTrapsCount--;
+    }
 }
 
 void LinkDamageNoKnockback(void) {
@@ -124,10 +141,9 @@ void IceTrap_UpdateOverride(ItemOverride* override, Bool isFromChest) {
 }
 
 void IceTrap_Give(void) {
-    if (cooldown == 0 && pendingFreezes) {
+    if (cooldown == 0 && IceTrap_IsPending()) {
+        PopStoredHash();
         IceTrapType trapType = IceTrap_GetType(IceTrap_ActiveHash, FALSE);
-
-        pendingFreezes--;
 
         if (trapType >= ICETRAP_CURSE_SHIELD) {
             IceTrap_ActivateCurseTrap(trapType);
