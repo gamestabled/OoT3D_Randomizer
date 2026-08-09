@@ -1458,6 +1458,11 @@ string_view gsLocGuaranteeNewDesc     = "Excludes the original location from the
 string_view randomSongNotesDesc       = "Randomize the notes for each ocarina song.\n"     //
                                         "Regular songs will be 3 notes repeated twice.\n"  //
                                         "Warp songs will be between 5 and 8 notes.";       //
+/*------------------------------                                                           //
+|      FROG SONG TIMER         |                                                           //
+------------------------------*/                                                           //
+string_view frogSongTimeMultDesc      = "Multiplier for the time you have to play each\n"  //
+                                        "note in the final frog song.";                  //
                                                                                            //--------------//
 /*------------------------------                                                                           //
 |  DETAILED LOGIC EXPLANATIONS |                                                                           //

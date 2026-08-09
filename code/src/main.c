@@ -24,8 +24,10 @@
 #include "bgm.h"
 #include "business_scrubs.h"
 #include "alert.h"
+#include "frog.h"
 
 #include "z3D/z3D.h"
+#include "z3D/actors/z_en_fr.h"
 #include "3ds/extdata.h"
 #include "3ds/services/irrst.h"
 #include "3ds/svc.h"
@@ -50,6 +52,11 @@ void Randomizer_Init() {
     irrstInit();
     Effects_Init();
     BusinessScrubs_Init();
+    FrogSongTimer_Init();
+
+    for(u8 i=0; i<5;i++){
+        sTimerFrogSong[i]=500;
+    }
 
     s64 output = 0;
     svcGetSystemInfo(&output, 0x20000, 0);

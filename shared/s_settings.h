@@ -813,5 +813,6 @@ typedef struct SettingsContext {
     u8 startingOcarinaButtons;
 
     u8 startingTokens;
+    u8 frogSongTimerMultiplier;
 
 } SettingsContext;

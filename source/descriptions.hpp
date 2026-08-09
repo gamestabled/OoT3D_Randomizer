@@ -451,6 +451,7 @@ extern string_view freeCamDesc;
 extern string_view randomGsLocationsDesc;
 extern string_view gsLocGuaranteeNewDesc;
 extern string_view randomSongNotesDesc;
+extern string_view frogSongTimeMultDesc;
 
 extern string_view ToggleAllTricksDesc;
 

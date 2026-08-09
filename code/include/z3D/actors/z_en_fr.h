@@ -23,4 +23,5 @@ typedef struct EnFr {
     /* 0xC48 */ char unk_C48[0x208];
 } EnFr; // size 0xE50
 
+extern s16 sTimerFrogSong[5];
 #endif //_EN_FR_H_
