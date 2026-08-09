@@ -54,8 +54,8 @@ void Randomizer_Init() {
     BusinessScrubs_Init();
     FrogSongTimer_Init();
 
-    for(u8 i=0; i<5;i++){
-        sTimerFrogSong[i]=500;
+    for (u8 i = 0; i < 5; i++) {
+        sTimerFrogSong[i] = 500;
     }
 
     s64 output = 0;
