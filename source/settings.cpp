@@ -1851,7 +1851,7 @@ SettingsContext FillContext() {
     ctx.startingOcarinaButtons |= StartingOcarinaButtonY.Value<u8>() << 3;
     ctx.startingOcarinaButtons |= StartingOcarinaButtonA.Value<u8>() << 4;
 
-    ctx.startingTokens = StartingSkulltulaToken.Value<u8>();
+    ctx.startingTokens          = StartingSkulltulaToken.Value<u8>();
     ctx.frogSongTimerMultiplier = FrogSongTimeMultiplier.Value<u8>();
 
     // Give the Gerudo Token if Gerudo Fortress is Open and Shuffle Gerudo Card is off

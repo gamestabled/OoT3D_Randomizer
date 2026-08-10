@@ -14,6 +14,7 @@ void EnFr_rSetReward(EnFr* frog) {
     }
 }
 
+
 s16 FrogSongTimerMultiplier(s16 initialFrogTimer){
     return initialFrogTimer * (gSettingsContext.frogSongTimerMultiplier+1);
 }
