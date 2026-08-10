@@ -4,5 +4,5 @@
 
 void EnFr_rSetReward(EnFr* frog);
 void FrogSongTimer_Init(void);
-s16 EnFr_rSetupFrogSongTimerMultiplier(s16 initialFrogTimer);
+s16 FrogSongTimerMultiplier(s16 initialFrogTimer);
 #endif //_FROG_H
