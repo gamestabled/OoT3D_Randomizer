@@ -14,13 +14,12 @@ void EnFr_rSetReward(EnFr* frog) {
     }
 }
 
-
-s16 FrogSongTimerMultiplier(s16 initialFrogTimer){
-    return initialFrogTimer * (gSettingsContext.frogSongTimerMultiplier+1);
+s16 FrogSongTimerMultiplier(s16 initialFrogTimer) {
+    return initialFrogTimer * (gSettingsContext.frogSongTimerMultiplier + 1);
 }
 
-void FrogSongTimer_Init(void){
-    for(u8 i=0; i<ARRAY_SIZE(sTimerFrogSong); i++){
-        sTimerFrogSong[i]=FrogSongTimerMultiplier(sTimerFrogSong[i]);
+void FrogSongTimer_Init(void) {
+    for (u8 i = 0; i < ARRAY_SIZE(sTimerFrogSong); i++) {
+        sTimerFrogSong[i] = FrogSongTimerMultiplier(sTimerFrogSong[i]);
     }
 }
