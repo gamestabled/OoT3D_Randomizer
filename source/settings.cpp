@@ -1673,7 +1673,7 @@ SettingsContext FillContext() {
     ctx.freeCamera          = (FreeCamera) ? 1 : 0;
     ctx.randomGsLocations   = (RandomGsLocations) ? 1 : 0;
     ctx.randomSongNotes     = (RandomSongNotes) ? 1 : 0;
-    ctx.frogSongTimerMult = FrogSongTimeMult.Value<u8>();
+    ctx.frogSongTimerMult   = FrogSongTimeMult.Value<u8>();
 
     ctx.faroresWindAnywhere  = (FaroresWindAnywhere) ? 1 : 0;
     ctx.stickAsAdult         = (StickAsAdult) ? 1 : 0;
@@ -1852,7 +1852,7 @@ SettingsContext FillContext() {
     ctx.startingOcarinaButtons |= StartingOcarinaButtonY.Value<u8>() << 3;
     ctx.startingOcarinaButtons |= StartingOcarinaButtonA.Value<u8>() << 4;
 
-    ctx.startingTokens          = StartingSkulltulaToken.Value<u8>();
+    ctx.startingTokens = StartingSkulltulaToken.Value<u8>();
 
     // Give the Gerudo Token if Gerudo Fortress is Open and Shuffle Gerudo Card is off
     if (GerudoFortress.Is(GERUDOFORTRESS_OPEN) && !ShuffleGerudoToken) {
