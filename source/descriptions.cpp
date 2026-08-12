@@ -1462,7 +1462,7 @@ string_view randomSongNotesDesc       = "Randomize the notes for each ocarina so
 |      FROG SONG TIMER         |                                                           //
 ------------------------------*/                                                           //
 string_view frogSongTimeMultDesc      = "Multiplier for the time you have to play each\n"  //
-                                        "note in the final frog song.";                  //
+                                        "note in the final frog song.";                    //
                                                                                            //--------------//
 /*------------------------------                                                                           //
 |  DETAILED LOGIC EXPLANATIONS |                                                                           //
