@@ -487,7 +487,7 @@ Option FreeCamera          = Option::Bool("Free Camera",            {"Off", "On"
 Option RandomGsLocations   = Option::Bool("Random GS Locations",    {"Off", "On"},                                                          {randomGsLocationsDesc});
 Option GsLocGuaranteeNew   = Option::Bool(2, "Guarantee New",       {"Off", "On"},                                                          {gsLocGuaranteeNewDesc});
 Option RandomSongNotes     = Option::Bool("Random Ocarina Melodies",{"Off", "On"},                                                          {randomSongNotesDesc});
-Option FrogSongTimeMultiplier = Option::U8("Frogsong Time Multiply",{"1x","2x","3x","4x"},                                                  {frogSongTimeMultDesc});
+Option FrogSongTimeMult    = Option::U8("Frog Song Timer",          {"1x","2x","3x","4x"},                                                  {frogSongTimeMultDesc});
 std::vector<Option*> gameplayOptions = {
     &FastBunnyHood,
     &KeepFWWarpPoint,
@@ -511,7 +511,7 @@ std::vector<Option*> gameplayOptions = {
     &RandomGsLocations,
     &GsLocGuaranteeNew,
     &RandomSongNotes,
-    &FrogSongTimeMultiplier,
+    &FrogSongTimeMult,
 };
 
 // Excluded Locations (Individual definitions made in ItemLocation class)
@@ -1673,6 +1673,7 @@ SettingsContext FillContext() {
     ctx.freeCamera          = (FreeCamera) ? 1 : 0;
     ctx.randomGsLocations   = (RandomGsLocations) ? 1 : 0;
     ctx.randomSongNotes     = (RandomSongNotes) ? 1 : 0;
+    ctx.frogSongTimerMult = FrogSongTimeMult.Value<u8>();
 
     ctx.faroresWindAnywhere  = (FaroresWindAnywhere) ? 1 : 0;
     ctx.stickAsAdult         = (StickAsAdult) ? 1 : 0;
@@ -1852,7 +1853,6 @@ SettingsContext FillContext() {
     ctx.startingOcarinaButtons |= StartingOcarinaButtonA.Value<u8>() << 4;
 
     ctx.startingTokens          = StartingSkulltulaToken.Value<u8>();
-    ctx.frogSongTimerMultiplier = FrogSongTimeMultiplier.Value<u8>();
 
     // Give the Gerudo Token if Gerudo Fortress is Open and Shuffle Gerudo Card is off
     if (GerudoFortress.Is(GERUDOFORTRESS_OPEN) && !ShuffleGerudoToken) {

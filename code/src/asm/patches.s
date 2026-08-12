@@ -562,7 +562,7 @@ PATCH AnjuCheckCuccoAmount
     b hook_AnjuCheckCuccoAmount
 
 PATCH EnFrSetupFrogSongTimerMultiplier
-    b hook_EnFrSetupFrogSongTimerMultiplier
+    bl hook_EnFrSetupFrogSongTimerMultiplier
 
 PATCH FrogReward
     b hook_FrogReward

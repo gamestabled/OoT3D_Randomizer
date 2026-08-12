@@ -381,7 +381,7 @@ HOOK EnFrSetupFrogSongTimerMultiplier
     mov r2,r0
     pop {r0,r1,r3-r12,lr}
     strh r2,[r1,#0x42]
-    b 0x381208
+    bx lr
 
 HOOK FrogReward
     push {r0-r12, lr}
