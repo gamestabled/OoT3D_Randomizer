@@ -27,7 +27,6 @@
 #include "frog.h"
 
 #include "z3D/z3D.h"
-#include "z3D/actors/z_en_fr.h"
 #include "3ds/extdata.h"
 #include "3ds/services/irrst.h"
 #include "3ds/svc.h"
