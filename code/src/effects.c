@@ -47,7 +47,7 @@ void Effects_UpdateSwordTrailDuration(void) {
     u8 duration;
     if (IceTrap_ActiveCurse == ICETRAP_CURSE_SWORD) {
         // Don't draw slash effect during sword curse.
-        duration = 0;
+        duration = sSwordTrailDurationValues[TRAILDURATION_DISABLED];
     } else {
         duration = sSwordTrailDurationValues[gSettingsContext.swordTrailDuration];
     }
