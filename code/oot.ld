@@ -608,6 +608,7 @@ SECTIONS
 	.patch_AltHeadersCommand 0x379020 + _LD_OFF : { *(.patch_AltHeadersCommand) }
 	EnWonderTalk2_Update = 0x3794EC + _LD_OFF;
 	Actor_KillAllWithMissingObject = 0x379C3C + _LD_OFF;
+	.patch_EnFrSetupFrogSongTimerMultiplier 0x381204 + _LD_OFF : { *(.patch_EnFrSetupFrogSongTimerMultiplier) }
 	BgSpot02Objects_Update = 0x3831AC + _LD_OFF;
 	BgSpot06Objects_Update = 0x3833F8 + _LD_OFF;
 	EnPoField_UpdateDead = 0x387564 + _LD_OFF;
@@ -894,6 +895,7 @@ SECTIONS
 	gGanonBlood = 0x515194 + _LD_OFF;
 	EnChanger_LoserGetItemIds = 0x521774 + _LD_OFF;
 	EnDns_ItemEntries = 0x522384 + _LD_OFF;
+	sTimerFrogSong = 0x5239C0 + _LD_OFF;
 	EnGirlA_ShopItemEntries = 0x524F50 + _LD_OFF;
 	.patch_BombchuCheapestPriceOne 0x525348 + _LD_OFF : { *(.patch_BombchuCheapestPriceOne) }
 	.patch_BombchuCheapestPriceTwo 0x5253D8 + _LD_OFF : { *(.patch_BombchuCheapestPriceTwo) }

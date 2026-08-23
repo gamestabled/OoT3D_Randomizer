@@ -13,3 +13,13 @@ void EnFr_rSetReward(EnFr* frog) {
         frog->reward = GI_HEART_PIECE_WIN;
     }
 }
+
+s16 FrogSongTimerMultiplier(s16 initialFrogTimer) {
+    return initialFrogTimer * (gSettingsContext.frogSongTimerMult + 1);
+}
+
+void FrogSongTimer_Init(void) {
+    for (u8 i = 0; i < ARRAY_SIZE(sTimerFrogSong); i++) {
+        sTimerFrogSong[i] = FrogSongTimerMultiplier(sTimerFrogSong[i]);
+    }
+}
