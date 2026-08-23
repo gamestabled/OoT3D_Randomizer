@@ -167,8 +167,7 @@ void EnBox_rUpdate(Actor* thisx, GlobalContext* globalCtx) {
     }
 }
 
-u8 Chest_OverrideAnimation() {
-
+Bool Chest_OverrideAnimation() {
     if ((gSettingsContext.chestAnimations == CHESTANIMATIONS_ALWAYSFAST) ||
         (!isItemOverrideActive)) // The animation is always fast for unused chests that aren't randomized
         return FALSE;
@@ -185,37 +184,32 @@ u8 Chest_OverrideAnimation() {
     return FALSE;
 }
 
-u8 vanillaIceTrap() {
+Bool vanillaIceTrap() {
     // Ice Traps from chests softlock when max health is 0, so just kill Link immediately
     if (gSaveContext.healthCapacity == 0) {
         PLAYER->stateFlags1 &= ~0x20000C00;
         gSaveContext.health = 0;
-        return 1;
+        return TRUE;
     }
-    return 0;
+    return FALSE;
 }
 
-u8 Chest_OverrideIceSmoke(Actor* thisx) {
+Bool Chest_OverrideIceSmoke(Actor* thisx) {
     if (gSettingsContext.randomTrapDmg == RANDOMTRAPS_OFF) {
         return vanillaIceTrap();
     }
 
     if (thisx != sLastTrapChest && thisx->xzDistToPlayer < 50.0f) {
-        sLastTrapChest = thisx;
-        u32 pRandInt = dizzyCurseSeed = IceTrap_ActiveHash;
-
-        u8 trapType = IceTrap_GetType(pRandInt, TRUE);
+        sLastTrapChest       = thisx;
+        IceTrapType trapType = IceTrap_GetType(IceTrap_ActiveHash, TRUE);
 
         // Curses
         if (trapType >= ICETRAP_CURSE_SHIELD) {
-            if (IceTrap_ActivateCurseTrap(trapType)) {
-                PLAYER->getItemId = 0;
-                PLAYER->stateFlags1 &= ~0x20000C00;
-                PLAYER->actor.home.pos.y = -5000; // Make Link airborne for a frame to cancel the get item event
-                return 1;
-            } else {
-                trapType = ICETRAP_BOMB_KNOCKDOWN; // if the curse can't trigger, use a bomb trap
-            }
+            IceTrap_ActivateCurseTrap(trapType);
+            PLAYER->getItemId = 0;
+            PLAYER->stateFlags1 &= ~0x20000C00;
+            Player_SetupIdleStanding(PLAYER, gGlobalContext);
+            return TRUE;
         }
 
         if (trapType == ICETRAP_VANILLA) {
@@ -245,21 +239,23 @@ u8 Chest_OverrideIceSmoke(Actor* thisx) {
             case ICETRAP_ANTIFAIRY:
                 sFairy = (EnElf*)Actor_Spawn(&gGlobalContext->actorCtx, gGlobalContext, 0x18, thisx->world.pos.x,
                                              thisx->world.pos.y, thisx->world.pos.z, 0, 0, 0, 0x5, FALSE);
-                PLAYER->actor.home.pos.y = -5000; // Make Link airborne for a frame to cancel the get item event
+                Player_SetupIdleStanding(PLAYER, gGlobalContext);
                 break;
             case ICETRAP_RUPPY:
                 Actor_Spawn(&gGlobalContext->actorCtx, gGlobalContext, 0x131, thisx->world.pos.x,
                             thisx->world.pos.y + 30, thisx->world.pos.z, 0, 0, 0, 0x2, FALSE);
-                PLAYER->actor.home.pos.y = -5000; // Make Link airborne for a frame to cancel the get item event
+                Player_SetupIdleStanding(PLAYER, gGlobalContext);
                 break;
             case ICETRAP_FIRE:
                 FireDamage(&(PLAYER->actor), gGlobalContext, gRandInt % 2);
                 LinkDamage(gGlobalContext, PLAYER, 0, 0.0f, 0.0f, 0, 20);
+                break;
+            default:
                 break;
         }
 
         Player_OnHit();
     }
 
-    return 1;
+    return TRUE;
 }

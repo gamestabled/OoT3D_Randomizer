@@ -502,6 +502,7 @@ typedef enum TrailDuration {
     TRAILDURATION_LONG,
     TRAILDURATION_VERYLONG,
     TRAILDURATION_LIGHTSABER,
+    TRAILDURATION_SPACETEARING,
 } TrailDuration;
 
 typedef enum MirrorWorld {
@@ -724,6 +725,7 @@ typedef struct SettingsContext {
     u8 customTrailEffects;
     u8 rainbowSwordTrailInnerColor;
     u8 rainbowSwordTrailOuterColor;
+    u8 swordTrailDuration;
     Color_RGBA8 boomerangTrailColor;
     u8 boomerangTrailColorMode;
     u8 boomerangTrailDuration;

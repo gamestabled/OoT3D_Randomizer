@@ -4,7 +4,9 @@
 #include "s_types.h"
 #include "s_colors.h"
 
-/* Effects */
+/*-------------------------------
+|            Effects            |
+-------------------------------*/
 
 #define SPARK_COUNT 24
 #define BLURE_COUNT 25
@@ -76,12 +78,33 @@ typedef struct EffectContext {
 } EffectContext;
 _Static_assert(sizeof(EffectContext) == 0xD250, "EffectContext size");
 
+typedef struct EffectBlureInit2 {
+    /* 0x00 */ s32 calcMode;
+    /* 0x04 */ u16 flags;
+    /* 0x06 */ Color_RGBA8 p1StartColor;
+    /* 0x0A */ Color_RGBA8 p2StartColor;
+    /* 0x0E */ Color_RGBA8 p1EndColor;
+    /* 0x12 */ Color_RGBA8 p2EndColor;
+    /* 0x16 */ u8 elemDuration;
+    /* 0x17 */ u8 unkFlag;
+    /* 0x18 */ u8 drawMode; // 0: simple; 1: simple with alt colors; 2+: smooth
+    /* 0x19 */ u8 mode4Param;
+    /* 0x1A */ Color_RGBA8 altPrimColor; // used with drawMode 1
+    /* 0x1E */ Color_RGBA8 altEnvColor;  // used with drawMode 1
+    /* 0x22 */ char unk_22[0x0A];
+} EffectBlureInit2;
+_Static_assert(sizeof(EffectBlureInit2) == 0x2C, "EffectBlureInit2 size");
+
+extern EffectBlureInit2 Player_SwordBlureEffectInitParams;
 extern EffectContext gEffectContext;
 
 void EffectBlure_Update(EffectBlure*);
 void Effect_Delete(struct GlobalContext* globalCtx, s32 index);
+void* Effect_GetByIndex(s32 index);
 
-/* Effect Soft Sprites */
+/*-------------------------------
+|      Effect Soft Sprites      |
+-------------------------------*/
 
 typedef enum EffectSsType {
     /* 0x00 */ EFFECT_SS_DUST,

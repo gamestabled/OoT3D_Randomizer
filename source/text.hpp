@@ -131,7 +131,7 @@ class Text {
             size_t position = str->find(oldStr);
             while (position != std::string::npos) {
                 str->replace(position, oldStr.length(), newStr);
-                position = str->find(oldStr);
+                position = str->find(oldStr, position + newStr.length());
             }
         }
     }

@@ -205,6 +205,7 @@ SECTIONS
 	EnBox_Update = 0x1D5B70 + _LD_OFF;
 	.patch_ChestIceSmoke 0x1D5E5C + _LD_OFF : { *(.patch_ChestIceSmoke) }
 	EnDns_Update = 0x1D67CC + _LD_OFF;
+	EnElf_Draw = 0x1D6EC4 + _LD_OFF;
 	EnGe1_Update = 0x1D742C + _LD_OFF;
 	.patch_CheckGerudoToken_1D7AD4 0x1D7AD4 + _LD_OFF : { *(.patch_CheckGerudoToken_1D7AD4) }
 	EnGeldB_Init = 0x1D7BD8 + _LD_OFF;
@@ -314,7 +315,6 @@ SECTIONS
 	EnMThunder_Init = 0x24C910 + _LD_OFF;
 	EnPoh_Update = 0x24D368 + _LD_OFF;
 	.patch_RedeadCanFreezePlayer 0x24DC2C + _LD_OFF : { *(.patch_RedeadCanFreezePlayer) }
-	.patch_SwordTrailDurationGrezzoFix 0x2507D0 + _LD_OFF : { *(.patch_SwordTrailDurationGrezzoFix) } /*duration is set to 6 due to framerate increase. NOP to allow custom duration*/
 	.patch_MultiplyPlayerSpeed 0x251D34 + _LD_OFF : { *(.patch_MultiplyPlayerSpeed) }
 	.patch_GameOverStart 0x252424 + _LD_OFF : { *(.patch_GameOverStart) }
 	ItemBHeart_Init = 0x25375C + _LD_OFF;
@@ -333,6 +333,7 @@ SECTIONS
 	DemoEffect_Update = 0x262C58 + _LD_OFF;
 	DemoKankyo_Update = 0x262EA4 + _LD_OFF;
 	DoorGerudo_Update = 0x263118 + _LD_OFF;
+	EnElf_UpdateNavi = 0x267DC0 + _LD_OFF;
 	.patch_NaviNotifications 0x267E04 + _LD_OFF : { *(.patch_NaviNotifications) }
 	EnEncount1_Update = 0x2682D0 + _LD_OFF;
 	EnExRuppy_Update = 0x2689B8 + _LD_OFF;
@@ -397,6 +398,7 @@ SECTIONS
 	.patch_OverrideItemAndTextID 0x2BC1C8 + _LD_OFF : { *(.patch_OverrideItemAndTextID) }
 	.patch_NoSilverGauntletsCutsceneWarp 0x2BC2A0 + _LD_OFF : { *(.patch_NoSilverGauntletsCutsceneWarp) }
 	.patch_RunAnimationSpeed 0x2BE70C + _LD_OFF : { *(.patch_RunAnimationSpeed) }
+	Player_SetupIdleStanding = 0x2C2224 + _LD_OFF;
 	.patch_FishingIgnoreTempBOne 0x2C3A10 + _LD_OFF : { *(.patch_FishingIgnoreTempBOne) }
 	.patch_DoorOfTimeOpenCutscene 0x2C6218 + _LD_OFF : { *(.patch_DoorOfTimeOpenCutscene) }
 	.patch_NoHealFromHealthUpgrades 0x2CD07C + _LD_OFF : { *(.patch_NoHealFromHealthUpgrades) }
@@ -523,6 +525,7 @@ SECTIONS
 	LinkAnimation_PlayOnce = 0x3604F0 + _LD_OFF;
 	.patch_ISGCrouchStab 0x360690 + _LD_OFF : { *(.patch_ISGCrouchStab) }
 	.patch_ForceTrailEffectUpdate 0x362108 + _LD_OFF : { *(.patch_ForceTrailEffectUpdate) } /*EffectBlure_AddVertex*/
+	Effect_GetByIndex = 0x362384 + _LD_OFF;
 	Actor_GetScreenPos = 0x363A20 + _LD_OFF;
 	Object_GetSlot = 0x363C10 + _LD_OFF;
 	.patch_ExtendObjectGetSlot 0x363CB4 + _LD_OFF : { *(.patch_ExtendObjectGetSlot) }
@@ -907,6 +910,7 @@ SECTIONS
 	gRestrictionFlags = 0x539DC4 + _LD_OFF;
 	sFloorType = 0x53A0A4 + _LD_OFF;
 	dynamicExitList = 0x53C094 + _LD_OFF;
+	Player_SwordBlureEffectInitParams = 0x53C130 + _LD_OFF;
 	PlayerDListGroup_EmptySheathAdult = 0x53C4D8 + _LD_OFF;
 	PlayerDListGroup_EmptySheathChildWithHylianShield = 0x53C4DC + _LD_OFF;
 	Vec3f_PlayerFeet_unk = 0x53CACC + _LD_OFF;

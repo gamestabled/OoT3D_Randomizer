@@ -4,7 +4,7 @@
 #include "z3D/z3D.h"
 #include "z3D/actors/z_en_box.h"
 
-typedef enum {
+typedef enum ChestType {
     CHEST_MAJOR,
     CHEST_JUNK,
     CHEST_BOSS_KEY,
@@ -18,7 +18,7 @@ typedef enum {
 void EnBox_rInit(Actor* thisx, GlobalContext* globalCtx);
 void EnBox_rUpdate(Actor* thisx, GlobalContext* globalCtx);
 void Chest_ChangeAppearance(Actor* thisx, GlobalContext* globalCtx);
-u8 Chest_OverrideAnimation();
-u8 Chest_OverrideIceSmoke(Actor* thisx);
+Bool Chest_OverrideAnimation();
+Bool Chest_OverrideIceSmoke(Actor* thisx);
 
 #endif //_CHEST_H_

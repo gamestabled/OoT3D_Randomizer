@@ -3,6 +3,8 @@
 #include "settings.h"
 #include "objects.h"
 #include "colors.h"
+#include "savefile.h"
+#include "icetrap.h"
 
 extern Color_RGBA8 NaviColorsArray[];
 
@@ -94,38 +96,40 @@ void Fairy_UpdateRainbowNaviColors(EnElf* navi) {
     }
 }
 
-s32 Fairy_SetTargetPointerColor(TargetContext* targetCtx, Actor* targetActor) {
+s32 Fairy_SetTargetPointerColor(Attention* attention, Actor* targetActor) {
     if (gSettingsContext.customNaviColors == OFF) {
         return 0;
     }
 
-    void** cmabManager = ZAR_GetCMABByIndex(targetCtx->zarInfo, 37); // mark_model_white.cmab as base for all colors
+    void** cmabManager = ZAR_GetCMABByIndex(attention->zarInfo, 37); // mark_model_white.cmab as base for all colors
     Fairy_ApplyColorToTargetCMAB(*cmabManager, NaviColorsArray[targetActor->type * 2]); // get inner color
     staticRainbowPointerCMAB = Fairy_IsNaviInnerRainbowForActorType(targetActor->type) ? *cmabManager : 0;
 
-    MatAnim_Init(targetCtx->visibleTargetIndicators.pointer->matAnim, cmabManager);
-    MatAnim_Init(targetCtx->hiddenTargetIndicators.pointer->matAnim, cmabManager);
-    targetCtx->pointerActorType = targetActor->type;
+    MatAnim_Init(attention->visibleTargetIndicators.pointer->matAnim, cmabManager);
+    MatAnim_Init(attention->hiddenTargetIndicators.pointer->matAnim, cmabManager);
+    attention->pointerActorType = targetActor->type;
 
     return 1;
 }
 
-s32 Fairy_SetTargetReticleColor(TargetContext* targetCtx) {
+s32 Fairy_SetTargetReticleColor(Attention* attention) {
     if (gSettingsContext.customNaviColors == OFF) {
         return 0;
     }
 
-    void** cmabManager = ZAR_GetCMABByIndex(targetCtx->zarInfo, 41); // target_model_white.cmab as base for all colors
-    Fairy_ApplyColorToTargetCMAB(*cmabManager, NaviColorsArray[targetCtx->reticleActorType * 2]); // get inner color
-    staticRainbowReticleCMAB = Fairy_IsNaviInnerRainbowForActorType(targetCtx->reticleActorType) ? *cmabManager : 0;
+    void** cmabManager = ZAR_GetCMABByIndex(attention->zarInfo, 41); // target_model_white.cmab as base for all colors
+    Fairy_ApplyColorToTargetCMAB(*cmabManager,
+                                 NaviColorsArray[attention->naviHoverActorCategory * 2]); // get inner color
+    staticRainbowReticleCMAB =
+        Fairy_IsNaviInnerRainbowForActorType(attention->naviHoverActorCategory) ? *cmabManager : 0;
 
     for (s32 i = 0; i < 4; i++) {
-        MatAnim_Init(targetCtx->visibleTargetIndicators.reticle[i]->matAnim, cmabManager);
-        MatAnim_Init(targetCtx->visibleTargetIndicators.reticleAfterimageOne[i]->matAnim, cmabManager);
-        MatAnim_Init(targetCtx->visibleTargetIndicators.reticleAfterimageTwo[i]->matAnim, cmabManager);
-        MatAnim_Init(targetCtx->hiddenTargetIndicators.reticle[i]->matAnim, cmabManager);
-        MatAnim_Init(targetCtx->hiddenTargetIndicators.reticleAfterimageOne[i]->matAnim, cmabManager);
-        MatAnim_Init(targetCtx->hiddenTargetIndicators.reticleAfterimageTwo[i]->matAnim, cmabManager);
+        MatAnim_Init(attention->visibleTargetIndicators.reticle[i]->matAnim, cmabManager);
+        MatAnim_Init(attention->visibleTargetIndicators.reticleAfterimageOne[i]->matAnim, cmabManager);
+        MatAnim_Init(attention->visibleTargetIndicators.reticleAfterimageTwo[i]->matAnim, cmabManager);
+        MatAnim_Init(attention->hiddenTargetIndicators.reticle[i]->matAnim, cmabManager);
+        MatAnim_Init(attention->hiddenTargetIndicators.reticleAfterimageOne[i]->matAnim, cmabManager);
+        MatAnim_Init(attention->hiddenTargetIndicators.reticleAfterimageTwo[i]->matAnim, cmabManager);
     }
 
     return 1;
@@ -134,4 +138,12 @@ s32 Fairy_SetTargetReticleColor(TargetContext* targetCtx) {
 void Fairy_ResetRainbowCMABs(void) {
     staticRainbowPointerCMAB = 0;
     staticRainbowReticleCMAB = 0;
+}
+
+s8 Navi_GetNotificationOption(void) {
+    if (IceTrap_ActiveCurse == ICETRAP_CURSE_NAVI) {
+        return NAVINOTIFS_SILENCED;
+    }
+
+    return gExtSaveData.options[OPTION_NAVINOTIFICATIONS];
 }
