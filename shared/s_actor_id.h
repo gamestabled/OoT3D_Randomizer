@@ -37,6 +37,7 @@ enum ActorId {
     ACTOR_PG_HORSE           = 0x067,
     ACTOR_BUBBLE             = 0x069,
     ACTOR_FLYING_FLOOR_TILE  = 0x06B,
+    ACTOR_FOREST_BIG_STONE   = 0x086,
     ACTOR_BEAMOS             = 0x08A,
     ACTOR_DEMO_EFFECT        = 0x08B,
     ACTOR_FLOORMASTER        = 0x08E,

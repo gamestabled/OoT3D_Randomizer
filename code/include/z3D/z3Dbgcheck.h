@@ -160,5 +160,6 @@ f32 BgCheck_RaycastDown1(CollisionContext* colCtx, CollisionPoly* outGroundPoly,
     __attribute__((pcs("aapcs-vfp")));
 s32 BgCheck_EntityLineTest1(CollisionContext* colCtx, Vec3f* posA, Vec3f* posB, Vec3f* posResult,
                             CollisionPoly** outPoly, s32 chkWall, s32 chkFloor, s32 chkCeil, s32 chkOneFace, s32* bgId);
+void DynaPoly_UpdateContext(struct GlobalContext* global_ctx, DynaCollisionContext* dyna);
 
 #endif //_Z3DBGCHECK_H

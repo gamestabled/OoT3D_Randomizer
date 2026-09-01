@@ -29,6 +29,8 @@ extern EnemizerLocationFlags gEnemizerLocationFlags;
 u8 Enemizer_IsEnemyRandomized(EnemyId enemyId);
 void Enemizer_Init(void);
 void Enemizer_Update(void);
+s32 Enemizer_FindOverrideIndex(u8 scene, u8 layer, u8 room, u8 actorEntry);
+EnemyOverride Enemizer_FindOverride(u8 scene, u8 layer, u8 room, u8 actorEntry);
 u8 Enemizer_OverrideActorEntry(ActorEntry* entry, s32 actorEntryIndex);
 void Enemizer_AfterActorSetup(void);
 EnemyOverride Enemizer_GetSpawnerOverride(void);
