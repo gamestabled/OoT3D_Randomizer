@@ -23,6 +23,7 @@ typedef struct {
     Vec3f pos;
 } GrottoReturnInfo;
 
+Bool Grotto_ReturnedFromGrotto();
 void Grotto_InitExitAndLoadLists(void);
 void Grotto_SetExitOverride(s16 originalIndex, s16 overrideIndex);
 void Grotto_SetLoadOverride(s16 originalIndex, s16 overrideIndex);

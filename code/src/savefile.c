@@ -11,6 +11,7 @@
 #include "permadeath.h"
 #include "gloom.h"
 #include "alert.h"
+#include "grotto.h"
 
 #include "savefile.h"
 
@@ -873,6 +874,11 @@ void SaveFile_AfterLoadGame(void) {
         (gSaveContext.dungeonItems[DUNGEON_GANONS_TOWER] & 1) == 0) {
 
         ItemOverride_PushHardcodedItem(GI_GANON_BOSS_KEY);
+    }
+    // If the randomized overworld spawn is a grotto return point, restore the entrance index
+    // in the void out respawn point because the game sets it to -1 when loading a file.
+    if (Grotto_ReturnedFromGrotto()) {
+        gSaveContext.respawn[RESPAWN_MODE_DOWN].entranceIndex = gSaveContext.entranceIndex;
     }
 }
 

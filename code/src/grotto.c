@@ -182,6 +182,10 @@ static s8 grottoId                     = 0xFF;
 static s8 lastEntranceType             = NOT_GROTTO;
 static u8 overridingNextEntrance       = FALSE;
 
+Bool Grotto_ReturnedFromGrotto() {
+    return lastEntranceType == GROTTO_RETURN;
+}
+
 // Initialize both lists so that each index refers to itself. An index referring
 // to itself means that the entrance is not shuffled. Indices will be overwritten
 // later in Entrance_Init() in entrance.c if entrance shuffle is enabled.
@@ -270,7 +274,7 @@ s16 Grotto_CheckSpecialEntrance(s16 nextEntranceIndex) {
         gSaveContext.respawn[RESPAWN_MODE_RETURN].data = grotto.content;
         nextEntranceIndex                              = grotto.entranceIndex;
 
-        lastEntranceType = NOT_GROTTO;
+        lastEntranceType = GROTTO_LOAD;
         // Otherwise just unset the current grotto ID
     } else {
         grottoId         = 0xFF;
