@@ -367,6 +367,9 @@ void InitEnemyLocations(void) {
         enemyLocations[3][0][5][4]       = EnemyLocation(ENEMY_SKULLTULA,          LocType::ABOVE_GROUND);
         enemyLocations[3][0][6][0]       = EnemyLocation(ENEMY_STALFOS,            LocType::ABOVE_GROUND);
         enemyLocations[3][0][6][1]       = EnemyLocation(ENEMY_STALFOS,            LocType::ABOVE_GROUND);
+        enemyLocations[3][0][6][0xFD]    = EnemyLocation(ENEMY_STALFOS,            LocType::ABOVE_GROUND);
+        enemyLocations[3][0][6][0xFE]    = EnemyLocation(ENEMY_STALFOS,            LocType::ABOVE_GROUND);
+        enemyLocations[3][0][6][0xFF]    = EnemyLocation(ENEMY_STALFOS,            LocType::ABOVE_GROUND);
         enemyLocations[3][0][7][2]       = EnemyLocation(ENEMY_OCTOROK,            LocType::ABOVE_WATER);
         enemyLocations[3][0][7][3]       = EnemyLocation(ENEMY_SKULLWALLTULA,      LocType::ABOVE_GROUND);
         enemyLocations[3][0][7][4]       = EnemyLocation(ENEMY_DEKU_BABA_SMALL,    LocType::ABOVE_GROUND);

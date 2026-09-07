@@ -137,8 +137,7 @@ void Camera_UpdateDistortion(Camera* camera) {
 
 s32 Camera_UpdateHotRoom(Camera* camera) {
     camera->distortionFlags &= 0xFFFE;
-    // Parts of RoomContext, bool value seems new to 3D
-    if (camera->globalCtx->unk_4C31[1] == 3 || camera->globalCtx->unk_4C31[6]) {
+    if (camera->globalCtx->roomCtx.curRoom.environmentType == 3 || camera->globalCtx->roomCtx.curRoom.visuallyHot) {
         camera->distortionFlags |= 1;
     }
     return 1;

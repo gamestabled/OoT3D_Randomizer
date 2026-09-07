@@ -15,6 +15,8 @@
 #define SKIP_ACTOR_ENTRY TRUE
 #define KEEP_ACTOR_ENTRY FALSE
 
+#define MAX_DYNAMIC_ENEMIES_PER_ROOM 3 // Forest Temple Stalfos
+
 EnemyOverride rEnemyOverrides[ENEMY_OVERRIDES_MAX];
 s32 rEnemyOverrides_Count  = 0;
 static u8 sRoomLoadSignal  = FALSE;
@@ -26,8 +28,6 @@ EnemizerLocationFlags gEnemizerLocationFlags;
     [_enemyId] = { .name = _name, .actorId = _actorId, .possibleParams = _possibleParams },
 EnemyData gEnemyTable[ENEMY_MAX] = { ENEMY_TABLE };
 #undef X
-
-static EnemyOverride Enemizer_FindOverride(u8 scene, u8 layer, u8 room, u8 actorEntry);
 
 u8 Enemizer_IsEnemyRandomized(EnemyId enemyId) {
     return gSettingsContext.enemizer == ON && gSettingsContext.enemizerList[enemyId] == ENEMYMODE_RANDOMIZED;
@@ -54,7 +54,7 @@ void Enemizer_Init(void) {
             .enemyId != ENEMY_INVALID;
 }
 
-static EnemyOverride Enemizer_FindOverride(u8 scene, u8 layer, u8 room, u8 actorEntry) {
+s32 Enemizer_FindOverrideIndex(u8 scene, u8 layer, u8 room, u8 actorEntry) {
     s32 key   = (scene << 24) | (layer << 16) | (room << 8) | actorEntry;
     s32 start = 0;
     s32 end   = rEnemyOverrides_Count - 1;
@@ -66,8 +66,16 @@ static EnemyOverride Enemizer_FindOverride(u8 scene, u8 layer, u8 room, u8 actor
         } else if (key > midOvr.key) {
             start = midIdx + 1;
         } else {
-            return midOvr;
+            return midIdx;
         }
+    }
+    return -1;
+}
+
+EnemyOverride Enemizer_FindOverride(u8 scene, u8 layer, u8 room, u8 actorEntry) {
+    s32 idx = Enemizer_FindOverrideIndex(scene, layer, room, actorEntry);
+    if (idx >= 0) {
+        return rEnemyOverrides[idx];
     }
     return (EnemyOverride){ 0 };
 }
@@ -540,11 +548,16 @@ void Enemizer_AfterActorSetup(void) {
         return;
     }
 
-    EnemyOverride enemySpawnerOvr = Enemizer_GetSpawnerOverride();
-    if (enemySpawnerOvr.enemyId != ENEMY_INVALID) {
-        s16 actorId = gEnemyTable[enemySpawnerOvr.enemyId].actorId;
-        s16 params  = gEnemyTable[enemySpawnerOvr.enemyId].possibleParams[enemySpawnerOvr.paramsIdx];
+    s32 spawnerOverrideIdx =
+        Enemizer_FindOverrideIndex(gGlobalContext->sceneNum, rSceneLayer, gGlobalContext->roomNum, 0xFF);
+    while (spawnerOverrideIdx >= 0 &&
+           rEnemyOverrides[spawnerOverrideIdx].actorEntry >= 0x100 - MAX_DYNAMIC_ENEMIES_PER_ROOM) {
+        u8 enemyId   = rEnemyOverrides[spawnerOverrideIdx].enemyId;
+        u8 paramsIdx = rEnemyOverrides[spawnerOverrideIdx].paramsIdx;
+        s16 actorId  = gEnemyTable[enemyId].actorId;
+        s16 params   = gEnemyTable[enemyId].possibleParams[paramsIdx];
         Enemizer_SpawnObjectsForActor(actorId, params);
+        spawnerOverrideIdx--;
     }
 
     sSFMWolfos       = NULL;

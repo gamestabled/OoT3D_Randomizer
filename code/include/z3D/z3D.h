@@ -529,6 +529,30 @@ typedef struct GameState {
 } GameState;
 _Static_assert(sizeof(GameState) == 0x104, "GameState size");
 
+typedef struct Room {
+    /* 0x000 */ s8 num;
+    /* 0x001 */ u8 unk_01;
+    /* 0x002 */ u8 environmentType;
+    /* 0x003 */ u8 type;
+    /* 0x004 */ s8 echo;
+    /* 0x005 */ u8 lensMode;
+    /* 0x006 */ u8 isDrawn;      // new in 3D
+    /* 0x007 */ u8 visuallyHot;  // new in 3D
+    /* 0x008 */ void* roomShape; // maybe?
+    /* 0x00C */ void* segment;   // maybe?
+    /* 0x010 */ char unk_010[0x3CC];
+} Room;
+_Static_assert(sizeof(Room) == 0x3DC, "Room size");
+
+typedef struct RoomContext {
+    /* 0x000 */ Room curRoom;
+    /* 0x3DC */ Room prevRoom;
+    /* 0x7B8 */ char unk_7B8[0x19];
+    /* 0x7D1 */ s8 status;
+    /* 0x7D2 */ char unk_7D2[0x786];
+} RoomContext;
+_Static_assert(sizeof(RoomContext) == 0xF58, "RoomContext size");
+
 // Global Context (ram start: 0871E840)
 typedef struct GlobalContext {
     /* 0x0000 */ GameState state;
@@ -574,8 +598,11 @@ typedef struct GlobalContext {
     /* 0x3234 */ char unk_3234[0x0824];
     /* 0x3A58 */ ObjectContext objectCtx;
     /* 0x43DC */ char unk_43DC[0x0854];
-    /* 0x4C30 */ s8 roomNum;
-    /* 0x4C31 */ char unk_4C31[0x0FCB];
+    /* 0x4C30 */ union {
+        RoomContext roomCtx;
+        s8 roomNum; // shorthand for roomCtx.curRoom.num
+    };
+    /* 0x5B88 */ char unk_5B88[0x0074];
     /* 0x5BFC */ u32 gameplayFrames;
     /* 0x5C00 */ u8 linkAgeOnLoad;
     /* 0x5C01 */ u8 unk_5C01;
