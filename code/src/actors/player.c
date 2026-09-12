@@ -142,6 +142,14 @@ void PlayerActor_rUpdate(Actor* thisx, GlobalContext* globalCtx) {
         Player_OnHit();
     }
     sPrevHealth = gSaveContext.health;
+
+    //play a land anim (0x237) on frame 0 and with speed 0 when link starts to fall and only on the run jump anim (0x6b)
+    //this fixes the land roll, thanks grezzo
+    if (PLAYER->actor.velocity.y < 0 && PLAYER->fallDistance >= 75) {
+        if (PLAYER->skelAnime.animIndex == 0x6b) {
+            LinkAnimation_Change(&this->skelAnime, globalCtx, 0x237, 0.0, 0.0, 0.0, 0, -2.0);
+        }
+    }
 }
 
 void PlayerActor_rDestroy(Actor* thisx, GlobalContext* globalCtx) {
