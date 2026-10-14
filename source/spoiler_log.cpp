@@ -196,6 +196,9 @@ void WriteIngameSpoilerLog() {
         else if (loc->IsCategory(Category::cFreestandingRupee) && !Settings::ShuffleRupees) {
             continue;
         }
+        else if (loc->IsCategory(Category::cRecoveryHeart) && !Settings::ShuffleRecoveryHearts) {
+            continue;
+        }
         // Big Poes
         else if (loc->IsCategory(Category::cBigPoe) && !Settings::ShuffleBigPoes) {
             continue;
