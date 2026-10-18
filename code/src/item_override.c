@@ -171,6 +171,9 @@ static ItemOverride_Key ItemOverride_GetSearchKey(Actor* actor, u8 scene, u8 ite
             .type  = OVR_GROTTO_SCRUB,
             .flag  = itemId,
         };
+    } else if (actor->id == ACTOR_DEKU_BABA || actor->id == ACTOR_WITHERED_DEKU_BABA) {
+        // Do not override baba drops
+        return (ItemOverride_Key){ .all = 0 };
     } else {
         return (ItemOverride_Key){
             .scene = scene,
