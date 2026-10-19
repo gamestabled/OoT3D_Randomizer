@@ -107,7 +107,7 @@ static ActorSoulData EnemySouls_GetActorSoulData(s16 actorId) {
         CASE(ACTOR_FREEZARD,                SOUL_FREEZARD,             EnFz_ReinitModels);
         CASE(ACTOR_HINT_DEKU_SCRUB,         SOUL_DEKU_SCRUB,           EnHintnuts_ReinitModels);
         CASE(ACTOR_MAD_SCRUB,               SOUL_DEKU_SCRUB,           EnDekunuts_ReinitModels);
-        CASE(ACTOR_BUSINESS_SCRUB,          SOUL_DEKU_SCRUB,           EnShopnuts_ReinitModels);
+        CASE(ACTOR_BUSINESS_SCRUB_ENEMY,    SOUL_DEKU_SCRUB,           EnShopnuts_ReinitModels);
         CASE(ACTOR_WOLFOS,                  SOUL_WOLFOS,               EnWf_ReinitModels);
         CASE(ACTOR_STALCHILD,               SOUL_STALCHILD,            SoullessModels_ReinitGenericSkelAnime);
         CASE(ACTOR_GUAY,                    SOUL_GUAY,                 EnCrow_ReinitModels);

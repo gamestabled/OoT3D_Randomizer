@@ -114,11 +114,11 @@ void ItemOverride_Init(void) {
 }
 
 static ItemOverride_Key ItemOverride_GetSearchKey(Actor* actor, u8 scene, u8 itemId) {
-    if (actor->id == 0x0A) { // Chest
+    if (actor->id == ACTOR_CHEST) {
         // Don't override WINNER purple rupee in the chest minigame scene
-        if (scene == 0x10) {
+        if (scene == SCENE_TREASURE_BOX_SHOP) {
             u32 chestItemId = (actor->params >> 5) & 0x7F;
-            if (chestItemId == 0x75) {
+            if (chestItemId == GI_RUPEE_PURPLE_LOSE) {
                 return (ItemOverride_Key){ .all = 0 };
             }
         }
@@ -128,7 +128,7 @@ static ItemOverride_Key ItemOverride_GetSearchKey(Actor* actor, u8 scene, u8 ite
             .type  = OVR_CHEST,
             .flag  = actor->params & 0x1F,
         };
-    } else if (actor->id == 0x15) { // Collectible
+    } else if (actor->id == ACTOR_EN_ITEM00) { // Collectible
         EnItem00* currentItem = ((EnItem00*)actor);
         u32 collectibleType   = actor->params & 0xFF;
         u16 collectibleFlag   = currentItem->collectibleFlag;
@@ -159,18 +159,21 @@ static ItemOverride_Key ItemOverride_GetSearchKey(Actor* actor, u8 scene, u8 ite
             .type  = OVR_COLLECTABLE,
             .flag  = collectibleFlag,
         };
-    } else if (actor->id == 0x19C) { // Gold Skulltula Token
+    } else if (actor->id == ACTOR_SKULL_TOKEN) {
         return (ItemOverride_Key){
             .scene = (actor->params >> 8) & 0x1F,
             .type  = OVR_SKULL,
             .flag  = actor->params & 0xFF,
         };
-    } else if (scene == 0x3E && actor->id == 0x11A) { // Grotto Salesman
+    } else if (scene == SCENE_GROTTOS && actor->id == ACTOR_BUSINESS_SCRUB_SALESMAN) {
         return (ItemOverride_Key){
             .scene = gSaveContext.respawn[RESPAWN_MODE_RETURN].data,
             .type  = OVR_GROTTO_SCRUB,
             .flag  = itemId,
         };
+    } else if (actor->id == ACTOR_DEKU_BABA || actor->id == ACTOR_WITHERED_DEKU_BABA) {
+        // Do not override baba drops
+        return (ItemOverride_Key){ .all = 0 };
     } else {
         return (ItemOverride_Key){
             .scene = scene,
