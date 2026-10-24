@@ -257,6 +257,9 @@ void Camera_FreeCamUpdate(Vec3s* out, Camera* camera) {
                 camera->mode        = 0; // Reset to CAM_MODE_NORMAL so won't read data OoB on switch back
             }
         }
+
+        // Return fov to normal value over a few seconds
+        camera->globalCtx->view.fovY = camera->fov = lerpf(camera->fov, 55, 0.05);
     }
     return;
 }
