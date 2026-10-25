@@ -89,6 +89,7 @@
 #include "armos.h"
 #include "poe_collector.h"
 #include "forest_temple_objects.h"
+#include "spike.h"
 
 Actor* gRunningActor;
 #define MAX_RUNNING_ACTORS 5
@@ -238,6 +239,8 @@ void Actor_Init() {
     gActorOverlayTable[0xE7].initInfo->init = EnMa1_rInit;
 
     gActorOverlayTable[0xE8].initInfo->update = BossGanon_rUpdate;
+
+    gActorOverlayTable[0xEC].initInfo->init = EnNy_rInit;
 
     gActorOverlayTable[0xF1].initInfo->init    = ItemOcarina_rInit;
     gActorOverlayTable[0xF1].initInfo->destroy = ItemOcarina_rDestroy;
