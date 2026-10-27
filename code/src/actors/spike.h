@@ -14,6 +14,8 @@ typedef struct EnNy {
 } EnNy;
 _Static_assert(sizeof(EnNy) == 0x3BC, "EnNy size");
 
+void EnNy_rInit(Actor* thisx, GlobalContext* globalCtx);
+
 void EnNy_ReinitModels(EnNy* this);
 
 #endif //_SPIKE_H_

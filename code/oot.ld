@@ -89,6 +89,7 @@ SECTIONS
 	EnMb_Init = 0x165BA4 + _LD_OFF;
 	.patch_MidoCheckSpawn 0x166154 + _LD_OFF : { *(.patch_MidoCheckSpawn) }
 	.patch_MidoCheckDekuTreeClearOne 0x16623C + _LD_OFF : { *(.patch_MidoCheckDekuTreeClearOne) }
+	EnNy_Init = 0x166F0C + _LD_OFF;
 	EnPeehat_Update = 0x167644 + _LD_OFF;
 	.patch_GetObjectEntry_EnRdInit_One 0x167DA4 + _LD_OFF : { *(.patch_GetObjectEntry_EnRdInit_One) }
 	.patch_GetObjectEntry_EnRdInit_Two 0x167E38 + _LD_OFF : { *(.patch_GetObjectEntry_EnRdInit_Two) }
