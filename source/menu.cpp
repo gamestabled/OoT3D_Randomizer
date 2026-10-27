@@ -171,10 +171,11 @@ void MoveCursor(u32 kDown, bool updatedByHeld) {
         if (currentMenu->mode == LOAD_PREMADE_RANDOMIZATION_PRESET) {
             max = premadePresets.size();
         } else if (currentMenu->mode == LOAD_CUSTOM_RANDOMIZATION_PRESET ||
-                   currentMenu->mode == DELETE_CUSTOM_RANDOMIZATION_PRESET ||
-                   currentMenu->mode == LOAD_CUSTOM_COSMETIC_PRESET ||
-                   currentMenu->mode == DELETE_CUSTOM_COSMETIC_PRESET) { // Number of presets if applicable
+                   currentMenu->mode == DELETE_CUSTOM_RANDOMIZATION_PRESET) {
             max = presetEntries.size();
+        } else if (currentMenu->mode == LOAD_CUSTOM_COSMETIC_PRESET ||
+                   currentMenu->mode == DELETE_CUSTOM_COSMETIC_PRESET) {
+            max = cosmeticPresetEntries.size();
         } else if (currentMenu->mode == GENERATE_MODE) { // Generate menu: 2 options
             max = 2;
         } else if (currentMenu->itemsList != nullptr) {
