@@ -33,7 +33,7 @@ int Playthrough_Init(u32 seed) {
 
         for (size_t i = 0; i < menu->settingsList->size(); i++) {
             Option* setting = menu->settingsList->at(i);
-            if (setting->IsCategory(OptionCategory::Setting)) {
+            if (setting->IsCategory(OptionCategory::Setting) && !setting->IsHidden()) {
                 settingsStr += setting->GetSelectedOptionText();
             }
         }
