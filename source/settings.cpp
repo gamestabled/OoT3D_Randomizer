@@ -1519,7 +1519,7 @@ std::vector<Menu *> mainMenu = {
 
 // declared here, set in fill.cpp
 u32 LinksPocketRewardBitMask = 0;
-std::array<u32, 9> rDungeonRewardOverrides{};
+std::array<s32, 9> rDungeonRewardOverrides{};
 
 // declared here, set in menu.cpp
 u8 PlayOption;

@@ -17,6 +17,8 @@
 #include "enemizer.hpp"
 #include "ocarina_notes.hpp"
 
+#include "s_dungeon.h"
+
 #include <vector>
 #include <unistd.h>
 #include <list>
@@ -752,14 +754,25 @@ static void RandomizeDungeonRewards() {
         }
 
         for (size_t i = 0; i < dungeonRewardLocations.size(); i++) {
-            const auto index           = Location(dungeonRewardLocations[i])->GetPlacedItem().GetItemID() - baseOffset;
-            rDungeonRewardOverrides[i] = index;
+            auto locKey = dungeonRewardLocations[i];
+            auto loc    = Location(locKey);
+
+            s32 rewardId;
+            if (loc->GetPlacedItemKey() != NONE) {
+                rewardId = loc->GetPlacedItem().GetItemID() - baseOffset;
+            } else {
+                // Dungeon reward locations might not have an item placed yet if some reward items
+                // were added to the starting inventory.
+                rewardId = INVALID_DUNGEON_REWARD;
+            }
+
+            rDungeonRewardOverrides[i] = rewardId;
 
             // set the player's dungeon reward on file creation instead of pushing it to them at the
             // start. This is done mainly because players are already familiar with seeing their dungeon
             // reward before opening up their file
             if (i == dungeonRewardLocations.size() - 1) {
-                LinksPocketRewardBitMask = bitMaskTable[index];
+                LinksPocketRewardBitMask = bitMaskTable[rewardId];
             }
         }
     } else if (LinksPocketItem.Is(LINKSPOCKETITEM_DUNGEON_REWARD)) {
