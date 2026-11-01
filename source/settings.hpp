@@ -838,7 +838,7 @@ extern Option ShuffleSFXCategorically;
 extern Option OcarinaNoteInstrument;
 
 extern u32 LinksPocketRewardBitMask;
-extern std::array<u32, 9> rDungeonRewardOverrides;
+extern std::array<s32, 9> rDungeonRewardOverrides;
 
 extern u8 PlayOption;
 extern u8 Region;

@@ -807,23 +807,27 @@ static void CreateCompassAndGearMenuHints(const std::vector<Text>& rewardHints) 
     for (u32 rewardId = R_KOKIRI_EMERALD; rewardId < DUNGEON_REWARDS_COUNT; rewardId++) {
         formattedRewardHints.push_back(AddColorsAndFormat(rewardHints[rewardId], { rewardColors[rewardId] }));
     }
-    std::vector<Text> baseCompassTexts = CreateBaseCompassTexts();
+    std::vector<Text> compassTexts = CreateBaseCompassTexts();
 
     // Create Compass messages
     for (u32 dungeonId = DUNGEON_DEKU_TREE; dungeonId <= DUNGEON_ICE_CAVERN; dungeonId++) {
         // Add reward hint to compass message if necessary
+        s32 rewardId = INVALID_DUNGEON_REWARD;
         if (Settings::CompassesShowReward && dungeonId <= DUNGEON_SHADOW_TEMPLE) {
             // If rewards are at End of Dungeons, the text will reveal what reward is at the end of the dungeon.
             // Otherwise, the text will reveal where the reward from that dungeon is located.
-            u32 rewardId = Settings::ShuffleRewards.Is(REWARDSHUFFLE_END_OF_DUNGEON)
-                               ? Settings::rDungeonRewardOverrides[dungeonId]
-                               : dungeonId;
-
-            baseCompassTexts[dungeonId] = baseCompassTexts[dungeonId] + formattedRewardHints[rewardId];
-        } else {
-            baseCompassTexts[dungeonId] = baseCompassTexts[dungeonId] + MESSAGE_END();
+            rewardId = Settings::ShuffleRewards.Is(REWARDSHUFFLE_END_OF_DUNGEON)
+                           ? Settings::rDungeonRewardOverrides[dungeonId]
+                           : dungeonId;
         }
-        CreateMessageFromTextObject(0x9DA + dungeonId, 0, 2, 3, baseCompassTexts[dungeonId]);
+
+        if (rewardId > INVALID_DUNGEON_REWARD && rewardId < DUNGEON_REWARDS_COUNT) {
+            compassTexts[dungeonId] += formattedRewardHints[rewardId];
+        } else {
+            compassTexts[dungeonId] += MESSAGE_END();
+        }
+
+        CreateMessageFromTextObject(0x9DA + dungeonId, 0, 2, 3, compassTexts[dungeonId]);
     }
 
     // Create Gear Menu messages
